@@ -1,2 +1,7 @@
 build
 CMakeLists.txt.*
+.github/**
+./build
+./build/*
+/.vscode/*
+/tests/runme
