@@ -15,7 +15,14 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         std::vector<std::unique_ptr<Resident>> makeResidents (
             std::vector<ResidentsFactory*> residentsFactories,
             int maxNumOfResidents
-        ) override;
+        )
+        override;
+        std::vector<std::unique_ptr<Resident>> makeBaseResidents (
+            std::vector<ResidentsFactory*> residentsFactories,
+            int maxNumOfResidents
+        )
+        override;
+
     private:
         
         ColorInfo askForGroupColor (int groupIdx);

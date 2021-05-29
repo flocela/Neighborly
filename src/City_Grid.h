@@ -6,8 +6,9 @@
 class City_Grid: public City
 {
     private:
-    	std::vector<int> _addresses;
         int _width;
+    	std::vector<int> _addresses;
+
     
     public:
     	City_Grid (int width);

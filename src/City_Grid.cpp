@@ -11,7 +11,7 @@
 // 2  5  8
 // Address 3 is 2 units away from address 5 in the y direction.
 // Address 1 is 2 units away from address 7 in the x direction.
-City_Grid::City_Grid (int width): _width{width}, _addresses(width*width)
+City_Grid::City_Grid (int width): City(), _width{width}, _addresses(width*width)
 {
   	for (int ii=0; ii<width; ++ii)
   	{
@@ -60,6 +60,7 @@ std::vector<int> City_Grid::getAdjacentAdresses (int address) const
 		adjacentAddresses.push_back(address - 1);
 	if (y != lastIdx_y)
 		adjacentAddresses.push_back(address +1);
+	return adjacentAddresses;
 }
 
 int City_Grid::get_x (const int& address) const

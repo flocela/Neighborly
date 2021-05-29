@@ -16,16 +16,25 @@ class ResidentsFactory_StepDown: public ResidentsFactory
         ~ResidentsFactory_StepDown() = default;
 
         std::vector<std::unique_ptr<Resident>> createResidents (
-                                                UI& ui,
-                                                int firstID,
-                                                int maxCount, 
-                                                Color color) override;
+            UI& ui,
+            int firstID,
+            int maxCount, 
+            Color color
+        ) override;
         std::vector<std::unique_ptr<Resident>> createResidents(
-                                                UI& ui,
-                                                int firstID, 
-                                                int maxCount, 
-                                                double happinessGoal, 
-                                                Color color) override;
+            UI& ui,
+            int firstID, 
+            int maxCount, 
+            double happinessGoal, 
+            Color color
+        ) override;
+        std::vector<std::unique_ptr<Resident>> createBaseResidents(
+            UI& ui,
+            int firstID, 
+            int maxCount, 
+            double happinessGoal, 
+            Color color
+        ) override;
         std::string toString () override;
     private:
         /*  Prompts for how many residents in this group. Prompts aren't complete.

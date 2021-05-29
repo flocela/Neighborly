@@ -17,16 +17,25 @@ class ResidentsFactory
         virtual ~ResidentsFactory() = default;
 
         virtual std::vector<std::unique_ptr<Resident>> createResidents(
-                                                        UI& ui, 
-                                                        int firstID,
-                                                        int count, 
-                                                        Color color) = 0;
+            UI& ui, 
+            int firstID,
+            int count, 
+            Color color
+        ) = 0;
         virtual std::vector<std::unique_ptr<Resident>> createResidents(
-                                                        UI& ui,
-                                                        int firstID, 
-                                                        int count, 
-                                                        double happinessGoal, 
-                                                        Color color) = 0;
+            UI& ui,
+            int firstID, 
+            int count, 
+            double happinessGoal, 
+            Color color
+        ) = 0;
+        virtual std::vector<std::unique_ptr<Resident>> createBaseResidents(
+            UI& ui,
+            int firstID, 
+            int count, 
+            double happinessGoal, 
+            Color color
+        ) = 0;
         virtual std::string toString () = 0;
 };
 

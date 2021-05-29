@@ -18,6 +18,7 @@ class CityFactory
         virtual ~CityFactory() = default;
 
         virtual std::unique_ptr<City> createCity (UI& ui) = 0;
+        virtual std::unique_ptr<City> createBaseCity (UI& ui) = 0;
         virtual std::string toString () = 0;
 };
 

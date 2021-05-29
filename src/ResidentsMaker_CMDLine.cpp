@@ -1,6 +1,39 @@
 #include "ResidentsMaker_CMDLine.h"
 #include <iostream>
 
+std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents (
+    std::vector<ResidentsFactory*> residentsFactories,
+    int maxResidentCount
+)
+{   
+    initColors();
+    std::vector<std::unique_ptr<Resident>> residents;
+
+    auto newResidents = residentsFactories[0]->createBaseResidents(
+            _ui,
+            0,
+            maxResidentCount/2,
+            0.5,
+            Color::red);
+    for (auto& r: newResidents)
+        {
+            residents.emplace_back(std::move(r));
+        }
+    
+    newResidents = residentsFactories[0]->createBaseResidents(
+            _ui,
+            0,
+            maxResidentCount/4,
+            0.5,
+            Color::green);
+    for (auto& r: newResidents)
+        {
+            residents.emplace_back(std::move(r));
+        }
+    
+    return residents;
+}
+
 std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
     std::vector<ResidentsFactory*> residentsFactories,
     int maxResidentCount
@@ -151,13 +184,13 @@ void ResidentsMaker_CMDLine::initColors ()
 
 void ResidentsMaker_CMDLine::updateAvailableColors(ColorInfo color)
 {
-    int ii = 0;
+    std::size_t ii = 0;
     for (;ii < _colors.size(); ++ii)
     {
         if (_colors[ii]._my_string == color._my_string)
             break;
     }
-    _colors.erase(_colors.begin() + ii);
+    _colors.erase(_colors.begin() + static_cast<int>(ii));
 }
 
 std::vector<std::string> ResidentsMaker_CMDLine::getFactoryNames (

@@ -13,3 +13,9 @@ std::unique_ptr<City> CityMaker_CMDLine::makeCity (std::vector<CityFactory*> cit
                             namesOfCityFactories);
     return cityFactories[cityChoice]->createCity(_ui);
 }
+
+std::unique_ptr<City> CityMaker_CMDLine::makeBaseCity (std::vector<CityFactory*> cityFactories)
+{
+    int cityChoice = 0;
+    return cityFactories[cityChoice]->createCity(_ui);
+}

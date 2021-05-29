@@ -27,10 +27,11 @@ class Resident{
         virtual double getHappiness (std::vector<Color> neighbors) const = 0;
         
     private:
+        int    _ID;
         Color  _color;
         double _allowed_movement_distance;
         double _happiness_goal;
-        int    _ID;
+       
 };
 
 #endif

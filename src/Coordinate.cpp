@@ -24,5 +24,6 @@ bool Coordinate::operator< (const Coordinate& a) const
 
 std::ostream& operator<<(std::ostream& os, Coordinate const& v)
 {
-    std::cout << "(" << v._x << ", " << v._y << ")";
+    os << "(" << v._x << ", " << v._y << ")"; // This needs to be tested
+    return os;
 }

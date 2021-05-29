@@ -34,6 +34,17 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <iostream>
+#include <memory>
+
+#include "CityFactory.h"
+#include "CityFactory_Grid.h"
+#include "CityMaker_CMDLine.h"
+#include "CityFactory_Grid.h"
+#include "ResidentsFactory_Flat.h"
+#include "ResidentsFactory.h"
+#include "ResidentsMaker_CMDLine.h"
+#include "Printer_Graphic.h"
+#include "Resident_Flat.h"
 
 // Define MAX and MIN macros
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
@@ -45,9 +56,9 @@
 
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
-int main(int argc, char* argv[])
+int oldCodeFromAminoshbh(int argc, char* argv[])
 {
-    // Unused argc, argv
+// Unused argc, argv
     (void) argc;
     (void) argv;
 
@@ -194,4 +205,106 @@ int main(int argc, char* argv[])
     SDL_Quit();
 
     return 0;
+}
+
+std::vector<std::unique_ptr<CityFactory>> initCityFactories ();
+
+std::vector<std::unique_ptr<ResidentsFactory>> initResidentFactories();
+
+std::vector<CityFactory*> fromCityFactoriesGetPointers (
+    std::vector<std::unique_ptr<CityFactory>>& cityFactories);
+
+std::vector<ResidentsFactory*> fromResidentFactoriesGetPointers (
+    std::vector<std::unique_ptr<ResidentsFactory>>& residentFactories);
+
+std::map<Coordinate, int> getHousePerCoordinate(const City& city);
+
+int main(int argc, char* argv[])
+{
+    // Unused argc, argv
+    (void) argc;
+    (void) argv;
+
+    std::vector<std::unique_ptr<CityFactory>> cityFactories =
+        initCityFactories();
+    std::vector<std::unique_ptr<ResidentsFactory>> residentFactories =
+        initResidentFactories();
+    std::vector<CityFactory*> cityFactoryPointers =
+        fromCityFactoriesGetPointers(cityFactories);
+    std::vector<ResidentsFactory*> residentFactoryPointers =
+        fromResidentFactoriesGetPointers(residentFactories);; 
+
+    CityMaker_CMDLine cityMaker{};
+    //std::unique_ptr<City> city = cityMaker.makeCity(cityFactoryPointers);
+    std::unique_ptr<City> city = cityMaker.makeBaseCity(cityFactoryPointers);
+    std::map<Coordinate, int> housePerCoordinate = getHousePerCoordinate(*(city.get()));
+
+    ResidentsMaker_CMDLine residentsMaker{};
+    //std::vector<std::unique_ptr<Resident>> residents = 
+    //    residentsMaker.makeResidents(residentFactoryPointers, city->getSize());
+    std::vector<std::unique_ptr<Resident>> residents = 
+        residentsMaker.makeBaseResidents(residentFactoryPointers, city->getSize());
+    std::cout << "number of residents: " << residents.size();
+
+    std::map<Color, int> intPerColor = {};
+    std::map<int, Resident*> residentPerAddress = {};
+
+    for (auto& resident : residents)
+    {
+        residentPerAddress[resident->getID()] = resident.get();
+    }
+
+    Printer_Graphic printer{640, 960, 20, 20};
+    printer.printScreen();
+
+    printer.print(residentPerAddress, housePerCoordinate, 1, 1, "Title");
+    printer.keepScreen();
+    return 0; 
+}
+
+std::vector<std::unique_ptr<CityFactory>> initCityFactories ()
+{
+    std::vector<std::unique_ptr<CityFactory>> cityFactories = {};
+    cityFactories.emplace_back(std::make_unique<CityFactory_Grid>());
+    return cityFactories;
+}
+
+std::vector<std::unique_ptr<ResidentsFactory>> initResidentFactories()
+{
+    std::vector<std::unique_ptr<ResidentsFactory>> residentFactories = {};
+    residentFactories.emplace_back(std::make_unique<ResidentsFactory_Flat>());
+    return residentFactories;
+}
+
+std::vector<CityFactory*> fromCityFactoriesGetPointers (
+    std::vector<std::unique_ptr<CityFactory>>& cityFactories)
+{
+    std::vector<CityFactory*> cityFactoryPointers = {};
+    for (auto& factory: cityFactories)
+    {
+        cityFactoryPointers.push_back(factory.get());
+    }
+    return cityFactoryPointers;
+}
+
+std::vector<ResidentsFactory*> fromResidentFactoriesGetPointers (
+    std::vector<std::unique_ptr<ResidentsFactory>>& residentFactories)
+{
+    std::vector<ResidentsFactory*> residentFactoryPointers = {};
+    for (auto& factory : residentFactories)
+    {
+        residentFactoryPointers.push_back(factory.get());
+    }
+    return residentFactoryPointers;
+}
+
+std::map<Coordinate, int> getHousePerCoordinate(const City& city)
+{
+    std::map<Coordinate, int> housePerCoordinate = {};
+    std::vector<int> addresses = city.getAddresses();
+    for (int address : addresses)
+    {
+        housePerCoordinate[city.getCoordinate(address)] = address;
+    }
+    return housePerCoordinate;
 }

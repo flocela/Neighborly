@@ -19,6 +19,7 @@ double HappinessFunc_Rising::getHappiness (
     int num_of_like_neighbors, 
     int num_of_diff_neighbors) const
 {
+    tot_num_of_possible_neighbors++;
     double slope = (_happiness_at_one_diversity-_happiness_at_zero_diversity)/1;
     double diversity_diff = num_of_diff_neighbors / 
                             (double)(num_of_diff_neighbors + num_of_like_neighbors);

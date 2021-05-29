@@ -3,7 +3,6 @@
 
 #include <vector>
 #include "SDL.h"
-#include "snake.h"
 #include "Coordinate.h"
 #include <map>
 #include <utility>
@@ -23,7 +22,6 @@ class Renderer {
 			std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
 			Coordinate placement
 		);
-  		void Render(Snake const snake, SDL_Point const &food);
   		void Render();
   		void UpdateWindowTitle(int score, int fps);
   		void poll();

@@ -9,6 +9,9 @@ void Printer_CMDLine::print(std::map<int, Resident*> residentPerHouse,
                             int totRuns,
                            	std::string title)
 {
+    run++; // TODO run is not used.
+    totRuns++; // TODO totRuns not used.
+    std::string x = title + "x"; // TODO title not used.
     std::vector<Coordinate> coordinates;
     for (auto const& element : housePerCoordinate)
     {
@@ -20,19 +23,17 @@ void Printer_CMDLine::print(std::map<int, Resident*> residentPerHouse,
     if (residentPerHouse.size() == 0)
     {
         int currY = 0;
-        int currX = 0;
-        for (int ii=0; ii< coordinates.size(); ii++)
+        for (Coordinate coord : coordinates)
         {
-            int diffY = coordinates[ii].getY() - currY;
+            int diffY = coord.getY() - currY;
             if (diffY != 0)
             {
-                currX = 0;
                 for (int ss=0; ss<diffY; ++ss)
                 {
                     std::cout << "\n";
                 }
             }
-            int diffX = coordinates[ii].getX();
+            int diffX = coord.getX();
             for (int hh=0; hh<diffX; ++hh)
             {
                 std::cout << " ";
@@ -48,4 +49,10 @@ void Printer_CMDLine::printResidents(std::map<int, Resident*> housePerResident,
                                      int totRuns,
                            			 std::string title)
 {
+    // TODO fill in function
+    housePerResident = {};
+    coordinatePerHouse = {};
+    run++;
+    totRuns++;
+    std::string x = title + "x";
 }

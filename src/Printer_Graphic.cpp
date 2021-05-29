@@ -41,6 +41,9 @@ void Printer_Graphic::print (
     std::string title
 )
 {  
+    run++;
+    totalRuns++;
+    std::string x = title + "x"; // TODO used unused parameters.
     std::map<Color, std::vector<Coordinate>> coordinatesPerColor = {};
     int count = 0;
     for (auto const& x : addressPerCoordinate)
@@ -91,6 +94,12 @@ void Printer_Graphic::printResidents(std::map<int, Resident*> addressPerResident
                                      int totRuns,
                            			 std::string title)
 {
+    //TODO use unused parameters
+    addressPerResident = {};
+    coordinatePerAddress = {};
+    run++;
+    totRuns++;
+    std::string x = title + "x";
 }
 
 bool mapContains (std::map<Color, std::vector<Coordinate>> aMap, Color aKey)

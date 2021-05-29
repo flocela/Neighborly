@@ -11,6 +11,7 @@ double HappinessFunc_Falling::getHappiness (
     int num_of_like_neighbors, 
     int num_of_diff_neighbors) const
 {
+    tot_num_of_possible_neighbors++; // TODO tot_num_of_possible_neighbors isn't used
     double diversity = num_of_diff_neighbors / (num_of_diff_neighbors + num_of_like_neighbors);
     return _happiness_at_zero_percent_diversity - 
             (_happiness_at_hundred_percent_diversity/_happiness_at_zero_percent_diversity) * diversity;

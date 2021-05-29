@@ -14,7 +14,8 @@ class CityFactory_Grid: public CityFactory
         CityFactory_Grid& operator=(CityFactory_Grid&& obj) noexcept = default;
         ~CityFactory_Grid() = default;
 
-        std::unique_ptr<City>  createCity (UI& ui) override;
+        std::unique_ptr<City> createCity (UI& ui) override;
+        std::unique_ptr<City> createBaseCity (UI& ui) override;
         std::string toString () override;
     private:
         int askForGridWidth(UI& ui);

@@ -12,8 +12,8 @@ TEST_CASE("x-coordinate based on address")
     const int a27 = addresses[27];
     REQUIRE( city.get_x(a0)  == 0 );
     REQUIRE( city.get_y(a0)  == 0 );
-    REQUIRE( city.get_x(a27) == 3 );
-    REQUIRE( city.get_y(a27) == 4 );
+    REQUIRE( city.get_x(a27) == 4 );
+    REQUIRE( city.get_y(a27) == 3 );
     REQUIRE(true);
 }
 
