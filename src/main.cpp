@@ -244,7 +244,7 @@ int main(int argc, char* argv[])
     //    residentsMaker.makeResidents(residentFactoryPointers, city->getSize());
     std::vector<std::unique_ptr<Resident>> residents = 
         residentsMaker.makeBaseResidents(residentFactoryPointers, city->getSize());
-    std::cout << "number of residents: " << residents.size();
+    std::cout << "main line 247, number of residents: " << residents.size() << std::endl;
 
     std::map<Color, int> intPerColor = {};
     std::map<int, Resident*> residentPerAddress = {};

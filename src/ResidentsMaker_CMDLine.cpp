@@ -6,13 +6,14 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents
     int maxResidentCount
 )
 {   
+    (void) maxResidentCount;
     initColors();
     std::vector<std::unique_ptr<Resident>> residents;
 
     auto newResidents = residentsFactories[0]->createBaseResidents(
             _ui,
             0,
-            maxResidentCount/2,
+            13,
             0.5,
             Color::red);
     for (auto& r: newResidents)
@@ -20,13 +21,13 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents
             residents.emplace_back(std::move(r));
         }
     
-    newResidents = residentsFactories[0]->createBaseResidents(
+    auto newResidents2 = residentsFactories[0]->createBaseResidents(
             _ui,
-            0,
-            maxResidentCount/4,
+            13,
+            17,
             0.5,
             Color::green);
-    for (auto& r: newResidents)
+    for (auto& r: newResidents2)
         {
             residents.emplace_back(std::move(r));
         }
