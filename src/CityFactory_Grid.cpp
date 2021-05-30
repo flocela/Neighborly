@@ -11,7 +11,7 @@ std::unique_ptr<City> CityFactory_Grid::createCity (UI& ui)
 std::unique_ptr<City> CityFactory_Grid::createBaseCity (UI& ui)
 {
     (void) ui;
-    int width = 12;
+    int width = 150;
     return std::make_unique<City_Grid>(width);
 }
 

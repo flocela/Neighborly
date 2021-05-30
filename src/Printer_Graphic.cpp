@@ -7,7 +7,18 @@
 #include <chrono>
 #include <iostream>
 
-bool mapContains (std::map<Color, std::vector<Coordinate>> aMap, Color aKey);
+/*
+template< typename T, typename V >
+bool mapContains2 (std::map<T, V> aMap, T aKey)
+{
+    return aMap.count(aKey);
+}*/
+
+bool mapContains (std::map<Color, std::vector<Coordinate>> aMap, Color aKey)
+{
+    return aMap.count(aKey);
+}
+
 bool mapContains (std::map<int, Resident*> aMap, int aKey);
 
 Printer_Graphic::Printer_Graphic (
@@ -51,7 +62,8 @@ void Printer_Graphic::print (
         Coordinate coord = x.first;
         int address = x.second;
         Color colorKey;
-        if (!mapContains(residentsPerAddress, address))
+        //if (!mapContains(residentsPerAddress, address))
+        if (residentsPerAddress.count(address) == 0)
         {   
             // No resident has this address. So this house is empty.
             colorKey = Color::absent;
@@ -61,8 +73,7 @@ void Printer_Graphic::print (
             Resident* res = residentsPerAddress[address];
             colorKey = res->getColor();
         }
-
-        if (!mapContains(coordinatesPerColor, colorKey))
+        if (coordinatesPerColor.count(colorKey) == 0)
         {
             std::vector<Coordinate> newCoordinateVector = {};
             coordinatesPerColor[colorKey] = newCoordinateVector;
@@ -100,11 +111,6 @@ void Printer_Graphic::printResidents(std::map<int, Resident*> addressPerResident
     run++;
     totRuns++;
     std::string x = title + "x";
-}
-
-bool mapContains (std::map<Color, std::vector<Coordinate>> aMap, Color aKey)
-{
-    return aMap.count(aKey);
 }
 
 bool mapContains (std::map<int, Resident*> aMap, int aKey)

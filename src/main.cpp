@@ -244,7 +244,6 @@ int main(int argc, char* argv[])
     //    residentsMaker.makeResidents(residentFactoryPointers, city->getSize());
     std::vector<std::unique_ptr<Resident>> residents = 
         residentsMaker.makeBaseResidents(residentFactoryPointers, city->getSize());
-    std::cout << "main line 247, number of residents: " << residents.size() << std::endl;
 
     std::map<Color, int> intPerColor = {};
     std::map<int, Resident*> residentPerAddress = {};
@@ -254,7 +253,7 @@ int main(int argc, char* argv[])
         residentPerAddress[resident->getID()] = resident.get();
     }
 
-    Printer_Graphic printer{640, 960, 20, 20};
+    Printer_Graphic printer{1200, 1200, 20, 20};
     //printer.printScreen();
 
     printer.print(residentPerAddress, housePerCoordinate, 1, 1, "Title");
