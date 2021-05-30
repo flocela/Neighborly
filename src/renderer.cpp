@@ -17,64 +17,9 @@
 #define SCREEN_HEIGHT   600
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
-Renderer::Renderer(
-	const std::size_t screen_width,
-    const std::size_t screen_height,
-    const std::size_t grid_width,
-	const std::size_t grid_height
-	):
-	screen_width(screen_width),
-    screen_height(screen_height),
-    grid_width(grid_width),
-    grid_height(grid_height) 
+void renderText(SDL_Renderer *sdl_renderer)
 {
-  	// Initialize SDL
-  	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-    	std::cerr << "SDL could not initialize.\n";
-    	std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
-  	}
-
-  	// Initialize SDL2_ttf
-  	TTF_Init();
-
-  	#if defined linux && SDL_VERSION_ATLEAST(2, 0, 8)
-    	// Disable compositor bypass
-    	if(!SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0"))
-    	{
-    	    printf("SDL can not disable compositor bypass!\n");
-    	    return 0;
-   	 	}
-  	#endif
-/*
-	SDL_Window *sdl_window = SDL_CreateWindow("SDL2_ttf sample",
-                                          SDL_WINDOWPOS_UNDEFINED,
-                                          SDL_WINDOWPOS_UNDEFINED,
-                                          SCREEN_WIDTH, SCREEN_HEIGHT,
-                                          SDL_WINDOW_SHOWN);*/
-  	// Create Window
-  	sdl_window = SDL_CreateWindow(
-        "Snake Game", SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED, 
-		screen_width,
-        screen_height, 
-		SDL_WINDOW_SHOWN
-	);
-
-  	if (nullptr == sdl_window) {
-    	std::cerr << "Window could not be created.\n";
-    	std::cerr << " SDL_Error: " << SDL_GetError() << "\n";
-  	}
-	else
-	{
-		// Create renderer
-  		sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
-  		if (nullptr == sdl_renderer) {
-    		std::cerr << "Renderer could not be created.\n";
-    		std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
-		}
-		else
-		{
-			// Declare rect of square
+	// Declare rect of square
             SDL_Rect squareRect;
 
             // Square dimensions: Half of the min(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -123,9 +68,97 @@ Renderer::Renderer(
             std::cout << "textRect.y = " << textRect.y;
             textRect.x = 500;
             textRect.y = 500;
- 			 // Event loop exit flag
+			
+			// Initialize renderer color white for the background
+                SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
-			 // Initialize renderer color white for the background
+                // Clear screen
+                SDL_RenderClear(sdl_renderer);
+
+                // Set renderer color red to draw the square
+                SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
+
+                // Draw filled square
+                SDL_RenderFillRect(sdl_renderer, &squareRect);
+
+                // Draw text
+                SDL_RenderCopy(sdl_renderer, text, NULL, &textRect);
+
+                // Update screen
+                //SDL_RenderPresent(sdl_renderer);
+}
+
+Renderer::Renderer(
+	const std::size_t screen_width,
+    const std::size_t screen_height,
+    const std::size_t grid_width,
+	const std::size_t grid_height
+	):
+	screen_width(screen_width),
+    screen_height(screen_height),
+    grid_width(grid_width),
+    grid_height(grid_height) 
+{
+  	// Initialize SDL
+  	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    	std::cerr << "SDL could not initialize.\n";
+    	std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
+  	}
+
+  	// Initialize SDL2_ttf
+  	TTF_Init();
+
+  	#if defined linux && SDL_VERSION_ATLEAST(2, 0, 8)
+    	// Disable compositor bypass
+    	if(!SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0"))
+    	{
+    	    printf("SDL can not disable compositor bypass!\n");
+    	    return 0;
+   	 	}
+  	#endif
+
+  	sdl_window = SDL_CreateWindow(
+        "Snake Game", SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED, 
+		screen_width,
+        screen_height, 
+		SDL_WINDOW_SHOWN
+	);
+
+  	if (nullptr == sdl_window) {
+    	std::cerr << "Window could not be created.\n";
+    	std::cerr << " SDL_Error: " << SDL_GetError() << "\n";
+  	}
+	else
+	{
+		// Create renderer
+  		sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
+  		if (nullptr == sdl_renderer) {
+    		std::cerr << "Renderer could not be created.\n";
+    		std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
+		}
+		else
+		{
+
+			/*
+			// Event loop exit flag
+            bool quit = false;
+
+            // Event loop
+            while(!quit)
+            {
+                SDL_Event e;
+
+                // Wait indefinitely for the next available event
+                SDL_WaitEvent(&e);
+
+                // User requests quit
+                if(e.type == SDL_QUIT)
+                {
+                    quit = true;
+                }
+
+                // Initialize renderer color white for the background
                 SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
                 // Clear screen
@@ -142,6 +175,8 @@ Renderer::Renderer(
 
                 // Update screen
                 SDL_RenderPresent(sdl_renderer);
+            }
+			*/
 
             // Destroy renderer
            // SDL_DestroyRenderer(sdl_renderer); TODO Destroy Renderer
@@ -186,16 +221,16 @@ void Renderer::RenderCity (
   	Coordinate placement
 )
 {
-	(void) coordinatesPerColor;
-	(void) placement;
-    /*std::map<Color, ColorInfo> colorMap = getColorInfo();
+	renderText(sdl_renderer);
+
+    std::map<Color, ColorInfo> colorMap = getColorInfo();
     int grid_width = 20;
     int grid_height = 20;
     SDL_Rect block;
     block.w = 12;
     block.h = 12;
     SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 255, 255);
-    SDL_RenderClear(sdl_renderer);
+    //SDL_RenderClear(sdl_renderer);
 
     for (auto const& x : coordinatesPerColor)
     {
@@ -214,7 +249,7 @@ void Renderer::RenderCity (
         }
     }
 
-    SDL_RenderPresent(sdl_renderer);*/
+    SDL_RenderPresent(sdl_renderer);
 }
 
 void Renderer::Render()
@@ -236,3 +271,5 @@ void Renderer::UpdateWindowTitle(int score, int fps) {
   	std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
   	SDL_SetWindowTitle(sdl_window, title.c_str());
 }
+
+

@@ -255,7 +255,7 @@ int main(int argc, char* argv[])
     }
 
     Printer_Graphic printer{640, 960, 20, 20};
-    printer.printScreen();
+    //printer.printScreen();
 
     printer.print(residentPerAddress, housePerCoordinate, 1, 1, "Title");
     printer.keepScreen();
