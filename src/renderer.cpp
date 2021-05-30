@@ -45,20 +45,20 @@ Renderer::Renderer(
     	    return 0;
    	 	}
   	#endif
-
+/*
 	SDL_Window *sdl_window = SDL_CreateWindow("SDL2_ttf sample",
                                           SDL_WINDOWPOS_UNDEFINED,
                                           SDL_WINDOWPOS_UNDEFINED,
                                           SCREEN_WIDTH, SCREEN_HEIGHT,
-                                          SDL_WINDOW_SHOWN);
+                                          SDL_WINDOW_SHOWN);*/
   	// Create Window
-  	/*sdl_window = SDL_CreateWindow(
+  	sdl_window = SDL_CreateWindow(
         "Snake Game", SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED, 
 		screen_width,
         screen_height, 
 		SDL_WINDOW_SHOWN
-	);*/
+	);
 
   	if (nullptr == sdl_window) {
     	std::cerr << "Window could not be created.\n";
