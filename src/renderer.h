@@ -34,6 +34,10 @@ class Renderer {
   		const std::size_t grid_width;
   		const std::size_t grid_height;
 		void renderText(SDL_Renderer *sdl_renderer);
+		bool initVideo();
+		bool linuxSettings();
+		bool initWindow();
+		bool initRenderer();
 };
 
 #endif
