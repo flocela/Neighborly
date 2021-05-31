@@ -20,7 +20,8 @@ class Renderer {
 		// Uses rgba values from _the_colors global variable
   		void RenderCity (
 			std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
-			Coordinate placement
+			Coordinate placement,
+			int gridSize
 		);
   		void Render();
   		void UpdateWindowTitle(int score, int fps);
@@ -33,11 +34,17 @@ class Renderer {
   		const std::size_t screen_height;
   		const std::size_t grid_width;
   		const std::size_t grid_height;
-		void renderText(SDL_Renderer *sdl_renderer);
-		bool initVideo();
-		bool linuxSettings();
-		bool initWindow();
-		bool initRenderer();
+
+		
+		void renderText (int x, int y, int fontSize);
+		bool initVideo ();
+		bool linuxSettings ();
+		bool initWindow ();
+		bool initRenderer ();
+		void setMinMaxCityCoordinates (std::vector<Coordinate> coordinates);
+		std::vector<Coordinate> extractCoordinates (
+			std::map<Color, std::vector<Coordinate>> coordinatesPerColor
+		);
 };
 
 #endif

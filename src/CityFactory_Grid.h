@@ -14,23 +14,31 @@ class CityFactory_Grid: public CityFactory
         CityFactory_Grid& operator=(CityFactory_Grid&& obj) noexcept = default;
         ~CityFactory_Grid() = default;
 
-        std::unique_ptr<City> createCity (UI& ui) override;
-        std::unique_ptr<City> createBaseCity (UI& ui) override;
+        std::unique_ptr<City> createCity (
+            UI& ui, 
+            int deltaX, 
+            int deltaY
+        ) override;
+        std::unique_ptr<City> createBaseCity (
+            UI& ui, 
+            int deltaX, 
+            int deltaY
+        ) override;
         std::string toString () override;
     private:
-        int askForGridWidth(UI& ui);
-        Question_Int createQuestionGridWidth ();
+        int askForGridWidth(UI& ui, int maxWidth);
+        Question_Int createQuestionGridWidth (int maxWidth);
 
         // Width of grid prompts for question
         std::string _width_of_grid_orig_prompt =
             "Enter the width of the grid, as in how many houses wide each side"
-            " will be. The minimum width is 1 house. The maximum width is 100 houses.  ";
+            " will be. The minimum width is 1 house. The maximum width is  houses.  ";
         std::string _width_of_grid_type_prompt = 
             "Nope, that's not a whole number. Should be a number without any"
             " decimals.  ";
         std::string _width_of_grid_range_prompt = 
             "That number is either too small or too large. Minimum allowed width"
-            " is 1, maximum allowed width is 100.  ";
+            " is 1, maximum allowed width is .  ";
         std::string _width_of_grid_failure = 
             "Can not get information needed to make a city from the user.";
 };

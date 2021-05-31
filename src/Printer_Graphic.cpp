@@ -7,27 +7,16 @@
 #include <chrono>
 #include <iostream>
 
-/*
-template< typename T, typename V >
-bool mapContains2 (std::map<T, V> aMap, T aKey)
-{
-    return aMap.count(aKey);
-}*/
-
-bool mapContains (std::map<Color, std::vector<Coordinate>> aMap, Color aKey)
-{
-    return aMap.count(aKey);
-}
-
-bool mapContains (std::map<int, Resident*> aMap, int aKey);
 
 Printer_Graphic::Printer_Graphic (
     const std::size_t screen_width,
     const std::size_t screen_height,
     const std::size_t grid_width, 
     const std::size_t grid_height
-): _renderer{screen_width, screen_height, grid_width, grid_height},
-   _keep_polling{true}
+):  _screen_width{screen_width},
+    _screen_height{screen_height}, 
+    _renderer{screen_width, screen_height, grid_width, grid_height},
+    _keep_polling{true}
 {
     for (ColorInfo colorInfo : _the_colors)
     {
@@ -60,6 +49,15 @@ void Printer_Graphic::print (
     for (auto const& x : addressPerCoordinate)
     {
         Coordinate coord = x.first;
+        if (coord.getX() > _max_x_coord)
+            _max_x_coord = coord.getX();
+        if (coord.getX() < _min_x_coord)
+            _min_x_coord = coord.getX();
+        if (coord.getY() > _max_y_coord)
+            _max_y_coord = coord.getY();
+        if (coord.getY() < _min_y_coord)
+            _min_y_coord = coord.getY();
+
         int address = x.second;
         Color colorKey;
         //if (!mapContains(residentsPerAddress, address))
@@ -81,8 +79,17 @@ void Printer_Graphic::print (
         coordinatesPerColor[colorKey].push_back(coord);
         count ++;
     }
+
+    int deltaX = _max_x_coord - _min_x_coord;
+    int deltaY = _max_y_coord - _min_y_coord;
+    int tempGridWidth = _screen_width/2/deltaX;
+    int tempGridHeight = _screen_width/2/deltaY;
+
+    // if gridSize is less than 4, probably is going to look too small.
+    int gridSize = std::min(tempGridHeight, tempGridWidth);
+
     
-    _renderer.RenderCity(coordinatesPerColor, Coordinate{50, 50});
+    _renderer.RenderCity(coordinatesPerColor, Coordinate{0, 0}, gridSize);
 } 
 
 void Printer_Graphic::keepScreen()
@@ -113,7 +120,3 @@ void Printer_Graphic::printResidents(std::map<int, Resident*> addressPerResident
     std::string x = title + "x";
 }
 
-bool mapContains (std::map<int, Resident*> aMap, int aKey)
-{
-    return aMap.count(aKey);
-}

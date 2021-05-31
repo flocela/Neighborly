@@ -41,11 +41,18 @@ class Printer_Graphic : public Printer
         void keepScreen();
     
     private:
+        std::size_t _screen_width;
+        std::size_t _screen_height;
+        int _min_x_coord = INT32_MAX;
+		int _min_y_coord = INT32_MAX;
+		int _max_x_coord = INT32_MIN;
+		int _max_y_coord = INT32_MIN;
         Renderer _renderer;
         std::thread poll_thread;
         void pollEvent();
         bool _keep_polling;
         std::map<Color, std::vector<int>> _rgba_per_color;
+        //void prinDownwardAxes(int )
 };
 
 #endif

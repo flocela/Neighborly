@@ -17,8 +17,11 @@
 #define SCREEN_HEIGHT   600
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
-void Renderer::renderText (SDL_Renderer *sdl_renderer)
+void Renderer::renderText (int x, int y, int fontSize)
 {
+    (void) x;
+    (void) y;
+    (void) fontSize;
 	// Declare rect of square
     SDL_Rect squareRect;
 
@@ -30,7 +33,7 @@ void Renderer::renderText (SDL_Renderer *sdl_renderer)
     squareRect.x = SCREEN_WIDTH / 2 - squareRect.w / 2;
     squareRect.y = SCREEN_HEIGHT / 2 - squareRect.h / 2;
 
-    TTF_Font *font = TTF_OpenFont(FONT_PATH, 40);
+    TTF_Font *font = TTF_OpenFont(FONT_PATH, 8);
     if(!font) {
         printf(
 			"Unable to load font: '%s'!\n"
@@ -135,17 +138,25 @@ std::map<Color, ColorInfo> getColorInfo ()
 
 void Renderer::RenderCity (
   	std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
-  	Coordinate placement
+  	Coordinate placement,
+    int gridSize
+    
 )
 {
-	renderText(sdl_renderer);
+	renderText(0, 0, 14);
 
     std::map<Color, ColorInfo> colorMap = getColorInfo();
-    int grid_width = 4;
-    int grid_height = 4;
     SDL_Rect block;
-    block.w = 2;
-    block.h = 2;
+    int blockWidth = gridSize/2;
+    if ((gridSize - blockWidth) % 2 != 0)
+        blockWidth++;
+    block.w = blockWidth;
+    block.h = blockWidth;
+    int borderWidth = (gridSize - blockWidth) / 2;
+    
+    std::cout << "renderer: gridSize: " << gridSize << std::endl;
+    std::cout << "renderer: blockWidth: " << blockWidth << std::endl;
+    std::cout << "renderer: borderWidth: " << borderWidth << std::endl;
     SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 255, 255);
 
     for (auto const& x : coordinatesPerColor)
@@ -159,8 +170,8 @@ void Renderer::RenderCity (
         SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
         for (Coordinate c : coordinates)
         {
-            block.x = placement.getX() + c.getX() * grid_width + 1;
-            block.y = placement.getY() + c.getY() * grid_height + 1;
+            block.x = placement.getX() + c.getX() * gridSize + borderWidth;
+            block.y = placement.getY() + c.getY() * gridSize + borderWidth;
             SDL_RenderFillRect(sdl_renderer, &block);
         }
     }
@@ -240,5 +251,10 @@ bool Renderer::initRenderer()
         return false;
 	}
     return true;
+}
+
+void Renderer::setMinMaxCityCoordinates(std::vector<Coordinate> coordinates)
+{
+    (void) coordinates;
 }
 

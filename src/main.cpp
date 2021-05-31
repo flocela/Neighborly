@@ -39,7 +39,6 @@
 #include "CityFactory.h"
 #include "CityFactory_Grid.h"
 #include "CityMaker_CMDLine.h"
-#include "CityFactory_Grid.h"
 #include "ResidentsFactory_Flat.h"
 #include "ResidentsFactory.h"
 #include "ResidentsMaker_CMDLine.h"
@@ -50,12 +49,10 @@
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
-// Define screen dimensions
-#define SCREEN_WIDTH    800
-#define SCREEN_HEIGHT   600
 
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
+/*
 int oldCodeFromAminoshbh(int argc, char* argv[])
 {
 // Unused argc, argv
@@ -205,7 +202,7 @@ int oldCodeFromAminoshbh(int argc, char* argv[])
     SDL_Quit();
 
     return 0;
-}
+}*/
 
 std::vector<std::unique_ptr<CityFactory>> initCityFactories ();
 
@@ -218,6 +215,11 @@ std::vector<ResidentsFactory*> fromResidentFactoriesGetPointers (
     std::vector<std::unique_ptr<ResidentsFactory>>& residentFactories);
 
 std::map<Coordinate, int> getHousePerCoordinate(const City& city);
+
+const int MAX_DELTA_X   = 150;
+const int MAX_DELTA_Y   = 150;
+const int SCREEN_WIDTH  = 1200;
+const int SCREEN_HEIGHT = 1200;
 
 int main(int argc, char* argv[])
 {
@@ -235,8 +237,15 @@ int main(int argc, char* argv[])
         fromResidentFactoriesGetPointers(residentFactories);; 
 
     CityMaker_CMDLine cityMaker{};
-    //std::unique_ptr<City> city = cityMaker.makeCity(cityFactoryPointers);
-    std::unique_ptr<City> city = cityMaker.makeBaseCity(cityFactoryPointers);
+    /*std::unique_ptr<City> city = cityMaker.makeCity(
+        cityFactoryPointers,
+        MAX_DELTA_X,
+        MAX_DELTA_Y);*/
+    std::unique_ptr<City> city = cityMaker.makeBaseCity(
+        cityFactoryPointers, 
+        MAX_DELTA_X, 
+        MAX_DELTA_Y
+    );
     std::map<Coordinate, int> housePerCoordinate = getHousePerCoordinate(*(city.get()));
 
     ResidentsMaker_CMDLine residentsMaker{};
