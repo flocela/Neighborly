@@ -26,13 +26,6 @@ Printer_Graphic::Printer_Graphic (
 
 }
 
-void Printer_Graphic::printScreen ()
-{
-    _renderer.Render();
-    //std::thread t1(&Renderer::poll, _renderer);
-    _keep_polling = true;
-}
-
 void Printer_Graphic::print (
     std::map<int, Resident*> residentsPerAddress, 
     std::map<Coordinate, int> addressPerCoordinate,
@@ -87,9 +80,25 @@ void Printer_Graphic::print (
 
     // if gridSize is less than 4, probably is going to look too small.
     int gridSize = std::min(tempGridHeight, tempGridWidth);
+    Coordinate cityOrigin = Coordinate{
+        static_cast<int>(_screen_width)/2 - 6*gridSize,
+        16 * gridSize};
+    int blockSize = gridSize/2;
+    if ( (gridSize - blockSize) % 2 != 0)
+        blockSize++;
 
+    _renderer.startFrame();
     
-    _renderer.RenderCity(coordinatesPerColor, Coordinate{0, 0}, gridSize);
+    _renderer.AddCity(
+        coordinatesPerColor, 
+        cityOrigin, 
+        gridSize, 
+        blockSize,
+        _min_x_coord,
+        _max_x_coord,
+        _min_y_coord,
+        _max_y_coord);
+    _renderer.endFrame();
 } 
 
 void Printer_Graphic::keepScreen()

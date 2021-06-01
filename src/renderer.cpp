@@ -136,27 +136,24 @@ std::map<Color, ColorInfo> getColorInfo ()
     return colorMap;
 }
 
-void Renderer::RenderCity (
+void Renderer::AddCity (
   	std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
   	Coordinate placement,
-    int gridSize
-    
+    int gridSize,
+    int blockSize,
+    int minX,
+	int maxX,
+	int minY,
+	int maxY 
 )
 {
 	renderText(0, 0, 14);
-
     std::map<Color, ColorInfo> colorMap = getColorInfo();
     SDL_Rect block;
-    int blockWidth = gridSize/2;
-    if ((gridSize - blockWidth) % 2 != 0)
-        blockWidth++;
-    block.w = blockWidth;
-    block.h = blockWidth;
-    int borderWidth = (gridSize - blockWidth) / 2;
+    block.w = blockSize;
+    block.h = blockSize;
+    int borderWidth = (gridSize - blockSize) / 2;
     
-    std::cout << "renderer: gridSize: " << gridSize << std::endl;
-    std::cout << "renderer: blockWidth: " << blockWidth << std::endl;
-    std::cout << "renderer: borderWidth: " << borderWidth << std::endl;
     SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 255, 255);
 
     for (auto const& x : coordinatesPerColor)
@@ -176,19 +173,30 @@ void Renderer::RenderCity (
         }
     }
 
-    SDL_RenderPresent(sdl_renderer);
+    SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 128, 128);
+    block.w = (maxX - minX) * gridSize + 2 * gridSize;
+    block.h = 1;
+    block.x = placement.getX();
+    block.y = placement.getY();
+    SDL_RenderFillRect(sdl_renderer, &block);
+
+    SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 128, 128);
+    block.w = 1;
+    block.h = (maxY - minY) * gridSize + 2 * gridSize;
+    block.x = placement.getX();
+    block.y = placement.getY();
+    SDL_RenderFillRect(sdl_renderer, &block);
+
 }
 
-void Renderer::Render()
+void Renderer::startFrame()
 {
-  	// TODO is this function ever called?
-    //SDL_Rect block;
-    //block.w = 50;
-    //block.h = 50;
-
     SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 255, 255);
     SDL_RenderClear(sdl_renderer);
+}
 
+void Renderer::endFrame()
+{
     SDL_RenderPresent(sdl_renderer);
 }
 

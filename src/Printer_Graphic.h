@@ -21,8 +21,6 @@ class Printer_Graphic : public Printer
         Printer_Graphic& operator= (Printer_Graphic&& obj) noexcept = default;
         ~Printer_Graphic () = default;
 
-        void printScreen ();
-
         void print(
             std::map<int, Resident*> residentPerHouse, 
             std::map<Coordinate, int> addressPerCoordinate,

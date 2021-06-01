@@ -18,12 +18,18 @@ class Renderer {
   		~Renderer();
 
 		// Uses rgba values from _the_colors global variable
-  		void RenderCity (
+  		void AddCity (
 			std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
 			Coordinate placement,
-			int gridSize
+			int gridSize,
+			int blockSize,
+			int minX,
+			int maxX,
+			int minY,
+			int maxY
 		);
-  		void Render();
+  		void startFrame();
+		void endFrame();
   		void UpdateWindowTitle(int score, int fps);
 
  	private:
