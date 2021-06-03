@@ -42,7 +42,13 @@ class Renderer {
   		const std::size_t grid_height;
 
 		
-		void renderText (int x, int y, int fontSize);
+		void renderText (
+			int x, 
+			int y, 
+			int fontSize,
+			char* text,
+			SDL_Color textColor,
+			SDL_Color backgroundColor);
 		bool initVideo ();
 		bool linuxSettings ();
 		bool initWindow ();
@@ -50,6 +56,20 @@ class Renderer {
 		void setMinMaxCityCoordinates (std::vector<Coordinate> coordinates);
 		std::vector<Coordinate> extractCoordinates (
 			std::map<Color, std::vector<Coordinate>> coordinatesPerColor
+		);
+		void addCityXAxes(
+			Coordinate placement,
+			int gridSize, 
+			int blockSize,
+			int minX, 
+			int maxX
+		);
+		void addCityYAxes(
+			Coordinate placement,
+			int gridSize, 
+			int blockSize, 
+			int minY, 
+			int maxY
 		);
 };
 

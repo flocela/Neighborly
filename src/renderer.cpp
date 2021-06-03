@@ -3,6 +3,7 @@
 
 
 #include <stdio.h>
+#include <string.h>
 #include <stdbool.h>
 
 #include <SDL.h>
@@ -17,23 +18,16 @@
 #define SCREEN_HEIGHT   600
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
-void Renderer::renderText (int x, int y, int fontSize)
+void Renderer::renderText (
+    int x, 
+    int y, 
+    int fontSize,
+	char* textString,
+	SDL_Color textColor,
+	SDL_Color backgroundColor
+)
 {
-    (void) x;
-    (void) y;
-    (void) fontSize;
-	// Declare rect of square
-    SDL_Rect squareRect;
-
-    // Square dimensions: Half of the min(SCREEN_WIDTH, SCREEN_HEIGHT)
-    squareRect.w = MIN(SCREEN_WIDTH, SCREEN_HEIGHT) / 2;
-    squareRect.h = MIN(SCREEN_WIDTH, SCREEN_HEIGHT) / 2;
-
-    // Square position: In the middle of the screen
-    squareRect.x = SCREEN_WIDTH / 2 - squareRect.w / 2;
-    squareRect.y = SCREEN_HEIGHT / 2 - squareRect.h / 2;
-
-    TTF_Font *font = TTF_OpenFont(FONT_PATH, 8);
+    TTF_Font *font = TTF_OpenFont(FONT_PATH, fontSize);
     if(!font) {
         printf(
 			"Unable to load font: '%s'!\n"
@@ -42,12 +36,15 @@ void Renderer::renderText (int x, int y, int fontSize)
         return;
     }
 
-    SDL_Color textColor           = { 0x00, 0x00, 0x00, 0xFF };
-    SDL_Color textBackgroundColor = { 0xFF, 0xFF, 0xFF, 0xFF };
     SDL_Texture *text = NULL;
     SDL_Rect textRect;
 
-    SDL_Surface *textSurface = TTF_RenderText_Shaded(font, "Red square", textColor, textBackgroundColor);
+    SDL_Surface *textSurface = TTF_RenderText_Shaded(
+        font, 
+        textString,
+        textColor,
+        backgroundColor
+    );
     if(!textSurface) {
         printf(
 			"Unable to render text surface!\n"
@@ -67,28 +64,22 @@ void Renderer::renderText (int x, int y, int fontSize)
         }
 
         // Get text dimensions
-        textRect.w = textSurface->w;
-        textRect.h = textSurface->h;
+        textRect.w = strlen(textString) * 6;
+        textRect.h = 20;
 
         SDL_FreeSurface(textSurface);
     }
-
-    textRect.x = (SCREEN_WIDTH - textRect.w) / 2;
-    textRect.y = squareRect.y - textRect.h - 10;
-    textRect.x = 500;
-    textRect.y = 500;
+    textRect.x = x;
+    textRect.y = y;
 			
 	// Initialize renderer color white for the background
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
     // Clear screen
-    SDL_RenderClear(sdl_renderer);
+    //SDL_RenderClear(sdl_renderer);
 
     // Set renderer color red to draw the square
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
-
-    // Draw filled square
-    SDL_RenderFillRect(sdl_renderer, &squareRect);
 
     // Draw text
     SDL_RenderCopy(sdl_renderer, text, NULL, &textRect);
@@ -147,13 +138,14 @@ void Renderer::AddCity (
 	int maxY 
 )
 {
-	renderText(0, 0, 14);
     std::map<Color, ColorInfo> colorMap = getColorInfo();
+
+    addCityXAxes(placement, gridSize, blockSize, minX, maxX);
+    addCityYAxes(placement, gridSize, blockSize, minY, maxY);
+
     SDL_Rect block;
     block.w = blockSize;
     block.h = blockSize;
-    int borderWidth = (gridSize - blockSize) / 2;
-    
     SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 255, 255);
 
     for (auto const& x : coordinatesPerColor)
@@ -167,26 +159,103 @@ void Renderer::AddCity (
         SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
         for (Coordinate c : coordinates)
         {
-            block.x = placement.getX() + c.getX() * gridSize + borderWidth;
-            block.y = placement.getY() + c.getY() * gridSize + borderWidth;
+            block.x = placement.getX() - block.w/2 + c.getX() * gridSize;
+            block.y = placement.getY() - block.w/2 + c.getY() * gridSize;
             SDL_RenderFillRect(sdl_renderer, &block);
         }
     }
 
-    SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 128, 128);
-    block.w = (maxX - minX) * gridSize + 2 * gridSize;
+    
+
+}
+
+void Renderer::addCityXAxes(
+    Coordinate placement,
+    int gridSize, 
+    int blockSize,
+    int minX,
+	int maxX
+)
+{
+    SDL_SetRenderDrawColor(sdl_renderer, 200, 200, 200, 200);
+    SDL_Rect block;
+
+    // axis line
+    block.w = (maxX - minX) * gridSize + 4 * gridSize;
     block.h = 1;
-    block.x = placement.getX();
-    block.y = placement.getY();
+    block.x = placement.getX() - 2 * gridSize;
+    block.y = placement.getY() - 2 * gridSize;
     SDL_RenderFillRect(sdl_renderer, &block);
 
-    SDL_SetRenderDrawColor(sdl_renderer, 128, 128, 128, 128);
+    // axis ticks
+    int flooredTen = minX - ( minX % 10 );
+    int nextTen    = flooredTen + 10;
+    int nextTenMinusMinX = nextTen - minX;
+    int numOfDashes = (maxX - minX)/10 + 2;
+
+    block.w = blockSize;
+    block.h = gridSize;
+    block.x = placement.getX() - block.w/2;
+    block.y = placement.getY() - 2 * gridSize;
+    SDL_RenderFillRect(sdl_renderer, &block);
+
+    for (int ii=0; ii<numOfDashes; ii++)
+    {
+        block.x = placement.getX() - block.w/2 + (nextTenMinusMinX * gridSize) + (ii * 10 * gridSize);
+        block.y = placement.getY() - 2 * gridSize;
+        SDL_RenderFillRect(sdl_renderer, &block);
+    }
+
+    std::cout <<"renderer placement: " << placement.getY() << std::endl;
+    // axis title
+    char q[] = "X Axis";
+
+    renderText(
+        placement.getX() + ( (maxX - minX) * gridSize + 4 * gridSize ) /2,
+        placement.getY() - 2 * gridSize,
+        14, 
+        q, 
+        {0x00, 0x00, 0x00, 0x00}, 
+        {0xFF, 0xFF, 0xFF, 0xFF}
+    );
+}
+
+void Renderer::addCityYAxes(
+    Coordinate placement,
+    int gridSize, 
+    int blockSize,
+	int minY,
+	int maxY
+)
+{
+    SDL_SetRenderDrawColor(sdl_renderer, 200, 200, 200, 200);
+    SDL_Rect block;
+
+    // axis line
     block.w = 1;
-    block.h = (maxY - minY) * gridSize + 2 * gridSize;
-    block.x = placement.getX();
-    block.y = placement.getY();
+    block.h = (maxY - minY) * gridSize + 4 * gridSize;
+    block.x = placement.getX() - 2 * gridSize;
+    block.y = placement.getY() - 2 * gridSize;
     SDL_RenderFillRect(sdl_renderer, &block);
 
+    // axis ticks
+    int flooredTen = minY - ( minY % 10 );
+    int nextTen    = flooredTen + 10;
+    int nextTenMinusMinY = nextTen - minY;
+    int numOfDashes = (maxY - minY)/10 + 1;
+
+    block.w = gridSize;
+    block.h = blockSize;
+    block.x = placement.getX() - 2 * gridSize;
+    block.y = placement.getY() - block.h/2;
+    SDL_RenderFillRect(sdl_renderer, &block);
+
+    for (int ii=0; ii<numOfDashes; ii++)
+    {
+        block.x = placement.getX() - 2 * gridSize;
+        block.y = placement.getY() - block.h/2 + (nextTenMinusMinY * gridSize) + (ii * 10 * gridSize);
+        SDL_RenderFillRect(sdl_renderer, &block);
+    }
 }
 
 void Renderer::startFrame()
@@ -265,4 +334,3 @@ void Renderer::setMinMaxCityCoordinates(std::vector<Coordinate> coordinates)
 {
     (void) coordinates;
 }
-

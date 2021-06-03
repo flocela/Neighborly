@@ -216,10 +216,16 @@ std::vector<ResidentsFactory*> fromResidentFactoriesGetPointers (
 
 std::map<Coordinate, int> getHousePerCoordinate(const City& city);
 
-const int MAX_DELTA_X   = 150;
-const int MAX_DELTA_Y   = 150;
+// I've set the SCREEN_WIDTH and SCREEN_HEIGHT. The city graph will take 
+// up 1/2 the screen. I want each house to take up no less than 4 pixels.
+// Otherwise, the house will be difficult to see.  So the largest number 
+// of houses I can have in the x and y directions are MAX_DELTA_X and MAX_DELTA_Y,
+// calculated as 1200/2/4 = 150. Each house takes up at least 4 pixels, there
+// are 150 houses, that makes 600 pixels or half the screen width.
 const int SCREEN_WIDTH  = 1200;
 const int SCREEN_HEIGHT = 1200;
+const int MAX_DELTA_X   = 150;
+const int MAX_DELTA_Y   = 150;
 
 int main(int argc, char* argv[])
 {

@@ -37,52 +37,27 @@ void Printer_Graphic::print (
     run++;
     totalRuns++;
     std::string x = title + "x"; // TODO used unused parameters.
-    std::map<Color, std::vector<Coordinate>> coordinatesPerColor = {};
-    int count = 0;
-    for (auto const& x : addressPerCoordinate)
-    {
-        Coordinate coord = x.first;
-        if (coord.getX() > _max_x_coord)
-            _max_x_coord = coord.getX();
-        if (coord.getX() < _min_x_coord)
-            _min_x_coord = coord.getX();
-        if (coord.getY() > _max_y_coord)
-            _max_y_coord = coord.getY();
-        if (coord.getY() < _min_y_coord)
-            _min_y_coord = coord.getY();
+    printSetUp(residentsPerAddress, addressPerCoordinate);
 
-        int address = x.second;
-        Color colorKey;
-        //if (!mapContains(residentsPerAddress, address))
-        if (residentsPerAddress.count(address) == 0)
-        {   
-            // No resident has this address. So this house is empty.
-            colorKey = Color::absent;
-        }
-        else
-        {   
-            Resident* res = residentsPerAddress[address];
-            colorKey = res->getColor();
-        }
-        if (coordinatesPerColor.count(colorKey) == 0)
-        {
-            std::vector<Coordinate> newCoordinateVector = {};
-            coordinatesPerColor[colorKey] = newCoordinateVector;
-        }
-        coordinatesPerColor[colorKey].push_back(coord);
-        count ++;
-    }
-
+    // lengths of city are deltaX and deltaY
     int deltaX = _max_x_coord - _min_x_coord;
     int deltaY = _max_y_coord - _min_y_coord;
-    int tempGridWidth = _screen_width/2/deltaX;
-    int tempGridHeight = _screen_width/2/deltaY;
 
-    // if gridSize is less than 4, probably is going to look too small.
-    int gridSize = std::min(tempGridHeight, tempGridWidth);
-    Coordinate cityOrigin = Coordinate{
-        static_cast<int>(_screen_width)/2 - 6*gridSize,
-        16 * gridSize};
+    // city graph will take up half the screen width, divide space
+    // among houses. Each house will be in one grid.
+    int gridSize = _screen_width/2/(std::max(deltaX, deltaY));
+
+    if (gridSize % 2 != 0)
+        gridSize++;
+    if (gridSize > 12)
+        gridSize = 12;
+    if (gridSize <= 3)
+        throw (
+            "Can not print a city graph with so many houses. Maximum number of houses"
+             " per side is 150."
+        );
+
+    Coordinate cityOrigin = Coordinate{static_cast<int>(_screen_width)/2, 0};
     int blockSize = gridSize/2;
     if ( (gridSize - blockSize) % 2 != 0)
         blockSize++;
@@ -90,7 +65,7 @@ void Printer_Graphic::print (
     _renderer.startFrame();
     
     _renderer.AddCity(
-        coordinatesPerColor, 
+        _coordinatesPerColor, 
         cityOrigin, 
         gridSize, 
         blockSize,
@@ -127,5 +102,44 @@ void Printer_Graphic::printResidents(std::map<int, Resident*> addressPerResident
     run++;
     totRuns++;
     std::string x = title + "x";
+}
+
+void Printer_Graphic::cityCoordinateSetup (
+    std::map<int, Resident*> residentsPerAddress, 
+    std::map<Coordinate, int> addressPerCoordinate
+)
+{
+   for (auto const& x : addressPerCoordinate)
+    {
+        Coordinate coord = x.first;
+        if (coord.getX() > _max_x_coord)
+            _max_x_coord = coord.getX();
+        if (coord.getX() < _min_x_coord)
+            _min_x_coord = coord.getX();
+        if (coord.getY() > _max_y_coord)
+            _max_y_coord = coord.getY();
+        if (coord.getY() < _min_y_coord)
+            _min_y_coord = coord.getY();
+
+        int address = x.second;
+        Color colorKey;
+        //if (!mapContains(residentsPerAddress, address))
+        if (residentsPerAddress.count(address) == 0)
+        {   
+            // No resident has this address. So this house is empty.
+            colorKey = Color::absent;
+        }
+        else
+        {   
+            Resident* res = residentsPerAddress[address];
+            colorKey = res->getColor();
+        }
+        if (_coordinatesPerColor.count(colorKey) == 0)
+        {
+            std::vector<Coordinate> newCoordinateVector = {};
+            _coordinatesPerColor[colorKey] = newCoordinateVector;
+        }
+        _coordinatesPerColor[colorKey].push_back(coord);
+    } 
 }
 

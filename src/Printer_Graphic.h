@@ -41,16 +41,21 @@ class Printer_Graphic : public Printer
     private:
         std::size_t _screen_width;
         std::size_t _screen_height;
+        std::map<Color, std::vector<Coordinate>> _coordinatesPerColor ={};
         int _min_x_coord = INT32_MAX;
 		int _min_y_coord = INT32_MAX;
 		int _max_x_coord = INT32_MIN;
 		int _max_y_coord = INT32_MIN;
+        int _gridSize;
         Renderer _renderer;
         std::thread poll_thread;
         void pollEvent();
         bool _keep_polling;
         std::map<Color, std::vector<int>> _rgba_per_color;
-        //void prinDownwardAxes(int )
+        void cityCoordinateSetup (
+            std::map<int, Resident*> residentsPerAddress, 
+            std::map<Coordinate, int> addressPerCoordinate
+        );
 };
 
 #endif
