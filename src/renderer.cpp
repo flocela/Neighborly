@@ -1,7 +1,5 @@
 #include "renderer.h"
 #include <string>
-
-
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -9,20 +7,10 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-// Define MAX and MIN macros
-#define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
-#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
 // Define screen dimensions
-#define SCREEN_WIDTH    800
-#define SCREEN_HEIGHT   600
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
-void Renderer::setGridWidthAndHeight (int width, int height)
-{
-    grid_width = width;
-    grid_height = height;
-}
 
 void Renderer::renderText (
     int x, 
@@ -207,7 +195,6 @@ void Renderer::addCityXAxes(
         SDL_RenderFillRect(sdl_renderer, &block);
     }
 
-    std::cout <<"renderer placement: " << placement.getY() << std::endl;
     // axis title
     char q[] = "X Axis";
 

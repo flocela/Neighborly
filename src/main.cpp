@@ -214,10 +214,8 @@ std::vector<CityFactory*> fromCityFactoriesGetPointers (
 std::vector<ResidentsFactory*> fromResidentFactoriesGetPointers (
     std::vector<std::unique_ptr<ResidentsFactory>>& residentFactories);
 
-std::map<Coordinate, int> getHousePerCoordinate(const City& city);
-
-// I've set the SCREEN_WIDTH and SCREEN_HEIGHT. The city graph will take 
-// up 1/2 the screen. I want each house to take up no less than 4 pixels.
+// I've set the SCREEN_WIDTH and SCREEN_HEIGHT to be 1200pixels. The city graph
+// will take up 1/2 the screen. I want each house to take up no less than 4 pixels.
 // Otherwise, the house will be difficult to see.  So the largest number 
 // of houses I can have in the x and y directions are MAX_DELTA_X and MAX_DELTA_Y,
 // calculated as 1200/2/4 = 150. Each house takes up at least 4 pixels, there
@@ -252,7 +250,6 @@ int main(int argc, char* argv[])
         MAX_DELTA_X, 
         MAX_DELTA_Y
     );
-    std::map<Coordinate, int> housePerCoordinate = getHousePerCoordinate(*(city.get()));
 
     ResidentsMaker_CMDLine residentsMaker{};
     //std::vector<std::unique_ptr<Resident>> residents = 
@@ -274,9 +271,6 @@ int main(int argc, char* argv[])
     }
 
     Printer_Graphic printer{1200, 1200, city.get()};
-    //printer.printScreen();
-
-    //printer.print(residentPerAddress, housePerCoordinate, 1, 1, "Title");
     printer.print(residentPerHouse, 1, 1, "Title");
     printer.keepScreen();
     return 0; 
@@ -316,15 +310,4 @@ std::vector<ResidentsFactory*> fromResidentFactoriesGetPointers (
         residentFactoryPointers.push_back(factory.get());
     }
     return residentFactoryPointers;
-}
-
-std::map<Coordinate, int> getHousePerCoordinate(const City& city)
-{
-    std::map<Coordinate, int> housePerCoordinate = {};
-    std::vector<int> addresses = city.getAddresses();
-    for (int address : addresses)
-    {
-        housePerCoordinate[city.getCoordinate(address)] = address;
-    }
-    return housePerCoordinate;
 }

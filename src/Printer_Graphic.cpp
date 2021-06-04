@@ -25,7 +25,6 @@ Printer_Graphic::Printer_Graphic (
 
     initCityCoordinateInfo(cityPtr);
     initGridAndHouseSize ();
-    _renderer.setGridWidthAndHeight(_grid_size, _grid_size);
 }
 
 void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
@@ -53,7 +52,8 @@ void Printer_Graphic::initGridAndHouseSize ()
     int deltaY = _max_y_coord - _min_y_coord;
 
     // city graph will take up half the screen width, divide space
-    // among houses. Each house will be in one grid.
+    // among houses. Each house will be in one grid. _grid_size and _house_size
+    // will be even so that the houses will be centered. // TODO not really necessary
     _grid_size = _screen_width/2/(std::max(deltaX, deltaY));
 
     if (_grid_size % 2 != 0)
@@ -76,17 +76,12 @@ void Printer_Graphic::print (
     int totRuns,
     std::string title
 )
-{  
-    run++;
-    totRuns++;
-    std::string x = title + "x"; // TODO used unused parameters.
+{   (void) run;
+    (void) totRuns;
+    (void) title;
 
+    // print city at top right corner
     Coordinate cityOrigin = Coordinate{static_cast<int>(_screen_width)/2, 0};
-    std::vector<Resident*> residentPtrs;
-    for (auto &s : residentPerHouse)
-    {
-        residentPtrs.push_back(s.second);
-    }
 
     _renderer.startFrame();
     
@@ -137,9 +132,11 @@ std::map<Color, std::vector<Coordinate>> Printer_Graphic::createVectorsForEachCo
     std::map<Color, std::vector<Coordinate>> coordinatePerColor ={};
     for (auto const& x : _housePerCoordinate)
     {
-        int address = x.second;
         Coordinate coord = x.first;
+        int address = x.second;
+
         Color colorKey;
+
         if (residentPerHouse.count(address) == 0)
         {   
             // No resident has this address. So this house is empty.
@@ -150,7 +147,8 @@ std::map<Color, std::vector<Coordinate>> Printer_Graphic::createVectorsForEachCo
             Resident* res = residentPerHouse[address];
             colorKey = res->getColor();
         }
-        if (coordinatePerColor.count(colorKey) == 0)
+
+        if (coordinatePerColor.count(colorKey) == 0) // TODO  c++ knows how to do this in one step
         {
             std::vector<Coordinate> newCoordinateVector = {};
             coordinatePerColor[colorKey] = newCoordinateVector;
