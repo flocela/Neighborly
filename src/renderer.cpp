@@ -102,7 +102,9 @@ Renderer::Renderer(
 
 
 Renderer::~Renderer() {
+    SDL_DestroyRenderer(sdl_renderer);
   	SDL_DestroyWindow(sdl_window);
+    TTF_Quit();
   	SDL_Quit();
 }
 
