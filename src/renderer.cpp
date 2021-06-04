@@ -18,6 +18,12 @@
 #define SCREEN_HEIGHT   600
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
+void Renderer::setGridWidthAndHeight (int width, int height)
+{
+    grid_width = width;
+    grid_height = height;
+}
+
 void Renderer::renderText (
     int x, 
     int y, 
@@ -87,14 +93,9 @@ void Renderer::renderText (
 
 Renderer::Renderer(
 	const std::size_t screen_width,
-    const std::size_t screen_height,
-    const std::size_t grid_width,
-	const std::size_t grid_height
-	):
+    const std::size_t screen_height):
 	screen_width(screen_width),
-    screen_height(screen_height),
-    grid_width(grid_width),
-    grid_height(grid_height) 
+    screen_height(screen_height)
 {
   	if (!initVideo())
       return;

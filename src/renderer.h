@@ -12,9 +12,7 @@ class Renderer {
  	public:
   		Renderer(
 			const std::size_t screen_width, 
-			const std::size_t screen_height,
-           	const std::size_t grid_width, 
-			const std::size_t grid_height);
+			const std::size_t screen_height);
   		~Renderer();
 
 		// Uses rgba values from _the_colors global variable
@@ -31,15 +29,16 @@ class Renderer {
   		void startFrame();
 		void endFrame();
   		void UpdateWindowTitle(int score, int fps);
-
+		void setGridWidthAndHeight (int width, int height);
+		
  	private:
   		SDL_Window *sdl_window;
   		SDL_Renderer *sdl_renderer;
 
   		const std::size_t screen_width;
   		const std::size_t screen_height;
-  		const std::size_t grid_width;
-  		const std::size_t grid_height;
+  		std::size_t grid_width;
+  		std::size_t grid_height;
 
 		
 		void renderText (

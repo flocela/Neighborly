@@ -3,12 +3,18 @@
 #include <vector>
 #include <algorithm>
 
-void Printer_CMDLine::print(std::map<int, Resident*> residentPerHouse, 
-                            std::map<Coordinate, int> housePerCoordinate,
-                            int run,
-                            int totRuns,
-                           	std::string title)
+void Printer_CMDLine::print(
+    std::map<int, Resident*> residentPerHouse,
+    int run,
+    int totRuns,
+    std::string title
+)
 {
+    (void) residentPerHouse;
+    (void) run;
+    (void) totRuns;
+    (void) title;
+    /*
     run++; // TODO run is not used.
     totRuns++; // TODO totRuns not used.
     std::string x = title + "x"; // TODO title not used.
@@ -40,7 +46,7 @@ void Printer_CMDLine::print(std::map<int, Resident*> residentPerHouse,
             }
             std::cout << "o";
         }
-    }
+    }*/
 
 } 
 void Printer_CMDLine::printResidents(std::map<int, Resident*> housePerResident,

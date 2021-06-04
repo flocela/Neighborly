@@ -261,17 +261,23 @@ int main(int argc, char* argv[])
         residentsMaker.makeBaseResidents(residentFactoryPointers, city->getSize());
 
     std::map<Color, int> intPerColor = {};
-    std::map<int, Resident*> residentPerAddress = {};
-
-    for (auto& resident : residents)
+    std::vector<Resident*> residentPtrs = {};
+    for (auto& resident: residents)
     {
-        residentPerAddress[resident->getID()] = resident.get();
+        residentPtrs.push_back(resident.get());
     }
 
-    Printer_Graphic printer{1200, 1200, 20, 20};
+    std::map<int, Resident*> residentPerHouse = {};
+    for (auto& resident : residents)
+    {
+        residentPerHouse[resident->getID()] = resident.get();
+    }
+
+    Printer_Graphic printer{1200, 1200, city.get()};
     //printer.printScreen();
 
-    printer.print(residentPerAddress, housePerCoordinate, 1, 1, "Title");
+    //printer.print(residentPerAddress, housePerCoordinate, 1, 1, "Title");
+    printer.print(residentPerHouse, 1, 1, "Title");
     printer.keepScreen();
     return 0; 
 }
