@@ -79,6 +79,7 @@ void Printer_Graphic::print (
 {   (void) run;
     (void) totRuns;
     (void) title;
+    (void) residentPerHouse;
 
     // print city at top right corner of screen.
     // allow 50 pixels for border
@@ -88,7 +89,10 @@ void Printer_Graphic::print (
     };
 
     _renderer.startFrame();
+
+    addCityGridLines(cityOrigin);
     
+    /*
     _renderer.AddTopLeftDotGraph(
         createVectorsForEachColor(residentPerHouse), 
         cityOrigin, 
@@ -98,7 +102,7 @@ void Printer_Graphic::print (
         _max_x_coord,
         _min_y_coord,
         _max_y_coord,
-        "City Residents");
+        "City Residents");*/
     _renderer.endFrame();
 } 
 
@@ -162,4 +166,40 @@ std::map<Color, std::vector<Coordinate>> Printer_Graphic::createVectorsForEachCo
     } 
     return coordinatePerColor;
 }
+
+void Printer_Graphic::addCityGridLines (Coordinate orig)
+{
+    
+    //Coordinate xAxesCoord = Coordinate{orig.getX(), orig.getY() + x_axis_offset};
+    //Coordinate yAxes = Coordinate{orig.getX(), orig.getY() + 10 * gridSize};
+    //Coordinate cAxes = Coordinate{orig.getX(), orig.getY() +  9 * gridSize};
+    
+    //Coordinate titleCoord = Coordinate{
+    //    orig.getX() + ((maxX - minX)/2) * gridSize, 
+    //    orig.getY() + _title_offset };
+    //char* title_arr = &title[0];
+    //addTitle (titleCoord, title_arr, 20);
+    addCityXAxis(orig);
+    //addCityYAxes(yAxes, gridSize, blockSize, minY, maxY);
+
+    
+    //addCityHouses(cAxes, gridSize, blockSize, coordinatesPerColor, colorMap);
+    
+}
+
+void Printer_Graphic::addCityXAxis (Coordinate cityOrigin)
+{
+    _renderer.setColorToMedGrey();
+
+    SDL_Rect block;
+
+    // horizontal axis.
+    block.w = (_max_x_coord - _min_x_coord) * _grid_size + x_axis_overrun;
+    block.h = 1;
+    block.x = cityOrigin.getX();
+    block.y = cityOrigin.getY() + x_axis_offset;
+    _renderer.fillBlock(block);
+}
+
+
 

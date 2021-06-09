@@ -30,6 +30,10 @@ class Renderer {
   		void startFrame();
 		void endFrame();
   		void UpdateWindowTitle(int score, int fps);
+
+		void setColorToMedGrey();
+
+		void fillBlock(SDL_Rect block);
 		
  	private:
   		SDL_Window *sdl_window;
@@ -79,8 +83,8 @@ class Renderer {
 			int fontsize,
 			int gridSize, 
 			int blockSize,
-			int minX, 
-			int maxX
+			int minX, // the axis's min value, not the city's minX value
+			int maxX  // the axis's max value, not the city's maxX value
 		);
 		void addCityYAxes(
 			Coordinate placement,

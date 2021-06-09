@@ -126,17 +126,21 @@ void Renderer::AddTopLeftDotGraph (
     (void) coordinatesPerColor;
     std::map<Color, ColorInfo> colorMap = getColorInfo();
 
-    char* title_arr = &title[0];
-    Coordinate titleCoord = Coordinate{
-        orig.getX() + (maxX - minX)/2, 
-        orig.getY() + _title_offset };
+    //int xAxesLength = (maxX - minX) * gridSize + x_axis_overrun;
+    
     Coordinate xAxes = Coordinate{orig.getX(), orig.getY() + x_axis_offset};
     Coordinate yAxes = Coordinate{orig.getX(), orig.getY() + 10 * gridSize};
     //Coordinate cAxes = Coordinate{orig.getX(), orig.getY() +  9 * gridSize};
     
+    Coordinate titleCoord = Coordinate{
+        orig.getX() + ((maxX - minX)/2) * gridSize, 
+        orig.getY() + _title_offset };
+    char* title_arr = &title[0];
     addTitle (titleCoord, title_arr, 20);
     addCityXAxes(xAxes, 14, gridSize, blockSize, minX, maxX);
     addCityYAxes(yAxes, gridSize, blockSize, minY, maxY);
+
+    
     //addCityHouses(cAxes, gridSize, blockSize, coordinatesPerColor, colorMap);
     
 }
@@ -157,6 +161,15 @@ void Renderer::addTitle (
     );
 }
 
+void Renderer::setColorToMedGrey ()
+{
+    SDL_SetRenderDrawColor(sdl_renderer, 200, 200, 200, 200);
+}
+
+void Renderer::fillBlock(SDL_Rect block)
+{
+    SDL_RenderFillRect(sdl_renderer, &block);
+}
 void Renderer::addCityXAxes(
     Coordinate placement,
     int fontsize,

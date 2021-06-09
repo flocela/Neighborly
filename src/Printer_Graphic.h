@@ -48,6 +48,29 @@ class Printer_Graphic : public Printer
 		int _min_y_coord = INT32_MAX;
 		int _max_x_coord = INT32_MIN;
 		int _max_y_coord = INT32_MIN;
+
+        // chart title is vertically offset from the origin by _title_offset
+		// from the x-axis by x-title-offset
+		const int _title_offset = 10;
+		
+		// x-axis numbers are vertically offset from origin by x_num_offset * gridSize
+		const int x_num_offset = 10;
+
+		// x-axis is vertically offset from origin by x-axis-offset
+		const int x_axis_offset = 50;
+
+		// x-tick marks sit above the x axis and are vertically offset
+		// from the x-axis by x-tick-offset
+		const int x_tick_offset = 6;
+
+		// x-axis title sits above the x-axis and are vertically offset
+		// from the x-axis by x-title-offset
+		const int x_title_offset = 30;
+
+		// x-axis overruns its data by x_axis_overrun
+		const int x_axis_overrun = 20;
+
+        
         std::map<Coordinate, int> _housePerCoordinate = {};
 
         Renderer _renderer;
@@ -67,6 +90,10 @@ class Printer_Graphic : public Printer
         // Initializes information about the graph based on the city 
         // and screen sizes.
         void initGridAndHouseSize ();
+
+        void addCityGridLines (Coordinate cityOrigin);
+
+        void addCityXAxis(Coordinate cityOrigin);
 };
 
 #endif
