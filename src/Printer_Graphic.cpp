@@ -80,12 +80,16 @@ void Printer_Graphic::print (
     (void) totRuns;
     (void) title;
 
-    // print city at top right corner
-    Coordinate cityOrigin = Coordinate{static_cast<int>(_screen_width)/2, 0};
+    // print city at top right corner of screen.
+    // allow 50 pixels for border
+    Coordinate cityOrigin = Coordinate{
+        static_cast<int>(_screen_width)/2 - 50
+        , 0
+    };
 
     _renderer.startFrame();
     
-    _renderer.AddCity(
+    _renderer.AddTopLeftDotGraph(
         createVectorsForEachColor(residentPerHouse), 
         cityOrigin, 
         _grid_size, 
@@ -93,7 +97,8 @@ void Printer_Graphic::print (
         _min_x_coord,
         _max_x_coord,
         _min_y_coord,
-        _max_y_coord);
+        _max_y_coord,
+        "City Residents");
     _renderer.endFrame();
 } 
 

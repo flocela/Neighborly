@@ -16,15 +16,16 @@ class Renderer {
   		~Renderer();
 
 		// Uses rgba values from _the_colors global variable
-  		void AddCity (
+  		void AddTopLeftDotGraph (
 			std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
-			Coordinate placement,
+			Coordinate orig, // Top left most point on graph. Allow room for titles.
 			int gridSize,
 			int blockSize,
 			int minX,
 			int maxX,
 			int minY,
-			int maxY
+			int maxY,
+			std::string title
 		);
   		void startFrame();
 		void endFrame();
@@ -37,7 +38,27 @@ class Renderer {
   		const std::size_t screen_width;
   		const std::size_t screen_height;
 
+		// chart title is vertically offset from the origin by _title_offset
+		// from the x-axis by x-title-offset
+		const int _title_offset = 10;
 		
+		// x-axis numbers are vertically offset from origin by x_num_offset * gridSize
+		const int x_num_offset = 10;
+
+		// x-axis is vertically offset from origin by x-axis-offset
+		const int x_axis_offset = 50;
+
+		// x-tick marks sit above the x axis and are vertically offset
+		// from the x-axis by x-tick-offset
+		const int x_tick_offset = 6;
+
+		// x-axis title sits above the x-axis and are vertically offset
+		// from the x-axis by x-title-offset
+		const int x_title_offset = 30;
+
+		// x-axis overruns its data by x_axis_overrun
+		const int x_axis_overrun = 20;
+
 		void renderText (
 			int x, 
 			int y, 
@@ -55,6 +76,7 @@ class Renderer {
 		);
 		void addCityXAxes(
 			Coordinate placement,
+			int fontsize,
 			int gridSize, 
 			int blockSize,
 			int minX, 
@@ -66,6 +88,19 @@ class Renderer {
 			int blockSize, 
 			int minY, 
 			int maxY
+		);
+		void addCityHouses(
+    		Coordinate cityOrigin,
+			int gridSize,
+			int blockSize,
+			std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
+			std::map<Color, ColorInfo> colorMap
+		);
+
+		void addTitle (
+			Coordinate placement,
+			char* title,
+			int fontsize
 		);
 };
 

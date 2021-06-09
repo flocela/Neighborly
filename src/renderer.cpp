@@ -11,7 +11,6 @@
 // Define screen dimensions
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
-
 void Renderer::renderText (
     int x, 
     int y, 
@@ -59,21 +58,15 @@ void Renderer::renderText (
 
         // Get text dimensions
         textRect.w = strlen(textString) * 6;
-        textRect.h = 20;
+        textRect.h = 1.25 * fontSize;
 
         SDL_FreeSurface(textSurface);
     }
     textRect.x = x;
     textRect.y = y;
-			
-	// Initialize renderer color white for the background
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
     // Clear screen
     //SDL_RenderClear(sdl_renderer);
-
-    // Set renderer color red to draw the square
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x00, 0x00, 0xFF);
 
     // Draw text
     SDL_RenderCopy(sdl_renderer, text, NULL, &textRect);
@@ -100,7 +93,6 @@ Renderer::Renderer(
 	
 }
 
-
 Renderer::~Renderer() {
     SDL_DestroyRenderer(sdl_renderer);
   	SDL_DestroyWindow(sdl_window);
@@ -118,50 +110,56 @@ std::map<Color, ColorInfo> getColorInfo ()
     return colorMap;
 }
 
-void Renderer::AddCity (
+void Renderer::AddTopLeftDotGraph (
   	std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
-  	Coordinate placement,
+  	Coordinate orig,
     int gridSize,
     int blockSize,
     int minX,
 	int maxX,
 	int minY,
-	int maxY 
+	int maxY,
+    std::string title 
 )
 {
+    (void) title;
+    (void) coordinatesPerColor;
     std::map<Color, ColorInfo> colorMap = getColorInfo();
 
-    addCityXAxes(placement, gridSize, blockSize, minX, maxX);
-    addCityYAxes(placement, gridSize, blockSize, minY, maxY);
-
-    SDL_Rect block;
-    block.w = blockSize;
-    block.h = blockSize;
-    SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 255, 255);
-
-    for (auto const& x : coordinatesPerColor)
-    {
-        Color currColor = x.first;
-        std::vector<Coordinate> coordinates = x.second;
-
-        ColorInfo colorInfo = colorMap[currColor];
-        std::vector<int> rgba = colorInfo.rgba;
-
-        SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
-        for (Coordinate c : coordinates)
-        {
-            block.x = placement.getX() - block.w/2 + c.getX() * gridSize;
-            block.y = placement.getY() - block.w/2 + c.getY() * gridSize;
-            SDL_RenderFillRect(sdl_renderer, &block);
-        }
-    }
-
+    char* title_arr = &title[0];
+    Coordinate titleCoord = Coordinate{
+        orig.getX() + (maxX - minX)/2, 
+        orig.getY() + _title_offset };
+    Coordinate xAxes = Coordinate{orig.getX(), orig.getY() + x_axis_offset};
+    Coordinate yAxes = Coordinate{orig.getX(), orig.getY() + 10 * gridSize};
+    //Coordinate cAxes = Coordinate{orig.getX(), orig.getY() +  9 * gridSize};
     
+    addTitle (titleCoord, title_arr, 20);
+    addCityXAxes(xAxes, 14, gridSize, blockSize, minX, maxX);
+    addCityYAxes(yAxes, gridSize, blockSize, minY, maxY);
+    //addCityHouses(cAxes, gridSize, blockSize, coordinatesPerColor, colorMap);
+    
+}
 
+void Renderer::addTitle (
+    Coordinate placement,
+    char* title,
+    int fontsize
+)
+{
+    renderText(
+        placement.getX(),
+        placement.getY(),
+        fontsize, 
+        title,
+        {100, 100, 100, 100}, 
+        {0xFF, 0xFF, 0xFF, 0xFF}
+    );
 }
 
 void Renderer::addCityXAxes(
     Coordinate placement,
+    int fontsize,
     int gridSize, 
     int blockSize,
     int minX,
@@ -171,29 +169,29 @@ void Renderer::addCityXAxes(
     SDL_SetRenderDrawColor(sdl_renderer, 200, 200, 200, 200);
     SDL_Rect block;
 
-    // axis line
-    block.w = (maxX - minX) * gridSize + 4 * gridSize;
+    // horizontal axis.
+    block.w = (maxX - minX) * gridSize + x_axis_overrun;
     block.h = 1;
-    block.x = placement.getX() - 2 * gridSize;
-    block.y = placement.getY() - 2 * gridSize;
+    block.x = placement.getX();
+    block.y = placement.getY();
     SDL_RenderFillRect(sdl_renderer, &block);
 
     // axis ticks
     int flooredTen = minX - ( minX % 10 );
     int nextTen    = flooredTen + 10;
     int nextTenMinusMinX = nextTen - minX;
-    int numOfDashes = (maxX - minX)/10 + 2;
+    int numOfDashes = (maxX - minX)/10 + 1;
 
     block.w = blockSize;
     block.h = gridSize;
     block.x = placement.getX() - block.w/2;
-    block.y = placement.getY() - 2 * gridSize;
+    block.y = placement.getY() - x_tick_offset;
     SDL_RenderFillRect(sdl_renderer, &block);
 
     for (int ii=0; ii<numOfDashes; ii++)
     {
         block.x = placement.getX() - block.w/2 + (nextTenMinusMinX * gridSize) + (ii * 10 * gridSize);
-        block.y = placement.getY() - 2 * gridSize;
+        block.y = placement.getY()- x_tick_offset;
         SDL_RenderFillRect(sdl_renderer, &block);
     }
 
@@ -201,11 +199,11 @@ void Renderer::addCityXAxes(
     char q[] = "X Axis";
 
     renderText(
-        placement.getX() + ( (maxX - minX) * gridSize + 4 * gridSize ) /2,
-        placement.getY() - 2 * gridSize,
-        14, 
-        q, 
-        {0x00, 0x00, 0x00, 0x00}, 
+        placement.getX() + ((maxX - minX) * gridSize) - (20 * gridSize),
+        placement.getY() - x_title_offset,
+        fontsize, 
+        q,
+        {100, 100, 100, 100}, 
         {0xFF, 0xFF, 0xFF, 0xFF}
     );
 }
@@ -224,8 +222,8 @@ void Renderer::addCityYAxes(
     // axis line
     block.w = 1;
     block.h = (maxY - minY) * gridSize + 4 * gridSize;
-    block.x = placement.getX() - 2 * gridSize;
-    block.y = placement.getY() - 2 * gridSize;
+    block.x = placement.getX();
+    block.y = placement.getY();
     SDL_RenderFillRect(sdl_renderer, &block);
 
     // axis ticks
@@ -323,4 +321,35 @@ bool Renderer::initRenderer()
 void Renderer::setMinMaxCityCoordinates(std::vector<Coordinate> coordinates)
 {
     (void) coordinates;
+}
+
+void Renderer::addCityHouses(
+    Coordinate cityOrigin,
+	int gridSize,
+	int blockSize,
+	std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
+    std::map<Color, ColorInfo> colorMap
+)
+{
+    SDL_Rect block;
+    block.w = blockSize;
+    block.h = blockSize;
+
+    for (auto const& x : coordinatesPerColor)
+    {
+        Color currColor = x.first;
+        std::vector<Coordinate> coordinates = x.second;
+
+        ColorInfo colorInfo = colorMap[currColor];
+        std::vector<int> rgba = colorInfo.rgba;
+
+        SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
+        for (Coordinate c : coordinates)
+        {
+            block.x = cityOrigin.getX() - block.w/2 + c.getX() * gridSize;
+            block.y = cityOrigin.getY() - block.w/2 + c.getY() * gridSize;
+            SDL_RenderFillRect(sdl_renderer, &block);
+        }
+    }
+
 }
