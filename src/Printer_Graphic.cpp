@@ -187,17 +187,18 @@ void Printer_Graphic::addCityGridLines (Coordinate orig)
     
 }
 
-void Printer_Graphic::addCityXAxis (Coordinate cityOrigin)
+void Printer_Graphic::addCityXAxis (Coordinate graphTopLeftCorner)
 {
     _renderer.setColorToMedGrey();
 
     SDL_Rect block;
 
-    // horizontal axis.
-    block.w = (_max_x_coord - _min_x_coord) * _grid_size + x_axis_overrun;
+    // Horizontal axis is offset four _grid_size to the left and overruns 
+    // four _grid_size to the right.
+    block.w = (_max_x_coord - _min_x_coord) * _grid_size + 8 * _grid_size;
     block.h = 1;
-    block.x = cityOrigin.getX();
-    block.y = cityOrigin.getY() + x_axis_offset;
+    block.x = graphTopLeftCorner.getX() - 1 * _grid_size;
+    block.y = graphTopLeftCorner.getY() + 16 * _grid_size;
     _renderer.fillBlock(block);
 }
 

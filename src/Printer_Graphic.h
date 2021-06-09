@@ -91,7 +91,7 @@ class Printer_Graphic : public Printer
         // and screen sizes.
         void initGridAndHouseSize ();
 
-        void addCityGridLines (Coordinate cityOrigin);
+        void addCityGridLines (Coordinate graphTopLeftCorner);
 
         void addCityXAxis(Coordinate cityOrigin);
 };
