@@ -93,7 +93,19 @@ class Printer_Graphic : public Printer
 
         void addCityGridLines (Coordinate graphTopLeftCorner);
 
-        void addCityXAxis(Coordinate cityOrigin);
+        void addCityXAxis (
+            Coordinate graphOrigin, // top left
+            int leftOffset, // so houses do not lie on the y axis
+            int xOverrun, // so axis continues farther than last house
+            int titlesAtTopOffset,
+            int titlesAtRightOffset);
+
+        void addCityYAxis (
+            Coordinate graphOrigin, // top left
+            int topOffset, // so houses do not lie on the x axis
+            int yOverrun, // so axis continues farther than last house
+            int titlesAtTopOffset,
+            int titlesAtRightOffset);
 };
 
 #endif

@@ -179,28 +179,52 @@ void Printer_Graphic::addCityGridLines (Coordinate orig)
     //    orig.getY() + _title_offset };
     //char* title_arr = &title[0];
     //addTitle (titleCoord, title_arr, 20);
-    addCityXAxis(orig);
-    //addCityYAxes(yAxes, gridSize, blockSize, minY, maxY);
+    addCityXAxis(orig, 4, 2, 20, 20);
+    addCityYAxis(orig, 4, 2, 20, 20);
 
     
     //addCityHouses(cAxes, gridSize, blockSize, coordinatesPerColor, colorMap);
     
 }
 
-void Printer_Graphic::addCityXAxis (Coordinate graphTopLeftCorner)
+void Printer_Graphic::addCityXAxis (
+    Coordinate graphOrigin,
+    int leftOffset,
+    int xOverrun,
+    int titlesAtTopOffset,
+    int titlesAtRightOffset)
 {
     _renderer.setColorToMedGrey();
 
     SDL_Rect block;
 
-    // Horizontal axis is offset four _grid_size to the left and overruns 
-    // four _grid_size to the right.
-    block.w = (_max_x_coord - _min_x_coord) * _grid_size + 8 * _grid_size;
+    block.w = (_max_x_coord - _min_x_coord) * _grid_size + 
+              (leftOffset + xOverrun) * _grid_size;
     block.h = 1;
-    block.x = graphTopLeftCorner.getX() - 1 * _grid_size;
-    block.y = graphTopLeftCorner.getY() + 16 * _grid_size;
+    block.x = graphOrigin.getX() - titlesAtRightOffset * _grid_size;
+    block.y = graphOrigin.getY() + titlesAtTopOffset * _grid_size;
     _renderer.fillBlock(block);
 }
+
+void Printer_Graphic::addCityYAxis (
+    Coordinate graphOrigin,
+    int topOffset,
+    int yOverrun,
+    int titlesAtTopOffset,
+    int titlesAtRightOffset)
+{
+    _renderer.setColorToMedGrey();
+
+    SDL_Rect block;
+
+    block.w = 1;
+    block.h = (_max_y_coord - _min_y_coord) * _grid_size + 
+              (topOffset + yOverrun) * _grid_size;
+    block.x = graphOrigin.getX() - titlesAtRightOffset * _grid_size;
+    block.y = graphOrigin.getY() + titlesAtTopOffset * _grid_size;
+    _renderer.fillBlock(block);
+}
+
 
 
 
