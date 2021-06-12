@@ -58,7 +58,6 @@ void Renderer::renderText (
         }
 
         // Get text dimensions
-        std::cout << "renderer length " << textString.length() << std::endl;
         textRect.w = textString.length() * 8 + textString.length();
         textRect.h = 1.75 * fontSize;
 
@@ -66,7 +65,6 @@ void Renderer::renderText (
     }
     if (centered == 1)
     {
-        std::cout << "renderer: textRext.w:  " << textRect.w << std::endl;
         textRect.x = x - textRect.w/2;
         //textRect.x = x;
         textRect.y = y - textRect.h;
@@ -105,7 +103,7 @@ void Renderer::renderNumbersHorizontally (
 
     SDL_Texture *text = NULL;
     SDL_Rect textRect;
-
+    std::cout << "renderer: repeated: " << repeated << std::endl;
     for (int ii=0 ; ii<repeated; ++ii)
     {
         std::string numString = std::to_string(firstNum + diff * ii);

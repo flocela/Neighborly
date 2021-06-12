@@ -196,9 +196,8 @@ void Printer_Graphic::addCityXAxis (
 
     // Axis line
     SDL_Rect block;
-
-    block.w = (_max_x_coord - _min_x_coord) * _grid_size + 
-              (leftOffset + xOverrun) * _grid_size;
+    int lineLength = _max_x_coord - _min_x_coord + leftOffset + xOverrun;
+    block.w = lineLength * _grid_size;
     block.h = 1;
     block.x = graphOrigin.getX() + titlesAtRightOffset;
     block.y = graphOrigin.getY() + titlesAtTopOffset;
@@ -238,13 +237,26 @@ void Printer_Graphic::addCityXAxis (
 
     // number for second tick
     int nextNum = _min_x_coord + nextTick;
-    std::cout << "printer grpahic nextTick: " << nextTick << std::endl;
-    std::cout << "block.x: " << block.x << std::endl;
     _renderer.renderText(
         minXPixel + nextTick * _grid_size,
         block.y, // 1 is for spacing so text isn't touching the tick
         18,
         std::to_string(nextNum),
+        {100, 100, 100, 100}, 
+        {0xAA, 0xFF, 0xFF, 0xFF},
+        1
+    );
+
+    // numbers for rest of ticks
+    int first50 = nextNum - (nextNum % 50) + 50;
+    _renderer.renderNumbersHorizontally(
+        minXPixel + (first50 - _min_x_coord) * _grid_size,
+        block.y,
+        18,
+        first50,
+        50,
+        50 * _grid_size,
+        (lineLength + _min_x_coord - first50)/50 + 1,
         {100, 100, 100, 100}, 
         {0xAA, 0xFF, 0xFF, 0xFF},
         1
