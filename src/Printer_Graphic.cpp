@@ -43,6 +43,7 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
         if (coord.getY() < _min_y_coord)
             _min_y_coord = coord.getY();
     }
+    _min_x_coord = 3;
 }
 
 void Printer_Graphic::initGridAndHouseSize ()
@@ -81,12 +82,9 @@ void Printer_Graphic::print (
     (void) title;
     (void) residentPerHouse;
 
-    // print city at top right corner of screen.
-    // allow 50 pixels for border
-    Coordinate cityOrigin = Coordinate{
-        static_cast<int>(_screen_width)/2 - 50
-        , 0
-    };
+    // Print city at top right corner of screen.
+    // Allow 10 and 10 pixels for x and y borders.
+    Coordinate cityOrigin = Coordinate{10, 10};
 
     _renderer.startFrame();
 
@@ -179,8 +177,8 @@ void Printer_Graphic::addCityGridLines (Coordinate orig)
     //    orig.getY() + _title_offset };
     //char* title_arr = &title[0];
     //addTitle (titleCoord, title_arr, 20);
-    addCityXAxis(orig, 4, 2, 20, 20);
-    addCityYAxis(orig, 4, 2, 20, 20);
+    addCityXAxis(orig, 4, 2, 80, 240);
+    addCityYAxis(orig, 4, 2, 80, 240);
 
     
     //addCityHouses(cAxes, gridSize, blockSize, coordinatesPerColor, colorMap);
@@ -193,17 +191,72 @@ void Printer_Graphic::addCityXAxis (
     int xOverrun,
     int titlesAtTopOffset,
     int titlesAtRightOffset)
-{
+{   
     _renderer.setColorToMedGrey();
 
+    // Axis line
     SDL_Rect block;
 
     block.w = (_max_x_coord - _min_x_coord) * _grid_size + 
               (leftOffset + xOverrun) * _grid_size;
     block.h = 1;
-    block.x = graphOrigin.getX() - titlesAtRightOffset * _grid_size;
-    block.y = graphOrigin.getY() + titlesAtTopOffset * _grid_size;
+    block.x = graphOrigin.getX() + titlesAtRightOffset;
+    block.y = graphOrigin.getY() + titlesAtTopOffset;
     _renderer.fillBlock(block);
+
+    // Axis ticks
+    _renderer.setColorToBlack();
+
+    // First tick is at _min_x_coord, which may not be at a tens value. 
+    // So drawn separately.
+    int minXPixel = titlesAtRightOffset + graphOrigin.getX() + leftOffset * _grid_size;
+    block.w = _grid_size/2;
+    block.h = _grid_size;
+    block.x = minXPixel - _grid_size/2;
+    block.y = titlesAtTopOffset + graphOrigin.getY() - _grid_size/2;
+    _renderer.fillBlock(block);
+
+    _renderer.setColorToRed();
+    // Rest of ticks. They start at the first tens value.
+    int nextTick = 10 - (_min_x_coord % 10);
+    block.x = titlesAtRightOffset + graphOrigin.getX() + (nextTick + leftOffset) * _grid_size - _grid_size/2;
+    block.y = titlesAtTopOffset + graphOrigin.getY() - _grid_size/2;
+    int numOfBlocks = ( (_max_x_coord - _min_x_coord) / 10 ) + 1;
+    _renderer.renderBlocksHorizontally(block, _grid_size * 10, numOfBlocks);
+
+
+    // number for first tick
+    _renderer.renderText(
+        minXPixel,
+        block.y, // 1 is for spacing so text isn't touching the tick
+        18,
+        std::to_string(_min_x_coord),
+        {100, 100, 100, 100}, 
+        {0xAA, 0xFF, 0xFF, 0xFF},
+        1
+    );
+
+    // number for second tick
+    int nextNum = _min_x_coord + nextTick;
+    std::cout << "printer grpahic nextTick: " << nextTick << std::endl;
+    std::cout << "block.x: " << block.x << std::endl;
+    _renderer.renderText(
+        minXPixel + nextTick * _grid_size,
+        block.y, // 1 is for spacing so text isn't touching the tick
+        18,
+        std::to_string(nextNum),
+        {100, 100, 100, 100}, 
+        {0xAA, 0xFF, 0xFF, 0xFF},
+        1
+    );
+    
+    SDL_Rect centerBlock;
+    
+    centerBlock.w = 2;
+    centerBlock.h = 2;
+    centerBlock.x = graphOrigin.getX();
+    centerBlock.y = graphOrigin.getY();
+    _renderer.fillBlock(centerBlock);
 }
 
 void Printer_Graphic::addCityYAxis (
@@ -220,8 +273,8 @@ void Printer_Graphic::addCityYAxis (
     block.w = 1;
     block.h = (_max_y_coord - _min_y_coord) * _grid_size + 
               (topOffset + yOverrun) * _grid_size;
-    block.x = graphOrigin.getX() - titlesAtRightOffset * _grid_size;
-    block.y = graphOrigin.getY() + titlesAtTopOffset * _grid_size;
+    block.x = graphOrigin.getX() + titlesAtRightOffset;
+    block.y = graphOrigin.getY() + titlesAtTopOffset;
     _renderer.fillBlock(block);
 }
 

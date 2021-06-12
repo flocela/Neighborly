@@ -32,8 +32,36 @@ class Renderer {
   		void UpdateWindowTitle(int score, int fps);
 
 		void setColorToMedGrey();
+		void setColorToBlack();
+		void setColorToRed();
 
 		void fillBlock(SDL_Rect block);
+		void renderBlocksHorizontally (
+			SDL_Rect firstBlock,
+			int pixelsBetweenBlocks,
+			int numOfBlocks
+		);
+		void renderNumbersHorizontally (
+			int x, 
+			int y,
+			int fontSize,
+			int firstNum,
+			int diff, // differentece between numbers
+			int spacing, // pixel distance between numbers
+			int repeated, // number of numbers
+			SDL_Color textColor,
+			SDL_Color backgroundColor,
+			int centered
+		);
+
+		void renderText (
+			int x, 
+			int y, 
+			int fontSize,
+			std::string text,
+			SDL_Color textColor,
+			SDL_Color backgroundColor,
+			int centered);
 		
  	private:
   		SDL_Window *sdl_window;
@@ -63,13 +91,6 @@ class Renderer {
 		// x-axis overruns its data by x_axis_overrun
 		const int x_axis_overrun = 20;
 
-		void renderText (
-			int x, 
-			int y, 
-			int fontSize,
-			char* text,
-			SDL_Color textColor,
-			SDL_Color backgroundColor);
 		bool initVideo ();
 		bool linuxSettings ();
 		bool initWindow ();
@@ -106,6 +127,8 @@ class Renderer {
 			char* title,
 			int fontsize
 		);
+
+		
 };
 
 #endif

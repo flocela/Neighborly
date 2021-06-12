@@ -15,9 +15,10 @@ void Renderer::renderText (
     int x, 
     int y, 
     int fontSize,
-	char* textString,
+	std::string textString,
 	SDL_Color textColor,
-	SDL_Color backgroundColor
+	SDL_Color backgroundColor,
+    int centered
 )
 {
     TTF_Font *font = TTF_OpenFont(FONT_PATH, fontSize);
@@ -34,7 +35,7 @@ void Renderer::renderText (
 
     SDL_Surface *textSurface = TTF_RenderText_Shaded(
         font, 
-        textString,
+        &textString[0],
         textColor,
         backgroundColor
     );
@@ -57,19 +58,100 @@ void Renderer::renderText (
         }
 
         // Get text dimensions
-        textRect.w = strlen(textString) * 6;
-        textRect.h = 1.25 * fontSize;
+        std::cout << "renderer length " << textString.length() << std::endl;
+        textRect.w = textString.length() * 8 + textString.length();
+        textRect.h = 1.75 * fontSize;
 
         SDL_FreeSurface(textSurface);
     }
-    textRect.x = x;
-    textRect.y = y;
-
-    // Clear screen
-    //SDL_RenderClear(sdl_renderer);
-
+    if (centered == 1)
+    {
+        std::cout << "renderer: textRext.w:  " << textRect.w << std::endl;
+        textRect.x = x - textRect.w/2;
+        //textRect.x = x;
+        textRect.y = y - textRect.h;
+    }
+    else if (centered == 2)
+    {
+        textRect.x = x;
+        textRect.y = y - textRect.w/2;
+    }
+    
     // Draw text
     SDL_RenderCopy(sdl_renderer, text, NULL, &textRect);
+}
+
+void Renderer::renderNumbersHorizontally (
+    int x, 
+	int y,
+	int fontSize,
+	int firstNum,
+	int diff, // difference between numbers
+	int spacing, // pixel distance between numbers
+    int repeated, // number of numbers
+	SDL_Color textColor,
+	SDL_Color backgroundColor,
+	int centered
+)
+{
+    TTF_Font *font = TTF_OpenFont(FONT_PATH, fontSize);
+    if(!font) {
+        printf(
+			"Unable to load font: '%s'!\n"
+            "SDL2_ttf Error: %s\n", FONT_PATH, TTF_GetError()
+			);
+        return;
+    }
+
+    SDL_Texture *text = NULL;
+    SDL_Rect textRect;
+
+    for (int ii=0 ; ii<repeated; ++ii)
+    {
+        std::string numString = std::to_string(firstNum + diff * ii);
+        SDL_Surface *textSurface = TTF_RenderText_Shaded(
+        font, 
+        &numString[0],
+        textColor,
+        backgroundColor
+        );
+        if(!textSurface) {
+          printf(
+		    	"Unable to render text surface!\n"
+                "SDL2_ttf Error: %s\n", TTF_GetError()
+		    );
+        } 
+	    else 
+	    {
+            // Create texture from surface pixels
+            text = SDL_CreateTextureFromSurface(sdl_renderer, textSurface);
+            if(!text) {
+                printf(
+		    		"Unable to create texture from rendered text!\n"
+                    "SDL2 Error: %s\n", SDL_GetError()
+		    	);
+                return;
+            }
+        // Get text dimensions
+        textRect.w = numString.length() * 8 + numString.length();
+        textRect.h = 1.75 * fontSize;
+
+        SDL_FreeSurface(textSurface);
+        }
+        if (centered == 1)
+        {
+            textRect.x = x + spacing * ii - textRect.w/2;
+            textRect.y = y - textRect.h;
+        }
+        else if (centered == 2)
+        {
+            textRect.x = x;
+            textRect.y = y - textRect.w/2;
+        }
+        SDL_RenderCopy(sdl_renderer, text, NULL, &textRect);
+        }
+
+    
 }
 
 Renderer::Renderer(
@@ -151,19 +233,31 @@ void Renderer::addTitle (
     int fontsize
 )
 {
+    (void) title;
     renderText(
         placement.getX(),
         placement.getY(),
         fontsize, 
-        title,
+        "title",
         {100, 100, 100, 100}, 
-        {0xFF, 0xFF, 0xFF, 0xFF}
+        {0xFF, 0xFF, 0xFF, 0xFF},
+        1
     );
 }
 
 void Renderer::setColorToMedGrey ()
 {
     SDL_SetRenderDrawColor(sdl_renderer, 200, 200, 200, 200);
+}
+
+void Renderer::setColorToBlack ()
+{
+    SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 0xFF);
+}
+
+void Renderer::setColorToRed ()
+{
+    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0, 0, 0xFF);
 }
 
 void Renderer::fillBlock(SDL_Rect block)
@@ -208,17 +302,35 @@ void Renderer::addCityXAxes(
         SDL_RenderFillRect(sdl_renderer, &block);
     }
 
-    // axis title
-    char q[] = "X Axis";
 
     renderText(
         placement.getX() + ((maxX - minX) * gridSize) - (20 * gridSize),
         placement.getY() - x_title_offset,
         fontsize, 
-        q,
+        "x axis",
         {100, 100, 100, 100}, 
-        {0xFF, 0xFF, 0xFF, 0xFF}
+        {0xFF, 0xFF, 0xFF, 0xFF},
+        1
     );
+}
+
+void Renderer::renderBlocksHorizontally (
+    SDL_Rect firstBlock,
+    int pixelsBetweenBlocks,
+    int numOfBlocks
+)
+{
+    SDL_Rect current;
+    current.w = firstBlock.w;
+    current.h = firstBlock.h;
+    current.x = firstBlock.x;
+    current.y = firstBlock.y;
+
+    for (int ii=0; ii<numOfBlocks; ++ii)
+    {
+        current.x = firstBlock.x + ii * pixelsBetweenBlocks;
+        SDL_RenderFillRect(sdl_renderer, &current);
+    }
 }
 
 void Renderer::addCityYAxes(
