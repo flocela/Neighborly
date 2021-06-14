@@ -54,6 +54,16 @@ class Renderer {
 			int centered
 		);
 
+		void renderNumbersHorizontally (
+			int x, 
+			int y,
+			int firstNum,
+			int diff, // differentece between numbers
+			int spacing, // pixel distance between numbers
+			int repeated, // number of numbers
+			int centered
+		);
+
 		void renderText (
 			int x, 
 			int y, 
@@ -61,7 +71,21 @@ class Renderer {
 			std::string text,
 			SDL_Color textColor,
 			SDL_Color backgroundColor,
-			int centered);
+			int centered
+		);
+
+		void renderText (
+			int x, 
+			int y,
+			std::string text,
+			int centered
+		);
+
+		void setTextFormats (
+			SDL_Color textColor,
+			SDL_Color textBackgroundColor,
+			int fontSize
+		);
 		
  	private:
   		SDL_Window *sdl_window;
@@ -69,6 +93,10 @@ class Renderer {
 
   		const std::size_t screen_width;
   		const std::size_t screen_height;
+
+		SDL_Color _text_color;
+		SDL_Color _text_background_color;
+		int _font_size;
 
 		// chart title is vertically offset from the origin by _title_offset
 		// from the x-axis by x-title-offset

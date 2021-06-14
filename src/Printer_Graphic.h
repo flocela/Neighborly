@@ -1,9 +1,11 @@
 #ifndef PRINTER_Graphic_H
 #define PRINTER_Graphic_H
 
+#include "GraphicCityPrinter.h"
 #include "Printer.h"
 #include "renderer.h"
 #include <thread>
+#include <memory>
 
 class Printer_Graphic : public Printer
 {   
@@ -37,6 +39,7 @@ class Printer_Graphic : public Printer
         void keepScreen();
     
     private:
+        std::unique_ptr<GraphicCityPrinter> _graphic_city_printer;
         std::size_t _screen_width;
         std::size_t _screen_height;
         // Each house is inside of a grid square. The grid square 
@@ -94,12 +97,14 @@ class Printer_Graphic : public Printer
         void addCityGridLines (Coordinate graphTopLeftCorner);
 
         void addCityXAxis (
-            Coordinate graphOrigin, // top left
-            int leftOffset, // so houses do not lie on the y axis
-            int xOverrun, // so axis continues farther than last house
-            int titlesAtTopOffset,
-            int titlesAtRightOffset);
-
+            Coordinate chartOrigin, // top left corner of entire chart, including titles, screen coordinate
+            int leftOffset, // move origin to the left, so houses do not lie on the y axis, axis offset
+            int xOverrun, // increase length of axis so axis continues farther than last house
+            int titlesAtTopOffset, // room given for titles at top of graph
+            int titlestLeftOffset, // room given for titles at left ofgraph
+            int fontSize // tick numbers font
+        );
+        
         void addCityYAxis (
             Coordinate graphOrigin, // top left
             int topOffset, // so houses do not lie on the x axis

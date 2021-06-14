@@ -79,6 +79,47 @@ void Renderer::renderText (
     SDL_RenderCopy(sdl_renderer, text, NULL, &textRect);
 }
 
+void Renderer::renderText (
+    int x, 
+    int y,
+    std::string text,
+    int centered
+)
+{
+    renderText(
+        x,
+        y,
+        _font_size,
+        text,
+        _text_color,
+        _text_background_color,
+        centered
+    );
+}
+
+void Renderer::renderNumbersHorizontally (
+    int x, 
+	int y,
+	int firstNum,
+	int diff, // differentece between numbers
+	int spacing, // pixel distance between numbers
+	int repeated, // number of numbers
+	int centered
+)
+{
+    renderNumbersHorizontally(
+        x,
+        y,
+        _font_size,
+        firstNum,
+        diff,
+        spacing,
+        repeated,
+        _text_color,
+        _text_background_color,
+        centered
+    );
+}
 void Renderer::renderNumbersHorizontally (
     int x, 
 	int y,
@@ -150,6 +191,17 @@ void Renderer::renderNumbersHorizontally (
         }
 
     
+}
+
+void Renderer::setTextFormats (
+    SDL_Color textColor,
+    SDL_Color textBackgroundColor,
+    int fontSize
+)
+{
+    _text_color = textColor;
+    _text_background_color = textBackgroundColor;
+    _font_size = fontSize;
 }
 
 Renderer::Renderer(
@@ -437,7 +489,10 @@ bool Renderer::initRenderer()
     	std::cerr << "Renderer could not be created.\n";
     	std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
         return false;
-	}
+    }
+    _text_color =  {100, 100, 100, 100};
+    _text_background_color = {0xAA, 0xFF, 0xFF, 0xFF};
+    _font_size = 18;
     return true;
 }
 
