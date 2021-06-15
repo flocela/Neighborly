@@ -25,6 +25,7 @@ Printer_Graphic::Printer_Graphic (
 
     initCityCoordinateInfo(cityPtr);
     Coordinate cityOrigin = Coordinate{10, 10};
+    std::cout << "PrinterGraphic min_y: " << _min_y_coord << std::endl;
     _graphic_city_printer = std::make_unique<GraphicCityPrinter>(
         &_renderer,
         cityOrigin,
@@ -35,11 +36,11 @@ Printer_Graphic::Printer_Graphic (
         _max_y_coord,
         2,
         2,
-        2,
-        2,
+        20,
+        20,
         240,
         80,
-        18
+        20
     );
     initGridAndHouseSize ();
 }
@@ -229,7 +230,11 @@ void Printer_Graphic::addCityXAxis (
     int fontSize
 )
 {   
-    (void) fontSize;
+    _renderer.setTextFormats(
+        {100, 100, 100, 100}, 
+        {0xAA, 0xFF, 0xFF, 0xFF}, 
+        fontSize
+    );
     int lineLength = _max_x_coord - _min_x_coord + leftOffset + xOverrun;
     // xAxisOrigPixel and yAxisOrigPixel is where x and y axes cross
     int xAxisOrigPixel = chartOrigin.getX() + titlesAtLeftOffset;

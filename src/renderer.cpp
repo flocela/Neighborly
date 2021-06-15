@@ -21,6 +21,10 @@ void Renderer::renderText (
     int centered
 )
 {
+    if (centered == 2)
+    {
+        std::cout <<"renderer line 27 x: " << x << std::endl;
+    }
     TTF_Font *font = TTF_OpenFont(FONT_PATH, fontSize);
     if(!font) {
         printf(
@@ -58,21 +62,20 @@ void Renderer::renderText (
         }
 
         // Get text dimensions
-        textRect.w = textString.length() * 8 + textString.length();
-        textRect.h = 1.75 * fontSize;
+        textRect.w = textString.length() * 6;
+        textRect.h = 2 * fontSize;
 
         SDL_FreeSurface(textSurface);
     }
     if (centered == 1)
     {
         textRect.x = x - textRect.w/2;
-        //textRect.x = x;
         textRect.y = y - textRect.h;
     }
     else if (centered == 2)
     {
-        textRect.x = x;
-        textRect.y = y - textRect.w/2;
+        textRect.x = x - 1.5 * textRect.w;
+        textRect.y = y - 0.7 * textRect.h;
     }
     
     // Draw text
@@ -184,8 +187,8 @@ void Renderer::renderNumbersHorizontally (
         }
         else if (centered == 2)
         {
-            textRect.x = x;
-            textRect.y = y - textRect.w/2;
+            textRect.x = x - textRect.w/2;
+            textRect.y = y;
         }
         SDL_RenderCopy(sdl_renderer, text, NULL, &textRect);
         }
@@ -491,7 +494,7 @@ bool Renderer::initRenderer()
         return false;
     }
     _text_color =  {100, 100, 100, 100};
-    _text_background_color = {0xAA, 0xFF, 0xFF, 0xFF};
+    _text_background_color = {0xFF, 0xFF, 0xFF, 0xFF};
     _font_size = 18;
     return true;
 }

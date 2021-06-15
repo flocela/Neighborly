@@ -71,11 +71,14 @@ class GraphicCityPrinter
         int _titles_at_top_offset;
         int _font_size;
 
-        // x-axis SDL_Rects and x-axis TextRects.
+        // axes SDL_Rects and x-axis TextRects.
         std::vector<SDL_Rect> _x_blocks = {};
         std::vector<TextRect> _x_texts = {};
+        std::vector<SDL_Rect> _y_blocks = {};
+        std::vector<TextRect> _y_texts = {};
 
         void addCityXAxis ();
+        void addCityYAxis ();
 
 
 
