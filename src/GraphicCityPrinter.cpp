@@ -10,11 +10,12 @@ void GraphicCityPrinter::addCityXAxis ()
 {   
     if (xAxisBlocks.size() == 0)
     {
-        std::cout << "GraphicCityPrinter: line 13" << std::endl; 
         int lineLength = _max_x - _min_x + _x_axis_offset + _x_axis_overrun;
-        // xAxisOrigPixel and yAxisOrigPixel is where x and y axes cross
-        int xAxisOrigPixel = _chart_origin.getX() + _titles_at_left_offset;
-        int yAxisOrigPixel = _chart_origin.getY() + _titles_at_top_offset;
+        // orig is where x and y axes cross
+        Coordinate orig{
+            _chart_origin.getX() + _titles_at_left_offset,
+            _chart_origin.getY() + _titles_at_top_offset
+        };
 
         _renderer->setColorToMedGrey();
 
@@ -22,30 +23,29 @@ void GraphicCityPrinter::addCityXAxis ()
         SDL_Rect block;
         block.w = lineLength * _grid_size;
         block.h = 1;
-        block.x = xAxisOrigPixel;
-        block.y = yAxisOrigPixel;
-        std::cout << "GraphicCityPrinter: " << block.w << " " << block.h << " " << block.x << " " << block.y << std::endl;
-        //std::cout << "max_x, min_x, x_axis_offset"
+        block.x = orig.getX();
+        block.y = orig.getY();
         _renderer->fillBlock(block);
         xAxisBlocks.push_back(block);
 
         // Axis ticks
         block.w = _grid_size/2;
         block.h = _grid_size;
-        block.y = yAxisOrigPixel - _grid_size/2;
+        block.y = orig.getY() - _grid_size/2;
 
         // First tick is at _min_x_coord, which may not be at a tens value. 
-        int minXPixel = xAxisOrigPixel + _titles_at_top_offset * _grid_size;
+        int minXPixel = orig.getX() + _x_axis_offset;
         block.x = minXPixel - _grid_size/2;
         xAxisBlocks.push_back(block);
 
         // Rest of ticks. They start at the first tens value.
-        int nextTick = 10 - (_min_x % 10);
-        block.x = minXPixel +  nextTick * _grid_size - _grid_size/2;
+        // Difference between next Tick and _min_x is nextTickDiff
+        int nextTickDiff = 10 - (_min_x % 10);
+        int nextTickPixel = minXPixel +  nextTickDiff * _grid_size - _grid_size/2;
         int numOfBlocks = ( lineLength / 10 );
         for (int ii=0; ii<numOfBlocks; ++ii)
         {
-            block.x = block.x + ii * _grid_size * 10; // 10 grids between ticks
+            block.x = nextTickPixel + ii * _grid_size * 10; // 10 grids between ticks
             xAxisBlocks.push_back(block);
         }
     }
