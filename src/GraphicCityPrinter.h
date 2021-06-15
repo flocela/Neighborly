@@ -3,6 +3,7 @@
 
 #include "renderer.h"
 #include "Coordinate.h"
+#include "TextRect.h"
 #include <vector>
 
 // Takes in a Renderer and city chart origin and offsets.
@@ -70,8 +71,9 @@ class GraphicCityPrinter
         int _titles_at_top_offset;
         int _font_size;
 
-        std::vector<SDL_Rect> xAxisBlocks = {};
-
+        // x-axis SDL_Rects and x-axis TextRects.
+        std::vector<SDL_Rect> _x_blocks = {};
+        std::vector<TextRect> _x_texts = {};
 
         void addCityXAxis ();
 

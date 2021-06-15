@@ -8,7 +8,7 @@ void GraphicCityPrinter::printCity ()
 
 void GraphicCityPrinter::addCityXAxis ()
 {   
-    if (xAxisBlocks.size() == 0)
+    if (_x_blocks.size() == 0)
     {
         int lineLength = _max_x - _min_x + _x_axis_offset + _x_axis_overrun;
         // orig is where x and y axes cross
@@ -26,7 +26,7 @@ void GraphicCityPrinter::addCityXAxis ()
         block.x = orig.getX();
         block.y = orig.getY();
         _renderer->fillBlock(block);
-        xAxisBlocks.push_back(block);
+        _x_blocks.push_back(block);
 
         // Axis ticks
         block.w = _grid_size/2;
@@ -36,37 +36,50 @@ void GraphicCityPrinter::addCityXAxis ()
         // First tick is at _min_x_coord, which may not be at a tens value. 
         int minXPixel = orig.getX() + _x_axis_offset;
         block.x = minXPixel - _grid_size/2;
-        xAxisBlocks.push_back(block);
+        _x_blocks.push_back(block);
+        TextRect tr{minXPixel, block.y, std::to_string(_min_x), 1};
+        _x_texts.push_back(tr);
 
         // Rest of ticks. They start at the first tens value.
         // Difference between next Tick and _min_x is nextTickDiff
         int nextTickDiff = 10 - (_min_x % 10);
-        int nextTickPixel = minXPixel +  nextTickDiff * _grid_size - _grid_size/2;
+
+        int nextTick = _min_x + nextTickDiff;
+        int nextTickPixel = minXPixel +  nextTickDiff * _grid_size;
+        // blocks are drawn from top left, not from center of the block
+        int nextTickBlock = nextTickPixel - _grid_size/2;
         int numOfBlocks = ( lineLength / 10 );
         for (int ii=0; ii<numOfBlocks; ++ii)
         {
-            block.x = nextTickPixel + ii * _grid_size * 10; // 10 grids between ticks
-            xAxisBlocks.push_back(block);
+            block.x = nextTickBlock + ii * _grid_size * 10; // 10 grids between ticks
+            _x_blocks.push_back(block);
+            std::string text = std::to_string(nextTick + ii *10);
+            TextRect tr{nextTickPixel + ii * _grid_size * 10, block.y, text, 1};
+            _x_texts.push_back(tr);
         }
     }
-    for (SDL_Rect block : xAxisBlocks)
+    for (SDL_Rect block : _x_blocks)
     {
         _renderer->fillBlock(block);
     }
-    /*
+
+    for (TextRect tr : _x_texts)
+    {
+        _renderer->renderText(tr.xPixel, tr.yPixel, tr.text, tr.centered);
+    }
     
-    _renderer.setTextFormats(
+    _renderer->setTextFormats(
         {100, 100, 100, 100}, 
         {0xAA, 0xFF, 0xFF, 0xFF}, 
-        fontSize
+        _font_size
     );
-
+/*
     // number for first tick
-    _renderer.renderText(minXPixel, block.y, std::to_string(_min_x_coord), 1);
+    _renderer->renderText(minXPixel, block.y, std::to_string(_min_x_coord), 1);
 
     // number for second tick
     int nextNum = _min_x_coord + nextTick;
-    _renderer.renderText(
+    _renderer->renderText(
         minXPixel + nextTick * _grid_size,
         block.y,
         std::to_string(nextNum),
@@ -75,7 +88,7 @@ void GraphicCityPrinter::addCityXAxis ()
 
     // numbers for rest of ticks
     int first50 = nextNum - (nextNum % 50) + 50;
-    _renderer.renderNumbersHorizontally(
+    _renderer->renderNumbersHorizontally(
         minXPixel + (first50 - _min_x_coord) * _grid_size,
         block.y,
         first50,
