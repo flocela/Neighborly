@@ -14,19 +14,7 @@ class Renderer {
 			const std::size_t screen_width, 
 			const std::size_t screen_height);
   		~Renderer();
-
-		// Uses rgba values from _the_colors global variable
-  		void AddTopLeftDotGraph (
-			std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
-			Coordinate orig, // Top left most point on graph. Allow room for titles.
-			int gridSize,
-			int blockSize,
-			int minX,
-			int maxX,
-			int minY,
-			int maxY,
-			std::string title
-		);
+		  
   		void startFrame();
 		void endFrame();
   		void UpdateWindowTitle(int score, int fps);
@@ -36,33 +24,6 @@ class Renderer {
 		void setColorToRed();
 
 		void fillBlock(SDL_Rect block);
-		void renderBlocksHorizontally (
-			SDL_Rect firstBlock,
-			int pixelsBetweenBlocks,
-			int numOfBlocks
-		);
-		void renderNumbersHorizontally (
-			int x, 
-			int y,
-			int fontSize,
-			int firstNum,
-			int diff, // differentece between numbers
-			int spacing, // pixel distance between numbers
-			int repeated, // number of numbers
-			SDL_Color textColor,
-			SDL_Color backgroundColor,
-			int centered
-		);
-
-		void renderNumbersHorizontally (
-			int x, 
-			int y,
-			int firstNum,
-			int diff, // differentece between numbers
-			int spacing, // pixel distance between numbers
-			int repeated, // number of numbers
-			int centered
-		);
 
 		void renderText (
 			int x, 
@@ -126,21 +87,6 @@ class Renderer {
 		void setMinMaxCityCoordinates (std::vector<Coordinate> coordinates);
 		std::vector<Coordinate> extractCoordinates (
 			std::map<Color, std::vector<Coordinate>> coordinatesPerColor
-		);
-		void addCityXAxes(
-			Coordinate placement,
-			int fontsize,
-			int gridSize, 
-			int blockSize,
-			int minX, // the axis's min value, not the city's minX value
-			int maxX  // the axis's max value, not the city's maxX value
-		);
-		void addCityYAxes(
-			Coordinate placement,
-			int gridSize, 
-			int blockSize, 
-			int minY, 
-			int maxY
 		);
 		void addCityHouses(
     		Coordinate cityOrigin,

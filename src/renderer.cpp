@@ -100,102 +100,6 @@ void Renderer::renderText (
     );
 }
 
-void Renderer::renderNumbersHorizontally (
-    int x, 
-	int y,
-	int firstNum,
-	int diff, // differentece between numbers
-	int spacing, // pixel distance between numbers
-	int repeated, // number of numbers
-	int centered
-)
-{
-    renderNumbersHorizontally(
-        x,
-        y,
-        _font_size,
-        firstNum,
-        diff,
-        spacing,
-        repeated,
-        _text_color,
-        _text_background_color,
-        centered
-    );
-}
-void Renderer::renderNumbersHorizontally (
-    int x, 
-	int y,
-	int fontSize,
-	int firstNum,
-	int diff, // difference between numbers
-	int spacing, // pixel distance between numbers
-    int repeated, // number of numbers
-	SDL_Color textColor,
-	SDL_Color backgroundColor,
-	int centered
-)
-{
-    TTF_Font *font = TTF_OpenFont(FONT_PATH, fontSize);
-    if(!font) {
-        printf(
-			"Unable to load font: '%s'!\n"
-            "SDL2_ttf Error: %s\n", FONT_PATH, TTF_GetError()
-			);
-        return;
-    }
-
-    SDL_Texture *text = NULL;
-    SDL_Rect textRect;
-    std::cout << "renderer: repeated: " << repeated << std::endl;
-    for (int ii=0 ; ii<repeated; ++ii)
-    {
-        std::string numString = std::to_string(firstNum + diff * ii);
-        SDL_Surface *textSurface = TTF_RenderText_Shaded(
-        font, 
-        &numString[0],
-        textColor,
-        backgroundColor
-        );
-        if(!textSurface) {
-          printf(
-		    	"Unable to render text surface!\n"
-                "SDL2_ttf Error: %s\n", TTF_GetError()
-		    );
-        } 
-	    else 
-	    {
-            // Create texture from surface pixels
-            text = SDL_CreateTextureFromSurface(sdl_renderer, textSurface);
-            if(!text) {
-                printf(
-		    		"Unable to create texture from rendered text!\n"
-                    "SDL2 Error: %s\n", SDL_GetError()
-		    	);
-                return;
-            }
-        // Get text dimensions
-        textRect.w = numString.length() * 8 + numString.length();
-        textRect.h = 1.75 * fontSize;
-
-        SDL_FreeSurface(textSurface);
-        }
-        if (centered == 1)
-        {
-            textRect.x = x + spacing * ii - textRect.w/2;
-            textRect.y = y - textRect.h;
-        }
-        else if (centered == 2)
-        {
-            textRect.x = x - textRect.w/2;
-            textRect.y = y;
-        }
-        SDL_RenderCopy(sdl_renderer, text, NULL, &textRect);
-        }
-
-    
-}
-
 void Renderer::setTextFormats (
     SDL_Color textColor,
     SDL_Color textBackgroundColor,
@@ -245,40 +149,6 @@ std::map<Color, ColorInfo> getColorInfo ()
     return colorMap;
 }
 
-void Renderer::AddTopLeftDotGraph (
-  	std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
-  	Coordinate orig,
-    int gridSize,
-    int blockSize,
-    int minX,
-	int maxX,
-	int minY,
-	int maxY,
-    std::string title 
-)
-{
-    (void) title;
-    (void) coordinatesPerColor;
-    std::map<Color, ColorInfo> colorMap = getColorInfo();
-
-    //int xAxesLength = (maxX - minX) * gridSize + x_axis_overrun;
-    
-    Coordinate xAxes = Coordinate{orig.getX(), orig.getY() + x_axis_offset};
-    Coordinate yAxes = Coordinate{orig.getX(), orig.getY() + 10 * gridSize};
-    //Coordinate cAxes = Coordinate{orig.getX(), orig.getY() +  9 * gridSize};
-    
-    Coordinate titleCoord = Coordinate{
-        orig.getX() + ((maxX - minX)/2) * gridSize, 
-        orig.getY() + _title_offset };
-    char* title_arr = &title[0];
-    addTitle (titleCoord, title_arr, 20);
-    addCityXAxes(xAxes, 14, gridSize, blockSize, minX, maxX);
-    addCityYAxes(yAxes, gridSize, blockSize, minY, maxY);
-
-    
-    //addCityHouses(cAxes, gridSize, blockSize, coordinatesPerColor, colorMap);
-    
-}
 
 void Renderer::addTitle (
     Coordinate placement,
@@ -316,112 +186,6 @@ void Renderer::setColorToRed ()
 void Renderer::fillBlock(SDL_Rect block)
 {
     SDL_RenderFillRect(sdl_renderer, &block);
-}
-void Renderer::addCityXAxes(
-    Coordinate placement,
-    int fontsize,
-    int gridSize, 
-    int blockSize,
-    int minX,
-	int maxX
-)
-{
-    SDL_SetRenderDrawColor(sdl_renderer, 200, 200, 200, 200);
-    SDL_Rect block;
-
-    // horizontal axis.
-    block.w = (maxX - minX) * gridSize + x_axis_overrun;
-    block.h = 1;
-    block.x = placement.getX();
-    block.y = placement.getY();
-    SDL_RenderFillRect(sdl_renderer, &block);
-
-    // axis ticks
-    int flooredTen = minX - ( minX % 10 );
-    int nextTen    = flooredTen + 10;
-    int nextTenMinusMinX = nextTen - minX;
-    int numOfDashes = (maxX - minX)/10 + 1;
-
-    block.w = blockSize;
-    block.h = gridSize;
-    block.x = placement.getX() - block.w/2;
-    block.y = placement.getY() - x_tick_offset;
-    SDL_RenderFillRect(sdl_renderer, &block);
-
-    for (int ii=0; ii<numOfDashes; ii++)
-    {
-        block.x = placement.getX() - block.w/2 + (nextTenMinusMinX * gridSize) + (ii * 10 * gridSize);
-        block.y = placement.getY()- x_tick_offset;
-        SDL_RenderFillRect(sdl_renderer, &block);
-    }
-
-
-    renderText(
-        placement.getX() + ((maxX - minX) * gridSize) - (20 * gridSize),
-        placement.getY() - x_title_offset,
-        fontsize, 
-        "x axis",
-        {100, 100, 100, 100}, 
-        {0xFF, 0xFF, 0xFF, 0xFF},
-        1
-    );
-}
-
-void Renderer::renderBlocksHorizontally (
-    SDL_Rect firstBlock,
-    int pixelsBetweenBlocks,
-    int numOfBlocks
-)
-{
-    SDL_Rect current;
-    current.w = firstBlock.w;
-    current.h = firstBlock.h;
-    current.x = firstBlock.x;
-    current.y = firstBlock.y;
-
-    for (int ii=0; ii<numOfBlocks; ++ii)
-    {
-        current.x = firstBlock.x + ii * pixelsBetweenBlocks;
-        SDL_RenderFillRect(sdl_renderer, &current);
-    }
-}
-
-void Renderer::addCityYAxes(
-    Coordinate placement,
-    int gridSize, 
-    int blockSize,
-	int minY,
-	int maxY
-)
-{
-    SDL_SetRenderDrawColor(sdl_renderer, 200, 200, 200, 200);
-    SDL_Rect block;
-
-    // axis line
-    block.w = 1;
-    block.h = (maxY - minY) * gridSize + 4 * gridSize;
-    block.x = placement.getX();
-    block.y = placement.getY();
-    SDL_RenderFillRect(sdl_renderer, &block);
-
-    // axis ticks
-    int flooredTen = minY - ( minY % 10 );
-    int nextTen    = flooredTen + 10;
-    int nextTenMinusMinY = nextTen - minY;
-    int numOfDashes = (maxY - minY)/10 + 1;
-
-    block.w = gridSize;
-    block.h = blockSize;
-    block.x = placement.getX() - 2 * gridSize;
-    block.y = placement.getY() - block.h/2;
-    SDL_RenderFillRect(sdl_renderer, &block);
-
-    for (int ii=0; ii<numOfDashes; ii++)
-    {
-        block.x = placement.getX() - 2 * gridSize;
-        block.y = placement.getY() - block.h/2 + (nextTenMinusMinY * gridSize) + (ii * 10 * gridSize);
-        SDL_RenderFillRect(sdl_renderer, &block);
-    }
 }
 
 void Renderer::startFrame()
@@ -499,10 +263,6 @@ bool Renderer::initRenderer()
     return true;
 }
 
-void Renderer::setMinMaxCityCoordinates(std::vector<Coordinate> coordinates)
-{
-    (void) coordinates;
-}
 
 void Renderer::addCityHouses(
     Coordinate cityOrigin,
