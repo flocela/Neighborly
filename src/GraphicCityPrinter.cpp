@@ -39,16 +39,22 @@ void GraphicCityPrinter::addCityXAxis ()
 
         // First tick is at _min_x, which may not be at a tens value. 
         int minXPixel = orig.getX() + _x_axis_offset;
+        // firstTensDeiff is difference between _min_x and first tens value
+        int firstTensDiff = 10 - (_min_x % 10);
         block.x = minXPixel - _grid_size/2;
-        TextRect tr{minXPixel, block.y, std::to_string(_min_x), 1};
         _x_blocks.push_back(block);
-        _x_texts.push_back(tr);
+        // only show _min_x number if it doesn't overlap with first tens value
+        if (firstTensDiff > 3)
+        {
+            TextRect tr{minXPixel, block.y, std::to_string(_min_x), 1};
+            _x_texts.push_back(tr);
+        }
 
         // Rest of ticks. They start at the first tens value.
         // Difference between next tick and _min_x is nextTickDiff
-        int nextTickDiff = 10 - (_min_x % 10);
-        int nextTick = _min_x + nextTickDiff;
-        int nextTickPixel = minXPixel +  nextTickDiff * _grid_size;
+        
+        int nextTick = _min_x + firstTensDiff;
+        int nextTickPixel = minXPixel +  firstTensDiff * _grid_size;
         // blocks are drawn from top left, not from center of the block
         int nextTickBlock = nextTickPixel - _grid_size/2;
         int numOfBlocks = ( lineLength / 10 );
@@ -58,7 +64,8 @@ void GraphicCityPrinter::addCityXAxis ()
             std::string text = std::to_string(nextTick + ii *10);
             TextRect tr{nextTickPixel + ii * _grid_size * 10, block.y, text, 1};
             _x_blocks.push_back(block);
-            _x_texts.push_back(tr);
+            if (firstTensDiff > 3 && ii != 1) // if less than 3, numbers overlap
+                _x_texts.push_back(tr);
         }
     }
     for (SDL_Rect block : _x_blocks)
@@ -109,17 +116,20 @@ void GraphicCityPrinter::addCityYAxis ()
 
         // First tick is at _min_y, which may not be at a tens value. 
         int minYPixel = orig.getY() + _y_axis_offset;
+        // firstTensDiff is difference between _min_y and first tens value
+        int firstTensDiff = 10 - (_min_y % 10);
         block.y = minYPixel - _grid_size/2;
-        std::cout << "GraphicCityPrinter minYPixel: " << minYPixel << std::endl;
-        TextRect tr{block.x, minYPixel, std::to_string(_min_y), 2};
         _y_blocks.push_back(block);
-        _y_texts.push_back(tr);
-
+        // only show _min_y number if it doesn't overlap with first tens value
+        if (firstTensDiff > 3)
+        {
+            TextRect tr{block.x, minYPixel, std::to_string(_min_y), 2};
+            _y_texts.push_back(tr);
+        }
+        
         // Rest of ticks. They start at the first tens value.
-        // Difference between next tick and _min_y is nextTickDiff
-        int nextTickDiff = 10 - (_min_y % 10);
-        int nextTick = _min_y + nextTickDiff;
-        int nextTickPixel = minYPixel +  nextTickDiff * _grid_size;
+        int nextTick = _min_y + firstTensDiff;
+        int nextTickPixel = minYPixel +  firstTensDiff * _grid_size;
         // blocks are drawn from top left, not from center of the block
         int nextTickBlock = nextTickPixel - _grid_size/2;
         int numOfBlocks = ( lineLength / 10 );

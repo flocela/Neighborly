@@ -75,7 +75,7 @@ void Renderer::renderText (
     else if (centered == 2)
     {
         textRect.x = x - 1.5 * textRect.w;
-        textRect.y = y - 0.7 * textRect.h;
+        textRect.y = y - 0.6 * textRect.h;
     }
     
     // Draw text

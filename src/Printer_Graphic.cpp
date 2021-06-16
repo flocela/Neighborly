@@ -34,10 +34,10 @@ Printer_Graphic::Printer_Graphic (
         _max_x_coord,
         _min_y_coord,
         _max_y_coord,
-        2,
-        2,
-        20,
-        20,
+        40,
+        40,
+        10,
+        10,
         240,
         80,
         20
@@ -62,6 +62,7 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
             _min_y_coord = coord.getY();
     }
     _min_x_coord = 3;
+    _min_y_coord = 9;
 
     int deltaX = _max_x_coord - _min_x_coord;
     int deltaY = _max_y_coord - _min_y_coord;
