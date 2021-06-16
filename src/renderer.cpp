@@ -57,10 +57,10 @@ void Renderer::renderText (
             return;
         }
 
-        // Get text dimensions
-        textRect.w = textString.length() * 6;
-        textRect.h = 2 * fontSize;
-
+        // Account for spacing between letters and line height
+        textRect.w = 0.5 * fontSize * textString.length();
+        textRect.h = 1.75 * fontSize;
+        
         SDL_FreeSurface(textSurface);
     }
     if (centered == 1)
@@ -72,6 +72,11 @@ void Renderer::renderText (
     {
         textRect.x = x - 1.5 * textRect.w;
         textRect.y = y - 0.6 * textRect.h;
+    }
+    else if (centered == 3)
+    {
+        textRect.x = x - textRect.w/2;
+        textRect.y = y;
     }
     
     // Draw text

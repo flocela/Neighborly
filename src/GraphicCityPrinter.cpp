@@ -5,6 +5,20 @@ void GraphicCityPrinter::printCity ()
 {
     addCityXAxis();
     addCityYAxis();
+    addTitle();
+}
+
+void GraphicCityPrinter::addTitle()
+{
+    int lineLength = (_max_x - _min_x + _x_axis_offset + _x_axis_overrun) * _grid_size;
+    int x = _chart_origin.getX() + _titles_at_left_offset + lineLength/2;
+    int y = _chart_origin.getY();
+    _renderer->setTextFormats(
+        {100, 100, 100, 100}, 
+        {0xAA, 0xFF, 0xFF, 0xFF}, 
+        24
+    );
+    _renderer->renderText(x, y, "City Map", 3);
 }
 
 void GraphicCityPrinter::addCityXAxis ()
@@ -64,8 +78,7 @@ void GraphicCityPrinter::addCityXAxis ()
             std::string text = std::to_string(nextTick + ii *10);
             TextRect tr{nextTickPixel + ii * _grid_size * 10, block.y, text, 1};
             _x_blocks.push_back(block);
-            if (firstTensDiff > 3 && ii != 1) // if less than 3, numbers overlap
-                _x_texts.push_back(tr);
+            _x_texts.push_back(tr);
         }
     }
     for (SDL_Rect block : _x_blocks)
@@ -89,7 +102,12 @@ void GraphicCityPrinter::addCityXAxis ()
 }
 
 void GraphicCityPrinter::addCityYAxis ()
-{   
+{  
+    _renderer->setTextFormats(
+        {100, 100, 100, 100}, 
+        {0xAA, 0xFF, 0xFF, 0xFF}, 
+        12
+    );   
     if (_y_blocks.size() == 0)
     {
         int lineLength = _max_y - _min_y + _y_axis_offset + _y_axis_overrun;

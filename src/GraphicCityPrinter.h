@@ -79,6 +79,7 @@ class GraphicCityPrinter
 
         void addCityXAxis ();
         void addCityYAxis ();
+        void addTitle();
 
 
 
