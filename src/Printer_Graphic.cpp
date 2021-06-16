@@ -25,7 +25,6 @@ Printer_Graphic::Printer_Graphic (
 
     initCityCoordinateInfo(cityPtr);
     Coordinate cityOrigin = Coordinate{10, 10};
-    std::cout << "PrinterGraphic min_y: " << _min_y_coord << std::endl;
     _graphic_city_printer = std::make_unique<GraphicCityPrinter>(
         &_renderer,
         cityOrigin,
@@ -124,19 +123,6 @@ void Printer_Graphic::print (
 
     _renderer.startFrame();
     _graphic_city_printer->printCity();
-    //addCityGridLines(cityOrigin);
-    
-    /*
-    _renderer.AddTopLeftDotGraph(
-        createVectorsForEachColor(residentPerHouse), 
-        cityOrigin, 
-        _grid_size, 
-        _house_size,
-        _min_x_coord,
-        _max_x_coord,
-        _min_y_coord,
-        _max_y_coord,
-        "City Residents");*/
     _renderer.endFrame();
 } 
 
@@ -199,27 +185,6 @@ std::map<Color, std::vector<Coordinate>> Printer_Graphic::createVectorsForEachCo
         coordinatePerColor[colorKey].push_back(coord);
     } 
     return coordinatePerColor;
-}
-
-void Printer_Graphic::addCityGridLines (Coordinate orig)
-{
-    (void) orig;
-    //Coordinate xAxesCoord = Coordinate{orig.getX(), orig.getY() + x_axis_offset};
-    //Coordinate yAxes = Coordinate{orig.getX(), orig.getY() + 10 * gridSize};
-    //Coordinate cAxes = Coordinate{orig.getX(), orig.getY() +  9 * gridSize};
-    
-    //Coordinate titleCoord = Coordinate{
-    //    orig.getX() + ((maxX - minX)/2) * gridSize, 
-    //    orig.getY() + _title_offset };
-    //char* title_arr = &title[0];
-    //addTitle (titleCoord, title_arr, 20);
-
-    //addCityXAxis(orig, 4, 2, 80, 240, 18);
-    //addCityYAxis(orig, 4, 2, 80, 240);
-
-    
-    //addCityHouses(cAxes, gridSize, blockSize, coordinatesPerColor, colorMap);
-    
 }
 
 

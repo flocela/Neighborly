@@ -21,10 +21,6 @@ void Renderer::renderText (
     int centered
 )
 {
-    if (centered == 2)
-    {
-        std::cout <<"renderer line 27 x: " << x << std::endl;
-    }
     TTF_Font *font = TTF_OpenFont(FONT_PATH, fontSize);
     if(!font) {
         printf(
