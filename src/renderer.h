@@ -27,16 +27,6 @@ class Renderer {
 
 		void renderText (
 			int x, 
-			int y, 
-			int fontSize,
-			std::string text,
-			SDL_Color textColor,
-			SDL_Color backgroundColor,
-			int centered
-		);
-
-		void renderText (
-			int x, 
 			int y,
 			std::string text,
 			int centered
@@ -102,6 +92,16 @@ class Renderer {
 			Coordinate placement,
 			char* title,
 			int fontsize
+		);
+
+		void renderText (
+			int x, 
+			int y, 
+			int fontSize,
+			std::string text,
+			SDL_Color textColor,
+			SDL_Color backgroundColor,
+			int centered
 		);
 
 		

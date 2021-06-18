@@ -14,8 +14,7 @@ Printer_Graphic::Printer_Graphic (
     City* cityPtr
 ):  _screen_width{screen_width},
     _screen_height{screen_height},
-    _renderer{_screen_width, _screen_height},
-    _keep_polling{true}
+    _renderer{_screen_width, _screen_height}
 {
     for (ColorInfo colorInfo : _the_colors)
     {
@@ -28,20 +27,20 @@ Printer_Graphic::Printer_Graphic (
     _graphic_city_printer = std::make_unique<GraphicCityPrinter>(
         &_renderer,
         graphOrigin,
-        _coord_to_house,
+        _coord_to_house_map,
         _rgba_per_color,
         _grid_size,
         _min_x_coord,
         _max_x_coord,
         _min_y_coord,
         _max_y_coord,
-        40,
-        40,
-        10,
-        10,
-        240,
-        80,
-        20
+        _x_axis_offset,
+        _y_axis_offset,
+        _x_axis_overrun,
+        _y_axis_overrun,
+        _titles_at_left_offset,
+        _titles_at_top_offset,
+        _axis_font_size
     );
     initGridAndHouseSize ();
 }
@@ -52,7 +51,7 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
     for (int address : addresses)
     {   
         Coordinate coord =  cityPtr->getCoordinate(address);
-        _coord_to_house[coord] = address;
+        _coord_to_house_map[coord] = address;
         if (coord.getX() > _max_x_coord)
             _max_x_coord = coord.getX();
         if (coord.getX() < _min_x_coord)
@@ -87,9 +86,9 @@ void Printer_Graphic::initGridAndHouseSize ()
     int deltaX = _max_x_coord - _min_x_coord;
     int deltaY = _max_y_coord - _min_y_coord;
 
-    // city graph will take up half the screen width, divide space
+    // city graph will take up half the screen height, divide space
     // among houses. Each house will be in one grid. _grid_size and _house_size
-    // will be even so that the houses will be centered. // TODO not really necessary
+    // will be even numbers so that the houses will be centered.
     _grid_size = _screen_width/2/(std::max(deltaX, deltaY));
 
     if (_grid_size % 2 != 0)
@@ -115,12 +114,6 @@ void Printer_Graphic::print (
 {   (void) run;
     (void) totRuns;
     (void) title;
-
-    // Print city at top right corner of screen.
-    // Allow 10 and 10 pixels for x and y borders.
-    //Coordinate cityOrigin = Coordinate{10, 10};
-
-    _renderer.startFrame();
     _graphic_city_printer->printCity(residentPerHouse);
     _renderer.endFrame();
 } 
@@ -134,23 +127,9 @@ void Printer_Graphic::keepScreen()
         counter ++;
         if (e.type == SDL_QUIT)
         {
-            //_keep_polling = false;
             break;
         }
     }
-}
-void Printer_Graphic::printResidents(std::map<int, Resident*> addressPerResident,
-                                     std::map<int, Coordinate> coordinatePerAddress,
-                                     int run,
-                                     int totRuns,
-                           			 std::string title)
-{
-    //TODO use unused parameters
-    addressPerResident = {};
-    coordinatePerAddress = {};
-    run++;
-    totRuns++;
-    std::string x = title + "x";
 }
 
 std::map<Color, std::vector<Coordinate>> Printer_Graphic::createVectorsForEachColor (
@@ -158,7 +137,7 @@ std::map<Color, std::vector<Coordinate>> Printer_Graphic::createVectorsForEachCo
 )
 {
     std::map<Color, std::vector<Coordinate>> coordinatePerColor ={};
-    for (auto const& x : _coord_to_house)
+    for (auto const& x : _coord_to_house_map)
     {
         Coordinate coord = x.first;
         int address = x.second;

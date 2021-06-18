@@ -150,24 +150,6 @@ std::map<Color, ColorInfo> getColorInfo ()
     return colorMap;
 }
 
-void Renderer::addTitle (
-    Coordinate placement,
-    char* title,
-    int fontsize
-)
-{
-    (void) title;
-    renderText(
-        placement.getX(),
-        placement.getY(),
-        fontsize, 
-        "title",
-        {100, 100, 100, 100}, 
-        {0xFF, 0xFF, 0xFF, 0xFF},
-        1
-    );
-}
-
 void Renderer::setColorToMedGrey ()
 {
     SDL_SetRenderDrawColor(sdl_renderer, 200, 200, 200, 200);

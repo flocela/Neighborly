@@ -23,10 +23,10 @@ class GraphicCityPrinter
             int maxX,
             int minY,
             int maxY,
-            int xAxisOverrun,
-            int yAxisOverrun,
             int xAxisOffset,
             int yAxisOffset,
+            int xAxisOverrun,
+            int yAxisOverrun,
             int titlesAtLeftOffset,
             int titlesAtTopOffset,
             int fontSize

@@ -28,13 +28,6 @@ class Printer_Graphic : public Printer
             int totRuns,
             std::string title
         ) override;
-        void printResidents (
-            std::map<int, Resident*> housePerResident,
-            std::map<int, Coordinate> coordinatePerHouse,
-            int run,
-            int totRuns,
-            std::string title
-        ) override;
 
         void keepScreen();
     
@@ -55,31 +48,29 @@ class Printer_Graphic : public Printer
         // chart title is vertically offset from the origin by _title_offset
 		// from the x-axis by x-title-offset
 		const int _title_offset = 10;
-		
-		// x-axis numbers are vertically offset from origin by x_num_offset * gridSize
-		const int x_num_offset = 10;
 
 		// x-axis is vertically offset from origin by x-axis-offset
-		const int x_axis_offset = 50;
+		const int _x_axis_offset = 10;
 
-		// x-tick marks sit above the x axis and are vertically offset
-		// from the x-axis by x-tick-offset
-		const int x_tick_offset = 6;
-
-		// x-axis title sits above the x-axis and are vertically offset
-		// from the x-axis by x-title-offset
-		const int x_title_offset = 30;
+        // y-axis is vertically offset from origin by y-axis-offset
+		const int _y_axis_offset = 10;
 
 		// x-axis overruns its data by x_axis_overrun
-		const int x_axis_overrun = 20;
+		const int _x_axis_overrun = 0;
 
+        // y-axis overruns its data by y_axis_overrun
+		const int _y_axis_overrun = 0;
+
+        // titlesAtTopOffset and titlesLeftOffset is room given for titles at top
+        // and left of the graph.
+        // fontSize is for x and y axes.
+        const int _titles_at_left_offset = 240;
+        const int _titles_at_top_offset = 80;
+        const int _axis_font_size = 20;
         
-        std::map<Coordinate, int> _coord_to_house = {};
+        std::map<Coordinate, int> _coord_to_house_map = {};
 
         Renderer _renderer;
-        std::thread poll_thread;
-        void pollEvent();
-        bool _keep_polling;
         std::map<Color, std::vector<int>> _rgba_per_color;
         std::map<Color, std::vector<Coordinate>> createVectorsForEachColor (
             std::map<int, Resident*> houseToResidentMap
@@ -93,7 +84,6 @@ class Printer_Graphic : public Printer
         // Initializes information about the graph based on the city 
         // and screen sizes.
         void initGridAndHouseSize ();
-
 
 };
 

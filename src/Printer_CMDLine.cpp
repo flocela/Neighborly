@@ -49,16 +49,3 @@ void Printer_CMDLine::print(
     }*/
 
 } 
-void Printer_CMDLine::printResidents(std::map<int, Resident*> housePerResident,
-                                     std::map<int, Coordinate> coordinatePerHouse,
-                                     int run,
-                                     int totRuns,
-                           			 std::string title)
-{
-    // TODO fill in function
-    housePerResident = {};
-    coordinatePerHouse = {};
-    run++;
-    totRuns++;
-    std::string x = title + "x";
-}
