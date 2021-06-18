@@ -1,11 +1,12 @@
 #include "GraphicCityPrinter.h"
 #include <iostream>
 
-void GraphicCityPrinter::printCity ()
+void GraphicCityPrinter::printCity (std::map<int, Resident*> houseToResMap)
 {
     addCityXAxis();
     addCityYAxis();
     addTitle();
+    addHouses(houseToResMap);
 }
 
 void GraphicCityPrinter::addTitle()
@@ -170,4 +171,65 @@ void GraphicCityPrinter::addCityYAxis ()
         _renderer->renderText(tr.xPixel, tr.yPixel, tr.text, tr.centered);
     }
     
+}
+
+void GraphicCityPrinter::addHouses(
+    std::map<int, Resident*> houseToResMap
+)
+{
+    std::map<Color, std::vector<Coordinate>> colorToCoordinates =
+        createVectorsForEachColor(houseToResMap);
+    
+    for (auto const& colorToCoord : colorToCoordinates)
+    {
+        Color color = colorToCoord.first;
+        _renderer->addBlocksByColor(
+            _grid_size/2,
+            _grid_size/2,
+            colorToCoord.second,
+            _rgba_per_color[color]
+        );
+    }
+}
+
+std::map<Color, std::vector<Coordinate>> GraphicCityPrinter::createVectorsForEachColor (
+    std::map<int, Resident*> houseToResMap
+)
+{
+    std::map<Color, std::vector<Coordinate>> colorToCoordinatesMap ={};
+    // city origin is where x and y axis meet.
+    Coordinate cityOrigin{
+        _chart_origin.getX() + _titles_at_left_offset,
+        _chart_origin.getY() + _titles_at_top_offset
+    };
+
+    for (auto const& x : _coord_to_house_map)
+    {
+        Coordinate coord = x.first;
+        int address = x.second;
+
+        Color colorKey;
+
+        if (houseToResMap.count(address) == 0)
+        {   
+            // No resident has this address. So this house is empty.
+            colorKey = Color::absent;
+        }
+        else
+        {   
+            Resident* res = houseToResMap[address];
+            colorKey = res->getColor();
+        }
+
+        if (colorToCoordinatesMap.count(colorKey) == 0) // TODO  c++ knows how to do this in one step
+        {
+            std::vector<Coordinate> newCoordinateVector = {};
+            colorToCoordinatesMap[colorKey] = newCoordinateVector;
+        }
+        int pixelX = cityOrigin.getX() + _x_axis_offset + (coord.getX()-_min_x) * _grid_size - _grid_size/2;
+        int pixelY = cityOrigin.getY() + _y_axis_offset + (coord.getY()-_min_y) * _grid_size - _grid_size/2;
+        Coordinate pixelCoord{pixelX, pixelY};
+        colorToCoordinatesMap[colorKey].push_back(pixelCoord);
+    } 
+    return colorToCoordinatesMap;
 }

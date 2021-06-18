@@ -150,7 +150,6 @@ std::map<Color, ColorInfo> getColorInfo ()
     return colorMap;
 }
 
-
 void Renderer::addTitle (
     Coordinate placement,
     char* title,
@@ -264,34 +263,23 @@ bool Renderer::initRenderer()
     return true;
 }
 
-
-void Renderer::addCityHouses(
-    Coordinate cityOrigin,
-	int gridSize,
-	int blockSize,
-	std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
-    std::map<Color, ColorInfo> colorMap
+void Renderer::addBlocksByColor(
+	int width,
+	int height,
+	std::vector<Coordinate> coordinates,
+	std::vector<int> rgba
 )
 {
     SDL_Rect block;
-    block.w = blockSize;
-    block.h = blockSize;
+    block.w = width;
+    block.h = height;
 
-    for (auto const& x : coordinatesPerColor)
+    SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
+    for (Coordinate c : coordinates)
     {
-        Color currColor = x.first;
-        std::vector<Coordinate> coordinates = x.second;
-
-        ColorInfo colorInfo = colorMap[currColor];
-        std::vector<int> rgba = colorInfo.rgba;
-
-        SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
-        for (Coordinate c : coordinates)
-        {
-            block.x = cityOrigin.getX() - block.w/2 + c.getX() * gridSize;
-            block.y = cityOrigin.getY() - block.w/2 + c.getY() * gridSize;
-            SDL_RenderFillRect(sdl_renderer, &block);
-        }
+        block.x = c.getX();
+        block.y = c.getY();
+        SDL_RenderFillRect(sdl_renderer, &block);
     }
 
 }

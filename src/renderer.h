@@ -47,6 +47,15 @@ class Renderer {
 			SDL_Color textBackgroundColor,
 			int fontSize
 		);
+
+		// @coordinates: the coordinates are in pixels, not in city coordinates.
+		// They refer to the top left point on the block.
+		void addBlocksByColor(
+			int width,
+			int height,
+			std::vector<Coordinate> coordinates,
+			std::vector<int> rgba
+		);
 		
  	private:
   		SDL_Window *sdl_window;
@@ -87,13 +96,6 @@ class Renderer {
 		void setMinMaxCityCoordinates (std::vector<Coordinate> coordinates);
 		std::vector<Coordinate> extractCoordinates (
 			std::map<Color, std::vector<Coordinate>> coordinatesPerColor
-		);
-		void addCityHouses(
-    		Coordinate cityOrigin,
-			int gridSize,
-			int blockSize,
-			std::map<Color, std::vector<Coordinate>> coordinatesPerColor,
-			std::map<Color, ColorInfo> colorMap
 		);
 
 		void addTitle (

@@ -20,14 +20,16 @@ Printer_Graphic::Printer_Graphic (
     for (ColorInfo colorInfo : _the_colors)
     {
 
-        _rgba_per_color[colorInfo._my_color];
+        _rgba_per_color[colorInfo._my_color] = colorInfo.rgba;
     }
-
+    
     initCityCoordinateInfo(cityPtr);
-    Coordinate cityOrigin = Coordinate{10, 10};
+    Coordinate graphOrigin = Coordinate{10, 10};
     _graphic_city_printer = std::make_unique<GraphicCityPrinter>(
         &_renderer,
-        cityOrigin,
+        graphOrigin,
+        _coord_to_house,
+        _rgba_per_color,
         _grid_size,
         _min_x_coord,
         _max_x_coord,
@@ -50,7 +52,7 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
     for (int address : addresses)
     {   
         Coordinate coord =  cityPtr->getCoordinate(address);
-        _housePerCoordinate[coord] = address;
+        _coord_to_house[coord] = address;
         if (coord.getX() > _max_x_coord)
             _max_x_coord = coord.getX();
         if (coord.getX() < _min_x_coord)
@@ -60,8 +62,6 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
         if (coord.getY() < _min_y_coord)
             _min_y_coord = coord.getY();
     }
-    _min_x_coord = 3;
-    _min_y_coord = 9;
 
     int deltaX = _max_x_coord - _min_x_coord;
     int deltaY = _max_y_coord - _min_y_coord;
@@ -115,14 +115,13 @@ void Printer_Graphic::print (
 {   (void) run;
     (void) totRuns;
     (void) title;
-    (void) residentPerHouse;
 
     // Print city at top right corner of screen.
     // Allow 10 and 10 pixels for x and y borders.
     //Coordinate cityOrigin = Coordinate{10, 10};
 
     _renderer.startFrame();
-    _graphic_city_printer->printCity();
+    _graphic_city_printer->printCity(residentPerHouse);
     _renderer.endFrame();
 } 
 
@@ -159,7 +158,7 @@ std::map<Color, std::vector<Coordinate>> Printer_Graphic::createVectorsForEachCo
 )
 {
     std::map<Color, std::vector<Coordinate>> coordinatePerColor ={};
-    for (auto const& x : _housePerCoordinate)
+    for (auto const& x : _coord_to_house)
     {
         Coordinate coord = x.first;
         int address = x.second;

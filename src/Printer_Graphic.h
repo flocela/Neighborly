@@ -74,7 +74,7 @@ class Printer_Graphic : public Printer
 		const int x_axis_overrun = 20;
 
         
-        std::map<Coordinate, int> _housePerCoordinate = {};
+        std::map<Coordinate, int> _coord_to_house = {};
 
         Renderer _renderer;
         std::thread poll_thread;
@@ -82,7 +82,7 @@ class Printer_Graphic : public Printer
         bool _keep_polling;
         std::map<Color, std::vector<int>> _rgba_per_color;
         std::map<Color, std::vector<Coordinate>> createVectorsForEachColor (
-            std::map<int, Resident*> residentPerHouse
+            std::map<int, Resident*> houseToResidentMap
         );
         // Initializes information from the city that will not change. Each 
         // address's coordinate will stay the same. So the _housePerCoordinate map

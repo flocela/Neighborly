@@ -4,6 +4,7 @@
 #include "renderer.h"
 #include "Coordinate.h"
 #include "TextRect.h"
+#include "Resident.h"
 #include <vector>
 
 // Takes in a Renderer and city chart origin and offsets.
@@ -15,6 +16,8 @@ class GraphicCityPrinter
         GraphicCityPrinter (
             Renderer* renderer,
             Coordinate chartOrigin,
+            std::map<Coordinate, int> coordToHouseMap,
+            std::map<Color, std::vector<int>> rgbaPerColor,
             int gridSize,
             int minX,
             int maxX,
@@ -29,6 +32,8 @@ class GraphicCityPrinter
             int fontSize
         ):  _renderer{renderer},
             _chart_origin{chartOrigin},
+            _coord_to_house_map{coordToHouseMap},
+            _rgba_per_color{rgbaPerColor},
             _grid_size{gridSize},
             _min_x{minX},
             _max_x{maxX},
@@ -43,13 +48,15 @@ class GraphicCityPrinter
             _font_size{fontSize}
         {}
 
-        void printCity ();
+        void printCity (std::map<int, Resident*> houseToResMap);
           
     private:
         Renderer* _renderer;
         // chartOrigin is top left corner of entire chart, including titles. 
         // Coordinate uses window coordinate system.
         Coordinate _chart_origin;
+        std::map<Coordinate, int> _coord_to_house_map;
+        std::map<Color, std::vector<int>> _rgba_per_color;
         int _grid_size;
         int _min_x;
         int _max_x;
@@ -80,8 +87,10 @@ class GraphicCityPrinter
         void addCityXAxis ();
         void addCityYAxis ();
         void addTitle();
-
-
+        void addHouses(std::map<int, Resident*> houseToResMap);
+        std::map<Color, std::vector<Coordinate>> createVectorsForEachColor (
+            std::map<int, Resident*> houseToResMap
+        );
 
 };
 
