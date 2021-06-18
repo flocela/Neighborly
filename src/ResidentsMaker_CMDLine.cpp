@@ -13,7 +13,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents
     auto newResidents = residentsFactories[0]->createBaseResidents(
             _ui,
             0,
-            13,
+            30,
             0.5,
             Color::red);
     for (auto& r: newResidents)
@@ -24,7 +24,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents
     auto newResidents2 = residentsFactories[0]->createBaseResidents(
             _ui,
             13,
-            17,
+            50,
             0.5,
             Color::green);
     for (auto& r: newResidents2)

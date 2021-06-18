@@ -44,6 +44,7 @@
 #include "ResidentsMaker_CMDLine.h"
 #include "Printer_Graphic.h"
 #include "Resident_Flat.h"
+#include "Simulator.h"
 
 // Define MAX and MIN macros
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
@@ -112,14 +113,19 @@ int main(int argc, char* argv[])
         residentPtrs.push_back(resident.get());
     }
 
-    std::map<int, Resident*> residentPerHouse = {};
+/*
+    std::map<int, Resident*> houseToResidentMap = {};
     for (auto& resident : residents)
     {
-        residentPerHouse[resident->getID()] = resident.get();
-    }
+        houseToResidentMap[resident->getID()] = resident.get();
+    }*/
+    Simulator simulator{city.get()};
+    std::map<int, Resident*> houseToResidentMap = simulator.startSimulation(
+        residentPtrs
+    );
 
     Printer_Graphic printer{1200, 1200, city.get()};
-    printer.print(residentPerHouse, 1, 1, "Title");
+    printer.print(houseToResidentMap, 1, 1, "Title");
     printer.keepScreen();
     return 0; 
 }

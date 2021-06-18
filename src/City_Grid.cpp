@@ -63,6 +63,33 @@ std::vector<int> City_Grid::getAdjacentAdresses (int address) const
 	return adjacentAddresses;
 }
 
+std::vector<int> City_Grid::getAddressesWithin(int address, double distance) const
+{
+	std::pair<int, double> addressAndDistance{address, distance};
+	std::vector<int> closeAddresses;
+	int x = get_x(address);
+	int y = get_y(address);
+	int minX = x - std::floor(distance);
+	int maxX = x + std::floor(distance);
+	int minY = y - std::floor(distance);
+	int maxY = y + std::floor(distance);
+	int topLeftAddress = minX * _width + minY;
+	int yDiff = maxY - minY;
+	for (int ii=topLeftAddress; ii<=maxX; ii++)
+	{
+		for (int jj=0; jj<yDiff; jj++)
+		{
+			int otherAddress = ii + jj;
+			double farAway = dist(address, otherAddress);
+			if (farAway <= distance)
+			{
+				closeAddresses.push_back(otherAddress);
+			}
+		}
+	}
+	return closeAddresses;
+}
+
 int City_Grid::get_x (const int& address) const
 {
 	return (address/_width);
