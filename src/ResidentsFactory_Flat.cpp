@@ -28,15 +28,31 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
         qHappinessGoal,
         _happinessGoalFailure
     );
+
+    Question_YN qHappyAtGoal {
+        2,
+        _happy_at_goal_orig_prompt,
+        _happy_at_goal_invalid_prompt
+    };
+
+    bool happyAtGoal = askUserForBool(
+        ui,
+        qHappyAtGoal,
+        _happy_at_goal_failure
+
+    );
     
-    return createResidents(ui, firstID, count, happinessGoal, color);
+    return createResidents(ui, firstID, count, happinessGoal, happyAtGoal, color);
 }
 
+// This is used by ResidentsMaker_CMDLine because the game uses one happinessGoal for
+// all residents. That is found out for the whole game, and then passed in here.
 std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     UI& ui,
     int firstID, 
     int count, 
-    double happinessGoal, 
+    double happinessGoal,
+    bool happyAtGoal,
     Color color
 )
 {   
@@ -79,6 +95,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
                 color,
                 movement,
                 happinessGoal,
+                happyAtGoal,
                 happinessValue
         ));
     }
@@ -89,7 +106,8 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createBaseResident
     UI& ui,
     int firstID, 
     int count, 
-    double happinessGoal, 
+    double happinessGoal,
+    bool happyAtGoal,
     Color color
 )
 {   
@@ -105,6 +123,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createBaseResident
             color,
             movement,
             happinessGoal,
+            happyAtGoal,
             happinessValue
         ));
     }
@@ -138,6 +157,23 @@ double ResidentsFactory_Flat::askUserForDouble (
     if (question.hasValidAnswer())
     {
         return std::stod(question.getAnswer());
+    }
+    else
+    {
+        throw failureString;
+    }
+}
+
+bool ResidentsFactory_Flat::askUserForBool (
+    UI& ui,
+    Question_YN question,
+    std::string failureString
+)
+{
+    ui.getAnswer(question);
+    if (question.hasValidAnswer())
+    {
+        return question.getAnswer() == "N" ? false : true;
     }
     else
     {

@@ -24,7 +24,7 @@ class City_Grid: public City
         std::vector<int> getAddresses () const override;
         double dist (const int& from_address, const int& to_address) const override;
         std::vector<int> getAdjacentAdresses (int address) const override;
-        std::vector<int> getAddressesWithin(int address, double distance) const override;
+        std::set<int> getAddressesWithin(int address, double distance) const override;
         int get_x (const int& address) const override;
         int get_y (const int& address) const override;
         bool equals(const City_Grid& other) const;

@@ -1,21 +1,24 @@
 #include "Resident_Flat.h"
-
-Resident_Flat::Resident_Flat (int id,
-                              Color color,
-                              double allowedMovementDistance,
-                              double happinessGoal,
-                              double happinessValue):
-    Resident(id, color, allowedMovementDistance, happinessGoal),
+#include <iostream>
+Resident_Flat::Resident_Flat (
+    int    id,
+    Color  color,
+    double allowedMovementDistance,
+    double happinessGoal,
+    bool   happyAtGoal,
+    double happinessValue):
+    Resident(id, color, allowedMovementDistance, happinessGoal, happyAtGoal),
     _happiness_func{happinessValue}
-{
-    
-}
+{}
 
-double Resident_Flat::getHappiness(std::vector<Color> neighbors) const
+double Resident_Flat::getHappiness(
+    std::vector<Color> neighbors,
+    int numOfAdjacentHouses
+) const
 {
-    int total = neighbors.size();
+    (void) neighbors;
     int like  = 0;
     int diff  = 0;
 
-    return _happiness_func.getHappiness(total, like, diff);
+    return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
 }

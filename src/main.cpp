@@ -119,13 +119,16 @@ int main(int argc, char* argv[])
     {
         houseToResidentMap[resident->getID()] = resident.get();
     }*/
-    Simulator simulator{city.get()};
-    std::map<int, Resident*> houseToResidentMap = simulator.startSimulation(
-        residentPtrs
-    );
+    Simulator simulator{city.get(), residentPtrs};
+     Printer_Graphic printer{1200, 1200, city.get()};
 
-    Printer_Graphic printer{1200, 1200, city.get()};
-    printer.print(houseToResidentMap, 1, 1, "Title");
+    for (int ii=0; ii< 5; ii++)
+    {
+        std::map<int, Resident*> houseToResidentMap = simulator.simulate();
+        printer.print(houseToResidentMap, 1, 1, "Title");
+        //std::this_thread::sleep_for(std::chrono::nanoseconds(1000));
+        std::cout << "main line 130: " << ii << std::endl;
+    }
     printer.keepScreen();
     return 0; 
 }

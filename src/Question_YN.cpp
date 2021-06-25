@@ -1,8 +1,11 @@
 #include "Question_YN.h"
 
-Question_YN::Question_YN ( int id,
-                           std::string origPrompt):
-    _ID{id}, _orig_prompt{origPrompt}
+Question_YN::Question_YN (
+    int id,
+    std::string origPrompt,
+    std::string invalidPrompt):
+    _ID{id}, _orig_prompt{origPrompt},
+    _invalid_prompt{invalidPrompt}
 {
     _next_prompt = &_orig_prompt;
 }

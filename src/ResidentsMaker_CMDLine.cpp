@@ -15,6 +15,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents
             0,
             30,
             0.5,
+            false,
             Color::red);
     for (auto& r: newResidents)
         {
@@ -26,6 +27,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents
             13,
             50,
             0.5,
+            false,
             Color::green);
     for (auto& r: newResidents2)
         {
@@ -65,12 +67,14 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
         );
 
         double happinessGoal = askForHappinessGoalForGroup(color._my_string);
+        bool happyAtGoal = askForHappyAtGoalForGroup(color._my_string);
 
         auto newResidents = residentsFactories[choice]->createResidents(
             _ui,
             numOfResidentsCreated,
             numOfResidents,
             happinessGoal,
+            happyAtGoal,
             color._my_color);
 
         for (auto& r: newResidents)
@@ -107,6 +111,20 @@ double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (std::string color)
         return std::stod(question.getAnswer());
     else
         throw _group_happiness_failure.insert(56, color + " ");
+}
+
+bool ResidentsMaker_CMDLine::askForHappyAtGoalForGroup (std::string color)
+{
+    Question_YN question = createQuestionGroupHappyAtGoal(color);
+    _ui.getAnswer(question);
+    if (question.hasValidAnswer())
+    {
+        return question.getAnswer() == "N" ? false : true;
+    }
+    else
+    {
+        throw _group_happy_at_goal_failure;
+    }
 }
 
 int ResidentsMaker_CMDLine::askForNumOfGroupsOfResidents()
@@ -173,6 +191,15 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupHappiness (std::strin
                            _group_happiness_orig_prompt.insert(55, color + " "),
                            _group_happiness_range_prompt,
                            _group_happiness_range_prompt};
+}
+
+Question_YN ResidentsMaker_CMDLine::createQuestionGroupHappyAtGoal (std::string color)
+{
+    return Question_YN {
+        3,
+        _group_happiness_orig_prompt.insert(20, color + " "),
+        _group_happy_at_goal_invalid_prompt
+    };
 }
 
 void ResidentsMaker_CMDLine::initColors ()

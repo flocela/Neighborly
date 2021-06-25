@@ -8,21 +8,25 @@ class Resident_StepUp: public Resident
 {
     public:
         Resident_StepUp () = delete;
-        Resident_StepUp (int id,
-                        Color color,
-                        double allowedMovementDistance,
-                        double happinessGoal,
-                        double happinessValueAtZeroDiversity,
-                        double happinessValueAtOneDiversity,
-                        double diversityWhereRiseHappens);
+        Resident_StepUp (
+            int id,
+            Color color,
+            double allowedMovementDistance,
+            double happinessGoal,
+            bool   happyAtGoal,
+            double happinessValueAtZeroDiversity,
+            double happinessValueAtOneDiversity,
+            double diversityWhereRiseHappens);
         Resident_StepUp (const Resident_StepUp& obj) = default;
         Resident_StepUp (Resident_StepUp&& obj) noexcept = default;
         Resident_StepUp& operator= (const Resident_StepUp& obj) = default;
         Resident_StepUp& operator= (Resident_StepUp&& obj) noexcept = default;
         ~Resident_StepUp() = default;
 
-        double getHappiness (std::vector<Color> neighbors) const override;
-
+        double getHappiness (
+            std::vector<Color> neighbors,
+            int numOfAdjacentHouses
+        ) const override;
         private:
         HappinessFunc_StepUp _happiness_func;
 };

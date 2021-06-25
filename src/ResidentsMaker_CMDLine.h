@@ -4,6 +4,7 @@
 #include "ResidentsMaker.h"
 #include "Question_Int.h"
 #include "Question_Double.h"
+#include "Question_YN.h"
 #include "Color.h"
 #include "UI_CMDLine.h"
 
@@ -27,6 +28,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         
         ColorInfo askForGroupColor (int groupIdx);
         double askForHappinessGoalForGroup (std::string color);
+        bool askForHappyAtGoalForGroup (std::string color);
         int askForNumOfGroupsOfResidents ();
         int askForNumOfResidents (int count, std::string color);
         int askForGroupResidentType (
@@ -37,6 +39,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         Question_Int createQuestionHowManyResidentGroups ();
         Question_Int createQuestionHowManyResidents (int count, std::string color);
         Question_Double createQuestionGroupHappiness(std::string color);
+        Question_YN createQuestionGroupHappyAtGoal (std::string color);
 
         void initColors ();
         void updateAvailableColors (ColorInfo color);
@@ -88,6 +91,19 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
             "That's too small or too large. Should be between 0 and 1 inclusive.  ";
         std::string _group_happiness_failure = 
             "Could not determine the happiness goal for members of group.";
+
+        // Prompts for group_happy_at_goal question.
+        std::string _group_happy_at_goal_orig_prompt = 
+            "Should residents in group choose the first house that meets"
+            " thier happiness goal? If you type No, then residents will"
+            " choose the available house that makes them the most happy"
+            " Type Yes or No.";
+        std::string _group_happy_at_goal_invalid_prompt = 
+            "Type a Yes or No. Should residents in this group choose the first"
+            " house that meets thir happiness goal?";
+        std::string _group_happy_at_goal_failure = 
+            "Could not determine if residents would be satisfied with the first"
+            " house that met their happiness goal or if they would keep looking.";
 
 };
 

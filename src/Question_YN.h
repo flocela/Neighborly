@@ -7,7 +7,8 @@ class Question_YN: public Question
 {
     public:
         Question_YN ( int id,
-                      std::string origPrompt);
+                      std::string origPrompt,
+                      std::string invalidPrompt);
         
         Question_YN () = default;
         Question_YN ( const Question_YN& obj ) = default;
@@ -26,7 +27,7 @@ class Question_YN: public Question
         std::string _answer;
         bool _valid_answer = false;
         std::string _orig_prompt;
-        std::string _invalid_prompt = "I didn't understand your answer.";
+        std::string _invalid_prompt;
         std::string* _next_prompt;
 };
 
