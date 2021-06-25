@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
     Simulator simulator{city.get(), residentPtrs};
      Printer_Graphic printer{1200, 1200, city.get()};
 
-    for (int ii=0; ii< 5; ii++)
+    for (int ii=0; ii< 3; ii++)
     {
         std::map<int, Resident*> houseToResidentMap = simulator.simulate();
         printer.print(houseToResidentMap, 1, 1, "Title");
