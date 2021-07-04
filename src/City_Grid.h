@@ -11,6 +11,18 @@ class City_Grid: public City
         int _width;
     	std::vector<int> _addresses;
         std::map<std::pair<int, double>, std::vector<int>> _within_dist_map;
+        std::set<std::pair<int, int>>::iterator selectRandom (
+            const std::set<std::pair<int, int>> &s,
+            size_t n
+        ) const;
+        std::set<std::pair<int, int>> getSetAddresses (
+            int minX,
+            int maxX,
+            int minY,
+            int maxY
+        ) const;
+        int getAddress (int x, int y) const;
+        std::set<int> convertVectorToSet (std::vector<int> ints) const;
     
     public:
     	City_Grid (int width);
@@ -24,7 +36,13 @@ class City_Grid: public City
         std::vector<int> getAddresses () const override;
         double dist (const int& from_address, const int& to_address) const override;
         std::vector<int> getAdjacentAdresses (int address) const override;
-        std::set<int> getAddressesWithin(int address, double distance) const override;
+        std::set<int> getCloseAddresses (int address, double distance) const override;
+        std::set<int> getCloseAddresses (
+            int address,
+            double distance,
+            std::set<int> occupiedAdresses,
+            int count
+        ) const override;
         int get_x (const int& address) const override;
         int get_y (const int& address) const override;
         bool equals(const City_Grid& other) const;

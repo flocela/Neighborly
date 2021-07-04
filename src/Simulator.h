@@ -16,7 +16,8 @@ class Simulator
         std::map<int, Resident*> _curr_addr_to_res_map = {};
         bool firstSimDone = false;
 
-        std::set<int>::iterator selectRandom (const std::set<int> &s, size_t n);
+        // selectRandom deletes the integer that is returned from @setOfInt
+        int selectRandom (std::set<int>& setOfInt) const;
         void firstSimulation ();
         std::set<int> getSetOfAddresses ();
         std::set<int> getSetOfInts (int max);
@@ -24,32 +25,31 @@ class Simulator
         std::vector<Resident*> getResidents (std::vector<int> residentIndices);
         std::map<Resident*, int> getAddresses(std::vector<Resident*> residents);
         void openHouses (std::vector<Resident*> residents);
-        std::set<int> getOnlyOpenHouses (std::set<int> addresses);
-        int findNewForcedAddress (
+        std::set<int> filterForOpenHouses (std::set<int> addresses);
+        int findAddressForForcedRes (
             Resident* resident,
             int oldAddress,
             std::set<int> openHouses, // open houses within distance of resident
             int chances
         );
-        int findForcedAddressHappyAtGoal (
+        int findAddressForForcedResHappyAtGoal (
             Resident* res,
             int oldAddress,
-            std::set<int> openHouses, // open houses within distance of resident
-            int chances
+            std::set<int> openHouses // open houses within distance of resident
         );
-        int findForcedAddressHappyAtBest (
+        int findAddressForForcedResHappyAtBest (
             Resident* res,
             int oldAddress,
-            std::set<int> openHouses, // open houses within distance of resident
-            int chances
+            std::set<int> openHouses // open houses within distance of resident
         );
-        int findOptionalAddress (
+        int findAddressForOptionalMoveRes (
             Resident* res,
             int oldAddress,
             std::set<int> openHouses, // open houses within distance of resident
             int chances
         );
         std::vector<Color> getColors (std::vector<int> addresses);
+        std::set<int> getKeysFromMap (std::map<int, Resident*> theMap);
 
     public:
         Simulator (City* city, std::vector<Resident*> residents);

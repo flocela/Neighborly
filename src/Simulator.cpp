@@ -13,51 +13,57 @@ std::map<int, Resident*> Simulator::simulate()
         return _curr_addr_to_res_map;
     }
     int chances = 2;
-    // ints in movingResidents are indices in _residents
+    
+    // forcedResIdxs hold indexes corresponding to residents in _residents.
+    // optionalResIdxs hold the indexes corresponding to residents in _residents.
+    // forcedResIdxs are residents that are forced to move.
+    // optionalResIdxs are residents that can choose not to move.
+    // forcedResIdxs and optionalResIdxs have integers in random order.
+    // Each iteration of while loop will designate a house for a resident in
+    // forcedResIdxs and then designate a house for a resident in optionalResIdxs.
     std::pair<std::vector<int>, std::vector<int>> moving = getMovingResIdxs();
-    std::vector<Resident*> forcedMoveResidents = getResidents(moving.first);
-    std::map<Resident*, int> resToOldAddrMap = getAddresses(forcedMoveResidents);
-    openHouses(forcedMoveResidents);
     std::vector<int> forcedResIdxs = moving.first;
     std::vector<int> optionalResIdxs = moving.second;
     std::vector<int>::iterator forcedResIt = forcedResIdxs.begin();
     std::vector<int>::iterator optionalResIt = optionalResIdxs.begin();
 
+    std::vector<Resident*> forcedMoveResidents = getResidents(forcedResIdxs);
+    std::map<Resident*, int> ResToOldAddressMapForForcedRes = 
+        getAddresses(forcedMoveResidents);
+    // all forcedMoveResidents' houses are available to move into.
+    openHouses(forcedMoveResidents);
+    std::set<int> occupied = getKeysFromMap(_curr_addr_to_res_map);
+
     while ( forcedResIt != forcedResIdxs.end() ||
         optionalResIt != optionalResIdxs.end()
     )
-    {
+    {   
         if (forcedResIt != forcedResIdxs.end())
         {   
             Resident* curr = _residents[*forcedResIt];
-            std::set<int> openHouses = getOnlyOpenHouses(
-                _city->getAddressesWithin(
-                    resToOldAddrMap[curr],
-                    100
-                )
+            int oldAddress = ResToOldAddressMapForForcedRes[curr];
+            std::set<int> openHouses = _city->getCloseAddresses(
+                oldAddress,
+                100,
+                occupied,
+                chances
             );
-            int oldHouse = resToOldAddrMap[curr];
-            openHouses.erase(oldHouse);
-            std::map<double, int> happinessToAddress = {};
-            int tries = chances;
 
             int newAddress = -1;
             if (curr->getHappyAtGoal())
             { 
-                newAddress = findForcedAddressHappyAtGoal(
+                newAddress = findAddressForForcedResHappyAtGoal(
                     curr,
-                    oldHouse,
-                    openHouses,
-                    tries
+                    oldAddress,
+                    openHouses
                 );
             }
             else // happyAtGoal = false; Then find the best house
             { 
-                newAddress = findForcedAddressHappyAtBest(
+                newAddress = findAddressForForcedResHappyAtBest(
                     curr,
-                    oldHouse,
-                    openHouses,
-                    tries
+                    oldAddress,
+                    openHouses
                 );
             }
             _curr_addr_to_res_map.insert(std::pair<int, Resident*>(
@@ -70,15 +76,15 @@ std::map<int, Resident*> Simulator::simulate()
         if (optionalResIt != optionalResIdxs.end())
         { 
             Resident* curr = _residents[*optionalResIt];
-            int oldHouse = resToOldAddrMap[curr];
+            int oldHouse = ResToOldAddressMapForForcedRes[curr];
             int tries = chances;
-            std::set<int> openHouses = getOnlyOpenHouses(
-                _city->getAddressesWithin(
-                    resToOldAddrMap[curr],
-                    100
+            std::set<int> openHouses = filterForOpenHouses(
+                _city->getCloseAddresses(
+                    ResToOldAddressMapForForcedRes[curr],
+                    25
                 )
             );
-            int newAddress = findOptionalAddress(
+            int newAddress = findAddressForOptionalMoveRes(
                 curr,
                 oldHouse,
                 openHouses,
@@ -92,15 +98,27 @@ std::map<int, Resident*> Simulator::simulate()
             
         }
     }
-
+        
     return _curr_addr_to_res_map;
 }
 
-std::set<int>::iterator Simulator::selectRandom(const std::set<int> &s, size_t n)
+std::set<int> Simulator::getKeysFromMap (std::map<int, Resident*> theMap)
 {
-    std::set<int>::iterator it = std::begin(s);
-    std::advance(it, n);
-    return it;
+    std::set<int> keysToReturn;
+    for (std::map<int, Resident*>::iterator it = theMap.begin(); it != theMap.end(); ++it)
+    {
+        keysToReturn.insert(it->first);
+    }
+    return keysToReturn;
+}
+
+int Simulator::selectRandom(std::set<int>& setOfInt) const
+{   int size = setOfInt.size();
+    int r = rand() % size;
+    std::set<int>::iterator it = std::begin(setOfInt);
+    std::advance(it, r);
+    setOfInt.erase(*it);
+    return *it;
 }
 
 void Simulator::firstSimulation()
@@ -109,11 +127,8 @@ void Simulator::firstSimulation()
     
     for (Resident* res : _residents)
     {
-        int size = openAddresses.size();
-        int r = rand() % size;
-        int address = *selectRandom(openAddresses, r);
+        int address = selectRandom(openAddresses);
         _curr_addr_to_res_map.insert({address, res});
-        openAddresses.erase(address);
     }
 }
 
@@ -140,25 +155,20 @@ std::set<int> Simulator::getSetOfInts(int max)
 
 std::pair<std::vector<int>, std::vector<int>> Simulator::getMovingResIdxs()
 {
-    std::set<int> residentIndices = getSetOfInts(_residents.size());
+    std::set<int> residentIdxsSet = getSetOfInts(_residents.size());
     std::vector<int> forcedResidentIndices;
     std::vector<int> optionalResidentIndices;
-    // choose is total number of times residents are choosen.
-    int choose = _residents.size() * 0.2;
-    for (int ii=0; ii<choose; ii++)
+    // chosen is total number of residents that are chosen.
+    // At each iteration, one is chosen for being forced
+    // to move and one is chosen that can optionally move.
+    int chosen = _residents.size() * 0.2;
+    for (int ii=0; ii<chosen/2; ii++)
     {
-        int size = residentIndices.size();
-        int r = rand() % size;
-        int chosenIdx = *selectRandom(residentIndices, r);
-        if (ii % 2 == 0)
-        {
-            forcedResidentIndices.push_back(chosenIdx);
-        }
-        else
-        {
-            optionalResidentIndices.push_back(chosenIdx);
-        }
-        residentIndices.erase(chosenIdx);
+        int chosenIdx = selectRandom(residentIdxsSet);
+        forcedResidentIndices.push_back(chosenIdx);
+
+        chosenIdx = selectRandom(residentIdxsSet);
+        optionalResidentIndices.push_back(chosenIdx);
     }
     return std::pair<std::vector<int>, std::vector<int>>{
         forcedResidentIndices, 
@@ -213,7 +223,7 @@ std::map<Resident*, int> Simulator::getAddresses (std::vector<Resident*> residen
     return selectResToAddrMap;
 } 
 
-std::set<int> Simulator::getOnlyOpenHouses (std::set<int> addresses)
+std::set<int> Simulator::filterForOpenHouses (std::set<int> addresses)
 {
     std::set<int> openHouses;
     for (int addr : addresses)
@@ -226,34 +236,33 @@ std::set<int> Simulator::getOnlyOpenHouses (std::set<int> addresses)
     return openHouses;
 }
 
-int Simulator::findNewForcedAddress (
+// TODO not used probably delete
+int Simulator::findAddressForForcedRes (
     Resident* res,
     int oldAddress,
     std::set<int> openHouses, // open houses within distance of resident
     int chances
 )
-{   
+{   (void) chances;
     if (res->getHappyAtGoal())
     { 
-        return findForcedAddressHappyAtGoal(
+        return findAddressForForcedResHappyAtGoal(
             res,
             oldAddress,
-            openHouses,
-            chances
+            openHouses // TODO tries should be taken into account
         );
     }
     else
     { 
-        return findForcedAddressHappyAtBest (
+        return findAddressForForcedResHappyAtBest (
             res,
             oldAddress,
-            openHouses,
-            chances
+            openHouses
         );
     }
 }
 
-int Simulator::findOptionalAddress (
+int Simulator::findAddressForOptionalMoveRes (
         Resident* res,
         int oldAddress,
         std::set<int> openHouses, // open houses within distance of resident
@@ -294,66 +303,74 @@ int Simulator::findOptionalAddress (
     return oldAddress;
 }
 
-// TODO what if no address is found at all. Then allow to stay, maybe throw exception.
-int Simulator::findForcedAddressHappyAtGoal (
+// If @openHouses is empty (or only contains the @oldAddress), returns @oldAddress.
+// @oldAddress is removed from @openHouses.
+// Goes through openHouses until a house that meets the happinessGoal is found.
+// Returns that address.
+// If no house is found that meets happinessGoal, returns house that makes
+// resident most happy.
+int Simulator::findAddressForForcedResHappyAtGoal (
     Resident* res,
     int oldAddress,
-    std::set<int> openHouses, // open houses within distance of resident
-    int chances
+    std::set<int> openHouses
 )
 {
-    openHouses.erase(oldAddress); // old address is not a possibility. Must move.
+    // old address is not a possibility. Resident must move.
+    if (openHouses.count(oldAddress) != 0)
+        openHouses.erase(oldAddress); 
     double highHappiness = -1; // most happiness seen so far, will be updated
-    std::map<double, int> happinessToAddress = {};
-    int newAddress = oldAddress;
+    int happiestAddress = oldAddress;
+
     for (int address : openHouses)
     {
-        if (chances == 0)
-             break;
         std::vector<int> adjacentAddresses = _city->getAdjacentAdresses(address);
         std::vector<Color> adjacentColors = getColors(adjacentAddresses);
         double happiness = res->getHappiness(
             adjacentColors,
             adjacentAddresses.size()
         );
-        highHappiness = happiness > highHappiness ? happiness : highHappiness;
-        happinessToAddress.insert(std::pair<double, int>(happiness, address));
         if (happiness >= res->getHappinessGoal())
-            newAddress = address;
-        else if (chances == 1)
-            newAddress = happinessToAddress[highHappiness];
-        --chances;
+            return address;
+        if (happiness > highHappiness)
+        {
+            highHappiness = happiness;
+            happiestAddress = address;
+        }
     }
-    return newAddress;
+    return happiestAddress;
 }
-// TODO what if no address is found at all. Then allow to stay, maybe throw exception.
-int Simulator::findForcedAddressHappyAtBest (
+
+// If @openHouses is empty (or only contains the @oldAddress), returns @oldAddress.
+// @oldAddress is removed from @openHouses.
+// Goes through openHouses, recording the address that makes resident happiest.
+// Returns the happiest address.
+int Simulator::findAddressForForcedResHappyAtBest (
     Resident* res,
     int oldAddress,
-    std::set<int> openHouses, // open houses within distance of resident
-    int chances
+    std::set<int> openHouses
 )
 {
-    openHouses.erase(oldAddress); // old address is not a possibility. Must move.
+    // old address is not a possibility. Resident must move.
+    if (openHouses.count(oldAddress) != 0)
+        openHouses.erase(oldAddress); 
     double highHappiness = -1; // most happiness seen so far, will be updated
-    std::map<double, int> happinessToAddress = {};
+    int happiestAddress = oldAddress;
+
     for (int address : openHouses)
     {
-        if (chances == 0)
-            break;
-        std::vector<int> adjacentAddresses =_city->getAdjacentAdresses(address);
+        std::vector<int> adjacentAddresses = _city->getAdjacentAdresses(address);
         std::vector<Color> adjacentColors = getColors(adjacentAddresses);
         double happiness = res->getHappiness(
             adjacentColors,
             adjacentAddresses.size()
         );
-        highHappiness = happiness > highHappiness ? happiness : highHappiness;
-        happinessToAddress.insert(
-            std::pair<double, int>(happiness, address)
-        );
-        --chances;
+        if (happiness > highHappiness)
+        {
+            highHappiness = happiness;
+            happiestAddress = address;
+        }
     }
-    return happinessToAddress[highHappiness];
+    return happiestAddress;
 }
 
 std::vector<Color> Simulator::getColors (std::vector<int> addresses)

@@ -126,7 +126,7 @@ int main(int argc, char* argv[])
     {
         std::map<int, Resident*> houseToResidentMap = simulator.simulate();
         printer.print(houseToResidentMap, 1, 1, "Title");
-        //std::this_thread::sleep_for(std::chrono::nanoseconds(1000));
+        std::this_thread::sleep_for(std::chrono::nanoseconds(1000));
         std::cout << "main line 130: " << ii << std::endl;
     }
     printer.keepScreen();

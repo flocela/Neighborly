@@ -66,7 +66,8 @@ std::vector<int> City_Grid::getAdjacentAdresses (int address) const
 	return adjacentAddresses;
 }
 
-std::set<int> City_Grid::getAddressesWithin(int address, double distance) const
+// Does not include @address that is given in result.
+std::set<int> City_Grid::getCloseAddresses (int address, double distance) const
 {  
 	std::pair<int, double> addressAndDistance{address, distance};
 	std::set<int> closeAddresses;
@@ -90,7 +91,95 @@ std::set<int> City_Grid::getAddressesWithin(int address, double distance) const
 			}
 		}
 	}
+	closeAddresses.erase(address);
 	return closeAddresses;
+}
+
+int City_Grid::getAddress (int x, int y) const
+{
+	int address = x * _width + y;
+	return address;
+}
+
+std::set<std::pair<int, int>>::iterator City_Grid::selectRandom(
+	const std::set<std::pair<int, int>> &s,
+    size_t n
+) const
+{
+    std::set<std::pair<int, int>>::iterator it = std::begin(s);
+    std::advance(it, n);
+    return it;
+}
+
+std::set<int> City_Grid::convertVectorToSet (std::vector<int> ints) const
+{
+	std::set<int> returnSet;
+	for (int ii : ints)
+	{
+		returnSet.insert(ii);
+	}
+	return returnSet;
+}
+
+// May give less than count number of addresses. Maybe area within
+// allowableDistance doesn't hold that many addresses.
+// Does not include @address that is given in result.
+std::set<int> City_Grid::getCloseAddresses (
+    int address,
+    double allowDistance,
+    std::set<int> occupiedAddresses,
+    int count
+) const
+{
+	std::set<int> returnAddresses;
+	int x = get_x(address);
+	int y = get_y(address);
+	int minX = x - std::floor(allowDistance);
+	int maxX = x + std::floor(allowDistance);
+	int minY = y - std::floor(allowDistance);
+	int maxY = y + std::floor(allowDistance);
+	std::set<std::pair<int, int>> gridAddresses =
+		getSetAddresses(minX, maxX, minY, maxY);
+	gridAddresses.erase(std::pair<int, int>(x, y));
+	while (count != 0)
+	{
+		if (gridAddresses.size() == 0)
+			break;
+		std::set<std::pair<int, int>>::iterator itA = 
+			selectRandom(gridAddresses, gridAddresses.size());
+		std::pair<int, int> xyPair = *itA;
+		int currAddress = getAddress(xyPair.first, xyPair.second);
+		double distFromAddress = dist(address, currAddress);
+		if (distFromAddress < allowDistance && 
+			occupiedAddresses.count(currAddress) == 0
+		)
+		{
+			occupiedAddresses.insert(currAddress); // TODO not really necessary
+			returnAddresses.insert(currAddress);
+			--count;
+		}
+		gridAddresses.erase(xyPair);
+		count--;
+	}
+	return returnAddresses;
+}
+
+std::set<std::pair<int, int>> City_Grid::getSetAddresses (
+    int minX,
+    int maxX,
+    int minY,
+    int maxY
+) const
+{	
+	std::set<std::pair<int, int>> addresses;
+	for (int xx=minX; xx<=maxX; ++xx)
+	{
+		for (int yy=minY; yy<=maxY; ++yy)
+		{
+			addresses.insert(std::pair<int, int>(xx, yy));
+		}
+	}
+	return addresses;
 }
 
 int City_Grid::get_x (const int& address) const
