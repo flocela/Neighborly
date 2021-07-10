@@ -9,7 +9,6 @@ TEST_CASE("Resident_Flat Ctor throws exception if happinessGoal is greater than 
                        Color::green,
                        1.0,
                        1.2,
-                       true,
                        0.25 ), 
                        Contains("HappinessGoal must be between 0.0 and 1.0 inclusive.") );
 }
@@ -22,7 +21,6 @@ TEST_CASE("Resident_Flat Ctor throws exception if happinessGoal is less than 0.0
                        Color::green,
                        1.0,
                        -0.1,
-                       true,
                        0.25 ), 
                        Contains("HappinessGoal must be between 0.0 and 1.0 inclusive.") );
 }
@@ -34,7 +32,6 @@ TEST_CASE("Resident_Flat Ctor throws exception if happinessValue is greater than
                        Color::green,
                        1.0,
                        1.0,
-                       true,
                        1.2 ), Contains("HappinessValue must be between 0.0 and 1.0 inclusive.") );
 }
 
@@ -44,7 +41,6 @@ TEST_CASE("Resident_Flat Ctor throws exception if happinessValue is less than 0.
                                        Color::green,
                                        1.0,
                                        1.0,
-                                       true,
                                        -.25 ), Contains("must be between 0.0 and 1.0 inclusive") );
 }
 
@@ -55,7 +51,6 @@ TEST_CASE("getHappines() returns happinessValue")
                             Color::green,
                             1.0,
                             1.0,
-                            true,
                             0.25 };
     std::vector<Color> neighbors = {Color::blue, Color::blue};
 }

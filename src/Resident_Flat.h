@@ -13,7 +13,6 @@ class Resident_Flat: public Resident
             Color color,
             double allowedMovementDistance,
             double happinessGoal,
-            bool   happyAtGoal,
             double happinessValue);
         Resident_Flat (const Resident_Flat& obj) = default;
         Resident_Flat (Resident_Flat&& obj) noexcept = default;
@@ -25,6 +24,21 @@ class Resident_Flat: public Resident
             std::vector<Color> neighbors,
             int numOfAdjacentHouses
         ) const override;
+
+        House* findHome (
+            City* city, 
+            House* oldHouse,
+            std::set<House*> openHouses,
+            std::map<House*, Resident*> houseToResMap
+        ) const override;
+
+        House* findBestHome (
+            City* city, 
+            House* oldHouse,
+            std::set<House*> openHouses,
+            std::map<House*, Resident*> houseToResMap
+        ) const override;
+
         private:
         HappinessFunc_Flat _happiness_func;
 };

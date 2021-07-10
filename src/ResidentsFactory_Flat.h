@@ -27,7 +27,6 @@ class ResidentsFactory_Flat: public ResidentsFactory
             int    firstID, 
             int    count, 
             double happinessGoal,
-            bool   happyAtGoal,
             Color  color
         ) override;
         std::vector<std::unique_ptr<Resident>> createBaseResidents(
@@ -35,7 +34,6 @@ class ResidentsFactory_Flat: public ResidentsFactory
             int    firstID, 
             int    count, 
             double happinessGoal,
-            bool   happyAtGoal,
             Color  color
         ) override;
         std::string toString () override;
@@ -54,19 +52,6 @@ class ResidentsFactory_Flat: public ResidentsFactory
         std::string _happinessGoalFailure = 
             "Can not get information needed to determine the happiness goal for"
             " these residents from the user.  ";
-
-        /*  Prompts for boolean happyAtGoal for this group of residents. */
-        std::string _happy_at_goal_orig_prompt =
-            "Should the resident stop looking at houses if they find a house that"
-            " meets their happiness goal?";
-        std::string _happy_at_goal_invalid_prompt =
-            "That wasn't a yes or no. Should the resident take a house if they"
-            " find the house meets their happiness goal? If so, type Yes. If not"
-            " type no. If not then the resident will choose the house that makes"
-            " them the most happy.";
-        std::string _happy_at_goal_failure = 
-            "Can not get user to type a yes or no for residents' _happy_at_goal"
-            " value.";
                         
         /*  Prompts for the allowed movement for this group of residents.   */
         std::string _movmentOrigPrompt  = 
@@ -104,11 +89,6 @@ class ResidentsFactory_Flat: public ResidentsFactory
         double askUserForDouble (
             UI& ui,
             Question_Double question, 
-            std::string failureString
-        );
-        bool askUserForBool (
-            UI& ui,
-            Question_YN question,
             std::string failureString
         );
 };

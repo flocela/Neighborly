@@ -5,9 +5,8 @@ Resident_Flat::Resident_Flat (
     Color  color,
     double allowedMovementDistance,
     double happinessGoal,
-    bool   happyAtGoal,
     double happinessValue):
-    Resident(id, color, allowedMovementDistance, happinessGoal, happyAtGoal),
+    Resident(id, color, allowedMovementDistance, happinessGoal),
     _happiness_func{happinessValue}
 {}
 
@@ -21,4 +20,32 @@ double Resident_Flat::getHappiness(
     int diff  = 0;
 
     return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
+}
+
+House* Resident_Flat::findHome (
+    City* city, 
+    House* oldHouse,
+    std::set<House*> openHouses,
+    std::map<House*, Resident*> houseToResMap
+) const
+{
+(void) city;
+(void) oldHouse;
+(void) openHouses;
+(void) houseToResMap;
+return oldHouse;
+}
+
+House* Resident_Flat::findBestHome(
+    City* city, 
+    House* oldHouse,
+    std::set<House*> openHouses,
+    std::map<House*, Resident*> houseToResMap
+) const
+{
+(void) city;
+(void) oldHouse;
+(void) openHouses;
+(void) houseToResMap;
+return oldHouse;
 }

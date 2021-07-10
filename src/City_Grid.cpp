@@ -14,65 +14,73 @@
 City_Grid::City_Grid (int width):
 	City(),
 	_width{width},
-	_addresses(width*width)
-{
+	_houses(width*width)
+{	
   	for (int ii=0; ii<width; ++ii)
   	{
   		for (int jj=0; jj<width; ++jj)
         {
-          _addresses[ (ii*width) + jj] = ii * width + jj;
+		  int addr = (ii*width) + jj;
+		  std::unique_ptr<House> house = std::make_unique<House>(addr);
+          //_houses.push_back(std::move(house));
+		  //_addrToHouseMap[addr] = _houses[addr].get();
         }
   	}
 }
 
 int City_Grid::getSize() const
 {
-	return _addresses.size();
+	return _houses.size();
 }
 
-std::vector<int> City_Grid::getAddresses () const
-{
-	return _addresses;
+std::vector<House*> City_Grid::getHouses () const
+{	std::vector<House*> houses;
+	for (auto& house : _houses) // TODO maybe const auto&
+	{
+		houses.push_back(house.get());
+	}
+	return houses;
 }
 
-std::vector<int> City_Grid::getAdjacentAdresses (int address) const
+std::vector<House*> City_Grid::getAdjacentHouses (House* house) const
 {
+	int address = house->_address;
 	int x = get_x(address);
 	int y = get_y(address);
 	int lastIdx_x = _width - 1;
 	int lastIdx_y = _width - 1;
-
-	std::vector<int> adjacentAddresses = {};
+	
+	std::vector<House*> adjacentHouses = {};
 	if (x != 0)
 	{
-		adjacentAddresses.push_back(address - _width);
+		adjacentHouses.push_back(_addrToHouseMap.at(address - _width));
 		if (y != 0)
-			adjacentAddresses.push_back(address - _width - 1);
+			adjacentHouses.push_back(_addrToHouseMap.at(address - _width - 1));
 		if (y != lastIdx_y)
-			adjacentAddresses.push_back(address - _width + 1);
+			adjacentHouses.push_back(_addrToHouseMap.at(address - _width + 1));
 	}
 	if (x != lastIdx_x)
 	{
-		adjacentAddresses.push_back(address + _width);
+		adjacentHouses.push_back(_addrToHouseMap.at(address + _width));
 		if (y != 0)
-			adjacentAddresses.push_back(address + _width - 1);
+			adjacentHouses.push_back(_addrToHouseMap.at(address + _width - 1));
 		if (y != lastIdx_y)
-			adjacentAddresses.push_back(address + _width + 1);
+			adjacentHouses.push_back(_addrToHouseMap.at(address + _width + 1));
 	}
 	if (y != 0)
-		adjacentAddresses.push_back(address - 1);
+		adjacentHouses.push_back(_addrToHouseMap.at(address - 1));
 	if (y != lastIdx_y)
-		adjacentAddresses.push_back(address +1);
-	return adjacentAddresses;
+		adjacentHouses.push_back(_addrToHouseMap.at(address + 1));
+	return adjacentHouses;
 }
 
-// Does not include @address that is given in result.
-std::set<int> City_Grid::getCloseAddresses (int address, double distance) const
+// Resulting set<int> does not include @address.
+std::set<House*> City_Grid::getNearHouses (House* house, double distance) const
 {  
-	std::pair<int, double> addressAndDistance{address, distance};
-	std::set<int> closeAddresses;
-	int x = get_x(address);
-	int y = get_y(address);
+	int origAddress = house->_address;
+	std::set<House*> closeAddresses;
+	int x = get_x(origAddress);
+	int y = get_y(origAddress);
 	int minX = x - std::floor(distance);
 	int maxX = x + std::floor(distance);
 	int minY = y - std::floor(distance);
@@ -84,14 +92,13 @@ std::set<int> City_Grid::getCloseAddresses (int address, double distance) const
 		for (int jj=0; jj<yDiff; jj++)
 		{
 			int otherAddress = ii + jj;
-			double farAway = dist(address, otherAddress);
-			if (farAway <= distance)
+			double farAway = dist(origAddress, otherAddress);
+			if (farAway <= distance && otherAddress != origAddress)
 			{
-				closeAddresses.insert(otherAddress);
+				closeAddresses.insert(_addrToHouseMap.at(otherAddress));
 			}
 		}
 	}
-	closeAddresses.erase(address);
 	return closeAddresses;
 }
 
@@ -111,75 +118,72 @@ std::set<std::pair<int, int>>::iterator City_Grid::selectRandom(
     return it;
 }
 
-std::set<int> City_Grid::convertVectorToSet (std::vector<int> ints) const
-{
-	std::set<int> returnSet;
-	for (int ii : ints)
-	{
-		returnSet.insert(ii);
-	}
-	return returnSet;
-}
-
 // May give less than count number of addresses. Maybe area within
 // allowableDistance doesn't hold that many addresses.
-// Does not include @address that is given in result.
-std::set<int> City_Grid::getCloseAddresses (
-    int address,
-    double allowDistance,
-    std::set<int> occupiedAddresses,
-    int count
-) const
+// Resulting set<int> does not include @address.
+std::set<House*> City_Grid::getNearHouses (
+        House* house,
+        double distance,
+        std::set<House*> occupied,
+        int count
+    ) const
 {
-	std::set<int> returnAddresses;
-	int x = get_x(address);
-	int y = get_y(address);
-	int minX = x - std::floor(allowDistance);
-	int maxX = x + std::floor(allowDistance);
-	int minY = y - std::floor(allowDistance);
-	int maxY = y + std::floor(allowDistance);
-	std::set<std::pair<int, int>> gridAddresses =
-		getSetAddresses(minX, maxX, minY, maxY);
-	gridAddresses.erase(std::pair<int, int>(x, y));
+	int origAddress = house->_address;
+	std::set<House*> returnHouses;
+	int x = get_x(origAddress);
+	int y = get_y(origAddress);
+	int minX = x - std::floor(distance);
+	int maxX = x + std::floor(distance);
+	int minY = y - std::floor(distance);
+	int maxY = y + std::floor(distance);
+	std::set<House*> subsetOfHouses = getEncompassedHouses(minX, maxX, minY, maxY);
 	while (count != 0)
 	{
-		if (gridAddresses.size() == 0)
+		if (subsetOfHouses.size() == 0)
 			break;
-		std::set<std::pair<int, int>>::iterator itA = 
-			selectRandom(gridAddresses, gridAddresses.size());
-		std::pair<int, int> xyPair = *itA;
-		int currAddress = getAddress(xyPair.first, xyPair.second);
-		double distFromAddress = dist(address, currAddress);
-		if (distFromAddress < allowDistance && 
-			occupiedAddresses.count(currAddress) == 0
+		House* currHouse = selectRandom(subsetOfHouses);
+		int currAddress = house->_address;
+		double distFromAddress = dist(origAddress, currAddress);
+		if (distFromAddress < distance && 
+			occupied.count(currHouse) == 0 &&
+			currAddress != origAddress
 		)
 		{
-			occupiedAddresses.insert(currAddress); // TODO not really necessary
-			returnAddresses.insert(currAddress);
+			occupied.insert(currHouse); // TODO not really necessary
+			returnHouses.insert(currHouse);
 			--count;
 		}
-		gridAddresses.erase(xyPair);
 		count--;
 	}
-	return returnAddresses;
+	return returnHouses;
 }
 
-std::set<std::pair<int, int>> City_Grid::getSetAddresses (
+House* City_Grid::selectRandom (std::set<House*>& setOfHouses) const
+{
+	int size = setOfHouses.size();
+    int r = rand() % size;
+    std::set<House*>::iterator it = std::begin(setOfHouses);
+    std::advance(it, r);
+    setOfHouses.erase(*it);
+    return *it; // TODO this isn't going to work because I erase it first!!
+}
+
+std::set<House*> City_Grid::getEncompassedHouses (
     int minX,
     int maxX,
     int minY,
     int maxY
 ) const
 {	
-	std::set<std::pair<int, int>> addresses;
+	std::set<House*> houses;
 	for (int xx=minX; xx<=maxX; ++xx)
 	{
 		for (int yy=minY; yy<=maxY; ++yy)
 		{
-			addresses.insert(std::pair<int, int>(xx, yy));
+			houses.insert(_addrToHouseMap.at(getAddress(xx, yy)));
 		}
 	}
-	return addresses;
+	return houses;
 }
 
 int City_Grid::get_x (const int& address) const
@@ -200,8 +204,9 @@ double City_Grid::dist (const int& from_address, const int& to_address) const
   	return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
 }
 
+// TODO is this ever used.
 bool City_Grid::equals (const City_Grid& other) const{
-  	if ( other.getAddresses().size() == this->getAddresses().size() )
+  	if ( other._houses.size() == this->_houses.size() )
       return true;
 	return false;
 }

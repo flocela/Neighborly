@@ -6,6 +6,7 @@
 #include "renderer.h"
 #include <thread>
 #include <memory>
+#include "House.h"
 
 class Printer_Graphic : public Printer
 {   
@@ -23,7 +24,7 @@ class Printer_Graphic : public Printer
         ~Printer_Graphic () = default;
 
         void print(
-            std::map<int, Resident*> residentPerHouse,
+            std::map<House*, Resident*> residentPerHouse,
             int run,
             int totRuns,
             std::string title
@@ -68,12 +69,12 @@ class Printer_Graphic : public Printer
         const int _titles_at_top_offset = 80;
         const int _axis_font_size = 20;
         
-        std::map<Coordinate, int> _coord_to_house_map = {};
+        std::map<Coordinate, House*> _coord_to_house_map = {};
 
         Renderer _renderer;
         std::map<Color, std::vector<int>> _rgba_per_color;
         std::map<Color, std::vector<Coordinate>> createVectorsForEachColor (
-            std::map<int, Resident*> houseToResidentMap
+            std::map<House*, Resident*> houseToResidentMap
         );
         // Initializes information from the city that will not change. Each 
         // address's coordinate will stay the same. So the _housePerCoordinate map

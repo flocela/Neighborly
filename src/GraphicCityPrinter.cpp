@@ -1,7 +1,7 @@
 #include "GraphicCityPrinter.h"
 #include <iostream>
 
-void GraphicCityPrinter::printCity (std::map<int, Resident*> houseToResMap)
+void GraphicCityPrinter::printCity (std::map<House*, Resident*> houseToResMap)
 {
     addCityXAxis();
     addCityYAxis();
@@ -174,7 +174,7 @@ void GraphicCityPrinter::addCityYAxis ()
 }
 
 void GraphicCityPrinter::addHouses(
-    std::map<int, Resident*> houseToResMap
+    std::map<House*, Resident*> houseToResMap
 )
 {
     std::map<Color, std::vector<Coordinate>> colorToCoordinates =
@@ -193,7 +193,7 @@ void GraphicCityPrinter::addHouses(
 }
 
 std::map<Color, std::vector<Coordinate>> GraphicCityPrinter::createVectorsForEachColor (
-    std::map<int, Resident*> houseToResMap
+    std::map<House*, Resident*> houseToResMap
 )
 {
     std::map<Color, std::vector<Coordinate>> colorToCoordinatesMap ={};
@@ -206,18 +206,18 @@ std::map<Color, std::vector<Coordinate>> GraphicCityPrinter::createVectorsForEac
     for (auto const& x : _coord_to_house_map)
     {
         Coordinate coord = x.first;
-        int address = x.second;
+        House* house = x.second;
 
         Color colorKey;
 
-        if (houseToResMap.count(address) == 0)
+        if (houseToResMap.count(house) == 0)
         {   
             // No resident has this address. So this house is empty.
             colorKey = Color::absent;
         }
         else
         {   
-            Resident* res = houseToResMap[address];
+            Resident* res = houseToResMap[house];
             colorKey = res->getColor();
         }
 

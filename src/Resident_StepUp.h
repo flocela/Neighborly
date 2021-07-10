@@ -13,7 +13,6 @@ class Resident_StepUp: public Resident
             Color color,
             double allowedMovementDistance,
             double happinessGoal,
-            bool   happyAtGoal,
             double happinessValueAtZeroDiversity,
             double happinessValueAtOneDiversity,
             double diversityWhereRiseHappens);
@@ -27,6 +26,21 @@ class Resident_StepUp: public Resident
             std::vector<Color> neighbors,
             int numOfAdjacentHouses
         ) const override;
+
+        House* findHome(
+            City* city, 
+            House* oldHouse,
+            std::set<House*> openHouses,
+            std::map<House*, Resident*> addressToResMap
+        ) const override;
+
+        House* findBestHome(
+            City* city, 
+            House* oldHouse,
+            std::set<House*> openHouses,
+            std::map<House*, Resident*> HouseToResMap
+        ) const override;
+
         private:
         HappinessFunc_StepUp _happiness_func;
 };

@@ -4,7 +4,7 @@
 #include <algorithm>
 
 void Printer_CMDLine::print(
-    std::map<int, Resident*> residentPerHouse,
+    std::map<House*, Resident*> residentPerHouse,
     int run,
     int totRuns,
     std::string title

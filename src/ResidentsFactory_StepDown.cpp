@@ -29,21 +29,8 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
         "Can not get information needed to determine the happiness goal for"
         " these residents from the user."
     );
-
-    Question_YN qHappyAtGoal {
-        2,
-        _happy_at_goal_orig_prompt,
-        _happy_at_goal_invalid_prompt
-    };
-
-    bool happyAtGoal = askUserForBool(
-        ui,
-        qHappyAtGoal,
-        _happy_at_goal_failure
-
-    );
     
-    return createResidents(ui, firstID, maxCount, happinessGoal, happyAtGoal, color);
+    return createResidents(ui, firstID, maxCount, happinessGoal, color);
 }
 
 std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createBaseResidents (
@@ -51,7 +38,6 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createBaseResi
     int firstID, 
     int maxCount,
     double happinessGoal,
-    bool happyAtGoal,
     Color color
 )
 {   
@@ -71,7 +57,6 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createBaseResi
             color,
             movement,
             happinessGoal,
-            happyAtGoal,
             happinessAtZero,
             happinessAtOne,
             locationOfDrop
@@ -85,7 +70,6 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
     int firstID, 
     int maxCount,
     double happinessGoal,
-    bool happyAtGoal,
     Color color
 )
 {   
@@ -176,7 +160,6 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
             color,
             movement,
             happinessGoal,
-            happyAtGoal,
             happinessAtZero,
             happinessAtOne,
             locationOfDrop
@@ -212,23 +195,6 @@ double ResidentsFactory_StepDown::askUserForDouble (
     if (question.hasValidAnswer())
     {
         return std::stod(question.getAnswer());
-    }
-    else
-    {
-        throw failureString;
-    }
-}
-
-bool ResidentsFactory_StepDown::askUserForBool (
-    UI& ui,
-    Question_YN question,
-    std::string failureString
-)
-{
-    ui.getAnswer(question);
-    if (question.hasValidAnswer())
-    {
-        return question.getAnswer() == "N" ? false : true;
     }
     else
     {

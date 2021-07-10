@@ -5,6 +5,7 @@
 #include <set>
 #include <memory>
 #include "Coordinate.h"
+#include "House.h"
 
 class City
 {
@@ -14,14 +15,16 @@ class City
 
         // getSize() returns the number of addresses.
         virtual int getSize() const = 0;
-        virtual std::vector<int> getAddresses () const = 0;
+        virtual std::vector<House*> getHouses () const = 0;
         virtual double dist (const int& from_address, const int& to_address) const = 0;
-        virtual std::vector<int> getAdjacentAdresses(int address) const = 0;
-        virtual std::set<int> getCloseAddresses (int address, double distance) const = 0;
-        virtual std::set<int> getCloseAddresses (
-            int address,
+        virtual std::vector<House*> getAdjacentHouses(House* house) const = 0;
+        // Does not include @address in resulting set.
+        virtual std::set<House*> getNearHouses (House* house, double distance) const = 0;
+        // Does not include @address in resulting set.
+        virtual std::set<House*> getNearHouses (
+            House* house,
             double distance,
-            std::set<int> occupiedAdresses,
+            std::set<House*> occupied,
             int count
         ) const = 0;
         virtual int get_x (const int& address) const = 0;

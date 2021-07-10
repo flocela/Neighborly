@@ -84,6 +84,7 @@ src/HappinessFunc_Flat.cpp
 src/HappinessFunc_Rising.cpp
 src/HappinessFunc_StepDown.cpp
 src/HappinessFunc_StepUp.cpp
+src/House.cpp
 src/Manager.cpp
 src/Question_Int.cpp
 src/Question_Double.cpp

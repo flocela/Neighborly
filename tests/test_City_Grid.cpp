@@ -1,5 +1,6 @@
 #include "catch.hpp"
 #include "../src/City_Grid.h"
+#include "../src/House.h"
 
 #include <math.h>
 // g++ --std=c++17 -o runme ../src/City_Grid.cpp test_City_Grid.cpp test_main.o
@@ -7,9 +8,9 @@
 TEST_CASE("x-coordinate based on address")
 {
     City_Grid city = City_Grid(6);
-    std::vector<int> addresses = city.getAddresses();
-    const int a0  = addresses[0];
-    const int a27 = addresses[27];
+    std::vector<House*> houses = city.getHouses();
+    const int a0  = houses[0]->_address;
+    const int a27 = houses[27]->_address;
     REQUIRE( city.get_x(a0)  == 0 );
     REQUIRE( city.get_y(a0)  == 0 );
     REQUIRE( city.get_x(a27) == 4 );
@@ -20,9 +21,9 @@ TEST_CASE("x-coordinate based on address")
 TEST_CASE("distance calculated")
 {
     City_Grid city = City_Grid(6);
-    std::vector<int> addresses = city.getAddresses();
-    const int a1  = addresses[1];
-    const int a28 = addresses[28];
+    std::vector<House*> houses = city.getHouses();
+    const int a1  = houses[1]->_address;
+    const int a28 = houses[28]->_address;
     int a1_x  = city.get_x(a1);
     int a1_y  = city.get_y(a1);
     int a28_x = city.get_x(a28);

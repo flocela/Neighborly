@@ -7,7 +7,7 @@ class Printer_CMDLine : public Printer
 {   
     public:
         void print(
-            std::map<int, Resident*> residentPerHouse,
+            std::map<House*, Resident*> residentPerHouse,
             int run,
             int totRuns,
             std::string title

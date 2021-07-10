@@ -47,11 +47,11 @@ Printer_Graphic::Printer_Graphic (
 
 void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
 {
-    std::vector<int> addresses = cityPtr->getAddresses();
-    for (int address : addresses)
+    std::vector<House*> houses = cityPtr->getHouses();
+    for (House* house : houses)
     {   
-        Coordinate coord =  cityPtr->getCoordinate(address);
-        _coord_to_house_map[coord] = address;
+        Coordinate coord =  cityPtr->getCoordinate(house->_address);
+        _coord_to_house_map[coord] = house;
         if (coord.getX() > _max_x_coord)
             _max_x_coord = coord.getX();
         if (coord.getX() < _min_x_coord)
@@ -106,7 +106,7 @@ void Printer_Graphic::initGridAndHouseSize ()
 
 
 void Printer_Graphic::print (
-    std::map<int, Resident*> residentPerHouse,
+    std::map<House*, Resident*> residentPerHouse,
     int run,
     int totRuns,
     std::string title
@@ -133,25 +133,25 @@ void Printer_Graphic::keepScreen()
 }
 
 std::map<Color, std::vector<Coordinate>> Printer_Graphic::createVectorsForEachColor (
-    std::map<int, Resident*> residentPerHouse
+    std::map<House*, Resident*> residentPerHouse
 )
 {
     std::map<Color, std::vector<Coordinate>> coordinatePerColor ={};
     for (auto const& x : _coord_to_house_map)
     {
         Coordinate coord = x.first;
-        int address = x.second;
+        House* house = x.second;
 
         Color colorKey;
 
-        if (residentPerHouse.count(address) == 0)
+        if (residentPerHouse.count(house) == 0)
         {   
             // No resident has this address. So this house is empty.
             colorKey = Color::absent;
         }
         else
         {   
-            Resident* res = residentPerHouse[address];
+            Resident* res = residentPerHouse[house];
             colorKey = res->getColor();
         }
 

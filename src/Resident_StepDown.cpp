@@ -6,11 +6,10 @@ Resident_StepDown::Resident_StepDown (
     Color color,
     double allowedMovementDistance,
     double happinessGoal,
-    bool   happyAtGoal,
     double happinessValueAtZeroDiversity,
     double happinessValueAtOneDiversity,
     double diversityWhereDropHappens):
-    Resident(id, color, allowedMovementDistance, happinessGoal, happyAtGoal),
+    Resident(id, color, allowedMovementDistance, happinessGoal),
     _happiness_func{
         happinessValueAtZeroDiversity, 
         happinessValueAtOneDiversity, 
@@ -23,7 +22,7 @@ double Resident_StepDown::getHappiness(
     std::vector<Color> neighbors,
     int numOfAdjacentHouses
 ) const
-{std::cout << "Resident_StepDown line 26" << std::endl;
+{
     int like  = 0;
     int diff  = 0;
     
@@ -39,4 +38,32 @@ double Resident_StepDown::getHappiness(
     }
 
     return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
+}
+
+House* Resident_StepDown::findHome(
+    City* city, 
+    House* oldHouse,
+    std::set<House*> openHouses,
+    std::map<House*, Resident*> houseToResMap
+) const
+{
+    (void) city;
+    (void) oldHouse;
+    (void) openHouses;
+    (void) houseToResMap;
+    return oldHouse;
+}
+
+House* Resident_StepDown::findBestHome(
+    City* city, 
+    House* oldHouse,
+    std::set<House*> openHouses,
+    std::map<House*, Resident*> houseToResMap
+) const
+{
+(void) city;
+(void) oldHouse;
+(void) openHouses;
+(void) houseToResMap;
+return oldHouse;
 }

@@ -4,26 +4,28 @@
 #include "City.h"
 #include <map>
 #include <utility>
+#include "House.h"
+#include <memory>
 
 class City_Grid: public City
 {
     private:
         int _width;
-    	std::vector<int> _addresses;
+    	std::vector<std::unique_ptr<House>> _houses;
+        std::map<int, House*> _addrToHouseMap;
         std::map<std::pair<int, double>, std::vector<int>> _within_dist_map;
         std::set<std::pair<int, int>>::iterator selectRandom (
             const std::set<std::pair<int, int>> &s,
             size_t n
         ) const;
-        std::set<std::pair<int, int>> getSetAddresses (
+        std::set<House*> getEncompassedHouses (
             int minX,
             int maxX,
             int minY,
             int maxY
         ) const;
         int getAddress (int x, int y) const;
-        std::set<int> convertVectorToSet (std::vector<int> ints) const;
-    
+        House* selectRandom (std::set<House*>& setOfHouses) const;
     public:
     	City_Grid (int width);
         City_Grid () = delete;
@@ -33,14 +35,14 @@ class City_Grid: public City
         ~City_Grid () = default;
 
         int getSize() const override;
-        std::vector<int> getAddresses () const override;
+        std::vector<House*> getHouses () const override;
         double dist (const int& from_address, const int& to_address) const override;
-        std::vector<int> getAdjacentAdresses (int address) const override;
-        std::set<int> getCloseAddresses (int address, double distance) const override;
-        std::set<int> getCloseAddresses (
-            int address,
+        std::vector<House*> getAdjacentHouses (House* house) const override;
+        std::set<House*> getNearHouses (House* house, double distance) const override;
+        std::set<House*> getNearHouses (
+            House* house,
             double distance,
-            std::set<int> occupiedAdresses,
+            std::set<House*> occupied,
             int count
         ) const override;
         int get_x (const int& address) const override;
