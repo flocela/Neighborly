@@ -43,7 +43,7 @@ std::vector<House*> City_Grid::getHouses () const
 	return houses;
 }
 
-std::vector<House*> City_Grid::getAdjacentHouses (House* house) const
+std::set<House*> City_Grid::getAdjacentHouses (House* house) const
 {
 	int address = house->_address;
 	int x = get_x(address);
@@ -51,27 +51,27 @@ std::vector<House*> City_Grid::getAdjacentHouses (House* house) const
 	int lastIdx_x = _width - 1;
 	int lastIdx_y = _width - 1;
 	
-	std::vector<House*> adjacentHouses = {};
+	std::set<House*> adjacentHouses = {};
 	if (x != 0)
 	{
-		adjacentHouses.push_back(_addrToHouseMap.at(address - _width));
+		adjacentHouses.insert(_addrToHouseMap.at(address - _width));
 		if (y != 0)
-			adjacentHouses.push_back(_addrToHouseMap.at(address - _width - 1));
+			adjacentHouses.insert(_addrToHouseMap.at(address - _width - 1));
 		if (y != lastIdx_y)
-			adjacentHouses.push_back(_addrToHouseMap.at(address - _width + 1));
+			adjacentHouses.insert(_addrToHouseMap.at(address - _width + 1));
 	}
 	if (x != lastIdx_x)
 	{
-		adjacentHouses.push_back(_addrToHouseMap.at(address + _width));
+		adjacentHouses.insert(_addrToHouseMap.at(address + _width));
 		if (y != 0)
-			adjacentHouses.push_back(_addrToHouseMap.at(address + _width - 1));
+			adjacentHouses.insert(_addrToHouseMap.at(address + _width - 1));
 		if (y != lastIdx_y)
-			adjacentHouses.push_back(_addrToHouseMap.at(address + _width + 1));
+			adjacentHouses.insert(_addrToHouseMap.at(address + _width + 1));
 	}
 	if (y != 0)
-		adjacentHouses.push_back(_addrToHouseMap.at(address - 1));
+		adjacentHouses.insert(_addrToHouseMap.at(address - 1));
 	if (y != lastIdx_y)
-		adjacentHouses.push_back(_addrToHouseMap.at(address + 1));
+		adjacentHouses.insert(_addrToHouseMap.at(address + 1));
 	return adjacentHouses;
 }
 

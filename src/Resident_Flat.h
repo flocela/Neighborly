@@ -26,16 +26,14 @@ class Resident_Flat: public Resident
         ) const override;
 
         House* findHome (
-            City* city, 
             House* oldHouse,
-            std::set<House*> openHouses,
+            std::map<House*, std::set<House*>> openHousesToNeighbors,
             std::map<House*, Resident*> houseToResMap
         ) const override;
 
         House* findBestHome (
-            City* city, 
             House* oldHouse,
-            std::set<House*> openHouses,
+            std::map<House*, std::set<House*>> openHousesToNeighbors,
             std::map<House*, Resident*> houseToResMap
         ) const override;
 

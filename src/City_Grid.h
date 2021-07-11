@@ -41,7 +41,7 @@ class City_Grid: public City
         int getSize() const override;
         std::vector<House*> getHouses () const override;
         double dist (const int& from_address, const int& to_address) const override;
-        std::vector<House*> getAdjacentHouses (House* house) const override;
+        std::set<House*> getAdjacentHouses (House* house) const override;
         std::set<House*> getNearHouses (House* house, double distance) const override;
         std::set<House*> getNearHouses (
             House* house,

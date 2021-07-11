@@ -51,7 +51,7 @@ std::map<House*, Resident*> Simulator::simulate()
         { 
             Resident* curr = _residents[*optionalResIt];
             House* oldHouse = _curr_res_to_house_map[curr];
-            std::set<House*> closeOpenHouses = filterForOpenHouses(
+            std::set<House*> nearOpenHouses = filterForOpenHouses(
                 _city->getNearHouses(
                     oldHouse,
                     25
@@ -59,9 +59,8 @@ std::map<House*, Resident*> Simulator::simulate()
             );
             // TODO what if openHouses is empty?
             House* newHouse = curr->findHome(
-                _city,
                 oldHouse,
-                closeOpenHouses,
+                getSetsOfNeighbors(nearOpenHouses),
                 _curr_house_to_res_map
             );
             moveResidentIntoHouse(curr, newHouse);
@@ -212,7 +211,7 @@ House* Simulator::findHouseForOptionalMoveRes (
 {
     openHouses.erase(oldHouse);
     
-    std::vector<House*> adjacentHouses = _city->getAdjacentHouses(oldHouse);
+    std::set<House*> adjacentHouses = _city->getAdjacentHouses(oldHouse);
     std::vector<Color> adjacentColors = getColors(adjacentHouses);
     double oldAddressHappinesss = res->getHappiness(
         adjacentColors,
@@ -225,7 +224,7 @@ House* Simulator::findHouseForOptionalMoveRes (
     {  
         if (chances == 0)
             break;
-        std::vector<House*> adjacentHouses = _city->getAdjacentHouses(house);
+        std::set<House*> adjacentHouses = _city->getAdjacentHouses(house);
         std::vector<Color> adjacentColors = getColors(adjacentHouses);
         double happiness = res->getHappiness(
             adjacentColors,
@@ -264,7 +263,7 @@ House* Simulator::findHouseForForcedResHappyAtGoal (
 
     for (House* house : openHouses)
     {
-        std::vector<House*> adjacentAddresses = _city->getAdjacentHouses(house);
+        std::set<House*> adjacentAddresses = _city->getAdjacentHouses(house);
         std::vector<Color> adjacentColors = getColors(adjacentAddresses);
         double happiness = res->getHappiness(
             adjacentColors,
@@ -299,7 +298,7 @@ House* Simulator::findHouseForForcedResHappyAtBest (
 
     for (House* house : openHouses)
     {
-        std::vector<House*> adjacentHouses = _city->getAdjacentHouses(house);
+        std::set<House*> adjacentHouses = _city->getAdjacentHouses(house);
         std::vector<Color> adjacentColors = getColors(adjacentHouses);
         double happiness = res->getHappiness(
             adjacentColors,
@@ -314,7 +313,7 @@ House* Simulator::findHouseForForcedResHappyAtBest (
     return happiestHouse;
 }
 
-std::vector<Color> Simulator::getColors (std::vector<House*> houses)
+std::vector<Color> Simulator::getColors (std::set<House*> houses)
 {
     std::vector<Color> colors;
     for (House* house : houses)
@@ -344,9 +343,8 @@ House* Simulator::findHomeForForcedToMoveResident (
     );
     //TODO if closeOpenHouses is empty.
     House* newHome = resident->findHome(
-        _city,
         oldHouse,
-        nearOpenHouses,
+        getSetsOfNeighbors(nearOpenHouses),
         _curr_house_to_res_map
     );
     
@@ -369,9 +367,8 @@ House* Simulator::findHomeForOptionalMoveResident (
     //TODO if closeOpenHouses is empty.
 
     House* newHouse = resident->findBestHome(
-        _city,
         oldHouse,
-        nearOpenHouses,
+        getSetsOfNeighbors(nearOpenHouses),
         _curr_house_to_res_map
     );
     return newHouse;
@@ -397,4 +394,17 @@ void Simulator::openHouse (Resident* res)
     House* house = _curr_res_to_house_map[res];
     _curr_res_to_house_map.erase(res);
     _curr_house_to_res_map.erase(house);
+}
+
+std::map<House*, std::set<House*>> Simulator::getSetsOfNeighbors (
+    std::set<House*> houses
+)
+{
+    std::map<House*, std::set<House*>> setsOfNeighbors;
+    for (House* house : houses)
+    {
+        std::set<House*> neighbors = _city->getAdjacentHouses(house);
+        setsOfNeighbors.insert(std::pair<House*, std::set<House*>>(house, neighbors));
+    }
+    return setsOfNeighbors;
 }

@@ -41,29 +41,25 @@ double Resident_StepDown::getHappiness(
 }
 
 House* Resident_StepDown::findHome(
-    City* city, 
     House* oldHouse,
-    std::set<House*> openHouses,
+    std::map<House*, std::set<House*>> openHousesToNeighbors,
     std::map<House*, Resident*> houseToResMap
 ) const
 {
-    (void) city;
     (void) oldHouse;
-    (void) openHouses;
+    (void) openHousesToNeighbors;
     (void) houseToResMap;
     return oldHouse;
 }
 
 House* Resident_StepDown::findBestHome(
-    City* city, 
     House* oldHouse,
-    std::set<House*> openHouses,
+    std::map<House*, std::set<House*>> openHousesToNeighbors,
     std::map<House*, Resident*> houseToResMap
 ) const
 {
-(void) city;
-(void) oldHouse;
-(void) openHouses;
-(void) houseToResMap;
-return oldHouse;
+    (void) oldHouse;
+    (void) openHousesToNeighbors;
+    (void) houseToResMap;
+    return oldHouse;
 }

@@ -17,7 +17,7 @@ class City
         virtual int getSize() const = 0;
         virtual std::vector<House*> getHouses () const = 0;
         virtual double dist (const int& from_address, const int& to_address) const = 0;
-        virtual std::vector<House*> getAdjacentHouses(House* house) const = 0;
+        virtual std::set<House*> getAdjacentHouses(House* house) const = 0;
         // Does not include @address in resulting set.
         virtual std::set<House*> getNearHouses (House* house, double distance) const = 0;
         // Does not include @address in resulting set.

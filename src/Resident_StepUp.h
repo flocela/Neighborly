@@ -27,18 +27,16 @@ class Resident_StepUp: public Resident
             int numOfAdjacentHouses
         ) const override;
 
-        House* findHome(
-            City* city, 
+        House* findHome (
             House* oldHouse,
-            std::set<House*> openHouses,
-            std::map<House*, Resident*> addressToResMap
+            std::map<House*, std::set<House*>> openHousesToNeighbors,
+            std::map<House*, Resident*> houseToResMap
         ) const override;
 
-        House* findBestHome(
-            City* city, 
+        House* findBestHome (
             House* oldHouse,
-            std::set<House*> openHouses,
-            std::map<House*, Resident*> HouseToResMap
+            std::map<House*, std::set<House*>> openHousesToNeighbors,
+            std::map<House*, Resident*> houseToResMap
         ) const override;
 
         private:

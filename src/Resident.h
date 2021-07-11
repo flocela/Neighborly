@@ -30,17 +30,15 @@ class Resident{
             std::vector<Color> neighbors,
             int numOfAdjacentHouses
         ) const = 0;
-        virtual House* findHome(
-            City* city, 
+        virtual House* findHome (
             House* oldHouse,
-            std::set<House*> openHouses,
-            std::map<House*, Resident*> houseToResMap
+            std::map<House*, std::set<House*>> openHousesToNeighbors,
+            std::map<House*, Resident*> houseToResMap // This should be const. Or only send a copy of needed neighbors
         ) const = 0;
-        virtual House* findBestHome(
-            City* city, 
+        virtual House* findBestHome (
             House* oldHouse,
-            std::set<House*> openHouses,
-            std::map<House*, Resident*> houseToResMap
+            std::map<House*, std::set<House*>> openHousesToNeighbors,
+            std::map<House*, Resident*> houseToResMap// This should be const. Or only send a copy of needed neighbors
         ) const = 0;
         
     private:
