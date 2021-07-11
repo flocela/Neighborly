@@ -51,6 +51,7 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
     for (House* house : houses)
     {   
         Coordinate coord =  cityPtr->getCoordinate(house->_address);
+        
         _coord_to_house_map[coord] = house;
         if (coord.getX() > _max_x_coord)
             _max_x_coord = coord.getX();

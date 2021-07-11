@@ -99,35 +99,34 @@ int main(int argc, char* argv[])
         MAX_DELTA_X, 
         MAX_DELTA_Y
     );
-    std::cout << "Main 102" << std::endl;
+
     ResidentsMaker_CMDLine residentsMaker{};
     //std::vector<std::unique_ptr<Resident>> residents = 
     //    residentsMaker.makeResidents(residentFactoryPointers, city->getSize());
     std::vector<std::unique_ptr<Resident>> residents = 
         residentsMaker.makeBaseResidents(residentFactoryPointers, city->getSize());
-    std::cout << "Main 108" << std::endl;
+    
     std::map<Color, int> intPerColor = {};
     std::vector<Resident*> residentPtrs = {};
     for (auto& resident: residents)
     {
         residentPtrs.push_back(resident.get());
     }
-    std::cout << "Main 115" << std::endl;
+    
 /*
     std::map<int, Resident*> houseToResidentMap = {};
     for (auto& resident : residents)
     {
         houseToResidentMap[resident->getID()] = resident.get();
     }*/
-    Simulator simulator{city.get(), residentPtrs};std::cout << "Main 122" << std::endl;
+    Simulator simulator{city.get(), residentPtrs};
     Printer_Graphic printer{1200, 1200, city.get()};
-    std::cout << "Main 124" << std::endl;
     for (int ii=0; ii< 3; ii++)
-    {   std::cout << "main 126" << std::endl;
+    {   
         std::map<House*, Resident*> houseToResidentMap = simulator.simulate();
         printer.print(houseToResidentMap, 1, 1, "Title");
         std::this_thread::sleep_for(std::chrono::nanoseconds(1000));
-        std::cout << "main line 130: " << ii << std::endl;
+        
     }
     printer.keepScreen();
     return 0; 

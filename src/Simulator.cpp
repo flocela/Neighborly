@@ -13,7 +13,6 @@ std::map<House*, Resident*> Simulator::simulate()
         return _curr_house_to_res_map;
     }
     int chances = 2;
-    std::cout << "Simulator 16" << std::endl;
     // forcedResIdxs hold indexes corresponding to residents in _residents.
     // optionalResIdxs hold the indexes corresponding to residents in _residents.
     // forcedResIdxs are residents that are forced to move.
@@ -33,8 +32,6 @@ std::map<House*, Resident*> Simulator::simulate()
     // call openHouses() so that all forcedMoveResidents' houses are available
     // to move into.
     openHouses(forcedMoveResidents);
-    
-
     while ( forcedResIt != forcedResIdxs.end() ||
         optionalResIt != optionalResIdxs.end()
     )
@@ -42,26 +39,21 @@ std::map<House*, Resident*> Simulator::simulate()
         if (forcedResIt != forcedResIdxs.end())
         {   
             Resident* curr = _residents[*forcedResIt];
-            House* newAddress = findHomeForForcedToMoveResident(
+            House* newHouse = findHomeForForcedToMoveResident(
                 curr,
                 resToOldHouseMapForForcedRes[curr],
                 chances
             );
-
-            _curr_house_to_res_map.insert(std::pair<House*, Resident*>(
-                newAddress,
-                curr
-            ));
-            
+            moveResidentIntoHouse(curr, newHouse);
             ++forcedResIt;
         }
         if (optionalResIt != optionalResIdxs.end())
         { 
             Resident* curr = _residents[*optionalResIt];
-            House* oldHouse = resToOldHouseMapForForcedRes[curr];
+            House* oldHouse = _curr_res_to_house_map[curr];
             std::set<House*> closeOpenHouses = filterForOpenHouses(
                 _city->getNearHouses(
-                    resToOldHouseMapForForcedRes[curr],
+                    oldHouse,
                     25
                 )
             );
@@ -72,16 +64,13 @@ std::map<House*, Resident*> Simulator::simulate()
                 closeOpenHouses,
                 _curr_house_to_res_map
             );
-            _curr_house_to_res_map.insert(std::pair<House*, Resident*>(
-                newHouse,
-                curr
-            ));
+            moveResidentIntoHouse(curr, newHouse);
             
             ++optionalResIt;
             
         }
     }
-        
+       
     return _curr_house_to_res_map;
 }
 
@@ -122,7 +111,7 @@ void Simulator::firstSimulation()
     for (Resident* res : _residents)
     {
         House* house = selectRandom(openHouses);
-        _curr_house_to_res_map.insert({house, res});
+        moveResidentIntoHouse(res, house);
     }
 }
 
@@ -182,36 +171,20 @@ std::vector<Resident*> Simulator::getResidents(
 }
 
 void Simulator::openHouses(std::vector<Resident*> residents){
-    std::map<Resident*, House*> currResidentToAddressMap = {};
-    for (auto const& m : _curr_house_to_res_map)
-    {
-        currResidentToAddressMap.insert(std::pair<Resident*, House*>(
-            m.second,
-            m.first
-        ));
-    }
     for (Resident* res :residents)
     {
-        _curr_house_to_res_map.erase(currResidentToAddressMap[res]);
+        openHouse(res);
     }
 }
 
 std::map<Resident*, House*> Simulator::getHouses (std::vector<Resident*> residents)
 {
-    std::map<Resident*, House*> resToHouseMap = {};
-    for (auto const& m : _curr_house_to_res_map)
-    {
-        resToHouseMap.insert(std::pair<Resident*, House*>(
-            m.second,
-            m.first
-        ));
-    }
     std::map<Resident*, House*> selectResToAddrMap = {};
     for ( Resident* res : residents)
-    {
+    {   
         selectResToAddrMap.insert(std::pair<Resident*, House*>(
             res,
-            resToHouseMap[res]
+            _curr_res_to_house_map[res]
         ));
     }
     return selectResToAddrMap;
@@ -363,18 +336,17 @@ House* Simulator::findHomeForForcedToMoveResident (
 )
 {
     std::set<House*> occupied = getKeysFromMap(_curr_house_to_res_map);
-    std::set<House*> closeOpenHouses = _city->getNearHouses(
+    std::set<House*> nearOpenHouses = _city->getNearHouses(
         oldHouse,
         100,
         occupied,
         count
     );
     //TODO if closeOpenHouses is empty.
-
     House* newHome = resident->findHome(
         _city,
         oldHouse,
-        closeOpenHouses,
+        nearOpenHouses,
         _curr_house_to_res_map
     );
     
@@ -388,7 +360,7 @@ House* Simulator::findHomeForOptionalMoveResident (
 )
 {
     std::set<House*> occupied = getKeysFromMap(_curr_house_to_res_map);
-    std::set<House*> closeOpenHouses = _city->getNearHouses(
+    std::set<House*> nearOpenHouses = _city->getNearHouses(
         oldHouse,
         100,
         occupied,
@@ -399,8 +371,30 @@ House* Simulator::findHomeForOptionalMoveResident (
     House* newHouse = resident->findBestHome(
         _city,
         oldHouse,
-        closeOpenHouses,
+        nearOpenHouses,
         _curr_house_to_res_map
     );
     return newHouse;
+}
+
+void Simulator::moveResidentIntoHouse (Resident* res, House* house)
+{
+    House* oldHouse = _curr_res_to_house_map[res];
+    _curr_house_to_res_map.erase(oldHouse);
+    _curr_res_to_house_map.erase(res);
+    _curr_house_to_res_map.insert(std::pair<House*, Resident*>(
+        house,
+        res
+    ));
+    _curr_res_to_house_map.insert(std::pair<Resident*, House*>(
+        res,
+        house
+    ));
+}
+
+void Simulator::openHouse (Resident* res)
+{
+    House* house = _curr_res_to_house_map[res];
+    _curr_res_to_house_map.erase(res);
+    _curr_house_to_res_map.erase(house);
 }

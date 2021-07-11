@@ -14,6 +14,7 @@ class Simulator
         City* _city;
         std::vector<Resident*> _residents;
         std::map<House*, Resident*> _curr_house_to_res_map = {};
+        std::map<Resident*, House*> _curr_res_to_house_map = {};
         bool firstSimDone = false;
 
         // selectRandom deletes the integer that is returned from @setOfInt
@@ -55,6 +56,8 @@ class Simulator
             House* oldHouse, 
             int count
         );
+        void moveResidentIntoHouse (Resident* res, House* house);
+        void openHouse (Resident* res);
 
     public:
         Simulator (City* city, std::vector<Resident*> residents);

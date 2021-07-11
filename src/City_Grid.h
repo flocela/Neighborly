@@ -11,6 +11,10 @@ class City_Grid: public City
 {
     private:
         int _width;
+        int _minX = 0;
+        int _minY = 0;
+        int _maxX;
+        int _maxY;
     	std::vector<std::unique_ptr<House>> _houses;
         std::map<int, House*> _addrToHouseMap;
         std::map<std::pair<int, double>, std::vector<int>> _within_dist_map;

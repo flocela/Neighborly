@@ -14,16 +14,17 @@
 City_Grid::City_Grid (int width):
 	City(),
 	_width{width},
-	_houses(width*width)
+	_maxX{_width - 1},
+	_maxY{_width - 1}
 {	
+	_houses.reserve(_width * _width);
   	for (int ii=0; ii<width; ++ii)
   	{
   		for (int jj=0; jj<width; ++jj)
-        {
+        { 
 		  int addr = (ii*width) + jj;
-		  std::unique_ptr<House> house = std::make_unique<House>(addr);
-          //_houses.push_back(std::move(house));
-		  //_addrToHouseMap[addr] = _houses[addr].get();
+          _houses.push_back(std::make_unique<House>(addr));
+		  _addrToHouseMap[addr] = (_houses[addr]).get();
         }
   	}
 }
@@ -36,7 +37,7 @@ int City_Grid::getSize() const
 std::vector<House*> City_Grid::getHouses () const
 {	std::vector<House*> houses;
 	for (auto& house : _houses) // TODO maybe const auto&
-	{
+	{	
 		houses.push_back(house.get());
 	}
 	return houses;
@@ -76,21 +77,25 @@ std::vector<House*> City_Grid::getAdjacentHouses (House* house) const
 
 // Resulting set<int> does not include @address.
 std::set<House*> City_Grid::getNearHouses (House* house, double distance) const
-{  
+{ 
 	int origAddress = house->_address;
 	std::set<House*> closeAddresses;
 	int x = get_x(origAddress);
 	int y = get_y(origAddress);
-	int minX = x - std::floor(distance);
-	int maxX = x + std::floor(distance);
-	int minY = y - std::floor(distance);
-	int maxY = y + std::floor(distance);
+	int calculatedMinX = x - std::floor(distance);
+	int calculatedMaxX = x + std::floor(distance);
+	int calculatedMinY = y - std::floor(distance);
+	int calculatedMaxY = y + std::floor(distance);
+	int minX = calculatedMinX < _minX ? _minX : calculatedMinX;
+	int maxX = calculatedMaxX > _maxX ? _maxX : calculatedMaxX;
+	int minY = calculatedMinY < _minY ? _minY : calculatedMinY;
+	int maxY = calculatedMaxY > _maxY ? _maxY : calculatedMaxY;
 	int topLeftAddress = minX * _width + minY;
 	int yDiff = maxY - minY;
 	for (int ii=topLeftAddress; ii<=maxX; ii++)
 	{
 		for (int jj=0; jj<yDiff; jj++)
-		{
+		{	
 			int otherAddress = ii + jj;
 			double farAway = dist(origAddress, otherAddress);
 			if (farAway <= distance && otherAddress != origAddress)
@@ -127,15 +132,20 @@ std::set<House*> City_Grid::getNearHouses (
         std::set<House*> occupied,
         int count
     ) const
-{
+{	
 	int origAddress = house->_address;
 	std::set<House*> returnHouses;
 	int x = get_x(origAddress);
 	int y = get_y(origAddress);
-	int minX = x - std::floor(distance);
-	int maxX = x + std::floor(distance);
-	int minY = y - std::floor(distance);
-	int maxY = y + std::floor(distance);
+	int calculatedMinX = x - std::floor(distance);
+	int calculatedMaxX = x + std::floor(distance);
+	int calculatedMinY = y - std::floor(distance);
+	int calculatedMaxY = y + std::floor(distance);
+	int minX = calculatedMinX < _minX ? _minX : calculatedMinX;
+	int maxX = calculatedMaxX > _maxX ? _maxX : calculatedMaxX;
+	int minY = calculatedMinY < _minY ? _minY : calculatedMinY;
+	int maxY = calculatedMaxY > _maxY ? _maxY : calculatedMaxY;
+	 
 	std::set<House*> subsetOfHouses = getEncompassedHouses(minX, maxX, minY, maxY);
 	while (count != 0)
 	{
@@ -179,7 +189,7 @@ std::set<House*> City_Grid::getEncompassedHouses (
 	for (int xx=minX; xx<=maxX; ++xx)
 	{
 		for (int yy=minY; yy<=maxY; ++yy)
-		{
+		{	
 			houses.insert(_addrToHouseMap.at(getAddress(xx, yy)));
 		}
 	}

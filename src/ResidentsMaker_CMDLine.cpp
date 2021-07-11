@@ -82,7 +82,6 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
 
         numOfResidentsCreated += newResidents.size();
         updateAvailableColors(color);
-        std::cout << "ResidentsMaker_CMDLine line 49 residents.size(): " << residents.size() << std::endl;
     }
     
     return residents;

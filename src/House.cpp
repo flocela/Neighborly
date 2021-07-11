@@ -1,4 +1,5 @@
 #include "House.h"
+#include <iostream>
 
 House::House (int address):_address{address}{}
 
