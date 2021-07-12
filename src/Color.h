@@ -4,7 +4,6 @@
 #include <ostream>
 #include <vector>
 
-
 enum class Color { red, blue, green, absent };
 
 struct ColorInfo
@@ -21,13 +20,11 @@ std::ostream& operator<< (std::ostream& ost, const ColorInfo& c)
     return c.toStream(ost);
 }*/
 
-
-inline std::vector<ColorInfo> _the_colors = {
+inline std::vector<ColorInfo> _the_color_Infos = {
     {Color::red, "red", {255, 0, 0, 255}},
     {Color::blue, "blue", {0, 255, 0, 255}},
     {Color::green, "green", {0, 0, 255, 255}},
     {Color::absent, "absent", {128, 128, 128, 255}}
 };
-
 
 #endif

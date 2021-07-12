@@ -5,44 +5,50 @@
 
 std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents (
     std::vector<ResidentsFactory*> residentsFactories,
-    int maxResidentCount
+    int maxResidentCount,
+    std::vector<ColorInfo> colorInfos // these are the colors that the residents can be.
 )
 {   
     (void) maxResidentCount;
-    initColors();
+    if (colorInfos.size() < 3)
+        throw std::invalid_argument( "colorInfos must have at least 3 colors.");
+    initColors(colorInfos);
+
     std::vector<std::unique_ptr<Resident>> residents;
 
-    auto newResidents = residentsFactories[0]->createBaseResidents(
-            _ui,
-            0,
-            30,
-            0.5,
-            Color::red);
-    for (auto& r: newResidents)
-        {
-            residents.emplace_back(std::move(r));
-        }
-    
-    auto newResidents2 = residentsFactories[0]->createBaseResidents(
-            _ui,
-            13,
-            50,
-            0.5,
-            Color::green);
-    for (auto& r: newResidents2)
-        {
-            residents.emplace_back(std::move(r));
-        }
+    auto residentsGroup1 = residentsFactories[0]->createBaseResidents (
+         _ui,
+        0,
+        30,
+        0.5,
+        Color::red);
+
+    auto residentsGroup2 = residentsFactories[0]->createBaseResidents (
+        _ui,
+        13,
+        50,
+        0.5,
+        Color::green);
+
+    for (auto& r: residentsGroup1)
+        residents.emplace_back(std::move(r));
+
+    for (auto& r: residentsGroup2)
+        residents.emplace_back(std::move(r));
     
     return residents;
 }
 
 std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
     std::vector<ResidentsFactory*> residentsFactories,
-    int maxResidentCount
+    int maxResidentCount,
+    std::vector<ColorInfo> colorInfos
+
 )
 {   
-    initColors();
+    if (colorInfos.size() < 3)
+        throw std::invalid_argument( "colorInfos must have at least 3 colors.");
+    initColors(colorInfos);
     std::vector<std::unique_ptr<Resident>> residents;
 
     int numOfGroups = askForNumOfGroupsOfResidents();
@@ -76,9 +82,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
             color._my_color);
 
         for (auto& r: newResidents)
-        {
             residents.emplace_back(std::move(r));
-        }
 
         numOfResidentsCreated += newResidents.size();
         updateAvailableColors(color);
@@ -87,26 +91,22 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
     return residents;
 }
 
-void ResidentsMaker_CMDLine::initColors ()
+void ResidentsMaker_CMDLine::initColors (std::vector<ColorInfo> colorInfos)
 {
-    for (ColorInfo color : _the_colors)
-    {
-        _colors.push_back(color);
-    }
+    for (ColorInfo color : colorInfos)
+        _available_colors.push_back(color);
 }
-
 
 ColorInfo ResidentsMaker_CMDLine::askForGroupColor (int groupIdx)
 {
     std::vector<std::string> colorStrings = {};
-    for (ColorInfo color : _colors)
-    {
+    for (ColorInfo color : _available_colors)
         colorStrings.push_back(color._my_string);
-    }
+
     std::vector<std::string> number = {" first", " second", " third", " fourth"};
     std::string prompt = _which_group_color_prompt.insert(30, number[groupIdx]);
     int colorIdx = _ui.menu(prompt, colorStrings);
-    return _colors[colorIdx];
+    return _available_colors[colorIdx];
 }
 
 double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (std::string color)
@@ -137,13 +137,14 @@ int ResidentsMaker_CMDLine::askForNumOfResidents(int count, std::string color)
     if (question.hasValidAnswer())
         return std::stoi(question.getAnswer());
     else
-       
         throw _how_many_residents_failure.insert(48 , color + " ");
 }
 
-int ResidentsMaker_CMDLine::askForGroupResidentType (std::string color, 
-                                                     std::vector<ResidentsFactory*> 
-                                                        residentsFactories)
+int ResidentsMaker_CMDLine::askForGroupResidentType (
+    std::string color, 
+    std::vector<ResidentsFactory*> 
+    residentsFactories
+)
 {
     std::vector<std::string> factoryNames = getFactoryNames(residentsFactories);
     return _ui.menu(_which_type_prompt.insert(24, color + " "), factoryNames);
@@ -151,49 +152,60 @@ int ResidentsMaker_CMDLine::askForGroupResidentType (std::string color,
 
 Question_Int ResidentsMaker_CMDLine::createQuestionHowManyResidentGroups()
 {
-    return Question_Int{0,
-                        1,
-                        3, 
-                        _how_many_groups_orig_prompt,
-                        _how_many_groups_type_prompt,
-                        _how_many_groups_range_prompt};
+    return Question_Int{
+        0,
+        1,
+        3, 
+        _how_many_groups_orig_prompt,
+        _how_many_groups_type_prompt,
+        _how_many_groups_range_prompt
+    };
 }
 
 Question_Int ResidentsMaker_CMDLine::createQuestionHowManyResidents (
     int count, 
     std::string color
 )
-{   std::string origPromptFinalized = _how_many_residents_orig_prompt.insert(34, color + " ");
-    int insertionPoint = origPromptFinalized.size() - 3;
-    origPromptFinalized = origPromptFinalized.insert( insertionPoint, std::to_string(count));
+{   
+    std::string origPrompt = _how_many_residents_orig_prompt.insert(
+        34, 
+        color + " "
+    );
+    origPrompt = origPrompt.insert(
+        origPrompt.size() - 3,
+        std::to_string(count)
+    );
 
-    return Question_Int{1,
-                        1,
-                        count,
-                        origPromptFinalized,
-                        _how_many_residents_type_prompt,
-                        _how_many_residents_range_prompt};
+    return Question_Int{
+        1,
+        1,
+        count,
+        origPrompt,
+        _how_many_residents_type_prompt,
+        _how_many_residents_range_prompt
+    };
 }
 
 Question_Double ResidentsMaker_CMDLine::createQuestionGroupHappiness (std::string color)
 {
-    return Question_Double{2,
-                           0.0,
-                           1.0,
-                           _group_happiness_orig_prompt.insert(55, color + " "),
-                           _group_happiness_range_prompt,
-                           _group_happiness_range_prompt};
+    return Question_Double{
+        2,
+        0.0,
+        1.0,
+        _group_happiness_orig_prompt.insert(55, color + " "),
+        _group_happiness_range_prompt,
+        _group_happiness_range_prompt};
 }
 
 void ResidentsMaker_CMDLine::updateAvailableColors(ColorInfo color)
 {
     std::size_t ii = 0;
-    for (;ii < _colors.size(); ++ii)
+    for (;ii < _available_colors.size(); ++ii)
     {
-        if (_colors[ii]._my_string == color._my_string)
+        if (_available_colors[ii]._my_string == color._my_string)
             break;
     }
-    _colors.erase(_colors.begin() + static_cast<int>(ii));
+    _available_colors.erase(_available_colors.begin() + static_cast<int>(ii));
 }
 
 std::vector<std::string> ResidentsMaker_CMDLine::getFactoryNames (

@@ -11,15 +11,17 @@
 Printer_Graphic::Printer_Graphic (
     const std::size_t screen_width,
     const std::size_t screen_height,
-    City* cityPtr
+    City* cityPtr,
+    std::vector<ColorInfo> colorInfos
 ):  _screen_width{screen_width},
     _screen_height{screen_height},
-    _renderer{_screen_width, _screen_height}
+    _renderer{_screen_width, _screen_height},
+    _color_infos{colorInfos}
 {
-    for (ColorInfo colorInfo : _the_colors)
+    std::map<Color, std::vector<int>> rgbaPerColor;
+    for (ColorInfo colorInfo : _the_color_Infos)
     {
-
-        _rgba_per_color[colorInfo._my_color] = colorInfo.rgba;
+        rgbaPerColor[colorInfo._my_color] = colorInfo.rgba;
     }
     
     initCityCoordinateInfo(cityPtr);
@@ -28,8 +30,8 @@ Printer_Graphic::Printer_Graphic (
         &_renderer,
         graphOrigin,
         _coord_to_house_map,
-        _rgba_per_color,
-        _grid_size,
+        rgbaPerColor,
+        _cell_size,
         _min_x_coord,
         _max_x_coord,
         _min_y_coord,
@@ -65,16 +67,17 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
 
     int deltaX = _max_x_coord - _min_x_coord;
     int deltaY = _max_y_coord - _min_y_coord;
-    // city graph will take up half the screen width, divide space
-    // among houses. Each house will be in one grid. _grid_size and _house_size
-    // will be even so that the houses will be centered. // TODO not really necessary
-    _grid_size = _screen_width/2/(std::max(deltaX, deltaY));
+    // city graph will take up half the screen width, divide space among houses.
+    // Each house will be inside one cell. _cell_size and _house_size will be
+    // even numbers to simplify the math so that each house will be easily 
+    // centered inside one cell. // TODO not really necessary
+    _cell_size = _screen_width/2/(std::max(deltaX, deltaY));
 
-    if (_grid_size % 2 != 0)
-        _grid_size++;
-    if (_grid_size > 12)
-        _grid_size = 12;
-    if (_grid_size <= 3)
+    if (_cell_size % 2 != 0)
+        _cell_size++;
+    if (_cell_size > 12)
+        _cell_size = 12;
+    if (_cell_size <= 3)
         throw (
             "Can not print a city graph with so many houses. Maximum number of houses"
              " per side is 150."
@@ -88,21 +91,21 @@ void Printer_Graphic::initGridAndHouseSize ()
     int deltaY = _max_y_coord - _min_y_coord;
 
     // city graph will take up half the screen height, divide space
-    // among houses. Each house will be in one grid. _grid_size and _house_size
+    // among houses. Each house will be in one cell. _cell_size and _house_size
     // will be even numbers so that the houses will be centered.
-    _grid_size = _screen_width/2/(std::max(deltaX, deltaY));
+    _cell_size = _screen_width/2/(std::max(deltaX, deltaY));
 
-    if (_grid_size % 2 != 0)
-        _grid_size++;
-    if (_grid_size > 12)
-        _grid_size = 12;
-    if (_grid_size <= 3)
+    if (_cell_size % 2 != 0)
+        _cell_size++;
+    if (_cell_size > 12)
+        _cell_size = 12;
+    if (_cell_size <= 3)
         throw (
             "Can not print a city graph with so many houses. Maximum number of houses"
              " per side is 150."
         );
     
-    _house_size = _grid_size/2;
+    _house_size = _cell_size/2;
 }
 
 

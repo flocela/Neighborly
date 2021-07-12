@@ -102,11 +102,10 @@ int main(int argc, char* argv[])
 
     ResidentsMaker_CMDLine residentsMaker{};
     //std::vector<std::unique_ptr<Resident>> residents = 
-    //    residentsMaker.makeResidents(residentFactoryPointers, city->getSize());
+    //    residentsMaker.makeResidents(residentFactoryPointers, city->getSize(), _the_color_Infos);
     std::vector<std::unique_ptr<Resident>> residents = 
-        residentsMaker.makeBaseResidents(residentFactoryPointers, city->getSize());
+        residentsMaker.makeBaseResidents(residentFactoryPointers, city->getSize(), _the_color_Infos);
     
-    std::map<Color, int> intPerColor = {};
     std::vector<Resident*> residentPtrs = {};
     for (auto& resident: residents)
     {
@@ -120,7 +119,7 @@ int main(int argc, char* argv[])
         houseToResidentMap[resident->getID()] = resident.get();
     }*/
     Simulator simulator{city.get(), residentPtrs};
-    Printer_Graphic printer{1200, 1200, city.get()};
+    Printer_Graphic printer{1200, 1200, city.get(), _the_color_Infos};
     for (int ii=0; ii< 3; ii++)
     {   
         std::map<House*, Resident*> houseToResidentMap = simulator.simulate();

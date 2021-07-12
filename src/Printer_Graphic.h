@@ -7,6 +7,8 @@
 #include <thread>
 #include <memory>
 #include "House.h"
+#include <vector>
+#include "Color.h"
 
 class Printer_Graphic : public Printer
 {   
@@ -15,7 +17,8 @@ class Printer_Graphic : public Printer
         Printer_Graphic (
             const std::size_t screen_width,
             const std::size_t screen_height,
-            City* cityPtr
+            City* cityPtr,
+            std::vector<ColorInfo> colorInfos
         );
         Printer_Graphic (const Printer_Graphic& obj) = default;
         Printer_Graphic (Printer_Graphic&& obj) noexcept = default;
@@ -36,10 +39,12 @@ class Printer_Graphic : public Printer
         std::unique_ptr<GraphicCityPrinter> _graphic_city_printer;
         std::size_t _screen_width;
         std::size_t _screen_height;
-        // Each house is inside of a grid square. The grid square 
+        Renderer _renderer;
+        std::vector<ColorInfo> _color_infos;
+        // Each house is inside of a square cell. The cell 
         // will hold a house (represented by a colored square) and a
         // clear border around the house.
-        int _grid_size;
+        int _cell_size;
         int _house_size;
         int _min_x_coord = INT32_MAX;
 		int _min_y_coord = INT32_MAX;
@@ -71,8 +76,8 @@ class Printer_Graphic : public Printer
         
         std::map<Coordinate, House*> _coord_to_house_map = {};
 
-        Renderer _renderer;
-        std::map<Color, std::vector<int>> _rgba_per_color;
+
+
         std::map<Color, std::vector<Coordinate>> createVectorsForEachColor (
             std::map<House*, Resident*> houseToResidentMap
         );

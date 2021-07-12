@@ -8,19 +8,27 @@
 #include "Color.h"
 #include "UI_CMDLine.h"
 
+// Creates Residents by asking user how many resident groups they want (max is 3).
+// Then for each group, asks what type of Resident the group will be composed of.
+// For each type of Resident type, asks specific questions that are necessary
+// to create Residents of that type.
 class ResidentsMaker_CMDLine: public ResidentsMaker
 {
     public:
         ResidentsMaker_CMDLine () = default;
         ~ResidentsMaker_CMDLine () = default;
+
+        // Only allows 1 to 3 groups of residents.
         std::vector<std::unique_ptr<Resident>> makeResidents (
             std::vector<ResidentsFactory*> residentsFactories,
-            int maxNumOfResidents
+            int maxNumOfResidents,
+            std::vector<ColorInfo> colors // these are the colors that the residents can be.
         )
         override;
         std::vector<std::unique_ptr<Resident>> makeBaseResidents (
             std::vector<ResidentsFactory*> residentsFactories,
-            int maxNumOfResidents
+            int maxNumOfResidents,
+            std::vector<ColorInfo> colors // these are the colors that the residents can be.
         )
         override;
 
@@ -39,7 +47,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         Question_Int createQuestionHowManyResidents (int count, std::string color);
         Question_Double createQuestionGroupHappiness(std::string color);
 
-        void initColors ();
+        void initColors (std::vector<ColorInfo> colorInfos);
         void updateAvailableColors (ColorInfo color);
         std::vector<std::string>  getFactoryNames (
             std::vector<ResidentsFactory*> residentsFactories
@@ -48,7 +56,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         UI_CMDLine _ui = UI_CMDLine{};
 
         // Vector of color strings, is diminished as users use their colors.
-        std::vector<ColorInfo> _colors;
+        std::vector<ColorInfo> _available_colors;
 
         // Prompt for what is this group's color question.
         std::string _which_group_color_prompt = "What will be the color of your"

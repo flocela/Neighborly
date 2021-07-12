@@ -143,7 +143,7 @@ Renderer::~Renderer() {
 std::map<Color, ColorInfo> getColorInfo ()
 {
     std::map<Color, ColorInfo> colorMap = {};
-    for (ColorInfo colorInfo : _the_colors)
+    for (ColorInfo colorInfo : _the_color_Infos)
     {
         colorMap[colorInfo._my_color] = colorInfo;
     }
