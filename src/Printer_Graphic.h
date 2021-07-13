@@ -36,24 +36,24 @@ class Printer_Graphic : public Printer
         void keepScreen();
     
     private:
-        std::unique_ptr<GraphicCityPrinter> _graphic_city_printer;
         std::size_t _screen_width;
         std::size_t _screen_height;
         Renderer _renderer;
         std::vector<ColorInfo> _color_infos;
-        // Each house is inside of a square cell. The cell 
-        // will hold a house (represented by a colored square) and a
-        // clear border around the house.
-        int _cell_size;
-        int _house_size;
-        int _min_x_coord = INT32_MAX;
-		int _min_y_coord = INT32_MAX;
-		int _max_x_coord = INT32_MIN;
-		int _max_y_coord = INT32_MIN;
+        std::unique_ptr<GraphicCityPrinter> _graphic_city_printer;
+        std::map<Coordinate, House*> _coord_to_house_map = {};
 
-        // chart title is vertically offset from the origin by _title_offset
-		// from the x-axis by x-title-offset
-		const int _title_offset = 10;
+        // Each house is inside of a square cell. The cell 
+        // will hold a house (represented by a colored square) and have
+        // clear border around the house.
+        int _cell_size;  // pixels for square cell
+        int _house_size; // pixels for colored square house
+
+        // House coordinates from the city, not in pixels.
+        int _min_x_coord = INT32_MAX; // top left corner of grid
+		int _min_y_coord = INT32_MAX; // top left corner of grid
+		int _max_x_coord = INT32_MIN; // bottom right corner of grid
+		int _max_y_coord = INT32_MIN; // bottom right corner of grid
 
 		// x-axis is vertically offset from origin by x-axis-offset
 		const int _x_axis_offset = 10;
@@ -67,29 +67,27 @@ class Printer_Graphic : public Printer
         // y-axis overruns its data by y_axis_overrun
 		const int _y_axis_overrun = 0;
 
-        // titlesAtTopOffset and titlesLeftOffset is room given for titles at top
+        // _titles_at_left_offset and _titles_at_top_offset is room given for titles at top
         // and left of the graph.
-        // fontSize is for x and y axes.
+        // _axis_font_size is for x and y axes.
         const int _titles_at_left_offset = 240;
         const int _titles_at_top_offset = 80;
         const int _axis_font_size = 20;
-        
-        std::map<Coordinate, House*> _coord_to_house_map = {};
 
-
-
-        std::map<Color, std::vector<Coordinate>> createVectorsForEachColor (
-            std::map<House*, Resident*> houseToResidentMap
-        );
-        // Initializes information from the city that will not change. Each 
-        // address's coordinate will stay the same. So the _housePerCoordinate map
-        // is initialized. The city's most west, east, north, and south coordinates
-        // will not change. So the min, max, x, and y coordinates 
-        // from the city are initialized (i.e. _min_x_coord).
+        // Moves non-changing information from the city into class attributes
+        // (which by the way will also not be changing). For example City
+        // houses' coordinates will not change so initializes _coord_to_house_map. 
+        // The city's most west, east, north, and south coordinates
+        // will not change. So the _min_x_coord and the like are initialized. 
+        // We have _screen_width and min and max coordinates so the _cell_size
+        // is initialized.
         void initCityCoordinateInfo (City* cityPtr);
-        // Initializes information about the graph based on the city 
-        // and screen sizes.
-        void initGridAndHouseSize ();
+
+        // initialize _graphic_city_printer with base information
+        // like where to put grid (graphOrigin), x and y axis offsets,
+        // cell_size, rgba for residents' colors and the like. Basically 
+        // set up the graph where the residents will be plotted.
+        void initGraphicCityPrinter (Coordinate graphOrigin);
 
 };
 
