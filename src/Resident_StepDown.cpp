@@ -19,16 +19,16 @@ Resident_StepDown::Resident_StepDown (
 }
 
 double Resident_StepDown::getHappiness(
-    std::vector<Color> neighbors,
+    std::set<Resident*> neighbors,
     int numOfAdjacentHouses
 ) const
 {
     int like  = 0;
     int diff  = 0;
     
-    for (Color color : neighbors)
+    for (Resident* res : neighbors)
     {
-        if (color == getColor())
+        if (res->getColor() == getColor())
         {
             like++;
         }

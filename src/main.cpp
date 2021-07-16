@@ -45,6 +45,7 @@
 #include "Printer_Graphic.h"
 #include "Resident_Flat.h"
 #include "Simulator.h"
+#include "Simulator_Basic_A.h"
 
 // Define MAX and MIN macros
 #define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
@@ -106,10 +107,10 @@ int main(int argc, char* argv[])
     std::vector<std::unique_ptr<Resident>> residents = 
         residentsMaker.makeBaseResidents(residentFactoryPointers, city->getSize(), _the_color_Infos);
     
-    std::vector<Resident*> residentPtrs = {};
+    std::set<Resident*> residentPtrs = {};
     for (auto& resident: residents)
     {
-        residentPtrs.push_back(resident.get());
+        residentPtrs.insert(resident.get());
     }
     
 /*
@@ -118,14 +119,13 @@ int main(int argc, char* argv[])
     {
         houseToResidentMap[resident->getID()] = resident.get();
     }*/
-    Simulator simulator{city.get(), residentPtrs};
+    std::unique_ptr<Simulator> simulator = std::make_unique<Simulator_Basic_A>(city.get(), residentPtrs);
     Printer_Graphic printer{1200, 1200, city.get(), _the_color_Infos};
     for (int ii=0; ii< 3; ii++)
     {   
-        std::map<House*, Resident*> houseToResidentMap = simulator.simulate();
+        std::map<House*, Resident*> houseToResidentMap = simulator->simulate();
         printer.print(houseToResidentMap, 1, 1, "Title");
         std::this_thread::sleep_for(std::chrono::nanoseconds(1000));
-        
     }
     printer.keepScreen();
     return 0; 

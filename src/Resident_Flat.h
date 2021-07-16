@@ -21,7 +21,7 @@ class Resident_Flat: public Resident
         ~Resident_Flat() = default;
 
         double getHappiness (
-            std::vector<Color> neighbors,
+            std::set<Resident*> neighbors,
             int numOfAdjacentHouses
         ) const override;
 

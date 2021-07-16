@@ -27,7 +27,7 @@ class Resident{
         // if a neighbors house is empty, Color::absent should
         // be added to neighbors
         virtual double getHappiness (
-            std::vector<Color> neighbors,
+            std::set<Resident*> neighbors,
             int numOfAdjacentHouses
         ) const = 0;
         virtual House* findHome (

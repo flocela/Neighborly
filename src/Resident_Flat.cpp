@@ -11,7 +11,7 @@ Resident_Flat::Resident_Flat (
 {}
 
 double Resident_Flat::getHappiness(
-    std::vector<Color> neighbors,
+    std::set<Resident*> neighbors,
     int numOfAdjacentHouses
 ) const
 {

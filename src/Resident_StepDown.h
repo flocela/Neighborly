@@ -23,7 +23,7 @@ class Resident_StepDown: public Resident
         ~Resident_StepDown() = default;
 
         double getHappiness (
-            std::vector<Color> neighbors,
+            std::set<Resident*> neighbors,
             int numOfAdjacentHouses
         ) const override;
 
