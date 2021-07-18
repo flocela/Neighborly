@@ -18,10 +18,25 @@ std::map<House*, Resident*> Simulator_Basic_A::simulate ()
         _first_simulation_done = true;
         return _curr_house_to_res_map;
     }
+    
     for (Resident* res : _residents)
     {   
-        std::cout << "SBasicA 24" << std::endl;
         moveResidentIfUnhappy(res);
+    }
+    for (auto const& x : _curr_house_to_res_map)
+    {
+        House* house = x.first;
+        Resident* res = x.second;
+        if (house == nullptr) {
+            std::cout << "Sim 32 house is null" << std::endl;
+            break;
+        }
+        if (res == nullptr)
+        {
+            std::cout << "Sim 37 house is " << x.first->_address << "res is null house. " << std::endl;
+            break;
+        }
+            
     }
     return _curr_house_to_res_map;
 }
@@ -35,52 +50,47 @@ void Simulator_Basic_A::firstSimulation ()
     }
 }
 void Simulator_Basic_A::moveResidentIfUnhappy (Resident* res)
-{
+{   
     House* oldHouse = _curr_res_to_house_map[res];
-
     std::set<House*> adjHouses = _city->getAdjacentHouses(oldHouse);
     std::set<Resident*> adjResidents = getResidentsInHouses(adjHouses);
+
     if ( res->getHappiness(adjResidents, adjHouses.size()) <
          res->getHappinessGoal() )
     {   
         House* newHouse = selectRandom(_open_houses);
         moveResidentIntoHouse(res, newHouse);
     }
-
 }
 
 void Simulator_Basic_A::moveResidentIntoHouse (Resident* res, House* newHouse)
-{   /*
-    House* oldHouse = _curr_res_to_house_map[res];
-    if ( oldHouse ) // if resident has a current house
+{   
+    if (_curr_res_to_house_map.count(res) > 0)
     {
+        House* oldHouse = _curr_res_to_house_map[res];
+        _curr_res_to_house_map.erase(res);
         _curr_house_to_res_map.erase(oldHouse);
         _open_houses.insert(oldHouse);
     }
-    std::cout << "Sim 60 new house "; std::cout << res->getID() << " " << newHouse->_address << std::endl;
+
     _curr_house_to_res_map.insert(std::pair<House*, Resident*>(newHouse, res));
     _curr_res_to_house_map.insert(std::pair<Resident*, House*>(res, newHouse));
-    //_open_houses.erase(newHouse);
-    std::cout << "Sim 64 newHouse: " << newHouse->_address << std::endl;
-    std::cout << "Sim 65: " << res->getID(); std::cout << " " << _curr_res_to_house_map.count(res) << std::endl;
-    std::cout << "Sim 66: " << res->getID() << std::endl;
-    std::cout << "Sim 67: " << ((_curr_res_to_house_map[res])== nullptr) << std::endl;
-    */
-
-   std::map<Resident*, House*> testMap;
-   testMap.insert(std::pair<Resident*, House*>(res, newHouse));
-   std::cout << "Sim 72: " << testMap[res]->_address << std::endl;
+    _open_houses.erase(newHouse);
+  
 }
 
 std::set<Resident*> Simulator_Basic_A::getResidentsInHouses(
     std::set<House*> houses
 )
-{   std::set<Resident*> residents;
+{   
+    std::set<Resident*> residents;
     for (House* house : houses)
     {   
-        Resident* currRes = _curr_house_to_res_map[house];
-        if (currRes)
-            residents.insert(_curr_house_to_res_map[house]);
+        if (_curr_house_to_res_map.count(house) > 0)
+        {
+            Resident* currRes = _curr_house_to_res_map[house];
+            residents.insert(currRes);
+        }  
     }
     return residents;
 }

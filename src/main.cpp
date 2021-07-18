@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
     }*/
     std::unique_ptr<Simulator> simulator = std::make_unique<Simulator_Basic_A>(city.get(), residentPtrs);
     Printer_Graphic printer{1200, 1200, city.get(), _the_color_Infos};
-    for (int ii=0; ii< 3; ii++)
+    for (int ii=0; ii< 2; ii++)
     {   
         std::map<House*, Resident*> houseToResidentMap = simulator->simulate();
         printer.print(houseToResidentMap, 1, 1, "Title");

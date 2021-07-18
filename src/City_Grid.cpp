@@ -45,7 +45,7 @@ std::vector<House*> City_Grid::getHouses () const
 
 std::set<House*> City_Grid::getAdjacentHouses (House* house) const
 {
-	std::cout<< "City_Grid 48 house " << (house == nullptr) << std::endl;
+	std::cout<< "City_Grid 48 house is nullptr " << (house == nullptr) << std::endl;
 	int address = house->_address;
 	int x = get_x(address);
 	int y = get_y(address);

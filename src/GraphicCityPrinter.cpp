@@ -2,11 +2,13 @@
 #include <iostream>
 
 void GraphicCityPrinter::printCity (std::map<House*, Resident*> houseToResMap)
-{
+{   std::cout << "GrapchiCityPrinter 5 " << std::endl;
     addCityXAxis();
     addCityYAxis();
     addTitle();
+    std::cout << "GrapchiCityPrinter 9 " << std::endl;
     addHouses(houseToResMap);
+    std::cout << "GrapchiCityPrinter 11 " << std::endl;
 }
 
 void GraphicCityPrinter::addTitle()
@@ -176,10 +178,10 @@ void GraphicCityPrinter::addCityYAxis ()
 void GraphicCityPrinter::addHouses(
     std::map<House*, Resident*> houseToResMap
 )
-{
+{   std::cout << "GraphicCityPrinter 181 " << std::endl;
     std::map<Color, std::vector<Coordinate>> colorToCoordinates =
         createVectorsForEachColor(houseToResMap);
-    
+    std::cout << "GraphicCityPrinter 184 " << std::endl;
     for (auto const& colorToCoord : colorToCoordinates)
     {
         Color color = colorToCoord.first;
@@ -195,21 +197,18 @@ void GraphicCityPrinter::addHouses(
 std::map<Color, std::vector<Coordinate>> GraphicCityPrinter::createVectorsForEachColor (
     std::map<House*, Resident*> houseToResMap
 )
-{
+{   
     std::map<Color, std::vector<Coordinate>> colorToCoordinatesMap ={};
     // city origin is where x and y axis meet.
     Coordinate cityOrigin{
         _chart_origin.getX() + _titles_at_left_offset,
         _chart_origin.getY() + _titles_at_top_offset
     };
-
     for (auto const& x : _coord_to_house_map)
     {
         Coordinate coord = x.first;
         House* house = x.second;
-
         Color colorKey;
-
         if (houseToResMap.count(house) == 0)
         {   
             // No resident has this address. So this house is empty.
@@ -218,9 +217,9 @@ std::map<Color, std::vector<Coordinate>> GraphicCityPrinter::createVectorsForEac
         else
         {   
             Resident* res = houseToResMap[house];
+            //std::cout << "GraphicCityPrinter 220 res is null " << (res == nullptr) << std::endl;
             colorKey = res->getColor();
         }
-
         if (colorToCoordinatesMap.count(colorKey) == 0) // TODO  c++ knows how to do this in one step
         {
             std::vector<Coordinate> newCoordinateVector = {};
