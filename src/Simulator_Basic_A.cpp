@@ -23,21 +23,6 @@ std::map<House*, Resident*> Simulator_Basic_A::simulate ()
     {   
         moveResidentIfUnhappy(res);
     }
-    for (auto const& x : _curr_house_to_res_map)
-    {
-        House* house = x.first;
-        Resident* res = x.second;
-        if (house == nullptr) {
-            std::cout << "Sim 32 house is null" << std::endl;
-            break;
-        }
-        if (res == nullptr)
-        {
-            std::cout << "Sim 37 house is " << x.first->_address << "res is null house. " << std::endl;
-            break;
-        }
-            
-    }
     return _curr_house_to_res_map;
 }
 

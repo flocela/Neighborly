@@ -2,13 +2,11 @@
 #include <iostream>
 
 void GraphicCityPrinter::printCity (std::map<House*, Resident*> houseToResMap)
-{   std::cout << "GrapchiCityPrinter 5 " << std::endl;
+{   
     addCityXAxis();
     addCityYAxis();
     addTitle();
-    std::cout << "GrapchiCityPrinter 9 " << std::endl;
     addHouses(houseToResMap);
-    std::cout << "GrapchiCityPrinter 11 " << std::endl;
 }
 
 void GraphicCityPrinter::addTitle()
@@ -178,10 +176,9 @@ void GraphicCityPrinter::addCityYAxis ()
 void GraphicCityPrinter::addHouses(
     std::map<House*, Resident*> houseToResMap
 )
-{   std::cout << "GraphicCityPrinter 181 " << std::endl;
+{   
     std::map<Color, std::vector<Coordinate>> colorToCoordinates =
         createVectorsForEachColor(houseToResMap);
-    std::cout << "GraphicCityPrinter 184 " << std::endl;
     for (auto const& colorToCoord : colorToCoordinates)
     {
         Color color = colorToCoord.first;
@@ -217,7 +214,6 @@ std::map<Color, std::vector<Coordinate>> GraphicCityPrinter::createVectorsForEac
         else
         {   
             Resident* res = houseToResMap[house];
-            //std::cout << "GraphicCityPrinter 220 res is null " << (res == nullptr) << std::endl;
             colorKey = res->getColor();
         }
         if (colorToCoordinatesMap.count(colorKey) == 0) // TODO  c++ knows how to do this in one step

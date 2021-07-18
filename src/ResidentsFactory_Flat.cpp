@@ -97,7 +97,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createBaseResident
 {   
     (void) ui;
     double movement = 4;
-    double happinessValue = 0.5;
+    double happinessValue = 0.4;
 
     std::vector<std::unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)
