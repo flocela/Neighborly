@@ -9,12 +9,14 @@
 #include "House.h"
 #include <vector>
 #include "Color.h"
+#include "GraphicRunCounterPrinter.h"
 
 class Printer_Graphic : public Printer
 {   
     public:
         Printer_Graphic() = delete;
         Printer_Graphic (
+            int maxNumOfRuns,
             const std::size_t screen_width,
             const std::size_t screen_height,
             City* cityPtr,
@@ -29,18 +31,20 @@ class Printer_Graphic : public Printer
         void print(
             std::map<House*, Resident*> residentPerHouse,
             int run,
-            int totRuns,
             std::string title
         ) override;
 
         void keepScreen();
     
     private:
+        int _num_of_runs = 0;
+        int _max_num_of_runs;
         std::size_t _screen_width;
         std::size_t _screen_height;
-        Renderer _renderer;
+        std::unique_ptr<Renderer> _renderer;
         std::vector<ColorInfo> _color_infos;
-        std::unique_ptr<GraphicCityPrinter> _graphic_city_printer;
+        std::unique_ptr<GraphicCityPrinter> _city_printer;
+        std::unique_ptr<GraphicRunCounterPrinter> _run_counter_printer;
         std::map<Coordinate, House*> _coord_to_house_map = {};
 
         // Each house is inside of a square cell. The cell 
@@ -74,6 +78,10 @@ class Printer_Graphic : public Printer
         const int _titles_at_top_offset = 80;
         const int _axis_font_size = 20;
 
+        // x and y offsets for title displaying number of runs so far.
+        const int _x_num_of_runs_offset = 80;
+        const int _y_num_of_runs_offset = 80;
+
         // Moves non-changing information from the city into class attributes
         // (which by the way will also not be changing). For example City
         // houses' coordinates will not change so initializes _coord_to_house_map. 
@@ -87,7 +95,9 @@ class Printer_Graphic : public Printer
         // like where to put grid (graphOrigin), x and y axis offsets,
         // cell_size, rgba for residents' colors and the like. Basically 
         // set up the graph where the residents will be plotted.
-        void initGraphicCityPrinter (Coordinate graphOrigin);
+        void initCityPrinter (Coordinate graphOrigin);
+
+        void initRunCounterPrinter (int maxNumOfRuns);
 
 };
 

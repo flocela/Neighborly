@@ -11,7 +11,6 @@ class Printer
         virtual void print(
                 std::map<House*, Resident*> residentPerHouse,
                 int run,
-                int totRuns,
                 std::string title) = 0;
 };
 

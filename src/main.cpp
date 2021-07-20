@@ -120,12 +120,12 @@ int main(int argc, char* argv[])
         houseToResidentMap[resident->getID()] = resident.get();
     }*/
     std::unique_ptr<Simulator> simulator = std::make_unique<Simulator_Basic_A>(city.get(), residentPtrs);
-    Printer_Graphic printer{1200, 1200, city.get(), _the_color_Infos};
+    Printer_Graphic printer{4, 1200, 1200, city.get(), _the_color_Infos};
     for (int ii=0; ii< 5; ii++)
     {   
         std::map<House*, Resident*> houseToResidentMap = simulator->simulate();
-        printer.print(houseToResidentMap, 1, 1, "Title");
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        printer.print(houseToResidentMap, ii, "Title");
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
         std::cout << "main simulation count " << ii << std::endl;
     }
     printer.keepScreen();

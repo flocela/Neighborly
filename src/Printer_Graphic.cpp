@@ -9,46 +9,47 @@
 
 
 Printer_Graphic::Printer_Graphic (
+    int maxNumOfRuns,
     const std::size_t screen_width,
     const std::size_t screen_height,
     City* cityPtr,
     std::vector<ColorInfo> colorInfos
 ):  _screen_width{screen_width},
     _screen_height{screen_height},
-    _renderer{_screen_width, _screen_height},
+    _renderer{std::make_unique<Renderer>(_screen_width, _screen_height)},
     _color_infos{colorInfos}
 {
     initCityCoordinateInfo(cityPtr);
     Coordinate graphOrigin = Coordinate{10, 10};
-    initGraphicCityPrinter(graphOrigin);
+    initCityPrinter(graphOrigin);
+    initRunCounterPrinter(maxNumOfRuns);
 }
 
-void Printer_Graphic::initGraphicCityPrinter (Coordinate graphOrigin)
-{
-    std::map<Color, std::vector<int>> rgbaPerColor;
-    for (ColorInfo colorInfo : _the_color_Infos)
-    {
-        rgbaPerColor[colorInfo._my_color] = colorInfo.rgba;
-    }
+void Printer_Graphic::print (
+    std::map<House*, Resident*> residentPerHouse,
+    int run,
+    std::string title
+)
+{   
+    (void) title;
+    (void) residentPerHouse;
+    _city_printer->printCity(residentPerHouse);
+    _run_counter_printer->print(run);
+    _renderer->endFrame();
+} 
 
-    _graphic_city_printer = std::make_unique<GraphicCityPrinter>(
-        &_renderer,
-        _coord_to_house_map,
-        rgbaPerColor,
-        graphOrigin,
-        _cell_size,
-        _min_x_coord,
-        _max_x_coord,
-        _min_y_coord,
-        _max_y_coord,
-        _x_axis_offset,
-        _y_axis_offset,
-        _x_axis_overrun,
-        _y_axis_overrun,
-        _titles_at_left_offset,
-        _titles_at_top_offset,
-        _axis_font_size
-    );
+void Printer_Graphic::keepScreen()
+{
+    SDL_Event e;
+    int counter = 0;
+    while (SDL_WaitEvent(&e) != 0)
+    {   
+        counter ++;
+        if (e.type == SDL_QUIT)
+        {
+            break;
+        }
+    }
 }
 
 void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
@@ -89,33 +90,39 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
     _house_size = _cell_size/2;
 }
 
-void Printer_Graphic::print (
-    std::map<House*, Resident*> residentPerHouse,
-    int run,
-    int totRuns,
-    std::string title
-)
-{   (void) run;
-    (void) totRuns;
-    (void) title;
-    _graphic_city_printer->printCity(residentPerHouse);
-    _renderer.endFrame();
-} 
-
-void Printer_Graphic::keepScreen()
+void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
 {
-    SDL_Event e;
-    int counter = 0;
-    while (SDL_WaitEvent(&e) != 0)
-    {   
-        counter ++;
-        if (e.type == SDL_QUIT)
-        {
-            break;
-        }
+    std::map<Color, std::vector<int>> rgbaPerColor;
+    for (ColorInfo colorInfo : _the_color_Infos)
+    {
+        rgbaPerColor[colorInfo._my_color] = colorInfo.rgba;
     }
+
+    _city_printer = std::make_unique<GraphicCityPrinter>(
+        _renderer.get(),
+        _coord_to_house_map,
+        rgbaPerColor,
+        graphOrigin,
+        _cell_size,
+        _min_x_coord,
+        _max_x_coord,
+        _min_y_coord,
+        _max_y_coord,
+        _x_axis_offset,
+        _y_axis_offset,
+        _x_axis_overrun,
+        _y_axis_overrun,
+        _titles_at_left_offset,
+        _titles_at_top_offset,
+        _axis_font_size
+    );
 }
 
-
-
-
+void Printer_Graphic::initRunCounterPrinter (int maxNumOfRuns)
+{
+    _run_counter_printer = std::make_unique<GraphicRunCounterPrinter>(
+        _renderer.get(), 
+        _x_num_of_runs_offset, 
+        _y_num_of_runs_offset,
+        maxNumOfRuns );
+}

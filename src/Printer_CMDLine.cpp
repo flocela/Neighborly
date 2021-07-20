@@ -6,13 +6,11 @@
 void Printer_CMDLine::print(
     std::map<House*, Resident*> residentPerHouse,
     int run,
-    int totRuns,
     std::string title
 )
 {
     (void) residentPerHouse;
     (void) run;
-    (void) totRuns;
     (void) title;
     /*
     run++; // TODO run is not used.
