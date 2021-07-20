@@ -2,6 +2,7 @@
 #include "../src/Coordinate.h"
 #include <vector>
 #include <algorithm>
+#include <sstream>
 
 TEST_CASE("operator< 's primary axis is the y axis")
 {
@@ -39,4 +40,12 @@ TEST_CASE("vector is sorted because operator< has been overriden")
     REQUIRE(coordinates[1].getX() == 10);
     REQUIRE(coordinates[2].getX() == 20);
     REQUIRE(coordinates[3].getX() == 5);
+}
+
+TEST_CASE("ostream operator")
+{
+    Coordinate a{10, 1};
+    std::stringstream out;
+    out << a;
+    REQUIRE(out.str() == "(10, 1)");
 }
