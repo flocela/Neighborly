@@ -16,9 +16,9 @@ class GraphicCityPrinter
     public:
         GraphicCityPrinter (
             Renderer* renderer,
-            Coordinate chartOrigin,
             std::map<Coordinate, House*> coordToHouseMap,
             std::map<Color, std::vector<int>> rgbaPerColor,
+            Coordinate chartOrigin,
             int gridSize,
             int minX,
             int maxX,
@@ -32,9 +32,9 @@ class GraphicCityPrinter
             int titlesAtTopOffset,
             int fontSize
         ):  _renderer{renderer},
-            _chart_origin{chartOrigin},
             _coord_to_house_map{coordToHouseMap},
             _rgba_per_color{rgbaPerColor},
+            _chart_origin{chartOrigin},
             _grid_size{gridSize},
             _min_x{minX},
             _max_x{maxX},
@@ -53,30 +53,39 @@ class GraphicCityPrinter
           
     private:
         Renderer* _renderer;
-        // chartOrigin is top left corner of entire chart, including titles. 
-        // Coordinate uses window coordinate system.
-        Coordinate _chart_origin;
         std::map<Coordinate, House*> _coord_to_house_map;
         std::map<Color, std::vector<int>> _rgba_per_color;
+
+        // chartOrigin is top left corner of entire chart, including titles. 
+        Coordinate _chart_origin;
         int _grid_size;
         int _min_x;
         int _max_x;
         int _min_y;
         int _max_y;
-        // xAxisOffset exists so houses do not lie on the y-axis. It is the number of 
-        // _grid_sizes that xAxis will be offset to the left.
-        // Instead of xAxis starting at 320, it will start at 314 if offset is 3
-        // and the _grid_size is 2.
+
+        // _x_axis_offset exists so houses do not lie on the y-axis. It is the number of 
+        // _grid_sizes that x-axis will be offset to the left.
+        // Example: If a house is at Coordinate (0,0) and that coordinate
+        // corresponds to pixel (320,20), then the house will be
+        // at pixel (320, 20). Now if _x_axis_offset is 3 and _grid_size is 2,
+        // then the x-axis will start at pixel (314, 20) and the y_axis will lie
+        // vertically at pixel 314. 
+        // The house will be at (320, 20), which is not in the way of the y-axis.
+        // Similar explanation for _y_axis_offset.
         int _x_axis_offset;
         int _y_axis_offset;
+
         // overruns are how much farther the axis runs past the last house
         int _x_axis_overrun;
         int _y_axis_overrun;
+
         // titlesAtTopOffset and titlesLeftOffset is room given for titles at top
         // and left of the graph.
         // fontSize is for x and y axes.
         int _titles_at_left_offset;
         int _titles_at_top_offset;
+
         int _font_size;
 
         // axes SDL_Rects and x-axis TextRects.

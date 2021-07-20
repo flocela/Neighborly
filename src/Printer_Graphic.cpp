@@ -33,9 +33,9 @@ void Printer_Graphic::initGraphicCityPrinter (Coordinate graphOrigin)
 
     _graphic_city_printer = std::make_unique<GraphicCityPrinter>(
         &_renderer,
-        graphOrigin,
         _coord_to_house_map,
         rgbaPerColor,
+        graphOrigin,
         _cell_size,
         _min_x_coord,
         _max_x_coord,
