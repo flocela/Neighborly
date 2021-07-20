@@ -21,7 +21,7 @@ class City
         // Does not include @address in resulting set.
         virtual std::set<House*> getNearHouses (House* house, double distance) const = 0;
         // Does not include @address in resulting set.
-        virtual std::set<House*> getNearHouses (
+        virtual std::set<House*> getSomeNearHouses (
             House* house,
             double distance,
             std::set<House*> occupied,

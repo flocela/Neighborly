@@ -333,13 +333,11 @@ House* Simulator_E::findHomeForForcedToMoveResident (
     House* oldHouse,
     int count
 )
-{
+{   (void) count;
     std::set<House*> occupied = getKeysFromMap(_curr_house_to_res_map);
     std::set<House*> nearOpenHouses = _city->getNearHouses(
         oldHouse,
-        100,
-        occupied,
-        count
+        100
     );
     //TODO if closeOpenHouses is empty.
     House* newHome = resident->findHome(
@@ -356,13 +354,11 @@ House* Simulator_E::findHomeForOptionalMoveResident (
     House* oldHouse,
     int count
 )
-{
+{   (void) count;
     std::set<House*> occupied = getKeysFromMap(_curr_house_to_res_map);
     std::set<House*> nearOpenHouses = _city->getNearHouses(
         oldHouse,
-        100,
-        occupied,
-        count
+        100
     );
     //TODO if closeOpenHouses is empty.
 
