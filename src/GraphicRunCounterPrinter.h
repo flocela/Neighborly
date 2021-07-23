@@ -18,9 +18,7 @@ class GraphicRunCounterPrinter
             _x_offset{xOffset},
             _y_offset{yOffset},
             _max_num_of_runs{maxNumOfRuns}
-        {
-            std::cout << "Graphic run .h 22: " << _x_offset << std::endl;
-        }
+        {}
         GraphicRunCounterPrinter (const GraphicRunCounterPrinter& obj) = default;
         GraphicRunCounterPrinter (GraphicRunCounterPrinter&& obj) noexcept = default;
         GraphicRunCounterPrinter& operator= (const GraphicRunCounterPrinter& obj) = default;

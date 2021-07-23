@@ -126,7 +126,6 @@ int main(int argc, char* argv[])
         std::map<House*, Resident*> houseToResidentMap = simulator->simulate();
         printer.print(houseToResidentMap, ii, "Title");
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        std::cout << "main simulation count " << ii << std::endl;
     }
     printer.keepScreen();
     return 0; 
