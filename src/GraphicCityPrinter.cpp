@@ -49,15 +49,19 @@ GraphicCityPrinter::GraphicCityPrinter(
 }
 
 void GraphicCityPrinter::printCity(std::map<House *, Resident *> houseToResMap)
-{
-    addCityXAxis();
-    addCityYAxis();
-    addTitle();
-    addHouses(houseToResMap);
+{  (void) houseToResMap;
+    if (!_chart_base_printed)
+    {
+        addCityXAxis();
+        addCityYAxis();
+        addTitle();
+        _chart_base_printed = true;
+    }
+    //addHouses(houseToResMap);
 }
 
 void GraphicCityPrinter::addCityXAxis()
-{
+{   _renderer->setColorToMedGrey();
     _renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
@@ -81,7 +85,7 @@ void GraphicCityPrinter::addCityXAxis()
 }
 
 void GraphicCityPrinter::addCityYAxis()
-{
+{   _renderer->setColorToMedGrey();
     _renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
@@ -92,6 +96,7 @@ void GraphicCityPrinter::addCityYAxis()
     }
     _renderer->fillBlocks(_y_blocks);
     _renderer->renderTexts(_y_texts);
+    std::cout << "GraphicCityPrinter 99" << std::endl;
 }
 
 void GraphicCityPrinter::addTitle()

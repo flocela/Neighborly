@@ -119,6 +119,8 @@ class GraphicCityPrinter
         std::vector<TextRect> _x_texts = {};
         std::vector<TextRect> _y_texts = {};
 
+        bool _chart_base_printed = false;
+
         void addCityXAxis ();
         void addCityYAxis ();
         void addTitle();
