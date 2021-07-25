@@ -39,10 +39,13 @@ GraphicCityPrinter::GraphicCityPrinter(
     if (_cell_size__px % 2 != 0)
         _house_size__px++;
     _x_axis_overrun__px = (_x_axis_overrun__px < _cell_size__px)? _cell_size__px : _x_axis_overrun__px;
+    _y_axis_overrun__px = (_y_axis_overrun__px < _cell_size__px)? _cell_size__px : _y_axis_overrun__px;
     _cross_hairs_x__px = _chart_origin__px.getX() + _titles_at_left_offset__px;
-    _cross_hairs_y__px = _chart_origin__px.getX() + _titles_at_top_offset__px;
+    _cross_hairs_y__px = _chart_origin__px.getY() + _titles_at_top_offset__px;
     _house_min_x__px = _cross_hairs_x__px  + _x_axis_offset__px;
     _house_max_x__px = _house_min_x__px + (_house_max_x__cl - _house_min_x__cl) * _cell_size__px;
+    _house_min_y__px = _cross_hairs_y__px  + _y_axis_offset__px;
+    _house_max_y__px = _house_min_y__px + (_house_max_y__cl - _house_min_y__cl) * _cell_size__px;
 }
 
 void GraphicCityPrinter::printCity(std::map<House *, Resident *> houseToResMap)
@@ -72,7 +75,7 @@ void GraphicCityPrinter::addCityXAxis()
     {
         _renderer->renderText(tr.xPixel, tr.yPixel, tr.text, tr.centered);
     }
-
+    // TODO delete this. Just for reference.
     SDL_Rect centerBlock;
 
     centerBlock.w = 2;
@@ -90,54 +93,7 @@ void GraphicCityPrinter::addCityYAxis()
         12);
     if (_y_blocks.size() == 0)
     {
-        int lineLength = _house_max_y__cl - _house_min_y__cl + _y_axis_offset__px + _y_axis_overrun__px;
-        // orig is where x and y axes cross
-        Coordinate orig{
-            _chart_origin__px.getX() + _titles_at_left_offset__px,
-            _chart_origin__px.getY() + _titles_at_top_offset__px};
-
-        _renderer->setColorToMedGrey();
-
-        // Axis line
-        SDL_Rect block;
-        block.w = 1;
-        block.h = lineLength * _cell_size__px;
-        block.x = orig.getX();
-        block.y = orig.getY();
-        _y_blocks.push_back(block);
-
-        // Axis ticks
-        block.w = _cell_size__px;
-        block.h = _cell_size__px / 2;
-        block.x = orig.getX() - _cell_size__px / 2;
-
-        // First tick is at _min_y, which may not be at a tens value.
-        int minYPixel = orig.getY() + _y_axis_offset__px;
-        // firstTensDiff is difference between _min_y and first tens value
-        int firstTensDiff = 10 - (_house_min_y__cl % 10);
-        block.y = minYPixel - _cell_size__px / 2;
-        _y_blocks.push_back(block);
-        // only show _min_y number if it doesn't overlap with first tens value
-        if (firstTensDiff > 3)
-        {
-            TextRect tr{block.x, minYPixel, std::to_string(_house_min_y__cl), 2};
-            _y_texts.push_back(tr);
-        }
-
-        // Rest of ticks. They start at the first tens value.
-        int nextTick = _house_min_y__cl + firstTensDiff;
-        int nextTickPixel = minYPixel + firstTensDiff * _cell_size__px;
-        // blocks are drawn from top left, not from center of the block
-        int nextTickBlock = nextTickPixel - _cell_size__px / 2;
-        int numOfBlocks = (lineLength / 10);
-        for (int ii = 0; ii < numOfBlocks; ++ii)
-        {
-            block.y = nextTickBlock + ii * _cell_size__px * 10; // 10 grids between ticks
-            std::string text = std::to_string(nextTick + ii * 10);
-            TextRect tr{block.x, nextTickPixel + ii * _cell_size__px * 10, text, 2};
-            _y_blocks.push_back(block);
-            _y_texts.push_back(tr);
-        }
+        initYBlocks();
     }
     for (SDL_Rect block : _y_blocks)
     {
@@ -152,7 +108,7 @@ void GraphicCityPrinter::addCityYAxis()
 
 void GraphicCityPrinter::addTitle()
 {
-    int lineLength = (_house_max_x__cl - _house_min_x__cl + _x_axis_offset__px + _x_axis_overrun__px) * _cell_size__px;
+    int lineLength = _house_max_x__px + _x_axis_overrun__px - _cross_hairs_x__px;
     int x = _chart_origin__px.getX() + _titles_at_left_offset__px + lineLength / 2;
     int y = _chart_origin__px.getY();
     _renderer->setTextFormats(
@@ -206,8 +162,8 @@ std::map<Color, std::vector<Coordinate>> GraphicCityPrinter::createVectorsForEac
             std::vector<Coordinate> newCoordinateVector = {};
             colorToCoordinatesMap[colorKey] = newCoordinateVector;
         }
-        int pixelX = _house_min_x__px + (coord.getX() - _house_max_x__cl) * _house_size__px - _house_size__px / 2;
-        int pixelY = cityOrigin.getY() + _y_axis_offset__px + (coord.getY() - _house_min_y__cl) * _cell_size__px - _house_size__px / 2;
+        int pixelX = _house_min_x__px + (coord.getX() - _house_min_x__cl) * _cell_size__px - _house_size__px / 2;
+        int pixelY = _house_min_y__px + (coord.getY() - _house_min_y__cl) * _cell_size__px - _house_size__px / 2;
         Coordinate pixelCoord{pixelX, pixelY};
         colorToCoordinatesMap[colorKey].push_back(pixelCoord);
     }
@@ -218,8 +174,7 @@ void GraphicCityPrinter::initXBlocks()
 {
     // x-axis (long horizontal block)
     SDL_Rect block;
-    int lineLength__px = _house_max_x__px + _x_axis_overrun__px - _cross_hairs_x__px;
-    block.w = lineLength__px;
+    block.w = _house_max_x__px + _x_axis_overrun__px - _cross_hairs_x__px;
     block.h = 1;
     block.x = _cross_hairs_x__px;
     block.y = _cross_hairs_y__px;
@@ -245,7 +200,7 @@ void GraphicCityPrinter::initXBlocks()
     }
 
     // Rest of ticks are spaced ten cells apart.
-    // And ticks at tens values have numerical labels.
+    // And have numerical labels.
     int nextTick = _house_min_x__cl + minXHouseToFirstTensValue;
     int nextTickPixel = _house_min_x__px + minXHouseToFirstTensValue * _cell_size__px;
     // Blocks are drawn from top left, not from center of the block
@@ -259,5 +214,51 @@ void GraphicCityPrinter::initXBlocks()
         TextRect tr{nextTickPixel + ii * _cell_size__px * 10, block.y, text, 1};
         _x_blocks.push_back(block);
         _x_texts.push_back(tr);
+    }
+}
+
+void GraphicCityPrinter::initYBlocks()
+{
+    // y-axis (long vertical block)
+    SDL_Rect block;
+    block.w = 1;
+    block.h = _house_max_y__px + _y_axis_overrun__px - _cross_hairs_y__px;
+    block.x = _cross_hairs_x__px;
+    block.y = _cross_hairs_y__px;
+    _y_blocks.push_back(block);
+
+    // Ticks along the y axis have same width, height and y coordinate.
+    block.w = _cell_size__px;
+    block.h = _axis_tick_width__px;
+    block.x = _cross_hairs_x__px - _cell_size__px / 2;
+
+    // Add _house_min_y tick.
+    // Blocks are drawn from top left, not from center of the block.
+    block.y = _house_min_y__px  - _axis_tick_width__px / 2;
+    _y_blocks.push_back(block);
+
+    // Add label for _house_min_y tick unless label overlaps with 
+    // future tens values labels.
+    int minYHouseToFirstTensValue = 10 - (_house_min_y__cl % 10);
+    if (minYHouseToFirstTensValue > 3)
+    {
+        TextRect houseMinYLabel{_house_min_y__px, block.y, std::to_string(_house_min_y__cl), 1};
+        _x_texts.push_back(houseMinYLabel);
+    }
+
+    // Rest of ticks are spaced ten cells apart. And have numerical labels.
+    int nextTick = _house_min_y__cl + minYHouseToFirstTensValue;
+    int nextTickPixel = _house_min_y__px + minYHouseToFirstTensValue * _cell_size__px;
+    // Blocks are drawn from top left, not from center of the block
+    int nextTickBlock = nextTickPixel - _axis_tick_width__px / 2;
+    int numOfBlocks = (_house_max_y__px - _house_min_y__px + _y_axis_overrun__px) /
+                      _cell_size__px / 10;
+    for (int ii = 0; ii < numOfBlocks; ++ii)
+    {
+        block.y = nextTickBlock + ii * _cell_size__px * 10;
+        std::string text = std::to_string(nextTick + ii * 10);
+        TextRect tr{block.x, nextTickPixel + ii * _cell_size__px * 10, text, 2};
+        _y_blocks.push_back(block);
+        _y_texts.push_back(tr);
     }
 }

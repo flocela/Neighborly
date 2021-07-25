@@ -128,6 +128,7 @@ class GraphicCityPrinter
         );
 
         void initXBlocks ();
+        void initYBlocks ();
         void initAxisTickWidth ();
 
 };
