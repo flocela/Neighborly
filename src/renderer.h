@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "Coordinate.h"
 #include <map>
+#include "TextRect.h"
 #include <utility>
 #include "Color.h"
 
@@ -23,7 +24,8 @@ class Renderer {
 		void setColorToBlack();
 		void setColorToRed();
 
-		void fillBlock(SDL_Rect block);
+		void fillBlock (SDL_Rect block);
+		void fillBlocks (std::vector<SDL_Rect> blocks);
 
 		void renderText (
 			int x, 
@@ -31,6 +33,8 @@ class Renderer {
 			std::string text,
 			int centered
 		);
+
+		void renderTexts (std::vector<TextRect> texts);
 
 		void setTextFormats (
 			SDL_Color textColor,

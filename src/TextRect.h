@@ -8,7 +8,7 @@ struct TextRect
     int xPixel;
     int yPixel;
     std::string text;
-    int centered;
+    int position;
 };
 
 #endif

@@ -265,3 +265,19 @@ void Renderer::addBlocksByColor(
     }
 
 }
+
+void Renderer::fillBlocks (std::vector<SDL_Rect> blocks)
+{
+    for (SDL_Rect block : blocks)
+    {
+        fillBlock(block);
+    }
+}
+
+void Renderer::renderTexts (std::vector<TextRect> texts)
+{
+    for (TextRect tr : texts)
+    {
+       renderText(tr.xPixel, tr.yPixel, tr.text, tr.position);
+    }
+}

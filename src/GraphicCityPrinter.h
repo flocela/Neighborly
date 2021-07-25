@@ -127,9 +127,10 @@ class GraphicCityPrinter
             std::map<House*, Resident*> houseToResMap
         );
 
-        void initXBlocks ();
-        void initYBlocks ();
-        void initAxisTickWidth ();
+        // Initialize the blocks and texts that are used by the renderer to render
+        // the axes' lines, ticks, and labels
+        void initXAxisBlocks ();
+        void initYAxisBlocks ();
 
 };
 
