@@ -88,6 +88,8 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
              " per side is 150."
         );
     _house_size = _cell_size/2;
+    if (_house_size % 2 != 0)
+        _house_size++;
 }
 
 void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
