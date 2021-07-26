@@ -58,7 +58,7 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
     for (House* house : houses)
     {   
         Coordinate coord =  cityPtr->getCoordinate(house->_address);
-        
+        std::cout << coord << std::endl;
         _coord_to_house_map[coord] = house;
         if (coord.getX() > _max_x_coord)
             _max_x_coord = coord.getX();
@@ -70,24 +70,28 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
             _min_y_coord = coord.getY();
     }
 
-    // The city graph will take up half the screen width, so evenly divide space
-    // among houses. Each house will be inside one cell. 
-    // Also _cell_size and _house_size will be even numbers to simplify the math
-    // so that each house will be easily centered inside one cell.
+    // Evenly divide houses among half the screen. 
+    // Each house will be surrounded by a border and be inside one cell. 
     int deltaX = _max_x_coord - _min_x_coord;
     int deltaY = _max_y_coord - _min_y_coord;
     _cell_size = _screen_width/2/(std::max(deltaX, deltaY));
 
-    if (_cell_size % 2 != 0)
-        _cell_size++;
-    if (_cell_size > 12)
-        _cell_size = 12;
+    // _cell_size will be even to simplify the math.
+    _cell_size = (_cell_size % 2 != 0) ? _cell_size -1 : _cell_size;
+
+    // Limit _cell_size so the squares don't appear to big (personal aesthetics).
+    _cell_size = (_cell_size > 20) ? 20 : _cell_size;
+
+    // Limit _cell_size. Cells required to be 4 pixels at least or too small to see.
     if (_cell_size <= 3)
         throw (
             "Can not print a city graph with so many houses. Maximum number of houses"
              " per side is 150."
         );
+
     _house_size = _cell_size/2;
+
+    // _cell_size will be even to simplify the math.
     if (_house_size % 2 != 0)
         _house_size++;
 }

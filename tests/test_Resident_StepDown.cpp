@@ -1,8 +1,69 @@
 #include "catch.hpp"
 #include "../src/Resident_StepDown.h"
 #include "../src/Resident_Flat.h"
+#include <set>
 using Catch::Matchers::Contains;
 
+Resident_StepDown blueNeighbor1{
+    2,
+    Color::blue, // Only argument that matters.
+    0.0,  
+    0.25, 
+    0.75, 
+    0.25, 
+    0.5   
+};
+
+Resident_StepDown blueNeighbor2{
+    2,
+    Color::blue, // Only argument that matters.
+    0.0,  
+    0.25, 
+    0.75, 
+    0.25, 
+    0.5   
+};
+
+Resident_StepDown blueNeighbor3{
+    2,
+    Color::blue, // Only argument that matters.
+    0.0,  
+    0.25, 
+    0.75, 
+    0.25, 
+    0.5   
+};
+    
+Resident_StepDown greenNeighbor1{
+    2,
+    Color::green, // Only argument that matters.
+    0.0,  
+    0.25, 
+    0.75, 
+    0.25, 
+    0.5   
+};
+
+Resident_StepDown greenNeighbor2{
+    2,
+    Color::green, // Only argument that matters.
+    0.0,  
+    0.25, 
+    0.75, 
+    0.25, 
+    0.5   
+};
+
+Resident_StepDown greenNeighbor3{
+    2,
+    Color::green, // Only argument that matters.
+    0.0,  
+    0.25, 
+    0.75, 
+    0.25, 
+    0.5   
+};
+    
 
 TEST_CASE("Resident_StepDown Ctor throws exception if happinessGoal is greater than 1.0.")
 {   
@@ -132,54 +193,69 @@ TEST_CASE("Resident_StepDown Ctor throws exception if"
 
 TEST_CASE("getHappines() returns lowered happinessValue at point where drop happens.")
 {
-    // Note diversity Ratio is 0.5. @diverstiyWhereDropHappens is 0.5.
-    Resident_StepDown resident{ 1, 
-                                Color::green, 
-                                5.0,  // allowedMovementDistance
-                                0.25, // happinessGoal
-                                0.75, // happinessValueAtZeroDiversity
-                                0.25, // happinessValueAtOneDiversity
-                                0.5   // diversityWhereDropHappens
-                                };
-    std::vector<Color> neighbors = { Color::blue,
-                                               Color::blue,
-                                               Color::green,
-                                               Color::green};
-    //REQUIRE(resident.getHappiness(neighbors, 4) == 0.25);
+    // Note diversity Ratio is 0.5. @diverstiyWhereDropHappens is 0.25.
+    Resident_StepDown greenResident{ 
+        1, 
+        Color::green, 
+        0.0,  // allowedMovementDistance (doesn't matter)
+        0.25, // happinessGoal (doesn't matter)
+        0.75, // happinessValueAtZeroDiversity
+        0.25, // happinessValueAtOneDiversity
+        0.25   // diversityWhereDropHappens
+    };
+
+    std::set<Resident*> neighbors = { 
+        &greenNeighbor1,
+        &greenNeighbor2,
+        &greenNeighbor3,
+        &blueNeighbor1
+    };
+
+    REQUIRE(greenResident.getHappiness(neighbors, 4) == 0.25);
 }
 
 TEST_CASE("getHappines() returns higher happinessValue before diversity drop.")
 {
     // Note diversity Ratio is 0.25. @diverstiyWhereDropHappens is 0.5.
-    Resident_StepDown resident{ 1, 
-                                Color::green, 
-                                5.0,  // allowedMovementDistance
-                                0.25, // happinessGoal
-                                0.75, // happinessValueAtZeroDiversity
-                                0.25, // happinessValueAtOneDiversity
-                                0.5   // diversityWhereDropHappens
-                                };
-    std::vector<Color> neighbors = { Color::blue,
-                                               Color::green,
-                                               Color::green,
-                                               Color::green};
-    //REQUIRE(resident.getHappiness(neighbors, 4) == 0.75);
+    Resident_StepDown greenResident{ 
+        1, 
+        Color::green, 
+        0.0,  // allowedMovementDistance (doesn't matter)
+        0.25, // happinessGoal (doesn't matter)
+        0.75, // happinessValueAtZeroDiversity
+        0.25, // happinessValueAtOneDiversity
+        0.5   // diversityWhereDropHappens
+    };
+
+    std::set<Resident*> neighbors = { 
+        &blueNeighbor1,
+        &greenNeighbor1,
+        &greenNeighbor2,
+        &greenNeighbor3,
+    };
+
+    REQUIRE(greenResident.getHappiness(neighbors, 4) == 0.75);
 }
 
 TEST_CASE("getHappines() returns lower happinessValue afterDiversity drop.")
 {
-    // Note diversity Ratio is 0.25. @diverstiyWhereDropHappens is 0.5.
-    Resident_StepDown resident{ 1, 
-                                Color::green, 
-                                5.0,  // allowedMovementDistance
-                                0.25, // happinessGoal
-                                0.75, // happinessValueAtZeroDiversity
-                                0.25, // happinessValueAtOneDiversity
-                                0.5   // diversityWhereDropHappens
-                                };
-    std::vector<Color> neighbors = { Color::blue,
-                                               Color::blue,
-                                               Color::blue,
-                                               Color::green};
-    //REQUIRE(resident.getHappiness(neighbors, 4) == 0.25);
+    // Note diversity Ratio is 0.25. @diverstiyWhereDropHappens is 0.25.
+    Resident_StepDown greenResident{ 
+        1, 
+        Color::green, 
+        0.0,  // allowedMovementDistance (doesn't matter)
+        0.25, // happinessGoal (doesn't matter)
+        0.75, // happinessValueAtZeroDiversity
+        0.25, // happinessValueAtOneDiversity
+        0.5   // diversityWhereDropHappens
+    };
+
+    std::set<Resident*> neighbors = { 
+        &blueNeighbor1,
+        &blueNeighbor2,
+        &blueNeighbor3,
+        &greenNeighbor1,
+    };
+
+    REQUIRE(greenResident.getHappiness(neighbors, 4) == 0.25);
 }

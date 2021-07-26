@@ -25,7 +25,6 @@ double Resident_StepDown::getHappiness(
 {
     int like  = 0;
     int diff  = 0;
-    
     for (Resident* res : neighbors)
     {
         if (res->getColor() == getColor())

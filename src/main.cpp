@@ -30,7 +30,6 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <iostream>
@@ -46,72 +45,159 @@
 #include "Resident_Flat.h"
 #include "Simulator.h"
 #include "Simulator_Basic_A.h"
+#include "Color.h"
+#include "City_Grid.h"
+#include "Resident_StepDown.h"
+#include "Resident_Flat.h"
 
-// Define MAX and MIN macros
-#define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
-#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
-
+using std::vector;
+using std::unique_ptr;
+using std::string;
 
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
-std::vector<std::unique_ptr<CityFactory>> initCityFactories ();
+/* Function Declarations */
+template<typename T>
+vector<T*> getPointers (vector<unique_ptr<T>>& ts)
+{
+    vector<T*> pointers = {};
+    for (auto& t : ts)
+    {
+        pointers.push_back(t.get());
+    }
+    return pointers;
+}
 
-std::vector<std::unique_ptr<ResidentsFactory>> initResidentFactories();
+template<typename T>
+std::set<T*> getSetOfPointers (vector<unique_ptr<T>>& ts)
+{
+    std::set<T*> pointers = {};
+    for (auto& t : ts)
+    {
+        pointers.insert(t.get());
+    }
+    return pointers;
+}
 
-std::vector<CityFactory*> fromCityFactoriesGetPointers (
-    std::vector<std::unique_ptr<CityFactory>>& cityFactories);
+vector<unique_ptr<CityFactory>> initCityFactories ();
+vector<unique_ptr<ResidentsFactory>> initResidentFactories ();
+void initForSimpleExample (int example);
+void initForUserDefinedRun ();
 
-std::vector<ResidentsFactory*> fromResidentFactoriesGetPointers (
-    std::vector<std::unique_ptr<ResidentsFactory>>& residentFactories);
+/* Value Declarations */
+unique_ptr<City> city;
+vector<unique_ptr<Resident>> residents;
+unique_ptr<Simulator> simulator;
+int numOfRuns = 5;
 
-// I've set the SCREEN_WIDTH and SCREEN_HEIGHT to be 1200pixels. The city graph
-// will take up 1/2 the screen. I want each house to take up no less than 4 pixels.
-// Otherwise, the house will be difficult to see.  So the largest number 
-// of houses I can have in the x and y directions are MAX_DELTA_X and MAX_DELTA_Y,
-// calculated as 1200/2/4 = 150. Each house takes up at least 4 pixels, there
-// are 150 houses, that makes 600 pixels or half the screen width.
-const int SCREEN_WIDTH  = 1200;
-const int SCREEN_HEIGHT = 1200;
-const int MAX_DELTA_X   = 150;
-const int MAX_DELTA_Y   = 150;
+// SCREEN_WIDTH and SCREEN_HEIGHT is set to 1200 pixels. The city graph
+// will take up 1/2 the screen, 600 pixels. Each house must be no smaller
+// than 4 pixels, or it will be difficulat to see.
+// So the largest number of houses in the x and y directions are 150.
+// Calculated as 600/4 = 150.
+const int SCREEN_WIDTH   = 1200;
+const int SCREEN_HEIGHT  = 1200;
+const int MAX_HOUSES_X   = 150;
+const int MAX_HOUSES_Y   = 150;
 
 int main(int argc, char* argv[])
 {
-    // Unused argc, argv
     (void) argc;
     (void) argv;
 
-    std::vector<std::unique_ptr<CityFactory>> cityFactories =
-        initCityFactories();
-    std::vector<std::unique_ptr<ResidentsFactory>> residentFactories =
-        initResidentFactories();
-    std::vector<CityFactory*> cityFactoryPointers =
-        fromCityFactoriesGetPointers(cityFactories);
-    std::vector<ResidentsFactory*> residentFactoryPointers =
-        fromResidentFactoriesGetPointers(residentFactories);; 
+    vector<unique_ptr<CityFactory>> cityFactories = initCityFactories();
+    vector<unique_ptr<ResidentsFactory>> residentFactories = initResidentFactories();
 
-    CityMaker_CMDLine cityMaker{};
-    /*std::unique_ptr<City> city = cityMaker.makeCity(
-        cityFactoryPointers,
-        MAX_DELTA_X,
-        MAX_DELTA_Y);*/
-    std::unique_ptr<City> city = cityMaker.makeBaseCity(
-        cityFactoryPointers, 
-        MAX_DELTA_X, 
-        MAX_DELTA_Y
+    vector<CityFactory*> cityFactoryPointers = getPointers(cityFactories);
+    vector<ResidentsFactory*> resFactoryPointers = getPointers(residentFactories); 
+
+    UI_CMDLine ui;
+    int useExample = ui.menu(
+        "First time? Maybe just run one of the examples. ",
+        vector<string>{"Use an example. ", "Choose my own simulation. "}
     );
 
-    ResidentsMaker_CMDLine residentsMaker{};
-    //std::vector<std::unique_ptr<Resident>> residents = 
-    //    residentsMaker.makeResidents(residentFactoryPointers, city->getSize(), _the_color_Infos);
-    std::vector<std::unique_ptr<Resident>> residents = 
-        residentsMaker.makeBaseResidents(residentFactoryPointers, city->getSize(), _the_color_Infos);
-    
-    std::set<Resident*> residentPtrs = {};
-    for (auto& resident: residents)
+    if (useExample == 1)
     {
-        residentPtrs.insert(resident.get());
+        int chosenExample = ui.menu(
+            "Which example do you want to choose? ",
+            vector<string>{ 
+                "simple with a small city", 
+                "simple with a large city",
+                "finicky residents with a small city",
+                "finicky residents with a large city"}
+        );
+        switch (chosenExample)
+        {
+            // 20 x 20 city with 400 houses. 
+            // 200 StepDown (Blue)
+            //     Unhappy if 80% or more neighbors are different from themselves.
+            // 50  StepDown Residents (Red)
+            //     Unhappy if 25% or more neighbors are different from themselves.
+            case 1:
+            {
+                city = std::make_unique<City_Grid>(20);
+                for (int ii=0; ii<200; ++ii)
+                {
+                    residents.push_back(std::make_unique<Resident_StepDown>(
+                        0,
+                        Color::blue,
+                        5,
+                        1,
+                        1,
+                        0,
+                        0.8
+                    ));
+                }
+                for (int jj=0; jj<50; ++jj)
+                {
+                    residents.push_back(std::make_unique<Resident_StepDown>(
+                        200,
+                        Color::red,
+                        5,
+                        1,
+                        1,
+                        0,
+                        0.25
+                    ));
+                }
+                simulator = std::make_unique<Simulator_Basic_A>(
+                    city.get(),
+                    getSetOfPointers(residents)
+                );
+                numOfRuns = 100;
+                break;
+            }
+        }
     }
+    else
+    {
+        CityMaker_CMDLine cityMaker{};
+        /*unique_ptr<City> city = cityMaker.makeCity(
+            cityFactoryPointers,
+            MAX_DELTA_X,
+            MAX_DELTA_Y);*/
+        city = cityMaker.makeBaseCity(
+            cityFactoryPointers, 
+            MAX_HOUSES_X, 
+            MAX_HOUSES_Y
+        );
+
+        ResidentsMaker_CMDLine residentsMaker{};
+        //vector<unique_ptr<Resident>> residents = 
+        //    residentsMaker.makeResidents(residentFactoryPointers, city->getSize(), _the_color_Infos);
+        residents = 
+            residentsMaker.makeBaseResidents(resFactoryPointers, city->getSize(), _the_color_Infos);
+    
+        std::set<Resident*> residentPtrs = {};
+        for (auto& resident: residents)
+        {
+            residentPtrs.insert(resident.get());
+        }
+        simulator = std::make_unique<Simulator_Basic_A>(city.get(), residentPtrs);
+    }
+    
+    
     
 /*
     std::map<int, Resident*> houseToResidentMap = {};
@@ -119,50 +205,28 @@ int main(int argc, char* argv[])
     {
         houseToResidentMap[resident->getID()] = resident.get();
     }*/
-    std::unique_ptr<Simulator> simulator = std::make_unique<Simulator_Basic_A>(city.get(), residentPtrs);
+    
     Printer_Graphic printer{4, 1200, 1200, city.get(), _the_color_Infos};
-    for (int ii=0; ii< 5; ii++)
+    for (int ii=0; ii< numOfRuns; ii++)
     {   
         std::map<House*, Resident*> houseToResidentMap = simulator->simulate();
         printer.print(houseToResidentMap, ii, "Title");
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
     printer.keepScreen();
     return 0; 
 }
 
-std::vector<std::unique_ptr<CityFactory>> initCityFactories ()
+vector<unique_ptr<CityFactory>> initCityFactories ()
 {
-    std::vector<std::unique_ptr<CityFactory>> cityFactories = {};
+    vector<unique_ptr<CityFactory>> cityFactories = {};
     cityFactories.emplace_back(std::make_unique<CityFactory_Grid>());
     return cityFactories;
 }
 
-std::vector<std::unique_ptr<ResidentsFactory>> initResidentFactories()
+vector<unique_ptr<ResidentsFactory>> initResidentFactories()
 {
-    std::vector<std::unique_ptr<ResidentsFactory>> residentFactories = {};
+    vector<unique_ptr<ResidentsFactory>> residentFactories = {};
     residentFactories.emplace_back(std::make_unique<ResidentsFactory_Flat>());
     return residentFactories;
-}
-
-std::vector<CityFactory*> fromCityFactoriesGetPointers (
-    std::vector<std::unique_ptr<CityFactory>>& cityFactories)
-{
-    std::vector<CityFactory*> cityFactoryPointers = {};
-    for (auto& factory: cityFactories)
-    {
-        cityFactoryPointers.push_back(factory.get());
-    }
-    return cityFactoryPointers;
-}
-
-std::vector<ResidentsFactory*> fromResidentFactoriesGetPointers (
-    std::vector<std::unique_ptr<ResidentsFactory>>& residentFactories)
-{
-    std::vector<ResidentsFactory*> residentFactoryPointers = {};
-    for (auto& factory : residentFactories)
-    {
-        residentFactoryPointers.push_back(factory.get());
-    }
-    return residentFactoryPointers;
 }

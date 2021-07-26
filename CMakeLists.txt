@@ -77,6 +77,7 @@ file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 file(GLOB test_SRCS tests/*.cpp
 src/City_Grid.cpp
 src/CityFactory_Grid.cpp
+src/Color.cpp
 src/Converter.cpp
 src/Coordinate.cpp
 src/HappinessFunc_Falling.cpp

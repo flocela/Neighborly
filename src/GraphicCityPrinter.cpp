@@ -57,11 +57,12 @@ void GraphicCityPrinter::printCity(std::map<House *, Resident *> houseToResMap)
         addTitle();
         _chart_base_printed = true;
     }
-    //addHouses(houseToResMap);
+    addHouses(houseToResMap);
 }
 
 void GraphicCityPrinter::addCityXAxis()
-{   _renderer->setColorToMedGrey();
+{   
+    _renderer->setColorToMedGrey();
     _renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
@@ -85,7 +86,8 @@ void GraphicCityPrinter::addCityXAxis()
 }
 
 void GraphicCityPrinter::addCityYAxis()
-{   _renderer->setColorToMedGrey();
+{   
+    _renderer->setColorToMedGrey();
     _renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
@@ -96,7 +98,6 @@ void GraphicCityPrinter::addCityYAxis()
     }
     _renderer->fillBlocks(_y_blocks);
     _renderer->renderTexts(_y_texts);
-    std::cout << "GraphicCityPrinter 99" << std::endl;
 }
 
 void GraphicCityPrinter::addTitle()
@@ -229,10 +230,12 @@ void GraphicCityPrinter::initYAxisBlocks()
     // Add label at _house_min_y, unless label overlaps with 
     // future tens values labels.
     int minYHouseToFirstTensValue = 10 - (_house_min_y__cl % 10);
-    if (minYHouseToFirstTensValue > 3)
+
+    //if (minYHouseToFirstTensValue > 3)
+    if (true)
     {   
         std::string label = std::to_string(_house_min_y__cl);
-        TextRect houseMinYLabel{_house_min_y__px, block.y, label, 1};
+        TextRect houseMinYLabel{block.x, _house_min_y__px, label, 2};
         _x_texts.push_back(houseMinYLabel);
     }
 

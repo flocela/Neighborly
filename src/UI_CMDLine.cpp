@@ -36,7 +36,7 @@ int UI_CMDLine::menu (std::string prompt, std::vector<std::string> items)
 
     std::stringstream ssInRange;
     ssInRange << "Please enter a number between 1 and ";
-    ssInRange << items.size() << "  ";
+    ssInRange << items.size() << ".  ";
     ssInRange << ssPrompt.str();
 
     Question_Int chooseMenuItem{1,
@@ -57,6 +57,6 @@ int UI_CMDLine::menu (std::string prompt, std::vector<std::string> items)
     }
     if (tries >= 4)
         throw "User would not choose a menu item properly.";
-    
-    return stoi(answer) - 1;
+        
+    return stoi(answer);
 }

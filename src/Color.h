@@ -6,6 +6,9 @@
 
 enum class Color { red, blue, green, absent };
 
+
+std::ostream& operator<<(std::ostream& os, Color const& obj);
+
 struct ColorInfo
 {
     Color _my_color;
