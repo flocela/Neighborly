@@ -20,11 +20,6 @@ class Resident_Flat: public Resident
         Resident_Flat& operator= (Resident_Flat&& obj) noexcept = default;
         ~Resident_Flat() = default;
 
-        double getHappiness (
-            std::set<Resident*> neighbors,
-            int numOfAdjacentHouses
-        ) const override;
-
         House* findHome (
             House* oldHouse,
             std::map<House*, std::set<House*>> openHousesToNeighbors,
@@ -37,8 +32,14 @@ class Resident_Flat: public Resident
             std::map<House*, Resident*> houseToResMap
         ) const override;
 
-        private:
+    private:
         HappinessFunc_Flat _happiness_func;
+    
+    protected:
+        double implCalculateHappiness (
+            std::set<Resident*> neighbors,
+            int numOfAdjacentHouses
+        ) const override;
 };
 
 #endif

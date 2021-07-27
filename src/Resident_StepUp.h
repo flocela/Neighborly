@@ -22,10 +22,7 @@ class Resident_StepUp: public Resident
         Resident_StepUp& operator= (Resident_StepUp&& obj) noexcept = default;
         ~Resident_StepUp() = default;
 
-        double getHappiness (
-            std::set<Resident*> neighbors,
-            int numOfAdjacentHouses
-        ) const override;
+        
 
         House* findHome (
             House* oldHouse,
@@ -39,8 +36,15 @@ class Resident_StepUp: public Resident
             std::map<House*, Resident*> houseToResMap
         ) const override;
 
-        private:
+    private:
         HappinessFunc_StepUp _happiness_func;
+
+    protected:
+        double implCalculateHappiness (
+            std::set<Resident*> neighbors,
+            int numOfAdjacentHouses
+        ) const override;
+
 };
 
 #endif

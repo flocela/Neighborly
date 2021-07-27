@@ -13,3 +13,12 @@ Resident::Resident (
     if (happinessGoal < 0.0 || happinessGoal > 1.0)
         throw "HappinessGoal must be between 0.0 and 1.0 inclusive.";
 }
+
+double Resident::calculateHappiness ( 
+    std::set<Resident*> neighbors,
+    int numOfAdjacentHouses
+)
+{
+    _happiness = implCalculateHappiness (neighbors, numOfAdjacentHouses);
+    return _happiness;
+}

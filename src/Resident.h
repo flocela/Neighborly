@@ -23,13 +23,14 @@ class Resident{
         virtual Color getColor () const { return _color; };
         virtual double getAllowedMovementDistance () const { return _allowed_movement_distance; };
         virtual double getHappinessGoal () const { return _happiness_goal; };
+        virtual double getHappiness () const {return _happiness;};
         // neighbors vector includes all possible neighbors, so
         // if a neighbors house is empty, Color::absent should
         // be added to neighbors
-        virtual double getHappiness (
+        double calculateHappiness (
             std::set<Resident*> neighbors,
             int numOfAdjacentHouses
-        ) const = 0;
+        );
         virtual House* findHome (
             House* oldHouse,
             std::map<House*, std::set<House*>> openHousesToNeighbors,
@@ -46,6 +47,13 @@ class Resident{
         Color  _color;
         double _allowed_movement_distance;
         double _happiness_goal;
+        double _happiness;
+
+    protected:
+        virtual double implCalculateHappiness (
+            std::set<Resident*> neighbors,
+            int numOfAdjacentHouses
+        ) const = 0;
        
 };
 

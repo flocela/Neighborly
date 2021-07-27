@@ -32,19 +32,16 @@ void Simulator_Basic_A::firstSimulation ()
     {
         House* house = selectRandom(_open_houses);
         moveResidentIntoHouse(res, house);
+        updateResident(res);
     }
 }
 void Simulator_Basic_A::moveResidentIfUnhappy (Resident* res)
 {   
-    House* oldHouse = _curr_res_to_house_map[res];
-    std::set<House*> adjHouses = _city->getAdjacentHouses(oldHouse);
-    std::set<Resident*> adjResidents = getResidentsInHouses(adjHouses);
-
-    if ( res->getHappiness(adjResidents, adjHouses.size()) <
-         res->getHappinessGoal() )
+    if ( res->getHappiness() < res->getHappinessGoal() )
     {   
         House* newHouse = selectRandom(_open_houses);
         moveResidentIntoHouse(res, newHouse);
+        updateResident(res);
     }
 }
 
@@ -62,6 +59,14 @@ void Simulator_Basic_A::moveResidentIntoHouse (Resident* res, House* newHouse)
     _curr_res_to_house_map.insert(std::pair<Resident*, House*>(res, newHouse));
     _open_houses.erase(newHouse);
   
+}
+
+void Simulator_Basic_A::updateResident (Resident* res)
+{   
+    House* house = _curr_res_to_house_map[res];
+    std::set<House*> adjHouses = _city->getAdjacentHouses(house);
+    std::set<Resident*> adjResidents = getResidentsInHouses(adjHouses);
+    res->calculateHappiness(adjResidents, adjHouses.size());
 }
 
 std::set<Resident*> Simulator_Basic_A::getResidentsInHouses(

@@ -211,7 +211,7 @@ TEST_CASE("getHappines() returns lowered happinessValue at point where drop happ
         &blueNeighbor1
     };
 
-    REQUIRE(greenResident.getHappiness(neighbors, 4) == 0.25);
+    REQUIRE(greenResident.calculateHappiness(neighbors, 4) == 0.25);
 }
 
 TEST_CASE("getHappines() returns higher happinessValue before diversity drop.")
@@ -234,7 +234,7 @@ TEST_CASE("getHappines() returns higher happinessValue before diversity drop.")
         &greenNeighbor3,
     };
 
-    REQUIRE(greenResident.getHappiness(neighbors, 4) == 0.75);
+    REQUIRE(greenResident.calculateHappiness(neighbors, 4) == 0.75);
 }
 
 TEST_CASE("getHappines() returns lower happinessValue afterDiversity drop.")
@@ -257,5 +257,5 @@ TEST_CASE("getHappines() returns lower happinessValue afterDiversity drop.")
         &greenNeighbor1,
     };
 
-    REQUIRE(greenResident.getHappiness(neighbors, 4) == 0.25);
+    REQUIRE(greenResident.calculateHappiness(neighbors, 4) == 0.25);
 }

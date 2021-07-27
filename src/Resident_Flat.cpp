@@ -10,7 +10,7 @@ Resident_Flat::Resident_Flat (
     _happiness_func{happinessValue}
 {}
 
-double Resident_Flat::getHappiness(
+double Resident_Flat::implCalculateHappiness(
     std::set<Resident*> neighbors,
     int numOfAdjacentHouses
 ) const
@@ -45,3 +45,4 @@ House* Resident_Flat::findBestHome (
     (void) houseToResMap;
     return oldHouse;
 }
+

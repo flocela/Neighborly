@@ -33,7 +33,7 @@ class Simulator_Basic_A: public Simulator
 
         // All unoccupied houses
         std::set<House*> _open_houses;
-        
+
         // In first simulation, no resident has a house. And all residents are assigned a house.
         void firstSimulation ();
 
@@ -51,6 +51,8 @@ class Simulator_Basic_A: public Simulator
         // Then adds @res and @newHouse into said maps.
         // Removes @newHouse from _open_houses.
         void moveResidentIntoHouse (Resident* res, House* newHouse);
+
+        void updateResident (Resident* res);
 
         // Returns residents that live in @houses. If a house is empty, then 
         // returned set will be smaller than @houses.

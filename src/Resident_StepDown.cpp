@@ -18,7 +18,7 @@ Resident_StepDown::Resident_StepDown (
 {
 }
 
-double Resident_StepDown::getHappiness(
+double Resident_StepDown::implCalculateHappiness (
     std::set<Resident*> neighbors,
     int numOfAdjacentHouses
 ) const
@@ -35,7 +35,6 @@ double Resident_StepDown::getHappiness(
             diff++;
         
     }
-
     return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
 }
 

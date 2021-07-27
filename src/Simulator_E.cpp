@@ -213,10 +213,7 @@ House* Simulator_E::findHouseForOptionalMoveRes (
     
     std::set<House*> adjacentHouses = _city->getAdjacentHouses(oldHouse);
     std::set<Resident*> adjacentResidents = getResidentsInHouses(adjacentHouses);
-    double oldAddressHappinesss = res->getHappiness(
-        adjacentResidents,
-        adjacentHouses.size()
-    );
+    double oldAddressHappinesss = res->getHappiness();
     double highHappiness = oldAddressHappinesss;
 
     std::map<double, House*> happinessToHouseMap = {};
@@ -226,10 +223,7 @@ House* Simulator_E::findHouseForOptionalMoveRes (
             break;
         std::set<House*> adjacentHouses = _city->getAdjacentHouses(house);
         std::set<Resident*> adjacentResidents = getResidentsInHouses(adjacentHouses);
-        double happiness = res->getHappiness(
-            adjacentResidents,
-            adjacentHouses.size()
-        );
+        double happiness = res->getHappiness();
         highHappiness = happiness > highHappiness ? happiness : highHappiness;
         happinessToHouseMap.insert(
             std::pair<double, House*>(happiness, house)
@@ -265,10 +259,7 @@ House* Simulator_E::findHouseForForcedResHappyAtGoal (
     {
         std::set<House*> adjacentHouses = _city->getAdjacentHouses(house);
         std::set<Resident*> adjacentResidents = getResidentsInHouses(adjacentHouses);
-        double happiness = res->getHappiness(
-            adjacentResidents,
-            adjacentHouses.size()
-        );
+        double happiness = res->getHappiness();
         if (happiness >= res->getHappinessGoal())
             return house;
         if (happiness > highHappiness)
@@ -300,10 +291,7 @@ House* Simulator_E::findHouseForForcedResHappyAtBest (
     {
         std::set<House*> adjacentHouses = _city->getAdjacentHouses(house);
         std::set<Resident*> adjacentResidents = getResidentsInHouses(adjacentHouses);
-        double happiness = res->getHappiness(
-            adjacentResidents,
-            adjacentHouses.size()
-        );
+        double happiness = res->getHappiness();
         if (happiness > highHappiness)
         {
             highHappiness = happiness;
