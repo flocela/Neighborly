@@ -82,8 +82,8 @@ class City_Grid: public City
         ) const override;
         int get_x (const int& address) const override;
         int get_y (const int& address) const override;
+        Coordinate getCoordinate (const int& address) const override;
         bool equals(const City_Grid& other) const;
-        virtual Coordinate getCoordinate(const int& address) const override;
 
 };
 

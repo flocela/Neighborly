@@ -49,6 +49,9 @@
 #include "City_Grid.h"
 #include "Resident_StepDown.h"
 #include "Resident_Flat.h"
+#include "MainBaseQuestion.h"
+#include "SimulationComponents.h"
+#include "MainExamples.h"
 
 using std::vector;
 using std::unique_ptr;
@@ -111,64 +114,17 @@ int main(int argc, char* argv[])
     vector<CityFactory*> cityFactoryPointers = getPointers(cityFactories);
     vector<ResidentsFactory*> resFactoryPointers = getPointers(residentFactories); 
 
-    UI_CMDLine ui;
-    int useExample = ui.menu(
-        "First time? Maybe just run one of the examples. ",
-        vector<string>{"Use an example. ", "Choose my own simulation. "}
-    );
-
-    if (useExample == 1)
+    MainBaseQuestion mainQuestion;
+    bool usesExamples = mainQuestion.askUserToUsePremadeExamples();
+    SimulationComponents components;
+    if (usesExamples)
     {
-        int chosenExample = ui.menu(
-            "Which example do you want to choose? ",
-            vector<string>{ 
-                "simple with a small city", 
-                "simple with a large city",
-                "finicky residents with a small city",
-                "finicky residents with a large city"}
-        );
-        switch (chosenExample)
-        {
-            // 20 x 20 city with 400 houses. 
-            // 200 StepDown (Blue)
-            //     Unhappy if 80% or more neighbors are different from themselves.
-            // 50  StepDown Residents (Red)
-            //     Unhappy if 25% or more neighbors are different from themselves.
-            case 1:
-            {
-                city = std::make_unique<City_Grid>(20);
-                for (int ii=0; ii<200; ++ii)
-                {
-                    residents.push_back(std::make_unique<Resident_StepDown>(
-                        0,
-                        Color::blue,
-                        5,
-                        1,
-                        1,
-                        0,
-                        0.8
-                    ));
-                }
-                for (int jj=0; jj<50; ++jj)
-                {
-                    residents.push_back(std::make_unique<Resident_StepDown>(
-                        200,
-                        Color::red,
-                        5,
-                        1,
-                        1,
-                        0,
-                        0.25
-                    ));
-                }
-                simulator = std::make_unique<Simulator_Basic_A>(
-                    city.get(),
-                    getSetOfPointers(residents)
-                );
-                numOfRuns = 100;
-                break;
-            }
-        }
+        MainExamples mainExamples;
+        components = mainExamples.userChoosesExample();
+        city = std::move(components.city);
+        residents = std::move(components.residents);
+        simulator = std::move(components.simulator);
+        numOfRuns = components.numOfRuns;
     }
     else
     {

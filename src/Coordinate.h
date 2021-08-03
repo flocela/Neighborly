@@ -18,6 +18,8 @@ class Coordinate
         bool operator<(const Coordinate& a) const;
         
         friend std::ostream& operator<<(std::ostream& os, Coordinate const& c);
+        bool operator==(const Coordinate& c) const;
+        bool operator!=(const Coordinate& c) const;
 
     private:
         int _x = -1;

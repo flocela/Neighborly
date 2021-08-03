@@ -49,3 +49,33 @@ TEST_CASE("ostream operator")
     out << a;
     REQUIRE(out.str() == "(10, 1)");
 }
+
+TEST_CASE("operator==")
+{
+    Coordinate a{10, 1};
+    Coordinate b{10, 1};
+    Coordinate c{20, 1};
+    Coordinate d{10, 2};
+    Coordinate e{20, 20};
+
+    REQUIRE(a == a);
+    REQUIRE(a == b);
+    REQUIRE(!(a == c));
+    REQUIRE(!(a == d));
+    REQUIRE(!(a == e));
+}
+
+TEST_CASE("operator!=")
+{
+    Coordinate a{10, 1};
+    Coordinate b{10, 1};
+    Coordinate c{20, 1};
+    Coordinate d{10, 2};
+    Coordinate e{20, 20};
+
+    REQUIRE(!(a != a));
+    REQUIRE(!(a != b));
+    REQUIRE(a != c);
+    REQUIRE(a != d);
+    REQUIRE(a != e);
+}

@@ -93,6 +93,7 @@ src/Question.cpp
 src/Resident_Flat.cpp
 src/Resident_StepDown.cpp
 src/Resident.cpp
+src/Simulator_Basic_A.cpp
 src/UI_CMDLine.cpp 
 )
 

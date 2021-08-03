@@ -27,3 +27,14 @@ std::ostream& operator<<(std::ostream& os, Coordinate const& v)
     os << "(" << v._x << ", " << v._y << ")"; // This needs to be tested
     return os;
 }
+
+bool Coordinate::operator==(const Coordinate& c) const
+{
+    return _x == c.getX() && _y == c.getY();
+}
+
+bool Coordinate::operator!=(const Coordinate& c) const
+{
+    return _x != c.getX() || _y != c.getY();
+}
+
