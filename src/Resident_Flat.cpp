@@ -7,8 +7,20 @@ Resident_Flat::Resident_Flat (
     double happinessGoal,
     double happinessValue):
     Resident(id, color, allowedMovementDistance, happinessGoal),
+    _happiness_val(happinessValue),
     _happiness_func{happinessValue}
 {}
+
+std::string Resident_Flat::toStr () const
+{
+    return "Res_Flat(id, clr, mov, goal, hap): (" + 
+        std::to_string(getID()) +
+        ", " + colorMap[getColor()] +
+        ", " + std::to_string(getAllowedMovementDistance()) +
+        ", " + std::to_string(getHappinessGoal()) +
+        ", " + std::to_string(_happiness_val) +
+        "). Happiness is " + std::to_string(getHappiness());
+}
 
 double Resident_Flat::implCalculateHappiness(
     std::set<Resident*> neighbors,

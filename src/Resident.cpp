@@ -19,6 +19,6 @@ double Resident::calculateHappiness (
     int numOfAdjacentHouses
 )
 {
-    _happiness = implCalculateHappiness (neighbors, numOfAdjacentHouses);
-    return _happiness;
+    _curr_happiness = implCalculateHappiness (neighbors, numOfAdjacentHouses);
+    return _curr_happiness;
 }

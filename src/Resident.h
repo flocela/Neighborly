@@ -19,11 +19,13 @@ class Resident{
         Resident& operator= (Resident&& obj) noexcept = default;
         virtual ~Resident () = default;
 
-        int getID() { return _ID; }
+        virtual std::string toStr () const = 0;
+
+        int getID() const { return _ID; }
         virtual Color getColor () const { return _color; };
         virtual double getAllowedMovementDistance () const { return _allowed_movement_distance; };
         virtual double getHappinessGoal () const { return _happiness_goal; };
-        virtual double getHappiness () const {return _happiness;};
+        virtual double getHappiness () const {return _curr_happiness;};
         // neighbors vector includes all possible neighbors, so
         // if a neighbors house is empty, Color::absent should
         // be added to neighbors
@@ -47,7 +49,7 @@ class Resident{
         Color  _color;
         double _allowed_movement_distance;
         double _happiness_goal;
-        double _happiness;
+        double _curr_happiness;
 
     protected:
         virtual double implCalculateHappiness (

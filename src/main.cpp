@@ -52,6 +52,7 @@
 #include "MainBaseQuestion.h"
 #include "SimulationComponents.h"
 #include "MainExamples.h"
+#include "RandSeedMaker_CMDLine.h"
 
 using std::vector;
 using std::unique_ptr;
@@ -92,6 +93,7 @@ unique_ptr<City> city;
 vector<unique_ptr<Resident>> residents;
 unique_ptr<Simulator> simulator;
 int numOfRuns = 5;
+int randomSeed = 5;
 
 // SCREEN_WIDTH and SCREEN_HEIGHT is set to 1200 pixels. The city graph
 // will take up 1/2 the screen, 600 pixels. Each house must be no smaller
@@ -117,8 +119,10 @@ int main(int argc, char* argv[])
     MainBaseQuestion mainQuestion;
     bool usesExamples = mainQuestion.askUserToUsePremadeExamples();
     SimulationComponents components;
+    int randomSeed = 1;
     if (usesExamples)
     {
+        srand(randomSeed);
         MainExamples mainExamples;
         components = mainExamples.userChoosesExample();
         city = std::move(components.city);
@@ -128,6 +132,9 @@ int main(int argc, char* argv[])
     }
     else
     {
+        RandSeedMaker_CMDLine randSeedMaker;
+        randomSeed = randSeedMaker.makeSeedForRand();
+        srand(randomSeed);
         CityMaker_CMDLine cityMaker{};
         /*unique_ptr<City> city = cityMaker.makeCity(
             cityFactoryPointers,
@@ -150,7 +157,9 @@ int main(int argc, char* argv[])
         {
             residentPtrs.insert(resident.get());
         }
+        
         simulator = std::make_unique<Simulator_Basic_A>(city.get(), residentPtrs);
+
     }
     
     

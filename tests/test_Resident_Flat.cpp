@@ -54,3 +54,13 @@ TEST_CASE("getHappines() returns happinessValue")
                             0.25 };
     std::vector<Color> neighbors = {Color::blue, Color::blue};
 }
+
+TEST_CASE("ostream operator << ")
+{
+    Resident_Flat resident { 1,
+                            Color::green,
+                            1.0,
+                            1.0,
+                            0.25 };
+    REQUIRE(resident.toStr() == "Res_Flat(id, clr, mov, goal, hap): (1, green, 1.000000, 1.000000, 0.250000). Happiness is 0.000000");
+}

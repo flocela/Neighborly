@@ -5,7 +5,7 @@ Simulator_E::Simulator_E (City* city, std::vector<Resident*> residents):
     _city{city}, _residents{residents}{}
 
 std::map<House*, Resident*> Simulator_E::simulate()
-{
+{   //(void) randomSeed;
     if (!firstSimDone)
     {
         firstSimulation();

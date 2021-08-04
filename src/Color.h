@@ -3,9 +3,16 @@
 
 #include <ostream>
 #include <vector>
+#include <map>
 
 enum class Color { red, blue, green, absent };
 
+inline std::map<Color, std::string> colorMap = {
+    {Color::red, "red"},
+    {Color::blue, "blue"},
+    {Color::green, "green"},
+    {Color::absent, "grey"}
+};
 
 std::ostream& operator<<(std::ostream& os, Color const& obj);
 

@@ -231,7 +231,7 @@ TEST_CASE("getHappines() returns higher happinessValue before diversity drop.")
         &blueNeighbor1,
         &greenNeighbor1,
         &greenNeighbor2,
-        &greenNeighbor3,
+        &greenNeighbor3
     };
 
     REQUIRE(greenResident.calculateHappiness(neighbors, 4) == 0.75);
@@ -258,4 +258,18 @@ TEST_CASE("getHappines() returns lower happinessValue afterDiversity drop.")
     };
 
     REQUIRE(greenResident.calculateHappiness(neighbors, 4) == 0.25);
+}
+
+TEST_CASE("ostream operator <<")
+{
+    Resident_StepDown greenResident{ 
+        1, 
+        Color::green, 
+        0.0,  // allowedMovementDistance (doesn't matter)
+        0.25, // happinessGoal (doesn't matter)
+        0.75, // happinessValueAtZeroDiversity
+        0.25, // happinessValueAtOneDiversity
+        0.5   // diversityWhereDropHappens
+    };
+    REQUIRE(greenResident.toStr() == "Res_StepDown(id, clr, mov, goal, hap0, hap1, drop): (1, green, 0.000000, 0.250000, 0.750000, 0.250000, 0.500000). Happiness is 0.000000");
 }
