@@ -21,6 +21,7 @@ class Resident_Flat: public Resident
         ~Resident_Flat() = default;
 
         std::string toStr() const override;
+        std::string toStrInput () const override;
         
         House* findHome (
             House* oldHouse,

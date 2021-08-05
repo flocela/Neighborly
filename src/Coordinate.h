@@ -16,6 +16,7 @@ class Coordinate
         int getX() const;
         int getY() const;
         bool operator<(const Coordinate& a) const;
+        std::string toStr() const;
         
         friend std::ostream& operator<<(std::ostream& os, Coordinate const& c);
         bool operator==(const Coordinate& c) const;

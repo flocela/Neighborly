@@ -1,6 +1,8 @@
 #ifndef HOUSE_H
 #define HOUSE_H
 
+#include <string>
+
 class House
 {
     public:
@@ -14,6 +16,7 @@ class House
 
         int _address;
         bool operator< (const House& other) const;
+        std::string toStr () const;
 };
 
 #endif

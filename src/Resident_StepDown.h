@@ -23,7 +23,8 @@ class Resident_StepDown: public Resident
         ~Resident_StepDown() = default;
 
         std::string toStr () const override;
-
+        std::string toStrInput () const override;
+        
         House* findHome(
             House* oldHouse,
             std::map<House*, std::set<House*>> openHousesToNeighbors,

@@ -22,6 +22,17 @@ std::string Resident_Flat::toStr () const
         "). Happiness is " + std::to_string(getHappiness());
 }
 
+std::string Resident_Flat::toStrInput () const
+{
+    return "Res_Flat(id, clr, mov, goal, hap): (" + 
+        std::to_string(getID()) +
+        ", " + colorMap[getColor()] +
+        ", " + std::to_string(getAllowedMovementDistance()) +
+        ", " + std::to_string(getHappinessGoal()) +
+        ", " + std::to_string(_happiness_val) +
+        ").";
+}
+
 double Resident_Flat::implCalculateHappiness(
     std::set<Resident*> neighbors,
     int numOfAdjacentHouses

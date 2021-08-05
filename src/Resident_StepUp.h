@@ -23,6 +23,7 @@ class Resident_StepUp: public Resident
         ~Resident_StepUp() = default;
 
         std::string toStr() const override;
+        std::string toStrInput () const override;
 
         House* findHome (
             House* oldHouse,

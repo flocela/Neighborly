@@ -41,7 +41,7 @@ SimulationComponents MainExamples::userChoosesExample ()
             for (int ii=0; ii<200; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(
-                    0,
+                    ii,
                     Color::blue,
                     5,
                     1,
@@ -50,7 +50,7 @@ SimulationComponents MainExamples::userChoosesExample ()
                     0.8
                 ));
             }
-            for (int jj=0; jj<50; ++jj)
+            for (int jj=200; jj<250; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(
                     200,

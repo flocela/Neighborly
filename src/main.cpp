@@ -42,6 +42,7 @@
 #include "ResidentsFactory.h"
 #include "ResidentsMaker_CMDLine.h"
 #include "Printer_Graphic.h"
+#include "Printer_CMDLine.h"
 #include "Resident_Flat.h"
 #include "Simulator.h"
 #include "Simulator_Basic_A.h"
@@ -171,14 +172,17 @@ int main(int argc, char* argv[])
         houseToResidentMap[resident->getID()] = resident.get();
     }*/
     
-    Printer_Graphic printer{4, 1200, 1200, city.get(), _the_color_Infos};
+    Printer_Graphic graphicPrinter{4, 1200, 1200, city.get(), _the_color_Infos};
+    std::map<House*, Resident*> houseToResidentMap;
     for (int ii=0; ii< numOfRuns; ii++)
     {   
-        std::map<House*, Resident*> houseToResidentMap = simulator->simulate();
-        printer.print(houseToResidentMap, ii, "Title");
+        houseToResidentMap = simulator->simulate();
+        graphicPrinter.print(houseToResidentMap, ii, "Title");
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-    printer.keepScreen();
+    Printer_CMDLine cmdLinePrinter{numOfRuns, city.get()};
+    cmdLinePrinter.print(houseToResidentMap, numOfRuns, "Title");
+    graphicPrinter.keepScreen();
     return 0; 
 }
 

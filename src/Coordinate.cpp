@@ -13,6 +13,11 @@ int Coordinate::getY () const
     return _y;
 }
 
+std::string Coordinate::toStr() const
+{
+    return "(" + std::to_string(_x) + ", " + std::to_string(_y) + ")";
+}
+
 bool Coordinate::operator< (const Coordinate& a) const
 {
     if (_y == a._y)
