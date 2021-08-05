@@ -119,6 +119,7 @@ void GraphicCityPrinter::addHouses(
         createVectorsForEachColor(houseToResMap);
     for (auto const &colorToCoord : colorToCoordinates)
     {
+        
         _renderer->addBlocksByColor(
             _house_size__px,
             _house_size__px,
@@ -262,9 +263,13 @@ void GraphicCityPrinter::initYAxisBlocks()
 
 std::vector<int> GraphicCityPrinter::getUnhappyColor (Color color)
 {
-    std::vector<int> rgba = _rgba_per_color[color];
-    rgba[3] = rgba[3] - 100;
-    return rgba;
+    Color unhappy = unhappyColorMap[color];
+    std::cout << "GPrinter 270 " << colorMap[color] << "  " << colorMap[unhappy] << " ";
+    std::cout << "GraphicCityPrinter 268 " << _the_color_rgba[unhappy][0] << " " <<
+            _the_color_rgba[unhappy][1] << " " <<
+            _the_color_rgba[unhappy][2] << " " <<
+            _the_color_rgba[unhappy][3] << std::endl;
+    return _the_color_rgba[unhappy];
 }
 
 std::vector<int> GraphicCityPrinter::getHappyColor (Color color)
