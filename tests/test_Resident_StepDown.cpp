@@ -260,7 +260,7 @@ TEST_CASE("getHappines() returns lower happinessValue afterDiversity drop.")
     REQUIRE(greenResident.calculateHappiness(neighbors, 4) == 0.25);
 }
 
-TEST_CASE("ostream operator <<")
+TEST_CASE("toStrBasic()")
 {
     Resident_StepDown greenResident{ 
         1, 
@@ -271,5 +271,7 @@ TEST_CASE("ostream operator <<")
         0.25, // happinessValueAtOneDiversity
         0.5   // diversityWhereDropHappens
     };
-    REQUIRE(greenResident.toStr() == "Res_StepDown(id, clr, mov, goal, hap0, hap1, drop): (1, green, 0.000000, 0.250000, 0.750000, 0.250000, 0.500000). Happiness is 0.000000");
+    REQUIRE(greenResident.toStrBasic() == 
+        "Res_StepDown(id, clr, mov, goal, hap0, hap1, drop):"
+        " (1, green, 0.000000, 0.250000, 0.750000, 0.250000, 0.500000)");
 }

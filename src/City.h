@@ -30,6 +30,9 @@ class City
         virtual int get_x (const int& address) const = 0;
         virtual int get_y (const int& address) const = 0;
         virtual Coordinate getCoordinate(const int& address) const = 0;
+        virtual int getLargestXCoord () const = 0;
+        virtual int getLargestYCoord () const = 0;
+        virtual int getLargestHouse () const = 0;
         //vector<CityType> citytypes{Grid, }
 };
 

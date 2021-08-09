@@ -21,7 +21,7 @@ Resident_StepDown::Resident_StepDown (
 {
 }
 
-std::string Resident_StepDown::toStr () const
+std::string Resident_StepDown::toStrBasic() const
 {
     return "Res_StepDown(id, clr, mov, goal, hap0, hap1, drop): (" + 
         std::to_string(getID()) +
@@ -31,20 +31,7 @@ std::string Resident_StepDown::toStr () const
         ", " + std::to_string(_happiness_at_zero_diversity) +
         ", " + std::to_string(_happiness_at_one_diversity) +
         ", " + std::to_string(_diversity_where_drop_happens) +
-        "). Happiness is " + std::to_string(getHappiness()); 
-}
-
-std::string Resident_StepDown::toStrInput () const
-{
-    return "Res_StepDown(id, clr, mov, goal, hap0, hap1, drop): (" + 
-        std::to_string(getID()) +
-        ", " + colorMap[getColor()] +
-        ", " + std::to_string(getAllowedMovementDistance()) +
-        ", " + std::to_string(getHappinessGoal()) +
-        ", " + std::to_string(_happiness_at_zero_diversity) +
-        ", " + std::to_string(_happiness_at_one_diversity) +
-        ", " + std::to_string(_diversity_where_drop_happens) +
-        ")."; 
+        ")"; 
 }
 
 double Resident_StepDown::implCalculateHappiness (

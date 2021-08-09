@@ -22,8 +22,7 @@ class Resident_StepDown: public Resident
         Resident_StepDown& operator= (Resident_StepDown&& obj) noexcept = default;
         ~Resident_StepDown() = default;
 
-        std::string toStr () const override;
-        std::string toStrInput () const override;
+        std::string toStrBasic () const override;
         
         House* findHome(
             House* oldHouse,

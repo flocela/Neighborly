@@ -94,6 +94,7 @@ src/Resident_Flat.cpp
 src/Resident_StepDown.cpp
 src/Resident.cpp
 src/Simulator_Basic_A.cpp
+src/TextHelper.cpp
 src/UI_CMDLine.cpp 
 )
 

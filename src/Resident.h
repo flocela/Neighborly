@@ -19,8 +19,7 @@ class Resident{
         Resident& operator= (Resident&& obj) noexcept = default;
         virtual ~Resident () = default;
 
-        virtual std::string toStr () const = 0;
-        virtual std::string toStrInput () const = 0;
+        virtual std::string toStrBasic () const = 0;
 
         int getID() const { return _ID; }
         virtual Color getColor () const { return _color; };

@@ -276,6 +276,19 @@ int City_Grid::get_y (const int& address) const
 	return (address%_width);
 }
 
+int City_Grid::getLargestXCoord () const 
+{
+	return _maxX;
+}
+int City_Grid::getLargestYCoord () const
+{
+	return _maxY;
+}
+int City_Grid::getLargestHouse () const
+{
+	return _houses[_houses.size()-1]->_address;
+}
+
 double City_Grid::dist (const int& from_address, const int& to_address) const
 {
 	double x_dist = fabs( get_x(from_address) - get_x(to_address) );
@@ -292,6 +305,7 @@ bool City_Grid::equals (const City_Grid& other) const{
 
 Coordinate City_Grid::getCoordinate(const int& address) const
 {
+	std::cout << "CityGrid 308: " << address << " " << get_x(address) << " " << get_y(address) << std::endl;
 	return Coordinate{get_x(address), get_y(address)};
 }
 

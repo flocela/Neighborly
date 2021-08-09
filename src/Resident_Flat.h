@@ -20,8 +20,7 @@ class Resident_Flat: public Resident
         Resident_Flat& operator= (Resident_Flat&& obj) noexcept = default;
         ~Resident_Flat() = default;
 
-        std::string toStr() const override;
-        std::string toStrInput () const override;
+        std::string toStrBasic () const override;
         
         House* findHome (
             House* oldHouse,

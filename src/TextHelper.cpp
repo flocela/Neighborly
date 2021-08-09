@@ -1,4 +1,9 @@
 #include "TextHelper.h"
+#include <sstream>
+#include <algorithm>
+#include <iomanip>
+
+bool pComp(House* a, House* b) {return *a < *b; }
 
 std::string TextHelper::createText (
     std::map<House*, Resident*> residentPerHouse,
@@ -7,31 +12,41 @@ std::string TextHelper::createText (
     ) const
 {
     (void) title;
-    std::string text = "Run/FinalRun: " + run;
-    text.append("/"); 
-    text.append(_max_num_of_runs + "\n");
-
-    text.append("Resident presented as: \n");
-    text.append("Resident ID, color, address, coordinate,"
-        " happiness / happiness goal \n");
-
+    (void) residentPerHouse;
+    for (House* h : _city_ptr->getHouses())
+    {
+        _city_ptr->getCoordinate(h->_address);
+    }
+    std::ostringstream s1;
+    s1 << "Run/FinalRun: " << run;
+    s1 << " / " << _max_num_of_runs << "\n";
+    s1 << "Resident presented as:\n";
+    s1 << "Resident ID, color, address, coordinate, happiness / happiness goal \n";
+    
     std::set<Color> seenColors;
     std::set<Resident*> seenResidents;
+    std::vector<House*> housesInOrder;
     for (auto h2r : residentPerHouse)
-    { 
+    {   
         House* house = h2r.first;
         Resident* res = h2r.second;
+        housesInOrder.push_back(house);
         if (seenColors.count(res->getColor()) == 0)
         {
             seenResidents.insert(res);
             seenColors.insert(res->getColor());
         }
-        text.append(std::to_string(res->getID())).append(", ");
-        text.append(colorMap[res->getColor()]).append(", ");
-        text.append(std::to_string(house->_address)).append(", ");
-        text.append(_city_ptr->getCoordinate(house->_address).toStr()).append(", ");
-        text.append(std::to_string(res->getHappiness())).append("/");
-        text.append(std::to_string(res->getHappinessGoal())).append("\n");
     }
-    return text;
+    std::sort(housesInOrder.begin(), housesInOrder.end(), pComp);
+    for (House* house : housesInOrder)
+    {
+        Resident* res = residentPerHouse[house];
+        s1 << std::setw(3) << res->getID() << ", ";
+        s1 << std::setw(5) << colorMap[res->getColor()] << ", ";
+        s1 << std::setw(2) << house->_address << ", ";
+        s1 << std::setw(8) << _city_ptr->getCoordinate(house->_address).toStr() << ", ";
+        s1 << res->getHappiness() << "/";
+        s1 << res->getHappinessGoal() << "\n";
+    }
+    return s1.str();
 }

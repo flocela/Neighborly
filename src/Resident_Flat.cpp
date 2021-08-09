@@ -11,26 +11,15 @@ Resident_Flat::Resident_Flat (
     _happiness_func{happinessValue}
 {}
 
-std::string Resident_Flat::toStr () const
+std::string Resident_Flat::toStrBasic () const
 {
-    return "Res_Flat(id, clr, mov, goal, hap): (" + 
+    return "Res_Flat(id, clr, mov, goal, hapV): (" + 
         std::to_string(getID()) +
         ", " + colorMap[getColor()] +
         ", " + std::to_string(getAllowedMovementDistance()) +
         ", " + std::to_string(getHappinessGoal()) +
         ", " + std::to_string(_happiness_val) +
-        "). Happiness is " + std::to_string(getHappiness());
-}
-
-std::string Resident_Flat::toStrInput () const
-{
-    return "Res_Flat(id, clr, mov, goal, hap): (" + 
-        std::to_string(getID()) +
-        ", " + colorMap[getColor()] +
-        ", " + std::to_string(getAllowedMovementDistance()) +
-        ", " + std::to_string(getHappinessGoal()) +
-        ", " + std::to_string(_happiness_val) +
-        ").";
+        ")";
 }
 
 double Resident_Flat::implCalculateHappiness(

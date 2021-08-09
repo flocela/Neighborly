@@ -83,6 +83,9 @@ class City_Grid: public City
         int get_x (const int& address) const override;
         int get_y (const int& address) const override;
         Coordinate getCoordinate (const int& address) const override;
+        int getLargestXCoord () const override;
+        int getLargestYCoord () const override;
+        int getLargestHouse () const override;
         bool equals(const City_Grid& other) const;
 
 };
