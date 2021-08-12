@@ -37,6 +37,9 @@ class Resident_StepUp: public Resident
         ) const override;
 
     private:
+        double _happiness_at_zero_diversity;
+        double _happiness_at_one_diversity;
+        double _diversity_where_rise_happens;
         HappinessFunc_StepUp _happiness_func;
 
     protected:

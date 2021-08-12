@@ -305,7 +305,6 @@ bool City_Grid::equals (const City_Grid& other) const{
 
 Coordinate City_Grid::getCoordinate(const int& address) const
 {
-	std::cout << "CityGrid 308: " << address << " " << get_x(address) << " " << get_y(address) << std::endl;
 	return Coordinate{get_x(address), get_y(address)};
 }
 

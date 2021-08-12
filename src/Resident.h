@@ -43,7 +43,7 @@ class Resident{
             std::map<House*, std::set<House*>> openHousesToNeighbors,
             std::map<House*, Resident*> houseToResMap// This should be const. Or only send a copy of needed neighbors
         ) const = 0;
-        
+        bool operator< (const Resident& other) const;
     private:
         int    _ID;
         Color  _color;

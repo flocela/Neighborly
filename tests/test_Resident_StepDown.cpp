@@ -260,7 +260,7 @@ TEST_CASE("getHappines() returns lower happinessValue afterDiversity drop.")
     REQUIRE(greenResident.calculateHappiness(neighbors, 4) == 0.25);
 }
 
-TEST_CASE("toStrBasic()")
+TEST_CASE("Resident_StepDown toStrBasic()")
 {
     Resident_StepDown greenResident{ 
         1, 

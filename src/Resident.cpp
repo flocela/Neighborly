@@ -22,3 +22,8 @@ double Resident::calculateHappiness (
     _curr_happiness = implCalculateHappiness (neighbors, numOfAdjacentHouses);
     return _curr_happiness;
 }
+
+bool Resident:: operator< (const Resident& other) const
+{
+    return _ID < other._ID;
+}

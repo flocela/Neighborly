@@ -16,13 +16,15 @@ std::map<House*, Resident*> Simulator_Basic_A::simulate ()
     {
         firstSimulation();
         _first_simulation_done = true;
-        return _curr_house_to_res_map;
+    }
+    else
+    {
+        for (Resident* res : _residents)
+        {   
+            moveResidentIfUnhappy(res);
+        }
     }
     
-    for (Resident* res : _residents)
-    {   
-        moveResidentIfUnhappy(res);
-    }
     return _curr_house_to_res_map;
 }
 
