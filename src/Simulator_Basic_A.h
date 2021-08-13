@@ -57,6 +57,7 @@ class Simulator_Basic_A: public Simulator
         // Returns residents that live in @houses. If a house is empty, then 
         // returned set will be smaller than @houses.
         std::set<Resident*> getResidentsInHouses(std::set<House*> houses);
+        House* selectRandomWithinMovingDist (std::set<House*> setOfHouses, House* origHouse, double allowedMovement);
         House* selectRandom (std::set<House*>& setOfHouses) const;
         
 };

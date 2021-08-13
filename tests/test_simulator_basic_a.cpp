@@ -78,20 +78,20 @@ TEST_CASE("four runs happy resident stays unhappy resident moves")
     }
 }
 
-TEST_CASE ("two runs with many residents")
+TEST_CASE ("2 runs with many residents whose allowable movement is the whole city")
 {   
     vector<unique_ptr<Resident>> residents;
     set<Resident*> resPtrs;
     for (int ii=0; ii<=6; ++ii)
     {
-        // Blue residents become unhappy when diversity is 
+        // Blue residents become unhappy when diversity is 0.5 or greater.
         residents.push_back(std::make_unique<Resident_StepDown>(
-            ii,           // id
+            ii,          // id
             Color::blue, // color
-            0.0,         // movement
-            0.5,        // happiness goal
-            0.75,        // happiness at zero diversity
-            0.25,        // happiness at one diversity
+            5.0,         // movement
+            0.5,         // happiness goal
+            0.75,        // happiness at diversity of zero
+            0.25,        // happiness at diversity of one
             0.5          // diversity where drop happens
         ));
         resPtrs.insert(residents[ii].get());
@@ -100,67 +100,232 @@ TEST_CASE ("two runs with many residents")
     for (int jj=7; jj <= 13; ++jj)
     {
         residents.push_back(std::make_unique<Resident_StepDown>(
-            jj,
-            Color::red, 
-            0.0,  
-            0.5, 
-            0.75, 
-            0.25, 
+            jj,         // id
+            Color::red, // color
+            5.0,        // movement
+            0.5,        // happiness goal
+            0.75,       // happiness at diversity of zero
+            0.25,       // happiness at diversity of one
             0.5
         ));
         resPtrs.insert(residents[jj].get());
     }
 
-    int run = 1;
-    int maxNumOfRuns = 10;
     int cityWidth = 5;
-    std::string title = "title";
     City_Grid city{cityWidth};
     std::vector<House*> houses = city.getHouses();
     Simulator_Basic_A sim{&city, resPtrs};
 
-    // first simulation.
-    std::map<House*, Resident*> oneHouseToResidentMap = sim.simulate();
+    // Simulation zero. (first simulation)
+    // separate happy and unhappy residents into two maps.
+    std::map<House*, Resident*> housToResMapSimZero = sim.simulate();
 
-    std::map<int, int> oneHappyResidentIDToAddressMap;
-    std::map<int, int> oneUnhappyResidentIDToAddressMap;
-    for (auto h2R : oneHouseToResidentMap)
+    std::map<int, int> happyResIDToAddressMapSimZero;
+    std::map<int, int> unhappyResIDToAddressMapSimZero;
+    for (auto h2R : housToResMapSimZero)
     {
         House* house = h2R.first;
         Resident* res = h2R.second;
         if (res->getHappiness() < res->getHappinessGoal())
         {   
-            oneUnhappyResidentIDToAddressMap.insert(
+            unhappyResIDToAddressMapSimZero.insert(
                 std::pair<int, int>(res->getID(), house->_address)
             );
         }
         else
         {   
-            oneHappyResidentIDToAddressMap.insert(
+            happyResIDToAddressMapSimZero.insert(
                 std::pair<int, int>(res->getID(), house->_address)
             );
         }
     }
 
-    // second simulation.
-    // Check previously unhappy residents moved. {reviously happy didn't move.
-    std::map<House*, Resident*> twoHouseToResidentMap = sim.simulate();
+    // Simulation one.
+    // Check previously unhappy residents moved. Previously happy didn't move.
+    std::map<House*, Resident*> housToResMapSimOne = sim.simulate();
 
-    std::map<int, int> twoResIDToAddress;
-    for (auto h2R: twoHouseToResidentMap)
+    std::map<int, int> resIDToAddressSimOne;
+    for (auto h2R: housToResMapSimOne)
     {
-        twoResIDToAddress.insert(
+        resIDToAddressSimOne.insert(
             std::pair<int, int>(h2R.second->getID(), h2R.first->_address)
         );
     }
 
-    for (auto oneR2H :  oneHappyResidentIDToAddressMap)
+    // Test originally happy residents stayed in the same house.
+    for (auto oneR2H :  happyResIDToAddressMapSimZero)
     {
-        REQUIRE(oneR2H.second == twoResIDToAddress[oneR2H.first]);
+        REQUIRE(oneR2H.second == resIDToAddressSimOne[oneR2H.first]);
     }
 
-    for (auto oneR2H :  oneUnhappyResidentIDToAddressMap)
+    // Test originally unhappy residents moved to different house.
+    for (auto oneR2H :  unhappyResIDToAddressMapSimZero)
     {
-        REQUIRE(oneR2H.second != twoResIDToAddress[oneR2H.first]);
+        REQUIRE(oneR2H.second != resIDToAddressSimOne[oneR2H.first]);
+    }
+}
+
+TEST_CASE ("2 runs with many residents whose allowable movement is zero")
+{   
+    vector<unique_ptr<Resident>> residents;
+    set<Resident*> resPtrs;
+    for (int ii=0; ii<=6; ++ii)
+    {
+        // Blue residents become unhappy when diversity is 0.5 or greater.
+        residents.push_back(std::make_unique<Resident_StepDown>(
+            ii,          // id
+            Color::blue, // color
+            0.0,         // NO movement
+            0.5,         // happiness goal
+            0.75,        // happiness at diversity of zero
+            0.25,        // happiness at diversity of one
+            0.5          // diversity where drop happens
+        ));
+        resPtrs.insert(residents[ii].get());
+    }
+
+    for (int jj=7; jj <= 13; ++jj)
+    {
+        residents.push_back(std::make_unique<Resident_StepDown>(
+            jj,         // id
+            Color::red, // color
+            0.0,        // NO movement
+            0.5,        // happiness goal
+            0.75,       // happiness at diversity of zero
+            0.25,       // happiness at diversity of one
+            0.5         // diversity where drop happens
+        ));
+        resPtrs.insert(residents[jj].get());
+    }
+
+    int cityWidth = 5;
+    City_Grid city{cityWidth};
+    std::vector<House*> houses = city.getHouses();
+    Simulator_Basic_A sim{&city, resPtrs};
+
+    // Simulation zero. (first simulation)
+    // separate happy and unhappy residents into two maps.
+    std::map<House*, Resident*> housToResMapSimZero = sim.simulate();
+
+    std::map<int, int> happyResIDToAddressMapSimZero;
+    std::map<int, int> unhappyResIDToAddressMapSimZero;
+    for (auto h2R : housToResMapSimZero)
+    {
+        House* house = h2R.first;
+        Resident* res = h2R.second;
+        if (res->getHappiness() < res->getHappinessGoal())
+        {   
+            unhappyResIDToAddressMapSimZero.insert(
+                std::pair<int, int>(res->getID(), house->_address)
+            );
+        }
+        else
+        {   
+            happyResIDToAddressMapSimZero.insert(
+                std::pair<int, int>(res->getID(), house->_address)
+            );
+        }
+    }
+
+    // Simulation one.
+    // Check previously happy and unhappy residents stayed in the same house.
+    std::map<House*, Resident*> housToResMapSimOne = sim.simulate();
+
+    std::map<int, int> resIDToAddressSimOne;
+    for (auto h2R: housToResMapSimOne)
+    {
+        resIDToAddressSimOne.insert(
+            std::pair<int, int>(h2R.second->getID(), h2R.first->_address)
+        );
+    }
+
+    // Test originally happy residents stayed in the same house.
+    for (auto oneR2H :  happyResIDToAddressMapSimZero)
+    {
+        REQUIRE(oneR2H.second == resIDToAddressSimOne[oneR2H.first]);
+    }
+
+    // Test originally unhappy residents also stayed in the same house.
+    for (auto oneR2H :  unhappyResIDToAddressMapSimZero)
+    {
+        REQUIRE(oneR2H.second == resIDToAddressSimOne[oneR2H.first]);
+    }
+}
+
+TEST_CASE ("2 runs with many residents whose allowable movement is 2.0")
+{   
+    vector<unique_ptr<Resident>> residents;
+    set<Resident*> resPtrs;
+    for (int ii=0; ii<=6; ++ii)
+    {
+        // Blue residents become unhappy when diversity is 0.5 or greater.
+        residents.push_back(std::make_unique<Resident_StepDown>(
+            ii,          // id
+            Color::blue, // color
+            2.0,         // allowable movement
+            0.5,         // happiness goal
+            0.75,        // happiness at diversity of zero
+            0.25,        // happiness at diversity of one
+            0.5          // diversity where drop happens
+        ));
+        resPtrs.insert(residents[ii].get());
+    }
+
+    for (int jj=7; jj <= 13; ++jj)
+    {
+        residents.push_back(std::make_unique<Resident_StepDown>(
+            jj,         // id
+            Color::red, // color
+            2.0,        // allowable movement
+            0.5,        // happiness goal
+            0.75,       // happiness at diversity of zero
+            0.25,       // happiness at diversity of one
+            0.5         // diversity where drop happens
+        ));
+        resPtrs.insert(residents[jj].get());
+    }
+
+    int cityWidth = 5;
+    City_Grid city{cityWidth};
+    std::vector<House*> houses = city.getHouses();
+    Simulator_Basic_A sim{&city, resPtrs};
+
+    // Simulation zero. (first simulation)
+    // Get unhappy residents into one map.
+    std::map<House*, Resident*> housToResMapSimZero = sim.simulate();
+
+    std::map<int, int> unhappyResToHousMapSimZero;
+    for (auto h2R : housToResMapSimZero)
+    {
+        House* house = h2R.first;
+        Resident* res = h2R.second;
+        if (res->getHappiness() < res->getHappinessGoal())
+        {   
+            unhappyResToHousMapSimZero.insert(
+                std::pair<int, int>(res->getID(), house->_address
+            ));
+        }
+    }
+
+    // Simulation one.
+    // Check previously unhappy residents only moved 2 units away from orig house.
+    std::map<House*, Resident*> housToResMapSimOne = sim.simulate();
+    std::map<int, int> resToHouseMapSimOne;
+    for (auto h2R : housToResMapSimOne)
+    {
+        resToHouseMapSimOne.insert(
+            std::pair<int, int>(h2R.second->getID(),
+            h2R.first->_address)
+        );
+    }
+
+    // Test originally unhappy residents didn't move more than 2 units.
+    for (auto r2HSimZero :  unhappyResToHousMapSimZero)
+    {
+        double distance = city.dist(
+            r2HSimZero.second,
+            resToHouseMapSimOne[r2HSimZero.first]
+        );
+        REQUIRE(distance <= 2.0);
     }
 }
