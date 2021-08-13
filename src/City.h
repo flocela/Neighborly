@@ -47,15 +47,6 @@ class City
 
         // Returns coordinate of house (x, y).
         virtual Coordinate getCoordinate(const int& address) const = 0;
-
-        // returns most east x coordinate.
-        virtual int getLargestXCoord () const = 0;
-
-        // returns most south coordinate.
-        virtual int getLargestYCoord () const = 0;
-
-        // returns house with largest address.
-        virtual int getLargestAddress () const = 0;
 };
 
 #endif

@@ -2,15 +2,7 @@
 #include <iostream>
 #include <math.h>
 
-// _width is the width of the grid.
-// The x axis goes from left to right.
-// The y axis goes from top to bottom.
-// A _width of 3 would result in
-// 0  3  6
-// 1  4  7
-// 2  5  8
-// Address 3 is 2 units away from address 5 in the y direction.
-// Address 1 is 2 units away from address 7 in the x direction.
+
 City_Grid::City_Grid (int width):
 	City(),
 	_width{width},
@@ -41,6 +33,13 @@ std::vector<House*> City_Grid::getHouses () const
 		houses.push_back(house.get());
 	}
 	return houses;
+}
+
+double City_Grid::dist (const int& from_address, const int& to_address) const
+{
+	double x_dist = fabs( get_x(from_address) - get_x(to_address) );
+	double y_dist = fabs( get_y(from_address) - get_y(to_address));
+  	return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
 }
 
 std::set<House*> City_Grid::getAdjacentHouses (House* house) const
@@ -75,7 +74,10 @@ std::set<House*> City_Grid::getAdjacentHouses (House* house) const
 	return adjacentHouses;
 }
 
-std::set<House*> City_Grid::getHousesWithinDistance (House* house, double allowableDist) const
+std::set<House*> City_Grid::getHousesWithinDistance (
+	House* house, 
+	double allowableDist
+) const
 { 
 	std::set<House*> nearHouses;
 
@@ -104,18 +106,12 @@ std::set<House*> City_Grid::getHousesWithinDistance (House* house, double allowa
 	return nearHouses;
 }
 
-int City_Grid::getAddress (int x, int y) const
-{
-	int address = x * _width + y;
-	return address;
-}
-
 std::set<House*> City_Grid::getNumberOfUnoccupiedNearHouses (
-        House* house,
-        double allowableDistance,
-        std::set<House*> occupied,
-        int count
-    ) const
+	House* house,
+	double allowableDistance,
+	std::set<House*> occupied,
+	int count
+) const
 {	
 	// Try to get houses quickly. May not be possible if a larger
 	// percentage of houses are occuplied.
@@ -147,9 +143,8 @@ std::set<House*> City_Grid::getSomeNearHousesFastAndRandom (
 	std::set<House*> returnedHouses;
 
 	// Houses that are within boxed area around @house.
-	std::set<House*> boxedHouses;
-
 	// Width and height of box are 2 x allowableDist and @house is at center.
+	std::set<House*> boxedHouses;
 	int origAddress = house->_address;
 	int minX = getMinXLine(get_x(origAddress), allowableDist);
 	int maxX = getMaxXLine(get_x(origAddress), allowableDist);
@@ -177,8 +172,8 @@ std::set<House*> City_Grid::getSomeNearHousesFastAndRandom (
 		if ( (int)returnedHouses.size() == count || boxedHouses.empty() )
 			return returnedHouses;
 		
-		// If we're not getting an unoccupied house about a third of the time,
-		// then a lot of houses are occupied. Do other method.
+		// If we're not getting an unoccupied house about a third of the time, then
+		// most houses are occupied. Do getSomeNearHousesSlowerAndRandom() instead.
 		if (tries/4 > (int)returnedHouses.size() && tries > 5)
 		{
 			returnedHouses = {};
@@ -224,44 +219,6 @@ std::set<House*> City_Grid::getSomeNearHousesSlowerAndRandom (
 	return returnedHouses;
 }
 
-std::set<House*> City_Grid::getEncompassedHouses (
-	House* house,
-	double allowableDist
-) const
-{
-	std::set<House*> returnHouses;
-
-	int origAddress = house->_address;
-	int origX = get_x(origAddress);
-	int origY = get_y(origAddress);
-	
-	// create a box around orig house. calculatedMin and calculatedMax
-	// are the corners of box.
-	int calculatedMinX = origX - std::floor(allowableDist);
-	int calculatedMaxX = origX + std::floor(allowableDist);
-	int calculatedMinY = origY - std::floor(allowableDist);
-	int calculatedMaxY = origY + std::floor(allowableDist);
-	int minX = calculatedMinX < _minX ? _minX : calculatedMinX;
-	int maxX = calculatedMaxX > _maxX ? _maxX : calculatedMaxX;
-	int minY = calculatedMinY < _minY ? _minY : calculatedMinY;
-	int maxY = calculatedMaxY > _maxY ? _maxY : calculatedMaxY;
-	
-	int topLeftAddress = minX * _width + minY;
-	int yDiff = maxY - minY;
-	for (int ii=topLeftAddress; ii<=maxX*_width; ii+=_width)
-	{	
-		for (int jj=0; jj<=yDiff; jj++)
-		{	
-			int otherAddress = ii + jj;
-			if ( otherAddress != origAddress )
-			{
-				returnHouses.insert(_addrToHouseMap.at(otherAddress));
-			}
-		}
-	}
-	return returnHouses;
-}
-
 int City_Grid::get_x (const int& address) const
 {
 	return (address/_width);
@@ -273,25 +230,7 @@ int City_Grid::get_y (const int& address) const
 	return (address%_width);
 }
 
-int City_Grid::getLargestXCoord () const 
-{
-	return _maxX;
-}
-int City_Grid::getLargestYCoord () const
-{
-	return _maxY;
-}
-int City_Grid::getLargestAddress () const
-{
-	return _houses[_houses.size()-1]->_address;
-}
 
-double City_Grid::dist (const int& from_address, const int& to_address) const
-{
-	double x_dist = fabs( get_x(from_address) - get_x(to_address) );
-	double y_dist = fabs( get_y(from_address) - get_y(to_address));
-  	return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
-}
 
 // TODO is this ever used.
 bool City_Grid::equals (const City_Grid& other) const{
@@ -338,11 +277,3 @@ House* City_Grid::selectRandom (std::set<House*>& setOfHouses) const
     return *it;
 }
 
-int City_Grid::selectRandom (std::set<int>& setOfInts) const
-{
-	int size = setOfInts.size();
-    int r = rand() % size;
-    std::set<int>::iterator it = std::begin(setOfInts);
-    std::advance(it, r);
-    return *it;
-}

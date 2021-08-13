@@ -10,6 +10,17 @@
 class City_Grid: public City
 {
     public:
+
+        // _width is the width of the grid. The x axis goes from left to right.
+        // The y axis goes from top to bottom. Houses are ordered north to south,
+        // from west to east. For exampleA _width of 3 would result in
+        // 0  3  6
+        // 1  4  7
+        // 2  5  8
+        // Address 3 is 2 units away from address 5 in the y direction.
+        // Address 1 is 2 units away from address 7 in the x direction.
+        // Line containing 0 and 3 addresses is the most north.
+        // Line containing 0 and 2 addresses is the most west.
     	City_Grid (int width);
         City_Grid () = delete;
         City_Grid (const City_Grid& o) = default;
@@ -42,12 +53,6 @@ class City_Grid: public City
         
         Coordinate getCoordinate (const int& address) const override;
 
-        int getLargestXCoord () const override;
-
-        int getLargestYCoord () const override;
-
-        int getLargestAddress () const override;
-        
         bool equals(const City_Grid& other) const;
 
     private:
@@ -56,25 +61,22 @@ class City_Grid: public City
         int _minY = 0;
         int _maxX;
         int _maxY;
+
+        // Houses in _houses are in order from smallest addrest to largest address.
     	std::vector<std::unique_ptr<House>> _houses;
+
         std::map<int, House*> _addrToHouseMap;
+
         std::map<std::pair<int, double>, std::vector<int>> _within_dist_map;
 
-        // Helper method. Returns all the houses that form a rectangular area
-        // around @house. Area is 2 * @allowableDist wide and high and
-        // @house is in the center of the area.
-        // The set that is returned does not include @house.
-        std::set<House*> getEncompassedHouses (
-            House* house, 
-            double allowableDist
-        ) const;
-
-        // Helper method for getSomeNearHouses. Since only have to return some
-        // of the near houses instead of all of them. Randomly select houses
-        // and see if they are unoccupied and if their distance is acceptable.
-        // This should be faster than checking every house in an area and then
-        // randomly selecting a few houses. Should be faster when a lot of the 
-        // houses are unoccupied and when only a few houses need to be chosen. 
+        // Helper method for getNumberOfUnoccupiedNearHouses(). Since only 
+        // have to return some of the houses within distance, randomly select
+        // houses within a square area and see if they are unoccupied and within
+        // the allowable distance.
+        // In the case where a lot of houses are unoccupied and only a few
+        // houses need to be chosen, this should be faster than aggregating
+        // every house within the allowable distance and then randomly
+        // selecting a few houses.
         std::set<House*> getSomeNearHousesFastAndRandom (
             House* house,
             double allowableDist,
@@ -82,25 +84,41 @@ class City_Grid: public City
             int count
         ) const;
 
-        // Helper method for getSomeNearHouses. Creates a set of all houses
-        // that are within @allowableDist from @house, called nearSet. Remove all
-        // occupied houses from nearSet. Then randomly choose houses from nearSet.
+        // Helper method for getNumberOfUnoccupiedNearHouses(). Creates a set of
+        // all houses that are within @allowableDist from @house, called nearSet.
+        // Remove all occupied houses from nearSet. Then randomly choose houses
+        // from nearSet.
         std::set<House*> getSomeNearHousesSlowerAndRandom (
             House* house,
             double allowableDist,
             std::set<House*> occupied,
             int count
         ) const;
-        int getAddress (int x, int y) const;
+        
+        // Returns the x value of origX minus allowableDist, except if x value
+        // is off the city map, then returns the most west x value on the map.
         int getMinXLine (int origX, int allowableDist) const;
+
+        // Returns the x value of origX plus allowableDist, except if x value
+        // is off the city map, then returns the most east x value on the map.
         int getMaxXLine (int origX, int allowableDist) const;
+
+        // Returns the y value of origY minus allowableDist, except if y value
+        // is off the city map, then returns the most north y value on the map.
         int getMinYLine (int origY, int allowableDist) const;
+
+        // Returns the y value of origY plus allowableDist, except if y value
+        // is off the city map, then returns the most south y value on the map.
         int getMaxYLine (int origY, int allowableDist) const;
+
+        // Returns a random house from @setOfHouses.
         House* selectRandom (std::set<House*>& setOfHouses) const;
-        int selectRandom (std::set<int>& setOfInts) const;
+        
+        // Returns x value of @address
         int get_x (const int& address) const;
+
+        // Returns y value of @address.
         int get_y (const int& address) const;
-    
 
 };
 
