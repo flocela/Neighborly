@@ -75,7 +75,7 @@ std::set<House*> City_Grid::getAdjacentHouses (House* house) const
 	return adjacentHouses;
 }
 
-std::set<House*> City_Grid::getNearHouses (House* house, double allowableDist) const
+std::set<House*> City_Grid::getHousesWithinDistance (House* house, double allowableDist) const
 { 
 	std::set<House*> nearHouses;
 
@@ -110,10 +110,7 @@ int City_Grid::getAddress (int x, int y) const
 	return address;
 }
 
-// May give less than count number of addresses. Maybe area within
-// allowableDistance doesn't hold that many addresses.
-// Resulting set<int> does not include @address.
-std::set<House*> City_Grid::getSomeNearHouses (
+std::set<House*> City_Grid::getNumberOfUnoccupiedNearHouses (
         House* house,
         double allowableDistance,
         std::set<House*> occupied,
@@ -212,7 +209,7 @@ std::set<House*> City_Grid::getSomeNearHousesSlowerAndRandom (
 	std::set<House*> returnedHouses;
 
 	std::set<House*> unoccupiedNearHouses;
-	std::set<House*> nearHouses = getNearHouses(house, allowableDist);
+	std::set<House*> nearHouses = getHousesWithinDistance(house, allowableDist);
 	for ( House* house : nearHouses )
 	{	
 		if (occupied.count(house) == 0)
@@ -284,7 +281,7 @@ int City_Grid::getLargestYCoord () const
 {
 	return _maxY;
 }
-int City_Grid::getLargestHouse () const
+int City_Grid::getLargestAddress () const
 {
 	return _houses[_houses.size()-1]->_address;
 }

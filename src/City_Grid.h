@@ -9,6 +9,47 @@
 
 class City_Grid: public City
 {
+    public:
+    	City_Grid (int width);
+        City_Grid () = delete;
+        City_Grid (const City_Grid& o) = default;
+        City_Grid (City_Grid&& o) noexcept = default;
+        City_Grid& operator= (const City_Grid& o) = default;
+        ~City_Grid () = default;
+
+        int getSize() const override;
+
+        std::vector<House*> getHouses () const override;
+        
+        double dist (
+            const int& from_address, 
+            const int& to_address
+        ) const override;
+
+        std::set<House*> getAdjacentHouses (House* house) const override;
+
+        std::set<House*> getHousesWithinDistance (
+            House* house, 
+            double allowableDist
+        ) const override;
+
+        std::set<House*> getNumberOfUnoccupiedNearHouses (
+            House* house,
+            double allowableDistance,
+            std::set<House*> occupied,
+            int count
+        ) const override;
+        
+        Coordinate getCoordinate (const int& address) const override;
+
+        int getLargestXCoord () const override;
+
+        int getLargestYCoord () const override;
+
+        int getLargestAddress () const override;
+        
+        bool equals(const City_Grid& other) const;
+
     private:
         int _width;
         int _minX = 0;
@@ -57,36 +98,9 @@ class City_Grid: public City
         int getMaxYLine (int origY, int allowableDist) const;
         House* selectRandom (std::set<House*>& setOfHouses) const;
         int selectRandom (std::set<int>& setOfInts) const;
-        
-    public:
-    	City_Grid (int width);
-        City_Grid () = delete;
-        City_Grid (const City_Grid& o) = default;
-        City_Grid (City_Grid&& o) noexcept = default;
-        City_Grid& operator= (const City_Grid& o) = default;
-        ~City_Grid () = default;
-
-        int getSize() const override;
-        std::vector<House*> getHouses () const override;
-        double dist (const int& from_address, const int& to_address) const override;
-        std::set<House*> getAdjacentHouses (House* house) const override;
-
-        // Return all houses that are @allowableDist or less away from @house.
-        // Returned set will not include @house.
-        std::set<House*> getNearHouses (House* house, double allowableDist) const override;
-        std::set<House*> getSomeNearHouses (
-            House* house,
-            double allowableDistance,
-            std::set<House*> occupied,
-            int count
-        ) const override;
-        int get_x (const int& address) const override;
-        int get_y (const int& address) const override;
-        Coordinate getCoordinate (const int& address) const override;
-        int getLargestXCoord () const override;
-        int getLargestYCoord () const override;
-        int getLargestHouse () const override;
-        bool equals(const City_Grid& other) const;
+        int get_x (const int& address) const;
+        int get_y (const int& address) const;
+    
 
 };
 

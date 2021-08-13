@@ -52,7 +52,7 @@ std::map<House*, Resident*> Simulator_E::simulate()
             Resident* curr = _residents[*optionalResIt];
             House* oldHouse = _curr_res_to_house_map[curr];
             std::set<House*> nearOpenHouses = filterForOpenHouses(
-                _city->getNearHouses(
+                _city->getHousesWithinDistance(
                     oldHouse,
                     25
                 )
@@ -323,7 +323,7 @@ House* Simulator_E::findHomeForForcedToMoveResident (
 )
 {   (void) count;
     std::set<House*> occupied = getKeysFromMap(_curr_house_to_res_map);
-    std::set<House*> nearOpenHouses = _city->getNearHouses(
+    std::set<House*> nearOpenHouses = _city->getHousesWithinDistance(
         oldHouse,
         100
     );
@@ -344,7 +344,7 @@ House* Simulator_E::findHomeForOptionalMoveResident (
 )
 {   (void) count;
     std::set<House*> occupied = getKeysFromMap(_curr_house_to_res_map);
-    std::set<House*> nearOpenHouses = _city->getNearHouses(
+    std::set<House*> nearOpenHouses = _city->getHousesWithinDistance(
         oldHouse,
         100
     );
