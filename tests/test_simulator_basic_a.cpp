@@ -62,8 +62,8 @@ TEST_CASE("four runs happy resident stays unhappy resident moves")
     std::map<House*, Resident*> houseToResMap = simulator.simulate();
     std::map<Resident*, House*> resToHouseMap = reverseMap(houseToResMap);
    
-    Coordinate currHappyCoord = city->getCoordinate(resToHouseMap[happyPtr]->_address);
-    Coordinate currUnhappyCoord = city->getCoordinate(resToHouseMap[unhappyPtr]->_address);
+    Coordinate currHappyCoord = city->getCoordinate(resToHouseMap[happyPtr]->getAddress());
+    Coordinate currUnhappyCoord = city->getCoordinate(resToHouseMap[unhappyPtr]->getAddress());
 
     for (int ii=0; ii<4; ++ii)
     {
@@ -71,8 +71,8 @@ TEST_CASE("four runs happy resident stays unhappy resident moves")
         Coordinate pastUnhappyCoord = currUnhappyCoord;
         houseToResMap = simulator.simulate();
         resToHouseMap = reverseMap(houseToResMap);
-        Coordinate currHappyCoord = city->getCoordinate(resToHouseMap[happyPtr]->_address);
-        Coordinate currUnhappyCoord = city->getCoordinate(resToHouseMap[unhappyPtr]->_address);
+        Coordinate currHappyCoord = city->getCoordinate(resToHouseMap[happyPtr]->getAddress());
+        Coordinate currUnhappyCoord = city->getCoordinate(resToHouseMap[unhappyPtr]->getAddress());
         REQUIRE(pastHappyCoord == currHappyCoord);
         REQUIRE(pastUnhappyCoord != currUnhappyCoord);
     }
@@ -129,13 +129,13 @@ TEST_CASE ("2 runs with many residents whose allowable movement is the whole cit
         if (res->getHappiness() < res->getHappinessGoal())
         {   
             unhappyResIDToAddressMapSimZero.insert(
-                std::pair<int, int>(res->getID(), house->_address)
+                std::pair<int, int>(res->getID(), house->getAddress())
             );
         }
         else
         {   
             happyResIDToAddressMapSimZero.insert(
-                std::pair<int, int>(res->getID(), house->_address)
+                std::pair<int, int>(res->getID(), house->getAddress())
             );
         }
     }
@@ -148,7 +148,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is the whole cit
     for (auto h2R: housToResMapSimOne)
     {
         resIDToAddressSimOne.insert(
-            std::pair<int, int>(h2R.second->getID(), h2R.first->_address)
+            std::pair<int, int>(h2R.second->getID(), h2R.first->getAddress())
         );
     }
 
@@ -216,13 +216,13 @@ TEST_CASE ("2 runs with many residents whose allowable movement is zero")
         if (res->getHappiness() < res->getHappinessGoal())
         {   
             unhappyResIDToAddressMapSimZero.insert(
-                std::pair<int, int>(res->getID(), house->_address)
+                std::pair<int, int>(res->getID(), house->getAddress())
             );
         }
         else
         {   
             happyResIDToAddressMapSimZero.insert(
-                std::pair<int, int>(res->getID(), house->_address)
+                std::pair<int, int>(res->getID(), house->getAddress())
             );
         }
     }
@@ -235,7 +235,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is zero")
     for (auto h2R: housToResMapSimOne)
     {
         resIDToAddressSimOne.insert(
-            std::pair<int, int>(h2R.second->getID(), h2R.first->_address)
+            std::pair<int, int>(h2R.second->getID(), h2R.first->getAddress())
         );
     }
 
@@ -302,7 +302,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is 2.0")
         if (res->getHappiness() < res->getHappinessGoal())
         {   
             unhappyResToHousMapSimZero.insert(
-                std::pair<int, int>(res->getID(), house->_address
+                std::pair<int, int>(res->getID(), house->getAddress()
             ));
         }
     }
@@ -315,7 +315,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is 2.0")
     {
         resToHouseMapSimOne.insert(
             std::pair<int, int>(h2R.second->getID(),
-            h2R.first->_address)
+            h2R.first->getAddress())
         );
     }
 

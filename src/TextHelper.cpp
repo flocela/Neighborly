@@ -15,7 +15,7 @@ std::string TextHelper::createText (
     (void) residentPerHouse;
     for (House* h : _city_ptr->getHouses())
     {
-        _city_ptr->getCoordinate(h->_address);
+        _city_ptr->getCoordinate(h->getAddress());
     }
     std::ostringstream s1;
     s1 << "Run/FinalRun: " << run;
@@ -43,8 +43,8 @@ std::string TextHelper::createText (
         Resident* res = residentPerHouse[house];
         s1 << std::setw(3) << res->getID() << ", ";
         s1 << std::setw(5) << colorMap[res->getColor()] << ", ";
-        s1 << std::setw(2) << house->_address << ", ";
-        s1 << std::setw(8) << _city_ptr->getCoordinate(house->_address).toStr() << ", ";
+        s1 << std::setw(2) << house->getAddress() << ", ";
+        s1 << std::setw(8) << _city_ptr->getCoordinate(house->getAddress()).toStr() << ", ";
         s1 << res->getHappiness() << "/";
         s1 << res->getHappinessGoal() << "\n";
     }

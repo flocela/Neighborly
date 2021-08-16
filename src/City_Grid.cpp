@@ -35,16 +35,16 @@ std::vector<House*> City_Grid::getHouses () const
 	return houses;
 }
 
-double City_Grid::dist (const int& from_address, const int& to_address) const
+double City_Grid::dist (const int& fromAddress, const int& toAddress) const
 {
-	double x_dist = fabs( get_x(from_address) - get_x(to_address) );
-	double y_dist = fabs( get_y(from_address) - get_y(to_address));
+	double x_dist = fabs( get_x(fromAddress) - get_x(toAddress) );
+	double y_dist = fabs( get_y(fromAddress) - get_y(toAddress));
   	return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
 }
 
 std::set<House*> City_Grid::getAdjacentHouses (House* house) const
 {
-	int address = house->_address;
+	int address = house->getAddress();
 	int x = get_x(address);
 	int y = get_y(address);
 	int lastIdx_x = _width - 1;
@@ -83,7 +83,7 @@ std::set<House*> City_Grid::getHousesWithinDistance (
 
 	// create box area around @house. Width and height are 2 x allowableDist
 	// and @house is at center.
-	int origAddress = house->_address;
+	int origAddress = house->getAddress();
 	int minX = getMinXLine(get_x(origAddress), allowableDist);
 	int maxX = getMaxXLine(get_x(origAddress), allowableDist);
 	int minY = getMinYLine(get_y(origAddress), allowableDist);
@@ -145,7 +145,7 @@ std::set<House*> City_Grid::getSomeNearHousesFastAndRandom (
 	// Houses that are within boxed area around @house.
 	// Width and height of box are 2 x allowableDist and @house is at center.
 	std::set<House*> boxedHouses;
-	int origAddress = house->_address;
+	int origAddress = house->getAddress();
 	int minX = getMinXLine(get_x(origAddress), allowableDist);
 	int maxX = getMaxXLine(get_x(origAddress), allowableDist);
 	int minY = getMinYLine(get_y(origAddress), allowableDist);
@@ -181,7 +181,7 @@ std::set<House*> City_Grid::getSomeNearHousesFastAndRandom (
 		}
 		House* currHouse = selectRandom(boxedHouses);
 		if ( occupied.count(currHouse) == 0 &&
-			 dist(origAddress, currHouse->_address) <= allowableDist
+			 dist(origAddress, currHouse->getAddress()) <= allowableDist
 		)
 		{	
 			returnedHouses.insert(currHouse);

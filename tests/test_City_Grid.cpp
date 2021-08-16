@@ -17,8 +17,8 @@ TEST_CASE("dist()")
 {   // house[1] is at (0, 1) and house[28] is at (4, 4).
     City_Grid city = City_Grid(6);
     std::vector<House*> houses = city.getHouses();
-    const int a1  = houses[1]->_address;
-    const int a28 = houses[28]->_address;
+    const int a1  = houses[1]->getAddress();
+    const int a28 = houses[28]->getAddress();
     REQUIRE( city.dist(a1, a28) == sqrt( (3 * 3) + (4 * 4) ) );
 }
 
@@ -84,21 +84,21 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1")
     std::set<int> nearAddresses;
     for (House* house :nearHouses)
     {
-        nearAddresses.insert(house->_address);
+        nearAddresses.insert(house->getAddress());
     }
 
     std::set<int> actualNearHouseAddresses = {};
-    actualNearHouseAddresses.insert(houses[18]->_address);
-    actualNearHouseAddresses.insert(houses[24]->_address);
-    actualNearHouseAddresses.insert(houses[25]->_address);
-    actualNearHouseAddresses.insert(houses[31]->_address);
-    actualNearHouseAddresses.insert(houses[26]->_address);
-    actualNearHouseAddresses.insert(houses[20]->_address);
-    actualNearHouseAddresses.insert(houses[21]->_address);
-    actualNearHouseAddresses.insert(houses[14]->_address);
-    actualNearHouseAddresses.insert(houses[7]->_address);
-    actualNearHouseAddresses.insert(houses[13]->_address);
-    actualNearHouseAddresses.insert(houses[12]->_address);
+    actualNearHouseAddresses.insert(houses[18]->getAddress());
+    actualNearHouseAddresses.insert(houses[24]->getAddress());
+    actualNearHouseAddresses.insert(houses[25]->getAddress());
+    actualNearHouseAddresses.insert(houses[31]->getAddress());
+    actualNearHouseAddresses.insert(houses[26]->getAddress());
+    actualNearHouseAddresses.insert(houses[20]->getAddress());
+    actualNearHouseAddresses.insert(houses[21]->getAddress());
+    actualNearHouseAddresses.insert(houses[14]->getAddress());
+    actualNearHouseAddresses.insert(houses[7]->getAddress());
+    actualNearHouseAddresses.insert(houses[13]->getAddress());
+    actualNearHouseAddresses.insert(houses[12]->getAddress());
     
     REQUIRE( nearAddresses == actualNearHouseAddresses );
 }

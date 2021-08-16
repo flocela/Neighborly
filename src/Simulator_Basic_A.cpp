@@ -105,7 +105,7 @@ House* Simulator_Basic_A::selectRandomWithinMovingDist (
     while (setOfHouses.size() > 0)
     {
         House* randomHouse = selectRandom(setOfHouses);
-        if (_city->dist(origHouse->_address, randomHouse->_address) <= allowedMovement)
+        if (_city->dist(origHouse->getAddress(), randomHouse->getAddress()) <= allowedMovement)
             return randomHouse;
         else
             setOfHouses.erase(randomHouse);

@@ -14,9 +14,12 @@ class House
         House& operator= (const House& o) = default;
         ~House () = default;
 
-        int _address;
+        int getAddress () const { return _address; }
         bool operator< (const House& other) const;
         std::string toStr () const;
+
+    private:
+        int _address;
 };
 
 #endif
