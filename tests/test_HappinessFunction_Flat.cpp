@@ -8,7 +8,7 @@ TEST_CASE(
     "HappinessFunc_Flat Constructor throws invalid argument exception"
     "when happiness value is less than 0.0"
 )
-{   std::cout<< "happiness func test" << std::endl;
+{  
     REQUIRE_THROWS_WITH(
         HappinessFunc_Flat(-0.1), 
         Contains("must be between 0.0 and 1.0 inclusive") 

@@ -19,7 +19,6 @@ void Printer_CMDLine::print(
 {   
 
     std::cout << textHelper.createText(residentPerHouse, run, title);
-
     (void) title;
 
 } 

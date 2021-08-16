@@ -54,13 +54,13 @@ TEST_CASE(
 {   
     REQUIRE_THROWS_WITH(
         HappinessFunc_Falling(0.1, 0.9), 
-        Contains("happiness at Zero Diversity must be less than"
-        "value at One Diversity.") 
+        Contains("happinessAtZeroDiversity must be"
+        " larger than happinessAtOneDiversity.") 
     );
 }
 
 TEST_CASE(
-    "HappinessFunc_Falling getHappiness"
+    "HappinessFunc_Falling getHappiness()"
 )
 {
     HappinessFunc_Falling hf{.5, .1};

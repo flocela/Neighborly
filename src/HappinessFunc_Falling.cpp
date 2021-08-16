@@ -13,11 +13,11 @@ HappinessFunc_Falling::HappinessFunc_Falling (double happinessAtZeroPercentDiver
         throw "happiness At Zero Diversity and One Diversity must be "
         "between 0.0 and 1.0 inclusive.";
     }
-    if (_happiness_at_hundred_percent_diversity >
+    if (_happiness_at_hundred_percent_diversity >=
         _happiness_at_zero_percent_diversity)
     {
-        throw "happiness at Zero Diversity must be less than"
-        "value at One Diversity.";
+        throw "happinessAtZeroDiversity must be"
+        " larger than happinessAtOneDiversity.";
     }
 
 }

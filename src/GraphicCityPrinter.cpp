@@ -264,11 +264,6 @@ void GraphicCityPrinter::initYAxisBlocks()
 std::vector<int> GraphicCityPrinter::getUnhappyColor (Color color)
 {
     Color unhappy = unhappyColorMap[color];
-    std::cout << "GPrinter 270 " << colorMap[color] << "  " << colorMap[unhappy] << " ";
-    std::cout << "GraphicCityPrinter 268 " << _the_color_rgba[unhappy][0] << " " <<
-            _the_color_rgba[unhappy][1] << " " <<
-            _the_color_rgba[unhappy][2] << " " <<
-            _the_color_rgba[unhappy][3] << std::endl;
     return _the_color_rgba[unhappy];
 }
 
