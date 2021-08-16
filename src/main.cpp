@@ -53,7 +53,7 @@
 #include "MainBaseQuestion.h"
 #include "SimulationComponents.h"
 #include "MainExamples.h"
-#include "RandSeedMaker_CMDLine.h"
+#include "RandSeedGetter.h"
 
 using std::vector;
 using std::unique_ptr;
@@ -133,8 +133,8 @@ int main(int argc, char* argv[])
     }
     else
     {
-        RandSeedMaker_CMDLine randSeedMaker;
-        randomSeed = randSeedMaker.makeSeedForRand();
+        RandSeedGetter randSeedGetter;
+        randomSeed = randSeedGetter.makeSeedForRand();
         srand(randomSeed);
         CityMaker_CMDLine cityMaker{};
         /*unique_ptr<City> city = cityMaker.makeCity(

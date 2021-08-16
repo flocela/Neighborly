@@ -1,6 +1,6 @@
-#include "RandSeedMaker_CMDLine.h"
+#include "RandSeedGetter.h"
 
-Question_Int RandSeedMaker_CMDLine::createQuestionForSeed ()
+Question_Int RandSeedGetter::createQuestionForSeed ()
 {
     return Question_Int{
         0,
@@ -12,7 +12,7 @@ Question_Int RandSeedMaker_CMDLine::createQuestionForSeed ()
     };
 }
 
-int RandSeedMaker_CMDLine::makeSeedForRand ()
+int RandSeedGetter::makeSeedForRand ()
 {
     Question_Int question = createQuestionForSeed();
     _ui.getAnswer(question);

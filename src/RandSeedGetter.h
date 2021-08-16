@@ -1,11 +1,11 @@
-#ifndef RANDSEEDMAKER_CMDLINE_H
-#define RANDSEEDMAKER_CMDLINE_H
+#ifndef RANDSEEDGETTER_H
+#define RANDSEEDGETTER_H
 
 #include <string>
 #include "Question_Int.h"
 #include "UI_CMDLine.h"
 
-class RandSeedMaker_CMDLine
+class RandSeedGetter
 {
     public:
         int makeSeedForRand ();
