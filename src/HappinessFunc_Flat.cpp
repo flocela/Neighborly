@@ -12,8 +12,8 @@ double HappinessFunc_Flat::getHappiness (
     int num_of_like_neighbors, 
     int num_of_diff_neighbors) const
 {
-    tot_num_of_possible_neighbors++;
-    num_of_like_neighbors++;
-    num_of_diff_neighbors++; // TODO update these unused variables
+    (void) tot_num_of_possible_neighbors;
+    (void) num_of_like_neighbors;
+    (void) num_of_diff_neighbors;
     return _result;
 }

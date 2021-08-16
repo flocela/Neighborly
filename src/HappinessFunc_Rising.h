@@ -16,13 +16,19 @@ class HappinessFunc_Rising: public HappinessFunc
         // hapinessAtOneDiversity is not in range.
         // Exception is thrown if happinessAtZeroDiversity is 
         // larger than happiness at OneDiversity.
-        HappinessFunc_Rising ( double happinessAtZeroDiversity,
-                              double happinessAtOneDiversity);
+        HappinessFunc_Rising ( 
+            double happinessAtZeroDiversity,
+            double happinessAtOneDiversity
+        );
         HappinessFunc_Rising () = delete;
         HappinessFunc_Rising (const HappinessFunc_Rising& obj) = default;
         HappinessFunc_Rising (HappinessFunc_Rising&& obj) noexcept = default;
-        HappinessFunc_Rising& operator=(const HappinessFunc_Rising& obj) = default;
-        HappinessFunc_Rising& operator=(HappinessFunc_Rising&& obj) noexcept = default;
+        HappinessFunc_Rising& operator=(
+            const HappinessFunc_Rising& obj
+        ) = default;
+        HappinessFunc_Rising& operator=(
+            HappinessFunc_Rising&& obj
+        ) noexcept = default;
         ~HappinessFunc_Rising() override = default;  
 
         double getHappiness ( int tot_num_of_possible_neighbors, 

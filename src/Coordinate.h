@@ -13,8 +13,8 @@ class Coordinate
         Coordinate& operator=(const Coordinate& obj) = default;
         Coordinate& operator=(Coordinate&& obj) noexcept = default;
 
-        int getX() const;
-        int getY() const;
+        int getX() const { return _x; };
+        int getY() const { return _y; };
         bool operator<(const Coordinate& a) const;
         std::string toStr() const;
         

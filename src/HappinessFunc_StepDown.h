@@ -18,9 +18,11 @@ class HappinessFunc_StepDown: public HappinessFunc
         // @happinessAtOneDiversity, or @stepDownHappensAt are not in range.
         // An exception is thrown in if @happinessValueAtZeroDiversity is less than
         // or equal to @happinessValueAtOneDiversity.
-        HappinessFunc_StepDown (double happinessAtZeroDiversity, 
-                               double happinessAtOneDiversity, 
-                               double stepDownHappensAt);
+        HappinessFunc_StepDown (
+            double happinessAtZeroDiversity, 
+            double happinessAtOneDiversity, 
+            double stepDownHappensAt
+        );
         HappinessFunc_StepDown () = delete;
         HappinessFunc_StepDown (const HappinessFunc_StepDown& obj) = default;
         HappinessFunc_StepDown (HappinessFunc_StepDown&& obj) noexcept = default;

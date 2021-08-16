@@ -6,11 +6,13 @@
 class HappinessFunc_StepUp: public HappinessFunc
 {
     public:
+        // HappinessFunc_StepUp has an x-axis of Diversity and a y-axis
+        // of Happiness. Both axes range from 0.0 to 1.0.
         // This describes a step function. For example:
         // HappinessFunctionStepUp(.50, .90, .75) makes
-        // a function that stays constant at 0.5 happiness from
+        // a function that stays constant at a happiness value of 0.5 from
         // diversity 0.0 to 0.7499.. 
-        // Then jumps at 0.75 diversity.
+        // Then jumps at 0.75 diversity to a value of 0.9.
         // So it has a constant 0.9 happiness from diversity 0.75 
         // to 1.0.
         HappinessFunc_StepUp (double happinessValue);

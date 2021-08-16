@@ -3,20 +3,6 @@
 Coordinate::Coordinate (int x, int y): _x{x}, _y{y}
 {}
 
-int Coordinate::getX () const
-{
-    return _x;
-}
-
-int Coordinate::getY () const
-{
-    return _y;
-}
-
-std::string Coordinate::toStr() const
-{
-    return "(" + std::to_string(_x) + ", " + std::to_string(_y) + ")";
-}
 
 bool Coordinate::operator< (const Coordinate& a) const
 {
@@ -27,9 +13,14 @@ bool Coordinate::operator< (const Coordinate& a) const
     
 }
 
+std::string Coordinate::toStr() const
+{
+    return "(" + std::to_string(_x) + ", " + std::to_string(_y) + ")";
+}
+
 std::ostream& operator<<(std::ostream& os, Coordinate const& v)
 {
-    os << "(" << v._x << ", " << v._y << ")"; // This needs to be tested
+    os << "(" << v._x << ", " << v._y << ")";
     return os;
 }
 
