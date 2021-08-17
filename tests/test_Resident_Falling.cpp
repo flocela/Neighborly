@@ -147,8 +147,8 @@ TEST_CASE("getHappiness()")
     Resident_Falling greenResident{ 
         0, 
         Color::green, 
-        0.0,  // allowedMovementDistance (doesn't matter)
-        0.25, // happinessGoal (doesn't matter)
+        0.0,  
+        0.0, 
         0.8, // happinessValueAtZeroDiversity
         0.2, // happinessValueAtOneDiversity
     };
@@ -168,8 +168,8 @@ TEST_CASE("Resident_Falling toStrBasic()")
     Resident_Falling greenResident{ 
         1, 
         Color::green, 
-        0.0,  // allowedMovementDistance (doesn't matter)
-        0.25, // happinessGoal (doesn't matter)
+        0.0,  
+        0.25, 
         0.75, // happinessValueAtZeroDiversity
         0.25, // happinessValueAtOneDiversity
     };
