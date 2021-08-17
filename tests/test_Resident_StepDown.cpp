@@ -189,7 +189,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if"
 
 TEST_CASE("getHappiness() returns lowered happinessValue at point where drop happens.")
 {
-    // Note diversity Ratio is 0.25. @diverstiyWhereDropHappens is 0.25.
+    // Note diversity Ratio is 0.25. 
     Resident_StepDown greenResident{ 
         0, 
         Color::green, 
@@ -200,6 +200,7 @@ TEST_CASE("getHappiness() returns lowered happinessValue at point where drop hap
         0.25  // diversityWhereDropHappens
     };
 
+    // @diversityWhereDropHappens is 0.25.
     std::set<Resident*> neighbors = { 
         &greenNeighbor1,
         &greenNeighbor2,
@@ -212,7 +213,7 @@ TEST_CASE("getHappiness() returns lowered happinessValue at point where drop hap
 
 TEST_CASE("getHappiness() returns higher happinessValue before diversity drop.")
 {
-    // Note diversity Ratio is 0.25. @diverstiyWhereDropHappens is 0.5.
+    // Note diversity Ratio is 0.25. 
     Resident_StepDown greenResident{ 
         0, 
         Color::green, 
@@ -223,6 +224,7 @@ TEST_CASE("getHappiness() returns higher happinessValue before diversity drop.")
         0.5   // diversityWhereDropHappens
     };
 
+    // @diversityWhereDropHappens is 0.5.
     std::set<Resident*> neighbors = { 
         &blueNeighbor1,
         &greenNeighbor1,
@@ -235,7 +237,7 @@ TEST_CASE("getHappiness() returns higher happinessValue before diversity drop.")
 
 TEST_CASE("getHappines() returns lower happinessValue afterDiversity drop.")
 {
-    // Note diversity Ratio is 0.25. @diverstiyWhereDropHappens is 0.25.
+    // Note diversity Ratio is 0.25. 
     Resident_StepDown greenResident{ 
         0, 
         Color::green, 
@@ -245,7 +247,8 @@ TEST_CASE("getHappines() returns lower happinessValue afterDiversity drop.")
         0.1,
         0.5
     };
-
+    
+    // @diversityWhereDropHappens is 0.25.
     std::set<Resident*> neighbors = { 
         &blueNeighbor1,
         &blueNeighbor2,
