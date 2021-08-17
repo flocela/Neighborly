@@ -92,6 +92,7 @@ src/Question_Double.cpp
 src/Question.cpp
 src/Resident_Falling.cpp
 src/Resident_Flat.cpp
+src/Resident_Rising.cpp
 src/Resident_StepDown.cpp
 src/Resident_StepUp.cpp
 src/Resident.cpp

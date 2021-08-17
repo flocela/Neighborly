@@ -174,6 +174,6 @@ TEST_CASE("Resident_Falling toStrBasic()")
         0.25, // happinessValueAtOneDiversity
     };
     REQUIRE(greenResident.toStrBasic() == 
-        "Res_Falling(id, clr, mov, goal, hap0, hap1, drop):"
+        "Res_Falling(id, clr, mov, goal, hap0, hap1):"
         " (1, green, 0.000000, 0.250000, 0.750000, 0.250000)");
 }

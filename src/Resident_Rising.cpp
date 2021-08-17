@@ -1,13 +1,14 @@
-#include "Resident_Falling.h"
+#include "Resident_Rising.h"
 #include <iostream>
 
-Resident_Falling::Resident_Falling ( 
+Resident_Rising::Resident_Rising ( 
     int id,
     Color color,
     double allowedMovementDistance,
     double happinessGoal,
     double happinessValueAtZeroDiversity,
-    double happinessValueAtOneDiversity):
+    double happinessValueAtOneDiversity
+    ):
     Resident(id, color, allowedMovementDistance, happinessGoal),
     _happiness_at_zero_diversity(happinessValueAtZeroDiversity),
     _happiness_at_one_diversity(happinessValueAtOneDiversity),
@@ -18,9 +19,9 @@ Resident_Falling::Resident_Falling (
 {
 }
 
-std::string Resident_Falling::toStrBasic() const
+std::string Resident_Rising::toStrBasic() const
 {
-    return "Res_Falling(id, clr, mov, goal, hap0, hap1): (" + 
+    return "Res_Rising(id, clr, mov, goal, hap0, hap1): (" + 
         std::to_string(getID()) +
         ", " + colorMap[getColor()] +
         ", " + std::to_string(getAllowedMovementDistance()) +
@@ -30,7 +31,7 @@ std::string Resident_Falling::toStrBasic() const
         ")"; 
 }
 
-double Resident_Falling::implCalculateHappiness (
+double Resident_Rising::implCalculateHappiness (
     std::set<Resident*> neighbors,
     int numOfAdjacentHouses
 ) const
@@ -50,7 +51,7 @@ double Resident_Falling::implCalculateHappiness (
     return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
 }
 
-House* Resident_Falling::findHome (
+House* Resident_Rising::findHome (
     House* oldHouse,
     std::map<House*, std::set<House*>> openHousesToNeighbors,
     std::map<House*, Resident*> houseToResMap
@@ -62,7 +63,7 @@ House* Resident_Falling::findHome (
     return oldHouse;
 }
 
-House* Resident_Falling::findBestHome (
+House* Resident_Rising::findBestHome (
     House* oldHouse,
     std::map<House*, std::set<House*>> openHousesToNeighbors,
     std::map<House*, Resident*> houseToResMap

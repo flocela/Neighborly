@@ -33,7 +33,6 @@ TEST_CASE("Resident_StepUp Ctor throws exception if happinessGoal is greater tha
         ),
         Contains("must be between 0.0 and 1.0 inclusive") 
     );
-
 }
 
 TEST_CASE("Resident_StepUp Ctor throws exception if happinessGoal is less than 0.0")
