@@ -25,13 +25,13 @@ class Resident_Falling: public Resident
         
         House* findHome(
             House* oldHouse,
-            std::map<House*, std::set<House*>> openHousesToNeighbors,
+            std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
             std::map<House*, Resident*> houseToResMap
         ) const override;
 
         House* findBestHome(
             House* oldHouse,
-            std::map<House*, std::set<House*>> openHousesToNeighbors,
+            std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
             std::map<House*, Resident*> houseToResMap
         ) const override;
 

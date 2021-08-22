@@ -22,10 +22,10 @@ class Resident{
         virtual std::string toStrBasic () const = 0;
 
         int getID() const { return _ID; }
-        virtual Color getColor () const { return _color; };
-        virtual double getAllowedMovementDistance () const { return _allowed_movement_distance; };
-        virtual double getHappinessGoal () const { return _happiness_goal; };
-        virtual double getHappiness () const {return _curr_happiness;};
+        Color getColor () const { return _color; };
+        double getAllowedMovementDistance () const { return _allowed_movement_distance; };
+        double getHappinessGoal () const { return _happiness_goal; };
+        double getHappiness () const  {return _curr_happiness; };
         // neighbors vector includes all possible neighbors, so
         // if a neighbors house is empty, Color::absent should
         // be added to neighbors
@@ -35,12 +35,12 @@ class Resident{
         );
         virtual House* findHome (
             House* oldHouse,
-            std::map<House*, std::set<House*>> openHousesToNeighbors,
+            std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
             std::map<House*, Resident*> houseToResMap // This should be const. Or only send a copy of needed neighbors
         ) const = 0;
         virtual House* findBestHome (
             House* oldHouse,
-            std::map<House*, std::set<House*>> openHousesToNeighbors,
+            std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
             std::map<House*, Resident*> houseToResMap// This should be const. Or only send a copy of needed neighbors
         ) const = 0;
         bool operator< (const Resident& other) const;

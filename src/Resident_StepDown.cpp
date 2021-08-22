@@ -56,24 +56,37 @@ double Resident_StepDown::implCalculateHappiness (
 
 House* Resident_StepDown::findHome(
     House* oldHouse,
-    std::map<House*, std::set<House*>> openHousesToNeighbors,
+    std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
     std::map<House*, Resident*> houseToResMap
 ) const
 {
-    (void) oldHouse;
-    (void) openHousesToNeighbors;
-    (void) houseToResMap;
+    for (auto h2N : openHousesAndTheirAdjacentHouses)
+    {
+        House* currHouse = h2N.first;
+        std::set<House*> setOfAdjHouses = h2N.second;
+        std::set<Resident*> currHouseAdjacentResidents;
+        for (House* nH : setOfAdjHouses)
+        {
+            if (houseToResMap.count(nH) > 0)
+                currHouseAdjacentResidents.insert(houseToResMap.at(nH));
+        }
+        int numOfNeighboringHouses = openHousesAndTheirAdjacentHouses.at(currHouse).size();
+        double happiness = implCalculateHappiness(
+            currHouseAdjacentResidents,
+            numOfNeighboringHouses
+        );
+        if (happiness >= getHappinessGoal())
+            return currHouse;
+    }
+
     return oldHouse;
 }
 
 House* Resident_StepDown::findBestHome(
     House* oldHouse,
-    std::map<House*, std::set<House*>> openHousesToNeighbors,
+    std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
     std::map<House*, Resident*> houseToResMap
 ) const
 {
-    (void) oldHouse;
-    (void) openHousesToNeighbors;
-    (void) houseToResMap;
-    return oldHouse;
+    return findHome(oldHouse, openHousesAndTheirAdjacentHouses, houseToResMap);
 }

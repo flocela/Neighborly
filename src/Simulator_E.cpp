@@ -349,7 +349,6 @@ House* Simulator_E::findHomeForOptionalMoveResident (
         100
     );
     //TODO if closeOpenHouses is empty.
-
     House* newHouse = resident->findBestHome(
         oldHouse,
         getSetsOfNeighbors(nearOpenHouses),
