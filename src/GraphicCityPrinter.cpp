@@ -115,33 +115,32 @@ void GraphicCityPrinter::addTitle()
 void GraphicCityPrinter::addHouses(
     std::map<House *, Resident *> houseToResMap)
 {
-    std::map<std::vector<int>, std::vector<Coordinate>> colorToCoordinates =
+    std::map<Color, std::vector<Coordinate>> colorToCoordinates =
         createVectorsForEachColor(houseToResMap);
     for (auto const &colorToCoord : colorToCoordinates)
     {
-        
         _renderer->addBlocksByColor(
             _house_size__px,
             _house_size__px,
             colorToCoord.second,
-            colorToCoord.first);
+            _the_color_infos[colorToCoord.first].rgba);
     }
 }
 
-std::map<std::vector<int>, std::vector<Coordinate>> GraphicCityPrinter::createVectorsForEachColor(
+std::map<Color, std::vector<Coordinate>> GraphicCityPrinter::createVectorsForEachColor(
     std::map<House *, Resident *> houseToResMap)
 {
-    std::map<std::vector<int>, std::vector<Coordinate>> colorToCoordinatesMap = {};
+    std::map<Color, std::vector<Coordinate>> colorToCoordinatesMap = {};
 
     for (auto const &x : _coord_to_house_map)
     {
         Coordinate coord = x.first;
         House *house = x.second;
-        std::vector<int> colorVector;
+        Color colorKey;
         if (houseToResMap.count(house) == 0)
         {
             // No resident has this address. So this house is empty.
-            colorVector = _the_color_infos[Color::absent].rgba;
+            colorKey = Color::absent;
         }
         else
         {
@@ -149,19 +148,19 @@ std::map<std::vector<int>, std::vector<Coordinate>> GraphicCityPrinter::createVe
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
             if (happinessValue < happinessGoal)
-                colorVector = _the_color_infos[_unhappy_color_map[res->getColor()]].rgba;
+                colorKey = _unhappy_color_map[res->getColor()];
             else
-                colorVector = _the_color_infos[res->getColor()].rgba;
+                colorKey = res->getColor();
         }
-        if (colorToCoordinatesMap.count(colorVector) == 0) // TODO  c++ knows how to do this in one step
+        if (colorToCoordinatesMap.count(colorKey) == 0) // TODO  c++ knows how to do this in one step
         {
             std::vector<Coordinate> newCoordinateVector = {};
-            colorToCoordinatesMap[colorVector] = newCoordinateVector;
+            colorToCoordinatesMap[colorKey] = newCoordinateVector;
         }
         int pixelX = _house_min_x__px + (coord.getX() - _house_min_x__cl) * _cell_size__px - _house_size__px / 2;
         int pixelY = _house_min_y__px + (coord.getY() - _house_min_y__cl) * _cell_size__px - _house_size__px / 2;
         Coordinate pixelCoord{pixelX, pixelY};
-        colorToCoordinatesMap[colorVector].push_back(pixelCoord);
+        colorToCoordinatesMap[colorKey].push_back(pixelCoord);
     }
     return colorToCoordinatesMap;
 }

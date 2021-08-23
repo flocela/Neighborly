@@ -125,7 +125,7 @@ class GraphicCityPrinter
         void addCityYAxis ();
         void addTitle();
         void addHouses (std::map<House*, Resident*> houseToResMap);
-        std::map<std::vector<int>, std::vector<Coordinate>> createVectorsForEachColor (
+        std::map<Color, std::vector<Coordinate>> createVectorsForEachColor (
             std::map<House*, Resident*> houseToResMap
         );
 
