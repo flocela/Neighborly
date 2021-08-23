@@ -20,7 +20,7 @@ class Printer_Graphic : public Printer
             const std::size_t screen_width,
             const std::size_t screen_height,
             City* cityPtr,
-            std::vector<ColorInfo> colorInfos
+            std::set<Color> colors
         );
         Printer_Graphic (const Printer_Graphic& obj) = default;
         Printer_Graphic (Printer_Graphic&& obj) noexcept = default;
@@ -42,7 +42,7 @@ class Printer_Graphic : public Printer
         std::size_t _screen_width;
         std::size_t _screen_height;
         std::unique_ptr<Renderer> _renderer;
-        std::vector<ColorInfo> _color_infos;
+        std::set<Color> _colors;
         std::unique_ptr<GraphicCityPrinter> _city_printer;
         std::unique_ptr<GraphicRunCounterPrinter> _run_counter_printer;
         std::map<Coordinate, House*> _coord_to_house_map = {};

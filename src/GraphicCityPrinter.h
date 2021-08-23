@@ -128,8 +128,6 @@ class GraphicCityPrinter
         std::map<std::vector<int>, std::vector<Coordinate>> createVectorsForEachColor (
             std::map<House*, Resident*> houseToResMap
         );
-        std::vector<int> getUnhappyColor (Color color);
-        std::vector<int> getHappyColor (Color color);
 
         // Initialize the blocks and texts that are used by the renderer to render
         // the axes' lines, ticks, and labels

@@ -6,13 +6,13 @@
 std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents (
     std::vector<ResidentsFactory*> residentsFactories,
     int maxResidentCount,
-    std::vector<ColorInfo> colorInfos // these are the colors that the residents can be.
+    std::set<Color> colors // these are the colors that the residents can be.
 )
 {   
     (void) maxResidentCount;
-    if (colorInfos.size() < 3)
+    if (colors.size() < 3)
         throw std::invalid_argument( "colorInfos must have at least 3 colors.");
-    initColors(colorInfos);
+    initColors(colors);
 
     std::vector<std::unique_ptr<Resident>> residents;
 
@@ -42,13 +42,13 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents
 std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
     std::vector<ResidentsFactory*> residentsFactories,
     int maxResidentCount,
-    std::vector<ColorInfo> colorInfos
+    std::set<Color> colors
 
 )
 {   
-    if (colorInfos.size() < 3)
+    if (colors.size() < 3)
         throw std::invalid_argument( "colorInfos must have at least 3 colors.");
-    initColors(colorInfos);
+    initColors(colors);
     std::vector<std::unique_ptr<Resident>> residents;
 
     int numOfGroups = askForNumOfGroupsOfResidents();
@@ -60,53 +60,53 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
         if (allowedNumOfResidents <= 0)
             break;
         
-        ColorInfo color = askForGroupColor(ii);
+        ColorInfo colorInfo = askForGroupColor(ii);
 
         int numOfResidents = askForNumOfResidents(
             allowedNumOfResidents, 
-            color._my_string
+            colorInfo._my_string
         );
         
         int choice = askForGroupResidentType(
-            color._my_string, 
+            colorInfo._my_string, 
             residentsFactories
         );
 
-        double happinessGoal = askForHappinessGoalForGroup(color._my_string);
+        double happinessGoal = askForHappinessGoalForGroup(colorInfo._my_string);
 
         auto newResidents = residentsFactories[choice]->createResidents(
             _ui,
             numOfResidentsCreated,
             numOfResidents,
             happinessGoal,
-            color._my_color);
+            colorInfo._my_color);
 
         for (auto& r: newResidents)
             residents.emplace_back(std::move(r));
 
         numOfResidentsCreated += newResidents.size();
-        updateAvailableColors(color);
+        updateAvailableColors(colorInfo._my_color);
     }
     
     return residents;
 }
 
-void ResidentsMaker_CMDLine::initColors (std::vector<ColorInfo> colorInfos)
+void ResidentsMaker_CMDLine::initColors (std::set<Color> colors)
 {
-    for (ColorInfo color : colorInfos)
+    for (Color color : colors)
         _available_colors.push_back(color);
 }
 
 ColorInfo ResidentsMaker_CMDLine::askForGroupColor (int groupIdx)
 {
     std::vector<std::string> colorStrings = {};
-    for (ColorInfo color : _available_colors)
-        colorStrings.push_back(color._my_string);
+    for (Color color : _available_colors)
+        colorStrings.push_back(_the_color_Infos[color]._my_string);
 
     std::vector<std::string> number = {" first", " second", " third", " fourth"};
     std::string prompt = _which_group_color_prompt.insert(30, number[groupIdx]);
     int colorIdx = _ui.menu(prompt, colorStrings);
-    return _available_colors[colorIdx];
+    return _the_color_Infos[_available_colors[colorIdx]];
 }
 
 double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (std::string color)
@@ -197,12 +197,12 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupHappiness (std::strin
         _group_happiness_range_prompt};
 }
 
-void ResidentsMaker_CMDLine::updateAvailableColors(ColorInfo color)
+void ResidentsMaker_CMDLine::updateAvailableColors(Color color)
 {
     std::size_t ii = 0;
     for (;ii < _available_colors.size(); ++ii)
     {
-        if (_available_colors[ii]._my_string == color._my_string)
+        if (_available_colors[ii] == color)
             break;
     }
     _available_colors.erase(_available_colors.begin() + static_cast<int>(ii));

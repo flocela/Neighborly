@@ -13,11 +13,11 @@ Printer_Graphic::Printer_Graphic (
     const std::size_t screen_width,
     const std::size_t screen_height,
     City* cityPtr,
-    std::vector<ColorInfo> colorInfos
+    std::set<Color> colors
 ):  _screen_width{screen_width},
     _screen_height{screen_height},
     _renderer{std::make_unique<Renderer>(_screen_width, _screen_height)},
-    _color_infos{colorInfos}
+    _colors{colors}
 {
     initCityCoordinateInfo(cityPtr);
     Coordinate graphOrigin = Coordinate{10, 10};
@@ -98,9 +98,9 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
 void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
 {
     std::map<Color, std::vector<int>> rgbaPerColor;
-    for (ColorInfo colorInfo : _the_color_Infos)
+    for (Color color : _colors)
     {
-        rgbaPerColor[colorInfo._my_color] = colorInfo.rgba;
+        rgbaPerColor[color] = _the_color_Infos[color].rgba;
     }
 
     _city_printer = std::make_unique<GraphicCityPrinter>(

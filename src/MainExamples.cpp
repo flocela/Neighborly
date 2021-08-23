@@ -66,7 +66,7 @@ SimulationComponents MainExamples::userChoosesExample ()
                 components.city.get(),
                 getSetOfPointers(components.residents)
             );
-            components.numOfRuns = 300;
+            components.numOfRuns = 100;
             
             break;
         }

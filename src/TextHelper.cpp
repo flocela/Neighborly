@@ -42,7 +42,7 @@ std::string TextHelper::createText (
     {
         Resident* res = residentPerHouse[house];
         s1 << std::setw(3) << res->getID() << ", ";
-        s1 << std::setw(5) << colorMap[res->getColor()] << ", ";
+        s1 << std::setw(5) << _the_color_Infos[res->getColor()]._my_string << ", ";
         s1 << std::setw(2) << house->getAddress() << ", ";
         s1 << std::setw(8) << _city_ptr->getCoordinate(house->getAddress()).toStr() << ", ";
         s1 << res->getHappiness() << "/";

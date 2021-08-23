@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
         //vector<unique_ptr<Resident>> residents = 
         //    residentsMaker.makeResidents(residentFactoryPointers, city->getSize(), _the_color_Infos);
         residents = 
-            residentsMaker.makeBaseResidents(resFactoryPointers, city->getSize(), _the_color_Infos);
+            residentsMaker.makeBaseResidents(resFactoryPointers, city->getSize(), _base_colors);
     
         std::set<Resident*> residentPtrs = {};
         for (auto& resident: residents)
@@ -172,7 +172,13 @@ int main(int argc, char* argv[])
         houseToResidentMap[resident->getID()] = resident.get();
     }*/
     
-    Printer_Graphic graphicPrinter{4, 1200, 1200, city.get(), _the_color_Infos};
+    std::set<Color> colors;
+    for (auto& resident : residents)
+    {
+        colors.insert(resident->getColor());
+    }
+
+    Printer_Graphic graphicPrinter{4, 1200, 1200, city.get(), colors};
     std::map<House*, Resident*> houseToResidentMap;
     for (int ii=0; ii< numOfRuns; ii++)
     {   

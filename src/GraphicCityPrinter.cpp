@@ -137,11 +137,11 @@ std::map<std::vector<int>, std::vector<Coordinate>> GraphicCityPrinter::createVe
     {
         Coordinate coord = x.first;
         House *house = x.second;
-        std::vector<int> colorKey;
+        std::vector<int> colorVector;
         if (houseToResMap.count(house) == 0)
         {
             // No resident has this address. So this house is empty.
-            colorKey = _rgba_per_color[Color::absent];
+            colorVector = _the_color_Infos[Color::absent].rgba;
         }
         else
         {
@@ -149,19 +149,19 @@ std::map<std::vector<int>, std::vector<Coordinate>> GraphicCityPrinter::createVe
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
             if (happinessValue < happinessGoal)
-                colorKey = getUnhappyColor(res->getColor());
+                colorVector = _the_color_Infos[_unhappy_color_map[res->getColor()]].rgba;
             else
-                colorKey = getHappyColor(res->getColor());
+                colorVector = _the_color_Infos[res->getColor()].rgba;
         }
-        if (colorToCoordinatesMap.count(colorKey) == 0) // TODO  c++ knows how to do this in one step
+        if (colorToCoordinatesMap.count(colorVector) == 0) // TODO  c++ knows how to do this in one step
         {
             std::vector<Coordinate> newCoordinateVector = {};
-            colorToCoordinatesMap[colorKey] = newCoordinateVector;
+            colorToCoordinatesMap[colorVector] = newCoordinateVector;
         }
         int pixelX = _house_min_x__px + (coord.getX() - _house_min_x__cl) * _cell_size__px - _house_size__px / 2;
         int pixelY = _house_min_y__px + (coord.getY() - _house_min_y__cl) * _cell_size__px - _house_size__px / 2;
         Coordinate pixelCoord{pixelX, pixelY};
-        colorToCoordinatesMap[colorKey].push_back(pixelCoord);
+        colorToCoordinatesMap[colorVector].push_back(pixelCoord);
     }
     return colorToCoordinatesMap;
 }
@@ -259,15 +259,4 @@ void GraphicCityPrinter::initYAxisBlocks()
         _y_blocks.push_back(block);
         _y_texts.push_back(tr);
     }
-}
-
-std::vector<int> GraphicCityPrinter::getUnhappyColor (Color color)
-{
-    Color unhappy = unhappyColorMap[color];
-    return _the_color_rgba[unhappy];
-}
-
-std::vector<int> GraphicCityPrinter::getHappyColor (Color color)
-{
-    return _rgba_per_color[color];
 }

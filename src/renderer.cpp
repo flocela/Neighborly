@@ -140,16 +140,6 @@ Renderer::~Renderer() {
   	SDL_Quit();
 }
 
-std::map<Color, ColorInfo> getColorInfo ()
-{
-    std::map<Color, ColorInfo> colorMap = {};
-    for (ColorInfo colorInfo : _the_color_Infos)
-    {
-        colorMap[colorInfo._my_color] = colorInfo;
-    }
-    return colorMap;
-}
-
 void Renderer::setColorToMedGrey ()
 {
     SDL_SetRenderDrawColor(sdl_renderer, 200, 200, 200, 200);

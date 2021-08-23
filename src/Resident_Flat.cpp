@@ -15,7 +15,7 @@ std::string Resident_Flat::toStrBasic () const
 {
     return "Res_Flat(id, clr, mov, goal, hapV): (" + 
         std::to_string(getID()) +
-        ", " + colorMap[getColor()] +
+        ", " + _the_color_Infos[getColor()]._my_string +
         ", " + std::to_string(getAllowedMovementDistance()) +
         ", " + std::to_string(getHappinessGoal()) +
         ", " + std::to_string(_happiness_val) +
