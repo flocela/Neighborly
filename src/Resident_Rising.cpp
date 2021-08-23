@@ -23,7 +23,7 @@ std::string Resident_Rising::toStrBasic() const
 {
     return "Res_Rising(id, clr, mov, goal, hap0, hap1): (" + 
         std::to_string(getID()) +
-        ", " + _the_color_Infos[getColor()]._my_string +
+        ", " + _the_color_infos[getColor()]._my_string +
         ", " + std::to_string(getAllowedMovementDistance()) +
         ", " + std::to_string(getHappinessGoal()) +
         ", " + std::to_string(_happiness_at_zero_diversity) +

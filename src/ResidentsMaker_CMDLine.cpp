@@ -101,12 +101,12 @@ ColorInfo ResidentsMaker_CMDLine::askForGroupColor (int groupIdx)
 {
     std::vector<std::string> colorStrings = {};
     for (Color color : _available_colors)
-        colorStrings.push_back(_the_color_Infos[color]._my_string);
+        colorStrings.push_back(_the_color_infos[color]._my_string);
 
     std::vector<std::string> number = {" first", " second", " third", " fourth"};
     std::string prompt = _which_group_color_prompt.insert(30, number[groupIdx]);
     int colorIdx = _ui.menu(prompt, colorStrings);
-    return _the_color_Infos[_available_colors[colorIdx]];
+    return _the_color_infos[_available_colors[colorIdx]];
 }
 
 double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (std::string color)

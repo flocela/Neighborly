@@ -100,7 +100,7 @@ void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
     std::map<Color, std::vector<int>> rgbaPerColor;
     for (Color color : _colors)
     {
-        rgbaPerColor[color] = _the_color_Infos[color].rgba;
+        rgbaPerColor[color] = _the_color_infos[color].rgba;
     }
 
     _city_printer = std::make_unique<GraphicCityPrinter>(

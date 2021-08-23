@@ -46,7 +46,7 @@ inline std::map<Color, std::vector<int>> _the_color_rgba = {
     {Color::absent,  {128, 128, 128, 255}}
 };
 
-inline std::map<Color, ColorInfo> _the_color_Infos = {
+inline std::map<Color, ColorInfo> _the_color_infos = {
     {Color::red, {Color::red, "red", {255, 0, 0, 255}}},
     {Color::red_sad, {Color::red_sad, "red_sad", {255, 0, 0, 133}}},
     {Color::blue, {Color::blue, "blue", {0, 255, 0, 255}}},

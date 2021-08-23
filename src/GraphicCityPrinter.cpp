@@ -141,7 +141,7 @@ std::map<std::vector<int>, std::vector<Coordinate>> GraphicCityPrinter::createVe
         if (houseToResMap.count(house) == 0)
         {
             // No resident has this address. So this house is empty.
-            colorVector = _the_color_Infos[Color::absent].rgba;
+            colorVector = _the_color_infos[Color::absent].rgba;
         }
         else
         {
@@ -149,9 +149,9 @@ std::map<std::vector<int>, std::vector<Coordinate>> GraphicCityPrinter::createVe
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
             if (happinessValue < happinessGoal)
-                colorVector = _the_color_Infos[_unhappy_color_map[res->getColor()]].rgba;
+                colorVector = _the_color_infos[_unhappy_color_map[res->getColor()]].rgba;
             else
-                colorVector = _the_color_Infos[res->getColor()].rgba;
+                colorVector = _the_color_infos[res->getColor()].rgba;
         }
         if (colorToCoordinatesMap.count(colorVector) == 0) // TODO  c++ knows how to do this in one step
         {
