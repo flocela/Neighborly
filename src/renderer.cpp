@@ -78,6 +78,11 @@ void Renderer::renderText (
         textRect.x = x - textRect.w/2;
         textRect.y = y;
     }
+    else if (centered == 4)
+    {
+        textRect.x = x;
+        textRect.y = y;
+    }
     
     // Draw text
     SDL_RenderCopy(sdl_renderer, text, NULL, &textRect);
@@ -254,6 +259,22 @@ void Renderer::addBlocksByColor(
         SDL_RenderFillRect(sdl_renderer, &block);
     }
 
+}
+
+void Renderer::addBlock (
+	int width, 
+	int height,
+	Coordinate coordinate,
+	std::vector<int> rgba
+	)
+{
+    SDL_Rect block;
+    block.w = width;
+    block.h = height;
+    SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
+    block.x = coordinate.getX();
+    block.y = coordinate.getY();
+    SDL_RenderFillRect(sdl_renderer, &block);
 }
 
 void Renderer::fillBlocks (std::vector<SDL_Rect> blocks)

@@ -97,17 +97,17 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
 
 void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
 {
-    std::map<Color, std::vector<int>> rgbaPerColor;
+    std::set<Color> sadAndHappyColors;
     for (Color color : _colors)
     {
-        rgbaPerColor[color] = _the_color_infos[color].rgba;
+        sadAndHappyColors.insert(color);
+        sadAndHappyColors.insert(_unhappy_color_map[color]);
     }
-
     _city_printer = std::make_unique<GraphicCityPrinter>(
         _renderer.get(),
         _coord_to_house_map,
-        rgbaPerColor,
         graphOrigin,
+        sadAndHappyColors,
         _cell_size,
         _min_x_coord,
         _max_x_coord,

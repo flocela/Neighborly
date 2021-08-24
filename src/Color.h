@@ -47,13 +47,13 @@ inline std::map<Color, std::vector<int>> _the_color_rgba = {
 };
 
 inline std::map<Color, ColorInfo> _the_color_infos = {
-    {Color::red, {Color::red, "red", {255, 0, 0, 255}}},
-    {Color::red_sad, {Color::red_sad, "red_sad", {255, 0, 0, 133}}},
-    {Color::blue, {Color::blue, "blue", {0, 255, 0, 255}}},
-    {Color::blue_sad, {Color::blue_sad, "blue_sad", {0, 255, 0, 125}}},
-    {Color::green, {Color::green, "green", {0, 0, 255, 255}}},
-    {Color::green_sad, {Color::green_sad, "green_sad", {0, 0, 133, 255}}},
-    {Color::absent, {Color::absent, "absent", {128, 128, 128, 255}}}
+    {Color::red, {Color::red, "red_happy", {255, 153, 153, 255}}},
+    {Color::red_sad, {Color::red_sad, "red_sad", {128, 0, 0, 255}}},
+    {Color::blue, {Color::blue, "blue_happy", {153, 204, 255, 255}}},
+    {Color::blue_sad, {Color::blue_sad, "blue_sad", {0, 0, 102, 255}}},
+    {Color::green, {Color::green, "green_happy", {102, 255, 102, 255}}},
+    {Color::green_sad, {Color::green_sad, "green_sad", {0, 102, 0, 255}}},
+    {Color::absent, {Color::absent, "absent", {60, 60, 60, 255}}}
 };
 
 #endif

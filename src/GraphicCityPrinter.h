@@ -17,8 +17,8 @@ class GraphicCityPrinter
         GraphicCityPrinter (
             Renderer* renderer,
             std::map<Coordinate, House*> coordToHouseMap,
-            std::map<Color, std::vector<int>> rgbaPerColor,
             Coordinate chartOrigin,
+            std::set<Color> resColors,
             int gridSize,
             int minX, // minimum x value for a house. (most west house)
             int maxX, // maximum x value for a house. (most east house)
@@ -50,11 +50,13 @@ class GraphicCityPrinter
     private:
         Renderer* _renderer;
         std::map<Coordinate, House*> _coord_to_house_map;
-        std::map<Color, std::vector<int>> _rgba_per_color;
 
         // chartOrigin is top left coordinate of entire chart, including titles.
         // It is a location on the screen in pixels.
         Coordinate _chart_origin__px;
+
+        // This includes sad resident colors and happy resident colors.
+        std::set<Color> _res_colors;
 
         // _cell_size is the spacing between ticks on the x and y axes.
         // It is determined as the size of the house plus the surrounding border
@@ -121,6 +123,8 @@ class GraphicCityPrinter
 
         bool _chart_base_printed = false;
 
+        int count = 0;
+
         void addCityXAxis ();
         void addCityYAxis ();
         void addTitle();
@@ -128,6 +132,7 @@ class GraphicCityPrinter
         std::map<Color, std::vector<Coordinate>> createVectorsForEachColor (
             std::map<House*, Resident*> houseToResMap
         );
+        void addKeyTitles ();
 
         // Initialize the blocks and texts that are used by the renderer to render
         // the axes' lines, ticks, and labels

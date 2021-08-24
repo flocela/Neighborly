@@ -4,8 +4,8 @@
 GraphicCityPrinter::GraphicCityPrinter(
     Renderer *renderer,
     std::map<Coordinate, House *> coordToHouseMap,
-    std::map<Color, std::vector<int>> rgbaPerColor,
     Coordinate chartOrigin,
+    std::set<Color> resColors,
     int gridSize,
     int minX, 
     int maxX,
@@ -20,8 +20,8 @@ GraphicCityPrinter::GraphicCityPrinter(
     int fontSize
     ) : _renderer{renderer},
         _coord_to_house_map{coordToHouseMap},
-        _rgba_per_color{rgbaPerColor},
         _chart_origin__px{chartOrigin},
+        _res_colors{resColors},
         _cell_size__px{gridSize},
         _house_min_x__cl{minX},
         _house_max_x__cl{maxX},
@@ -55,6 +55,7 @@ void GraphicCityPrinter::printCity(std::map<House *, Resident *> houseToResMap)
         addCityXAxis();
         addCityYAxis();
         addTitle();
+        addKeyTitles();
         _chart_base_printed = true;
     }
     addHouses(houseToResMap);
@@ -124,6 +125,28 @@ void GraphicCityPrinter::addHouses(
             _house_size__px,
             colorToCoord.second,
             _the_color_infos[colorToCoord.first].rgba);
+    }
+}
+
+void GraphicCityPrinter::addKeyTitles ()
+{   
+    int x = _chart_origin__px.getX() + (_titles_at_left_offset__px/3);
+    int y = _chart_origin__px.getY() + (_house_max_y__px - _house_min_y__px)/2;
+    
+    for (Color color : _res_colors)
+    {   
+        _renderer->addBlock(
+            _house_size__px,
+            _house_size__px,
+            Coordinate{ x - 20, y + _house_size__px},
+            _the_color_infos[color].rgba
+        );
+        _renderer->setTextFormats(
+        {100, 100, 100, 100},
+        {0xAA, 0xFF, 0xFF, 0xFF},
+        18);
+        _renderer->renderText(x, y, _the_color_infos[color]._my_string, 4);
+        y = y + 40;
     }
 }
 

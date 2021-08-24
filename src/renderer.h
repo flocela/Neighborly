@@ -50,6 +50,13 @@ class Renderer {
 			std::vector<Coordinate> coordinates,
 			std::vector<int> rgba
 		);
+
+		void addBlock (
+			int width, 
+			int height,
+			Coordinate coordinate,
+			std::vector<int> rgba
+		);
 		
  	private:
   		SDL_Window *sdl_window;
@@ -77,7 +84,6 @@ class Renderer {
 			int centered
 		);
 
-		
 };
 
 #endif
