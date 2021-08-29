@@ -6,6 +6,7 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
+#include "XAxisUtility.h"
 
 
 Printer_Graphic::Printer_Graphic (
@@ -33,7 +34,22 @@ void Printer_Graphic::print (
 {   
     (void) title;
     (void) residentPerHouse;
-    _city_printer->printCity(residentPerHouse);
+    XAxisUtility cityXAxisUtility(
+        "xAxis",
+        _renderer.get(),
+        city_cross_hairs_x_px,
+        city_cross_hairs_y_px,
+        _cell_size,
+        _min_x_coord,
+        _max_x_coord,
+        _city_x_axis_offset,
+        _city_x_axis_overrun,
+        10,
+        12,
+        12
+    );
+    cityXAxisUtility.left2RightTop();
+    //_city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
     _renderer->endFrame();
 } 
@@ -113,12 +129,12 @@ void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
         _max_x_coord,
         _min_y_coord,
         _max_y_coord,
-        _x_axis_offset,
-        _y_axis_offset,
-        _x_axis_overrun,
-        _y_axis_overrun,
-        _titles_at_left_offset,
-        _titles_at_top_offset,
+        _city_x_axis_offset,
+        _city_y_axis_offset,
+        _city_x_axis_overrun,
+        _city_y_axis_overrun,
+        240,
+        80,
         _axis_font_size
     );
 }

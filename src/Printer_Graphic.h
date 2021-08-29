@@ -47,6 +47,12 @@ class Printer_Graphic : public Printer
         std::unique_ptr<GraphicRunCounterPrinter> _run_counter_printer;
         std::map<Coordinate, House*> _coord_to_house_map = {};
 
+        // COMMON TO ALL CHARTS //
+        const int _axis_font_size = 20;
+
+
+        // MAP OF HOUSES IN CITY //
+
         // Each house is inside of a square cell. The cell 
         // will hold a house (represented by a colored square) and have
         // clear border around the house.
@@ -54,30 +60,30 @@ class Printer_Graphic : public Printer
         int _house_size; // pixels for colored square house
 
         // House coordinates from the city, not in pixels.
-        int _min_x_coord = INT32_MAX; // top left corner of grid
+        int _min_x_coord = INT32_MAX; // top left corner of grid 
 		int _min_y_coord = INT32_MAX; // top left corner of grid
 		int _max_x_coord = INT32_MIN; // bottom right corner of grid
 		int _max_y_coord = INT32_MIN; // bottom right corner of grid
 
 		// x-axis is vertically offset from origin by x-axis-offset
-		const int _x_axis_offset = 10;
+		const int _city_x_axis_offset = 10;
 
         // y-axis is vertically offset from origin by y-axis-offset
-		const int _y_axis_offset = 10;
+		const int _city_y_axis_offset = 10;
 
 		// x-axis overruns its data by x_axis_overrun
-		const int _x_axis_overrun = 0;
+		const int _city_x_axis_overrun = 0;
 
         // y-axis overruns its data by y_axis_overrun
-		const int _y_axis_overrun = 0;
+		const int _city_y_axis_overrun = 0;
 
-        // _titles_at_left_offset and _titles_at_top_offset is room given for titles at top
-        // and left of the graph.
-        // _axis_font_size is for x and y axes.
-        const int _titles_at_left_offset = 240;
-        const int _titles_at_top_offset = 80;
-        const int _axis_font_size = 20;
+        // location where x-y axes meet in pixels.
+        const int city_cross_hairs_x_px = 240;
+        const int city_cross_hairs_y_px = 80;
+        
 
+        // NUMBER OF RUNS COUNTER // 
+        
         // x and y offsets for title displaying number of runs so far.
         const int _x_num_of_runs_offset = 80;
         const int _y_num_of_runs_offset = 80;
