@@ -1,5 +1,5 @@
-#ifndef X_AXIS_UTILITY_H
-#define X_AXIS_UTILITY_H
+#ifndef Y_DOWN_AXIS_UTILITY_H
+#define Y_DOWN_AXIS_UTILITY_H
 
 #include <string>
 #include "renderer.h"
@@ -8,28 +8,28 @@
 #include <memory>
 
 
-class XAxisUtility
+class YDownAxisUtility
 {
     public:
-        XAxisUtility (
+        YDownAxisUtility (
             std::string title,
             Renderer* renderer,
             int x_coordinate__px, // where x and y axis meet
             int y_coordinate__px, // where x and y axis meet
             int cell_size__px,    // one unit size in pixels
-            int minVal, // min value delineated with tick. It is startOffset__px from the start of axis.
-            int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal.
-            int startOffset__px, // minVal is offset from start of axis by startOffset__px pixels.
-            int endOffset__px, // axis continues past maxVal for endOffset__px pixels.
+            int minVal, // min value delineated with tick. Located startOffset__px from the start of axis.
+            int maxVal, // max value delineated with tick. Axis continues for endOffset__px number of pixels afer maxVal.
+            int startOffset__px, // minVal is offset from start of axis by startOffset__px number pixels.
+            int endOffset__px, // axis continues past maxVal for endOffset__px number of pixels.
             int tickSpacing,  // in units, not pixels
             int labelSpacing, // in units, not in pixels.
             int labelFontSize,
             int titleFontSize
         );
-        // Renders axis from left to right with title at top (used for horizontal axes).
-        void left2RightTitleOnTop ();
 
-    
+        // Renders axis from bottom to top, title is on left side (used for vertical axes).
+        void top2BottomTitleOnLeft ();
+
     private:
         std::string _title;
         Renderer* _renderer;
@@ -38,21 +38,21 @@ class XAxisUtility
         int _cell_size__px;
         int _min_val;
         int _max_val;
-        int _start_offset__px; //offset before minimum value in pixels
-        int _end_offset__px;   //overrun after maximum value in pixels
+        int _start_offset__px; // the number of pixels before the minimum value
+        int _end_offset__px;   // the number of pixels after the maximum value
         int _tick_spacing;
         int _label_spacing;
         int _label_font_size;
         int _title_font_size;
-        int _title_placement_from_axis = 34;
-        
+        int _title_placement_from_axis = 50;
+
         std::unique_ptr<PixelConverter> _pc;
-        int _left_most_pixel;
-        int _right_most_pixel;
+        int _top_most_pixel;
+        int _bottom_most_pixel;
         int _min_val__px;
         int _max_val__px; 
         int _tick_width__px;
-        int _tick_height__px = 4;
+        int _tick_length__px = 4;
         
 };
 

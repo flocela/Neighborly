@@ -7,6 +7,7 @@
 #include <chrono>
 #include <iostream>
 #include "XAxisUtility.h"
+#include "YDownAxisUtility.h"
 
 
 Printer_Graphic::Printer_Graphic (
@@ -20,7 +21,8 @@ Printer_Graphic::Printer_Graphic (
     _renderer{std::make_unique<Renderer>(_screen_width, _screen_height)},
     _colors{colors}
 {
-    initCityCoordinateInfo(cityPtr);
+    initCityInfo(cityPtr);
+    initCityMapInfo();
     Coordinate graphOrigin = Coordinate{10, 10};
     initCityPrinter(graphOrigin);
     initRunCounterPrinter(maxNumOfRuns);
@@ -42,13 +44,34 @@ void Printer_Graphic::print (
         _cell_size,
         _min_x_coord,
         _max_x_coord,
-        _city_x_axis_offset,
-        _city_x_axis_overrun,
-        10,
-        12,
-        12
+        _city_x_axis_offset__px,
+        _city_x_axis_overrun__px,
+        _city_tick_spacing_x,
+        _city_label_spacing_x,
+        _axis_label_font_size,
+        _axis_title_font_size
     );
-    cityXAxisUtility.left2RightTop();
+    cityXAxisUtility.left2RightTitleOnTop();
+
+    YDownAxisUtility cityYAxisUtility(
+        "yAxis",
+        _renderer.get(),
+        city_cross_hairs_x_px,
+        city_cross_hairs_y_px,
+        _cell_size,
+        _min_y_coord,
+        _max_y_coord,
+        _city_y_axis_offset__px,
+        _city_y_axis_overrun__px,
+        _city_tick_spacing_y,
+        _city_label_spacing_y,
+        _axis_label_font_size,
+        _axis_title_font_size
+    );
+
+    cityYAxisUtility.top2BottomTitleOnLeft();
+
+
     //_city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
     _renderer->endFrame();
@@ -68,7 +91,7 @@ void Printer_Graphic::keepScreen()
     }
 }
 
-void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
+void Printer_Graphic::initCityInfo(City* cityPtr)
 {
     std::vector<House*> houses = cityPtr->getHouses();
     for (House* house : houses)
@@ -84,36 +107,41 @@ void Printer_Graphic::initCityCoordinateInfo(City* cityPtr)
         if (coord.getY() < _min_y_coord)
             _min_y_coord = coord.getY();
     }
+}
 
+void Printer_Graphic::initCityMapInfo ()
+{
     // Evenly divide houses among half the screen. 
     // Each house will be surrounded by a border and be inside one cell. 
     int deltaX = _max_x_coord - _min_x_coord;
     int deltaY = _max_y_coord - _min_y_coord;
     _cell_size = _screen_width/2/(std::max(deltaX, deltaY));
 
-    // _cell_size will be even to simplify the math.
-    _cell_size = (_cell_size % 2 != 0) ? _cell_size -1 : _cell_size;
-
-    // Limit _cell_size so the squares don't appear to big (personal aesthetics).
-    _cell_size = (_cell_size > 20) ? 20 : _cell_size;
-
     // Limit _cell_size. Cells required to be 4 pixels at least or too small to see.
-    if (_cell_size <= 3)
+    if (_cell_size < 4)
+    {
         throw (
             "Can not print a city graph with so many houses. Maximum number of houses"
              " per side is 150."
         );
+    }
 
-    _house_size = _cell_size/2;
+    // Limit _cell_size so the squares don't appear to big.
+    _cell_size = (_cell_size > 20) ? 20 : _cell_size;
+    
+    // House must be at center of cell. // TODO may not need _house_size
+    _house_size = (_cell_size % 2 == 0) ? (_cell_size/2) : ( (_cell_size/2) + 1);
 
-    // _cell_size will be even to simplify the math.
-    if (_house_size % 2 != 0)
-        _house_size++;
+    _city_tick_spacing_x = findTickSpacing(deltaX);
+    _city_label_spacing_x = findLabelSpacing(deltaX);
+    _city_tick_spacing_y = findTickSpacing(deltaY);
+    _city_label_spacing_y = findLabelSpacing(deltaY);
+
 }
 
 void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
-{
-    std::set<Color> sadAndHappyColors;
+{ (void) graphOrigin;
+    /*std::set<Color> sadAndHappyColors;
     for (Color color : _colors)
     {
         sadAndHappyColors.insert(color);
@@ -129,14 +157,14 @@ void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
         _max_x_coord,
         _min_y_coord,
         _max_y_coord,
-        _city_x_axis_offset,
-        _city_y_axis_offset,
-        _city_x_axis_overrun,
-        _city_y_axis_overrun,
+        _city_x_axis_offset__px,
+        _city_y_axis_offset__px,
+        _city_x_axis_overrun__px,
+        _city_y_axis_overrun__px,
         240,
         80,
         _axis_font_size
-    );
+    );*/
 }
 
 void Printer_Graphic::initRunCounterPrinter (int maxNumOfRuns)
@@ -147,3 +175,14 @@ void Printer_Graphic::initRunCounterPrinter (int maxNumOfRuns)
         _y_num_of_runs_offset,
         maxNumOfRuns );
 }
+
+int Printer_Graphic::findTickSpacing (int stretch)
+{
+    return (stretch <= 100)? 1 : 5;
+}
+
+int Printer_Graphic::findLabelSpacing (int stretch)
+{
+    return (stretch <= 10)? 1 : 10;
+}
+

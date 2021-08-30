@@ -12,3 +12,8 @@ int PixelConverter::getPixel(int value)
     int diff = value - _min_val;
     return _min_pixel + (diff * _cell_size__px);
 }
+
+int PixelConverter::getValue(int pixel)
+{
+    return _min_val + ( ( pixel - _min_pixel ) /_cell_size__px );
+}
