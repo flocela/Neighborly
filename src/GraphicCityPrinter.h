@@ -7,19 +7,38 @@
 #include "Resident.h"
 #include <vector>
 #include "House.h"
+#include "XAxisUtility.h"
+#include "YDownAxisUtility.h"
+#include <memory>
 
-// Takes in a Renderer and city chart origin and offsets.
+// Takes in a Renderer* and necessary settings to draw the city chart.
 // Remembers this initializing information so user can 
 // easily print city houses using city coordinates.
+
+// The x and y axes cross at the _chart_origin.
+// The x axes length is
+// (maxX - minX) * cellSize + xAxisOffset + xAxisOverrun.
+// The y axes length is 
+// (maxY - minY) * cellSize + yAxisOffset + yAxisOverrun.
+// Allow 300 pixels to the left of x-axis for the axis labels and
+// the chart's key.
+// Allow 100 pixels above the y axis for the y-axis labels and the chart title.
 class GraphicCityPrinter
 {
     public:
         GraphicCityPrinter (
             Renderer* renderer,
             std::map<Coordinate, House*> coordToHouseMap,
-            Coordinate chartOrigin,
+            int crossHairsX,
+            int crossHairsY,
             std::set<Color> resColors,
-            int gridSize,
+            int cellSize,
+            int tickSpacingX,
+            int tickSpacingY,
+            int tickWidthPx,
+            int axesWidthPx,
+            int labelSpacingX,
+            int labelSpacingY,
             int minX, // minimum x value for a house. (most west house)
             int maxX, // maximum x value for a house. (most east house)
             int minY, // minimum y value for a house. (most north house)
@@ -32,11 +51,9 @@ class GraphicCityPrinter
             int xAxisOverrun,
             // extra length of y-axis after most west house in pixels.
             int yAxisOverrun,
-            // space for titles to the left of y-axis in pixels.
-            int titlesAtLeftOffset,
-            // space for titles above the y-axis in pixels.
-            int titlesAtTopOffset,
-            int fontSize
+            int fontSizeTickLabels,
+            int fontSizeKeyLabels,
+            int fontSizeTitle
         );
 
         void printCity (std::map<House*, Resident*> houseToResMap);
@@ -51,9 +68,9 @@ class GraphicCityPrinter
         Renderer* _renderer;
         std::map<Coordinate, House*> _coord_to_house_map;
 
-        // chartOrigin is top left coordinate of entire chart, including titles.
-        // It is a location on the screen in pixels.
-        Coordinate _chart_origin__px;
+        // The coordinate where x and y axes cross on the screen in pixels.
+        int _cross_hairs_x__px;
+        int _cross_hairs_y__px;
 
         // This includes sad resident colors and happy resident colors.
         std::set<Color> _res_colors;
@@ -67,28 +84,30 @@ class GraphicCityPrinter
         // colored part of the cell in pixels. It does not include the border.
         int _house_size__px;
 
-        // The coordinate where x and y axes cross on the screen in pixels.
-        int _cross_hairs_x__px;
-        int _cross_hairs_y__px;
+        
 
-        // minimum x value for a house using map coordinates. (most west house)
-        int _house_min_x__cl;
-        // maximum x value for a house using map coordinates. (most east house)
-        int _house_max_x__cl;
-        // minimum y value for a house using map coordinates. (most north house)
-        int _house_min_y__cl;
-        // maximum y value for a house using map coordinates. (most south house) 
-        int _house_max_y__cl;
+        // tick spacing on axes.
+        int _tick_spacing_x;
+        int _tick_spacing_y;
 
-        // These are taken at the center of the house.
-        // minimum x value for a house in pixels. (most west house)
-        int _house_min_x__px;
-        // maximum x value for a house in pixels. (most east house)
-        int _house_max_x__px;
-        // minimum y value for a house in pixels. (most north house)
-        int _house_min_y__px;
-        // maximum y value for a house in pixels. (most south house)
-        int _house_max_y__px;
+        // tick width in pixels.
+        int _tick_width__px;
+
+        // The width of the ticks along the axes. Same for x and y axes.
+        int _axes_width__px;
+
+        // label spacing on axes.
+        int _label_spacing_x;
+        int _label_spacing_y;
+
+        // min x value for a house using map values not pixels. (most west house)
+        int _house_min_x;
+        // max x value for a house using map values not pixels. (most east house)
+        int _house_max_x;
+        // min y value for a house using map values not pixels. (most north house)
+        int _house_min_y;
+        // max y value for a house using map values not pixels. (most south house) 
+        int _house_max_y;
 
         // _x_axis_offset__pixel exists so houses do not lie on the y-axis.
         // Instead of the chart's min x value being _house_min_x__px (the
@@ -102,16 +121,30 @@ class GraphicCityPrinter
         int _x_axis_overrun__px;
         int _y_axis_overrun__px;
 
+        // These are taken at the center of the house.
+        // minimum x value for a house in pixels. (most west house)
+        int _house_min_x__px;
+        // maximum x value for a house in pixels. (most east house)
+        int _house_max_x__px;
+        // minimum y value for a house in pixels. (most north house)
+        int _house_min_y__px;
+        // maximum y value for a house in pixels. (most south house)
+        int _house_max_y__px;
+
         // titlesAtTopOffset and titlesLeftOffset is room given for titles at top
         // and left of the graph.
         int _titles_at_left_offset__px;
         int _titles_at_top_offset__px;
 
-        // The width of the ticks along the axes. Same for x and y axes.
-        int _axis_tick_width__px = 2;
+        // fontSizes
+        int _font_size_axes_tick_labels;
+        int _font_size_key; 
+        int _font_size_title;
+        
 
-        // fontSize is for x and y axes.
-        int _font_size;
+        // Axes
+        std::unique_ptr<XAxisUtility> _x_axis_utility;
+        std::unique_ptr<YDownAxisUtility> _y_axis_utility;
 
         // _x_blocks and _y_blocks hold the axes lines and the ticks on the lines.
         std::vector<SDL_Rect> _x_blocks = {};

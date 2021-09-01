@@ -17,8 +17,8 @@ class Printer_Graphic : public Printer
         Printer_Graphic() = delete;
         Printer_Graphic (
             int maxNumOfRuns,
-            const std::size_t screen_width,
-            const std::size_t screen_height,
+            const int screen_width,
+            const int screen_height,
             City* cityPtr,
             std::set<Color> colors
         );
@@ -41,8 +41,17 @@ class Printer_Graphic : public Printer
 
         // COMMON TO ALL CHARTS //
 
-        std::size_t _screen_width;
-        std::size_t _screen_height;
+        int _screen_width;
+        int _screen_height;
+        int _window_title__px = 100; // space for title at top of screen
+        int _bottom_border__px = 20; // space for border at top of screen
+        int _left_border__px = 10; // space for border at left of screen
+        int _right_border__px = 10; // space for border at right of screen
+        int _writable_horiz_length__px; // space allotted for all charts
+        int _writable_vert_length__px; // space allotted for all charts
+        int _map_writable_vert_length__px;
+        int _hapiness_chart_writable_vert_length__px;
+        int _diversity_chart_writable_vert_length__px;
         std::unique_ptr<Renderer> _renderer;
         std::set<Color> _colors;
         std::map<Coordinate, House*> _coord_to_house_map = {};
@@ -52,6 +61,8 @@ class Printer_Graphic : public Printer
 
         const int _axis_title_font_size = 20;
         const int _axis_label_font_size = 12;
+        const int _sub_title_font_size = 18;
+        const int _key_font_size = 12;
 
 
         // MAP OF HOUSES IN CITY //
@@ -64,9 +75,11 @@ class Printer_Graphic : public Printer
         int _city_tick_spacing_x; // tick spacing on x axis
         int _city_tick_spacing_y; // tick spacing on y axis
         int _city_label_spacing_x; // label spacing on x axis
-        int _city_label_spacing_y; // lable spacing on y axis
+        int _city_label_spacing_y; // label spacing on y axis
+        int _city_tick_width__px;
+        int _city_axis_width__px;
 
-        // House coordinates from the city, not in pixels.
+        // House coordinates from the city, not in pixels. // TODO maybe move this to COMMON TO ALL CHARTS
         int _min_x_coord = INT32_MAX; // top left corner of grid 
 		int _min_y_coord = INT32_MAX; // top left corner of grid
 		int _max_x_coord = INT32_MIN; // bottom right corner of grid
@@ -85,8 +98,8 @@ class Printer_Graphic : public Printer
 		const int _city_y_axis_overrun__px = 10;
 
         // location where x-y axes meet in pixels.
-        const int city_cross_hairs_x_px = 300;
-        const int city_cross_hairs_y_px = 100;
+        int _city_cross_hairs_x__px;
+        int _city_cross_hairs_y__px;
         
 
         // NUMBER OF RUNS COUNTER // 
