@@ -49,7 +49,7 @@ GraphicCityPrinter::GraphicCityPrinter(
         _font_size_key{fontSizeKeyLabels},
         _font_size_title{fontSizeTitle}
         
-{
+{   std::cout << "GraphicCityPrinter home_min_y: " << _house_min_y <<std::endl;
     _pixel_converter_x = std::make_unique<PixelConverter>(
         _house_min_x,
         _cross_hairs_x__px + _x_axis_offset__px,
@@ -60,8 +60,14 @@ GraphicCityPrinter::GraphicCityPrinter(
         _cross_hairs_y__px + _y_axis_offset__px,
         _cell_size__px
     );
+
+    _house_min_x__px = _pixel_converter_x->getPixel(_house_min_x);
+    _house_min_y__px = _pixel_converter_y->getPixel(_house_min_y);
+    _house_max_x__px = _pixel_converter_x->getPixel(_house_max_x);
+    _house_max_y__px = _pixel_converter_x->getPixel(_house_max_y);
     _house_size__px = (_cell_size__px % 2 == 0) ? 
         _cell_size__px / 2 : _cell_size__px / 2 + 1;
+
     // TODO may not be necessary to have overrun larger than cell size. House will 
     // fit into allotted size of axis.
     //_x_axis_overrun__px = (_x_axis_overrun__px < _cell_size__px)? _cell_size__px : _x_axis_overrun__px;
@@ -76,7 +82,7 @@ void GraphicCityPrinter::printCity(std::map<House *, Resident *> houseToResMap)
 {  (void) houseToResMap;
     _x_axis_utility->left2RightTitleOnTop();
     _y_axis_utility->top2BottomTitleOnLeft();
-    addHouses(houseToResMap);
+    printHouses(houseToResMap);
 }
 
 void GraphicCityPrinter::addCityXAxis()
@@ -118,17 +124,18 @@ void GraphicCityPrinter::addCityYAxis()
 }
 
 void GraphicCityPrinter::addTitle()
-{
+{   
     int x = _cross_hairs_x__px - _titles_at_left_offset__px;
-    int y = _cross_hairs_y__px + (_house_max_y__px - _house_min_y__px) / 5;
+    // Place Title a little below top of map (divide by 20).
+    int y = _cross_hairs_y__px + (_house_max_y__px - _house_min_y__px) / 20;
     _renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
         24);
-    _renderer->renderText(x, y, "City Map", 3);
+    _renderer->renderText(x, y, "City Map", 4);
 }
 
-void GraphicCityPrinter::addHouses(
+void GraphicCityPrinter::printHouses(
     std::map<House *, Resident *> houseToResMap)
 {
     std::map<Color, std::vector<Coordinate>> colorToCoordinates =

@@ -125,6 +125,7 @@ class GraphicCityPrinter
         int _x_axis_overrun__px;
         int _y_axis_overrun__px;
 
+        // TODO are these _house_min _max __px values used?
         // These are taken at the center of the house.
         // minimum x value for a house in pixels. (most west house)
         int _house_min_x__px;
@@ -165,7 +166,7 @@ class GraphicCityPrinter
         void addCityXAxis ();
         void addCityYAxis ();
         void addTitle();
-        void addHouses (std::map<House*, Resident*> houseToResMap);
+        void printHouses (std::map<House*, Resident*> houseToResMap);
         std::map<Color, std::vector<Coordinate>> createVectorsForEachColor (
             std::map<House*, Resident*> houseToResMap
         );
