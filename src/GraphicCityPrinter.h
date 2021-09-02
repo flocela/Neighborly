@@ -10,6 +10,7 @@
 #include "XAxisUtility.h"
 #include "YDownAxisUtility.h"
 #include <memory>
+#include "PixelConverter.h"
 
 // Takes in a Renderer* and necessary settings to draw the city chart.
 // Remembers this initializing information so user can 
@@ -65,8 +66,11 @@ class GraphicCityPrinter
     // (10, 10) and (20, 10) on the screen. That would be using the screen
     // coordinate system in pixels.
     private:
+        std::string _main_title = "City Map";
         Renderer* _renderer;
         std::map<Coordinate, House*> _coord_to_house_map;
+        std::unique_ptr<PixelConverter> _pixel_converter_x;
+        std::unique_ptr<PixelConverter> _pixel_converter_y;
 
         // The coordinate where x and y axes cross on the screen in pixels.
         int _cross_hairs_x__px;
@@ -133,8 +137,8 @@ class GraphicCityPrinter
 
         // titlesAtTopOffset and titlesLeftOffset is room given for titles at top
         // and left of the graph.
-        int _titles_at_left_offset__px;
-        int _titles_at_top_offset__px;
+        int _titles_at_left_offset__px = 290;
+        int _titles_at_top_offset__px = 80;
 
         // fontSizes
         int _font_size_axes_tick_labels;
@@ -165,7 +169,7 @@ class GraphicCityPrinter
         std::map<Color, std::vector<Coordinate>> createVectorsForEachColor (
             std::map<House*, Resident*> houseToResMap
         );
-        void addKeyTitles ();
+        void addLegend ();
 
         // Initialize the blocks and texts that are used by the renderer to render
         // the axes' lines, ticks, and labels

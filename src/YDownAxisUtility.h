@@ -14,12 +14,12 @@ class YDownAxisUtility
         YDownAxisUtility (
             std::string title,
             Renderer* renderer,
+            PixelConverter* pixelConverter,
             int x_coordinate__px, // where x and y axis meet
             int y_coordinate__px, // where x and y axis meet
             int cell_size__px,    // one unit size in pixels
             int minVal, // min value delineated with tick. Located startOffset__px from the start of axis.
             int maxVal, // max value delineated with tick. Axis continues for endOffset__px number of pixels afer maxVal.
-            int startOffset__px, // minVal is offset from start of axis by startOffset__px number pixels.
             int endOffset__px, // axis continues past maxVal for endOffset__px number of pixels.
             int tickSpacing,  // in units, not pixels
             int labelSpacing, // in units, not in pixels.
@@ -33,6 +33,7 @@ class YDownAxisUtility
     private:
         std::string _title;
         Renderer* _renderer;
+        PixelConverter* _pc;
         int _x_coord__px;
         int _y_coord__px;
         int _cell_size__px;
@@ -46,7 +47,6 @@ class YDownAxisUtility
         int _title_font_size;
         int _title_placement_from_axis = 50;
 
-        std::unique_ptr<PixelConverter> _pc;
         int _top_most_pixel;
         int _bottom_most_pixel;
         int _min_val__px;

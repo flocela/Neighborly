@@ -37,7 +37,7 @@ SimulationComponents MainExamples::userChoosesExample ()
         //     Unhappy if 25% or more neighbors are different from themselves.
         case 1:
         {
-            components.city = std::make_unique<City_Grid>(150);
+            components.city = std::make_unique<City_Grid>(151);
             for (int ii=0; ii<200; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(

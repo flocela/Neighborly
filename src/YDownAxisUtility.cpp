@@ -4,12 +4,12 @@
 YDownAxisUtility::YDownAxisUtility (
     std::string title,
     Renderer* renderer,
+    PixelConverter* pixelConverter,
     int x_coordinate__px,
     int y_coordinate__px,
     int cellSize__px,
     int minVal,
     int maxVal,
-    int startOffset__px,
     int endOffset__px,
     int tickSpacing,
     int labelSpacing,
@@ -17,12 +17,12 @@ YDownAxisUtility::YDownAxisUtility (
     int titleFontSize
 ) : _title{title},
     _renderer{renderer},
+    _pc{pixelConverter},
     _x_coord__px{x_coordinate__px},
     _y_coord__px{y_coordinate__px},
     _cell_size__px{cellSize__px},
     _min_val{minVal},
     _max_val{maxVal},
-    _start_offset__px{startOffset__px},
     _end_offset__px{endOffset__px},
     _tick_spacing{tickSpacing},
     _label_spacing{labelSpacing},
@@ -31,15 +31,8 @@ YDownAxisUtility::YDownAxisUtility (
 {
     // set _top_most_pixel and _bottom_most_pixel
     _top_most_pixel = _y_coord__px;
+    _bottom_most_pixel = _pc->getPixel(_max_val) + _end_offset__px;
 
-    _min_val__px = _top_most_pixel + _start_offset__px;
-    _pc = std::make_unique<PixelConverter>(_min_val, _min_val__px, _cell_size__px);
-
-    _max_val__px = _pc->getPixel(_max_val);
-    _bottom_most_pixel = _max_val__px + _end_offset__px;
-
-    // To sit at center tick width must be 1 if cell size is odd, 
-    // 2 if cell size is even.
     _tick_width__px = (_cell_size__px % 2 == 0) ? 2 : 1;
 
 }
@@ -80,14 +73,16 @@ void YDownAxisUtility::top2BottomTitleOnLeft ()
             std::string label = std::to_string(currValue);
             tr = {rect.x - 4, currValue__px, label, 2};
             texts.push_back(tr);
+            rects.push_back(rect);
         }
-        else
+        else if (currValue % _tick_spacing == 0)
         {
             rect.w = _tick_length__px;
             rect.x = _x_coord__px - ( _tick_length__px / 2 );
+            rects.push_back(rect);
         }
-        rects.push_back(rect);
-        currValue += _tick_spacing;
+        
+        ++currValue;
     }
    
     _renderer->setColorToMedGrey();

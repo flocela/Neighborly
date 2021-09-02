@@ -50,6 +50,16 @@ GraphicCityPrinter::GraphicCityPrinter(
         _font_size_title{fontSizeTitle}
         
 {
+    _pixel_converter_x = std::make_unique<PixelConverter>(
+        _house_min_x,
+        _cross_hairs_x__px + _x_axis_offset__px,
+        _cell_size__px
+    );
+    _pixel_converter_y = std::make_unique<PixelConverter>(
+        _house_min_y,
+        _cross_hairs_y__px + _y_axis_offset__px,
+        _cell_size__px
+    );
     _house_size__px = (_cell_size__px % 2 == 0) ? 
         _cell_size__px / 2 : _cell_size__px / 2 + 1;
     // TODO may not be necessary to have overrun larger than cell size. House will 
@@ -58,6 +68,7 @@ GraphicCityPrinter::GraphicCityPrinter(
     //_y_axis_overrun__px = (_y_axis_overrun__px < _cell_size__px)? _cell_size__px : _y_axis_overrun__px;
     addCityXAxis();
     addCityYAxis();
+    addTitle();
 }
 
 
@@ -65,16 +76,7 @@ void GraphicCityPrinter::printCity(std::map<House *, Resident *> houseToResMap)
 {  (void) houseToResMap;
     _x_axis_utility->left2RightTitleOnTop();
     _y_axis_utility->top2BottomTitleOnLeft();
-    /*if (!_chart_base_printed)
-    {
-        addCityXAxis();
-        addCityYAxis();
-        addTitle();
-        addKeyTitles();
-        _chart_base_printed = true;
-    }
     addHouses(houseToResMap);
-    */
 }
 
 void GraphicCityPrinter::addCityXAxis()
@@ -82,12 +84,12 @@ void GraphicCityPrinter::addCityXAxis()
     _x_axis_utility = std::make_unique<XAxisUtility>(
         "xAxis",
         _renderer,
+        _pixel_converter_x.get(),
         _cross_hairs_x__px,
         _cross_hairs_y__px,
         _cell_size__px,
         _house_min_x,
         _house_max_x,
-        _x_axis_offset__px,
         _x_axis_overrun__px,
         _tick_spacing_x,
         _label_spacing_x,
@@ -101,12 +103,12 @@ void GraphicCityPrinter::addCityYAxis()
     _y_axis_utility = std::make_unique<YDownAxisUtility>(
         "yAxis",
         _renderer,
+        _pixel_converter_y.get(),
         _cross_hairs_x__px,
         _cross_hairs_y__px,
         _cell_size__px,
         _house_min_y,
         _house_max_y,
-        _y_axis_offset__px,
         _y_axis_overrun__px,
         _tick_spacing_y,
         _label_spacing_y,
@@ -116,15 +118,14 @@ void GraphicCityPrinter::addCityYAxis()
 }
 
 void GraphicCityPrinter::addTitle()
-{/*
-    int lineLength = _house_max_x__px + _x_axis_overrun__px - _cross_hairs_x__px;
-    int x = _chart_origin__px.getX() + _titles_at_left_offset__px + lineLength / 2;
-    int y = _chart_origin__px.getY();
+{
+    int x = _cross_hairs_x__px - _titles_at_left_offset__px;
+    int y = _cross_hairs_y__px + (_house_max_y__px - _house_min_y__px) / 5;
     _renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
         24);
-    _renderer->renderText(x, y, "City Map", 3);*/
+    _renderer->renderText(x, y, "City Map", 3);
 }
 
 void GraphicCityPrinter::addHouses(
@@ -142,7 +143,7 @@ void GraphicCityPrinter::addHouses(
     }
 }
 
-void GraphicCityPrinter::addKeyTitles ()
+void GraphicCityPrinter::addLegend ()
 {   /*
     int x = _chart_origin__px.getX() + (_titles_at_left_offset__px/3);
     int y = _chart_origin__px.getY() + (_house_max_y__px - _house_min_y__px)/2;
@@ -194,9 +195,9 @@ std::map<Color, std::vector<Coordinate>> GraphicCityPrinter::createVectorsForEac
             std::vector<Coordinate> newCoordinateVector = {};
             colorToCoordinatesMap[colorKey] = newCoordinateVector;
         }
-        int pixelX = _house_min_x__px + (coord.getX() - _house_min_x) * _cell_size__px - _house_size__px / 2;
-        int pixelY = _house_min_y__px + (coord.getY() - _house_min_y) * _cell_size__px - _house_size__px / 2;
-        Coordinate pixelCoord{pixelX, pixelY};
+        int pixelsX = _pixel_converter_x->getPixel(coord.getX()) - _house_size__px / 2;
+        int pixelsY = _pixel_converter_y->getPixel(coord.getY()) - _house_size__px / 2;
+        Coordinate pixelCoord{pixelsX, pixelsY};
         colorToCoordinatesMap[colorKey].push_back(pixelCoord);
     }
     return colorToCoordinatesMap;
