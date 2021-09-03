@@ -68,6 +68,8 @@ GraphicCityPrinter::GraphicCityPrinter(
     _house_size__px = (_cell_size__px % 2 == 0) ? 
         _cell_size__px / 2 : _cell_size__px / 2 + 1;
 
+    _title_y__px = _cross_hairs_y__px + (_house_max_y__px - _house_min_y__px) / 20;
+
     // TODO may not be necessary to have overrun larger than cell size. House will 
     // fit into allotted size of axis.
     //_x_axis_overrun__px = (_x_axis_overrun__px < _cell_size__px)? _cell_size__px : _x_axis_overrun__px;
@@ -75,6 +77,7 @@ GraphicCityPrinter::GraphicCityPrinter(
     addCityXAxis();
     addCityYAxis();
     addTitle();
+    printLegend();
 }
 
 
@@ -127,12 +130,11 @@ void GraphicCityPrinter::addTitle()
 {   
     int x = _cross_hairs_x__px - _titles_at_left_offset__px;
     // Place Title a little below top of map (divide by 20).
-    int y = _cross_hairs_y__px + (_house_max_y__px - _house_min_y__px) / 20;
     _renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
-        24);
-    _renderer->renderText(x, y, "City Map", 4);
+        _font_size_title);
+    _renderer->renderText(x, _title_y__px, "City Map", 4);
 }
 
 void GraphicCityPrinter::printHouses(
@@ -150,26 +152,26 @@ void GraphicCityPrinter::printHouses(
     }
 }
 
-void GraphicCityPrinter::addLegend ()
-{   /*
-    int x = _chart_origin__px.getX() + (_titles_at_left_offset__px/3);
-    int y = _chart_origin__px.getY() + (_house_max_y__px - _house_min_y__px)/2;
+void GraphicCityPrinter::printLegend ()
+{   
+    _renderer->setTextFormats(
+        {100, 100, 100, 100},
+        {0xAA, 0xFF, 0xFF, 0xFF},
+        _font_size_key);
+    int x = _cross_hairs_x__px - _titles_at_left_offset__px;
+    int y = _title_y__px + _dist_from_title_to_legend;
     
     for (Color color : _res_colors)
     {   
         _renderer->addBlock(
-            _house_size__px,
-            _house_size__px,
-            Coordinate{ x - 20, y + _house_size__px},
+            _font_size_key,
+            _font_size_key,
+            Coordinate{x, y + (_font_size_key/2)},
             _the_color_infos[color].rgba
         );
-        _renderer->setTextFormats(
-        {100, 100, 100, 100},
-        {0xAA, 0xFF, 0xFF, 0xFF},
-        18);
-        _renderer->renderText(x, y, _the_color_infos[color]._my_string, 4);
-        y = y + 40;
-    }*/
+        _renderer->renderText(x + (2 * _font_size_key), y, _the_color_infos[color]._my_string, 4);
+        y = y + (4 * _font_size_key);
+    }
 }
 
 std::map<Color, std::vector<Coordinate>> GraphicCityPrinter::createVectorsForEachColor(

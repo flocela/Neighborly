@@ -140,11 +140,13 @@ class GraphicCityPrinter
         // and left of the graph.
         int _titles_at_left_offset__px = 290;
         int _titles_at_top_offset__px = 80;
+        int _title_y__px = 0;
+        int _dist_from_title_to_legend = 90;
 
         // fontSizes
-        int _font_size_axes_tick_labels;
-        int _font_size_key; 
-        int _font_size_title;
+        int _font_size_axes_tick_labels = 0;
+        int _font_size_key = 0; 
+        int _font_size_title = 0;
         
 
         // Axes
@@ -170,7 +172,7 @@ class GraphicCityPrinter
         std::map<Color, std::vector<Coordinate>> createVectorsForEachColor (
             std::map<House*, Resident*> houseToResMap
         );
-        void addLegend ();
+        void printLegend ();
 
         // Initialize the blocks and texts that are used by the renderer to render
         // the axes' lines, ticks, and labels

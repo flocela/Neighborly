@@ -61,8 +61,8 @@ class Printer_Graphic : public Printer
 
         const int _axis_title_font_size = 20;
         const int _axis_label_font_size = 12;
-        const int _sub_title_font_size = 18;
-        const int _key_font_size = 12;
+        const int _sub_title_font_size = 24;
+        const int _key_font_size = 18;
 
 
         // MAP OF HOUSES IN CITY //
