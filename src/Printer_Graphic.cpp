@@ -8,6 +8,7 @@
 #include <iostream>
 #include "XAxisUtility.h"
 #include "YDownAxisUtility.h"
+#include "GraphicCityPrinterBuilder.h"
 
 // Shows a City Map Chart, the current run number, 
 // a Happiness Chart, and a Diversity Chart.
@@ -168,6 +169,28 @@ void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
         sadAndHappyColors.insert(color);
         sadAndHappyColors.insert(_unhappy_color_map[color]);
     }
+    GrahpicCityPrinterBuilder builder = GraphicCityPrinter();
+    builder.addRenderer(_renderer.get())
+    .addCoordinateToHouseMap(_coord_to_house_map)
+    .addCrossHairsCoordinate(Coordinate{_city_cross_hairs_x__px, _city_cross_hairs_y__px})
+    .addCellSize(_cell_size)
+    .addXAxisTickSpacing()
+    .addYAxisTickSapcing()
+    .addAxesWidthInPixels()
+    .addXAxisLabelSpacing()
+    .addYAxisLabelSpacing()
+    .addMinimumXValueForHouse()
+    .addMaximumXValueForHouse()
+    .addMinimumYValueForHouse()
+    .addMaximumYValueForHouse()
+    .addXAxisOffsetInPixels()
+    .addYAxisOffsetInPixels()
+    .addXAxisOverrunInPixels()
+    .addYAxisOverrunInPixels()
+    .addFontSizeForTickLabels()
+    .addFontSizeForKeyLabels()
+    .addFontSizeForTitle();
+
     _city_printer = std::make_unique<GraphicCityPrinter>(
         _renderer.get(),
         _coord_to_house_map,
