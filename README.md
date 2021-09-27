@@ -1,17 +1,19 @@
-# SDL2_ttf sample
+# About
 
-This project is a basic sample written in C that demonstrates the usage of the
-[SDL2][SDL] and [SDL2_ttf][] libraries. It uses [CMake][] as a build system.
+This project is a city simulation where in each loop, residents buy the home that makes them the happiest.
 
+There are some restrictions on which homes are available to each resident. The city simulation is extensible 
+and the coder can create new restrictions. For now, the user can opt into restrictions of distance from previous home to new home. The residents may be forced to buy a home if it makes them happy enough instead of waiting to find a better home.
 
-It could be used as a base for any SDL2 project. Just fork it, clone it and
-execute the `rename_project.sh` script. You will be prompted to enter the new
-project name, the new executable name and the new git repository, but you can
-keep the autodetected values. Finally, just commit and push the result to your
-repository.
+The resident types are also extensible. Currently a residents' happiness is determined by the ratio of like residents to different residents that are direct neighbors. New resident types can be designed whose happiness functions are quadratic, or another type of function. New resident types can have different values for when they are sufficiently happy (happy enough).
+
+The city and its residents are shown for each loop graphically.
+
+## Starting Code is by aminoshbh, Amine B. Hassouna
+Original code contains the CMakeLists.txt file and the code to be able to use the SDL_image library so that graphics can be used.
+Please find the original code at https://gitlab.com/aminosbh/sdl2-ttf-sample.git
 
 ## Dependencies
-
 - [Git][]
 - C Compiler (gcc, ...)
 - [CMake][]
