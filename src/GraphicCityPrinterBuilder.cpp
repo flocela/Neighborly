@@ -5,6 +5,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addRenderer (
 )
 {
     _renderer = renderer;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addCoordinateToHouseMap (
@@ -12,6 +13,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addCoordinateToHouseMap (
 )
 {
     _coordinate_to_house_map = map;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addCrossHairsCoordinate (
@@ -20,16 +22,19 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addCrossHairsCoordinate (
 {
     _cross_hairs_x = coord.getX();
     _cross_hairs_y = coord.getY();
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addResidentColors (std::set<Color> resColors)
 {
     _resident_colors = resColors;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addCellSize (int cellSize)
 {
     _cell_size = cellSize;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisTickSpacing (
@@ -37,6 +42,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisTickSpacing (
 )
 {
     _tick_spacing_x = tickSpacing;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisTickSpacing (
@@ -44,6 +50,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisTickSpacing (
 )
 {
     _tick_spacing_y = tickSpacing;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addAxesWidthInPixels (
@@ -51,6 +58,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addAxesWidthInPixels (
 )
 {
     _axes_width__px = axesWidth;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisLabelSpacing (
@@ -58,6 +66,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisLabelSpacing (
 )
 {
     _label_spacing_x = labelSpacing;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisLabelSpacing (
@@ -65,6 +74,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisLabelSpacing (
 )
 {
     _label_spacing_y = labelSpacing;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMinimumXValueForHouse (
@@ -72,6 +82,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMinimumXValueForHouse (
 )
 {
     _min_house_x = minXHouse;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMaximumXValueForHouse (
@@ -79,6 +90,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMaximumXValueForHouse (
 )
 {
     _max_house_x = maxXHouse;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMinimumYValueForHouse (
@@ -86,6 +98,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMinimumYValueForHouse (
 )
 {
     _min_house_y = minYHouse;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMaximumYValueForHouse (
@@ -93,6 +106,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMaximumYValueForHouse (
 )
 {
     _max_house_y = maxYHouse;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisOffsetInPixels (
@@ -100,6 +114,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisOffsetInPixels (
 )
 {
     _x_axis_offset = xAxisOffset;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisOffsetInPixels (
@@ -107,6 +122,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisOffsetInPixels (
 )
 {
     _y_axis_offset = yAxisOffset;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisOverrunInPixels (
@@ -114,6 +130,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisOverrunInPixels (
 )
 {
     _x_axis_overrun = xAxisOverrun;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisOverrunInPixels (
@@ -121,6 +138,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisOverrunInPixels (
 )
 {
     _y_axis_overrun = yAxisOverrun;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addFontSizeForTickLabels (
@@ -128,6 +146,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addFontSizeForTickLabels (
 )
 {
     _font_size_tick_labels = fontSize;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addFontSizeForKeyLabels (
@@ -135,6 +154,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addFontSizeForKeyLabels (
 )
 {
     _font_size_key_labels = fontSize;
+    return *this;
 }
 
 GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addFontSizeForTitle (
@@ -142,4 +162,5 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addFontSizeForTitle (
 )
 {
     _font_size_title = fontSize;
+    return *this;
 }

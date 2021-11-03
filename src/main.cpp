@@ -117,10 +117,12 @@ int main(int argc, char* argv[])
     vector<CityFactory*> cityFactoryPointers = getPointers(cityFactories);
     vector<ResidentsFactory*> resFactoryPointers = getPointers(residentFactories); 
 
-    MainBaseQuestion mainQuestion;
-    bool usesExamples = mainQuestion.askUserToUsePremadeExamples();
     SimulationComponents components;
     int randomSeed = 1;
+
+    MainBaseQuestion mainQuestion;
+    bool usesExamples = mainQuestion.askUserToUsePremadeExamples();
+    
     if (usesExamples)
     {
         srand(randomSeed);
@@ -180,11 +182,14 @@ int main(int argc, char* argv[])
 
     Printer_Graphic graphicPrinter{4, 1200, 1200, city.get(), colors};
     std::map<House*, Resident*> houseToResidentMap;
+    std::cout << "before runs" << std::endl;
     for (int ii=0; ii< numOfRuns; ii++)
     {   
         houseToResidentMap = simulator->simulate();
+        std::cout << "run " << ii << " simulation done" << std::endl;
         graphicPrinter.print(houseToResidentMap, ii, "Title");
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::cout << "run " << ii << " print done" << std::endl;
     }
     Printer_CMDLine cmdLinePrinter{numOfRuns, city.get()};
     //cmdLinePrinter.print(houseToResidentMap, numOfRuns, "Title");

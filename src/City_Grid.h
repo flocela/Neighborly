@@ -47,7 +47,7 @@ class City_Grid: public City
         std::set<House*> getNumberOfUnoccupiedNearHouses (
             House* house,
             double allowableDistance,
-            std::set<House*> occupied,
+            std::set<House*> notOccupied,
             int count
         ) const override;
         
@@ -69,30 +69,11 @@ class City_Grid: public City
 
         std::map<std::pair<int, double>, std::vector<int>> _within_dist_map;
 
-        // Helper method for getNumberOfUnoccupiedNearHouses(). Since only 
-        // have to return some of the houses within distance, randomly select
-        // houses within a square area and see if they are unoccupied and within
-        // the allowable distance.
-        // In the case where a lot of houses are unoccupied and only a few
-        // houses need to be chosen, this should be faster than aggregating
-        // every house within the allowable distance and then randomly
-        // selecting a few houses.
-        std::set<House*> getSomeNearHousesFastAndRandom (
+        // Returns houses that are within a boxed area around @house.
+        // Width and height of box are 2 x allowableDist. @house is at center.
+        std::set<House*> getHousesWithinBoxedDistance (
             House* house,
-            double allowableDist,
-            std::set<House*> occupied,
-            int count
-        ) const;
-
-        // Helper method for getNumberOfUnoccupiedNearHouses(). Creates a set of
-        // all houses that are within @allowableDist from @house, called nearSet.
-        // Remove all occupied houses from nearSet. Then randomly choose houses
-        // from nearSet.
-        std::set<House*> getSomeNearHousesSlowerAndRandom (
-            House* house,
-            double allowableDist,
-            std::set<House*> occupied,
-            int count
+            double allowableDist
         ) const;
         
         // Returns the x value of origX minus allowableDist, except if x value

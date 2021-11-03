@@ -30,7 +30,7 @@ SimulationComponents MainExamples::userChoosesExample ()
         );
     switch (chosenExample)
     {
-        // 30 x 30 city with 400 houses. 
+        // 150 x 150 city with 22,500 houses. 
         // 200 StepDown (Blue)
         //     Unhappy if 80% or more neighbors are different from themselves.
         // 50  StepDown Residents (Red)
@@ -66,7 +66,7 @@ SimulationComponents MainExamples::userChoosesExample ()
                 components.city.get(),
                 getSetOfPointers(components.residents)
             );
-            components.numOfRuns = 1;
+            components.numOfRuns = 100;
             
             break;
         }

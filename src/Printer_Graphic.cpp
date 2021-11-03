@@ -9,6 +9,7 @@
 #include "XAxisUtility.h"
 #include "YDownAxisUtility.h"
 #include "GraphicCityPrinterBuilder.h"
+#include "GraphicCityPrinter.h"
 
 // Shows a City Map Chart, the current run number, 
 // a Happiness Chart, and a Diversity Chart.
@@ -169,27 +170,27 @@ void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
         sadAndHappyColors.insert(color);
         sadAndHappyColors.insert(_unhappy_color_map[color]);
     }
-    GrahpicCityPrinterBuilder builder = GraphicCityPrinter();
+    GraphicCityPrinterBuilder builder = GraphicCityPrinterBuilder();
     builder.addRenderer(_renderer.get())
     .addCoordinateToHouseMap(_coord_to_house_map)
     .addCrossHairsCoordinate(Coordinate{_city_cross_hairs_x__px, _city_cross_hairs_y__px})
     .addCellSize(_cell_size)
-    .addXAxisTickSpacing()
-    .addYAxisTickSapcing()
-    .addAxesWidthInPixels()
-    .addXAxisLabelSpacing()
-    .addYAxisLabelSpacing()
-    .addMinimumXValueForHouse()
-    .addMaximumXValueForHouse()
-    .addMinimumYValueForHouse()
-    .addMaximumYValueForHouse()
-    .addXAxisOffsetInPixels()
-    .addYAxisOffsetInPixels()
-    .addXAxisOverrunInPixels()
-    .addYAxisOverrunInPixels()
-    .addFontSizeForTickLabels()
-    .addFontSizeForKeyLabels()
-    .addFontSizeForTitle();
+    .addXAxisTickSpacing(_city_tick_spacing_x)
+    .addYAxisTickSpacing(_city_tick_spacing_y)
+    .addAxesWidthInPixels(_city_axis_width__px)
+    .addXAxisLabelSpacing(_city_axis_width__px)
+    .addYAxisLabelSpacing(_city_label_spacing_y)
+    .addMinimumXValueForHouse(_min_x_coord)
+    .addMaximumXValueForHouse(_max_x_coord)
+    .addMinimumYValueForHouse(_min_y_coord)
+    .addMaximumYValueForHouse(_max_y_coord)
+    .addXAxisOffsetInPixels(_city_x_axis_offset__px)
+    .addYAxisOffsetInPixels(_city_y_axis_offset__px)
+    .addXAxisOverrunInPixels(_city_x_axis_overrun__px)
+    .addYAxisOverrunInPixels(_city_y_axis_overrun__px)
+    .addFontSizeForTickLabels(_axis_label_font_size)
+    .addFontSizeForKeyLabels(_key_font_size)
+    .addFontSizeForTitle(_sub_title_font_size);
 
     _city_printer = std::make_unique<GraphicCityPrinter>(
         _renderer.get(),
@@ -200,7 +201,7 @@ void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
         _cell_size,
         _city_tick_spacing_x,
         _city_tick_spacing_y,
-        _city_tick_width__px,
+        _city_tick_width__px, // TODO must add this method for tick width__px
         _city_axis_width__px,
         _city_label_spacing_x,
         _city_label_spacing_y,

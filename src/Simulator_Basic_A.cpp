@@ -41,16 +41,18 @@ void Simulator_Basic_A::moveResidentIfUnhappy (Resident* res)
 {   
     if ( res->getHappiness() < res->getHappinessGoal() )
     {   
-        House* newHouse = selectRandomWithinMovingDist(
-            _open_houses,
+        std::set<House*> readyHouses = _city->getNumberOfUnoccupiedNearHouses(
             _curr_res_to_house_map[res],
-            res->getAllowedMovementDistance()
+            res->getAllowedMovementDistance(),
+            _open_houses,
+            1
         );
-        if (newHouse == nullptr)
+        if (readyHouses.size() == 0)
             return;
         else
-        {
-            moveResidentIntoHouse(res, newHouse);
+        {   
+            std::set<House*>::iterator it = readyHouses.begin();
+            moveResidentIntoHouse(res, *it);
             updateResident(res);
         }
     }

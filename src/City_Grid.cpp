@@ -74,6 +74,8 @@ std::set<House*> City_Grid::getAdjacentHouses (House* house) const
 	return adjacentHouses;
 }
 
+
+
 std::set<House*> City_Grid::getHousesWithinDistance (
 	House* house, 
 	double allowableDist
@@ -106,44 +108,11 @@ std::set<House*> City_Grid::getHousesWithinDistance (
 	return nearHouses;
 }
 
-std::set<House*> City_Grid::getNumberOfUnoccupiedNearHouses (
-	House* house,
-	double allowableDistance,
-	std::set<House*> occupied,
-	int count
-) const
-{	
-	// Try to get houses quickly. May not be possible if a larger
-	// percentage of houses are occuplied.
-	std::set<House*> fastHouses = getSomeNearHousesFastAndRandom(
-		house,
-		allowableDistance,
-		occupied,
-		count
-	);
-
-	if ( (int)fastHouses.size() > 0)
-		return fastHouses;
-
-	return getSomeNearHousesSlowerAndRandom(
-		house,
-		allowableDistance,
-		occupied,
-		count
-	);
-}
-
-std::set<House*> City_Grid::getSomeNearHousesFastAndRandom (
-    House* house,
-    double allowableDist,
-    std::set<House*> occupied,
-    int count
+std::set<House*> City_Grid::getHousesWithinBoxedDistance (
+            House* house,
+            double allowableDist
 ) const
 {
-	std::set<House*> returnedHouses;
-
-	// Houses that are within boxed area around @house.
-	// Width and height of box are 2 x allowableDist and @house is at center.
 	std::set<House*> boxedHouses;
 	int origAddress = house->getAddress();
 	int minX = getMinXLine(get_x(origAddress), allowableDist);
@@ -163,60 +132,76 @@ std::set<House*> City_Grid::getSomeNearHousesFastAndRandom (
 			}
 		}
 	}
-
-	// Randomly select houses, then check if they are unoccupied and
-	// within allowableDist from @house.
-	int tries = 0;
-	while (true)
-	{
-		if ( (int)returnedHouses.size() == count || boxedHouses.empty() )
-			return returnedHouses;
-		
-		// If we're not getting an unoccupied house about a third of the time, then
-		// most houses are occupied. Do getSomeNearHousesSlowerAndRandom() instead.
-		if (tries/4 > (int)returnedHouses.size() && tries > 5)
-		{
-			returnedHouses = {};
-			break;
-		}
-		House* currHouse = selectRandom(boxedHouses);
-		if ( occupied.count(currHouse) == 0 &&
-			 dist(origAddress, currHouse->getAddress()) <= allowableDist
-		)
-		{	
-			returnedHouses.insert(currHouse);
-		}
-		boxedHouses.erase(currHouse);
-		
-		tries++;	
-	}
-
-	return returnedHouses;
+	return boxedHouses;
 }
 
-std::set<House*> City_Grid::getSomeNearHousesSlowerAndRandom (
-    House* house,
-    double allowableDist,
-    std::set<House*> occupied,
-    int count
+std::set<House*> City_Grid::getNumberOfUnoccupiedNearHouses (
+	House* origHouse,
+	double allowableDistance,
+	std::set<House*> notOccupied,
+	int count
 ) const
 {	
 	std::set<House*> returnedHouses;
 
-	std::set<House*> unoccupiedNearHouses;
-	std::set<House*> nearHouses = getHousesWithinDistance(house, allowableDist);
-	for ( House* house : nearHouses )
-	{	
-		if (occupied.count(house) == 0)
-			unoccupiedNearHouses.insert(house);
+	if (count == 0)
+		return returnedHouses;
+	
+	// First possibleHouses consists of houses within a boxed distance from
+	// @origHouse.
+	std::set<House*> possibleHouses = getHousesWithinBoxedDistance (
+		origHouse,
+		allowableDistance
+	);
+
+	int tries = 0;
+	while (true)
+	{
+		if ( (int)returnedHouses.size() == count || possibleHouses.empty() )
+			return returnedHouses;
+		
+		// If we're not getting an unoccupied house within the allowable distance 
+		// about a quarter of the time, then most boxed houses are occupied or
+		// are not within the allowable distance. 
+		// Break, then remove occupied houses and houses farther than allowable distance
+		// from boxedHouses, then continue.
+		int houseAddress = origHouse->getAddress();
+		if ( tries/4 > (int)returnedHouses.size() && tries > 5 )
+		{
+			break;
+		}
+		House* currHouse = selectRandom(possibleHouses);
+		if ( notOccupied.count(currHouse) > 0 &&
+			 dist(currHouse->getAddress(), houseAddress) <= allowableDistance )
+		{
+			returnedHouses.insert(currHouse);
+			possibleHouses.erase(currHouse);
+		}
+		++tries;
 	}
-	while ( ( (int)returnedHouses.size() < count ) && ( (int)unoccupiedNearHouses.size() > 0 ) )
-	{	
-		House* unoccupiedNearHouse = selectRandom(unoccupiedNearHouses);
-		returnedHouses.insert(unoccupiedNearHouse);
-		unoccupiedNearHouses.erase(unoccupiedNearHouse);
+
+	// This is a continuation from the break caused by not selecting unoccupied houses
+	// with allowable distance often enough. Go through possibleHouses and remove
+	// occupied houses and houses farther than allowable distance from origHouse.
+	std::set<House*> decreasedPossibleHouses;
+	int origHouseAddress = origHouse->getAddress();
+	for ( House* boxedHouse : possibleHouses )
+	{
+		if ( notOccupied.count(boxedHouse) > 0 &&
+			 dist(boxedHouse->getAddress(), origHouseAddress) <= allowableDistance )
+		{
+			decreasedPossibleHouses.insert(boxedHouse);
+		}
 	}
-	return returnedHouses;
+	possibleHouses = decreasedPossibleHouses;
+	while (true) // TODO these while(trues) seem unsafe.
+	{
+		if ( (int)returnedHouses.size() == count || possibleHouses.empty() )
+			return returnedHouses;
+		House* currHouse = selectRandom(possibleHouses);
+		returnedHouses.insert(currHouse);
+		possibleHouses.erase(currHouse);
+	}
 }
 
 int City_Grid::get_x (const int& address) const
