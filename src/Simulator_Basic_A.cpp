@@ -39,8 +39,11 @@ void Simulator_Basic_A::firstSimulation ()
 }
 void Simulator_Basic_A::moveResidentIfUnhappy (Resident* res)
 {   
-    if ( res->getHappiness() < res->getHappinessGoal() ) // need to recalculate getHappiness(). As neighbors
-    // could have changed.
+    House* house = _curr_res_to_house_map[res];
+    std::set<House*> adjHouses = _city->getAdjacentHouses(house);
+    std::set<Resident*> adjResidents = getResidentsInHouses(adjHouses);
+    double happiness = res->calculateHappiness(adjResidents, adjHouses.size());
+    if ( happiness < res->getHappinessGoal() )
     {   
         std::set<House*> readyHouses = _city->getNumberOfUnoccupiedNearHouses(
             _curr_res_to_house_map[res],
@@ -54,7 +57,8 @@ void Simulator_Basic_A::moveResidentIfUnhappy (Resident* res)
         {   
             std::set<House*>::iterator it = readyHouses.begin();
             moveResidentIntoHouse(res, *it);
-            updateResident(res);
+            //updateResident(res); // TODO Why update resident now, if I have to update resident again later (
+                // at the beginning of this function?)
         }
     }
 }

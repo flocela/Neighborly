@@ -1,4 +1,5 @@
 #include "HappinessFunc_StepDown.h"
+#include <iostream>
 
 HappinessFunc_StepDown::HappinessFunc_StepDown ( 
     double happinessAtZeroDiversity, 
@@ -26,7 +27,12 @@ double HappinessFunc_StepDown::getHappiness ( int tot_num_of_possible_neighbors,
                                               int num_of_diff_neighbors) const
 {
     (void)tot_num_of_possible_neighbors;
-    double diversity = num_of_diff_neighbors / (double)(num_of_diff_neighbors + num_of_like_neighbors);
+    int num_of_neighbors = (num_of_diff_neighbors + num_of_like_neighbors);
+    
+    if (num_of_neighbors == 0)
+        return _happiness_at_zero_diversity; // Is happy to be alone.
+
+    double diversity = num_of_diff_neighbors / (double)num_of_neighbors;
     if (diversity < _where_drop_happens)
         return _happiness_at_zero_diversity;
     return _happiness_at_one_diversity;

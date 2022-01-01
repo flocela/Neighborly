@@ -25,7 +25,7 @@ class Resident{
         Color getColor () const { return _color; };
         double getAllowedMovementDistance () const { return _allowed_movement_distance; };
         double getHappinessGoal () const { return _happiness_goal; };
-        double getHappiness () const  {return _curr_happiness; };
+        double getHappiness () const  {return _curr_happiness; }; // TODO don't know if this is used.
         // neighbors vector includes all possible neighbors, so
         // if a neighbors house is empty, Color::absent should
         // be added to neighbors

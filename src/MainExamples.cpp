@@ -38,7 +38,7 @@ SimulationComponents MainExamples::userChoosesExample ()
         case 1:
         {
             components.city = std::make_unique<City_Grid>(120);
-            for (int ii=0; ii<200; ++ii)
+            for (int ii=0; ii<4000; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(
                     ii,
@@ -50,12 +50,12 @@ SimulationComponents MainExamples::userChoosesExample ()
                     0.8
                 ));
             }
-            for (int jj=200; jj<250; ++jj)
+            for (int jj=200; jj<4000; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(
                     200,
                     Color::red,
-                    5,
+                    20,
                     1,
                     1,
                     0,
@@ -66,7 +66,7 @@ SimulationComponents MainExamples::userChoosesExample ()
                 components.city.get(),
                 getSetOfPointers(components.residents)
             );
-            components.numOfRuns = 20;
+            components.numOfRuns = 100;
             
             break;
         }
