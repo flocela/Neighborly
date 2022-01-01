@@ -10,6 +10,7 @@
 #include <vector>
 #include "Color.h"
 #include "GraphicRunCounterPrinter.h"
+#include "GraphicDiversityPrinter.h"
 
 class Printer_Graphic : public Printer
 {   
@@ -43,7 +44,7 @@ class Printer_Graphic : public Printer
 
         int _screen_width;
         int _screen_height;
-        int _window_title__px = 100; // space for title at top of screen
+        int _window_title__px = 0; // space for title at top of screen
         int _bottom_border__px = 20; // space for border at top of screen
         int _left_border__px = 10; // space for border at left of screen
         int _right_border__px = 10; // space for border at right of screen
@@ -58,6 +59,7 @@ class Printer_Graphic : public Printer
 
         std::unique_ptr<GraphicCityPrinter> _city_printer;
         std::unique_ptr<GraphicRunCounterPrinter> _run_counter_printer;
+        std::unique_ptr<GraphicDiversityPrinter> _diversity_printer;
 
         const int _axis_title_font_size = 20;
         const int _axis_label_font_size = 12;
@@ -128,6 +130,8 @@ class Printer_Graphic : public Printer
         void initCityPrinter (Coordinate graphOrigin);
 
         void initRunCounterPrinter (int maxNumOfRuns);
+
+        void initDiversityPrinter();
 
         int findTickSpacing (int stretch);
 

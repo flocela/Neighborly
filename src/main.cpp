@@ -97,14 +97,15 @@ int numOfRuns = 5;
 int randomSeed = 5;
 
 // SCREEN_WIDTH and SCREEN_HEIGHT is set to 1200 pixels. The city graph
-// will take up 1/2 the screen, 600 pixels. Each house must be no smaller
+// will take up .5 the screen, 600 pixels. Remove 240pixels for borders,
+// titles, and axis title leaves 360 pixels. Each house must be no smaller
 // than 4 pixels, or it will be difficulat to see.
 // So the largest number of houses in the x and y directions are 150.
-// Calculated as 600/4 = 150.
+// Calculated as 360/4 = 90.
 const int SCREEN_WIDTH   = 1200;
 const int SCREEN_HEIGHT  = 1200;
-const int MAX_HOUSES_X   = 150;
-const int MAX_HOUSES_Y   = 150;
+const int MAX_HOUSES_X   = 120;
+const int MAX_HOUSES_Y   = 120;
 
 int main(int argc, char* argv[])
 {

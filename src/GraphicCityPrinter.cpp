@@ -49,7 +49,7 @@ GraphicCityPrinter::GraphicCityPrinter(
         _font_size_key{fontSizeKeyLabels},
         _font_size_title{fontSizeTitle}
         
-{   std::cout << "GraphicCityPrinter home_min_y: " << _house_min_y <<std::endl;
+{  
     _pixel_converter_x = std::make_unique<PixelConverter>(
         _house_min_x,
         _cross_hairs_x__px + _x_axis_offset__px,
@@ -82,7 +82,7 @@ GraphicCityPrinter::GraphicCityPrinter(
 
 
 void GraphicCityPrinter::printCity(std::map<House *, Resident *> houseToResMap)
-{  (void) houseToResMap;
+{  (void) houseToResMap; // TODO why do I have a (void) here?
     _x_axis_utility->left2RightTitleOnTop();
     _y_axis_utility->top2BottomTitleOnLeft();
     printHouses(houseToResMap);

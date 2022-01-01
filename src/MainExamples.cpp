@@ -30,14 +30,14 @@ SimulationComponents MainExamples::userChoosesExample ()
         );
     switch (chosenExample)
     {
-        // 150 x 150 city with 22,500 houses. 
+        // 120 x 120 city with 14,400 houses. 
         // 200 StepDown (Blue)
         //     Unhappy if 80% or more neighbors are different from themselves.
         // 50  StepDown Residents (Red)
         //     Unhappy if 25% or more neighbors are different from themselves.
         case 1:
         {
-            components.city = std::make_unique<City_Grid>(151);
+            components.city = std::make_unique<City_Grid>(120);
             for (int ii=0; ii<200; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(
@@ -66,7 +66,7 @@ SimulationComponents MainExamples::userChoosesExample ()
                 components.city.get(),
                 getSetOfPointers(components.residents)
             );
-            components.numOfRuns = 100;
+            components.numOfRuns = 20;
             
             break;
         }

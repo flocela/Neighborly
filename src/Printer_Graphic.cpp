@@ -31,7 +31,7 @@ Printer_Graphic::Printer_Graphic (
     _screen_height{screen_height},
     _writable_horiz_length__px{_screen_width - _left_border__px - _right_border__px},
     _writable_vert_length__px{_screen_height - _window_title__px - _bottom_border__px},
-    _map_writable_vert_length__px{_writable_vert_length__px * 4 / 10},
+    _map_writable_vert_length__px{_writable_vert_length__px * 6 / 10},
     _hapiness_chart_writable_vert_length__px{_writable_vert_length__px * 3 / 10},
     _diversity_chart_writable_vert_length__px{
         _writable_vert_length__px - 
@@ -45,6 +45,7 @@ Printer_Graphic::Printer_Graphic (
     Coordinate graphOrigin = Coordinate{10, 10};
     initCityPrinter(graphOrigin);
     initRunCounterPrinter(maxNumOfRuns);
+    initDiversityPrinter();
 }
 
 void Printer_Graphic::print (
@@ -55,7 +56,7 @@ void Printer_Graphic::print (
 {   
     (void) title;
     (void) residentPerHouse;
-
+    (void) run;
 
     _city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
@@ -130,13 +131,13 @@ void Printer_Graphic::initCityMapInfo ()
     int xCellSize = allowableHousesLengthX / deltaX;
     
     int deltaY = _max_y_coord - _min_y_coord;
-    int yAxisLength = _writable_vert_length__px - 80;
+    int yAxisLength = _map_writable_vert_length__px - 80;
     int allowableHousesLengthY =
         yAxisLength - _city_y_axis_offset__px - _city_y_axis_overrun__px;
     int yCellSize = allowableHousesLengthY / deltaY;
 
     _cell_size = std::min(xCellSize, yCellSize);
-
+    std::cout << "cell size: " << _cell_size << std::endl;
     // Limit _cell_size. Cells required to be 4 pixels at least or too small to see.
     if (_cell_size < 4)
     {
@@ -226,6 +227,36 @@ void Printer_Graphic::initRunCounterPrinter (int maxNumOfRuns)
         _x_num_of_runs_offset, 
         _y_num_of_runs_offset,
         maxNumOfRuns );
+}
+
+void Printer_Graphic::initDiversityPrinter ()
+{
+    _diversity_printer = std::make_unique<GraphicDiversityPrinter> (
+        _renderer.get(),
+        _colors,
+        _diversity_chart_writable_vert_length__px,
+        _writable_horiz_length__px - 300, // same -300 used for CityPrinter. Make this a variable
+        _left_border__px + 300, // same -300 used for CityPrinter. Make this a variable
+        _window_title__px + 80 + _map_writable_vert_length__px + _diversity_chart_writable_vert_length__px, // TODO how did I come up with this number
+        _max_num_of_runs,
+        3, // blocks will be 3 pixels wide and high. Make this into a variable.
+        1, //border
+        3, //block spacing
+        3,
+        1, // run spacing
+        1,
+        2,
+        2,
+        10,
+        10,
+        0,
+        0,
+        0,
+        0,
+        12,
+        12,
+        12
+    );
 }
 
 int Printer_Graphic::findTickSpacing (int stretch)

@@ -139,7 +139,7 @@ class GraphicCityPrinter
         // titlesAtTopOffset and titlesLeftOffset is room given for titles at top
         // and left of the graph.
         int _titles_at_left_offset__px = 290;
-        int _titles_at_top_offset__px = 80;
+        int _titles_at_top_offset__px = 0;
         int _title_y__px = 0;
         int _dist_from_title_to_legend = 90;
 

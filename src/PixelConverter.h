@@ -4,7 +4,8 @@
 class PixelConverter
 {
     public:
-        PixelConverter (int minVal, int minPixel, int cellSize__px);
+        PixelConverter (int minVal, int minPixel, int cellSize__px); // TODO delete this doesn't work for upward y axis or right to left x axes.
+        PixelConverter (int minVal, int minPixel, int maxVal, int maxPixel);
         int getPixel(int value);
         int getValue(int pixel);
 

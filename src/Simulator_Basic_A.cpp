@@ -18,10 +18,10 @@ std::map<House*, Resident*> Simulator_Basic_A::simulate ()
         _first_simulation_done = true;
     }
     else
-    {
+    {    // see comment on line 42. Maybe recalculate happiness here for res.
         for (Resident* res : _residents)
         {   
-            moveResidentIfUnhappy(res);
+            moveResidentIfUnhappy(res); // can only make decisions based on where neighbors are now.
         }
     }
     
@@ -39,7 +39,8 @@ void Simulator_Basic_A::firstSimulation ()
 }
 void Simulator_Basic_A::moveResidentIfUnhappy (Resident* res)
 {   
-    if ( res->getHappiness() < res->getHappinessGoal() )
+    if ( res->getHappiness() < res->getHappinessGoal() ) // need to recalculate getHappiness(). As neighbors
+    // could have changed.
     {   
         std::set<House*> readyHouses = _city->getNumberOfUnoccupiedNearHouses(
             _curr_res_to_house_map[res],
