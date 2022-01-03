@@ -1,4 +1,5 @@
 #include "PixelConverter.h"
+#include <iostream>
 
 PixelConverter::PixelConverter (
     int minVal,
@@ -17,7 +18,7 @@ PixelConverter::PixelConverter (
 
 
 int PixelConverter::getPixel(int value)
-{
+{   
     int diff = value - _min_val;
     return _min_pixel + (diff * _cell_size__px);
 }

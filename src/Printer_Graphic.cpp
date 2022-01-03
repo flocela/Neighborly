@@ -57,7 +57,6 @@ void Printer_Graphic::print (
     (void) title;
     (void) residentPerHouse;
     (void) run;
-
     _city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
     _renderer->endFrame();
@@ -137,7 +136,6 @@ void Printer_Graphic::initCityMapInfo ()
     int yCellSize = allowableHousesLengthY / deltaY;
 
     _cell_size = std::min(xCellSize, yCellSize);
-    std::cout << "cell size: " << _cell_size << std::endl;
     // Limit _cell_size. Cells required to be 4 pixels at least or too small to see.
     if (_cell_size < 4)
     {
@@ -179,7 +177,7 @@ void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
     .addXAxisTickSpacing(_city_tick_spacing_x)
     .addYAxisTickSpacing(_city_tick_spacing_y)
     .addAxesWidthInPixels(_city_axis_width__px)
-    .addXAxisLabelSpacing(_city_axis_width__px)
+    .addXAxisLabelSpacing(_city_label_spacing_x)
     .addYAxisLabelSpacing(_city_label_spacing_y)
     .addMinimumXValueForHouse(_min_x_coord)
     .addMaximumXValueForHouse(_max_x_coord)
@@ -192,8 +190,8 @@ void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
     .addFontSizeForTickLabels(_axis_label_font_size)
     .addFontSizeForKeyLabels(_key_font_size)
     .addFontSizeForTitle(_sub_title_font_size);
-
-    _city_printer = std::make_unique<GraphicCityPrinter>(
+    _city_printer = builder.build();
+    /*_city_printer = std::make_unique<GraphicCityPrinter>(
         _renderer.get(),
         _coord_to_house_map,
         _city_cross_hairs_x__px,
@@ -217,7 +215,7 @@ void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
         _axis_label_font_size,
         _key_font_size,
         _sub_title_font_size
-    );
+    );*/
 }
 
 void Printer_Graphic::initRunCounterPrinter (int maxNumOfRuns)

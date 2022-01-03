@@ -58,14 +58,12 @@ void XAxisUtility::left2RightTitleOnTop ()
 
     // All ticks have same width.
     rect.w = _tick_width__px;
-
     // Ticks and labels.
     int currValue = _min_val;
     while (currValue <= _pc->getValue(_right_most_pixel))
     {
         int currValue__px = _pc->getPixel(currValue);
         rect.x =  currValue__px - ( _tick_width__px / 2 );
-        
         if (currValue % _label_spacing == 0) // ticks with labels are longer
         {   
             rect.h = _tick_height__px + 4;
@@ -84,7 +82,7 @@ void XAxisUtility::left2RightTitleOnTop ()
         
         ++currValue;
     }
-   
+
     _renderer->setColorToMedGrey();
     _renderer->setTextFormats(
         {100, 100, 100, 100},
@@ -92,5 +90,4 @@ void XAxisUtility::left2RightTitleOnTop ()
         _label_font_size);
     _renderer->fillBlocks(rects);
     _renderer->renderTexts(texts);
-
 }

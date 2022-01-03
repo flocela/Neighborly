@@ -1,6 +1,37 @@
 #include "GraphicCityPrinterBuilder.h"
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addRenderer (
+std::unique_ptr<GraphicCityPrinter> GraphicCityPrinterBuilder::build ()
+{
+    
+    return std::make_unique<GraphicCityPrinter> (
+        _renderer, 
+        _coordinate_to_house_map,
+        _cross_hairs_x,
+        _cross_hairs_y,
+        _resident_colors,
+        _cell_size,
+        _tick_spacing_x,
+        _tick_spacing_y,
+        _tick_width_px,
+        _axes_width_px,
+        _label_spacing_x,
+        _label_spacing_y,
+        _min_house_x,
+        _max_house_x,
+        _min_house_y,
+        _max_house_y,
+        _x_axis_offset,
+        _y_axis_offset,
+        _x_axis_overrun,
+        _y_axis_overrun,
+        _font_size_tick_labels,
+        _font_size_key_labels,
+        _font_size_title
+    );
+    
+}
+
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addRenderer (
     Renderer* renderer
 )
 {
@@ -8,7 +39,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addRenderer (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addCoordinateToHouseMap (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addCoordinateToHouseMap (
     std::map<Coordinate,House*> map
 )
 {
@@ -16,7 +47,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addCoordinateToHouseMap (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addCrossHairsCoordinate (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addCrossHairsCoordinate (
     Coordinate coord
 )
 {
@@ -25,19 +56,19 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addCrossHairsCoordinate (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addResidentColors (std::set<Color> resColors)
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addResidentColors (std::set<Color> resColors)
 {
     _resident_colors = resColors;
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addCellSize (int cellSize)
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addCellSize (int cellSize)
 {
     _cell_size = cellSize;
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisTickSpacing (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addXAxisTickSpacing (
     int tickSpacing
 )
 {
@@ -45,7 +76,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisTickSpacing (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisTickSpacing (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addYAxisTickSpacing (
     int tickSpacing
 )
 {
@@ -53,15 +84,23 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisTickSpacing (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addAxesWidthInPixels (
-    int axesWidth
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addWidthOfTicksInPixels (
+    int tickWidthPx
 )
 {
-    _axes_width__px = axesWidth;
+    _tick_width_px = tickWidthPx;
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisLabelSpacing (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addAxesWidthInPixels (
+    int axesWidth
+)
+{
+    _axes_width_px = axesWidth;
+    return *this;
+}
+
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addXAxisLabelSpacing (
     int labelSpacing
 )
 {
@@ -69,7 +108,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisLabelSpacing (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisLabelSpacing (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addYAxisLabelSpacing (
     int labelSpacing
 )
 {
@@ -77,7 +116,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisLabelSpacing (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMinimumXValueForHouse (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addMinimumXValueForHouse (
     int minXHouse
 )
 {
@@ -85,7 +124,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMinimumXValueForHouse (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMaximumXValueForHouse (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addMaximumXValueForHouse (
     int maxXHouse
 )
 {
@@ -93,7 +132,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMaximumXValueForHouse (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMinimumYValueForHouse (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addMinimumYValueForHouse (
     int minYHouse
 )
 {
@@ -101,7 +140,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMinimumYValueForHouse (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMaximumYValueForHouse (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addMaximumYValueForHouse (
     int maxYHouse
 )
 {
@@ -109,7 +148,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addMaximumYValueForHouse (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisOffsetInPixels (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addXAxisOffsetInPixels (
     int xAxisOffset
 )
 {
@@ -117,7 +156,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisOffsetInPixels (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisOffsetInPixels (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addYAxisOffsetInPixels (
     int yAxisOffset
 )
 {
@@ -125,7 +164,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisOffsetInPixels (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisOverrunInPixels (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addXAxisOverrunInPixels (
     int xAxisOverrun
 )
 {
@@ -133,7 +172,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addXAxisOverrunInPixels (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisOverrunInPixels (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addYAxisOverrunInPixels (
     int yAxisOverrun
 )
 {
@@ -141,7 +180,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addYAxisOverrunInPixels (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addFontSizeForTickLabels (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addFontSizeForTickLabels (
     int fontSize
 )
 {
@@ -149,7 +188,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addFontSizeForTickLabels (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addFontSizeForKeyLabels (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addFontSizeForKeyLabels (
     int fontSize
 )
 {
@@ -157,7 +196,7 @@ GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addFontSizeForKeyLabels (
     return *this;
 }
 
-GraphicCityPrinterBuilder GraphicCityPrinterBuilder::addFontSizeForTitle (
+GraphicCityPrinterBuilder& GraphicCityPrinterBuilder::addFontSizeForTitle (
     int fontSize
 )
 {
