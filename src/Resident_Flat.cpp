@@ -30,7 +30,8 @@ double Resident_Flat::implCalculateHappiness(
     (void) neighbors;
     int like  = 0;
     int diff  = 0;
-
+    if ( (like + diff) == 0 )
+        return _happiness_val; // regular value when alone
     return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
 }
 

@@ -28,9 +28,6 @@ double HappinessFunc_StepDown::getHappiness ( int tot_num_of_possible_neighbors,
 {
     (void)tot_num_of_possible_neighbors;
     int num_of_neighbors = (num_of_diff_neighbors + num_of_like_neighbors);
-    
-    if (num_of_neighbors == 0)
-        return _happiness_at_zero_diversity; // Is happy to be alone.
 
     double diversity = num_of_diff_neighbors / (double)num_of_neighbors;
     if (diversity < _where_drop_happens)
