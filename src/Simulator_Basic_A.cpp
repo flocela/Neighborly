@@ -11,42 +11,55 @@ Simulator_Basic_A::Simulator_Basic_A (City* city, std::set<Resident*> residents)
 }
 
 std::map<House*, Resident*> Simulator_Basic_A::simulate ()
-{   
+{   std::cout << "simulate line 14" << std::endl;
     if (!_first_simulation_done)
     {
         firstSimulation();
         _first_simulation_done = true;
     }
     else
-    {    // see comment on line 42. Maybe recalculate happiness here for res.
+    {   std::cout << "simulate line 21" << std::endl;
+        // Make a set of currently unhappy residents. They get the opportunity 
+        // to move in this round of the simulation.
+        std::set<Resident*> currUnhappyResidents;
         for (Resident* res : _residents)
+        {
+            if ( res->getHappiness() < res->getHappinessGoal() )
+            {
+                currUnhappyResidents.insert(res);
+            }
+        }
+        for (Resident* res : currUnhappyResidents)
         {   
-            moveResidentIfUnhappy(res); // can only make decisions based on where neighbors are now.
+            moveResidentIfUnhappy(res); // can only make decisions based on current neighbors.
         }
     }
-    
+   
     return _curr_house_to_res_map;
 }
 
 void Simulator_Basic_A::firstSimulation ()
-{
+{   std::cout << "firstSimulation line 42" << std::endl;
     for (Resident* res : _residents)
-    {
+    {   
         House* house = selectRandom(_open_houses);
         moveResidentIntoHouse(res, house);
+        std::cout << "Simulator_Basic 53" << std::endl;
         updateResident(res);
     }
+    std::cout << "firstSimulation line 49" << std::endl;
 }
+
 void Simulator_Basic_A::moveResidentIfUnhappy (Resident* res)
 {   
-    House* house = _curr_res_to_house_map[res];
+    House* house = getCurrHouse(res);
     std::set<House*> adjHouses = _city->getAdjacentHouses(house);
-    std::set<Resident*> adjResidents = getResidentsInHouses(adjHouses);
+    std::set<Resident*> adjResidents = getResidentsInTheseHouses(adjHouses);
     double happiness = res->calculateHappiness(adjResidents, adjHouses.size());
     if ( happiness < res->getHappinessGoal() )
     {   
         std::set<House*> readyHouses = _city->getNumberOfUnoccupiedNearHouses(
-            _curr_res_to_house_map[res],
+            _curr_res_to_house_map.at(res),
             res->getAllowedMovementDistance(),
             _open_houses,
             1
@@ -54,7 +67,8 @@ void Simulator_Basic_A::moveResidentIfUnhappy (Resident* res)
         if (readyHouses.size() == 0)
             return;
         else
-        {   
+        {  
+            // Move into the first house that's ready. 
             std::set<House*>::iterator it = readyHouses.begin();
             moveResidentIntoHouse(res, *it);
             //updateResident(res); // TODO Why update resident now, if I have to update resident again later (
@@ -65,39 +79,43 @@ void Simulator_Basic_A::moveResidentIfUnhappy (Resident* res)
 
 void Simulator_Basic_A::moveResidentIntoHouse (Resident* res, House* newHouse)
 {   
-    if (_curr_res_to_house_map.count(res) > 0)
+    if (hasHouse(res))
     {
-        House* oldHouse = _curr_res_to_house_map[res];
+        House* oldHouse = getCurrHouse(res);
         _curr_res_to_house_map.erase(res);
         _curr_house_to_res_map.erase(oldHouse);
         _open_houses.insert(oldHouse);
+        updateNeighbors(oldHouse);
     }
-
+    std::cout << "Simulator_Basic_A 90 is res nullptr? " << (res == nullptr) <<std::endl;
     _curr_house_to_res_map.insert(std::pair<House*, Resident*>(newHouse, res));
     _curr_res_to_house_map.insert(std::pair<Resident*, House*>(res, newHouse));
     _open_houses.erase(newHouse);
-  
+    updateNeighbors(newHouse);
+    updateResident(res);
 }
 
 void Simulator_Basic_A::updateResident (Resident* res)
 {   
-    House* house = _curr_res_to_house_map[res];
+    House* house = _curr_res_to_house_map.at(res);
     std::set<House*> adjHouses = _city->getAdjacentHouses(house);
-    std::set<Resident*> adjResidents = getResidentsInHouses(adjHouses);
+    std::set<Resident*> adjResidents = getResidentsInTheseHouses(adjHouses);
     res->calculateHappiness(adjResidents, adjHouses.size());
 }
 
-std::set<Resident*> Simulator_Basic_A::getResidentsInHouses(
+std::set<Resident*> Simulator_Basic_A::getResidentsInTheseHouses(
     std::set<House*> houses
 )
 {   
     std::set<Resident*> residents;
     for (House* house : houses)
     {   
-        if (_curr_house_to_res_map.count(house) > 0)
-        {
-            Resident* currRes = _curr_house_to_res_map[house];
-            residents.insert(currRes);
+        if (hasResident(house))
+        {   //std::cout << "inside if statement" << std::endl;
+            Resident* rr = getCurrResident(house);
+            //std::cout << "Simulator Basic A 116" << std::endl;
+            //std::cout << "Simulator Basic A 117 " << rr->getID() << std::endl;
+            residents.insert(rr);
         }  
     }
     return residents;
@@ -132,4 +150,48 @@ House* Simulator_Basic_A::Simulator_Basic_A::selectRandom(
     return *it;
 }
 
+House* Simulator_Basic_A::getCurrHouse (Resident* res)
+{
+    House* currHouse = _curr_res_to_house_map.at(res);
+    if (currHouse ==  nullptr)
+    {
+        std::cout << "getCurrHouse is returning nullpointer house" << std::endl;
+    }
+    return currHouse;
+}
 
+Resident* Simulator_Basic_A::getCurrResident (House* house)
+{
+    Resident* currRes = _curr_house_to_res_map.at(house);
+    if (currRes == nullptr)
+    {
+        std::cout << "getCurrResident is returning a nullpointer" << std::endl;
+    }
+    return currRes;
+}
+
+bool Simulator_Basic_A::hasResident (House* house)
+{
+    std::map<House*, Resident*>::iterator it = _curr_house_to_res_map.find(house);
+    return ( it != _curr_house_to_res_map.end() );
+}
+
+bool Simulator_Basic_A::hasHouse (Resident* res)
+{
+    std::map<Resident*, House*>::iterator it = _curr_res_to_house_map.find(res);
+    return !(it == _curr_res_to_house_map.end());
+    //return _curr_res_to_house_map.count(res) > 0;
+}
+
+void Simulator_Basic_A::updateNeighbors (House* house)
+{
+    std::set<House*> adjToHouse = _city->getAdjacentHouses(house);
+    for (House* adjHouse: adjToHouse)
+    {
+        if (hasResident(adjHouse))
+        {
+            Resident* currRes = getCurrResident(adjHouse);
+            updateResident(currRes);
+        }
+    }
+}

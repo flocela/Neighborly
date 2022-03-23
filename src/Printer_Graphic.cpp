@@ -21,9 +21,9 @@
 // Allow 0.3 of the writable vertical length for the Diversity Chart.
 // The left and right borders are 10 px. So,
 // the writable horizontal length = _screen_width - 20 pixels.
-Printer_Graphic::Printer_Graphic (
+Printer_Graphic::Printer_Graphic ( // TODO check if parameters are zero, if stop
     int maxNumOfRuns,
-    const int screen_width,
+    const int screen_width, // TODO screen_width and screen_height do not have to be const
     const int screen_height,
     City* cityPtr,
     std::set<Color> colors
@@ -55,11 +55,15 @@ void Printer_Graphic::print (
 )
 {   
     (void) title;
-    (void) residentPerHouse;
+    //(void) residentPerHouse;
     (void) run;
+    std::cout << "Printer_Graphic line 60" << std::endl;
     _city_printer->printCity(residentPerHouse);
+    std::cout << "Printer_Graphic line 62 finished printing city" << std::endl;
     _run_counter_printer->print(run);
+    std::cout << "Printer_Graphic line 64 finished printing counter" << std::endl;
     _renderer->endFrame();
+    std::cout << "Printer_Graphic line 66 finished end frame" << std::endl;
 } 
 
 void Printer_Graphic::keepScreen()
@@ -191,31 +195,6 @@ void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
     .addFontSizeForKeyLabels(_key_font_size)
     .addFontSizeForTitle(_sub_title_font_size);
     _city_printer = builder.build();
-    /*_city_printer = std::make_unique<GraphicCityPrinter>(
-        _renderer.get(),
-        _coord_to_house_map,
-        _city_cross_hairs_x__px,
-        _city_cross_hairs_y__px,
-        sadAndHappyColors,
-        _cell_size,
-        _city_tick_spacing_x,
-        _city_tick_spacing_y,
-        _city_tick_width__px, // TODO must add this method for tick width__px
-        _city_axis_width__px,
-        _city_label_spacing_x,
-        _city_label_spacing_y,
-        _min_x_coord,
-        _max_x_coord,
-        _min_y_coord,
-        _max_y_coord,
-        _city_x_axis_offset__px,
-        _city_y_axis_offset__px,
-        _city_x_axis_overrun__px,
-        _city_y_axis_overrun__px,
-        _axis_label_font_size,
-        _key_font_size,
-        _sub_title_font_size
-    );*/
 }
 
 void Printer_Graphic::initRunCounterPrinter (int maxNumOfRuns)

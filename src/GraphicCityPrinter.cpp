@@ -85,7 +85,9 @@ void GraphicCityPrinter::printCity(std::map<House *, Resident *> houseToResMap)
 {  (void) houseToResMap; // TODO why do I have a (void) here?
     _x_axis_utility->left2RightTitleOnTop();
     _y_axis_utility->top2BottomTitleOnLeft();
+    std::cout << "GraphicCityPrinter line 88" << std::endl;
     printHouses(houseToResMap);
+    std::cout << "GraphicCityPrinter line 90 finished printHouses()" << std::endl;
 }
 
 void GraphicCityPrinter::addCityXAxis()
@@ -137,13 +139,14 @@ void GraphicCityPrinter::addTitle()
     _renderer->renderText(x, _title_y__px, "City Map", 4);
 }
 
-void GraphicCityPrinter::printHouses(
-    std::map<House *, Resident *> houseToResMap)
-{
+void GraphicCityPrinter::printHouses( std::map<House *, Resident *> houseToResMap )
+{   std::cout << "GraphicCityPrinter: line 143: printHouses() first line" << std::endl;
     std::map<Color, std::vector<Coordinate>> colorToCoordinates =
         createVectorsForEachColor(houseToResMap);
+    std::cout << "GraphicCityPrinter: printHouses line 146: finished createVectorsForEachColor" << std::endl;
     for (auto const &colorToCoord : colorToCoordinates)
     {
+        std::cout << "GraphicCityPrinter: " << _house_size__px << ", " << std::endl;
         _renderer->addBlocksByColor(
             _house_size__px,
             _house_size__px,
@@ -192,8 +195,11 @@ std::map<Color, std::vector<Coordinate>> GraphicCityPrinter::createVectorsForEac
         else
         {
             Resident *res = houseToResMap[house];
+            std::cout << "GraphicCityPrinter 198: *res pointer is null " << (res == nullptr)<< std::endl;
+            std::cout << "Graphic City Printer 199: "  << res->getID() << std::endl; 
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
+            std::cout << "GraphicCityPrinter 201: " << std::endl;
             if (happinessValue < happinessGoal)
                 colorKey = _unhappy_color_map[res->getColor()];
             else

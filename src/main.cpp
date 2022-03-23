@@ -187,7 +187,13 @@ int main(int argc, char* argv[])
     for (int ii=0; ii< numOfRuns; ii++)
     {   
         houseToResidentMap = simulator->simulate();
-        std::cout << "run " << ii << " simulation done" << std::endl;
+        //for (auto const& [key, val] : houseToResidentMap )
+        //{
+        //    std::cout << "main 192 is nullptr: " << (key == nullptr) << ", " << (val == nullptr) << std::endl;
+        //    std::cout << "main 193: " << key->getAddress() << ", " << val->getID() << std::endl;
+        //}
+
+
         graphicPrinter.print(houseToResidentMap, ii, "Title");
         //std::this_thread::sleep_for(std::chrono::milliseconds(100));
         std::cout << "run " << ii << " print done" << std::endl;
