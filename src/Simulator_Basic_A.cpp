@@ -11,14 +11,14 @@ Simulator_Basic_A::Simulator_Basic_A (City* city, std::set<Resident*> residents)
 }
 
 std::map<House*, Resident*> Simulator_Basic_A::simulate ()
-{   std::cout << "simulate line 14" << std::endl;
+{   
     if (!_first_simulation_done)
     {
         firstSimulation();
         _first_simulation_done = true;
     }
     else
-    {   std::cout << "simulate line 21" << std::endl;
+    {   
         // Make a set of currently unhappy residents. They get the opportunity 
         // to move in this round of the simulation.
         std::set<Resident*> currUnhappyResidents;
@@ -28,26 +28,27 @@ std::map<House*, Resident*> Simulator_Basic_A::simulate ()
             {
                 currUnhappyResidents.insert(res);
             }
-        }
-        for (Resident* res : currUnhappyResidents)
-        {   
-            moveResidentIfUnhappy(res); // can only make decisions based on current neighbors.
-        }
+        } 
+    }
+
+    for (Resident* res : _residents)
+    {   
+        moveResidentIfUnhappy(res); // can only make decisions based on current neighbors.
     }
    
     return _curr_house_to_res_map;
 }
 
 void Simulator_Basic_A::firstSimulation ()
-{   std::cout << "firstSimulation line 42" << std::endl;
+{   
     for (Resident* res : _residents)
     {   
         House* house = selectRandom(_open_houses);
-        moveResidentIntoHouse(res, house);
-        std::cout << "Simulator_Basic 53" << std::endl;
-        updateResident(res);
+        _curr_house_to_res_map.insert(std::pair<House*, Resident*>(house, res));
+        _curr_res_to_house_map.insert(std::pair<Resident*, House*>(res, house));
+        _open_houses.erase(house);
     }
-    std::cout << "firstSimulation line 49" << std::endl;
+
 }
 
 void Simulator_Basic_A::moveResidentIfUnhappy (Resident* res)
@@ -71,8 +72,6 @@ void Simulator_Basic_A::moveResidentIfUnhappy (Resident* res)
             // Move into the first house that's ready. 
             std::set<House*>::iterator it = readyHouses.begin();
             moveResidentIntoHouse(res, *it);
-            //updateResident(res); // TODO Why update resident now, if I have to update resident again later (
-                // at the beginning of this function?)
         }
     }
 }
@@ -85,14 +84,10 @@ void Simulator_Basic_A::moveResidentIntoHouse (Resident* res, House* newHouse)
         _curr_res_to_house_map.erase(res);
         _curr_house_to_res_map.erase(oldHouse);
         _open_houses.insert(oldHouse);
-        updateNeighbors(oldHouse);
     }
-    std::cout << "Simulator_Basic_A 90 is res nullptr? " << (res == nullptr) <<std::endl;
     _curr_house_to_res_map.insert(std::pair<House*, Resident*>(newHouse, res));
     _curr_res_to_house_map.insert(std::pair<Resident*, House*>(res, newHouse));
     _open_houses.erase(newHouse);
-    updateNeighbors(newHouse);
-    updateResident(res);
 }
 
 void Simulator_Basic_A::updateResident (Resident* res)
@@ -111,10 +106,8 @@ std::set<Resident*> Simulator_Basic_A::getResidentsInTheseHouses(
     for (House* house : houses)
     {   
         if (hasResident(house))
-        {   //std::cout << "inside if statement" << std::endl;
+        {   
             Resident* rr = getCurrResident(house);
-            //std::cout << "Simulator Basic A 116" << std::endl;
-            //std::cout << "Simulator Basic A 117 " << rr->getID() << std::endl;
             residents.insert(rr);
         }  
     }

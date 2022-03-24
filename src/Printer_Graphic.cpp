@@ -57,13 +57,9 @@ void Printer_Graphic::print (
     (void) title;
     //(void) residentPerHouse;
     (void) run;
-    std::cout << "Printer_Graphic line 60" << std::endl;
     _city_printer->printCity(residentPerHouse);
-    std::cout << "Printer_Graphic line 62 finished printing city" << std::endl;
     _run_counter_printer->print(run);
-    std::cout << "Printer_Graphic line 64 finished printing counter" << std::endl;
     _renderer->endFrame();
-    std::cout << "Printer_Graphic line 66 finished end frame" << std::endl;
 } 
 
 void Printer_Graphic::keepScreen()
