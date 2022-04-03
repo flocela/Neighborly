@@ -17,17 +17,22 @@ class Printer_Graphic : public Printer
     public:
         Printer_Graphic() = delete;
         Printer_Graphic (
-            int maxNumOfRuns,
             const int screen_width,
             const int screen_height,
-            City* cityPtr,
-            std::set<Color> colors
+            int maxTypesOfResidents
         );
         Printer_Graphic (const Printer_Graphic& obj) = default;
         Printer_Graphic (Printer_Graphic&& obj) noexcept = default;
         Printer_Graphic& operator= (const Printer_Graphic& obj) = default;
         Printer_Graphic& operator= (Printer_Graphic&& obj) noexcept = default;
         ~Printer_Graphic () = default;
+
+        void setCity (City* cityPtr); // make private
+        void setColors (std::set<Color> colors); // make private
+        void setNumOfRuns (int numOfRuns); // make private
+        void init (City* cityPtr, std::set<Color> colors, int numOfRuns);
+        int maxNumOfHousesX (int screenWidth__px);
+        int maxNumOfHousesY (int screenWidth__px);
 
         void print(
             std::map<House*, Resident*> residentPerHouse,
@@ -38,20 +43,21 @@ class Printer_Graphic : public Printer
         void keepScreen();
     
     private:
-
-
         // COMMON TO ALL CHARTS //
-
+        int _maxTypesOfResidents;
         int _screen_width;
         int _screen_height;
-        int _window_title__px = 0; // space for title at top of screen
+        int _max_num_of_types_of_residents = 3;
+        int _window_title_y__px = 40; // space for title at top of screen
+        int _num_runs_title_y__px = 30;
+        int _resident_title_y__px = 30; // space for each resident.
         int _bottom_border__px = 20; // space for border at top of screen
         int _left_border__px = 10; // space for border at left of screen
         int _right_border__px = 10; // space for border at right of screen
         int _writable_horiz_length__px; // space allotted for all charts
         int _writable_vert_length__px; // space allotted for all charts
         int _map_writable_vert_length__px;
-        int _hapiness_chart_writable_vert_length__px;
+        int _happiness_chart_writable_vert_length__px;
         int _diversity_chart_writable_vert_length__px;
         std::unique_ptr<Renderer> _renderer;
         std::set<Color> _colors;
@@ -72,6 +78,7 @@ class Printer_Graphic : public Printer
         // Each house is inside of a square cell. The cell 
         // will hold a house (represented by a colored square) and have
         // clear border around the house.
+        int _smallest_allowable_cell_size__px = 4; // can't see house, if smaller
         int _cell_size;  // pixels for square cell
         int _house_size; // pixels for colored square house
         int _city_tick_spacing_x; // tick spacing on x axis
@@ -118,7 +125,7 @@ class Printer_Graphic : public Printer
         // initialize _coord_to_house_map. 
         // Since, the city's most west, east, north, and south coordinates
         // will not change, set _min_x_coord and the like.
-        void initCityInfo (City* cityPtr);
+        void initCityCoordinates (City* cityPtr);
 
         // initialize info for the city map.
         void initCityMapInfo ();
@@ -127,7 +134,7 @@ class Printer_Graphic : public Printer
         // like where to put grid (graphOrigin), x and y axis offsets,
         // cell_size, rgba for residents' colors and the like. Basically 
         // set up the graph where the residents will be plotted.
-        void initCityPrinter (Coordinate graphOrigin);
+        void initCityPrinter ();
 
         void initRunCounterPrinter (int maxNumOfRuns);
 

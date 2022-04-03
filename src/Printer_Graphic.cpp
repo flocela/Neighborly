@@ -11,42 +11,61 @@
 #include "GraphicCityPrinterBuilder.h"
 #include "GraphicCityPrinter.h"
 
-// Shows a City Map Chart, the current run number, 
+// Shows a City Map, the current run number, 
 // a Happiness Chart, and a Diversity Chart.
 // The Window Title and current run number will take up 100 pixels at top.
 // The bottom border will take 20 pixels at the bottom.
-// The writable vertical length = _screen_height - 80 - 20 pixels.
+// The writable vertical length = _screen_height - Window Title - bottom border.
 // Allow 0.4 of the writable vertical length for the City Map Chart.
 // Allow 0.3 of the writable vertical length for the Happiness Chart.
 // Allow 0.3 of the writable vertical length for the Diversity Chart.
 // The left and right borders are 10 px. So,
-// the writable horizontal length = _screen_width - 20 pixels.
+// the writable horizontal length = _screen_width - left border - right border.
 Printer_Graphic::Printer_Graphic ( // TODO check if parameters are zero, if stop
-    int maxNumOfRuns,
     const int screen_width, // TODO screen_width and screen_height do not have to be const
     const int screen_height,
-    City* cityPtr,
-    std::set<Color> colors
-):  _screen_width{screen_width},
+    const int maxTypesOfResidents
+):  _maxTypesOfResidents{maxTypesOfResidents},
+    _screen_width{screen_width},
     _screen_height{screen_height},
     _writable_horiz_length__px{_screen_width - _left_border__px - _right_border__px},
-    _writable_vert_length__px{_screen_height - _window_title__px - _bottom_border__px},
+    _writable_vert_length__px{_screen_height - _window_title_y__px - _bottom_border__px},
     _map_writable_vert_length__px{_writable_vert_length__px * 6 / 10},
-    _hapiness_chart_writable_vert_length__px{_writable_vert_length__px * 3 / 10},
+    _happiness_chart_writable_vert_length__px{_writable_vert_length__px * 3 / 10},
     _diversity_chart_writable_vert_length__px{
         _writable_vert_length__px - 
         _map_writable_vert_length__px - 
-        _hapiness_chart_writable_vert_length__px},
-    _renderer{std::make_unique<Renderer>(_screen_width, _screen_height)},
-    _colors{colors}
+        _happiness_chart_writable_vert_length__px}
 {
-    initCityInfo(cityPtr);
-    initCityMapInfo();
-    Coordinate graphOrigin = Coordinate{10, 10};
-    initCityPrinter(graphOrigin);
-    initRunCounterPrinter(maxNumOfRuns);
-    initDiversityPrinter();
+    //initDiversityPrinter();
 }
+
+void Printer_Graphic::init (City* cityPtr, std::set<Color> colors, int numOfRuns)
+{   
+    _renderer = std::make_unique<Renderer>(_screen_width, _screen_height);
+    setCity (cityPtr);
+    setColors(colors);
+    setNumOfRuns(numOfRuns);
+}
+
+void Printer_Graphic::setCity (City* cityPtr) // TODO throw exception if city too large
+{
+    initCityCoordinates(cityPtr);
+    initCityMapInfo(); // TODO this throws an exception. Is that okay?
+    initCityPrinter();
+}
+
+void Printer_Graphic::setColors (std::set<Color> colors)
+{
+    _colors = colors;
+}
+
+void Printer_Graphic::setNumOfRuns (int numOfRuns)
+{
+    _num_of_runs = numOfRuns;
+    initRunCounterPrinter(numOfRuns);
+}
+
 
 void Printer_Graphic::print (
     std::map<House*, Resident*> residentPerHouse,
@@ -55,8 +74,6 @@ void Printer_Graphic::print (
 )
 {   
     (void) title;
-    //(void) residentPerHouse;
-    (void) run;
     _city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
     _renderer->endFrame();
@@ -76,8 +93,9 @@ void Printer_Graphic::keepScreen()
     }
 }
 
-void Printer_Graphic::initCityInfo(City* cityPtr)
+void Printer_Graphic::initCityCoordinates(City* cityPtr)
 {
+    // Determin the min and max house coordinates for x and y.
     std::vector<House*> houses = cityPtr->getHouses();
     for (House* house : houses)
     {   
@@ -157,18 +175,12 @@ void Printer_Graphic::initCityMapInfo ()
     _city_label_spacing_y = findLabelSpacing(deltaY);
 
     _city_cross_hairs_x__px = _left_border__px + 300;
-    _city_cross_hairs_y__px = _window_title__px + 80;
+    _city_cross_hairs_y__px = _window_title_y__px + 80;
 
 }
 
-void Printer_Graphic::initCityPrinter (Coordinate graphOrigin)
-{ (void) graphOrigin;
-    std::set<Color> sadAndHappyColors;
-    for (Color color : _colors)
-    {
-        sadAndHappyColors.insert(color);
-        sadAndHappyColors.insert(_unhappy_color_map[color]);
-    }
+void Printer_Graphic::initCityPrinter ()
+{ 
     GraphicCityPrinterBuilder builder = GraphicCityPrinterBuilder();
     builder.addRenderer(_renderer.get())
     .addCoordinateToHouseMap(_coord_to_house_map)
@@ -210,7 +222,7 @@ void Printer_Graphic::initDiversityPrinter ()
         _diversity_chart_writable_vert_length__px,
         _writable_horiz_length__px - 300, // same -300 used for CityPrinter. Make this a variable
         _left_border__px + 300, // same -300 used for CityPrinter. Make this a variable
-        _window_title__px + 80 + _map_writable_vert_length__px + _diversity_chart_writable_vert_length__px, // TODO how did I come up with this number
+        _window_title_y__px + 80 + _map_writable_vert_length__px + _diversity_chart_writable_vert_length__px, // TODO how did I come up with this number
         _max_num_of_runs,
         3, // blocks will be 3 pixels wide and high. Make this into a variable.
         1, //border
@@ -240,5 +252,24 @@ int Printer_Graphic::findTickSpacing (int stretch)
 int Printer_Graphic::findLabelSpacing (int stretch)
 {
     return (stretch <= 10)? 1 : 10;
+}
+
+int Printer_Graphic::maxNumOfHousesX (int screenWidth__px)
+{
+    int writableHorizLength = screenWidth__px - _left_border__px - _right_border__px;
+    int allowableLengthForHousesX = writableHorizLength - 
+        _city_x_axis_offset__px - _city_x_axis_overrun__px;
+    return allowableLengthForHousesX/_smallest_allowable_cell_size__px;
+}
+
+int Printer_Graphic::maxNumOfHousesY (int screenWidth__px)
+{
+    int writableVertLength = screenWidth__px -
+                             _window_title_y__px - 
+                             _num_runs_title_y__px -
+                             (_max_num_of_types_of_residents * _resident_title_y__px);
+    int allowableLengthForHousesY = writableVertLength - 
+        _city_y_axis_offset__px - _city_y_axis_overrun__px;
+    return allowableLengthForHousesY/_smallest_allowable_cell_size__px;
 }
 

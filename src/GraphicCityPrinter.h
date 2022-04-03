@@ -88,8 +88,6 @@ class GraphicCityPrinter
         // colored part of the cell in pixels. It does not include the border.
         int _house_size__px;
 
-        
-
         // tick spacing on axes.
         int _tick_spacing_x;
         int _tick_spacing_y;

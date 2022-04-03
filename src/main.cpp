@@ -117,6 +117,8 @@ int main(int argc, char* argv[])
 
     vector<CityFactory*> cityFactoryPointers = getPointers(cityFactories);
     vector<ResidentsFactory*> resFactoryPointers = getPointers(residentFactories); 
+    
+    Printer_Graphic graphicPrinter{1200, 1200, 2};
 
     SimulationComponents components;
     int randomSeed = 1;
@@ -166,8 +168,6 @@ int main(int argc, char* argv[])
 
     }
     
-    
-    
 /*
     std::map<int, Resident*> houseToResidentMap = {};
     for (auto& resident : residents)
@@ -180,23 +180,16 @@ int main(int argc, char* argv[])
     {
         colors.insert(resident->getColor());
     }
+    graphicPrinter.init(city.get(), colors, numOfRuns);
 
-    Printer_Graphic graphicPrinter{4, 1200, 1200, city.get(), colors};
     std::map<House*, Resident*> houseToResidentMap;
     std::cout << "before runs" << std::endl;
     for (int ii=0; ii< numOfRuns; ii++)
     {   
         houseToResidentMap = simulator->simulate();
-        //for (auto const& [key, val] : houseToResidentMap )
-        //{
-        //    std::cout << "main 192 is nullptr: " << (key == nullptr) << ", " << (val == nullptr) << std::endl;
-        //    std::cout << "main 193: " << key->getAddress() << ", " << val->getID() << std::endl;
-        //}
-
-
+        std::cout << "main: houseToResidentMap.size: " << houseToResidentMap.size() << std::endl;
         graphicPrinter.print(houseToResidentMap, ii, "Title");
-        //std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        std::cout << "run " << ii << " print done" << std::endl;
+        std::cout << "main 196, print runs " << std::endl;
     }
     Printer_CMDLine cmdLinePrinter{numOfRuns, city.get()};
     //cmdLinePrinter.print(houseToResidentMap, numOfRuns, "Title");
