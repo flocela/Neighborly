@@ -301,21 +301,6 @@ House* Simulator_E::findHouseForForcedResHappyAtBest (
     return happiestHouse;
 }
 
-std::vector<Color> Simulator_E::getColors (std::set<House*> houses)
-{
-    std::vector<Color> colors;
-    for (House* house : houses)
-    {
-        if (_curr_house_to_res_map.count(house) != 0)
-        {
-            colors.push_back(
-                (_curr_house_to_res_map[house])->getColor()
-            );
-        }
-    }
-    return colors;
-}
-
 House* Simulator_E::findHomeForForcedToMoveResident (
     Resident* resident,
     House* oldHouse,

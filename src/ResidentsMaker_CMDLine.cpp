@@ -21,14 +21,14 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents
         0,
         30,
         0.5,
-        Color::red);
+        1);
 
     auto residentsGroup2 = residentsFactories[0]->createBaseResidents (
         _ui,
         13,
         50,
         0.5,
-        Color::green);
+        2);
 
     for (auto& r: residentsGroup1)
         residents.emplace_back(std::move(r));
@@ -79,7 +79,8 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
             numOfResidentsCreated,
             numOfResidents,
             happinessGoal,
-            colorInfo._my_color);
+            ii
+            );
 
         for (auto& r: newResidents)
             residents.emplace_back(std::move(r));

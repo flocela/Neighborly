@@ -6,10 +6,10 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
-#include "XAxisUtility.h"
-#include "YDownAxisUtility.h"
-#include "GraphicCityPrinterBuilder.h"
-#include "GraphicCityPrinter.h"
+#include "XAxisL2R.h"
+#include "YAxisT2B.h"
+#include "GrCityPrinter.h"
+#include "GrDiversityPrinter.h"
 
 // Shows a City Map, the current run number, 
 // a Happiness Chart, and a Diversity Chart.
@@ -23,47 +23,91 @@
 // the writable horizontal length = _screen_width - left border - right border.
 Printer_Graphic::Printer_Graphic ( // TODO check if parameters are zero, if stop
     const int screen_width, // TODO screen_width and screen_height do not have to be const
-    const int screen_height,
-    const int maxTypesOfResidents
-):  _maxTypesOfResidents{maxTypesOfResidents},
-    _screen_width{screen_width},
-    _screen_height{screen_height},
-    _writable_horiz_length__px{_screen_width - _left_border__px - _right_border__px},
-    _writable_vert_length__px{_screen_height - _window_title_y__px - _bottom_border__px},
-    _map_writable_vert_length__px{_writable_vert_length__px * 6 / 10},
-    _happiness_chart_writable_vert_length__px{_writable_vert_length__px * 3 / 10},
-    _diversity_chart_writable_vert_length__px{
-        _writable_vert_length__px - 
-        _map_writable_vert_length__px - 
-        _happiness_chart_writable_vert_length__px}
-{
-    //initDiversityPrinter();
-}
+    const int screen_height
+):  _screen_width__px{screen_width},
+    _screen_height__px{screen_height}
+{}
 
-void Printer_Graphic::init (City* cityPtr, std::set<Color> colors, int numOfRuns)
+void Printer_Graphic::init (City* cityPtr, int numOfRuns)
 {   
-    _renderer = std::make_unique<Renderer>(_screen_width, _screen_height);
-    setCity (cityPtr);
-    setColors(colors);
-    setNumOfRuns(numOfRuns);
+    initAxesValues();
+    _renderer = std::make_unique<Renderer>(_screen_width__px, _screen_height__px);
+    initCityMap(cityPtr);
+    initRunCounter(numOfRuns);
 }
 
-void Printer_Graphic::setCity (City* cityPtr) // TODO throw exception if city too large
+void Printer_Graphic::initAxesValues ()
 {
-    initCityCoordinates(cityPtr);
-    initCityMapInfo(); // TODO this throws an exception. Is that okay?
-    initCityPrinter();
+    _charts_top_left_x_coord__px = calcLeftXCoordPx();
+    _city_map_chart_top_left_y_coord__px = calcCityMapChartTopLeftYCoordPx();
+    _div_chart_y_top_left_y_coord__px = calcDivChartTopLeftYCoordPx();
+    // _sum_y_space_lengths__px is all three charts' y-direction spaces added up
+    _sum_y_space_lengths__px = calcSumOfYSpacesPx ();
+    // all charts have the same _x_space_length__px
+    _x_space_length__px = calcXSpacePx();
 }
 
-void Printer_Graphic::setColors (std::set<Color> colors)
+void Printer_Graphic::initCityMap (City* cityPtr) // TODO throw exception if city too large
+{
+    determineMinMaxHouseCoords(cityPtr);
+    setCityPrinter();
+}
+
+void Printer_Graphic::determineMinMaxHouseCoords(City* cityPtr)
+{
+    // Determine the min and max house coordinates for x and y.
+    std::vector<House*> houses = cityPtr->getHouses();
+    for (House* house : houses)
+    {   // Coordinates are not in pixels! Think of them as the house number.
+        Coordinate coord =  cityPtr->getCoordinate(house->getAddress());
+        _coord_to_house_map[coord] = house;
+        if (coord.getX() > _max_x_coord)
+            _max_x_coord = coord.getX();
+        if (coord.getX() < _min_x_coord)
+            _min_x_coord = coord.getX();
+        if (coord.getY() > _max_y_coord)
+            _max_y_coord = coord.getY();
+        if (coord.getY() < _min_y_coord)
+            _min_y_coord = coord.getY();
+    }
+}
+
+void Printer_Graphic::setCityPrinter ()
+{ 
+    GrCityPrinterSizer cityPrinterSizer = 
+        GrCityPrinterSizer (_x_space_length__px,
+                            _sum_y_space_lengths__px * _city_map_y_axis_fraction, // this has to become a function. this calc is done in two places in this class.
+                            _axis_format_X,
+                            _axis_format_Y,
+                            _chart_title_letter,
+                            _min_x_coord,
+                            _max_x_coord,
+                            _min_y_coord,
+                            _max_y_coord
+        );
+    _city_printer = std::make_unique<GrCityPrinter>(
+        cityPrinterSizer,
+        _renderer.get(),
+        _coord_to_house_map,
+        _colors,
+        _charts_top_left_x_coord__px,
+        _city_map_chart_top_left_y_coord__px
+    );
+}
+
+void Printer_Graphic::setColors (std::map<int,std::pair<Color, Color>> colors)
 {
     _colors = colors;
 }
 
-void Printer_Graphic::setNumOfRuns (int numOfRuns)
+void Printer_Graphic::initRunCounter (int numOfRuns)
 {
     _num_of_runs = numOfRuns;
-    initRunCounterPrinter(numOfRuns);
+    _run_counter_printer = std::make_unique<GraphicRunCounterPrinter>(
+        _renderer.get(), 
+        _x_num_of_runs_offset, 
+        _y_num_of_runs_offset,
+        _num_of_runs );
 }
 
 
@@ -93,183 +137,77 @@ void Printer_Graphic::keepScreen()
     }
 }
 
-void Printer_Graphic::initCityCoordinates(City* cityPtr)
-{
-    // Determin the min and max house coordinates for x and y.
-    std::vector<House*> houses = cityPtr->getHouses();
-    for (House* house : houses)
-    {   
-        Coordinate coord =  cityPtr->getCoordinate(house->getAddress());
-        _coord_to_house_map[coord] = house;
-        if (coord.getX() > _max_x_coord)
-            _max_x_coord = coord.getX();
-        if (coord.getX() < _min_x_coord)
-            _min_x_coord = coord.getX();
-        if (coord.getY() > _max_y_coord)
-            _max_y_coord = coord.getY();
-        if (coord.getY() < _min_y_coord)
-            _min_y_coord = coord.getY();
-    }
-}
-
-void Printer_Graphic::initCityMapInfo ()
-{
-    // Find _cell_size. Each cell contains a house surrounded by a border.
-    // 
-    // Limits:
-    // Smallest allowable cell size is 4, otherwise I can't see the house.
-    // Largest allowable cell size is 20, otherwise looks too big.
-    // Limits for the x axis:
-    //   // I have a _writable_horizontal_length. 
-    //   // I am using a GraphicCityPrinter, which uses 300px on the left side.
-    //   // The xAxisLength will be writable_horizontal_length - 300px.
-    //   // The allowable length for the houses will be the
-    //   // xAxisLength - _city_x_axis_offset__px - _city_x_axis_overrun__px.
-    //   // The _cell_size = allowableHousesLengthX / (_max_x_coord - _min_x_coord),
-    //   // where the max and min coordinates coorespond to the most 
-    //   // right and left houses.
-    // Limits for the y axis:
-    //   // I have a _writable_vertical_length.
-    //   // I am using a GraphicalCityPrinter, which uses 80px above the y-axis.
-    //   // The yAxisLength will be the _writable_vertical_length - 80px.
-    //   // The allowable length for the houses will be the
-    //   // yAxisLength - _city_y_axis_offset__px - _city_y_axis_overrun__px.
-    //   // The _cell_size = allowableHouseLengthY / (_max_y_coord - _min_y_coord),
-    //   // where teh max and min coordinates correspond to the most 
-    //   // bottom and top houses.
-    // GraphicCityPrinter uses a square cell size, take smaller of
-    // axes' cell sizes.
-
-
-    int deltaX = _max_x_coord - _min_x_coord;
-    int xAxisLength = _writable_horiz_length__px - 300;
-    int allowableHousesLengthX = 
-        xAxisLength - _city_x_axis_offset__px - _city_x_axis_overrun__px;
-    int xCellSize = allowableHousesLengthX / deltaX;
-    
-    int deltaY = _max_y_coord - _min_y_coord;
-    int yAxisLength = _map_writable_vert_length__px - 80;
-    int allowableHousesLengthY =
-        yAxisLength - _city_y_axis_offset__px - _city_y_axis_overrun__px;
-    int yCellSize = allowableHousesLengthY / deltaY;
-
-    _cell_size = std::min(xCellSize, yCellSize);
-    // Limit _cell_size. Cells required to be 4 pixels at least or too small to see.
-    if (_cell_size < 4)
-    {
-        throw (
-            "Can not print a city graph with so many houses. Maximum number of houses"
-             " per side is 150."
-        );
-    }
-
-    // Limit _cell_size so the squares don't appear to big.
-    _cell_size = (_cell_size > 20) ? 20 : _cell_size;
-    
-    // House must be at center of cell. // TODO may not need _house_size
-    _house_size = (_cell_size % 2 == 0) ? (_cell_size/2) : ( (_cell_size/2) + 1);
-
-    _city_tick_spacing_x = findTickSpacing(deltaX);
-    _city_label_spacing_x = findLabelSpacing(deltaX);
-    _city_tick_spacing_y = findTickSpacing(deltaY);
-    _city_label_spacing_y = findLabelSpacing(deltaY);
-
-    _city_cross_hairs_x__px = _left_border__px + 300;
-    _city_cross_hairs_y__px = _window_title_y__px + 80;
-
-}
-
-void Printer_Graphic::initCityPrinter ()
-{ 
-    GraphicCityPrinterBuilder builder = GraphicCityPrinterBuilder();
-    builder.addRenderer(_renderer.get())
-    .addCoordinateToHouseMap(_coord_to_house_map)
-    .addCrossHairsCoordinate(Coordinate{_city_cross_hairs_x__px, _city_cross_hairs_y__px})
-    .addCellSize(_cell_size)
-    .addXAxisTickSpacing(_city_tick_spacing_x)
-    .addYAxisTickSpacing(_city_tick_spacing_y)
-    .addAxesWidthInPixels(_city_axis_width__px)
-    .addXAxisLabelSpacing(_city_label_spacing_x)
-    .addYAxisLabelSpacing(_city_label_spacing_y)
-    .addMinimumXValueForHouse(_min_x_coord)
-    .addMaximumXValueForHouse(_max_x_coord)
-    .addMinimumYValueForHouse(_min_y_coord)
-    .addMaximumYValueForHouse(_max_y_coord)
-    .addXAxisOffsetInPixels(_city_x_axis_offset__px)
-    .addYAxisOffsetInPixels(_city_y_axis_offset__px)
-    .addXAxisOverrunInPixels(_city_x_axis_overrun__px)
-    .addYAxisOverrunInPixels(_city_y_axis_overrun__px)
-    .addFontSizeForTickLabels(_axis_label_font_size)
-    .addFontSizeForKeyLabels(_key_font_size)
-    .addFontSizeForTitle(_sub_title_font_size);
-    _city_printer = builder.build();
-}
-
-void Printer_Graphic::initRunCounterPrinter (int maxNumOfRuns)
-{
-    _run_counter_printer = std::make_unique<GraphicRunCounterPrinter>(
-        _renderer.get(), 
-        _x_num_of_runs_offset, 
-        _y_num_of_runs_offset,
-        maxNumOfRuns );
-}
-
 void Printer_Graphic::initDiversityPrinter ()
 {
-    _diversity_printer = std::make_unique<GraphicDiversityPrinter> (
+    GrDiversityPrinterSizer grDivPrinterSizer{
+        _x_space_length__px,
+        static_cast<int>(_sum_y_space_lengths__px * _diversity_chart_y_axis_fraction),
+        _axis_format_X,
+        _axis_format_Y,
+        _chart_title_letter,
+        0,
+        _num_of_runs
+    };
+
+    _diversity_printer = std::make_unique<GrDiversityPrinter> (
+        grDivPrinterSizer,
         _renderer.get(),
         _colors,
-        _diversity_chart_writable_vert_length__px,
-        _writable_horiz_length__px - 300, // same -300 used for CityPrinter. Make this a variable
-        _left_border__px + 300, // same -300 used for CityPrinter. Make this a variable
-        _window_title_y__px + 80 + _map_writable_vert_length__px + _diversity_chart_writable_vert_length__px, // TODO how did I come up with this number
-        _max_num_of_runs,
-        3, // blocks will be 3 pixels wide and high. Make this into a variable.
-        1, //border
-        3, //block spacing
-        3,
-        1, // run spacing
-        1,
-        2,
-        2,
-        10,
-        10,
-        0,
-        0,
-        0,
-        0,
-        12,
-        12,
-        12
+        _charts_top_left_x_coord__px,
+        calcDivChartTopLeftYCoordPx()
     );
 }
 
-int Printer_Graphic::findTickSpacing (int stretch)
-{
-    return (stretch <= 100)? 1 : 5;
-}
-
-int Printer_Graphic::findLabelSpacing (int stretch)
-{
-    return (stretch <= 10)? 1 : 10;
-}
-
 int Printer_Graphic::maxNumOfHousesX (int screenWidth__px)
-{
-    int writableHorizLength = screenWidth__px - _left_border__px - _right_border__px;
-    int allowableLengthForHousesX = writableHorizLength - 
-        _city_x_axis_offset__px - _city_x_axis_overrun__px;
-    return allowableLengthForHousesX/_smallest_allowable_cell_size__px;
+{   (void)screenWidth__px;
+    //TODO figure this out
+    return 100;
 }
 
 int Printer_Graphic::maxNumOfHousesY (int screenWidth__px)
 {
-    int writableVertLength = screenWidth__px -
-                             _window_title_y__px - 
-                             _num_runs_title_y__px -
-                             (_max_num_of_types_of_residents * _resident_title_y__px);
-    int allowableLengthForHousesY = writableVertLength - 
-        _city_y_axis_offset__px - _city_y_axis_overrun__px;
-    return allowableLengthForHousesY/_smallest_allowable_cell_size__px;
+    (void)screenWidth__px;
+    //TODO figure this out
+    return 100;
 }
+
+int Printer_Graphic::calcSumOfYSpacesPx ()
+{
+    return _screen_width__px -
+           _top_border__px -
+           _window_title.letterHeight() -
+           _window_title.lineSpace() -
+           _chart_title_letter.letterHeight() - // num of runs chart title
+           _chart_title_letter.lineSpace() -
+           _num_of_types_of_residents * _resident_keys.getHeightIncLSpace() -
+           _bottom_border__px; 
+}
+
+int Printer_Graphic::calcXSpacePx ()
+{
+    return _screen_width__px -
+           _left_border__px -
+           _right_border__px;
+}
+
+int Printer_Graphic::calcLeftXCoordPx ()
+{
+    return _left_border__px;
+}
+
+int Printer_Graphic::calcCityMapChartTopLeftYCoordPx ()
+{
+    return _top_border__px +
+           _window_title.getHeightIncLSpace() +
+           _chart_title_letter.getHeightIncLSpace() + // Run counter chart.
+           _num_of_types_of_residents * _resident_keys.getHeightIncLSpace();
+}
+
+int Printer_Graphic::calcDivChartTopLeftYCoordPx ()
+{
+    return _city_map_chart_top_left_y_coord__px + 
+           (_sum_y_space_lengths__px * _city_map_y_axis_fraction);
+}
+
+
 

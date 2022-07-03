@@ -1,12 +1,6 @@
 #include "PixelConverter.h"
 #include <iostream>
 
-PixelConverter::PixelConverter (
-    int minVal,
-    int minPixel,
-    int cellSize__px
-): _min_val{minVal}, _min_pixel{minPixel}, _cell_size__px{cellSize__px}
-{}
 
 PixelConverter::PixelConverter (
     int minVal,

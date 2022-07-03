@@ -3,13 +3,13 @@
 
 Resident_StepDown::Resident_StepDown ( 
     int id,
-    Color color,
+    int groupNumber,
     double allowedMovementDistance,
     double happinessGoal,
     double happinessValueAtZeroDiversity,
     double happinessValueAtOneDiversity,
     double diversityWhereDropHappens):
-    Resident(id, color, allowedMovementDistance, happinessGoal),
+    Resident(id, groupNumber, allowedMovementDistance, happinessGoal),
     _happiness_at_zero_diversity(happinessValueAtZeroDiversity),
     _happiness_at_one_diversity(happinessValueAtOneDiversity),
     _diversity_where_drop_happens(diversityWhereDropHappens),
@@ -18,14 +18,13 @@ Resident_StepDown::Resident_StepDown (
         happinessValueAtOneDiversity, 
         diversityWhereDropHappens
     }
-{
-}
+{}
 
 std::string Resident_StepDown::toStrBasic() const
 {
     return "Res_StepDown(id, clr, mov, goal, hap0, hap1, drop): (" + 
         std::to_string(getID()) +
-        ", " + _the_color_infos[getColor()]._my_string +
+        ", " + std::to_string(getGroupNumber()) +
         ", " + std::to_string(getAllowedMovementDistance()) +
         ", " + std::to_string(getHappinessGoal()) +
         ", " + std::to_string(_happiness_at_zero_diversity) +
@@ -43,7 +42,7 @@ double Resident_StepDown::implCalculateHappiness (
     int diff  = 0;
     for (Resident* res : neighbors)
     {
-        if (res->getColor() == getColor())
+        if (res->getGroupNumber() == getGroupNumber())
         {
             like++;
         }

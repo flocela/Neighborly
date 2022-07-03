@@ -5,23 +5,23 @@ using Catch::Matchers::Contains;
 
 // Neighbors are used in getHappiness() method.
 // Only arugment that matteres is Color argument.
-Resident_Flat blueNeighbor01{1, Color::blue, 0.0, 0.0, 0.0 };
+Resident_Flat blueNeighbor01{1, 1, 0.0, 0.0, 0.0 };
 
-Resident_StepDown redNeighbor02{2, Color::red, 0.0, 0.25, 0.1, 0.0, 0.0};
+Resident_StepDown redNeighbor02{2, 3, 0.0, 0.25, 0.1, 0.0, 0.0};
 
-Resident_StepDown redNeighbor03{3, Color::red, 0.0, 0.25, 0.1, 0.0, 0.0};
+Resident_StepDown redNeighbor03{3, 3, 0.0, 0.25, 0.1, 0.0, 0.0};
     
-Resident_StepDown greenNeighbor04{4, Color::green, 0.0, 0.0, 0.1, 0.0, 0.0};
+Resident_StepDown greenNeighbor04{4, 2, 0.0, 0.0, 0.1, 0.0, 0.0};
 
-Resident_StepDown greenNeighbor05{5, Color::green, 0.0, 0.0, 0.1, 0.0, 0.0};
+Resident_StepDown greenNeighbor05{5, 2, 0.0, 0.0, 0.1, 0.0, 0.0};
 
-Resident_StepDown greenNeighbor06{6, Color::green, 0.0, 0.0, 0.1, 0.0, 0.0};
+Resident_StepDown greenNeighbor06{6, 2, 0.0, 0.0, 0.1, 0.0, 0.0};
 
 TEST_CASE("Resident_Flat Ctor throws exception if happinessGoal is greater than 1.0.")
 {   
     REQUIRE_THROWS_WITH(Resident_Flat(
             0,
-            Color::green,
+            2,
             0,
             1.2,
             0.0
@@ -36,7 +36,7 @@ TEST_CASE("Resident_Flat Ctor throws exception if happinessGoal is less than 0.0
     REQUIRE_THROWS_WITH(
         Resident_Flat(
             0,
-            Color::green,
+            2,
             0.0,
             -0.1,
             0.0
@@ -50,7 +50,7 @@ TEST_CASE("Resident_Flat Ctor throws exception if happinessValue is greater than
     REQUIRE_THROWS_WITH(
         Resident_Flat(
             0, 
-            Color::green,
+            2,
             0.0,
             0.0,
             1.2
@@ -64,7 +64,7 @@ TEST_CASE("Resident_Flat Ctor throws exception if happinessValue is less than 0.
     REQUIRE_THROWS_WITH(
         Resident_Flat(
             0, 
-            Color::green,
+            2,
             0.0,
             0.0,
             -.25
@@ -76,7 +76,7 @@ TEST_CASE("Resident_Flat Ctor throws exception if happinessValue is less than 0.
 
 TEST_CASE("getHappines() returns happinessValue")
 {
-    Resident_Flat blueResident {0, Color::blue, 0.0, 0.0, 0.25};
+    Resident_Flat blueResident {0, 1, 0.0, 0.0, 0.25};
     std::set<Resident*> neighbors = { 
         &blueNeighbor01,
         &greenNeighbor04,
@@ -89,7 +89,7 @@ TEST_CASE("getHappines() returns happinessValue")
 TEST_CASE("toStrBasic() ")
 {
     Resident_Flat resident { 1,
-                            Color::green,
+                            2,
                             1.0,
                             1.0,
                             0.25 };
@@ -135,7 +135,7 @@ TEST_CASE("Resident_Flat findHome()"
 {
     Resident_Flat greenResident { 
         1,
-        Color::green,
+        2,
         0.0,
         0.5, // happinessGoal
         0.6  // happinessValue
@@ -202,7 +202,7 @@ TEST_CASE("Resident_Flat findBestHome()"
 {  
     Resident_Flat greenResident { 
         1,
-        Color::green,
+        2,
         0.0,
         0.5, // happinessGoal
         0.6  // happinessValue

@@ -17,24 +17,25 @@ class ResidentsFactory_Flat: public ResidentsFactory
         ~ResidentsFactory_Flat() = default;
 
         std::vector<std::unique_ptr<Resident>> createResidents (
-            UI&   ui,
-            int   firstID,
-            int   count, 
-            Color color
+            UI& ui,
+            int firstID,
+            int count, 
+            int groupNumber
         ) override;
+        
         std::vector<std::unique_ptr<Resident>> createResidents(
             UI&    ui,
             int    firstID, 
             int    count, 
             double happinessGoal,
-            Color  color
+            int groupNumber
         ) override;
         std::vector<std::unique_ptr<Resident>> createBaseResidents(
             UI&    ui,
             int    firstID, 
             int    count, 
             double happinessGoal,
-            Color  color
+            int groupNumber
         ) override;
         std::string toString () override;
     

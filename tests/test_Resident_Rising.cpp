@@ -6,24 +6,24 @@ using Catch::Matchers::Contains;
 
 // Neighbors are used in getHappiness() method.
 // Only arugment that matteres is Color argument.
-Resident_Flat blueNeighbor0001{1, Color::blue, 0.0, 0.0, 0.0 };
+Resident_Flat blueNeighbor0001{1, 1, 0.0, 0.0, 0.0 };
 
-Resident_Flat blueNeighbor0002{2, Color::blue, 0.0, 0.0, 0.0 };
+Resident_Flat blueNeighbor0002{2, 1, 0.0, 0.0, 0.0 };
 
-Resident_Flat blueNeighbor0003{3, Color::blue, 0.0, 0.0, 0.0 };
+Resident_Flat blueNeighbor0003{3, 1, 0.0, 0.0, 0.0 };
     
-Resident_Flat greenNeighbor0001{1, Color::green, 0.0, 0.0, 0.0 };
+Resident_Flat greenNeighbor0001{1, 2, 0.0, 0.0, 0.0 };
 
-Resident_Flat greenNeighbor0002{2, Color::green, 0.0, 0.0, 0.0 };
+Resident_Flat greenNeighbor0002{2, 2, 0.0, 0.0, 0.0 };
 
-Resident_Flat greenNeighbor0003{3, Color::green, 0.0, 0.0, 0.0 };
+Resident_Flat greenNeighbor0003{3, 2, 0.0, 0.0, 0.0 };
 
 TEST_CASE("Resident_Rising Ctor throws exception if happinessGoal is less than 0.0")
 {   
     REQUIRE_THROWS_WITH(
         Resident_Rising(
             0, 
-            Color::green, 
+            2, 
             0.0,
             -0.25, // happiness goal
             0.1,
@@ -38,7 +38,7 @@ TEST_CASE("Resident_Rising Ctor throws exception if happinessGoal is greater tha
     REQUIRE_THROWS_WITH(
         Resident_Rising(
             0, 
-            Color::green, 
+            2, 
             0.0, 
             1.2, // happiness goal
             0.1, 
@@ -54,7 +54,7 @@ TEST_CASE("Resident_Rising Ctor throws exception if happinessValue at zero is le
     REQUIRE_THROWS_WITH(
         Resident_Rising(
             0, 
-            Color::green, 
+            2, 
             0.0,
             0.0,
             -0.3, // value at zero Diversity
@@ -69,7 +69,7 @@ TEST_CASE("Resident_Rising Ctor throws exception if happinessValue at zero is gr
     REQUIRE_THROWS_WITH(
         Resident_Rising(
             0, 
-            Color::green, 
+            2, 
             0.0,
             0.0,
             1.2, // value at zero Diversity
@@ -84,7 +84,7 @@ TEST_CASE("Resident_Rising Ctor throws exception if happinessValue at one is les
     REQUIRE_THROWS_WITH(
         Resident_Rising(
             0, 
-            Color::green, 
+            2, 
             0.0,
             0.0,
             0.1,
@@ -99,7 +99,7 @@ TEST_CASE("Resident_Rising Ctor throws exception if happinessValue at one is gre
     REQUIRE_THROWS_WITH(
         Resident_Rising(
             0, 
-            Color::green, 
+            2, 
             0.0,
             0.0,
             0.1,
@@ -115,7 +115,7 @@ TEST_CASE("Resident_Rising Ctor throws exception if"
     REQUIRE_THROWS_WITH(
         Resident_Rising(
             0, 
-            Color::green, 
+            2, 
             0.0,
             0.0,
             .2, // value at zero Diversity
@@ -133,7 +133,7 @@ TEST_CASE("Resident_Rising Ctor throws exception if"
     REQUIRE_THROWS_WITH(
         Resident_Rising(
             0, 
-            Color::green, 
+            2, 
             0.0,
             0.0,
             .75,
@@ -148,7 +148,7 @@ TEST_CASE("Residnt_Rising getHappiness()")
 {
     Resident_Rising greenResident{ 
         0, 
-        Color::green, 
+        2, 
         0.0,  
         0.0, 
         0.2, // happinessValueAtZeroDiversity
@@ -170,7 +170,7 @@ TEST_CASE("Resident_Rising toStrBasic()")
 {
     Resident_Rising greenResident{ 
         1, 
-        Color::green, 
+        2, 
         0.0,  
         0.25, 
         0.25, // happinessValueAtZeroDiversity
@@ -220,7 +220,7 @@ TEST_CASE("Resident_Rising findHome()"
 {
     Resident_Rising greenResident{ 
         1, 
-        Color::green, 
+        2, 
         0.0,  // allowed movement
         0.25, // happiness Goal
         0.0,  // happinessValueAtZeroDiversity
@@ -286,7 +286,7 @@ TEST_CASE("Resident_Falling findHome()"
 {   
     Resident_Rising blueResident{ 
         1, 
-        Color::blue, 
+        1, 
         0.0,  // allowed movement
         0.6, // happiness Goal
         0.0,  // happinessValueAtZeroDiversity
@@ -371,7 +371,7 @@ TEST_CASE("Resident_Falling findBestHome()"
 {   std::cout << "testResident rising findHouse() "<< std::endl;
     Resident_Rising blueResident{ 
         1, 
-        Color::blue, 
+        1, 
         0.0,  // allowed movement
         0.6, // happiness Goal
         0.0,  // happinessValueAtZeroDiversity

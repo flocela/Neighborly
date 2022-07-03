@@ -23,7 +23,7 @@ std::string TextHelper::createText (
     s1 << "Resident presented as:\n";
     s1 << "Resident ID, color, address, coordinate, happiness / happiness goal \n";
     
-    std::set<Color> seenColors;
+    std::set<int> seenColors;
     std::set<Resident*> seenResidents;
     std::vector<House*> housesInOrder;
     for (auto h2r : residentPerHouse)
@@ -31,10 +31,10 @@ std::string TextHelper::createText (
         House* house = h2r.first;
         Resident* res = h2r.second;
         housesInOrder.push_back(house);
-        if (seenColors.count(res->getColor()) == 0)
+        if (seenColors.count(res->getGroupNumber()) == 0)
         {
             seenResidents.insert(res);
-            seenColors.insert(res->getColor());
+            seenColors.insert(res->getGroupNumber());
         }
     }
     std::sort(housesInOrder.begin(), housesInOrder.end(), pComp);
@@ -42,7 +42,7 @@ std::string TextHelper::createText (
     {
         Resident* res = residentPerHouse[house];
         s1 << std::setw(3) << res->getID() << ", ";
-        s1 << std::setw(5) << _the_color_infos[res->getColor()]._my_string << ", ";
+        s1 << std::setw(5) << res->getGroupNumber() << ", ";
         s1 << std::setw(2) << house->getAddress() << ", ";
         s1 << std::setw(8) << _city_ptr->getCoordinate(house->getAddress()).toStr() << ", ";
         s1 << res->getHappiness() << "/";

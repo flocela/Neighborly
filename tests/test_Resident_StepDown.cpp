@@ -6,17 +6,17 @@ using Catch::Matchers::Contains;
 
 // Neighbors are used in getHappiness() method.
 // Only arugment that matteres is Color argument.
-Resident_Flat blueNeighbor1{1, Color::blue, 0.0, 0.0, 0.0 };
+Resident_Flat blueNeighbor1{1, 1, 0.0, 0.0, 0.0 };
 
-Resident_Flat blueNeighbor2{2, Color::blue, 0.0, 0.0, 0.0 };
+Resident_Flat blueNeighbor2{2, 1, 0.0, 0.0, 0.0 };
 
-Resident_Flat blueNeighbor3{3, Color::blue, 0.0, 0.0, 0.0 };
+Resident_Flat blueNeighbor3{3, 1, 0.0, 0.0, 0.0 };
     
-Resident_Flat greenNeighbor1{1, Color::green, 0.0, 0.0, 0.0 };
+Resident_Flat greenNeighbor1{1, 2, 0.0, 0.0, 0.0 };
 
-Resident_Flat greenNeighbor2{2, Color::green, 0.0, 0.0, 0.0 };
+Resident_Flat greenNeighbor2{2, 2, 0.0, 0.0, 0.0 };
 
-Resident_Flat greenNeighbor3{3, Color::green, 0.0, 0.0, 0.0 };
+Resident_Flat greenNeighbor3{3, 2, 0.0, 0.0, 0.0 };
     
 
 TEST_CASE("Resident_StepDown Ctor throws exception if happinessGoal is greater than 1.0.")
@@ -24,7 +24,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if happinessGoal is greater t
     REQUIRE_THROWS_WITH(
         Resident_StepDown(
             0, 
-            Color::green, 
+            2, 
             0.0, 
             1.2, //happinessGoal
             0.2, 
@@ -40,7 +40,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if happinessGoal is less than
     REQUIRE_THROWS_WITH(
         Resident_StepDown(
             0, 
-            Color::green, 
+            2, 
             0.0, 
             -0.1, //happinessGoal 
             0.2, 
@@ -56,7 +56,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if happinessValue at zero is 
     REQUIRE_THROWS_WITH(
         Resident_StepDown(
             0, 
-            Color::green, 
+            2, 
             0.0, 
             0.0,
             -0.2, // happinessValueAtZeroDiversity
@@ -72,7 +72,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if happinessValue at zero is 
     REQUIRE_THROWS_WITH(
         Resident_StepDown(
             0, 
-            Color::green, 
+            2, 
             0.0, 
             0.0,
             1.2, // happinessValueAtZeroDiversity
@@ -88,7 +88,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if happinessValue at one is l
     REQUIRE_THROWS_WITH(
         Resident_StepDown(
             0, 
-            Color::green, 
+            2, 
             0.0, 
             0.0,
             0.2, 
@@ -104,7 +104,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if happinessValue at one is g
     REQUIRE_THROWS_WITH(
         Resident_StepDown(
             0, 
-            Color::green, 
+            2, 
             0.0, 
             0.0,
             0.2, 
@@ -120,7 +120,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if diverstiyWhereDropHappens 
     REQUIRE_THROWS_WITH(
         Resident_StepDown(
             0, 
-            Color::green, 
+            2, 
             0.0, 
             0.0,
             0.2, 
@@ -136,7 +136,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if diverstiyWhereDropHappens 
     REQUIRE_THROWS_WITH(
         Resident_StepDown(
             0, 
-            Color::green, 
+            2, 
             0.0, 
             0.0,
             0.2, 
@@ -153,7 +153,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if"
     REQUIRE_THROWS_WITH(
         Resident_StepDown(
             0, 
-            Color::green, 
+            2, 
             0.0, 
             0.0,
             0.1, //happinessValueAtZeroDiversity
@@ -173,7 +173,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if"
     REQUIRE_THROWS_WITH(
         Resident_StepDown(
             0, 
-            Color::green, 
+            2, 
             0.0, 
             0.0,
             0.2, //happinessValueAtZeroDiversity
@@ -192,7 +192,7 @@ TEST_CASE("getHappiness() returns lowered happinessValue at point where drop hap
     // Note @diversityWhereDropHappens is 0.25.
     Resident_StepDown greenResident{ 
         0, 
-        Color::green, 
+        2, 
         0.0,  
         0.0,
         0.2, // happinessValueAtZeroDiversity
@@ -216,7 +216,7 @@ TEST_CASE("getHappiness() returns higher happinessValue before diversity drop.")
     // Note @diversityWhereDropHappens is 0.5.
     Resident_StepDown greenResident{ 
         0, 
-        Color::green, 
+        2, 
         0.0,  
         0.0, 
         0.2, // happinessValueAtZeroDiversity
@@ -240,7 +240,7 @@ TEST_CASE("getHappines() returns lower happinessValue afterDiversity drop.")
     // Note @diversityWhereDropHappens is 0.25. 
     Resident_StepDown greenResident{ 
         0, 
-        Color::green, 
+        2, 
         0.0, 
         0.0,
         0.2,
@@ -263,7 +263,7 @@ TEST_CASE("Resident_StepDown toStrBasic()")
 {
     Resident_StepDown greenResident{ 
         1, 
-        Color::green, 
+        2, 
         0.0,  // allowedMovementDistance
         0.25, // happinessGoal
         0.75, // happinessValueAtZeroDiversity
@@ -314,7 +314,7 @@ TEST_CASE("Resident_StepDown findHome()"
 {
     Resident_StepDown greenResident{ 
         1, 
-        Color::green, 
+        2, 
         0.0,  // allowed movement
         0.25, // happiness Goal
         0.5,  // happinessValueAtZeroDiversity
@@ -380,7 +380,7 @@ TEST_CASE("Resident_StepDown findHome()"
 { 
     Resident_StepDown greenResident{ 
         1, 
-        Color::green, 
+        2, 
         0.0, // allowed movement
         0.6, // happiness Goal
         1.0, // happinessValueAtZeroDiversity
@@ -461,7 +461,7 @@ TEST_CASE("Resident_StepDown findBestHome()"
 { 
     Resident_StepDown greenResident{ 
         1, 
-        Color::green, 
+        2, 
         0.0, // allowed movement
         0.6, // happiness Goal
         1.0, // happinessValueAtZeroDiversity

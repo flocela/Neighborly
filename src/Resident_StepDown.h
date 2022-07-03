@@ -10,7 +10,7 @@ class Resident_StepDown: public Resident
         Resident_StepDown () = delete;
         Resident_StepDown (
             int id,
-            Color color,
+            int groupNumber,
             double allowedMovementDistance,
             double happinessGoal,
             double happinessValueAtZeroDiversity,

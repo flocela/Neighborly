@@ -20,21 +20,21 @@ class ResidentsFactory_StepDown: public ResidentsFactory
             UI& ui,
             int firstID,
             int maxCount, 
-            Color color
+            int groupNumber
         ) override;
         std::vector<std::unique_ptr<Resident>> createResidents(
             UI& ui,
             int firstID, 
             int maxCount, 
             double happinessGoal,
-            Color color
+            int groupNumber
         ) override;
         std::vector<std::unique_ptr<Resident>> createBaseResidents(
             UI& ui,
             int firstID, 
             int maxCount, 
             double happinessGoal,
-            Color color
+            int groupNumber
         ) override;
         std::string toString () override;
     private:

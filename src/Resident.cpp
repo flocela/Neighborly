@@ -2,11 +2,11 @@
 
 Resident::Resident (
     int    id,
-    Color  color,
+    int    groupNumber,
     double allowedMovementDistance,
     double happinessGoal):
     _ID{id}, 
-    _color{color}, 
+    _group_number{groupNumber}, 
     _allowed_movement_distance{allowedMovementDistance}, 
     _happiness_goal{happinessGoal}            
 {

@@ -10,7 +10,7 @@ class Resident_Rising: public Resident
         Resident_Rising () = delete;
         Resident_Rising (
             int id,
-            Color color,
+            int groupNumber,
             double allowedMovementDistance,
             double happinessGoal,
             double happinessValueAtZeroDiversity,

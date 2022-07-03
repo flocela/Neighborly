@@ -11,7 +11,7 @@ using Catch::Matchers::Contains;
 
 Resident_StepDown blueNeighbor006{
     6,           // id
-    Color::blue, // color
+    1, // color
     0.0,         // movement
     0.25,        // happiness goal
     0.75,        // happiness at zero diversity
@@ -21,7 +21,7 @@ Resident_StepDown blueNeighbor006{
 
 Resident_StepDown blueNeighbor007{
     7,
-    Color::blue,
+    1,
     0.0,  
     0.25, 
     0.75, 
@@ -31,7 +31,7 @@ Resident_StepDown blueNeighbor007{
 
 Resident_StepDown blueNeighbor008{
     8,
-    Color::blue,
+    1,
     0.0,  
     0.25, 
     0.75, 
@@ -41,7 +41,7 @@ Resident_StepDown blueNeighbor008{
 
 Resident_StepDown blueNeighbor011{
     11,
-    Color::blue,
+    1,
     0.0,  
     0.25, 
     0.75, 
@@ -51,7 +51,7 @@ Resident_StepDown blueNeighbor011{
 
 Resident_StepDown blueNeighbor012{
     12,
-    Color::blue,
+    1,
     0.0,  
     0.25, 
     0.75, 
@@ -61,7 +61,7 @@ Resident_StepDown blueNeighbor012{
 
 Resident_StepDown blueNeighbor016{
     16,
-    Color::blue,
+    1,
     0.0,  
     0.25, 
     0.75, 
@@ -71,7 +71,7 @@ Resident_StepDown blueNeighbor016{
 
 Resident_StepDown blueNeighbor018{
     18,
-    Color::blue, 
+    1, 
     0.0,  
     0.25, 
     0.75, 
@@ -81,7 +81,7 @@ Resident_StepDown blueNeighbor018{
 
 Resident_StepDown redNeighbor013{
     13,
-    Color::red, 
+    3, 
     0.0,  
     0.25, 
     0.75, 
@@ -91,7 +91,7 @@ Resident_StepDown redNeighbor013{
 
 Resident_StepDown redNeighbor014{
     14,
-    Color::red, 
+    3, 
     0.0,  
     0.25, 
     0.75, 
@@ -101,7 +101,7 @@ Resident_StepDown redNeighbor014{
 
 Resident_StepDown redNeighbor017{
     17,
-    Color::red, 
+    3, 
     0.0,  
     0.25, 
     0.75, 
@@ -111,7 +111,7 @@ Resident_StepDown redNeighbor017{
 
 Resident_StepDown redNeighbor019{
     19,
-    Color::red,
+    3,
     0.0,  
     0.25, 
     0.75, 
@@ -121,7 +121,7 @@ Resident_StepDown redNeighbor019{
 
 Resident_StepDown redNeighbor022{
     22,
-    Color::red, 
+    3, 
     0.0,  
     0.25, 
     0.75, 
@@ -131,7 +131,7 @@ Resident_StepDown redNeighbor022{
 
 Resident_StepDown redNeighbor023{
     23,
-    Color::red, 
+    3, 
     0.0,  
     0.25, 
     0.75, 
@@ -141,7 +141,7 @@ Resident_StepDown redNeighbor023{
 
 Resident_StepDown redNeighbor024{
     24,
-    Color::red,
+    3,
     0.0,  
     0.25, 
     0.75, 

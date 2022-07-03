@@ -11,7 +11,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     UI& ui, 
     int firstID,
     int count,
-    Color color
+    int groupNumber
 )
 {   
     Question_Double qHappinessGoal{
@@ -29,7 +29,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
         _happinessGoalFailure
     );
     
-    return createResidents(ui, firstID, count, happinessGoal, color);
+    return createResidents(ui, firstID, count, happinessGoal, groupNumber);
 }
 
 // This is used by ResidentsMaker_CMDLine because the game uses one happinessGoal for
@@ -39,7 +39,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     int firstID, 
     int count, 
     double happinessGoal,
-    Color color
+    int groupNumber
 )
 {   
     Question_Double qMovement{
@@ -78,7 +78,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
         residents.push_back(
             std::make_unique<Resident_Flat>(
                 firstID+ii,
-                color,
+                groupNumber,
                 movement,
                 happinessGoal,
                 happinessValue
@@ -92,7 +92,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createBaseResident
     int firstID, 
     int count, 
     double happinessGoal,
-    Color color
+    int groupNumber
 )
 {   
     (void) ui;
@@ -104,7 +104,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createBaseResident
     {
         residents.push_back(std::make_unique<Resident_Flat>(
             firstID+ii,
-            color,
+            groupNumber,
             movement,
             happinessGoal,
             happinessValue

@@ -20,21 +20,21 @@ class ResidentsFactory
             UI& ui, 
             int firstID,
             int count, 
-            Color color
+            int groupNumber
         ) = 0;
         virtual std::vector<std::unique_ptr<Resident>> createResidents(
             UI& ui,
             int firstID, 
             int count, 
             double happinessGoal,
-            Color color
+            int groupNumber
         ) = 0;
         virtual std::vector<std::unique_ptr<Resident>> createBaseResidents(
             UI& ui,
             int firstID, 
             int count, 
             double happinessGoal,
-            Color color
+            int groupNumber
         ) = 0;
         virtual std::string toString () = 0;
 };

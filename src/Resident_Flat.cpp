@@ -2,11 +2,11 @@
 #include <iostream>
 Resident_Flat::Resident_Flat (
     int    id,
-    Color  color,
+    int    groupNumber,
     double allowedMovementDistance,
     double happinessGoal,
     double happinessValue):
-    Resident(id, color, allowedMovementDistance, happinessGoal),
+    Resident(id, groupNumber, allowedMovementDistance, happinessGoal),
     _happiness_val(happinessValue),
     _happiness_func{happinessValue}
 {}
@@ -15,7 +15,7 @@ std::string Resident_Flat::toStrBasic () const
 {
     return "Res_Flat(id, clr, mov, goal, hapV): (" + 
         std::to_string(getID()) +
-        ", " + _the_color_infos[getColor()]._my_string +
+        ", " + std::to_string(getGroupNumber()) +
         ", " + std::to_string(getAllowedMovementDistance()) +
         ", " + std::to_string(getHappinessGoal()) +
         ", " + std::to_string(_happiness_val) +

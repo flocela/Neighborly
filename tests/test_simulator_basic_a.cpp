@@ -39,7 +39,7 @@ TEST_CASE("four runs happy resident stays unhappy resident moves")
 
     unique_ptr<Resident> happy = std::make_unique<Resident_Flat>(
         1,
-        Color::red,
+        3,
         5,
         1.0, // happiness goal
         1.0  // happiness value
@@ -47,7 +47,7 @@ TEST_CASE("four runs happy resident stays unhappy resident moves")
 
     unique_ptr<Resident> unhappy = std::make_unique<Resident_Flat>(
         2,
-        Color::blue,
+        1,
         5,
         1.0, // happiness goal
         0.5  // happiness value
@@ -87,7 +87,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is the whole cit
         // Blue residents become unhappy when diversity is 0.5 or greater.
         residents.push_back(std::make_unique<Resident_StepDown>(
             ii,          // id
-            Color::blue, // color
+            1, // color
             5.0,         // movement
             0.5,         // happiness goal
             0.75,        // happiness at diversity of zero
@@ -101,7 +101,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is the whole cit
     {
         residents.push_back(std::make_unique<Resident_StepDown>(
             jj,         // id
-            Color::red, // color
+            3, // color
             5.0,        // movement
             0.5,        // happiness goal
             0.75,       // happiness at diversity of zero
@@ -174,7 +174,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is zero")
         // Blue residents become unhappy when diversity is 0.5 or greater.
         residents.push_back(std::make_unique<Resident_StepDown>(
             ii,          // id
-            Color::blue, // color
+            1, // color
             0.0,         // NO movement
             0.5,         // happiness goal
             0.75,        // happiness at diversity of zero
@@ -188,7 +188,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is zero")
     {
         residents.push_back(std::make_unique<Resident_StepDown>(
             jj,         // id
-            Color::red, // color
+            3, // color
             0.0,        // NO movement
             0.5,        // happiness goal
             0.75,       // happiness at diversity of zero
@@ -261,7 +261,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is 2.0")
         // Blue residents become unhappy when diversity is 0.5 or greater.
         residents.push_back(std::make_unique<Resident_StepDown>(
             ii,          // id
-            Color::blue, // color
+            1, // color
             2.0,         // allowable movement
             0.5,         // happiness goal
             0.75,        // happiness at diversity of zero
@@ -275,7 +275,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is 2.0")
     {
         residents.push_back(std::make_unique<Resident_StepDown>(
             jj,         // id
-            Color::red, // color
+            3, // color
             2.0,        // allowable movement
             0.5,        // happiness goal
             0.75,       // happiness at diversity of zero

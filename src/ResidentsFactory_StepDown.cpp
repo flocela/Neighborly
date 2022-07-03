@@ -11,7 +11,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
     UI& ui, 
     int firstID,
     int maxCount,
-    Color color
+    int groupNumber
 )
 {   
     Question_Double qHappinessGoal{
@@ -30,7 +30,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
         " these residents from the user."
     );
     
-    return createResidents(ui, firstID, maxCount, happinessGoal, color);
+    return createResidents(ui, firstID, maxCount, happinessGoal, groupNumber);
 }
 
 std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createBaseResidents (
@@ -38,7 +38,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createBaseResi
     int firstID, 
     int maxCount,
     double happinessGoal,
-    Color color
+    int groupNumber
 )
 {   
     (void) ui;
@@ -54,7 +54,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createBaseResi
     {
         residents.push_back(std::make_unique<Resident_StepDown>(
             firstID+ii,
-            color,
+            groupNumber,
             movement,
             happinessGoal,
             happinessAtZero,
@@ -70,7 +70,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
     int firstID, 
     int maxCount,
     double happinessGoal,
-    Color color
+    int groupNumber
 )
 {   
     Question_Int qHowMany{
@@ -157,7 +157,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
     {
         residents.push_back(std::make_unique<Resident_StepDown>(
             firstID+ii,
-            color,
+            groupNumber,
             movement,
             happinessGoal,
             happinessAtZero,

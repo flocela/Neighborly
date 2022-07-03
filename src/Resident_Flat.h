@@ -10,7 +10,7 @@ class Resident_Flat: public Resident
         Resident_Flat () = delete;
         Resident_Flat (
             int id,
-            Color color,
+            int groupNumber,
             double allowedMovementDistance,
             double happinessGoal,
             double happinessValue);

@@ -10,7 +10,7 @@
 class Resident{
     public:
         Resident (int id,
-                  Color color, 
+                  int groupNumber, // resident group
                   double allowedMovementDistance,
                   double happinessGoal);
         Resident (const Resident& obj) = default;
@@ -22,7 +22,7 @@ class Resident{
         virtual std::string toStrBasic () const = 0;
 
         int getID() const { return _ID; }
-        Color getColor () const { return _color; };
+        int getGroupNumber () const { return _group_number; };
         double getAllowedMovementDistance () const { return _allowed_movement_distance; };
         double getHappinessGoal () const { return _happiness_goal; };
         double getHappiness () const  {return _curr_happiness; }; // TODO don't know if this is used.
@@ -46,7 +46,7 @@ class Resident{
         bool operator< (const Resident& other) const;
     private:
         int    _ID;
-        Color  _color;
+        int    _group_number;
         double _allowed_movement_distance;
         double _happiness_goal;
         double _curr_happiness;

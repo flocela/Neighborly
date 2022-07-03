@@ -112,13 +112,12 @@ int main(int argc, char* argv[])
     (void) argc;
     (void) argv;
 
-    vector<unique_ptr<CityFactory>> cityFactories = initCityFactories();
-    vector<unique_ptr<ResidentsFactory>> residentFactories = initResidentFactories();
-
-    vector<CityFactory*> cityFactoryPointers = getPointers(cityFactories);
-    vector<ResidentsFactory*> resFactoryPointers = getPointers(residentFactories); 
+    vector<unique_ptr<CityFactory>>      cityFactories       = initCityFactories();
+    vector<CityFactory*>                 cityFactoryPointers = getPointers(cityFactories);
+    vector<unique_ptr<ResidentsFactory>> residentFactories   = initResidentFactories();
+    vector<ResidentsFactory*>            resFactoryPointers  = getPointers(residentFactories);
     
-    Printer_Graphic graphicPrinter{1200, 1200, 2};
+    Printer_Graphic graphicPrinter{1200, 1200};
 
     SimulationComponents components;
     int randomSeed = 1;
@@ -168,28 +167,29 @@ int main(int argc, char* argv[])
 
     }
     
-/*
-    std::map<int, Resident*> houseToResidentMap = {};
-    for (auto& resident : residents)
+    vector<std::pair<Color, Color>> colorsVector;
+    for (auto& color: _base_colors)
     {
-        houseToResidentMap[resident->getID()] = resident.get();
-    }*/
-    
-    std::set<Color> colors;
-    for (auto& resident : residents)
-    {
-        colors.insert(resident->getColor());
+        colorsVector.push_back( std::pair<Color, Color>(color, _unhappy_color_map[color]) );
     }
-    graphicPrinter.init(city.get(), colors, numOfRuns);
+
+    std::map<int, std::pair<Color,Color>> groupNumToColorMap;
+    int index = 0;
+    for (auto& num: components.groupNumbers)
+    {
+        groupNumToColorMap.insert( std::pair<int, std::pair<Color, Color>>(num, colorsVector[index]) );
+        // TODO ensure I don't overrun the array.
+        index++;
+    }
+    graphicPrinter.init(city.get(), numOfRuns);
+    graphicPrinter.setColors(groupNumToColorMap);
 
     std::map<House*, Resident*> houseToResidentMap;
     std::cout << "before runs" << std::endl;
     for (int ii=0; ii< numOfRuns; ii++)
     {   
         houseToResidentMap = simulator->simulate();
-        std::cout << "main: houseToResidentMap.size: " << houseToResidentMap.size() << std::endl;
         graphicPrinter.print(houseToResidentMap, ii, "Title");
-        std::cout << "main 196, print runs " << std::endl;
     }
     Printer_CMDLine cmdLinePrinter{numOfRuns, city.get()};
     //cmdLinePrinter.print(houseToResidentMap, numOfRuns, "Title");

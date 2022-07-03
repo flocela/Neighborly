@@ -44,7 +44,6 @@ class Simulator_E
             std::set<House*> openHouses, // open houses within distance of resident
             int chances
         );
-        std::vector<Color> getColors (std::set<House*> addresses);
         std::set<House*> getKeysFromMap (std::map<House*, Resident*> theMap);
         House* findHomeForForcedToMoveResident (
             Resident* resident, 
