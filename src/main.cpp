@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
     vector<unique_ptr<ResidentsFactory>> residentFactories   = initResidentFactories();
     vector<ResidentsFactory*>            resFactoryPointers  = getPointers(residentFactories);
     
-    Printer_Graphic graphicPrinter{1200, 1200};
+    Printer_Graphic graphicPrinter{SCREEN_WIDTH, SCREEN_HEIGHT};
 
     SimulationComponents components;
     int randomSeed = 1;
@@ -186,8 +186,8 @@ int main(int argc, char* argv[])
 
     std::map<House*, Resident*> houseToResidentMap;
     std::cout << "before runs" << std::endl;
-    for (int ii=0; ii< numOfRuns; ii++)
-    {   
+    for (int ii=0; ii< 2; ii++)
+    {   std::cout << "main ii: " << ii << std::endl;
         houseToResidentMap = simulator->simulate();
         graphicPrinter.print(houseToResidentMap, ii, "Title");
     }

@@ -101,7 +101,7 @@ class Printer_Graphic : public Printer
         const int y_axis_overrrun__px = 2;
 
         // MAP OF CIY HOUSES CHART//
-        double _city_map_y_axis_fraction = 0.4;
+        double _city_map_y_axis_fraction = 0.5;
         int _map_writable_vert_length__px; // TODO - probably not useful
         int _map_y_axis_length__px;
         int _city_map_chart_top_left_y_coord__px;
@@ -124,7 +124,7 @@ class Printer_Graphic : public Printer
 		int _max_y_coord = INT32_MIN; // bottom right corner of grid
         
         //DIVERSITY CHART
-        double _diversity_chart_y_axis_fraction = 0.3;
+        double _diversity_chart_y_axis_fraction = 0.25;
         int _div_chart_y_top_left_y_coord__px;
 
 

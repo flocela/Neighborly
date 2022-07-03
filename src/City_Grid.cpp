@@ -6,8 +6,8 @@
 City_Grid::City_Grid (int width):
 	City(),
 	_width{width},
-	_maxX{_width - 1},
-	_maxY{_width - 1}
+	_maxX{_width },
+	_maxY{_width }
 {	
 	_houses.reserve(_width * _width);
   	for (int ii=0; ii<width; ++ii)
