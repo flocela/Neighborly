@@ -39,23 +39,6 @@ class GrCityPrinter
             int topLeftCornerYPx
         );
 
-        GrCityPrinter (
-            Renderer* renderer,
-            std::map<Coordinate, House*> coordToHouseMap,
-            std::map<int, std::pair<Color, Color>> resColors,
-            int topLeftCornerXPx,
-            int topLeftCornerYPx,
-            int xSpaceLengthPx,
-            int ySpaceLengthPx,
-            AxisFormat axisFormatX,
-            AxisFormat axisFormatY,
-            Letter titleLetter,
-            int minX, // minimum x value for a house. (most west house)
-            int maxX, // maximum x value for a house. (most east house)
-            int minY, // minimum y value for a house. (most north house)
-            int maxY // maximum y value for a house. (most south house)
-        );
-
         void printCity (std::map<House*, Resident*> houseToResMap);
     
     // __px suffix means the variable is in pixels which correspond to the screen.
@@ -75,6 +58,12 @@ class GrCityPrinter
         int _top_left_corner_y__px;
         int _x_given_space__px;
         int _y_given_space__px;
+        // axis length determined by _cell_size__px.
+        // But _x_axis_length_for_houses__px and _y_axis_length_for_houses__px
+        // are used to determine _cell_size__px. _x_axis_length_for_houses__px and
+        // _y_axis_length_for_houses are temp values, but are important.
+        int _x_axis_length_for_houses__px; 
+        int _y_axis_length_for_houses__px;
 
         // The coordinate where x and y axes cross on the screen in pixels.
         int _cross_hairs_x__px;

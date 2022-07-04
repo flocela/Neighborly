@@ -24,6 +24,10 @@ XAxisL2R::XAxisL2R (
 {
     _left_most_pixel_x__px = _x_coord__px;
     _right_most_pixel_x__px = _pc->getPixel(_max_val) + _axis_format.overrunPx();
+    std::cout << "XAxisL2R _left_most_pixel_x__px: " << _left_most_pixel_x__px << std::endl;
+    std::cout << "_pc->getPixel(_max_val): " << _pc->getPixel(_max_val) << std::endl;
+    std::cout << "_axis_format.overrunPx(): " << _axis_format.overrunPx() << std::endl;
+    std::cout << "XAxisL2R _right_most_pixel_x__px: " << _right_most_pixel_x__px << std::endl;
 
 }
 
