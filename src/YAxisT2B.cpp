@@ -86,7 +86,7 @@ void YAxisT2B::addTicksAndLabels (
         leftEdgeOfLabelXPx,
         _pc->getPixel(_min_val),
         std::to_string(_min_val),
-        1
+        2
     };
 
     SDL_Rect curRect;
@@ -107,13 +107,13 @@ void YAxisT2B::addTicksAndLabels (
             rects.push_back(curRect);
 
             curText.text = std::to_string(curVal);
-            curText.yPixel = curVal__px;
+            curText.yPixel = curVal__px,
             texts.push_back(curText);
         }
         else if (curVal % _min_tick_spacing == 0)
         {
             curRect.x = _x_coord__px - _axis_format.minTickLengthPx();
-            curRect.y = curVal__px - (_axis_format.tickThickness()/2);
+            curRect.y = curVal__px;
             rects.push_back(curRect);
         }
         ++curVal;
