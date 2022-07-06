@@ -59,7 +59,8 @@ void Renderer::renderText (
 
         // Account for spacing between letters and line height
         textRect.w = 0.5 * fontSize * textString.length();
-        textRect.h = 1.75 * fontSize;
+        textRect.h = 1.75 * fontSize; // This is the same 1.75 that is in the AxisFormat to find the height
+        // of the text from the fontSize.
         
         SDL_FreeSurface(textSurface);
     }

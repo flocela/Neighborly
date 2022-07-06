@@ -17,7 +17,7 @@ class Letter
         void setLineSpace (int space);
 
         int fontSize () {return _font_size;};
-        int letterHeight () {return _font_size;};
+        int letterHeight ();
         int lineSpace () {return _line_space;};
         int getHeightIncLSpace () { return letterHeight() + _line_space;}
 

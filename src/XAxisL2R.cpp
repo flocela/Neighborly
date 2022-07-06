@@ -86,7 +86,7 @@ void XAxisL2R::addTicksAndLabels (
         _pc->getPixel(_min_val),
         topOfLabelYPx,
         std::to_string(_min_val), 
-        1
+        4
     };
 
     SDL_Rect rect;
@@ -107,7 +107,7 @@ void XAxisL2R::addTicksAndLabels (
             rect.y = _y_coord__px - 
                     ( _axis_format.majTickLengthPx() - _axis_format.tickLengthInsideChart() );
             std::string label = std::to_string(currValue);
-            tr = {currValue__px, topOfLabelYPx, label, 1};
+            tr = {currValue__px, topOfLabelYPx, label, 4};
             texts.push_back(tr);
             rects.push_back(rect);
         }
@@ -129,7 +129,7 @@ void XAxisL2R::addTitle (std::vector<TextRect>& texts)
         _left_most_pixel_x__px + (calcHorizontalLineLength()/2), //TODO width of text needs to be taken into account.
         _y_coord__px - _axis_format.getHeightOfAxisPx(),
         _title, 
-        1
+        4
     };
     texts.push_back(tr);
 }

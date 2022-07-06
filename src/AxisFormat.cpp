@@ -124,10 +124,10 @@ void AxisFormat::setOverrunPx (int length)
 
 int AxisFormat::titleHeightPx ()
 {
-    return _title_font_size + _title_line_space__px;
+    return (1.75 * _title_font_size) + _title_line_space__px;
 }
 
 int AxisFormat::labelHeightPx ()
 {
-    return _label_font_size + _label_line_space__px;
+    return (1.75 *_label_font_size) + _label_line_space__px;
 }

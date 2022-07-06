@@ -215,6 +215,8 @@ int GrCityPrinter::calcXCrossHairsPx ()
 
 int GrCityPrinter::calcYCrossHairsPx ()
 {
+    std::cout << "GrCityPrinter _title_letter.getHeightIncLSpace(): " << _title_letter.getHeightIncLSpace() << std::endl;
+    std::cout << "GrCityPrinter _axis_format_X.getHeightOfAxisPx(): " << _axis_format_X.getHeightOfAxisPx() << std::endl;
     return _top_left_corner_y__px + 
            _title_letter.getHeightIncLSpace() + 
            _axis_format_X.getHeightOfAxisPx();

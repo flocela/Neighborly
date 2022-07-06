@@ -28,3 +28,8 @@ void Letter::setLineSpace (int space)
         _line_space = space;
     }
 }
+
+int Letter::letterHeight ()
+{
+    return 1.75 * _font_size;
+}
