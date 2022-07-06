@@ -63,7 +63,7 @@ void GrCityPrinter::addCityXAxis()
 {   
     int length__coord = _house_max_x - _house_min_x;
     _x_axis_utility = std::make_unique<XAxisL2R>(
-        "xAxis",
+        "", // no axis title
         _pixel_converter_x.get(),
         _axis_format_X,
         _cross_hairs_x__px,
@@ -81,7 +81,7 @@ void GrCityPrinter::addCityYAxis()
 {   
     int length__coord = _house_max_y - _house_min_x;
     _y_axis_utility = std::make_unique<YAxisT2B>(
-        "yAxis",
+        "", // no axis title
         _pixel_converter_y.get(),
         _axis_format_Y,
         _cross_hairs_x__px,
@@ -226,23 +226,24 @@ int GrCityPrinter::calcCellSizePx ()
 {
     // X-direction
     int numHousesXDir = _house_max_x - _house_min_x + 1;
-
     int xCellSize = _x_axis_length_for_houses__px / (numHousesXDir);
 
     // Y-direction
     int numHousesYDir = _house_max_y - _house_min_y + 1;
     int yCellSize = _y_axis_length_for_houses__px / (numHousesYDir);
 
-    return std::min(xCellSize, yCellSize);
+    int smallestCellSize = std::min(xCellSize, yCellSize);
+    smallestCellSize = (smallestCellSize%2 == 0)? smallestCellSize : (smallestCellSize+1);
+    return (smallestCellSize < 4)? 4: smallestCellSize;
 }
 
 int GrCityPrinter::calcHouseSizePx ()
 {
     if (_cell_size__px < 4)
         return 0;
-    int initialHouseSize = _cell_size__px / 2;
-    return ( (_cell_size__px - initialHouseSize ) % 2 == 0) ? 
-        initialHouseSize : ( initialHouseSize + 1);
+    int houseSize = _cell_size__px / 2;
+    
+    return ( houseSize % 2 == 0) ? houseSize : (houseSize + 1);
 }
 
 int GrCityPrinter::calcXAxisLengthPx ()

@@ -51,14 +51,14 @@ class AxisFormat
         int _min_tick_length__px = 2;
         int _tick_length_inside_chart__px = 2; // does not include thickness of axis
 
-        int _title_font_size = 12;
+        int _title_font_size = 16;
         int _title_line_space__px = 2; // space below letters
 
-        int _label_font_size = 10;  
+        int _label_font_size = 12;  
         int _label_line_space__px = 2;
 
-        int _offset__px = 4;
-        int _overrun__px = 4;
+        int _offset__px = 20;
+        int _overrun__px = 20;
 };
 
 #endif
