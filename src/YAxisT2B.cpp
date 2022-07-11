@@ -35,6 +35,7 @@ void YAxisT2B::print (Renderer* renderer)
     std::vector<TextRect> texts = {};
 
     addTitle(texts);
+    
     renderer->setColorToMedGrey();
     renderer->setTextFormats(
         {100, 100, 100, 100},
@@ -45,8 +46,6 @@ void YAxisT2B::print (Renderer* renderer)
 
     addVerticalLine(rects);
     addTicksAndLabels(rects, texts);
-    renderer->fillBlocks(rects);
-    renderer->renderTexts(texts);
 
     renderer->setTextFormats(
         {100, 100, 100, 100},
@@ -65,7 +64,6 @@ void YAxisT2B::addVerticalLine (std::vector<SDL_Rect>& rects)
     rect.x = _x_coord__px - rect.w/2;
     rect.y = _y_coord__px;
     rects.push_back(rect);
-    std::cout << "YAxisT2B addVerticalLine: rect.h: " << rect.h << std::endl;
 }
         
 void YAxisT2B::addTicksAndLabels (
