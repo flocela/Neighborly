@@ -128,6 +128,7 @@ void GrCityPrinter::printXAxis()
 
 void GrCityPrinter::printYAxis()
 {   
+    std::cout << "GrCityPrinter printYAxis() first line" << std::endl;
     _y_axis_utility->print(_renderer);
 }
 

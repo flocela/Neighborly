@@ -64,7 +64,7 @@ void Renderer::renderText (
         
         SDL_FreeSurface(textSurface);
     }
-    if (centered == 1) // centered along a horizontal axis
+    if (centered == 1) // centered horizontally
     {
         textRect.x = x - textRect.w/2;
         textRect.y = y - textRect.h;

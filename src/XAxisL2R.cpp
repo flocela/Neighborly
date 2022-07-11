@@ -24,11 +24,6 @@ XAxisL2R::XAxisL2R (
 {
     _left_most_pixel_x__px = _x_coord__px;
     _right_most_pixel_x__px = _pc->getPixel(_max_val) + _axis_format.overrunPx();
-    std::cout << "XAxisL2R _left_most_pixel_x__px: " << _left_most_pixel_x__px << std::endl;
-    std::cout << "_pc->getPixel(_max_val): " << _pc->getPixel(_max_val) << std::endl;
-    std::cout << "_axis_format.overrunPx(): " << _axis_format.overrunPx() << std::endl;
-    std::cout << "XAxisL2R _right_most_pixel_x__px: " << _right_most_pixel_x__px << std::endl;
-
 }
 
 void XAxisL2R::print (Renderer* renderer)
@@ -82,11 +77,11 @@ void XAxisL2R::addTicksAndLabels (
                         _axis_format.majTickLengthPx() +
                         _axis_format.tickLengthInsideChart() -
                         _axis_format.labelHeightPx();
-    TextRect tr{
+    TextRect tr{ // TODO not necessary to define tr here.
         _pc->getPixel(_min_val),
         topOfLabelYPx,
         std::to_string(_min_val), 
-        4
+        1
     };
 
     SDL_Rect rect;
@@ -107,7 +102,7 @@ void XAxisL2R::addTicksAndLabels (
             rect.y = _y_coord__px - 
                     ( _axis_format.majTickLengthPx() - _axis_format.tickLengthInsideChart() );
             std::string label = std::to_string(currValue);
-            tr = {currValue__px, topOfLabelYPx, label, 4};
+            tr = {currValue__px, topOfLabelYPx, label, 1};
             texts.push_back(tr);
             rects.push_back(rect);
         }
