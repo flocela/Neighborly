@@ -74,9 +74,6 @@ void Printer_Graphic::determineMinMaxHouseCoords(City* cityPtr)
 
 void Printer_Graphic::setCityPrinter ()
 { 
-    std::cout << "Printer_Graphic: _sum_y_space_lengths__px: " << _sum_y_space_lengths__px << std::endl;
-    std::cout << "Printer_Graphic: _city_map_y_axis_fraction: " << _city_map_y_axis_fraction << std::endl;
-
     GrCityPrinterSizer cityPrinterSizer = 
         GrCityPrinterSizer (_x_space_length__px,
                             _sum_y_space_lengths__px * _city_map_y_axis_fraction, // this has to become a function. this calc is done in two places in this class.

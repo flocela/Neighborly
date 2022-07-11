@@ -21,6 +21,10 @@ void Renderer::renderText (
     int centered
 )
 {
+    if (textString.size() == 0)
+    {
+        return;
+    }
     TTF_Font *font = TTF_OpenFont(FONT_PATH, fontSize);
     if(!font) {
         printf(
@@ -59,7 +63,6 @@ void Renderer::renderText (
 
         // Account for spacing between letters and line height
         textRect.w = 0.5 * fontSize * textString.length();
-        textRect.w = (textRect.w < 1)? 1 : textRect.w;
         textRect.h = 1.75 * fontSize; // This is the same 1.75 that is in the AxisFormat to find the height
         // of the text from the fontSize.
         
