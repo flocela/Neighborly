@@ -117,7 +117,6 @@ void GrCityPrinter::printXAxis()
 
 void GrCityPrinter::printYAxis()
 {   
-    std::cout << "GrCityPrinter printYAxis() first line" << std::endl;
     _y_axis_utility->print(_renderer);
 }
 
@@ -205,7 +204,6 @@ int GrCityPrinter::calcXCrossHairsPx ()
 
 int GrCityPrinter::calcYCrossHairsPx ()
 {
-    std::cout << "GrCityPrinter calcYCrossHairsPx(): " << _top_left_corner_y__px << " " << _title_letter.getHeightIncLSpace() << " " << _axis_format_X.getHeightOfAxisPx() << std::endl;
     return _top_left_corner_y__px + 
            _title_letter.getHeightIncLSpace() + 
            _axis_format_X.getHeightOfAxisPx();

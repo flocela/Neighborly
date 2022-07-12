@@ -74,7 +74,8 @@ void YAxisT2B::addTicksAndLabels (
     int leftEdgeOfLabelXPx = _x_coord__px -
                              _axis_format.majTickLengthPx() +
                              _axis_format.tickLengthInsideChart() -
-                             _axis_format.labelHeightPx();
+                             _axis_format.labelHeightPx() -
+                             _axis_format.labelLineSpacePx();
 
     TextRect curText = {
         leftEdgeOfLabelXPx,

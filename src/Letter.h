@@ -21,7 +21,7 @@ class Letter
         int getHeightIncLSpace () { return letterHeight() + _line_space;}
 
     private:
-        int _letter_height = 15;
+        int _letter_height = 30;
         int _line_space = 2; // space below the letter.
 };
 #endif

@@ -76,7 +76,8 @@ void XAxisL2R::addTicksAndLabels (
     int topOfLabelYPx = _y_coord__px -
                         _axis_format.majTickLengthPx() +
                         _axis_format.tickLengthInsideChart() -
-                        _axis_format.labelHeightPx();
+                        _axis_format.labelHeightPx() -
+                        _axis_format.labelLineSpacePx();
     TextRect tr{ // TODO not necessary to define tr here.
         _pc->getPixel(_min_val),
         topOfLabelYPx,
