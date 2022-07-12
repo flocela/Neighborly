@@ -62,6 +62,7 @@ GrCityPrinter::GrCityPrinter (
 void GrCityPrinter::addCityXAxis()
 {   
     int length__coord = _house_max_x - _house_min_x;
+    _axis_format_X.setTitleFontSize(0);// axis title is empty string.
     _x_axis_utility = std::make_unique<XAxisL2R>(
         "", // no axis title
         _pixel_converter_x.get(),
@@ -79,6 +80,7 @@ void GrCityPrinter::addCityXAxis()
 void GrCityPrinter::addCityYAxis()
 {   
     int length__coord = _house_max_y - _house_min_x;
+    _axis_format_Y.setTitleFontSize(0);// axis title is empty string.
     _y_axis_utility = std::make_unique<YAxisT2B>(
         "", // no axis title
         _pixel_converter_y.get(),

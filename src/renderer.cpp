@@ -71,11 +71,11 @@ void Renderer::renderText (
     if (centered == 1) // centered horizontally
     {
         textRect.x = x - textRect.w/2;
-        textRect.y = y - textRect.h;
+        textRect.y = y;
     }
-    else if (centered == 2)
+    else if (centered == 2) // centered vertically
     {
-        textRect.x = x - 1.5 * textRect.w;
+        textRect.x = x;
         textRect.y = y - 0.5 * textRect.h;
     }
     else if (centered == 3)

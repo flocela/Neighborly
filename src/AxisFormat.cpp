@@ -52,14 +52,7 @@ void AxisFormat::setTickLengthInsideChartPx (int length)
 
 void AxisFormat::setTitleFontSize (int size)
 { 
-    if (size < 1)
-    {
-        throw std::invalid_argument("font size must be at least 1.");
-    }
-    else
-    {
-        _title_font_size = size;
-    }
+    _title_font_size = size;
 }
 
 void AxisFormat::setTitleLineSpacePx (int size)
