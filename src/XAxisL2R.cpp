@@ -37,7 +37,7 @@ void XAxisL2R::print (Renderer* renderer)
     renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.titleFontSize());
+        _axis_format.titleHeightPx());
     renderer->renderTexts(texts);
     texts.clear();
 
@@ -48,7 +48,7 @@ void XAxisL2R::print (Renderer* renderer)
     renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.labelFontSize());
+        _axis_format.labelHeightPx());
     renderer->fillBlocks(rects);
     renderer->renderTexts(texts);
 }

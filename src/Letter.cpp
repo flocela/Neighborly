@@ -1,11 +1,11 @@
 #include "Letter.h"
 
 Letter::Letter (int fontSize, int lineSpace):
-    _font_size{fontSize},
+    _letter_height{fontSize},
     _line_space{lineSpace}
 {}
 
-void Letter::setFontSize (int size)
+void Letter::setLetterHeight (int size)
 {
     if (size < 1)
     {
@@ -13,7 +13,7 @@ void Letter::setFontSize (int size)
     }
     else
     {
-        _font_size = size;
+        _letter_height = size;
     }
 }
 
@@ -27,9 +27,4 @@ void Letter::setLineSpace (int space)
     {
         _line_space = space;
     }
-}
-
-int Letter::letterHeight ()
-{
-    return 1.75 * _font_size;
 }

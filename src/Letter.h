@@ -13,16 +13,15 @@ class Letter
         Letter& operator= (const Letter& o) = default;
         ~Letter () = default;
 
-        void setFontSize (int size);
+        void setLetterHeight (int size);
         void setLineSpace (int space);
 
-        int fontSize () {return _font_size;};
-        int letterHeight ();
+        int letterHeight () {return _letter_height;};
         int lineSpace () {return _line_space;};
         int getHeightIncLSpace () { return letterHeight() + _line_space;}
 
     private:
-        int _font_size = 12;
+        int _letter_height = 15;
         int _line_space = 2; // space below the letter.
 };
 #endif

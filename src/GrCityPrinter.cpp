@@ -23,8 +23,8 @@ GrCityPrinter::GrCityPrinter (
     _house_min_y{grCityPrinterSizer.getMinY()},
     _house_max_y{grCityPrinterSizer.getMaxY()}
 {
-    _axis_format_X.setTitleFontSize(0);// axis title is empty string.
-    _axis_format_Y.setTitleFontSize(0);// axis title is empty string.
+    _axis_format_X.setTitleLetterHeight(0);// axis title is empty string.
+    _axis_format_Y.setTitleLetterHeight(0);// axis title is empty string.
     _x_axis_length_for_houses__px = 
         _x_given_space__px - 
         _axis_format_Y.getHeightOfAxisPx() -
@@ -106,7 +106,7 @@ void GrCityPrinter::printTitle()
 {   
     _renderer->setTextFormats({100, 100, 100, 100},
                               {0xAA, 0xFF, 0xFF, 0xFF},
-                              _title_letter.fontSize());
+                              _title_letter.letterHeight());
     _renderer->renderText(_title_x__px, _title_y__px, _main_title, 4);
 }
 

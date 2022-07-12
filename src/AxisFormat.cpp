@@ -3,12 +3,9 @@
 
 int AxisFormat::getHeightOfAxisPx ()
 {
-    std::cout << "AxisFormat: titleFontSize: " << titleFontSize() << std::endl;
-    std::cout << "AxisFormat: labelFontSize: " << labelFontSize() << std::endl;
-    std::cout << "AxisFormat: " << titleHeightPx() << " " << labelHeightPx() << std::endl;
-    return titleHeightPx() +
+    return _title_letter_height +
            _title_line_space__px +
-           labelHeightPx() +
+           _label_letter_height +
            _label_line_space__px +
            (_maj_tick_length__px - _tick_length_inside_chart__px);
 
@@ -54,9 +51,9 @@ void AxisFormat::setTickLengthInsideChartPx (int length)
     }
 }
 
-void AxisFormat::setTitleFontSize (int size)
+void AxisFormat::setTitleLetterHeight (int size)
 { 
-    _title_font_size = size;
+    _title_letter_height = size;
 }
 
 void AxisFormat::setTitleLineSpacePx (int size)
@@ -71,7 +68,7 @@ void AxisFormat::setTitleLineSpacePx (int size)
     }
 }
 
-void AxisFormat::setLabelFontSize (int size)
+void AxisFormat::setLabelLetterHeight (int size)
 { 
     if (size < 1)
     {
@@ -79,7 +76,7 @@ void AxisFormat::setLabelFontSize (int size)
     }
     else
     {
-        _label_font_size = size;
+        _label_letter_height = size;
     }
 }
 
@@ -117,14 +114,4 @@ void AxisFormat::setOverrunPx (int length)
     {
         _overrun__px = length;
     }
-}
-
-int AxisFormat::titleHeightPx ()
-{
-    return (1.75 * _title_font_size) + _title_line_space__px;
-}
-
-int AxisFormat::labelHeightPx ()
-{
-    return (1.75 *_label_font_size) + _label_line_space__px;
 }

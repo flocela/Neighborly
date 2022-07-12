@@ -67,7 +67,7 @@ class Renderer {
 
 		SDL_Color _text_color;
 		SDL_Color _text_background_color;
-		int _font_size;
+		int _font_height;
 
 		bool initVideo ();
 		bool linuxSettings ();

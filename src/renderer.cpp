@@ -14,7 +14,7 @@
 void Renderer::renderText (
     int x, 
     int y, 
-    int fontSize,
+    int letterHeight,
 	std::string textString,
 	SDL_Color textColor,
 	SDL_Color backgroundColor,
@@ -25,7 +25,9 @@ void Renderer::renderText (
     {
         return;
     }
-    TTF_Font *font = TTF_OpenFont(FONT_PATH, fontSize);
+    // fontSize of 50 seems to work for charts I have.
+    TTF_Font *font = TTF_OpenFont(FONT_PATH, 50);
+
     if(!font) {
         printf(
 			"Unable to load font: '%s'!\n"
@@ -62,9 +64,8 @@ void Renderer::renderText (
         }
 
         // Account for spacing between letters and line height
-        textRect.w = 0.5 * fontSize * textString.length();
-        textRect.h = 1.75 * fontSize; // This is the same 1.75 that is in the AxisFormat to find the height
-        // of the text from the fontSize.
+        textRect.w = 0.3 * letterHeight * textString.length();
+        textRect.h = letterHeight; 
         
         SDL_FreeSurface(textSurface);
     }
@@ -103,7 +104,7 @@ void Renderer::renderText (
     renderText(
         x,
         y,
-        _font_size,
+        _font_height,
         text,
         _text_color,
         _text_background_color,
@@ -114,12 +115,12 @@ void Renderer::renderText (
 void Renderer::setTextFormats (
     SDL_Color textColor,
     SDL_Color textBackgroundColor,
-    int fontSize
+    int letterHeight
 )
 {
     _text_color = textColor;
     _text_background_color = textBackgroundColor;
-    _font_size = fontSize;
+    _font_height = letterHeight;
 }
 
 Renderer::Renderer(
@@ -241,7 +242,7 @@ bool Renderer::initRenderer()
     }
     _text_color =  {100, 100, 100, 100};
     _text_background_color = {0xFF, 0xFF, 0xFF, 0xFF};
-    _font_size = 18;
+    _font_height = 15;
     return true;
 }
 
