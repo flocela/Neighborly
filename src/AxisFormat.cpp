@@ -1,7 +1,11 @@
 #include "AxisFormat.h"
+#include <iostream>
 
 int AxisFormat::getHeightOfAxisPx ()
 {
+    std::cout << "AxisFormat: titleFontSize: " << titleFontSize() << std::endl;
+    std::cout << "AxisFormat: labelFontSize: " << labelFontSize() << std::endl;
+    std::cout << "AxisFormat: " << titleHeightPx() << " " << labelHeightPx() << std::endl;
     return titleHeightPx() +
            _title_line_space__px +
            labelHeightPx() +

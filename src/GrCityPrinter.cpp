@@ -23,6 +23,8 @@ GrCityPrinter::GrCityPrinter (
     _house_min_y{grCityPrinterSizer.getMinY()},
     _house_max_y{grCityPrinterSizer.getMaxY()}
 {
+    _axis_format_X.setTitleFontSize(0);// axis title is empty string.
+    _axis_format_Y.setTitleFontSize(0);// axis title is empty string.
     _x_axis_length_for_houses__px = 
         _x_given_space__px - 
         _axis_format_Y.getHeightOfAxisPx() -
@@ -56,13 +58,11 @@ GrCityPrinter::GrCityPrinter (
 
     addCityXAxis();
     addCityYAxis();
-    addTitle();
 }
 
 void GrCityPrinter::addCityXAxis()
 {   
     int length__coord = _house_max_x - _house_min_x;
-    _axis_format_X.setTitleFontSize(0);// axis title is empty string.
     _x_axis_utility = std::make_unique<XAxisL2R>(
         "", // no axis title
         _pixel_converter_x.get(),
@@ -80,7 +80,6 @@ void GrCityPrinter::addCityXAxis()
 void GrCityPrinter::addCityYAxis()
 {   
     int length__coord = _house_max_y - _house_min_x;
-    _axis_format_Y.setTitleFontSize(0);// axis title is empty string.
     _y_axis_utility = std::make_unique<YAxisT2B>(
         "", // no axis title
         _pixel_converter_y.get(),
@@ -94,17 +93,6 @@ void GrCityPrinter::addCityYAxis()
         labelSpacing(length__coord)
     );
 }
-
-void GrCityPrinter::addTitle()
-{   
-    // Place Title a little below top of map (divide by 20).
-    _renderer->setTextFormats(
-        {100, 100, 100, 100},
-        {0xAA, 0xFF, 0xFF, 0xFF},
-        _title_letter.fontSize());
-    _renderer->renderText(_title_x__px, _title_y__px, "City Map", 4);
-}
-
 
 void GrCityPrinter::printCity(std::map<House*, Resident*> houseToResMap)
 {  (void) houseToResMap; // TODO why do I have a (void) here?
@@ -217,6 +205,7 @@ int GrCityPrinter::calcXCrossHairsPx ()
 
 int GrCityPrinter::calcYCrossHairsPx ()
 {
+    std::cout << "GrCityPrinter calcYCrossHairsPx(): " << _top_left_corner_y__px << " " << _title_letter.getHeightIncLSpace() << " " << _axis_format_X.getHeightOfAxisPx() << std::endl;
     return _top_left_corner_y__px + 
            _title_letter.getHeightIncLSpace() + 
            _axis_format_X.getHeightOfAxisPx();
