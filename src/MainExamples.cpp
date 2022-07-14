@@ -48,24 +48,30 @@ SimulationComponents MainExamples::userChoosesExample ()
                     ii,
                     1,
                     5,
+                    .5,
                     1,
-                    1,
-                    0,
+                    .1,
                     0.8
                 ));
             }
-            for (int jj=200; jj<4000; ++jj)
+            for (int jj=4001; jj<5000; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(
-                    200,
+                    jj,
                     2,
                     20,
                     1,
-                    1,
-                    0,
+                    .6,
+                    .1,
                     0.25
                 ));
             }
+            /*std::cout << "Main examples for loop: " << std::endl;
+            for (std::vector<int>::size_type ii=0; ii<components.residents.size();++ii)
+            {
+
+                std::cout << " id: " << components.residents[ii]->getID() << " " << components.residents[ii]->getHappinessGoal() << std::endl;;
+            }*/
             components.simulator = std::make_unique<Simulator_Basic_A>(
                 components.city.get(),
                 getSetOfPointers(components.residents)

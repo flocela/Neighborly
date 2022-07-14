@@ -24,8 +24,13 @@ class Resident{
         int getID() const { return _ID; }
         int getGroupNumber () const { return _group_number; };
         double getAllowedMovementDistance () const { return _allowed_movement_distance; };
-        double getHappinessGoal () const { return _happiness_goal; };
-        double getHappiness () const  {return _curr_happiness; }; // TODO don't know if this is used.
+        double getHappinessGoal () const {
+            return _happiness_goal; 
+            };
+        double getHappiness () const  {
+            return .7;
+            //return _curr_happiness;
+             }; // TODO don't know if this is used.
         // neighbors vector includes all possible neighbors, so
         // if a neighbors house is empty, Color::absent should
         // be added to neighbors

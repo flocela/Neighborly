@@ -95,11 +95,11 @@ void GrCityPrinter::addCityYAxis()
 }
 
 void GrCityPrinter::printCity(std::map<House*, Resident*> houseToResMap)
-{  (void) houseToResMap; // TODO why do I have a (void) here?
-    printTitle();
-    printXAxis();
-    printYAxis();
-    //printHouses(houseToResMap);
+{  
+    //printTitle();
+    //printXAxis();
+    //printYAxis();
+    printHouses(houseToResMap);
 }
 
 void GrCityPrinter::printTitle()
@@ -121,9 +121,11 @@ void GrCityPrinter::printYAxis()
 }
 
 void GrCityPrinter::printHouses( std::map<House *, Resident *> houseToResMap )
-{   
+{   std::cout << "GrCityPrinter line 124" << std::endl;
     std::map<Color, std::vector<Coordinate>> coordsPerColor =
-        createVectorsForEachColor(houseToResMap);
+        createVectorsOfHousesForEachColor(houseToResMap);
+    
+    std::cout << "GrCityPrinter line 128" << std::endl;
     for (auto const &colorToCoordVector : coordsPerColor)
     {
         _renderer->addBlocksByColor(
@@ -134,36 +136,38 @@ void GrCityPrinter::printHouses( std::map<House *, Resident *> houseToResMap )
     }
 }
 
-std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsForEachColor(
+std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsOfHousesForEachColor(
     std::map<House *, Resident *> houseToResMap)
-{
+{   
     std::map<Color, std::vector<Coordinate>> colorToCoordinatesMap = {};
-
+    std::cout << "_coord_to_house_map: " << _coord_to_house_map.size() << std::endl;
     for (auto const &x : _coord_to_house_map)
-    {
+    {   
         Coordinate coord = x.first;
         House *house = x.second;
         Color colorKey;
-        if (houseToResMap.count(house) == 0)
+        if (houseToResMap.find(house) == houseToResMap.end())
         {
             // No resident has this address. So this house is empty.
             colorKey = Color::absent;
         }
         else
         {
-            Resident *res = houseToResMap[house]; 
+            Resident *res = houseToResMap[house];
+            //std::cout << "resId: " << res->getID() <<std::endl;
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
             if (happinessValue < happinessGoal)
-                colorKey = getUnhappyColor(res->getGroupNumber());
+                colorKey = Color::red; //getUnhappyColor(res->getGroupNumber());
             else
-                colorKey = getHappyColor(res->getGroupNumber());
+                colorKey = Color::blue; //getHappyColor(res->getGroupNumber());
         }
-        if (colorToCoordinatesMap.count(colorKey) == 0) // TODO  c++ knows how to do this in one step
+        if (colorToCoordinatesMap.find(colorKey) == colorToCoordinatesMap.end()) // TODO  c++ knows how to do this in one step
         {
             std::vector<Coordinate> newCoordinateVector = {};
             colorToCoordinatesMap[colorKey] = newCoordinateVector;
         }
+        
         int pixelsX = _pixel_converter_x->getPixel(coord.getX()) - _house_size__px / 2;
         int pixelsY = _pixel_converter_y->getPixel(coord.getY()) - _house_size__px / 2;
         Coordinate pixelCoord{pixelsX, pixelsY};
