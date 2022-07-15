@@ -181,7 +181,7 @@ int main(int argc, char* argv[])
         // TODO ensure I don't overrun the array.
         index++;
     }
-    graphicPrinter.init(city.get(), numOfRuns);
+    graphicPrinter.init(city.get(), numOfRuns, "Neighbors");
     graphicPrinter.setColors(groupNumToColorMap);
 
     std::map<House*, Resident*> houseToResidentMap;
@@ -189,7 +189,7 @@ int main(int argc, char* argv[])
     for (int ii=0; ii< 2; ii++)
     {   std::cout << "main ii: " << ii << std::endl;
         houseToResidentMap = simulator->simulate();
-        graphicPrinter.print(houseToResidentMap, ii, "Title");
+        graphicPrinter.print(houseToResidentMap, ii);
     }
     Printer_CMDLine cmdLinePrinter{numOfRuns, city.get()};
     //cmdLinePrinter.print(houseToResidentMap, numOfRuns, "Title");

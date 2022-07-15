@@ -11,14 +11,10 @@ Printer_CMDLine::Printer_CMDLine (
     textHelper{maxNumofRuns,cityPtr}
 {}
 
-void Printer_CMDLine::print(
-    std::map<House*, Resident*> residentPerHouse,
-    int run,
-    std::string title
-)
+void Printer_CMDLine::print(std::map<House*, Resident*> residentPerHouse, int run)
 {   
-
-    std::cout << textHelper.createText(residentPerHouse, run, title);
-    (void) title;
+    (void)residentPerHouse;
+    (void)run;
+    //std::cout << textHelper.createText(residentPerHouse, run);
 
 } 

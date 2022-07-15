@@ -28,8 +28,10 @@ Printer_Graphic::Printer_Graphic ( // TODO check if parameters are zero, if stop
     _screen_height__px{screen_height}
 {}
 
-void Printer_Graphic::init (City* cityPtr, int numOfRuns)
+void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
 {   
+    initWindowValues();
+    initWindowTitle(title);
     initAxesValues();
     _renderer = std::make_unique<Renderer>(_screen_width__px, _screen_height__px);
     initCityMap(cityPtr);
@@ -38,13 +40,8 @@ void Printer_Graphic::init (City* cityPtr, int numOfRuns)
 
 void Printer_Graphic::initAxesValues ()
 {
-    _charts_top_left_x_coord__px = calcLeftXCoordPx();
     _city_map_chart_top_left_y_coord__px = calcCityMapChartTopLeftYCoordPx();
     _div_chart_y_top_left_y_coord__px = calcDivChartTopLeftYCoordPx();
-    // _sum_y_space_lengths__px is all three charts' y-direction spaces added up
-    _sum_y_space_lengths__px = calcSumOfYSpacesPx ();
-    // all charts have the same _x_space_length__px
-    _x_space_length__px = calcXSpacePx();
 }
 
 void Printer_Graphic::initCityMap (City* cityPtr) // TODO throw exception if city too large
@@ -113,11 +110,10 @@ void Printer_Graphic::initRunCounter (int numOfRuns)
 
 void Printer_Graphic::print (
     std::map<House*, Resident*> residentPerHouse,
-    int run,
-    std::string title
+    int run
 )
 {   
-    (void) title;
+    printWindowTitle();
     _city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
     _renderer->endFrame();
@@ -209,5 +205,27 @@ int Printer_Graphic::calcDivChartTopLeftYCoordPx ()
            (_sum_y_space_lengths__px * _city_map_y_axis_fraction);
 }
 
+void Printer_Graphic::initWindowTitle (std::string title)
+{
+    _window_title_x__px = _left_border__px + calcXSpacePx()/2;//TODO make XSpacePx into an attribute
+    _window_title_y__px = _top_border__px;
+    _window_title_string = title;
+}
 
+void Printer_Graphic::printWindowTitle ()
+{
+    _renderer->setTextFormats({100, 100, 100, 100},
+                              {0xAA, 0xFF, 0xFF, 0xFF},
+                              _window_title.letterHeight());
+    _renderer->renderText(_window_title_x__px, _window_title_y__px, _window_title_string, 1);
+}
+
+void Printer_Graphic::initWindowValues ()
+{
+    _charts_top_left_x_coord__px = calcLeftXCoordPx();
+    // all charts have the same _x_space_length__px
+    _x_space_length__px = calcXSpacePx();
+    // _sum_y_space_lengths__px is all three charts' y-direction spaces added up
+    _sum_y_space_lengths__px = calcSumOfYSpacesPx ();
+}
 

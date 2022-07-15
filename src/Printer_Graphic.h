@@ -30,14 +30,13 @@ class Printer_Graphic : public Printer
         void initCityMap (City* cityPtr); // make private
         void setColors (std::map<int, std::pair<Color, Color>> colors); // make private
         void initRunCounter (int numOfRuns); // make private
-        void init (City* cityPtr, int numOfRuns);
+        void init (City* cityPtr, int numOfRuns, std::string title);
         int maxNumOfHousesX (int screenWidth__px);
         int maxNumOfHousesY (int screenHeight__px);
 
         void print(
             std::map<House*, Resident*> residentPerHouse,
-            int run,
-            std::string title
+            int run
         ) override;
 
         void keepScreen();
@@ -80,10 +79,10 @@ class Printer_Graphic : public Printer
         int _left_border__px = 10;
         int _right_border__px = 10;
 
-        Letter _window_title = Letter(24, 2);
-        int _window_title_w__px = 100; // main title width
-        int _window_title_y__px = _top_border__px; // top left corner of text
+        Letter _window_title = Letter(40, 2);
+        std::string _window_title_string = "Neighbors";
         int _window_title_x__px;// top left corner of text
+        int _window_title_y__px = _top_border__px; // top left corner of text
         
         Letter _resident_keys = Letter (12, 2); // shows resident next to its colored square
 
@@ -160,6 +159,13 @@ class Printer_Graphic : public Printer
         void initDiversityPrinter();
 
         void initAxesValues ();
+
+        void printWindowTitle();
+
+        void initWindowTitle(std::string title);
+        
+        // these are distances.
+        void initWindowValues();
 
 
 

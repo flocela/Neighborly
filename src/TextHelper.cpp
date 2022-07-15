@@ -7,11 +7,9 @@ bool pComp(House* a, House* b) {return *a < *b; }
 
 std::string TextHelper::createText (
     std::map<House*, Resident*> residentPerHouse,
-    int run,
-    std::string title
+    int run
     ) const
 {
-    (void) title;
     (void) residentPerHouse;
     for (House* h : _city_ptr->getHouses())
     {

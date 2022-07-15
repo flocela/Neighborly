@@ -14,8 +14,7 @@ class Printer_CMDLine : public Printer
         
         void print(
             std::map<House*, Resident*> residentPerHouse,
-            int run,
-            std::string title
+            int run
         ) override;
 
     private:

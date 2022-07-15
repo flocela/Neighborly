@@ -17,8 +17,7 @@ class TextHelper
 
         std::string createText (
             std::map<House*, Resident*> residentPerHouse,
-            int run,
-            std::string title
+            int run
         ) const;
     private:
         int _max_num_of_runs;

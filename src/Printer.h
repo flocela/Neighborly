@@ -8,10 +8,7 @@
 
 class Printer
 {   public:
-        virtual void print(
-                std::map<House*, Resident*> residentPerHouse,
-                int run,
-                std::string title) = 0;
+        virtual void print(std::map<House*, Resident*> residentPerHouse, int run) = 0;
 };
 
 #endif

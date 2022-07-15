@@ -223,6 +223,6 @@ TEST_CASE("TextHelper create text()")
     text.append(" 23,   red, 23,   (4, 3), 0/0.25\n");
     text.append(" 24,   red, 24,   (4, 4), 0/0.25\n");
     TextHelper textHelper{maxNumOfRuns, &city};
-    std::string result = textHelper.createText(residentPerHouse, run, title);
+    std::string result = textHelper.createText(residentPerHouse, run);
     REQUIRE(text == result);
 }
