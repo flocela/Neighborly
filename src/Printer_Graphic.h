@@ -90,7 +90,7 @@ class Printer_Graphic : public Printer
         // COMMON TO ALL CHARTS //
         AxisFormat _axis_format_X{};
         AxisFormat _axis_format_Y{};
-        Letter _chart_title_letter = Letter(16, 2); // used for Num Of Runs, City Map, Diversity...
+        Letter _chart_title_letter = Letter(30, 2); // used for Num Of Runs, City Map, Diversity...
 
         int _charts_top_left_x_coord__px; // x-coordinate for top left corner of all charts is the same
         int _x_space_length__px; // Same in all charts so charts line up.

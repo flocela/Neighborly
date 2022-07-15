@@ -107,7 +107,7 @@ void GrCityPrinter::printTitle()
     _renderer->setTextFormats({100, 100, 100, 100},
                               {0xAA, 0xFF, 0xFF, 0xFF},
                               _title_letter.letterHeight());
-    _renderer->renderText(_title_x__px, _title_y__px, _main_title, 4);
+    _renderer->renderText(_title_x__px, _title_y__px, _main_title, 1);
 }
 
 void GrCityPrinter::printXAxis()

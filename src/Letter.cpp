@@ -1,7 +1,7 @@
 #include "Letter.h"
 
-Letter::Letter (int fontSize, int lineSpace):
-    _letter_height{fontSize},
+Letter::Letter (int letterHeight, int lineSpace):
+    _letter_height{letterHeight},
     _line_space{lineSpace}
 {}
 
