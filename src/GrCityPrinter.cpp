@@ -96,9 +96,9 @@ void GrCityPrinter::addCityYAxis()
 
 void GrCityPrinter::printCity(std::map<House*, Resident*> houseToResMap)
 {  
-    //printTitle();
-    //printXAxis();
-    //printYAxis();
+    printTitle();
+    printXAxis();
+    printYAxis();
     printHouses(houseToResMap);
 }
 
@@ -121,11 +121,11 @@ void GrCityPrinter::printYAxis()
 }
 
 void GrCityPrinter::printHouses( std::map<House *, Resident *> houseToResMap )
-{   std::cout << "GrCityPrinter line 124" << std::endl;
+{   
     std::map<Color, std::vector<Coordinate>> coordsPerColor =
         createVectorsOfHousesForEachColor(houseToResMap);
     
-    std::cout << "GrCityPrinter line 128" << std::endl;
+    
     for (auto const &colorToCoordVector : coordsPerColor)
     {
         _renderer->addBlocksByColor(
@@ -140,7 +140,6 @@ std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsOfHousesFor
     std::map<House *, Resident *> houseToResMap)
 {   
     std::map<Color, std::vector<Coordinate>> colorToCoordinatesMap = {};
-    std::cout << "_coord_to_house_map: " << _coord_to_house_map.size() << std::endl;
     for (auto const &x : _coord_to_house_map)
     {   
         Coordinate coord = x.first;
