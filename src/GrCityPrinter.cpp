@@ -25,22 +25,10 @@ GrCityPrinter::GrCityPrinter (
 {
     _axis_format_X.setTitleLetterHeight(0);// axis title is empty string.
     _axis_format_Y.setTitleLetterHeight(0);// axis title is empty string.
-    _x_axis_length_for_houses__px = 
-        _x_given_space__px - 
-        _axis_format_Y.getHeightOfAxisPx() -
-        _axis_format_X.offsetPx() - 
-        _axis_format_X.overrunPx();
-    _y_axis_length_for_houses__px = 
-        _y_given_space__px - 
-        _title_letter.getHeightIncLSpace() -
-        _axis_format_X.getHeightOfAxisPx() -
-        _axis_format_Y.offsetPx() - 
-        _axis_format_Y.overrunPx();
+    
+    
     _cell_size__px = calcCellSizePx(); // TODO check if too small. Maybe make an exception in print.
     _house_size__px = calcHouseSizePx();
-
-    _x_axis_length__px = calcXAxisLengthPx();
-    _y_axis_length__px = calcYAxisLengthPx();
 
     _cross_hairs_x__px = calcXCrossHairsPx();
     _cross_hairs_y__px = calcYCrossHairsPx();
@@ -202,7 +190,14 @@ int GrCityPrinter::labelSpacing (int axisLength__coord)
 
 int GrCityPrinter::calcXCrossHairsPx ()
 {
-    return _top_left_corner_x__px + _axis_format_Y.getHeightOfAxisPx();
+    return _top_left_corner_x__px +
+           ( _x_given_space__px - 
+              (_axis_format_Y.getHeightOfAxisPx() + 
+               _cell_size__px * (_house_max_x - _house_min_x) +
+               _axis_format_X.offsetPx() +
+               _axis_format_X.overrunPx()
+              )
+           )/2;
 }
 
 int GrCityPrinter::calcYCrossHairsPx ()
@@ -215,12 +210,23 @@ int GrCityPrinter::calcYCrossHairsPx ()
 int GrCityPrinter::calcCellSizePx ()
 {
     // X-direction
+    int xAxisLengthForHousesPx = 
+        _x_given_space__px - 
+        _axis_format_Y.getHeightOfAxisPx() -
+        _axis_format_X.offsetPx() - 
+        _axis_format_X.overrunPx(); 
     int numHousesXDir = _house_max_x - _house_min_x + 1;
-    int xCellSize = _x_axis_length_for_houses__px / (numHousesXDir);
+    int xCellSize = xAxisLengthForHousesPx / (numHousesXDir);
 
     // Y-direction
+    int yAxisLengthForHousesPx = 
+        _y_given_space__px - 
+        _title_letter.getHeightIncLSpace() -
+        _axis_format_X.getHeightOfAxisPx() -
+        _axis_format_Y.offsetPx() - 
+        _axis_format_Y.overrunPx();
     int numHousesYDir = _house_max_y - _house_min_y + 1;
-    int yCellSize = _y_axis_length_for_houses__px / (numHousesYDir);
+    int yCellSize = yAxisLengthForHousesPx / (numHousesYDir);
 
     int smallestCellSize = std::min(xCellSize, yCellSize);
     smallestCellSize = (smallestCellSize%2 == 0)? smallestCellSize : (smallestCellSize+1);
@@ -236,20 +242,6 @@ int GrCityPrinter::calcHouseSizePx ()
     return ( houseSize % 2 == 0) ? houseSize : (houseSize + 1);
 }
 
-int GrCityPrinter::calcXAxisLengthPx ()
-{
-    return _axis_format_X.offsetPx() + 
-           _cell_size__px * (_house_max_x - _house_min_x + 1) +
-           _axis_format_X.overrunPx();
-}
-
-int GrCityPrinter::calcYAxisLengthPx ()
-{   
-    return _axis_format_Y.offsetPx() + 
-           _cell_size__px * (_house_max_y - _house_min_y + 1) +
-           _axis_format_Y.overrunPx();
-}
-
 std::unique_ptr<PixelConverter> GrCityPrinter::createPixelConverterX()
 {
     int maxXHouseAxisPixel = 
@@ -260,7 +252,7 @@ std::unique_ptr<PixelConverter> GrCityPrinter::createPixelConverterX()
 
     return std::make_unique<PixelConverter>(
         _house_min_x,
-        _cross_hairs_x__px + _axis_format_Y.offsetPx(),
+        _cross_hairs_x__px + _axis_format_X.offsetPx(),
         _house_max_x,
         maxXHouseAxisPixel
     );
@@ -271,8 +263,7 @@ std::unique_ptr<PixelConverter> GrCityPrinter::createPixelConverterY()
     int maxYHouseAxisPixel = 
         _cross_hairs_y__px + 
         _axis_format_Y.offsetPx() + 
-        _cell_size__px * (_house_max_y - _house_min_y) + 
-        _axis_format_Y.overrunPx();
+        _cell_size__px * (_house_max_y - _house_min_y);
 
     return std::make_unique<PixelConverter>(
         _house_min_y,
