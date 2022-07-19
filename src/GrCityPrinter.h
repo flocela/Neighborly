@@ -144,11 +144,6 @@ class GrCityPrinter
             std::map<House*, Resident*> houseToResMap
         );
 
-        // Initialize the blocks and texts that are used by the renderer to render
-        // the axes' lines, ticks, and labels
-        void initXAxisBlocks ();
-        void initYAxisBlocks ();
-
         Color getHappyColor (int resGroup);
         Color getUnhappyColor (int resGroup);
 
