@@ -26,11 +26,14 @@ GrCityPrinter::GrCityPrinter (
     _axis_format_X.setTitleLetterHeight(0);// axis title is empty string.
     _axis_format_Y.setTitleLetterHeight(0);// axis title is empty string.
     
-    
     _cell_size__px = calcCellSizePx(); // TODO check if too small. Maybe make an exception in print.
     _house_size__px = calcHouseSizePx();
 
-    _cross_hairs_x__px = calcXCrossHairsPx();
+    _x_axis_length__px = _cell_size__px * (_house_max_x - _house_min_x) + 
+                         _axis_format_X.offsetPx() +
+                         _axis_format_X.overrunPx();
+
+    _cross_hairs_x__px = _top_left_corner_x__px + ((_x_given_space__px - _x_axis_length__px)/2);
     _cross_hairs_y__px = calcYCrossHairsPx();
 
     _pixel_converter_x = createPixelConverterX();
@@ -40,8 +43,8 @@ GrCityPrinter::GrCityPrinter (
     _house_min_y__px = _pixel_converter_y->getPixel(_house_min_y);
     _house_max_x__px = _pixel_converter_x->getPixel(_house_max_x);
     _house_max_y__px = _pixel_converter_x->getPixel(_house_max_y);
-
-    _title_x__px = _house_min_x__px + (_house_max_x__px - _house_min_x__px)/2;
+  
+    _title_x__px = _cross_hairs_x__px + (_x_axis_length__px/2);
     _title_y__px = _top_left_corner_y__px;
 
     addCityXAxis();
@@ -83,7 +86,7 @@ void GrCityPrinter::addCityYAxis()
 }
 
 void GrCityPrinter::printCity(std::map<House*, Resident*> houseToResMap)
-{  
+{   
     printTitle();
     printXAxis();
     printYAxis();
@@ -186,18 +189,6 @@ int GrCityPrinter::minTickSpacing (int axisLength__coord)
 int GrCityPrinter::labelSpacing (int axisLength__coord)
 {
     return (axisLength__coord <= 10)? 1 : 10;
-}
-
-int GrCityPrinter::calcXCrossHairsPx ()
-{
-    return _top_left_corner_x__px +
-           ( _x_given_space__px - 
-              (_axis_format_Y.getHeightOfAxisPx() + 
-               _cell_size__px * (_house_max_x - _house_min_x) +
-               _axis_format_X.offsetPx() +
-               _axis_format_X.overrunPx()
-              )
-           )/2;
 }
 
 int GrCityPrinter::calcYCrossHairsPx ()

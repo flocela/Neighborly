@@ -70,8 +70,8 @@ class GrCityPrinter
         int _title_x__px;
         int _title_y__px;
 
+        // Does not include any text, just the axis. 
         int _x_axis_length__px;
-        int _y_axis_length__px;
 
         // _cell_size is the spacing between ticks on the x and y axes.
         // It is determined as the size of the house plus the surrounding border
@@ -146,7 +146,6 @@ class GrCityPrinter
 
         int labelSpacing (int axisLength);
 
-        int calcXCrossHairsPx();
         int calcYCrossHairsPx();
         int calcCellSizePx();
         int calcHouseSizePx();

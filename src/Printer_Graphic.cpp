@@ -207,7 +207,7 @@ int Printer_Graphic::calcDivChartTopLeftYCoordPx ()
 
 void Printer_Graphic::initWindowTitle (std::string title)
 {
-    _window_title_x__px = _left_border__px + calcXSpacePx()/2;//TODO make XSpacePx into an attribute
+    _window_title_x__px = _screen_width__px/2;//TODO make XSpacePx into an attribute
     _window_title_y__px = _top_border__px;
     _window_title_string = title;
 }
