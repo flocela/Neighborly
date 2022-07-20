@@ -9,7 +9,7 @@
 #include "House.h"
 #include <vector>
 #include "Color.h"
-#include "GraphicRunCounterPrinter.h"
+#include "GrRunCPrinter.h"
 #include "GrDiversityPrinter.h"
 #include "Letter.h"
 
@@ -42,9 +42,9 @@ class Printer_Graphic : public Printer
         void keepScreen();
     
     private:
-        std::unique_ptr<GrCityPrinter>       _city_printer;
-        std::unique_ptr<GraphicRunCounterPrinter> _run_counter_printer;
-        std::unique_ptr<GrDiversityPrinter>  _diversity_printer;
+        std::unique_ptr<GrCityPrinter>            _city_printer;
+        std::unique_ptr<GrRunCPrinter> _run_counter_printer;
+        std::unique_ptr<GrDiversityPrinter>       _diversity_printer;
 
         std::map<Coordinate, House*> _coord_to_house_map = {};
         std::set<Color> colors = {
@@ -69,6 +69,7 @@ class Printer_Graphic : public Printer
         int calcLeftXCoordPx(); // same for all three charts.
         int calcCityMapChartTopLeftYCoordPx ();
         int calcDivChartTopLeftYCoordPx ();
+        int calcRunChartTopLeftYCoordPx ();
 
         // FOR WINDOW //
         int _screen_width__px;
@@ -131,7 +132,7 @@ class Printer_Graphic : public Printer
         int _hap_chart_y_axis_length__px;
 
         // RUNS COUNTER CHART//
-        int _num_runs_title_w__px = 50; // run title widths
+        int _runs_chart_top_left_y__coord__px;
         int _curr_run = 0;
         int _num_of_runs;
 

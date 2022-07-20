@@ -100,10 +100,16 @@ void Printer_Graphic::setColors (std::map<int,std::pair<Color, Color>> colors)
 void Printer_Graphic::initRunCounter (int numOfRuns)
 {
     _num_of_runs = numOfRuns;
-    _run_counter_printer = std::make_unique<GraphicRunCounterPrinter>(
+    _runs_chart_top_left_y__coord__px = 
+        _top_border__px + _window_title.getHeightIncLSpace();
+
+    _run_counter_printer = std::make_unique<GrRunCPrinter>(
         _renderer.get(), 
-        _x_num_of_runs_offset, 
-        _y_num_of_runs_offset,
+        _left_border__px, 
+        _runs_chart_top_left_y__coord__px,
+        _x_space_length__px,
+        static_cast<int>(_sum_y_space_lengths__px * _diversity_chart_y_axis_fraction),
+        _chart_title_letter,
         _num_of_runs );
 }
 
@@ -203,6 +209,11 @@ int Printer_Graphic::calcDivChartTopLeftYCoordPx ()
 {
     return _city_map_chart_top_left_y_coord__px + 
            (_sum_y_space_lengths__px * _city_map_y_axis_fraction);
+}
+
+int Printer_Graphic::calcRunChartTopLeftYCoordPx ()
+{
+    return _top_border__px + _window_title.getHeightIncLSpace();
 }
 
 void Printer_Graphic::initWindowTitle (std::string title)
