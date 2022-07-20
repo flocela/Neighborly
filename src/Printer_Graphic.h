@@ -42,16 +42,11 @@ class Printer_Graphic : public Printer
         void keepScreen();
     
     private:
-        std::unique_ptr<GrCityPrinter>            _city_printer;
-        std::unique_ptr<GrRunCPrinter> _run_counter_printer;
-        std::unique_ptr<GrDiversityPrinter>       _diversity_printer;
+        std::unique_ptr<GrCityPrinter>      _city_printer;
+        std::unique_ptr<GrRunCPrinter>      _run_counter_printer;
+        std::unique_ptr<GrDiversityPrinter> _diversity_printer;
 
         std::map<Coordinate, House*> _coord_to_house_map = {};
-        std::set<Color> colors = {
-            Color::red,
-            Color::blue,
-            Color::green
-        };
         std::unique_ptr<Renderer> _renderer;
         std::map<int, std::pair<Color, Color>> _colors;
         int _num_of_types_of_residents = 2;
