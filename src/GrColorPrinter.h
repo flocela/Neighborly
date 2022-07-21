@@ -28,6 +28,7 @@ class GrColorPrinter
         _x_space_for_unhappy_label__px = 2 * _title_letter.letterHeight();
         _x_space_for_group_label__px = _title_letter.letterHeight() * 34 / 10;
         _box_length__px = _title_letter.letterHeight();
+        
     }
 
     void print(Renderer* renderer);

@@ -181,8 +181,11 @@ int main(int argc, char* argv[])
         // TODO ensure I don't overrun the array.
         index++;
     }
-    graphicPrinter.init(city.get(), numOfRuns, "Neighbors");
+    
+    // TODO setColors must be called before init. There shouldn't be this restraint.
     graphicPrinter.setColors(groupNumToColorMap);
+    graphicPrinter.init(city.get(), numOfRuns, "Neighbors");
+    
 
     std::map<House*, Resident*> houseToResidentMap;
     std::cout << "before runs" << std::endl;

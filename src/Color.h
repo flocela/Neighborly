@@ -8,7 +8,7 @@
 
 enum class Color { red, red_sad, blue, blue_sad, green, green_sad, absent };
 
-inline std::map<Color, Color> _unhappy_color_map = {
+inline std::map<Color, Color> _unhappy_color_map {
     {Color::red, Color::red_sad},
     {Color::blue, Color::blue_sad},
     {Color::green, Color::green_sad}
