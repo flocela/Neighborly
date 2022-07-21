@@ -36,6 +36,7 @@ void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
     _renderer = std::make_unique<Renderer>(_screen_width__px, _screen_height__px);
     initCityMap(cityPtr);
     initRunCounter(numOfRuns);
+    initColorPrinter();
 }
 
 void Printer_Graphic::initAxesValues ()
@@ -122,6 +123,7 @@ void Printer_Graphic::print (
     printWindowTitle();
     _city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
+    _color_printer->print(_renderer.get());
     _renderer->endFrame();
 } 
 
@@ -137,6 +139,17 @@ void Printer_Graphic::keepScreen()
             break;
         }
     }
+}
+
+void Printer_Graphic::initColorPrinter ()
+{
+    _color_printer = std::make_unique<GrColorPrinter>(
+        _charts_top_left_x_coord__px,
+        _top_border__px + _window_title.getHeightIncLSpace() + _chart_title_letter.getHeightIncLSpace(),
+        _x_space_length__px,
+        _group_color_letter,
+        _colors
+    );
 }
 
 void Printer_Graphic::initDiversityPrinter ()
@@ -201,8 +214,7 @@ int Printer_Graphic::calcCityMapChartTopLeftYCoordPx ()
 {
     return _top_border__px +
            _window_title.getHeightIncLSpace() +
-           _chart_title_letter.getHeightIncLSpace() + // Run counter chart.
-           _num_of_types_of_residents * _resident_keys.getHeightIncLSpace();
+           ( 2 * _chart_title_letter.getHeightIncLSpace() );// Run counter chart plus Resident colors
 }
 
 int Printer_Graphic::calcDivChartTopLeftYCoordPx ()

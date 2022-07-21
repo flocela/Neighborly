@@ -79,12 +79,12 @@ void Renderer::renderText (
         textRect.x = x;
         textRect.y = y - 0.5 * textRect.h;
     }
-    else if (centered == 3)
+    else if (centered == 3) // align to right side
     {
-        textRect.x = x - textRect.w/2;
+        textRect.x = x - textRect.w;
         textRect.y = y;
     }
-    else if (centered == 4)
+    else if (centered == 4) // align to left side
     {
         textRect.x = x;
         textRect.y = y;

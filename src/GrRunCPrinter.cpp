@@ -11,5 +11,5 @@ void GrRunCPrinter::print (int numOfRuns)
         _x_offset + (_x_space_length__px/2), 
         _y_offset,
         "Runs: " + std::to_string(numOfRuns) + " ",
-        3);
+        1);
 }

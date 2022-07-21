@@ -11,6 +11,7 @@
 #include "Color.h"
 #include "GrRunCPrinter.h"
 #include "GrDiversityPrinter.h"
+#include "GrColorPrinter.h"
 #include "Letter.h"
 
 class Printer_Graphic : public Printer
@@ -30,6 +31,7 @@ class Printer_Graphic : public Printer
         void initCityMap (City* cityPtr); // make private
         void setColors (std::map<int, std::pair<Color, Color>> colors); // make private
         void initRunCounter (int numOfRuns); // make private
+        void initColorPrinter();
         void init (City* cityPtr, int numOfRuns, std::string title);
         int maxNumOfHousesX (int screenWidth__px);
         int maxNumOfHousesY (int screenHeight__px);
@@ -45,6 +47,7 @@ class Printer_Graphic : public Printer
         std::unique_ptr<GrCityPrinter>      _city_printer;
         std::unique_ptr<GrRunCPrinter>      _run_counter_printer;
         std::unique_ptr<GrDiversityPrinter> _diversity_printer;
+        std::unique_ptr<GrColorPrinter>     _color_printer;
 
         std::map<Coordinate, House*> _coord_to_house_map = {};
         std::unique_ptr<Renderer> _renderer;
@@ -85,7 +88,7 @@ class Printer_Graphic : public Printer
         // COMMON TO ALL CHARTS //
         AxisFormat _axis_format_X{};
         AxisFormat _axis_format_Y{};
-        Letter _chart_title_letter = Letter(30, 2); // used for Num Of Runs, City Map, Diversity...
+        Letter _chart_title_letter = Letter(28, 4); // used for Num Of Runs, City Map, Diversity...
 
         int _charts_top_left_x_coord__px; // x-coordinate for top left corner of all charts is the same
         int _x_space_length__px; // Same in all charts so charts line up.
@@ -130,6 +133,9 @@ class Printer_Graphic : public Printer
         int _runs_chart_top_left_y__coord__px;
         int _curr_run = 0;
         int _num_of_runs;
+
+        // Group Color Chart //
+        Letter _group_color_letter{24, 4};
 
         // x and y offsets for title displaying number of runs so far. // TODO what is this for?
         const int _x_num_of_runs_offset = 80;
