@@ -14,6 +14,7 @@
 #include "GrDiversityPrinterSizer.h"
 #include "AxisFormat.h"
 #include "Letter.h"
+#include <unordered_map>
 
 // Takes in a Renderer* and necessary settings to draw the diversity chart.
 
@@ -27,17 +28,19 @@ class GrDiversityPrinter
     public:
         GrDiversityPrinter (
             GrDiversityPrinterSizer grDivPrSizer,
-            Renderer* renderer,
             std::map<int, std::pair<Color, Color>> resColors,
             int topLeftCornerXPx,
-            int topLeftCornerYPx
+            int topLeftCornerYPx,
+            int largestNumOfNeighbors
         );
 
-        void printDiversity (std::map<Resident*, int> resident2like, std::map<Resident*, int> resident2diff);
+        void print(
+            std::unordered_map<int,std::vector<int>> _num_of_like_diff_per_group,
+            Renderer* renderer
+        );
     
     private:
         std::string _main_title = "Resident Diversity";
-        Renderer* _renderer;
         std::map<Coordinate, House*> _coord_to_house_map;
         // This includes sad resident colors and happy resident colors.
         std::map<int, std::pair<Color, Color>> _res_colors;
@@ -86,6 +89,8 @@ class GrDiversityPrinter
         int _label_spacing_x;
         int _label_spacing_y;
 
+        int _largest_num_of_neighbors;
+
         // Axes
         std::unique_ptr<XAxisL2R> _x_axis;
         std::unique_ptr<YAxisB2T> _y_axis;
@@ -116,7 +121,6 @@ class GrDiversityPrinter
         int calcYAxisLengthPx ();
 
         int calcCoordSkipX();
-        int calcCoordSkipY();
 
         int calcRunModulo();
         int calcYModulo();
