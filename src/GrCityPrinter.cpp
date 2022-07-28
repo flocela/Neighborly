@@ -144,7 +144,6 @@ std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsOfHousesFor
         else
         {
             Resident *res = houseToResMap[house];
-            //std::cout << "resId: " << res->getID() <<std::endl;
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
             if (happinessValue < happinessGoal)

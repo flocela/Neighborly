@@ -34,7 +34,6 @@ GrDiversityPrinter::GrDiversityPrinter (
     {
         _run_skip = 1;
         int spaceBetweenPoints =  (availablePixelsForPoints - xNumOfPixelsRequired)/(_num_of_runs - 1);
-        std::cout << "spaceBetweenPoints: " << spaceBetweenPoints << std::endl;
         _x_point_spacing__px = _point_size__px + spaceBetweenPoints;
         totalNumberOfPixelsUsedX = ((_num_of_runs - 1) * _x_point_spacing__px) + 
                                    _axis_format_X.offsetPx() +
@@ -42,7 +41,6 @@ GrDiversityPrinter::GrDiversityPrinter (
     }
     else
     {
-        std::cout << "else" << std::endl;
         _run_skip = (xNumOfPixelsRequired % availablePixelsForPoints) ?
                     (xNumOfPixelsRequired / availablePixelsForPoints) + 1 :
                     (xNumOfPixelsRequired / availablePixelsForPoints);
@@ -50,22 +48,11 @@ GrDiversityPrinter::GrDiversityPrinter (
                     _axis_format_X.offsetPx() +
                     _axis_format_X.overrunPx();
     }
-    std::cout << "_x_point_spacing__px: " << _x_point_spacing__px << std::endl;
-    std::cout << "axis_formatX.offsetPx() " << _axis_format_X.offsetPx() << std::endl;
-    std::cout << "_axis_formatX.overrunPx() " << _axis_format_X.overrunPx() << std::endl;
-    std::cout << "run_skip: " << _run_skip << std::endl;
-    std::cout << "totalNumberOfPixelsUsedX: " << totalNumberOfPixelsUsedX << std::endl;
-    std::cout << "GrDiversityPrinter AA" << std::endl;
-    std::cout << "_top_left_corner_x__px: " << topLeftCornerXPx << std::endl;
-    std::cout << "_x_given_space__px: " << _x_given_space__px << std::endl;
     
     _cross_x__px = _top_left_corner_x__px + ((_x_given_space__px - totalNumberOfPixelsUsedX)/2);
 
-    std::cout << "_cross_x__px: " << _cross_x__px << std::endl;
-    std::cout << "other cross x: " << (_top_left_corner_x__px + (_x_given_space__px/2)) << std::endl;
     _min_tick_spacing_x = calcMinTickSpacingX();
     _maj_tick_spacing_x = calcMajTickSpacingX();
-    std::cout << "_min_tick_spacing: " << _min_tick_spacing_x << std::endl;
     _min_tick_spacing_y = calcMinTickSpacingY();
     _maj_tick_spacing_y = calcMajTickSpacingY();
     _label_spacing_x = calcLabelSpacingX();
@@ -88,7 +75,7 @@ void GrDiversityPrinter::print (
 }
 
 void GrDiversityPrinter::addXAxis ()
-{   std::cout << "GrDivePrinter: _zero_run_idx, _last_run_idx: " << _zero_run_idx << ", " << _last_run_idx << std::endl;
+{   
     _x_axis = std::make_unique<XAxisL2R>(
         "", // no axis title
         _pixel_converter_x.get(),
