@@ -3,6 +3,7 @@
 
 #include "AxisFormat.h"
 #include "Letter.h"
+#include <iostream>
 
 class GrDiversityPrinterSizer 
 {
@@ -22,7 +23,10 @@ class GrDiversityPrinterSizer
         _title_letter{titleLetter},
         _min_x{minX},
         _max_x{maxX}
-        {}
+        {
+            std::cout << "xSpaceLengthPx: " << xSpaceLengthPx << std::endl;
+            std::cout << "ySpaceLengthPx: " << ySpaceLengthPx << std::endl;
+        }
 
         int getXSpaceLengthPx () {return _x_space_length__px;}
         int getYSpaceLengthPx () {return _y_space_length__px;}

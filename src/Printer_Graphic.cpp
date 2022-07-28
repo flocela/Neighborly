@@ -123,7 +123,8 @@ void Printer_Graphic::print (
 {   
     printWindowTitle();
     std::unordered_map<int,std::vector<int>> numOfLikeDiffPerGroup;
-    _city_printer->printCity(residentPerHouse);
+    (void) residentPerHouse;
+    //_city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
     _color_printer->print(_renderer.get());
     _diversity_printer->print(numOfLikeDiffPerGroup, _renderer.get());
@@ -157,7 +158,6 @@ void Printer_Graphic::initColorPrinter ()
 
 void Printer_Graphic::initDiversityPrinter ()
 {
-    std::cout << "Printer_Graphic initDiversityPrinter A" << std::endl;
     GrDiversityPrinterSizer grDivPrinterSizer{
         _x_space_length__px,
         static_cast<int>(_sum_y_space_lengths__px * _diversity_chart_y_axis_fraction),
@@ -167,7 +167,6 @@ void Printer_Graphic::initDiversityPrinter ()
         0,
         _num_of_runs
     };
-    std::cout << "Printer_Graphic initDiversityPrinter B" << std::endl;
     _diversity_printer = std::make_unique<GrDiversityPrinter> (
         grDivPrinterSizer,
         _colors,
@@ -175,7 +174,6 @@ void Printer_Graphic::initDiversityPrinter ()
         calcDivChartTopLeftYCoordPx(),
         10 // TODO get largest from city map
     );
-    std::cout << "Printer_Graphic initDiversityPrinter C" << std::endl;
 }
 
 int Printer_Graphic::maxNumOfHousesX (int screenWidth__px)

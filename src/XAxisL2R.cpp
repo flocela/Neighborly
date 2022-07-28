@@ -24,6 +24,8 @@ XAxisL2R::XAxisL2R (
 {
     _left_most_pixel_x__px = _x_coord__px;
     _right_most_pixel_x__px = _pc->getPixel(_max_val) + _axis_format.overrunPx();
+    std::cout << "XAxisL2R, _left_most_pixel_x__px: " << _left_most_pixel_x__px << std::endl;
+    std::cout << "XAxisL2R, _right_most_pixel_x: " << _right_most_pixel_x__px << std::endl;
 }
 
 void XAxisL2R::print (Renderer* renderer)
@@ -95,7 +97,7 @@ void XAxisL2R::addTicksAndLabels (
     while (currValue <= rightMostPixel__px)
     {
         int currValue__px = _pc->getPixel(currValue);
-        
+        std::cout << "currValue, currValue__px: " << currValue << ", " << currValue__px << std::endl;
         if (currValue % _label_spacing == 0) // long tick with label
         {   
             rect.x =  currValue__px - ( _axis_format.tickThickness() / 2 );

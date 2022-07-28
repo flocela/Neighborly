@@ -68,13 +68,9 @@ class GrDiversityPrinter
         std::unique_ptr<PixelConverter> _pixel_converter_x;
         std::unique_ptr<PixelConverter> _pixel_converter_y;
 
-        // Data point is 2 pixels wide by 2 pixels wide. 
-        int _data_point_size__px = 2;
-
         // may not be able to show every coordinate, may have to show every 5th coordinate.
         // So y axis would count 0, 5, 10, 15... 
         // Datapoints from 3 to 7 would show at coordinate 5.
-        int _coord_skip_x;
         int _coord_skip_y;
 
         int _min_tick_spacing_x;
@@ -104,6 +100,10 @@ class GrDiversityPrinter
         std::vector<TextRect> _y_texts = {};
 
         bool _chart_base_printed = false;
+        int _point_size__px = 6; // square points
+        int _x_point_spacing__px; // center to center.
+        // if _run_skip == 1, then every run is printed. If _run_skip ==2, then every other run is printed. And so on.
+        int _run_skip = 1; 
 
         int count = 0;
 
@@ -119,8 +119,6 @@ class GrDiversityPrinter
 
         int calcXAxisLengthPx ();
         int calcYAxisLengthPx ();
-
-        int calcCoordSkipX();
 
         int calcRunModulo();
         int calcYModulo();
