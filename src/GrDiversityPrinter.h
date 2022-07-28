@@ -58,7 +58,6 @@ class GrDiversityPrinter
 
         int _num_of_runs;
 
-        int _length_of_x_axis__px;
         int _length_of_y_axis__px;
 
         // The coordinate where x and y axes cross on the screen in pixels.
@@ -101,6 +100,9 @@ class GrDiversityPrinter
 
         bool _chart_base_printed = false;
         int _point_size__px = 6; // square points
+        // space from crosshairs to center of first pixel is _point_size__px * off_set_multiplier
+        int _offset_multiplier = 2;
+        int _override_multiplier = _offset_multiplier;
         int _x_point_spacing__px; // center to center.
         // if _run_skip == 1, then every run is printed. If _run_skip ==2, then every other run is printed. And so on.
         int _run_skip = 1; 

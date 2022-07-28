@@ -23,9 +23,8 @@ XAxisL2R::XAxisL2R (
     _label_spacing{labelSpacing}
 {
     _left_most_pixel_x__px = _x_coord__px;
-    _right_most_pixel_x__px = _pc->getPixel(_max_val) + _axis_format.overrunPx();
-    std::cout << "XAxisL2R, _left_most_pixel_x__px: " << _left_most_pixel_x__px << std::endl;
-    std::cout << "XAxisL2R, _right_most_pixel_x: " << _right_most_pixel_x__px << std::endl;
+    _right_most_pixel_x__px = _pc->getPixel(_max_val) + _axis_format.overrunPx(); 
+    std::cout << _left_most_pixel_x__px << ", " << _right_most_pixel_x__px << std::endl;
 }
 
 void XAxisL2R::print (Renderer* renderer)
@@ -34,7 +33,6 @@ void XAxisL2R::print (Renderer* renderer)
     std::vector<SDL_Rect> rects = {};
     // Tick lables are in texts vector.
     std::vector<TextRect> texts = {};
-
     addTitle(texts);
     renderer->setTextFormats(
         {100, 100, 100, 100},
@@ -42,10 +40,8 @@ void XAxisL2R::print (Renderer* renderer)
         _axis_format.titleHeightPx());
     renderer->renderTexts(texts);
     texts.clear();
-
     addHorizontalLine(rects);
     addTicksAndLabels(rects, texts);
-
     renderer->setColorToMedGrey();
     renderer->setTextFormats(
         {100, 100, 100, 100},
@@ -74,7 +70,7 @@ void XAxisL2R::addTicksAndLabels (
     std::vector<SDL_Rect>& rects, 
     std::vector<TextRect>& texts
 )
-{
+{   
     int topOfLabelYPx = _y_coord__px -
                         _axis_format.majTickLengthPx() +
                         _axis_format.tickLengthInsideChart() -
@@ -86,18 +82,15 @@ void XAxisL2R::addTicksAndLabels (
         std::to_string(_min_val), 
         1
     };
-
     SDL_Rect rect;
     rect.w = _axis_format.tickThickness();
     
     // Ticks and labels.
     int currValue = _min_val;
     int rightMostPixel__px = _pc->getValue(_right_most_pixel_x__px);
-
     while (currValue <= rightMostPixel__px)
     {
         int currValue__px = _pc->getPixel(currValue);
-        std::cout << "currValue, currValue__px: " << currValue << ", " << currValue__px << std::endl;
         if (currValue % _label_spacing == 0) // long tick with label
         {   
             rect.x =  currValue__px - ( _axis_format.tickThickness() / 2 );
