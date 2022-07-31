@@ -241,7 +241,7 @@ std::unique_ptr<PixelConverter> GrCityPrinter::createPixelConverterX()
 
     return std::make_unique<PixelConverter>(
         _house_min_x,
-        _cell_size__px * _offset_multiplier,
+        _cross_hairs_x__px + _cell_size__px * _offset_multiplier,
         _house_max_x,
         maxXHouseAxisPixel
     );
@@ -256,7 +256,7 @@ std::unique_ptr<PixelConverter> GrCityPrinter::createPixelConverterY()
 
     return std::make_unique<PixelConverter>(
         _house_min_y,
-        _cell_size__px * _offset_multiplier,
+        _cross_hairs_y__px + _cell_size__px * _offset_multiplier,
         _house_max_y,
         maxYHouseAxisPixel
     );

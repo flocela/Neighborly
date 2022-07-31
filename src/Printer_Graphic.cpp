@@ -123,8 +123,8 @@ void Printer_Graphic::print (
 {   
     printWindowTitle();
     std::unordered_map<int,std::vector<int>> numOfLikeDiffPerGroup;
-    (void) residentPerHouse;
-    //_city_printer->printCity(residentPerHouse);
+    //(void) residentPerHouse;
+    _city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
     _color_printer->print(_renderer.get());
     _diversity_printer->print(numOfLikeDiffPerGroup, _renderer.get());
