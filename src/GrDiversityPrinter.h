@@ -104,8 +104,9 @@ class GrDiversityPrinter
         int _offset_multiplier = 2;
         int _override_multiplier = _offset_multiplier;
         int _x_point_spacing__px; // center to center.
-        // if _run_skip == 1, then every run is printed. If _run_skip ==2, then every other run is printed. And so on.
-        int _run_skip = 1; 
+        int _y_point_spacing__px; 
+        // if _run_skip_x == 1, then every run is printed. If _run_skip_x ==2, then every other run is printed. And so on.
+        int _run_skip_x = 1; 
 
         int count = 0;
 

@@ -36,10 +36,10 @@ GrDiversityPrinter::GrDiversityPrinter (
     int totalNumberOfPixelsUsedX = 0;
     if (xAxisSpaceAllowed >= xAxisSpaceRequiredPx)
     {
-        _run_skip = 1;
+        _run_skip_x = 1;
 
         _x_point_spacing__px = 
-            (_x_given_space__px - xAxisSpaceRequiredPx)/(_last_run_idx - _zero_run_idx);
+            (xAxisSpaceAllowed - xAxisSpaceRequiredPx)/(_last_run_idx - _zero_run_idx);
             
         totalNumberOfPixelsUsedX = 
             _point_size__px * (_offset_multiplier + _override_multiplier) +
@@ -49,15 +49,33 @@ GrDiversityPrinter::GrDiversityPrinter (
     {
         int spaceForPoints = 
             xAxisSpaceAllowed - (_point_size__px * (_offset_multiplier + _override_multiplier));
-        _run_skip = (spaceForPoints%(_last_run_idx - _zero_run_idx))?
+        _run_skip_x = (spaceForPoints%(_last_run_idx - _zero_run_idx))?
                     (spaceForPoints/(_last_run_idx - _zero_run_idx)) + 1 :
                     (spaceForPoints/(_last_run_idx - _zero_run_idx));
         totalNumberOfPixelsUsedX = _point_size__px * ((_offset_multiplier + _offset_multiplier) +
-                                   (_last_run_idx - _zero_run_idx)/_run_skip); 
+                                   (_last_run_idx - _zero_run_idx)/_run_skip_x); 
         _x_point_spacing__px = 0;
     }
     _cross_x__px = _top_left_corner_x__px + ((_x_given_space__px - totalNumberOfPixelsUsedX)/2);
     _cross_y__px = _top_left_corner_y__px + _y_given_space__px - _axis_format_X.getHeightOfAxisPx();
+
+    int yAxisSpacedAllowed = 
+        _y_given_space__px - 
+        _title_letter.getHeightIncLSpace() - 
+        _axis_format_Y.getHeightOfAxisPx();
+
+    int yAxisSpaceRequiredPx = 
+        _point_size__px * 
+        (_largest_num_of_neighbors +
+        _offset_multiplier + 
+        _override_multiplier);
+
+    if (yAxisSpacedAllowed > yAxisSpaceRequiredPx)
+    {
+        _y_point_spacing__px = 
+            (yAxisSpacedAllowed - yAxisSpaceRequiredPx)/(_largest_num_of_neighbors + 1);
+    }
+    // TODO else throw an exception.
 
     _min_tick_spacing_x = calcMinTickSpacingX();
     _maj_tick_spacing_x = calcMajTickSpacingX();
@@ -68,7 +86,7 @@ GrDiversityPrinter::GrDiversityPrinter (
     _pixel_converter_x = createPixelConverterX();
     _pixel_converter_y = createPixelConverterY();
     addXAxis();
-    //addYAxis();
+    addYAxis();
     //addTitle();
     
 }
@@ -80,6 +98,7 @@ void GrDiversityPrinter::print (
 {
     (void)_num_of_like_diff_per_group;
     _x_axis->print(renderer);
+    _y_axis->print(renderer);
 }
 
 void GrDiversityPrinter::addXAxis ()
@@ -109,8 +128,8 @@ void GrDiversityPrinter::addYAxis ()
         _cross_y__px,
         0,
         _largest_num_of_neighbors,
-        calcMajTickSpacingY(),
-        calcMinTickSpacingY(),
+        calcMajTickSpacingY(), //TODO this has already been calculated
+        calcMinTickSpacingY(), //TODO this has already been calculated.
         calcLabelSpacingY()
     );
 }
@@ -142,32 +161,32 @@ int GrDiversityPrinter::calcYCrossHairsPx ()
 
 int GrDiversityPrinter::calcMajTickSpacingX ()
  {
-    return ( ((_last_run_idx - _zero_run_idx + 1)/_run_skip) <= 100)? 1 : 5;
+    return ( ((_last_run_idx - _zero_run_idx + 1)/_run_skip_x) <= 100)? 1 : 5;
  }
         
 int GrDiversityPrinter::calcMinTickSpacingX ()
 {
-    return ( ((_last_run_idx - _zero_run_idx + 1)/_run_skip) <= 100)? 1 : 5;
+    return ( ((_last_run_idx - _zero_run_idx + 1)/_run_skip_x) <= 100)? 1 : 5;
 }
 
 int GrDiversityPrinter::calcMajTickSpacingY ()
  {
-    return 2;
+    return (_largest_num_of_neighbors + 1 < 10)? 2 : 5;
  }
         
 int GrDiversityPrinter::calcMinTickSpacingY ()
 {
-    return 1;
+    return (_largest_num_of_neighbors + 1 < 10)? 1 : 1; // TODO maybe something haveing to do with odd and even would be better.
 }
 
 int GrDiversityPrinter::calcLabelSpacingX ()
 {
-    return (((_last_run_idx - _zero_run_idx + 1)/_run_skip) <= 10)? 1 : 10;
+    return (((_last_run_idx - _zero_run_idx + 1)/_run_skip_x) <= 10)? 1 : 10;
 }
 
 int GrDiversityPrinter::calcLabelSpacingY ()
 {
-    return 2;
+    return (_largest_num_of_neighbors + 1 < 10)? 2 : 5;
 }
 
 std::unique_ptr<PixelConverter> GrDiversityPrinter::createPixelConverterX ()
@@ -175,7 +194,7 @@ std::unique_ptr<PixelConverter> GrDiversityPrinter::createPixelConverterX ()
     int maxXAxisPixel = 
         _cross_x__px + 
         (_offset_multiplier * _point_size__px) + 
-        ((_point_size__px + _x_point_spacing__px) * (_last_run_idx - _zero_run_idx)); // TODO put in _run_skip
+        ((_point_size__px + _x_point_spacing__px) * (_last_run_idx - _zero_run_idx)); // TODO put in _run_skip_x
     return std::make_unique<PixelConverter>(
         _zero_run_idx,
         _cross_x__px + _offset_multiplier * _point_size__px,
@@ -190,11 +209,11 @@ std::unique_ptr<PixelConverter> GrDiversityPrinter::createPixelConverterY ()
     int maxYAxisPixel = 
         _cross_y__px -
         _offset_multiplier * _point_size__px -
-        _point_size__px * (_largest_num_of_neighbors + 1); // range of neighbors is zero to largest
+        (_point_size__px + _y_point_spacing__px) * (_largest_num_of_neighbors); // range of neighbors is zero to largest
     
     return std::make_unique<PixelConverter>(
         0,
-        _cross_y__px + _offset_multiplier * _point_size__px,
+        _cross_y__px - _offset_multiplier * _point_size__px,
         _largest_num_of_neighbors,
         maxYAxisPixel
     );

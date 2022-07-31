@@ -23,7 +23,7 @@ YAxisB2T::YAxisB2T (
     _label_spacing{labelSpacing}
 {
     // set _top_most_pixel and _bottom_most_pixel
-    _top_most_pixel_y__px = _pc->getPixel(_max_val) + _axis_format.overrunPx();
+    _top_most_pixel_y__px = _pc->getPixel(_max_val) - _axis_format.overrunPx() - 1;
     _bottom_most_pixel_y__px = _y_coord__px;
 }
 
@@ -34,16 +34,23 @@ void YAxisB2T::print (Renderer* renderer)
     // Tick lables are in texts vector.
     std::vector<TextRect> texts = {};
 
-    addVerticalLine(rects);
-    addTicksAndLabels (rects, texts);
     addTitle(texts);
-   
+
     renderer->setColorToMedGrey();
     renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.labelHeightPx()
-    );
+        _axis_format.titleHeightPx());
+    renderer->renderTexts(texts);
+    texts.clear();
+
+    addVerticalLine(rects);
+    addTicksAndLabels (rects, texts);
+
+    renderer->setTextFormats(
+        {100, 100, 100, 100},
+        {0xAA, 0xFF, 0xFF, 0xFF},
+        _axis_format.labelHeightPx());
     renderer->fillBlocks(rects);
     renderer->renderTexts(texts);
 
@@ -53,9 +60,9 @@ void YAxisB2T::addVerticalLine (std::vector<SDL_Rect>& rects)
 {
     SDL_Rect rect;
     rect.w = _axis_format.axisThicknessPx();
-    rect.h = _top_most_pixel_y__px - _bottom_most_pixel_y__px;
-    rect.x = _x_coord__px - rect.h/2;
-    rect.y = _y_coord__px;
+    rect.h = _bottom_most_pixel_y__px - _top_most_pixel_y__px + 1;
+    rect.x = _x_coord__px - rect.w/2;
+    rect.y = _y_coord__px - rect.h;
     rects.push_back(rect);
 }
         
@@ -73,7 +80,7 @@ void YAxisB2T::addTicksAndLabels (
         leftEdgeOfLabelXPx,
         _pc->getPixel(_min_val),
         std::to_string(_min_val),
-        1
+        2
     };
 
     SDL_Rect curRect;
@@ -90,7 +97,7 @@ void YAxisB2T::addTicksAndLabels (
                         _axis_format.majTickLengthPx() +
                         _axis_format.tickLengthInsideChart();
             curRect.w = _axis_format.majTickLengthPx();
-            curRect.y = curVal__px - (_axis_format.tickThickness()/2);
+            curRect.y = curVal__px + (_axis_format.tickThickness()/2);
             rects.push_back(curRect);
 
             curText.text = std::to_string(curVal);
@@ -100,7 +107,8 @@ void YAxisB2T::addTicksAndLabels (
         else if (curVal % _min_tick_spacing == 0)
         {
             curRect.x = _x_coord__px - _axis_format.minTickLengthPx();
-            curRect.y = curVal__px - (_axis_format.tickThickness()/2);
+            curRect.w = _axis_format.minTickLengthPx();
+            curRect.y = curVal__px + (_axis_format.tickThickness()/2);
             rects.push_back(curRect);
         }
         ++curVal;
@@ -108,6 +116,7 @@ void YAxisB2T::addTicksAndLabels (
 
 }
 
+// TODO we don't have have titles on axes anymore.
 void YAxisB2T::addTitle (std::vector<TextRect>& texts)
 {
     TextRect tr = {
