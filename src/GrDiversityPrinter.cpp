@@ -20,7 +20,6 @@ GrDiversityPrinter::GrDiversityPrinter (
     //_last_run_idx{grDivPrSizer.getMaxX()}, // TODO put this back
     _num_of_runs{_last_run_idx - _zero_run_idx + 1},
     _length_of_y_axis__px{_y_given_space__px - _axis_format_X.getHeightOfAxisPx()},
-    _cross_y__px{topLeftCornerYPx + _axis_format_X.getHeightOfAxisPx() + _title_letter.getHeightIncLSpace()},
     _largest_num_of_neighbors{largestNumOfNeighbors}
     
 {  
@@ -58,6 +57,7 @@ GrDiversityPrinter::GrDiversityPrinter (
         _x_point_spacing__px = 0;
     }
     _cross_x__px = _top_left_corner_x__px + ((_x_given_space__px - totalNumberOfPixelsUsedX)/2);
+    _cross_y__px = _top_left_corner_y__px + _y_given_space__px - _axis_format_X.getHeightOfAxisPx();
 
     _min_tick_spacing_x = calcMinTickSpacingX();
     _maj_tick_spacing_x = calcMajTickSpacingX();
@@ -84,7 +84,7 @@ void GrDiversityPrinter::print (
 
 void GrDiversityPrinter::addXAxis ()
 {   
-    _x_axis = std::make_unique<XAxisL2RTop>(
+    _x_axis = std::make_unique<XAxisL2RBottom>(
         "", // no axis title
         _pixel_converter_x.get(),
         _axis_format_X,
