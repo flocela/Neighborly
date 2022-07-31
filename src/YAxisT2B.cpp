@@ -60,7 +60,7 @@ void YAxisT2B::addVerticalLine (std::vector<SDL_Rect>& rects)
 {
     SDL_Rect rect;
     rect.w = _axis_format.axisThicknessPx();
-    rect.h = _bottom_most_pixel_y__px - _top_most_pixel_y__px;
+    rect.h = _bottom_most_pixel_y__px - _top_most_pixel_y__px + 1;
     rect.x = _x_coord__px - rect.w/2;
     rect.y = _y_coord__px;
     rects.push_back(rect);
@@ -98,7 +98,7 @@ void YAxisT2B::addTicksAndLabels (
                         _axis_format.majTickLengthPx() +
                         _axis_format.tickLengthInsideChart();
             curRect.w = _axis_format.majTickLengthPx();
-            curRect.y = curVal__px + (_axis_format.tickThickness()/2);
+            curRect.y = curVal__px - (_axis_format.tickThickness()/2);
             rects.push_back(curRect);
 
             curText.text = std::to_string(curVal);
@@ -108,7 +108,7 @@ void YAxisT2B::addTicksAndLabels (
         else if (curVal % _min_tick_spacing == 0)
         {
             curRect.x = _x_coord__px - _axis_format.minTickLengthPx();
-            curRect.y = curVal__px;
+            curRect.y = curVal__px - (_axis_format.tickThickness()/2);
             rects.push_back(curRect);
         }
         ++curVal;

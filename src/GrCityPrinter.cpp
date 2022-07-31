@@ -166,6 +166,7 @@ std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsOfHousesFor
         int pixelsY = _pixel_converter_y->getPixel(coord.getY()) - _house_size__px / 2;
         Coordinate pixelCoord{pixelsX, pixelsY};
         colorToCoordinatesMap[colorKey].push_back(pixelCoord);
+        
     }
     return colorToCoordinatesMap;
 }
