@@ -1,6 +1,6 @@
-#include "XAxisL2R.h"
+#include "XAxisL2RTop.h"
 
-XAxisL2R::XAxisL2R (
+XAxisL2RTop::XAxisL2RTop (
     std::string title,
     PixelConverter* pixelConverter,
     AxisFormat axisFormat,
@@ -27,7 +27,7 @@ XAxisL2R::XAxisL2R (
     std::cout << _left_most_pixel_x__px << ", " << _right_most_pixel_x__px << std::endl;
 }
 
-void XAxisL2R::print (Renderer* renderer)
+void XAxisL2RTop::print (Renderer* renderer)
 {
     // All lines and ticks are drawn as SDL_Rects, which are held in rects vector.
     std::vector<SDL_Rect> rects = {};
@@ -51,12 +51,12 @@ void XAxisL2R::print (Renderer* renderer)
     renderer->renderTexts(texts);
 }
 
-int XAxisL2R::calcHorizontalLineLength()
+int XAxisL2RTop::calcHorizontalLineLength()
 {
     return _right_most_pixel_x__px - _left_most_pixel_x__px;
 }
 
-void XAxisL2R::addHorizontalLine (std::vector<SDL_Rect>& rects)
+void XAxisL2RTop::addHorizontalLine (std::vector<SDL_Rect>& rects)
 {
     SDL_Rect rect;
     rect.w = calcHorizontalLineLength();
@@ -66,7 +66,7 @@ void XAxisL2R::addHorizontalLine (std::vector<SDL_Rect>& rects)
     rects.push_back(rect);
 }
 
-void XAxisL2R::addTicksAndLabels (
+void XAxisL2RTop::addTicksAndLabels (
     std::vector<SDL_Rect>& rects, 
     std::vector<TextRect>& texts
 )
@@ -114,7 +114,7 @@ void XAxisL2R::addTicksAndLabels (
     }
 }
 
-void XAxisL2R::addTitle (std::vector<TextRect>& texts)
+void XAxisL2RTop::addTitle (std::vector<TextRect>& texts)
 {
     TextRect tr = {
         _left_most_pixel_x__px + (calcHorizontalLineLength()/2), //TODO width of text needs to be taken into account.

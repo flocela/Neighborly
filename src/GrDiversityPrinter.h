@@ -7,7 +7,7 @@
 #include "Resident.h"
 #include <vector>
 #include "House.h"
-#include "XAxisL2R.h"
+#include "XAxisL2RTop.h"
 #include "YAxisB2T.h"
 #include <memory>
 #include "PixelConverter.h"
@@ -87,7 +87,7 @@ class GrDiversityPrinter
         int _largest_num_of_neighbors;
 
         // Axes
-        std::unique_ptr<XAxisL2R> _x_axis;
+        std::unique_ptr<XAxisL2RTop> _x_axis;
         std::unique_ptr<YAxisB2T> _y_axis;
 
         // _x_blocks and _y_blocks hold the axes lines and the ticks on the lines.

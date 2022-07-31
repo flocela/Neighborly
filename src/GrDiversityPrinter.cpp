@@ -84,7 +84,7 @@ void GrDiversityPrinter::print (
 
 void GrDiversityPrinter::addXAxis ()
 {   
-    _x_axis = std::make_unique<XAxisL2R>(
+    _x_axis = std::make_unique<XAxisL2RTop>(
         "", // no axis title
         _pixel_converter_x.get(),
         _axis_format_X,

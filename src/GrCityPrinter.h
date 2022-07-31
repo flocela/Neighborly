@@ -7,7 +7,7 @@
 #include "Resident.h"
 #include <vector>
 #include "House.h"
-#include "XAxisL2R.h"
+#include "XAxisL2RTop.h"
 #include "YAxisT2B.h"
 #include <memory>
 #include "PixelConverter.h"
@@ -117,7 +117,7 @@ class GrCityPrinter
         int _house_max_y__px;
 
         // Axes
-        std::unique_ptr<XAxisL2R> _x_axis_utility;
+        std::unique_ptr<XAxisL2RTop> _x_axis_utility;
         std::unique_ptr<YAxisT2B> _y_axis_utility;
 
         // _x_blocks and _y_blocks hold the axes lines and the ticks on the lines.

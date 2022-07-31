@@ -1,5 +1,5 @@
-#ifndef X_AXIS_L2R_H
-#define X_AXIS_L2R_H
+#ifndef X_AXIS_L2R_TOP_H
+#define X_AXIS_L2R_TOP_H
 
 #include <string>
 #include "SDL.h"
@@ -11,10 +11,10 @@
 #include "TextRect.h"
 
 
-class XAxisL2R
+class XAxisL2RTop
 {
     public:
-        XAxisL2R (
+        XAxisL2RTop (
             std::string title,
             PixelConverter* pixelConverter,
             AxisFormat axisFormat,
