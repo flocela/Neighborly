@@ -108,6 +108,7 @@ void YAxisT2B::addTicksAndLabels (
         else if (curVal % _min_tick_spacing == 0)
         {
             curRect.x = _x_coord__px - _axis_format.minTickLengthPx();
+            curRect.w = _axis_format.minTickLengthPx();
             curRect.y = curVal__px - (_axis_format.tickThickness()/2);
             rects.push_back(curRect);
         }
