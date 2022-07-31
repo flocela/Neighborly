@@ -12,7 +12,7 @@ class AxisFormat
         ~AxisFormat () = default;
 
         int axisThicknessPx () { return _axis_thickness__px;};
-        int tickThickness () {return _min_tick_length__px;};
+        int tickThickness () {return _tick_thickness__px;};
         int majTickLengthPx () { return _maj_tick_length__px;};
         int minTickLengthPx () {return _min_tick_length__px;};
         int tickLengthInsideChart() {return _tick_length_inside_chart__px;};
@@ -45,7 +45,7 @@ class AxisFormat
         // for simplicity, thicknesses can not be set. Both are one.
         int _axis_thickness__px = 1;
         int _tick_thickness__px = 2;
-        int _maj_tick_length__px = 5;
+        int _maj_tick_length__px = 10;
         int _min_tick_length__px = 2;
         int _tick_length_inside_chart__px = 2; // does not include thickness of axis
 
