@@ -32,7 +32,7 @@ void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
 {   
     initWindowValues();
     initWindowTitle(title);
-    initAxesValues();
+    initChartsTopLeftCorners();
     _renderer = std::make_unique<Renderer>(_screen_width__px, _screen_height__px);
     initCityMap(cityPtr);
     initRunCounter(numOfRuns);
@@ -40,10 +40,10 @@ void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
     initColorPrinter();
 }
 
-void Printer_Graphic::initAxesValues ()
+void Printer_Graphic::initChartsTopLeftCorners ()
 {
     _city_map_chart_top_left_y_coord__px = calcCityMapChartTopLeftYCoordPx();
-    _div_chart_y_top_left_y_coord__px = calcDivChartTopLeftYCoordPx();
+    _div_chart_y_top_left_y_coord__px = calcDChartTopLeftYCoordPx();
 }
 
 void Printer_Graphic::initCityMap (City* cityPtr) // TODO throw exception if city too large
@@ -110,7 +110,7 @@ void Printer_Graphic::initRunCounter (int numOfRuns)
         _left_border__px, 
         _runs_chart_top_left_y__coord__px,
         _x_space_length__px,
-        static_cast<int>(_sum_y_space_lengths__px * _diversity_chart_y_axis_fraction),
+        static_cast<int>(_sum_y_space_lengths__px * _diversity_chart_y_axis_fraction), //TODO this shouldn't be diversity_chart's y axis fraction
         _chart_title_letter,
         _num_of_runs );
 }
@@ -171,7 +171,7 @@ void Printer_Graphic::initDiversityPrinter ()
         grDivPrinterSizer,
         _colors,
         _charts_top_left_x_coord__px,
-        calcDivChartTopLeftYCoordPx(),
+        _div_chart_y_top_left_y_coord__px,
         10 // TODO get largest from city map
     );
 }
@@ -193,12 +193,10 @@ int Printer_Graphic::calcSumOfYSpacesPx ()
 {
     return _screen_height__px -
            _top_border__px -
-           _window_title.letterHeight() -
-           _window_title.lineSpace() -
-           _chart_title_letter.letterHeight() - // num of runs chart title
-           _chart_title_letter.lineSpace() -
-           _num_of_types_of_residents * _resident_keys.getHeightIncLSpace() -
-           _bottom_border__px; 
+           _window_title.getHeightIncLSpace() - 
+           ( 2 * _chart_title_letter.getHeightIncLSpace() ) - // Run counter chart plus resident colors
+           _bottom_border__px -
+           2 * _space_between_charts__px; 
 }
 
 int Printer_Graphic::calcXSpacePx ()
@@ -220,10 +218,13 @@ int Printer_Graphic::calcCityMapChartTopLeftYCoordPx ()
            ( 2 * _chart_title_letter.getHeightIncLSpace() );// Run counter chart plus Resident colors
 }
 
-int Printer_Graphic::calcDivChartTopLeftYCoordPx ()
-{
-    return _city_map_chart_top_left_y_coord__px + 
+int Printer_Graphic::calcDChartTopLeftYCoordPx () //TODO this should only be called once.
+{   int bottomofcitymap = _city_map_chart_top_left_y_coord__px + 
            (_sum_y_space_lengths__px * _city_map_y_axis_fraction);
+
+    return _city_map_chart_top_left_y_coord__px + 
+           (_sum_y_space_lengths__px * _city_map_y_axis_fraction) +
+           _space_between_charts__px;
 }
 
 int Printer_Graphic::calcRunChartTopLeftYCoordPx ()

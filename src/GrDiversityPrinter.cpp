@@ -59,6 +59,9 @@ GrDiversityPrinter::GrDiversityPrinter (
     _cross_x__px = _top_left_corner_x__px + ((_x_given_space__px - totalNumberOfPixelsUsedX)/2);
     _cross_y__px = _top_left_corner_y__px + _y_given_space__px - _axis_format_X.getHeightOfAxisPx();
 
+    _title_x__px = _cross_x__px + (totalNumberOfPixelsUsedX/2);
+    _title_y__px = _top_left_corner_y__px;
+
     int yAxisSpacedAllowed = 
         _y_given_space__px - 
         _title_letter.getHeightIncLSpace() - 
@@ -85,9 +88,10 @@ GrDiversityPrinter::GrDiversityPrinter (
     _label_spacing_y = calcLabelSpacingY();
     _pixel_converter_x = createPixelConverterX();
     _pixel_converter_y = createPixelConverterY();
+
+    
     addXAxis();
     addYAxis();
-    //addTitle();
     
 }
 
@@ -99,6 +103,7 @@ void GrDiversityPrinter::print (
     (void)_num_of_like_diff_per_group;
     _x_axis->print(renderer);
     _y_axis->print(renderer);
+    printTitle(renderer);
 }
 
 void GrDiversityPrinter::addXAxis ()
@@ -134,7 +139,13 @@ void GrDiversityPrinter::addYAxis ()
     );
 }
 
-void GrDiversityPrinter::addTitle (){} //TODO
+void GrDiversityPrinter::printTitle (Renderer* renderer){
+    renderer->setTextFormats({100, 100, 100, 100},
+                              {0xAA, 0xFF, 0xFF, 0xFF},
+                              _title_letter.letterHeight());
+    renderer->renderText(_title_x__px, _title_y__px, _main_title, 1);
+    std::cout << "GrDiverstiyPrinter _titl_y__Px: " << _title_y__px << std::endl;
+}
 
 // TODO not used, delete method
 int GrDiversityPrinter::calcXAxisLengthPx ()

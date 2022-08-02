@@ -112,7 +112,7 @@ void GrCityPrinter::printXAxis()
 }
 
 void GrCityPrinter::printYAxis()
-{   
+{   //TODO y axis isn't printing the 110 number, the largest y value label
     _y_axis_utility->print(_renderer);
 }
 
@@ -217,9 +217,9 @@ int GrCityPrinter::calcCellSizePx ()
         _axis_format_X.getHeightOfAxisPx();
     int numOfCellsY = (_house_max_y - _house_min_y) + _offset_multiplier + _overrun_multiplier;
     int yCellSize = yAxisLengthPx / numOfCellsY;
-
     int smallestCellSize = std::min(xCellSize, yCellSize);
     smallestCellSize = (smallestCellSize%2 == 0)? smallestCellSize : (smallestCellSize+1);
+    // TODO if yCellSize or xCellSize is less than four, then throw an exception.
     return (smallestCellSize < 4)? 4: smallestCellSize;
 }
 

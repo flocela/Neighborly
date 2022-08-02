@@ -66,7 +66,7 @@ class Printer_Graphic : public Printer
 
         int calcLeftXCoordPx(); // same for all three charts.
         int calcCityMapChartTopLeftYCoordPx ();
-        int calcDivChartTopLeftYCoordPx ();
+        int calcDChartTopLeftYCoordPx ();
         int calcRunChartTopLeftYCoordPx ();
 
         // FOR WINDOW //
@@ -93,6 +93,7 @@ class Printer_Graphic : public Printer
         int _charts_top_left_x_coord__px; // x-coordinate for top left corner of all charts is the same
         int _x_space_length__px; // Same in all charts so charts line up.
         int _sum_y_space_lengths__px; // all three chart's y direction spaces added up.
+        int _space_between_charts__px = 6; // vertical space
         const int x_axis_offset__px = 2;
         const int x_axis_overrun__px = 2;
         const int y_axis_offset__px = 2;
@@ -130,6 +131,7 @@ class Printer_Graphic : public Printer
         int _hap_chart_y_axis_length__px;
 
         // RUNS COUNTER CHART//
+        // runs counter chart doesn't have a chart_y_axis fraction. It's just the size of the chart title.
         int _runs_chart_top_left_y__coord__px;
         int _curr_run = 0;
         int _num_of_runs;
@@ -160,7 +162,7 @@ class Printer_Graphic : public Printer
 
         void initDiversityPrinter();
 
-        void initAxesValues ();
+        void initChartsTopLeftCorners ();
 
         void printWindowTitle();
 
