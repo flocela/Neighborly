@@ -113,6 +113,7 @@ void GrCityPrinter::printXAxis()
 
 void GrCityPrinter::printYAxis()
 {   //TODO y axis isn't printing the 110 number, the largest y value label
+// TODO don't let cell size become too large either.
     _y_axis_utility->print(_renderer);
 }
 

@@ -11,6 +11,7 @@
 #include "Color.h"
 #include "GrRunCPrinter.h"
 #include "GrDiversityPrinter.h"
+# include "GrHappinessPrinter.h"
 #include "GrColorPrinter.h"
 #include "Letter.h"
 
@@ -47,6 +48,7 @@ class Printer_Graphic : public Printer
         std::unique_ptr<GrCityPrinter>      _city_printer;
         std::unique_ptr<GrRunCPrinter>      _run_counter_printer;
         std::unique_ptr<GrDiversityPrinter> _diversity_printer;
+        std::unique_ptr<GrHappinessPrinter> _happiness_printer;
         std::unique_ptr<GrColorPrinter>     _color_printer;
 
         std::map<Coordinate, House*> _coord_to_house_map = {};
@@ -67,6 +69,7 @@ class Printer_Graphic : public Printer
         int calcLeftXCoordPx(); // same for all three charts.
         int calcCityMapChartTopLeftYCoordPx ();
         int calcDChartTopLeftYCoordPx ();
+        int calcHChartTopLeftYCoordPx ();
         int calcRunChartTopLeftYCoordPx ();
 
         // FOR WINDOW //
@@ -128,7 +131,8 @@ class Printer_Graphic : public Printer
 
 
         //HAPPINESS CHART
-        int _hap_chart_y_axis_length__px;
+        double _hap_chart_y_axis_fraction = 0.25;
+        int _hap_chart_y_top_left_y_coord__px;
 
         // RUNS COUNTER CHART//
         // runs counter chart doesn't have a chart_y_axis fraction. It's just the size of the chart title.
@@ -161,6 +165,8 @@ class Printer_Graphic : public Printer
         void setCityPrinter ();
 
         void initDiversityPrinter();
+
+        void initHappinessPrinter();
 
         void initChartsTopLeftCorners ();
 

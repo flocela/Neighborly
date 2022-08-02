@@ -10,6 +10,7 @@
 #include "YAxisT2B.h"
 #include "GrCityPrinter.h"
 #include "GrDiversityPrinter.h"
+#include "GrHappinessPrinterSizer.h"
 
 // Shows a City Map, the current run number, 
 // a Happiness Chart, and a Diversity Chart.
@@ -37,6 +38,7 @@ void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
     initCityMap(cityPtr);
     initRunCounter(numOfRuns);
     initDiversityPrinter();
+    initHappinessPrinter();
     initColorPrinter();
 }
 
@@ -44,6 +46,7 @@ void Printer_Graphic::initChartsTopLeftCorners ()
 {
     _city_map_chart_top_left_y_coord__px = calcCityMapChartTopLeftYCoordPx();
     _div_chart_y_top_left_y_coord__px = calcDChartTopLeftYCoordPx();
+    _hap_chart_y_top_left_y_coord__px = calcHChartTopLeftYCoordPx();
 }
 
 void Printer_Graphic::initCityMap (City* cityPtr) // TODO throw exception if city too large
@@ -128,6 +131,7 @@ void Printer_Graphic::print (
     _run_counter_printer->print(run);
     _color_printer->print(_renderer.get());
     _diversity_printer->print(numOfLikeDiffPerGroup, _renderer.get());
+    _happiness_printer->print(numOfLikeDiffPerGroup, _renderer.get());
     _renderer->endFrame();
 } 
 
@@ -176,6 +180,25 @@ void Printer_Graphic::initDiversityPrinter ()
     );
 }
 
+void Printer_Graphic::initHappinessPrinter ()
+{
+    GrHappinessPrinterSizer grHapPrinterSizer{
+        _x_space_length__px,
+        static_cast<int>(_sum_y_space_lengths__px * _hap_chart_y_axis_fraction),
+        _axis_format_X,
+        _axis_format_Y,
+        _chart_title_letter,
+        0,
+        _num_of_runs
+    };
+    _happiness_printer = std::make_unique<GrHappinessPrinter> (
+        grHapPrinterSizer,
+        _colors,
+        _charts_top_left_x_coord__px,
+        _hap_chart_y_top_left_y_coord__px
+    );
+}
+
 int Printer_Graphic::maxNumOfHousesX (int screenWidth__px)
 {   (void)screenWidth__px;
     //TODO figure this out
@@ -219,11 +242,16 @@ int Printer_Graphic::calcCityMapChartTopLeftYCoordPx ()
 }
 
 int Printer_Graphic::calcDChartTopLeftYCoordPx () //TODO this should only be called once.
-{   int bottomofcitymap = _city_map_chart_top_left_y_coord__px + 
-           (_sum_y_space_lengths__px * _city_map_y_axis_fraction);
-
+{  
     return _city_map_chart_top_left_y_coord__px + 
            (_sum_y_space_lengths__px * _city_map_y_axis_fraction) +
+           _space_between_charts__px;
+}
+
+int Printer_Graphic::calcHChartTopLeftYCoordPx () //TODO this should only be called once.
+{  
+    return _div_chart_y_top_left_y_coord__px + 
+           (_sum_y_space_lengths__px * _diversity_chart_y_axis_fraction) +
            _space_between_charts__px;
 }
 
