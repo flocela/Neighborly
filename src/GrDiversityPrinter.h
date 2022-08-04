@@ -40,7 +40,7 @@ class GrDiversityPrinter
         );
     
     private:
-        std::string _main_title = "Diversity, Average Number of Different Neighbors per Resident for Each Run";
+        std::string _main_title = "Diversity, Average Number of Disparate Neighbors per Resident for Each Run";
         std::map<Coordinate, House*> _coord_to_house_map;
         // This includes sad resident colors and happy resident colors.
         std::map<int, std::pair<Color, Color>> _res_colors;

@@ -39,7 +39,7 @@ class GrHappinessPrinter
         );
     
     private:
-        std::string _main_title = "Diversity, Average Number of Different Neighbors per Resident for Each Run";
+        std::string _main_title = "Happiness, Average Happiness per Resident (shown as a percentage)";
         std::map<Coordinate, House*> _coord_to_house_map;
         // This includes sad resident colors and happy resident colors.
         std::map<int, std::pair<Color, Color>> _res_colors;
@@ -60,7 +60,7 @@ class GrHappinessPrinter
         int _num_of_runs;
 
         int _length_of_y_axis__px;
-        int _largest_y = 20;
+        int _largest_y = 10;
 
         // The coordinate where x and y axes cross on the screen in pixels.
         int _cross_x__px;

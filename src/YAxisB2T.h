@@ -23,7 +23,9 @@ class YAxisB2T
             int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal.
             int majTickSpacing,
             int minTickSpacing,  // in units, not pixels
-            int labelSpacing // in units, not in pixels.
+            int labelSpacing, // in units, not in pixels.
+            double labelUnitFactor,
+            int labelDecimalPlaces
         );
 
         // Renders axis from bottom to top, title is on left side (used for vertical axes).
@@ -40,6 +42,8 @@ class YAxisB2T
         int _min_tick_spacing;
         int _maj_tick_spacing;
         int _label_spacing;
+        double _label_unit_factor;
+        int _label_decimal_places;
         
         int _top_most_pixel_y__px;
         int _bottom_most_pixel_y__px;

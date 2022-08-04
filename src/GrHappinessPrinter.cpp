@@ -15,8 +15,7 @@ GrHappinessPrinter::GrHappinessPrinter (
     _axis_format_Y{grDivPrSizer.getAxisFormatX()},
     _title_letter{grDivPrSizer.getTitleLetter()},
     _zero_run_idx{grDivPrSizer.getMinX()},
-    _last_run_idx{100},
-    //_last_run_idx{grDivPrSizer.getMaxX()}, // TODO put this back
+    _last_run_idx{grDivPrSizer.getMaxX()},
     _num_of_runs{_last_run_idx - _zero_run_idx + 1},
     _length_of_y_axis__px{_y_given_space__px - _axis_format_X.getHeightOfAxisPx()}
     
@@ -136,7 +135,9 @@ void GrHappinessPrinter::addYAxis ()
         _largest_y,
         calcMajTickSpacingY(), //TODO this has already been calculated
         calcMinTickSpacingY(), //TODO this has already been calculated.
-        calcLabelSpacingY()
+        calcLabelSpacingY(),
+        0.1,
+        1
     );
 }
 

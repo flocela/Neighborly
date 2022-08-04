@@ -1,4 +1,5 @@
 #include "YAxisB2T.h"
+#include <iomanip>
 
 YAxisB2T::YAxisB2T (
     std::string title,
@@ -10,7 +11,9 @@ YAxisB2T::YAxisB2T (
     int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal.
     int majTickSpacing,
     int minTickSpacing,  // in units, not pixels
-    int labelSpacing // in units, not in pixels.
+    int labelSpacing, // in units, not in pixels.
+    double labelUnitFactor,
+    int labelDecimalPlaces
 ) : _title{title},
     _pc{pixelConverter},
     _axis_format{axisFormat},
@@ -20,9 +23,12 @@ YAxisB2T::YAxisB2T (
     _max_val{maxVal},
     _min_tick_spacing{minTickSpacing},
     _maj_tick_spacing{majTickSpacing},
-    _label_spacing{labelSpacing}
+    _label_spacing{labelSpacing},
+    _label_unit_factor{labelUnitFactor},
+    _label_decimal_places{labelDecimalPlaces}
 {
     // set _top_most_pixel and _bottom_most_pixel
+    std::cout << "YB2B constructor: unitfactor: " << labelUnitFactor << std::endl; 
     _top_most_pixel_y__px = _pc->getPixel(_max_val) - _axis_format.overrunPx() - 1;
     _bottom_most_pixel_y__px = _y_coord__px;
 }
@@ -90,6 +96,12 @@ void YAxisB2T::addTicksAndLabels (
     while (curVal <= _max_val)
     {
         int curVal__px = _pc->getPixel(curVal);
+        double printedVal = (double)curVal*(double)(_label_unit_factor);
+        std::cout << "YAxisB2T printedVal: " << printedVal << std::endl;
+        std::ostringstream obj1;
+        obj1 << std::fixed;
+        obj1 << std::setprecision(_label_decimal_places);
+        obj1 << printedVal;
 
         if (curVal % _label_spacing == 0) // TODO do all maj ticks get a label?
         {
@@ -100,7 +112,8 @@ void YAxisB2T::addTicksAndLabels (
             curRect.y = curVal__px + (_axis_format.tickThickness()/2);
             rects.push_back(curRect);
 
-            curText.text = std::to_string(curVal);
+            std::cout << "obj1.str(): " << obj1.str() << std::endl;
+            curText.text = obj1.str();
             curText.yPixel = curVal__px;
             texts.push_back(curText);
         }

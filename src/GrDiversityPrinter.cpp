@@ -135,7 +135,9 @@ void GrDiversityPrinter::addYAxis ()
         _largest_num_of_neighbors,
         calcMajTickSpacingY(), //TODO this has already been calculated
         calcMinTickSpacingY(), //TODO this has already been calculated.
-        calcLabelSpacingY()
+        calcLabelSpacingY(),
+        1,
+        0
     );
 }
 
