@@ -11,8 +11,8 @@
 #include "Color.h"
 #include "GrRunCPrinter.h"
 #include "GrDiversityPrinter.h"
-# include "GrHappinessPrinter.h"
-#include "GrColorPrinter.h"
+#include "GrHappinessPrinter.h"
+#include "GrColorKeyPrinter.h"
 #include "Letter.h"
 
 class Printer_Graphic : public Printer
@@ -32,7 +32,8 @@ class Printer_Graphic : public Printer
         void initCityMap (City* cityPtr); // make private
         void setColors (std::map<int, std::pair<Color, Color>> colors); // make private
         void initRunCounter (int numOfRuns); // make private
-        void initColorPrinter();
+        void initColorKeyForCityMap();
+        void initColorKeyForDivAndHapCharts();
         void init (City* cityPtr, int numOfRuns, std::string title);
         int maxNumOfHousesX (int screenWidth__px);
         int maxNumOfHousesY (int screenHeight__px);
@@ -49,7 +50,8 @@ class Printer_Graphic : public Printer
         std::unique_ptr<GrRunCPrinter>      _run_counter_printer;
         std::unique_ptr<GrDiversityPrinter> _diversity_printer;
         std::unique_ptr<GrHappinessPrinter> _happiness_printer;
-        std::unique_ptr<GrColorPrinter>     _color_printer;
+        std::unique_ptr<GrColorKeyPrinter>     _color_key_for_map_printer;
+        std::unique_ptr<GrColorKeyPrinter>     _color_key_for_hap_and_div_printer;
 
         std::map<Coordinate, House*> _coord_to_house_map = {};
         std::unique_ptr<Renderer> _renderer;
@@ -68,8 +70,9 @@ class Printer_Graphic : public Printer
 
         int calcLeftXCoordPx(); // same for all three charts.
         int calcCityMapChartTopLeftYCoordPx ();
-        int calcDChartTopLeftYCoordPx ();
-        int calcHChartTopLeftYCoordPx ();
+        int calcHapAndDivColorKeyTopLeftYCoordPx ();
+        int calcDivChartTopLeftYCoordPx ();
+        int calcHapChartTopLeftYCoordPx ();
         int calcRunChartTopLeftYCoordPx ();
 
         // FOR WINDOW //
@@ -96,7 +99,7 @@ class Printer_Graphic : public Printer
         int _charts_top_left_x_coord__px; // x-coordinate for top left corner of all charts is the same
         int _x_space_length__px; // Same in all charts so charts line up.
         int _sum_y_space_lengths__px; // all three chart's y direction spaces added up.
-        int _space_between_charts__px = 6; // vertical space
+        int _space_between_charts__px = 8; // vertical space
         const int x_axis_offset__px = 2;
         const int x_axis_overrun__px = 2;
         const int y_axis_offset__px = 2;
@@ -124,13 +127,16 @@ class Printer_Graphic : public Printer
 		int _min_y_coord = INT32_MAX; // top left corner of grid
 		int _max_x_coord = INT32_MIN; // bottom right corner of grid
 		int _max_y_coord = INT32_MIN; // bottom right corner of grid
+
+        // COLOR KEY FOR DIVERSITY AND HAPPINESS CHARTS
+        int _div_hap_charts_color_key_top_left_y_coord__px;
+        Letter _color_key_letter{24, 4};
         
         //DIVERSITY CHART
         double _diversity_chart_y_axis_fraction = 0.25;
         int _div_chart_y_top_left_y_coord__px;
 
-
-        //HAPPINESS CHART
+        // HAPPINESS CHART
         double _hap_chart_y_axis_fraction = 0.25;
         int _hap_chart_y_top_left_y_coord__px;
 
@@ -140,8 +146,8 @@ class Printer_Graphic : public Printer
         int _curr_run = 0;
         int _num_of_runs;
 
-        // Group Color Chart //
-        Letter _group_color_letter{24, 4};
+        // COLOR KEY FOR DIVERSITY AND HAPPINESS CHARTS
+        Letter _color_key_letter_for_map{24, 4};
 
         // x and y offsets for title displaying number of runs so far. // TODO what is this for?
         const int _x_num_of_runs_offset = 80;

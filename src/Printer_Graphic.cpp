@@ -39,14 +39,18 @@ void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
     initRunCounter(numOfRuns);
     initDiversityPrinter();
     initHappinessPrinter();
-    initColorPrinter();
+    initColorKeyForCityMap();
+    initColorKeyForDivAndHapCharts();
+    
 }
 
 void Printer_Graphic::initChartsTopLeftCorners ()
-{
+{   
     _city_map_chart_top_left_y_coord__px = calcCityMapChartTopLeftYCoordPx();
-    _div_chart_y_top_left_y_coord__px = calcDChartTopLeftYCoordPx();
-    _hap_chart_y_top_left_y_coord__px = calcHChartTopLeftYCoordPx();
+    _div_hap_charts_color_key_top_left_y_coord__px = calcHapAndDivColorKeyTopLeftYCoordPx();
+    _div_chart_y_top_left_y_coord__px = calcDivChartTopLeftYCoordPx();
+    _hap_chart_y_top_left_y_coord__px = calcHapChartTopLeftYCoordPx();
+    
 }
 
 void Printer_Graphic::initCityMap (City* cityPtr) // TODO throw exception if city too large
@@ -129,10 +133,14 @@ void Printer_Graphic::print (
     //(void) residentPerHouse;
     _city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
-    _color_printer->print(_renderer.get());
+    _color_key_for_map_printer->print(_renderer.get());
+    
+    _color_key_for_hap_and_div_printer->print(_renderer.get());
+    
     _diversity_printer->print(numOfLikeDiffPerGroup, _renderer.get());
     _happiness_printer->print(numOfLikeDiffPerGroup, _renderer.get());
     _renderer->endFrame();
+    
 } 
 
 void Printer_Graphic::keepScreen()
@@ -149,13 +157,25 @@ void Printer_Graphic::keepScreen()
     }
 }
 
-void Printer_Graphic::initColorPrinter ()
+void Printer_Graphic::initColorKeyForCityMap ()
 {
-    _color_printer = std::make_unique<GrColorPrinter>(
+    _color_key_for_map_printer = std::make_unique<GrColorKeyPrinter>(
         _charts_top_left_x_coord__px,
         _top_border__px + _window_title.getHeightIncLSpace() + _chart_title_letter.getHeightIncLSpace(),
         _x_space_length__px,
-        _group_color_letter,
+        _color_key_letter,
+        _colors
+    );
+}
+
+void Printer_Graphic::initColorKeyForDivAndHapCharts ()
+{
+
+    _color_key_for_hap_and_div_printer = std::make_unique<GrColorKeyPrinter>(
+        _charts_top_left_x_coord__px,
+        _div_hap_charts_color_key_top_left_y_coord__px,
+        _x_space_length__px,
+        _color_key_letter,
         _colors
     );
 }
@@ -214,12 +234,17 @@ int Printer_Graphic::maxNumOfHousesY (int screenWidth__px)
 
 int Printer_Graphic::calcSumOfYSpacesPx ()
 {
+    // Three heights are included for _chart_title_letter;
+    // they are for the Run Counter and the two Resident Colors Keys
+    // Two spaces between charts are: one space between CityMap and 
+    // color key for hap and div charts, one space between diversity
+    // chart and happiness chart.
     return _screen_height__px -
            _top_border__px -
            _window_title.getHeightIncLSpace() - 
-           ( 2 * _chart_title_letter.getHeightIncLSpace() ) - // Run counter chart plus resident colors
+           ( 3 * _chart_title_letter.getHeightIncLSpace() ) -
            _bottom_border__px -
-           2 * _space_between_charts__px; 
+           2 *_space_between_charts__px; 
 }
 
 int Printer_Graphic::calcXSpacePx ()
@@ -241,14 +266,21 @@ int Printer_Graphic::calcCityMapChartTopLeftYCoordPx ()
            ( 2 * _chart_title_letter.getHeightIncLSpace() );// Run counter chart plus Resident colors
 }
 
-int Printer_Graphic::calcDChartTopLeftYCoordPx () //TODO this should only be called once.
-{  
+int Printer_Graphic::calcHapAndDivColorKeyTopLeftYCoordPx ()
+{
     return _city_map_chart_top_left_y_coord__px + 
            (_sum_y_space_lengths__px * _city_map_y_axis_fraction) +
-           _space_between_charts__px;
+           3 * _space_between_charts__px;
 }
 
-int Printer_Graphic::calcHChartTopLeftYCoordPx () //TODO this should only be called once.
+int Printer_Graphic::calcDivChartTopLeftYCoordPx () //TODO this should only be called once.
+{  
+    return _div_hap_charts_color_key_top_left_y_coord__px + 
+           _space_between_charts__px +
+           _color_key_letter.getHeightIncLSpace();
+}
+
+int Printer_Graphic::calcHapChartTopLeftYCoordPx () //TODO this should only be called once.
 {  
     return _div_chart_y_top_left_y_coord__px + 
            (_sum_y_space_lengths__px * _diversity_chart_y_axis_fraction) +

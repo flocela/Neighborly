@@ -1,15 +1,15 @@
-#ifndef GR_COLOR_PRINTER_H
-#define GR_COLOR_PRINTER_H
+#ifndef GR_COLOR_KEY_PRINTER_H
+#define GR_COLOR_KEY_PRINTER_H
 
 #include "renderer.h"
 #include "Letter.h"
 
 // Group Color Printer
-class GrColorPrinter
+class GrColorKeyPrinter
 {
     public:
-    GrColorPrinter() = delete;
-    GrColorPrinter (
+    GrColorKeyPrinter() = delete;
+    GrColorKeyPrinter (
         int topLeftCornerXPx,
         int topLeftCornerYPx,
         int xSpaceLengthPx,

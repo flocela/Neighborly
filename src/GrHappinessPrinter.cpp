@@ -44,14 +44,7 @@ GrHappinessPrinter::GrHappinessPrinter (
     }
     else
     {
-        int spaceForPoints = 
-            xAxisSpaceAllowed - (_point_size__px * (_offset_multiplier + _override_multiplier));
-        _run_skip_x = (spaceForPoints%(_last_run_idx - _zero_run_idx))?
-                    (spaceForPoints/(_last_run_idx - _zero_run_idx)) + 1 :
-                    (spaceForPoints/(_last_run_idx - _zero_run_idx));
-        totalNumberOfPixelsUsedX = _point_size__px * ((_offset_multiplier + _offset_multiplier) +
-                                   (_last_run_idx - _zero_run_idx)/_run_skip_x); 
-        _x_point_spacing__px = 0;
+        // Throw and exception
     }
     _cross_x__px = _top_left_corner_x__px + ((_x_given_space__px - totalNumberOfPixelsUsedX)/2);
     _cross_y__px = _top_left_corner_y__px + _y_given_space__px - _axis_format_X.getHeightOfAxisPx();
@@ -70,13 +63,11 @@ GrHappinessPrinter::GrHappinessPrinter (
         _offset_multiplier + 
         _override_multiplier);
         
-    (void)yAxisSpacedAllowed;
-    (void)yAxisSpaceRequiredPx;
 
     if (yAxisSpacedAllowed > yAxisSpaceRequiredPx)
     {
         _y_point_spacing__px = 
-            (yAxisSpacedAllowed - yAxisSpaceRequiredPx)/(20 + 1);
+            (yAxisSpacedAllowed - yAxisSpaceRequiredPx)/(_largest_y + 1);
     }
     // TODO else throw an exception.
 
@@ -89,7 +80,6 @@ GrHappinessPrinter::GrHappinessPrinter (
     _pixel_converter_x = createPixelConverterX();
     _pixel_converter_y = createPixelConverterY();
 
-    
     addXAxis();
     addYAxis();
     

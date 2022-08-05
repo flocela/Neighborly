@@ -1,6 +1,6 @@
-#include "GrColorPrinter.h"
+#include "GrColorKeyPrinter.h"
 
-void GrColorPrinter::print (Renderer* renderer)
+void GrColorKeyPrinter::print (Renderer* renderer)
 {
     int xCenter = _x_offset + (_x_space_length__px/2);
 
