@@ -30,7 +30,7 @@ Printer_Graphic::Printer_Graphic ( // TODO check if parameters are zero, if stop
 {}
 
 void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
-{   
+{   std::cout << "Printer Graphic AA" << std::endl;
     initWindowValues();
     initWindowTitle(title);
     initChartsTopLeftCorners();
@@ -41,7 +41,7 @@ void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
     initHappinessPrinter();
     initColorKeyForCityMap();
     initColorKeyForDivAndHapCharts();
-    
+    std::cout << "Printer Graphic BB" << std::endl;
 }
 
 void Printer_Graphic::initChartsTopLeftCorners ()
@@ -91,6 +91,8 @@ void Printer_Graphic::setCityPrinter ()
                             _min_y_coord,
                             _max_y_coord
         );
+    std::map<int, std::pair<Color, Color>> resColors;
+    
     _city_printer = std::make_unique<GrCityPrinter>(
         cityPrinterSizer,
         _renderer.get(),
@@ -101,7 +103,7 @@ void Printer_Graphic::setCityPrinter ()
     );
 }
 
-void Printer_Graphic::setColors (std::map<int,std::pair<Color, Color>> colors)
+void Printer_Graphic::setColors (std::unordered_map<int, Color> colors)
 {
     _colors = colors;
 }
@@ -134,13 +136,10 @@ void Printer_Graphic::print (
     _city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
     _color_key_for_map_printer->print(_renderer.get());
-    
     _color_key_for_hap_and_div_printer->print(_renderer.get());
-    
     _diversity_printer->print(numOfLikeDiffPerGroup, _renderer.get());
     _happiness_printer->print(numOfLikeDiffPerGroup, _renderer.get());
     _renderer->endFrame();
-    
 } 
 
 void Printer_Graphic::keepScreen()
@@ -159,24 +158,27 @@ void Printer_Graphic::keepScreen()
 
 void Printer_Graphic::initColorKeyForCityMap ()
 {
+    std::set<std::string> moods{"happy", "unhappy"};
     _color_key_for_map_printer = std::make_unique<GrColorKeyPrinter>(
         _charts_top_left_x_coord__px,
         _top_border__px + _window_title.getHeightIncLSpace() + _chart_title_letter.getHeightIncLSpace(),
         _x_space_length__px,
         _color_key_letter,
-        _colors
+        _colors,
+        moods
     );
 }
 
 void Printer_Graphic::initColorKeyForDivAndHapCharts ()
 {
-
+    std::set<std::string> moods{"neutral"};
     _color_key_for_hap_and_div_printer = std::make_unique<GrColorKeyPrinter>(
         _charts_top_left_x_coord__px,
         _div_hap_charts_color_key_top_left_y_coord__px,
         _x_space_length__px,
         _color_key_letter,
-        _colors
+        _colors,
+        moods
     );
 }
 

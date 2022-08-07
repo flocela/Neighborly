@@ -14,20 +14,19 @@ class GrColorKeyPrinter
         int topLeftCornerYPx,
         int xSpaceLengthPx,
         Letter titleLetter,
-        std::map<int, std::pair<Color,Color>> colors
+        std::unordered_map<int, Color> colors, // group number to Color
+        std::set<std::string> moods // keys for colors, e.g. happy, sad, neutral
     ):
         _x_offset{topLeftCornerXPx},
         _y_offset{topLeftCornerYPx},
         _x_space_length__px{xSpaceLengthPx},
         _title_letter{titleLetter},
-        _colors{colors}
+        _colors{colors},
+        _moods{moods}
     {
-        // just an estimate of space needed.
-        _x_space_from_center = 300;
-        _x_space_for_happy_label__px = _title_letter.letterHeight() * 10 / 6;
-        _x_space_for_unhappy_label__px = 2 * _title_letter.letterHeight();
-        _x_space_for_group_label__px = _title_letter.letterHeight() * 34 / 10;
-        _box_length__px = _title_letter.letterHeight();
+        // just an estimate of space needed for one box plus label. 
+        _x_column_width = 200;
+        _box_length__px = _title_letter.letterHeight(); // box is the colored square
         
     }
 
@@ -38,13 +37,11 @@ class GrColorKeyPrinter
     int _y_offset = 0;
     int _x_space_length__px = 0;
     Letter _title_letter;
-    int _x_space_from_center = 0;
-    int _x_space_for_happy_label__px = 0;
-    int _x_space_for_unhappy_label__px = 0;
-    int _x_space_for_group_label__px = 0;
+    int _x_column_width = 0;
     int _box_length__px = 0;
     int _box_spacer__px = 12;
-    std::map<int, std::pair<Color, Color>> _colors;
+    std::unordered_map<int, Color> _colors;
+    std::set<std::string> _moods;
 
 };
 

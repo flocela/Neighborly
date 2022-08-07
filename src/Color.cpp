@@ -8,23 +8,23 @@ std::ostream& operator<<(std::ostream& os, Color const& obj)
 
     switch (obj)
     {
-        case Color::green:
-            colorString = "green";
+        case Color::green_neutral:
+            colorString = "green_neutral";
             break;
-        case Color::green_sad:
-            colorString = "green_sad";
+        case Color::green_unhappy:
+            colorString = "green_unhappy";
             break;
-        case Color::red:
-            colorString = "red";
+        case Color::red_neutral:
+            colorString = "red_neutral";
             break;
-        case Color::red_sad:
-            colorString = "red_sad";
+        case Color::red_unhappy:
+            colorString = "red_unhappy";
             break;
-        case Color::blue:
-            colorString = "blue";
+        case Color::blue_neutral:
+            colorString = "blue_neutral";
             break;
-        case Color::blue_sad:
-            colorString = "blue_sad";
+        case Color::blue_unhappy:
+            colorString = "blue_unhappy";
             break;
         default:
             colorString = "unknown";

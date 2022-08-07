@@ -3,7 +3,7 @@
 
 GrHappinessPrinter::GrHappinessPrinter (
     GrHappinessPrinterSizer grDivPrSizer,
-    std::map<int, std::pair<Color, Color>> resColors,
+    std::unordered_map<int, Color> resColors,
     int topLeftCornerXPx,
     int topLeftCornerYPx
 ) : _res_colors{resColors},

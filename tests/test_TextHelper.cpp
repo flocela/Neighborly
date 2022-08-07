@@ -157,10 +157,10 @@ Resident_StepDown redNeighbor024{
     3  8  13  18  23
     4  9  14  19  24
 
-    Residents in city. B is for blue. R is for red.
-    The blue resident in house 18 has 1 blue neighbor and 
+    Residents in city. B is for blue_neutral. R is for red.
+    The blue_neutral resident in house 18 has 1 blue_neutral neighbor and 
     7 red neighbors.
-    The blue resident in house 12 has 6 blue neighbors and
+    The blue_neutral resident in house 12 has 6 blue_neutral neighbors and
     2 red neighbors.
     0  5  10  15  20
     1  B   B   B  21
@@ -208,16 +208,16 @@ TEST_CASE("TextHelper create text()")
     text.append("Resident presented as:\n");
     text.append("Resident ID, color, address, coordinate,"
         " happiness / happiness goal \n");
-    text.append("  6,  blue,  6,   (1, 1), 0/0.25\n");
-    text.append("  7,  blue,  7,   (1, 2), 0/0.25\n");
-    text.append("  8,  blue,  8,   (1, 3), 0/0.25\n");
-    text.append(" 11,  blue, 11,   (2, 1), 0/0.25\n");
-    text.append(" 12,  blue, 12,   (2, 2), 0/0.25\n");
+    text.append("  6,  blue_neutral,  6,   (1, 1), 0/0.25\n");
+    text.append("  7,  blue_neutral,  7,   (1, 2), 0/0.25\n");
+    text.append("  8,  blue_neutral,  8,   (1, 3), 0/0.25\n");
+    text.append(" 11,  blue_neutral, 11,   (2, 1), 0/0.25\n");
+    text.append(" 12,  blue_neutral, 12,   (2, 2), 0/0.25\n");
     text.append(" 13,   red, 13,   (2, 3), 0/0.25\n");
     text.append(" 14,   red, 14,   (2, 4), 0/0.25\n");
-    text.append(" 16,  blue, 16,   (3, 1), 0/0.25\n");
+    text.append(" 16,  blue_neutral, 16,   (3, 1), 0/0.25\n");
     text.append(" 17,   red, 17,   (3, 2), 0/0.25\n");
-    text.append(" 18,  blue, 18,   (3, 3), 0/0.25\n");
+    text.append(" 18,  blue_neutral, 18,   (3, 3), 0/0.25\n");
     text.append(" 19,   red, 19,   (3, 4), 0/0.25\n");
     text.append(" 22,   red, 22,   (4, 2), 0/0.25\n");
     text.append(" 23,   red, 23,   (4, 3), 0/0.25\n");

@@ -28,7 +28,6 @@ YAxisB2T::YAxisB2T (
     _label_decimal_places{labelDecimalPlaces}
 {
     // set _top_most_pixel and _bottom_most_pixel
-    std::cout << "YB2B constructor: unitfactor: " << labelUnitFactor << std::endl; 
     _top_most_pixel_y__px = _pc->getPixel(_max_val) - _axis_format.overrunPx() - 1;
     _bottom_most_pixel_y__px = _y_coord__px;
 }
@@ -97,7 +96,6 @@ void YAxisB2T::addTicksAndLabels (
     {
         int curVal__px = _pc->getPixel(curVal);
         double printedVal = (double)curVal*(double)(_label_unit_factor);
-        std::cout << "YAxisB2T printedVal: " << printedVal << std::endl;
         std::ostringstream obj1;
         obj1 << std::fixed;
         obj1 << std::setprecision(_label_decimal_places);
@@ -112,7 +110,6 @@ void YAxisB2T::addTicksAndLabels (
             curRect.y = curVal__px + (_axis_format.tickThickness()/2);
             rects.push_back(curRect);
 
-            std::cout << "obj1.str(): " << obj1.str() << std::endl;
             curText.text = obj1.str();
             curText.yPixel = curVal__px;
             texts.push_back(curText);

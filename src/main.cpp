@@ -166,31 +166,24 @@ int main(int argc, char* argv[])
         simulator = std::make_unique<Simulator_Basic_A>(city.get(), residentPtrs);
 
     }
-    
-    vector<std::pair<Color, Color>> colorsVector;
-    for (auto& color: _base_colors)
+    ;
+    //TODO only have 2 groups.
+    std::unordered_map<int, Color> groupNumToColorMap;
+    std::set<int>::iterator group_nums_iter = components.groupNumbers.begin();
+    std::unordered_map<Color, std::unordered_map<std::string, Color>>::iterator color_iter = _color_map.begin();
+    while ( group_nums_iter != components.groupNumbers.end() && color_iter != _color_map.end() )
     {
-        colorsVector.push_back( std::pair<Color, Color>(color, _unhappy_color_map[color]) );
+        groupNumToColorMap.insert(std::pair<int, Color>(*group_nums_iter, color_iter->first));
+        group_nums_iter++;
+        color_iter++;
     }
-
-    std::map<int, std::pair<Color,Color>> groupNumToColorMap;
-    int index = 0;
-    for (auto& num: components.groupNumbers)
-    {
-        groupNumToColorMap.insert( std::pair<int, std::pair<Color, Color>>(num, colorsVector[index]) );
-        // TODO ensure I don't overrun the array.
-        index++;
-    }
-    
-    // TODO setColors must be called before init. There shouldn't be this restraint.
     graphicPrinter.setColors(groupNumToColorMap);
     graphicPrinter.init(city.get(), numOfRuns, "Neighbors");
-    
-
+    std::cout << "main line 182" << std::endl;
     std::map<House*, Resident*> houseToResidentMap;
     std::cout << "before runs" << std::endl;
     for (int ii=0; ii< 2; ii++)
-    {   std::cout << "main ii: " << ii << std::endl;
+    {   std::cout << "main run ii: " << ii << std::endl;
         houseToResidentMap = simulator->simulate();
         graphicPrinter.print(houseToResidentMap, ii);
     }

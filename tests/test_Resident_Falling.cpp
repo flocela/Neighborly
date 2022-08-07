@@ -176,7 +176,7 @@ TEST_CASE("Resident_Falling toStrBasic()")
     };
     REQUIRE(greenResident.toStrBasic() == 
         "Res_Falling(id, clr, mov, goal, hap0, hap1):"
-        " (1, green, 0.000000, 0.250000, 0.750000, 0.250000)");
+        " (1, green_neutral, 0.000000, 0.250000, 0.750000, 0.250000)");
 }
 
 // findingHome() and findingBesHome() methods use this map
@@ -213,8 +213,8 @@ House h23 = House{23};
 House h24 = House{24};
 
 TEST_CASE("Resident_Falling findHome()"
-    " green resident has choice of one green neigbor or one blue neigbor,"
-    " chooses green neighbor")
+    " green_neutral resident has choice of one green_neutral neigbor or one blue_neutral neigbor,"
+    " chooses green_neutral neighbor")
 {
     Resident_Falling greenResident{ 
         1, 
@@ -226,10 +226,10 @@ TEST_CASE("Resident_Falling findHome()"
     };
 
     House& oldHouse = h0; // resident's current house
-    House& grHouse8 = h8;  // green resident lives in house 8
-    House& blHouse16 = h16; // blue resident lives in house 16
-    House& house11  = h11; // next to blue resident
-    House& house13  = h13; // next to green resident
+    House& grHouse8 = h8;  // green_neutral resident lives in house 8
+    House& blHouse16 = h16; // blue_neutral resident lives in house 16
+    House& house11  = h11; // next to blue_neutral resident
+    House& house13  = h13; // next to green_neutral resident
 
     std::set<House*> housesAdjToHouse13;
     housesAdjToHouse13.insert(&h7);
@@ -278,8 +278,8 @@ TEST_CASE("Resident_Falling findHome()"
 }
 
 TEST_CASE("Resident_Falling findHome()"
-    " green resident has choice of a) two green neigbors, b) two green + 1 blue neighbors,"
-    " or c) one blue plus one green neigbor, chooses either a) or b).")
+    " green_neutral resident has choice of a) two green_neutral neigbors, b) two green_neutral + 1 blue_neutral neighbors,"
+    " or c) one blue_neutral plus one green_neutral neigbor, chooses either a) or b).")
 { 
     Resident_Falling greenResident{ 
         1, 
@@ -291,12 +291,12 @@ TEST_CASE("Resident_Falling findHome()"
     };
 
     House& oldHouse  = h0;  // resident's current house
-    House& grHouse7  = h7;  // green resident lives in house 7
-    House& grHouse8  = h8;  // green resident lives in house 8
-    House& blHouse16 = h16; // blue resident lives in house 16
-    House& house2  = h2;  // next to two green residents (happiness = 1.0)
-    House& house11 = h11; // next to one blue resident + one green resident (happiness = 0.5)
-    House& house12 = h12; // next to two green + one blue residents (happiness = 0.66)
+    House& grHouse7  = h7;  // green_neutral resident lives in house 7
+    House& grHouse8  = h8;  // green_neutral resident lives in house 8
+    House& blHouse16 = h16; // blue_neutral resident lives in house 16
+    House& house2  = h2;  // next to two green_neutral residents (happiness = 1.0)
+    House& house11 = h11; // next to one blue_neutral resident + one green_neutral resident (happiness = 0.5)
+    House& house12 = h12; // next to two green_neutral + one blue_neutral residents (happiness = 0.66)
 
     std::set<House*> housesAdjToHouse2;
     housesAdjToHouse2.insert(&h1);
@@ -359,8 +359,8 @@ TEST_CASE("Resident_Falling findHome()"
 }
 
 TEST_CASE("Resident_Falling findBestHome()"
-    " green resident has choice of a) two green neigbors, b) two green + 1 blue neighbors,"
-    " or c) one blue plus one green neigbor, chooses a).")
+    " green_neutral resident has choice of a) two green_neutral neigbors, b) two green_neutral + 1 blue_neutral neighbors,"
+    " or c) one blue_neutral plus one green_neutral neigbor, chooses a).")
 {  
     Resident_Falling greenResident{ 
         1, 
@@ -372,12 +372,12 @@ TEST_CASE("Resident_Falling findBestHome()"
     };
 
     House& oldHouse = h0;  // resident's current house
-    House& grHouse7 = h7;  // green resident lives in house 7
-    House& grHouse8 = h8;  // green resident lives in house 8
-    House& blHouse16 = h16; // blue resident lives in house 16
-    House& house2    = h2;  // next to two green residents (happiness = 1.0)
-    House& house11   = h11; // next to one blue resident + one green resident (happiness = 0.5)
-    House& house12   = h12; // next to two green + one blue residents (happiness = 0.66)
+    House& grHouse7 = h7;  // green_neutral resident lives in house 7
+    House& grHouse8 = h8;  // green_neutral resident lives in house 8
+    House& blHouse16 = h16; // blue_neutral resident lives in house 16
+    House& house2    = h2;  // next to two green_neutral residents (happiness = 1.0)
+    House& house11   = h11; // next to one blue_neutral resident + one green_neutral resident (happiness = 0.5)
+    House& house12   = h12; // next to two green_neutral + one blue_neutral residents (happiness = 0.66)
 
     std::set<House*> housesAdjToHouse2;
     housesAdjToHouse2.insert(&h1);

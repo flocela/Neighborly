@@ -30,7 +30,7 @@ class Printer_Graphic : public Printer
         ~Printer_Graphic () = default;
 
         void initCityMap (City* cityPtr); // make private
-        void setColors (std::map<int, std::pair<Color, Color>> colors); // make private
+        void setColors (std::unordered_map<int, Color> colors); // make private
         void initRunCounter (int numOfRuns); // make private
         void initColorKeyForCityMap();
         void initColorKeyForDivAndHapCharts();
@@ -50,12 +50,12 @@ class Printer_Graphic : public Printer
         std::unique_ptr<GrRunCPrinter>      _run_counter_printer;
         std::unique_ptr<GrDiversityPrinter> _diversity_printer;
         std::unique_ptr<GrHappinessPrinter> _happiness_printer;
-        std::unique_ptr<GrColorKeyPrinter>     _color_key_for_map_printer;
-        std::unique_ptr<GrColorKeyPrinter>     _color_key_for_hap_and_div_printer;
+        std::unique_ptr<GrColorKeyPrinter>  _color_key_for_map_printer;
+        std::unique_ptr<GrColorKeyPrinter>  _color_key_for_hap_and_div_printer;
 
         std::map<Coordinate, House*> _coord_to_house_map = {};
         std::unique_ptr<Renderer> _renderer;
-        std::map<int, std::pair<Color, Color>> _colors;
+        std::unordered_map<int, Color> _colors;
         int _num_of_types_of_residents = 2;
 
         // all X axes have the same length

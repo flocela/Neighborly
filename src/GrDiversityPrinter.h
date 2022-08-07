@@ -28,7 +28,7 @@ class GrDiversityPrinter
     public:
         GrDiversityPrinter (
             GrDiversityPrinterSizer grDivPrSizer,
-            std::map<int, std::pair<Color, Color>> resColors,
+            std::unordered_map<int, Color> resColors,
             int topLeftCornerXPx,
             int topLeftCornerYPx,
             int largestNumOfNeighbors
@@ -43,7 +43,7 @@ class GrDiversityPrinter
         std::string _main_title = "Diversity, Average Number of Disparate Neighbors per Resident for Each Run";
         std::map<Coordinate, House*> _coord_to_house_map;
         // This includes sad resident colors and happy resident colors.
-        std::map<int, std::pair<Color, Color>> _res_colors;
+        std::unordered_map<int, Color> _res_colors;
         int _top_left_corner_x__px;
         int _top_left_corner_y__px;
         int _x_given_space__px;

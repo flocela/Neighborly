@@ -5,7 +5,7 @@ GrCityPrinter::GrCityPrinter (
     GrCityPrinterSizer grCityPrinterSizer,
     Renderer* renderer,
     std::map<Coordinate, House*> coordToHouseMap,
-    std::map<int, std::pair<Color, Color>> resColors,
+    std::unordered_map<int, Color> resColors,
     int topLeftCornerXPx,
     int topLeftCornerYPx
 ) : _renderer{renderer},
@@ -153,9 +153,9 @@ std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsOfHousesFor
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
             if (happinessValue < happinessGoal)
-                colorKey = Color::red; //getUnhappyColor(res->getGroupNumber());
+                colorKey = Color::red_neutral; //getUnhappyColor(res->getGroupNumber());
             else
-                colorKey = Color::blue; //getHappyColor(res->getGroupNumber());
+                colorKey = Color::blue_neutral; //getHappyColor(res->getGroupNumber());
         }
         if (colorToCoordinatesMap.find(colorKey) == colorToCoordinatesMap.end()) // TODO  c++ knows how to do this in one step
         {
@@ -174,12 +174,12 @@ std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsOfHousesFor
 
 Color GrCityPrinter::getHappyColor (int resGroup)
 {
-    return _res_colors.at(resGroup).first;
+    return _color_map[_res_colors[resGroup]]["happy"];
 }
 
 Color GrCityPrinter::getUnhappyColor (int resGroup)
 {
-    return _res_colors.at(resGroup).second;
+    return _color_map[_res_colors[resGroup]]["unhappy"];
 }
 
 int GrCityPrinter::majTickSpacing (int axisLength__coord)
