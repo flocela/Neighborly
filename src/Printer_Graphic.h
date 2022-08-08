@@ -81,8 +81,8 @@ class Printer_Graphic : public Printer
 
         int _top_border__px = 10;
         int _bottom_border__px = 10;
-        int _left_border__px = 10;
-        int _right_border__px = 10;
+        int _left_border__px = 20;
+        int _right_border__px = 20;
 
         Letter _window_title = Letter(40, 2);
         std::string _window_title_string = "Neighbors";

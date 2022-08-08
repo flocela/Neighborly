@@ -105,7 +105,7 @@ class GrDiversityPrinter
         // space from crosshairs to center of first pixel is _point_size__px * off_set_multiplier
         int _offset_multiplier = 2;
         int _override_multiplier = _offset_multiplier;
-        int _x_point_spacing__px; // center to center.
+        int _x_point_spacing__px;
         int _y_point_spacing__px; 
         // if _run_skip_x == 1, then every run is printed. If _run_skip_x ==2, then every other run is printed. And so on.
         int _run_skip_x = 1; 

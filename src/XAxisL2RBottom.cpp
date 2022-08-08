@@ -23,12 +23,13 @@ XAxisL2RBottom::XAxisL2RBottom (
     _label_spacing{labelSpacing}
 {
     _left_most_pixel_x__px = _x_coord__px;
-    _right_most_pixel_x__px = _pc->getPixel(_max_val) + _axis_format.overrunPx(); 
+    _right_most_pixel_x__px = _pc->getPixel(_max_val) + _axis_format.overrunPx();
+    std::cout << "XAxisL2RBottom AA" << std::endl;
     std::cout << _left_most_pixel_x__px << ", " << _right_most_pixel_x__px << std::endl;
 }
 
 void XAxisL2RBottom::print (Renderer* renderer)
-{
+{   
     // All lines and ticks are drawn as SDL_Rects, which are held in rects vector.
     std::vector<SDL_Rect> rects = {};
     // Tick lables are in texts vector.
@@ -85,12 +86,13 @@ void XAxisL2RBottom::addTicksAndLabels (
     
     // Ticks and labels.
     int currValue = _min_val;
-    int rightMostPixel__px = _pc->getValue(_right_most_pixel_x__px);
-    while (currValue <= rightMostPixel__px)
+    std::cout << "XAxisL2RBottom line 96 " << std::endl;
+    std::cout << "maxval: " << _max_val << std::endl;
+    while (currValue <= _max_val)
     {
         int currValue__px = _pc->getPixel(currValue);
         if (currValue % _label_spacing == 0) // long tick with label
-        {   
+        {   std::cout << "XAxisL2RBottom line 103 " << std::endl;
             rect.x =  currValue__px - ( _axis_format.tickThickness() / 2 );
             rect.h = _axis_format.majTickLengthPx();
             rect.y = _y_coord__px - _axis_format.tickLengthInsideChart();
@@ -100,13 +102,13 @@ void XAxisL2RBottom::addTicksAndLabels (
             rects.push_back(rect);
         }
         else if (currValue % _min_tick_spacing == 0) // shorter tick
-        {
+        {   std::cout << "XAxisL2RBottom line 113 " << std::endl;
             rect.x =  currValue__px - ( _axis_format.tickThickness() / 2 );
             rect.h = _axis_format.minTickLengthPx();
             rect.y = _y_coord__px + _axis_format.axisThicknessPx();
             rects.push_back(rect);
         }
-        
+        std::cout << "XAxisL2RBottom line 119 " << std::endl;
         ++currValue;
     }
 }

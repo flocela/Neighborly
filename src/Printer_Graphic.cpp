@@ -30,7 +30,7 @@ Printer_Graphic::Printer_Graphic ( // TODO check if parameters are zero, if stop
 {}
 
 void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
-{   std::cout << "Printer Graphic AA" << std::endl;
+{   
     initWindowValues();
     initWindowTitle(title);
     initChartsTopLeftCorners();
@@ -41,7 +41,6 @@ void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
     initHappinessPrinter();
     initColorKeyForCityMap();
     initColorKeyForDivAndHapCharts();
-    std::cout << "Printer Graphic BB" << std::endl;
 }
 
 void Printer_Graphic::initChartsTopLeftCorners ()
@@ -138,7 +137,7 @@ void Printer_Graphic::print (
     _color_key_for_map_printer->print(_renderer.get());
     _color_key_for_hap_and_div_printer->print(_renderer.get());
     _diversity_printer->print(numOfLikeDiffPerGroup, _renderer.get());
-    _happiness_printer->print(numOfLikeDiffPerGroup, _renderer.get());
+    //_happiness_printer->print(numOfLikeDiffPerGroup, _renderer.get());
     _renderer->endFrame();
 } 
 
