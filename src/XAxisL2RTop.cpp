@@ -118,7 +118,7 @@ void XAxisL2RTop::addTitle (std::vector<TextRect>& texts)
 {
     TextRect tr = {
         _left_most_pixel_x__px + (calcHorizontalLineLength()/2), //TODO width of text needs to be taken into account.
-        _y_coord__px - _axis_format.getHeightOfAxisPx(),
+        _y_coord__px - _axis_format.getAxisHeightPx(),
         _title, 
         4
     };

@@ -201,13 +201,13 @@ int GrCityPrinter::calcYCrossHairsPx ()
 {
     return _top_left_corner_y__px + 
            _title_letter.getHeightIncLSpace() + 
-           _axis_format_X.getHeightOfAxisPx();
+           _axis_format_X.getAxisHeightPx();
 }
 
 int GrCityPrinter::calcCellSizePx ()
 {
     // X-direction
-    int xAxisLengthPx = _x_given_space__px - _axis_format_Y.getHeightOfAxisPx(); 
+    int xAxisLengthPx = _x_given_space__px - _axis_format_Y.getAxisHeightPx(); 
     int numOfCellsX = (_house_max_x - _house_min_x) + _offset_multiplier + _overrun_multiplier;
     int xCellSize = xAxisLengthPx / numOfCellsX;
 
@@ -215,7 +215,7 @@ int GrCityPrinter::calcCellSizePx ()
     int yAxisLengthPx = 
         _y_given_space__px - 
         _title_letter.getHeightIncLSpace() -
-        _axis_format_X.getHeightOfAxisPx();
+        _axis_format_X.getAxisHeightPx();
     int numOfCellsY = (_house_max_y - _house_min_y) + _offset_multiplier + _overrun_multiplier;
     int yCellSize = yAxisLengthPx / numOfCellsY;
     int smallestCellSize = std::min(xCellSize, yCellSize);

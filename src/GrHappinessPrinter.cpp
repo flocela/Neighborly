@@ -17,14 +17,14 @@ GrHappinessPrinter::GrHappinessPrinter (
     _zero_run_idx{grDivPrSizer.getMinX()},
     _last_run_idx{grDivPrSizer.getMaxX()},
     _num_of_runs{_last_run_idx - _zero_run_idx + 1},
-    _length_of_y_axis__px{_y_given_space__px - _axis_format_X.getHeightOfAxisPx()}
+    _length_of_y_axis__px{_y_given_space__px - _axis_format_X.getAxisHeightPx()}
     
 {  
     _axis_format_X.setOffsetPx(_offset_multiplier * _point_size__px);
     _axis_format_X.setOverrunPx(_override_multiplier * _point_size__px);
     _axis_format_Y.setOffsetPx(_offset_multiplier * _point_size__px);
     _axis_format_Y.setOverrunPx(_override_multiplier * _point_size__px);
-    int xAxisSpaceAllowed = _x_given_space__px - _axis_format_Y.getHeightOfAxisPx();
+    int xAxisSpaceAllowed = _x_given_space__px - _axis_format_Y.getAxisHeightPx();
     int xAxisSpaceRequiredPx =  _point_size__px * ( 
                                 (_last_run_idx - _zero_run_idx) +
                                 _offset_multiplier +
@@ -47,7 +47,7 @@ GrHappinessPrinter::GrHappinessPrinter (
         // Throw and exception
     }
     _cross_x__px = _top_left_corner_x__px + ((_x_given_space__px - totalNumberOfPixelsUsedX)/2);
-    _cross_y__px = _top_left_corner_y__px + _y_given_space__px - _axis_format_X.getHeightOfAxisPx();
+    _cross_y__px = _top_left_corner_y__px + _y_given_space__px - _axis_format_X.getAxisHeightPx();
 
     _title_x__px = _cross_x__px + (totalNumberOfPixelsUsedX/2);
     _title_y__px = _top_left_corner_y__px;
@@ -55,7 +55,7 @@ GrHappinessPrinter::GrHappinessPrinter (
     int yAxisSpacedAllowed = 
         _y_given_space__px - 
         _title_letter.getHeightIncLSpace() - 
-        _axis_format_Y.getHeightOfAxisPx();
+        _axis_format_Y.getAxisHeightPx();
 
     int yAxisSpaceRequiredPx = 
         _point_size__px * 
@@ -142,24 +142,24 @@ void GrHappinessPrinter::printTitle (Renderer* renderer){
 // TODO not used, delete method
 int GrHappinessPrinter::calcXAxisLengthPx ()
 {
-    return _x_given_space__px - _axis_format_Y.getHeightOfAxisPx();
+    return _x_given_space__px - _axis_format_Y.getAxisHeightPx();
 }
 
 // TODO not used, delete method
 int GrHappinessPrinter::calcYAxisLengthPx ()
 {
-    return _y_given_space__px - _axis_format_X.getHeightOfAxisPx() - _title_letter.getHeightIncLSpace();
+    return _y_given_space__px - _axis_format_X.getAxisHeightPx() - _title_letter.getHeightIncLSpace();
 }
 
 // TODO not used, delete method
 int GrHappinessPrinter::calcXCrossHairsPx ()
 {
-    return _axis_format_Y.getHeightOfAxisPx();
+    return _axis_format_Y.getAxisHeightPx();
 }
 
 int GrHappinessPrinter::calcYCrossHairsPx ()
 {
-    return _axis_format_X.getHeightOfAxisPx() + _title_letter.getHeightIncLSpace();
+    return _axis_format_X.getAxisHeightPx() + _title_letter.getHeightIncLSpace();
 }
 
 int GrHappinessPrinter::calcMajTickSpacingX ()

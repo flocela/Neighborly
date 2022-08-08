@@ -119,7 +119,7 @@ void YAxisT2B::addTicksAndLabels (
 void YAxisT2B::addTitle (std::vector<TextRect>& texts)
 {
     TextRect tr = {
-        _x_coord__px - _axis_format.getHeightOfAxisPx(),
+        _x_coord__px - _axis_format.getAxisHeightPx(),
         _top_most_pixel_y__px + (_bottom_most_pixel_y__px - _top_most_pixel_y__px)/2,
         _title, 
         1

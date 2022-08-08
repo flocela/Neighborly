@@ -1,7 +1,7 @@
 #include "AxisFormat.h"
 #include <iostream>
 
-int AxisFormat::getHeightOfAxisPx ()
+int AxisFormat::getAxisHeightPx ()
 {
     return _title_letter_height +
            _title_line_space__px +

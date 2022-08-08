@@ -44,15 +44,17 @@ class GrDiversityPrinter
         std::map<Coordinate, House*> _coord_to_house_map;
         // This includes sad resident colors and happy resident colors.
         std::unordered_map<int, Color> _res_colors;
-        int _top_left_corner_x__px;
-        int _top_left_corner_y__px;
-        int _x_given_space__px;
-        int _y_given_space__px;
-        AxisFormat _axis_format_X;
-        AxisFormat _axis_format_Y;
+
+        // top left corner of space given for Diversity chart.
+        int _top_left_x__px;
+        int _top_left_y__px;
+        int _given_space_x__px;
+        int _given_space_y__px;
+        AxisFormat _format_x; // Axis X's format
+        AxisFormat _format_y;
 
         Letter _title_letter;
-        int _title_x__px;
+        int _title_x__px; // center placement of _title
         int _title_y__px;
 
         int _zero_run_idx;

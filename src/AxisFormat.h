@@ -26,7 +26,7 @@ class AxisFormat
         int offsetPx () {return _offset__px;};
         int overrunPx () {return _overrun__px;};
 
-        int getHeightOfAxisPx ();
+        int getAxisHeightPx ();
 
         void setMajTickLengthPx (int length);
         void setMinTickLengthPx (int length);

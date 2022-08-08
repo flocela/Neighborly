@@ -83,7 +83,7 @@ void XAxisL2RBottom::addTicksAndLabels (
     };
     SDL_Rect rect;
     rect.w = _axis_format.tickThickness();
-    
+    // Todo should put ending label on last maj tick mark.
     // Ticks and labels.
     int currValue = _min_val;
     std::cout << "XAxisL2RBottom line 96 " << std::endl;
@@ -92,7 +92,7 @@ void XAxisL2RBottom::addTicksAndLabels (
     {
         int currValue__px = _pc->getPixel(currValue);
         if (currValue % _label_spacing == 0) // long tick with label
-        {   std::cout << "XAxisL2RBottom line 103 " << std::endl;
+        {   //std::cout << "XAxisL2RBottom line 103 " << std::endl;
             rect.x =  currValue__px - ( _axis_format.tickThickness() / 2 );
             rect.h = _axis_format.majTickLengthPx();
             rect.y = _y_coord__px - _axis_format.tickLengthInsideChart();
@@ -102,13 +102,13 @@ void XAxisL2RBottom::addTicksAndLabels (
             rects.push_back(rect);
         }
         else if (currValue % _min_tick_spacing == 0) // shorter tick
-        {   std::cout << "XAxisL2RBottom line 113 " << std::endl;
+        {   //std::cout << "XAxisL2RBottom line 113 " << std::endl;
             rect.x =  currValue__px - ( _axis_format.tickThickness() / 2 );
             rect.h = _axis_format.minTickLengthPx();
             rect.y = _y_coord__px + _axis_format.axisThicknessPx();
             rects.push_back(rect);
         }
-        std::cout << "XAxisL2RBottom line 119 " << std::endl;
+        //std::cout << "XAxisL2RBottom line 119 " << std::endl;
         ++currValue;
     }
 }
@@ -117,7 +117,7 @@ void XAxisL2RBottom::addTitle (std::vector<TextRect>& texts)
 {
     TextRect tr = {
         _left_most_pixel_x__px + (calcHorizontalLineLength()/2), //TODO width of text needs to be taken into account.
-        _y_coord__px - _axis_format.getHeightOfAxisPx(),
+        _y_coord__px - _axis_format.getAxisHeightPx(),
         _title, 
         4
     };

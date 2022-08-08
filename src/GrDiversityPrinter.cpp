@@ -8,104 +8,78 @@ GrDiversityPrinter::GrDiversityPrinter (
     int topLeftCornerYPx,
     int largestNumOfNeighbors
 ) : _res_colors{resColors},
-    _top_left_corner_x__px{topLeftCornerXPx},
-    _top_left_corner_y__px{topLeftCornerYPx},
-    _x_given_space__px{grDivPrSizer.getXSpaceLengthPx()},
-    _y_given_space__px{grDivPrSizer.getYSpaceLengthPx()},
-    _axis_format_X{grDivPrSizer.getAxisFormatX()},
-    _axis_format_Y{grDivPrSizer.getAxisFormatX()},
+    _top_left_x__px{topLeftCornerXPx},
+    _top_left_y__px{topLeftCornerYPx},
+    _given_space_x__px{grDivPrSizer.getXSpaceLengthPx()},
+    _given_space_y__px{grDivPrSizer.getYSpaceLengthPx()},
+    _format_x{grDivPrSizer.getAxisFormatX()},
+    _format_y{grDivPrSizer.getAxisFormatX()},
     _title_letter{grDivPrSizer.getTitleLetter()},
     _zero_run_idx{grDivPrSizer.getMinX()},
     _last_run_idx{100},
-    //_last_run_idx{grDivPrSizer.getMaxX()}, // TODO put this back
+    //_last_run_idx{grDivPrSizer.getMaxX()},
     _num_of_runs{_last_run_idx - _zero_run_idx + 1},
-    _length_of_y_axis__px{_y_given_space__px - _axis_format_X.getHeightOfAxisPx()},
+    _length_of_y_axis__px{_given_space_y__px - _format_x.getAxisHeightPx()},
     _largest_num_of_neighbors{largestNumOfNeighbors}
     
 {  
-    _axis_format_X.setOffsetPx(_offset_multiplier * _point_size__px);
-    _axis_format_X.setOverrunPx(_override_multiplier * _point_size__px);
-    _axis_format_Y.setOffsetPx(_offset_multiplier * _point_size__px);
-    _axis_format_Y.setOverrunPx(_override_multiplier * _point_size__px);
-    _axis_format_Y.setTitleLetterHeight(0);
-    //int xAxisSpaceAllowed = _x_given_space__px - _axis_format_Y.getHeightOfAxisPx();
+    _format_x.setOffsetPx(_offset_multiplier * _point_size__px);
+    _format_x.setOverrunPx(_override_multiplier * _point_size__px);
+    _format_y.setOffsetPx(_offset_multiplier * _point_size__px);
+    _format_y.setOverrunPx(_override_multiplier * _point_size__px);
+    _format_y.setTitleLetterHeight(0);
     int runDiff = _last_run_idx - _zero_run_idx;
+
+    // Space required if there is no space between points.
+    // Center-to-center space for points is _point_size__px.
     int xRequiredSpace = 
-        _axis_format_Y.getHeightOfAxisPx() +
+        _format_y.getAxisHeightPx() +
         _point_size__px * (_offset_multiplier + _override_multiplier + runDiff);
 
-    if (xRequiredSpace > _x_given_space__px)
+    if (xRequiredSpace > _given_space_x__px)
     {
         // throw and exception
     }
 
-    // spacing from center of point to center of point
-    _run_skip_x = 1;
-    _x_point_spacing__px = 
-        (_x_given_space__px - 
-        _axis_format_Y.getHeightOfAxisPx() -
-        (_point_size__px * (_offset_multiplier + _override_multiplier)))
-        /runDiff;
-    std::cout << "x_point_spacing__px: " << _x_point_spacing__px << std::endl;
-    std::cout << "y.getHeightOfAxisPx(): " << _axis_format_Y.getHeightOfAxisPx() << std::endl;
-    std::cout << "offset, override, rundif: " << _offset_multiplier << ", " << _override_multiplier << ", " << runDiff << std::endl;
-    std::cout << "_point_size__px: " << _point_size__px << std::endl;
-    int xNumOfPixelsUsed = 
-        _axis_format_Y.getHeightOfAxisPx() +
-        (_point_size__px * (_offset_multiplier + _override_multiplier)) +
-        (_x_point_spacing__px * runDiff);
-    std::cout << "GrDiversityPrinter AA" << std::endl;
+    int yRequiredSpacePx =
+        _format_x.getAxisHeightPx() +
+        _point_size__px * (_offset_multiplier + _override_multiplier + _largest_num_of_neighbors);
 
-/*
-    int xOffsetAndOverride = _point_size__px * (_offset_multiplier + _override_multiplier);
-    int xAxisSpaceRequiredPx =  
-        xOffsetAndOverride + 
-        _point_size__px * (_last_run_idx - _zero_run_idx);
-
-    int totalNumberOfPixelsUsedX = 0;
-    if (xAxisSpaceAllowed >= xAxisSpaceRequiredPx)
-    {
-        _run_skip_x = 1;
-
-        _x_point_spacing__px = 
-            (xAxisSpaceAllowed - xOffsetAndOverride)/(_last_run_idx - _zero_run_idx);
-            
-        totalNumberOfPixelsUsedX = 
-            xOffsetAndOverride +
-            _x_point_spacing__px * (_last_run_idx - _zero_run_idx);
-    }
-    else
+    if (yRequiredSpacePx > _given_space_y__px)
     {
         // throw an exception
-    }*/
-    std::cout << "_x_given_space__px, xNumOfPixelsUsed: " << _x_given_space__px << ", " << xNumOfPixelsUsed << std::endl;
-    _cross_x__px = 
-        _top_left_corner_x__px +
-        ((_x_given_space__px - xNumOfPixelsUsed)/2) +
-        _axis_format_Y.getHeightOfAxisPx();
-    std::cout << "_cross_x__px: " << _cross_x__px << std::endl;
-    _cross_y__px = _top_left_corner_y__px + _y_given_space__px - _axis_format_X.getHeightOfAxisPx();
-
-    _title_x__px = xNumOfPixelsUsed/2;
-    _title_y__px = _top_left_corner_y__px;
-    std::cout << "GrDiversityPrinter BB" << std::endl;
-    int yAxisSpacedAllowed = 
-        _y_given_space__px - 
-        _title_letter.getHeightIncLSpace() - 
-        _axis_format_Y.getHeightOfAxisPx();
-
-    int yAxisSpaceRequiredPx = 
-        _point_size__px * 
-        (_largest_num_of_neighbors +
-        _offset_multiplier + 
-        _override_multiplier);
-
-    if (yAxisSpacedAllowed > yAxisSpaceRequiredPx)
-    {
-        _y_point_spacing__px = 
-            (yAxisSpacedAllowed - yAxisSpaceRequiredPx)/(_largest_num_of_neighbors + 1);
     }
-    // TODO else throw an exception.
+
+    // X axis values
+    _x_point_spacing__px = 
+        (_given_space_x__px - 
+        _format_y.getAxisHeightPx() -
+        (_point_size__px * (_offset_multiplier + _override_multiplier)))
+        /runDiff;
+
+    int xNumOfPixelsUsed = 
+        _format_y.getAxisHeightPx() +
+        (_point_size__px * (_offset_multiplier + _override_multiplier)) +
+        (_x_point_spacing__px * runDiff);
+
+    _cross_x__px = 
+        _top_left_x__px +
+        ((_given_space_x__px - xNumOfPixelsUsed)/2) +
+        _format_y.getAxisHeightPx();
+
+    // Y axis values
+    _y_point_spacing__px = 
+        (_given_space_y__px -
+        _title_letter.getHeightIncLSpace() -
+        _format_x.getAxisHeightPx() -
+        (_point_size__px * (_offset_multiplier + _override_multiplier)))
+        /_largest_num_of_neighbors;
+
+    _cross_y__px = _top_left_y__px + _given_space_y__px -_format_x.getAxisHeightPx();
+
+    // Title values
+    _title_x__px = xNumOfPixelsUsed/2;
+    _title_y__px = _top_left_y__px;
 
     _min_tick_spacing_x = calcMinTickSpacingX();
     _maj_tick_spacing_x = calcMajTickSpacingX();
@@ -113,7 +87,6 @@ GrDiversityPrinter::GrDiversityPrinter (
     _maj_tick_spacing_y = calcMajTickSpacingY();
     _label_spacing_x = calcLabelSpacingX();
     _label_spacing_y = calcLabelSpacingY();
-    std::cout << "GrDivPrinter, x_point_spacing__px: " << _x_point_spacing__px << std::endl;
     _pixel_converter_x = createPixelConverterX();
     _pixel_converter_y = createPixelConverterY();
 
@@ -127,17 +100,17 @@ void GrDiversityPrinter::print (
     std::unordered_map<int,std::vector<int>> _num_of_like_diff_per_group,
     Renderer* renderer
 )
-{   /*std::vector<SDL_Rect> rects = {};
+{   std::vector<SDL_Rect> rects = {};
     
     SDL_Rect rect1;
-    rect1.w = _x_given_space__px;
-    rect1.h = 5;
-    rect1.x = _top_left_corner_x__px;
-    rect1.y = 900;
+    rect1.w = 10;
+    rect1.h = _given_space_y__px;
+    rect1.x = _top_left_x__px + 50;
+    rect1.y = _top_left_y__px;
 
     renderer->setColorToRed();
     rects.push_back(rect1);
-    renderer->fillBlocks(rects);*/
+    renderer->fillBlocks(rects);
 
     std::cout << "GrDiversityPrinter DD" << std::endl;
     (void)_num_of_like_diff_per_group;
@@ -154,7 +127,7 @@ void GrDiversityPrinter::addXAxis ()
     _x_axis = std::make_unique<XAxisL2RBottom>(
         "", // no axis title
         _pixel_converter_x.get(),
-        _axis_format_X,
+        _format_x,
         _cross_x__px,
         _cross_y__px,
         _zero_run_idx,
@@ -171,7 +144,7 @@ void GrDiversityPrinter::addYAxis ()
     _y_axis = std::make_unique<YAxisB2T>(
         "",
         _pixel_converter_y.get(),
-        _axis_format_Y,
+        _format_y,
         _cross_x__px,
         _cross_y__px,
         0,
@@ -194,34 +167,34 @@ void GrDiversityPrinter::printTitle (Renderer* renderer){
 // TODO not used, delete method
 int GrDiversityPrinter::calcXAxisLengthPx ()
 {
-    return _x_given_space__px - _axis_format_Y.getHeightOfAxisPx();
+    return _given_space_x__px - _format_y.getAxisHeightPx();
 }
 
 // TODO not used, delete method
 int GrDiversityPrinter::calcYAxisLengthPx ()
 {
-    return _y_given_space__px - _axis_format_X.getHeightOfAxisPx() - _title_letter.getHeightIncLSpace();
+    return _given_space_y__px - _format_x.getAxisHeightPx() - _title_letter.getHeightIncLSpace();
 }
 
 // TODO not used, delete method
 int GrDiversityPrinter::calcXCrossHairsPx ()
 {
-    return _axis_format_Y.getHeightOfAxisPx();
+    return _format_y.getAxisHeightPx();
 }
 
 int GrDiversityPrinter::calcYCrossHairsPx ()
 {
-    return _axis_format_X.getHeightOfAxisPx() + _title_letter.getHeightIncLSpace();
+    return _format_x.getAxisHeightPx() + _title_letter.getHeightIncLSpace();
 }
 
 int GrDiversityPrinter::calcMajTickSpacingX ()
  {
-    return ( ((_last_run_idx - _zero_run_idx + 1)/_run_skip_x) <= 100)? 1 : 5;
+    return ( _num_of_runs <= 100 )? 1 : 5;
  }
         
 int GrDiversityPrinter::calcMinTickSpacingX ()
 {
-    return ( ((_last_run_idx - _zero_run_idx + 1)/_run_skip_x) <= 100)? 1 : 5;
+    return ( _num_of_runs <= 100 )? 1 : 5;
 }
 
 int GrDiversityPrinter::calcMajTickSpacingY ()
@@ -236,7 +209,7 @@ int GrDiversityPrinter::calcMinTickSpacingY ()
 
 int GrDiversityPrinter::calcLabelSpacingX ()
 {
-    return (((_last_run_idx - _zero_run_idx + 1)/_run_skip_x) <= 10)? 1 : 10;
+    return ( _num_of_runs <= 10 )? 1 : 10;
 }
 
 int GrDiversityPrinter::calcLabelSpacingY ()
@@ -246,12 +219,11 @@ int GrDiversityPrinter::calcLabelSpacingY ()
 
 std::unique_ptr<PixelConverter> GrDiversityPrinter::createPixelConverterX ()
 {
-    std::cout << "_x_point_spacing__px, _cross_x__px: " << _x_point_spacing__px << ", " << _cross_x__px << std::endl;
     int maxXAxisPixel = 
         _cross_x__px + 
         (_offset_multiplier * _point_size__px) + 
-        (_x_point_spacing__px) * (_last_run_idx - _zero_run_idx); // TODO put in _run_skip_x
-    std::cout << "xConverter: maxXAxisPixel: " << maxXAxisPixel << std::endl;
+        (_x_point_spacing__px) * (_last_run_idx - _zero_run_idx);
+
     return std::make_unique<PixelConverter>(
         _zero_run_idx,
         _cross_x__px + _offset_multiplier * _point_size__px,
@@ -266,7 +238,7 @@ std::unique_ptr<PixelConverter> GrDiversityPrinter::createPixelConverterY ()
     int maxYAxisPixel = 
         _cross_y__px -
         _offset_multiplier * _point_size__px -
-        (_point_size__px + _y_point_spacing__px) * (_largest_num_of_neighbors); // range of neighbors is zero to largest
+        (_y_point_spacing__px) * (_largest_num_of_neighbors); // range of neighbors is zero to largest
     
     return std::make_unique<PixelConverter>(
         0,
