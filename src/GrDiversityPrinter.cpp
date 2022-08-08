@@ -6,7 +6,9 @@ GrDiversityPrinter::GrDiversityPrinter (
     std::unordered_map<int, Color> resColors,
     int topLeftCornerXPx,
     int topLeftCornerYPx,
-    int largestNumOfNeighbors
+    int zeroYIdx,
+    int lastYIdx,
+    std::string title
 ) : _res_colors{resColors},
     _top_left_x__px{topLeftCornerXPx},
     _top_left_y__px{topLeftCornerYPx},
@@ -15,11 +17,13 @@ GrDiversityPrinter::GrDiversityPrinter (
     _format_x{grDivPrSizer.getAxisFormatX()},
     _format_y{grDivPrSizer.getAxisFormatX()},
     _title_letter{grDivPrSizer.getTitleLetter()},
+    _zero_y_idx{zeroYIdx},
+    _last_y_idx{lastYIdx},
     _zero_run_idx{grDivPrSizer.getMinX()},
-    _last_run_idx{100},
     //_last_run_idx{grDivPrSizer.getMaxX()},
+    _last_run_idx{100},
     _num_of_runs{_last_run_idx - _zero_run_idx + 1},
-    _largest_num_of_neighbors{largestNumOfNeighbors}
+    _main_title{title}
     
 {  
     _format_x.setOffsetPx(_offset_multiplier * _point_size__px);
@@ -43,7 +47,7 @@ GrDiversityPrinter::GrDiversityPrinter (
 
     int yRequiredSpacePx =
         _format_x.getAxisHeightPx() +
-        _point_size__px * (_offset_multiplier + _override_multiplier + _largest_num_of_neighbors);
+        _point_size__px * (_offset_multiplier + _override_multiplier + (_last_y_idx-_zero_y_idx));
 
     if (yRequiredSpacePx > _given_space_y__px)
     {
@@ -73,7 +77,7 @@ GrDiversityPrinter::GrDiversityPrinter (
         _title_letter.getHeightIncLSpace() -
         _format_x.getAxisHeightPx() -
         (_point_size__px * (_offset_multiplier + _override_multiplier)))
-        /_largest_num_of_neighbors;
+        /(_last_y_idx - _zero_y_idx);
 
     _cross_y__px = _top_left_y__px + _given_space_y__px -_format_x.getAxisHeightPx();
 
@@ -82,12 +86,12 @@ GrDiversityPrinter::GrDiversityPrinter (
     _title_y__px = _top_left_y__px;
 
     // tick and label spacing
-    _min_tick_spacing_x = ( _num_of_runs <= 100 )? 1 : 5;
-    _maj_tick_spacing_x = ( _num_of_runs <= 100 )? 1 : 5;
-    _min_tick_spacing_y = (_largest_num_of_neighbors + 1 < 10)? 1 : 1; // TODO maybe something haveing to do with odd and even would be better.
-    _maj_tick_spacing_y = (_largest_num_of_neighbors + 1 < 10)? 2 : 5;
-    _label_spacing_x = ( _num_of_runs <= 10 )? 1 : 10;
-    _label_spacing_y = (_largest_num_of_neighbors + 1 < 10)? 2 : 5;
+    _min_tick_spacing_x = ( _num_of_runs <= 100 )? 1 : 2;
+    _maj_tick_spacing_x = ( _num_of_runs <= 100 )? 1 : 2;
+    _min_tick_spacing_y = (_last_y_idx - _zero_y_idx < 10)? 1 : 2; // TODO maybe something haveing to do with odd and even would be better.
+    _maj_tick_spacing_y = (_last_y_idx - _zero_y_idx < 10)? 1 : 10;
+    _label_spacing_x = ( _num_of_runs <= 10 )? 2 : 10;
+    _label_spacing_y = (_last_y_idx - _zero_y_idx < 10)? 2 : 10;
     _pixel_converter_x = createPixelConverterX();
     _pixel_converter_y = createPixelConverterY();
 
@@ -142,8 +146,8 @@ void GrDiversityPrinter::addYAxis ()
         _format_y,
         _cross_x__px,
         _cross_y__px,
-        0,
-        _largest_num_of_neighbors,
+        _zero_y_idx,
+        _last_y_idx,
         _maj_tick_spacing_y, 
         _min_tick_spacing_y,
         _label_spacing_y,
@@ -179,12 +183,12 @@ std::unique_ptr<PixelConverter> GrDiversityPrinter::createPixelConverterY ()
     int maxYAxisPixel = 
         _cross_y__px -
         _offset_multiplier * _point_size__px -
-        (_y_point_spacing__px) * (_largest_num_of_neighbors); // range of neighbors is zero to largest
+        (_y_point_spacing__px) * (_last_y_idx - _zero_y_idx); // range of neighbors is zero to last
     
     return std::make_unique<PixelConverter>(
         0,
         _cross_y__px - _offset_multiplier * _point_size__px,
-        _largest_num_of_neighbors,
+        _last_y_idx,
         maxYAxisPixel
     );
 }

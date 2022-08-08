@@ -137,7 +137,7 @@ void Printer_Graphic::print (
     _color_key_for_map_printer->print(_renderer.get());
     _color_key_for_hap_and_div_printer->print(_renderer.get());
     _diversity_printer->print(numOfLikeDiffPerGroup, _renderer.get());
-    //_happiness_printer->print(numOfLikeDiffPerGroup, _renderer.get());
+    _happiness_printer->print(numOfLikeDiffPerGroup, _renderer.get());
     _renderer->endFrame();
 } 
 
@@ -197,26 +197,31 @@ void Printer_Graphic::initDiversityPrinter ()
         _colors,
         _charts_top_left_x_coord__px,
         _div_chart_y_top_left_y_coord__px,
-        10 // TODO get largest from city map
+        0,
+        10, // TODO get largest from city map
+        "Diversity, Average Number of Disparate Neighbors per Resident per Run"
     );
 }
 
 void Printer_Graphic::initHappinessPrinter ()
 {
-    GrHappinessPrinterSizer grHapPrinterSizer{
+    GrDiversityPrinterSizer grHapPrinterSizer{
         _x_space_length__px,
         static_cast<int>(_sum_y_space_lengths__px * _hap_chart_y_axis_fraction),
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,
         0,
-        _num_of_runs
+        _num_of_runs,
     };
-    _happiness_printer = std::make_unique<GrHappinessPrinter> (
+    _happiness_printer = std::make_unique<GrDiversityPrinter> (
         grHapPrinterSizer,
         _colors,
         _charts_top_left_x_coord__px,
-        _hap_chart_y_top_left_y_coord__px
+        _hap_chart_y_top_left_y_coord__px,
+        0,
+        10,
+        "Average Happiness per Group per Run"
     );
 }
 

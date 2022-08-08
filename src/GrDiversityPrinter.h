@@ -31,7 +31,9 @@ class GrDiversityPrinter
             std::unordered_map<int, Color> resColors,
             int topLeftCornerXPx,
             int topLeftCornerYPx,
-            int largestNumOfNeighbors
+            int zeroYIdx,
+            int lastYIdx,
+            std::string title
         );
 
         void print(
@@ -40,7 +42,6 @@ class GrDiversityPrinter
         );
     
     private:
-        std::string _main_title = "Diversity, Average Number of Disparate Neighbors per Resident for Each Run";
         std::map<Coordinate, House*> _coord_to_house_map;
         // This includes sad resident colors and happy resident colors.
         std::unordered_map<int, Color> _res_colors;
@@ -57,11 +58,15 @@ class GrDiversityPrinter
         int _title_x__px; // center placement of _title
         int _title_y__px;
 
+        int _zero_y_idx;
+        int _last_y_idx;
+
         int _zero_run_idx;
         int _last_run_idx;
 
         int _num_of_runs;
-
+        std::string _main_title = "Diversity, Average Number of Disparate Neighbors per Resident for Each Run";
+    
         // The coordinate where x and y axes cross on the screen in pixels.
         int _cross_x__px;
         int _cross_y__px;
@@ -86,7 +91,7 @@ class GrDiversityPrinter
         int _label_spacing_x;
         int _label_spacing_y;
 
-        int _largest_num_of_neighbors;
+
 
         // Axes
         std::unique_ptr<XAxisL2RBottom> _x_axis;

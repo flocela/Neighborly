@@ -49,7 +49,7 @@ class Printer_Graphic : public Printer
         std::unique_ptr<GrCityPrinter>      _city_printer;
         std::unique_ptr<GrRunCPrinter>      _run_counter_printer;
         std::unique_ptr<GrDiversityPrinter> _diversity_printer;
-        std::unique_ptr<GrHappinessPrinter> _happiness_printer;
+        std::unique_ptr<GrDiversityPrinter> _happiness_printer;
         std::unique_ptr<GrColorKeyPrinter>  _color_key_for_map_printer;
         std::unique_ptr<GrColorKeyPrinter>  _color_key_for_hap_and_div_printer;
 
