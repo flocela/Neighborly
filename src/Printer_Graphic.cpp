@@ -220,7 +220,7 @@ void Printer_Graphic::initHappinessPrinter ()
         _charts_top_left_x_coord__px,
         _hap_chart_y_top_left_y_coord__px,
         0,
-        10,
+        100,
         "Average Happiness per Group per Run"
     );
 }
