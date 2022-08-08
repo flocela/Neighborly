@@ -62,8 +62,6 @@ class GrDiversityPrinter
 
         int _num_of_runs;
 
-        int _length_of_y_axis__px;
-
         // The coordinate where x and y axes cross on the screen in pixels.
         int _cross_x__px;
         int _cross_y__px;
@@ -124,21 +122,8 @@ class GrDiversityPrinter
         void initXAxisBlocks ();
         void initYAxisBlocks ();
 
-        int calcXAxisLengthPx ();
-        int calcYAxisLengthPx ();
-
         int calcRunModulo();
         int calcYModulo();
-
-        int calcXCrossHairsPx ();
-        int calcYCrossHairsPx ();
-
-        int calcMajTickSpacingX ();
-        int calcMinTickSpacingX ();        
-        int calcMajTickSpacingY ();
-        int calcMinTickSpacingY ();
-        int calcLabelSpacingX ();
-        int calcLabelSpacingY ();
 
         std::unique_ptr<PixelConverter>createPixelConverterX ();
         std::unique_ptr<PixelConverter>createPixelConverterY ();   

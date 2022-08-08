@@ -19,7 +19,6 @@ GrDiversityPrinter::GrDiversityPrinter (
     _last_run_idx{100},
     //_last_run_idx{grDivPrSizer.getMaxX()},
     _num_of_runs{_last_run_idx - _zero_run_idx + 1},
-    _length_of_y_axis__px{_given_space_y__px - _format_x.getAxisHeightPx()},
     _largest_num_of_neighbors{largestNumOfNeighbors}
     
 {  
@@ -28,6 +27,7 @@ GrDiversityPrinter::GrDiversityPrinter (
     _format_y.setOffsetPx(_offset_multiplier * _point_size__px);
     _format_y.setOverrunPx(_override_multiplier * _point_size__px);
     _format_y.setTitleLetterHeight(0);
+    
     int runDiff = _last_run_idx - _zero_run_idx;
 
     // Space required if there is no space between points.
@@ -77,30 +77,29 @@ GrDiversityPrinter::GrDiversityPrinter (
 
     _cross_y__px = _top_left_y__px + _given_space_y__px -_format_x.getAxisHeightPx();
 
-    // Title values
+    // Place titles
     _title_x__px = xNumOfPixelsUsed/2;
     _title_y__px = _top_left_y__px;
 
-    _min_tick_spacing_x = calcMinTickSpacingX();
-    _maj_tick_spacing_x = calcMajTickSpacingX();
-    _min_tick_spacing_y = calcMinTickSpacingY();
-    _maj_tick_spacing_y = calcMajTickSpacingY();
-    _label_spacing_x = calcLabelSpacingX();
-    _label_spacing_y = calcLabelSpacingY();
+    // tick and label spacing
+    _min_tick_spacing_x = ( _num_of_runs <= 100 )? 1 : 5;
+    _maj_tick_spacing_x = ( _num_of_runs <= 100 )? 1 : 5;
+    _min_tick_spacing_y = (_largest_num_of_neighbors + 1 < 10)? 1 : 1; // TODO maybe something haveing to do with odd and even would be better.
+    _maj_tick_spacing_y = (_largest_num_of_neighbors + 1 < 10)? 2 : 5;
+    _label_spacing_x = ( _num_of_runs <= 10 )? 1 : 10;
+    _label_spacing_y = (_largest_num_of_neighbors + 1 < 10)? 2 : 5;
     _pixel_converter_x = createPixelConverterX();
     _pixel_converter_y = createPixelConverterY();
 
-    
     addXAxis();
     addYAxis();
-    std::cout << "GrDiversityPrinter CC" << std::endl;
 }
 
 void GrDiversityPrinter::print (
     std::unordered_map<int,std::vector<int>> _num_of_like_diff_per_group,
     Renderer* renderer
 )
-{   std::vector<SDL_Rect> rects = {};
+{   /*std::vector<SDL_Rect> rects = {};
     
     SDL_Rect rect1;
     rect1.w = 10;
@@ -110,16 +109,12 @@ void GrDiversityPrinter::print (
 
     renderer->setColorToRed();
     rects.push_back(rect1);
-    renderer->fillBlocks(rects);
+    renderer->fillBlocks(rects);*/
 
-    std::cout << "GrDiversityPrinter DD" << std::endl;
     (void)_num_of_like_diff_per_group;
     _x_axis->print(renderer);
-    std::cout << "GrDiversityPrinter EE" << std::endl;
     _y_axis->print(renderer);
     printTitle(renderer);
-
-
 }
 
 void GrDiversityPrinter::addXAxis ()
@@ -132,9 +127,9 @@ void GrDiversityPrinter::addXAxis ()
         _cross_y__px,
         _zero_run_idx,
         _last_run_idx,
-        calcMajTickSpacingX(),
-        calcMinTickSpacingX(),
-        calcLabelSpacingX()
+        _maj_tick_spacing_x,
+        _min_tick_spacing_x,
+        _label_spacing_x
     );
 
 }
@@ -149,9 +144,9 @@ void GrDiversityPrinter::addYAxis ()
         _cross_y__px,
         0,
         _largest_num_of_neighbors,
-        calcMajTickSpacingY(), //TODO this has already been calculated
-        calcMinTickSpacingY(), //TODO this has already been calculated.
-        calcLabelSpacingY(),
+        _maj_tick_spacing_y, 
+        _min_tick_spacing_y,
+        _label_spacing_y,
         1,
         0
     );
@@ -162,59 +157,6 @@ void GrDiversityPrinter::printTitle (Renderer* renderer){
                               {0xAA, 0xFF, 0xFF, 0xFF},
                               _title_letter.letterHeight());
     renderer->renderText(_title_x__px, _title_y__px, _main_title, 1);
-}
-
-// TODO not used, delete method
-int GrDiversityPrinter::calcXAxisLengthPx ()
-{
-    return _given_space_x__px - _format_y.getAxisHeightPx();
-}
-
-// TODO not used, delete method
-int GrDiversityPrinter::calcYAxisLengthPx ()
-{
-    return _given_space_y__px - _format_x.getAxisHeightPx() - _title_letter.getHeightIncLSpace();
-}
-
-// TODO not used, delete method
-int GrDiversityPrinter::calcXCrossHairsPx ()
-{
-    return _format_y.getAxisHeightPx();
-}
-
-int GrDiversityPrinter::calcYCrossHairsPx ()
-{
-    return _format_x.getAxisHeightPx() + _title_letter.getHeightIncLSpace();
-}
-
-int GrDiversityPrinter::calcMajTickSpacingX ()
- {
-    return ( _num_of_runs <= 100 )? 1 : 5;
- }
-        
-int GrDiversityPrinter::calcMinTickSpacingX ()
-{
-    return ( _num_of_runs <= 100 )? 1 : 5;
-}
-
-int GrDiversityPrinter::calcMajTickSpacingY ()
- {
-    return (_largest_num_of_neighbors + 1 < 10)? 2 : 5;
- }
-        
-int GrDiversityPrinter::calcMinTickSpacingY ()
-{
-    return (_largest_num_of_neighbors + 1 < 10)? 1 : 1; // TODO maybe something haveing to do with odd and even would be better.
-}
-
-int GrDiversityPrinter::calcLabelSpacingX ()
-{
-    return ( _num_of_runs <= 10 )? 1 : 10;
-}
-
-int GrDiversityPrinter::calcLabelSpacingY ()
-{
-    return (_largest_num_of_neighbors + 1 < 10)? 2 : 5;
 }
 
 std::unique_ptr<PixelConverter> GrDiversityPrinter::createPixelConverterX ()
@@ -230,7 +172,6 @@ std::unique_ptr<PixelConverter> GrDiversityPrinter::createPixelConverterX ()
         _last_run_idx,
         maxXAxisPixel
     );
-    
 }
 
 std::unique_ptr<PixelConverter> GrDiversityPrinter::createPixelConverterY ()
