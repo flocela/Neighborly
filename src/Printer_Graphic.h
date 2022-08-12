@@ -58,31 +58,14 @@ class Printer_Graphic : public Printer
         std::unordered_map<int, Color> _colors;
         int _num_of_types_of_residents = 2;
 
-        // all X axes have the same length
-        int allowableLengthXAxes (int screenWidth__px);
-
-        // sum of all Y axes (City Map, Diversity Chart, Happiness Chart)
-        int allowableLengthForYAxes (int screenWidth__px);
-
-        // The sum of the Y axes for map chart, diversity chart, and happiness chart
-        int calcSumOfYSpacesPx ();
-        int calcXSpacePx();
-
-        int calcLeftXCoordPx(); // same for all three charts.
-        int calcCityMapChartTopLeftYCoordPx ();
-        int calcHapAndDivColorKeyTopLeftYCoordPx ();
-        int calcDivChartTopLeftYCoordPx ();
-        int calcHapChartTopLeftYCoordPx ();
-        int calcRunChartTopLeftYCoordPx ();
-
-        // FOR WINDOW //
+        // * FOR WINDOW * //
         int _screen_width__px;
         int _screen_height__px;
 
-        int _top_border__px = 10;
+        int _top_border__px    = 10;
         int _bottom_border__px = 10;
-        int _left_border__px = 20;
-        int _right_border__px = 20;
+        int _side_border__px   = 20; // left and right border is same.
+        int _inside_border__px = 10; // left column's left border, and right column's right border
 
         Letter _window_title = Letter(40, 2);
         std::string _window_title_string = "Neighbors";
@@ -91,25 +74,35 @@ class Printer_Graphic : public Printer
         
         Letter _resident_keys = Letter (12, 2); // shows resident next to its colored square
 
-        // COMMON TO ALL CHARTS //
+        // * COMMON TO ALL CHARTS * //
         AxisFormat _axis_format_X{};
         AxisFormat _axis_format_Y{};
         Letter _chart_title_letter = Letter(28, 4); // used for Num Of Runs, City Map, Diversity...
+        int _x_space_length__px; // total x space minus the side borders
+        int _x_space__px; // space per chart
+        int _x_center__px; // center of screen
 
-        int _charts_top_left_x_coord__px; // x-coordinate for top left corner of all charts is the same
-        int _x_space_length__px; // Same in all charts so charts line up.
-        int _sum_y_space_lengths__px; // all three chart's y direction spaces added up.
+        // At the start of the axis, leave a space of cell size or point size times offset.
+        // At the end of the axis, leave a space of cell size or point size times overrun.
+        const int x_offset__px  = 2;
+        const int x_overrun__px = 2;
+        const int y_offset__px  = 2;
+        const int y_overrun__px = 2;
+
         int _space_between_charts__px = 8; // vertical space
-        const int x_axis_offset__px = 2;
-        const int x_axis_overrun__px = 2;
-        const int y_axis_offset__px = 2;
-        const int y_axis_overrrun__px = 2;
 
-        // MAP OF CIY HOUSES CHART//
-        double _city_map_y_axis_fraction = 0.5;
-        int _map_writable_vert_length__px; // TODO - probably not useful
-        int _map_y_axis_length__px;
+        // * RUNS COUNTER *// 
+        // Sits center, below window title
+        int _run_counter_top_y__px;
+        int _curr_run = 0;
+        int _num_of_runs;
+
+        // * MAP OF CIY HOUSES CHART, RIGHT COLUMN * //
+        int _city_y_space__px;
         int _city_map_chart_top_left_y_coord__px;
+
+        //  COLOR KEY FOR MAP OF CITY
+        int _color_key_for_city_map_top_y__px;
 
         // Each house is inside of a square cell. The cell 
         // will hold a house (represented by a colored square) and have
@@ -122,36 +115,29 @@ class Printer_Graphic : public Printer
         int _city_label_spacing_x; // label spacing on x axis
         int _city_label_spacing_y; // label spacing on y axis
         
-        // House coordinates from the city, not in pixels. // TODO maybe move this to COMMON TO ALL CHARTS
+        //   House coordinates from the city, not in pixels.
         int _min_x_coord = INT32_MAX; // top left corner of grid 
 		int _min_y_coord = INT32_MAX; // top left corner of grid
 		int _max_x_coord = INT32_MIN; // bottom right corner of grid
 		int _max_y_coord = INT32_MIN; // bottom right corner of grid
 
-        // COLOR KEY FOR DIVERSITY AND HAPPINESS CHARTS
-        int _div_hap_charts_color_key_top_left_y_coord__px;
+        // * DIVERSITY CHART, HAPPINESS CHART LEFT COLUMN* //
+        int _chart_y_space__px;
+        int _color_key_for_div_and_hap_top_y__px;
         Letter _color_key_letter{24, 4};
         
         //DIVERSITY CHART
-        double _diversity_chart_y_axis_fraction = 0.25;
-        int _div_chart_y_top_left_y_coord__px;
+        double _diversity_chart_y_axis_fraction = 0.5;
+        int _div_chart_top_y__px;
 
         // HAPPINESS CHART
-        double _hap_chart_y_axis_fraction = 0.25;
-        int _hap_chart_y_top_left_y_coord__px;
+        double _hap_chart_y_axis_fraction = 0.5;
+        int _hap_chart_top_y__px;
 
-        // RUNS COUNTER CHART//
-        // runs counter chart doesn't have a chart_y_axis fraction. It's just the size of the chart title.
-        int _runs_chart_top_left_y__coord__px;
-        int _curr_run = 0;
-        int _num_of_runs;
+        
 
         // COLOR KEY FOR DIVERSITY AND HAPPINESS CHARTS
         Letter _color_key_letter_for_map{24, 4};
-
-        // x and y offsets for title displaying number of runs so far. // TODO what is this for?
-        const int _x_num_of_runs_offset = 80;
-        const int _y_num_of_runs_offset = 80;
 
         // Moves the city's non-changing information into class attributes
         // (which by the way will also not be changing). For example since
@@ -173,8 +159,6 @@ class Printer_Graphic : public Printer
         void initDiversityPrinter();
 
         void initHappinessPrinter();
-
-        void initChartsTopLeftCorners ();
 
         void printWindowTitle();
 

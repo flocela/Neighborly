@@ -45,7 +45,6 @@ void GrColorKeyPrinter::print (Renderer* renderer)
                     _y_offset + _box_length__px/4),
                 _the_color_infos[_color_map[color][moods[mm]]].rgba
             );
-            std::cout << "gg, mm, color, mood: " << gg << ", " << mm << ", " << color << ", " << moods[mm] << std::endl;
             std::string text;
             if (moods[mm] == "neutral")
             {

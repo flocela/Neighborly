@@ -74,10 +74,11 @@ GrDiversityPrinter::GrDiversityPrinter (
     // Y axis values
     _y_point_spacing__px = 
         (_given_space_y__px -
-        _title_letter.getHeightIncLSpace() -
         _format_x.getAxisHeightPx() -
         (_point_size__px * (_offset_multiplier + _override_multiplier)))
         /(_last_y_idx - _zero_y_idx);
+
+    std::cout << "ypointspacing: " << _y_point_spacing__px << std::endl;
 
     _cross_y__px = _top_left_y__px + _given_space_y__px -_format_x.getAxisHeightPx();
 
@@ -103,7 +104,7 @@ void GrDiversityPrinter::print (
     std::unordered_map<int,std::vector<int>> _num_of_like_diff_per_group,
     Renderer* renderer
 )
-{   /*std::vector<SDL_Rect> rects = {};
+{   std::vector<SDL_Rect> rects = {};
     
     SDL_Rect rect1;
     rect1.w = 10;
@@ -113,7 +114,7 @@ void GrDiversityPrinter::print (
 
     renderer->setColorToRed();
     rects.push_back(rect1);
-    renderer->fillBlocks(rects);*/
+    renderer->fillBlocks(rects);
 
     (void)_num_of_like_diff_per_group;
     _x_axis->print(renderer);
@@ -179,12 +180,16 @@ std::unique_ptr<PixelConverter> GrDiversityPrinter::createPixelConverterX ()
 }
 
 std::unique_ptr<PixelConverter> GrDiversityPrinter::createPixelConverterY ()
-{
+{   std::cout << "Converter Y, _y_point_spacing: " << _y_point_spacing__px << std::endl;
+    std::cout << "Converter Y, _last_y_idx: " << _last_y_idx << std::endl;
     int maxYAxisPixel = 
         _cross_y__px -
         _offset_multiplier * _point_size__px -
         (_y_point_spacing__px) * (_last_y_idx - _zero_y_idx); // range of neighbors is zero to last
-    
+
+    std::cout << "topleft - x axis height: " << (_top_left_y__px + _format_x.titleHeightPx() + _format_x.titleLineSpacePx()) << std::endl;
+    std::cout << "topleft: " << _top_left_y__px << std::endl;
+    std::cout << "maxYAxisPixel: " << maxYAxisPixel << std::endl;
     return std::make_unique<PixelConverter>(
         0,
         _cross_y__px - _offset_multiplier * _point_size__px,

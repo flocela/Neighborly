@@ -102,7 +102,7 @@ int randomSeed = 5;
 // than 4 pixels, or it will be difficulat to see.
 // So the largest number of houses in the x and y directions are 150.
 // Calculated as 360/4 = 90.
-const int SCREEN_WIDTH   = 1200;
+const int SCREEN_WIDTH   = 2400;
 const int SCREEN_HEIGHT  = 1200;
 const int MAX_HOUSES_X   = 120;
 const int MAX_HOUSES_Y   = 120;
