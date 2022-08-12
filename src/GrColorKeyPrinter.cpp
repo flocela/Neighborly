@@ -25,7 +25,7 @@ void GrColorKeyPrinter::print (Renderer* renderer)
     std::sort(groups.begin(), groups.end());
     std::sort(moods.begin(), moods.end());
     int offset = 70;
-    int leftPixel = (_x_space_length__px/2) - (_x_column_width/2 * moods.size() * groups.size());
+    int leftPixel = _x_offset + (_x_space_length__px/2) - (_x_column_width/2 * moods.size() * groups.size());
     for (int gg=0; gg<(int)groups.size(); ++gg)
     {
         if ( ( gg != 0 && gg == (int)groups.size()/2) )

@@ -117,9 +117,10 @@ void Printer_Graphic::print (
     int run
 )
 {   
+    //(void) residentPerHouse;
+    //(void) run;
     printWindowTitle();
     std::unordered_map<int,std::vector<int>> numOfLikeDiffPerGroup;
-    //(void) residentPerHouse;
     _city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
     _color_key_for_map_printer->print(_renderer.get());
@@ -147,7 +148,7 @@ void Printer_Graphic::initColorKeyForCityMap ()
 {
     std::set<std::string> moods{"happy", "unhappy"};
     _color_key_for_map_printer = std::make_unique<GrColorKeyPrinter>(
-        _x_space__px,
+        _side_border__px,
         _top_border__px + _window_title.getHeightIncLSpace() + _chart_title_letter.getHeightIncLSpace(),
         _x_space__px,
         _color_key_letter,
