@@ -83,7 +83,7 @@ GrDiversityPrinter::GrDiversityPrinter (
     _cross_y__px = _top_left_y__px + _given_space_y__px -_format_x.getAxisHeightPx();
 
     // Place titles
-    _title_x__px = xNumOfPixelsUsed/2;
+    _title_x__px = _top_left_x__px + xNumOfPixelsUsed/2;
     _title_y__px = _top_left_y__px;
 
     // tick and label spacing
