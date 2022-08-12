@@ -127,11 +127,11 @@ class Printer_Graphic : public Printer
         Letter _color_key_letter{24, 4};
         
         //DIVERSITY CHART
-        double _diversity_chart_y_axis_fraction = 0.5;
+        double _diversity_chart_y_axis_fraction = 0.4;
         int _div_chart_top_y__px;
 
         // HAPPINESS CHART
-        double _hap_chart_y_axis_fraction = 0.5;
+        double _hap_chart_y_axis_fraction = 0.6;
         int _hap_chart_top_y__px;
 
         

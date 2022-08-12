@@ -74,6 +74,7 @@ GrDiversityPrinter::GrDiversityPrinter (
     // Y axis values
     _y_point_spacing__px = 
         (_given_space_y__px -
+        _title_letter.getHeightIncLSpace() -
         _format_x.getAxisHeightPx() -
         (_point_size__px * (_offset_multiplier + _override_multiplier)))
         /(_last_y_idx - _zero_y_idx);
