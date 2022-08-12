@@ -89,7 +89,7 @@ class Printer_Graphic : public Printer
         const int y_offset__px  = 2;
         const int y_overrun__px = 2;
 
-        int _space_between_charts__px = 8; // vertical space
+        int _space_between_charts__px = 20; // vertical space
 
         // * RUNS COUNTER *// 
         // Sits center, below window title
