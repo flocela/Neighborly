@@ -45,13 +45,13 @@ SimulationComponents MainExamples::userChoosesExample ()
             for (int ii=0; ii<4000; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(
-                    ii,
-                    1,
-                    5,
-                    .5,
-                    1,
-                    .1,
-                    0.8
+                    ii,  // id
+                    1,   // group number
+                    5,   // allowed movement
+                    50,  // happiness goal
+                    100, // happiness value at zero diversity
+                    10,  // happiness value at one diverstiy
+                    0.8  // diversity where drop happens
                 ));
             }
             for (int jj=4001; jj<5000; ++jj)
@@ -60,18 +60,12 @@ SimulationComponents MainExamples::userChoosesExample ()
                     jj,
                     2,
                     20,
-                    1,
-                    .6,
-                    .1,
+                    50,
+                    60,
+                    10,
                     0.25
                 ));
             }
-            /*std::cout << "Main examples for loop: " << std::endl;
-            for (std::vector<int>::size_type ii=0; ii<components.residents.size();++ii)
-            {
-
-                std::cout << " id: " << components.residents[ii]->getID() << " " << components.residents[ii]->getHappinessGoal() << std::endl;;
-            }*/
             components.simulator = std::make_unique<Simulator_Basic_A>(
                 components.city.get(),
                 getSetOfPointers(components.residents)

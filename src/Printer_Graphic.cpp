@@ -80,7 +80,6 @@ void Printer_Graphic::setCityPrinter ()
                             _min_y_coord,
                             _max_y_coord
         );
-    std::map<int, std::pair<Color, Color>> resColors;
     
     _city_printer = std::make_unique<GrCityPrinter>(
         cityPrinterSizer,

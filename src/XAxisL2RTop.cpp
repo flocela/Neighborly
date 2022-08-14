@@ -24,7 +24,6 @@ XAxisL2RTop::XAxisL2RTop (
 {
     _left_most_pixel_x__px = _x_coord__px;
     _right_most_pixel_x__px = _pc->getPixel(_max_val) + _axis_format.overrunPx(); 
-    std::cout << _left_most_pixel_x__px << ", " << _right_most_pixel_x__px << std::endl;
 }
 
 void XAxisL2RTop::print (Renderer* renderer)

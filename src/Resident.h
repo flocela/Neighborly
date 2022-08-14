@@ -28,9 +28,8 @@ class Resident{
             return _happiness_goal; 
             };
         double getHappiness () const  {
-            return .7;
-            //return _curr_happiness;
-             }; // TODO don't know if this is used.
+            return _curr_happiness;
+        }; // TODO don't know if this is used.
         // neighbors vector includes all possible neighbors, so
         // if a neighbors house is empty, Color::absent should
         // be added to neighbors

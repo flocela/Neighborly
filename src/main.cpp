@@ -126,12 +126,16 @@ int main(int argc, char* argv[])
     bool usesExamples = mainQuestion.askUserToUsePremadeExamples();
     
     if (usesExamples)
-    {
+    {   
         srand(randomSeed);
         MainExamples mainExamples;
+
         components = mainExamples.userChoosesExample();
+
         city = std::move(components.city);
+
         residents = std::move(components.residents);
+
         simulator = std::move(components.simulator);
         numOfRuns = components.numOfRuns;
     }
@@ -179,11 +183,9 @@ int main(int argc, char* argv[])
     }
     graphicPrinter.setColors(groupNumToColorMap);
     graphicPrinter.init(city.get(), numOfRuns, "Neighbors");
-    std::cout << "main line 182" << std::endl;
     std::map<House*, Resident*> houseToResidentMap;
-    std::cout << "before runs" << std::endl;
     for (int ii=0; ii< 2; ii++)
-    {   std::cout << "main run ii: " << ii << std::endl;
+    {   
         houseToResidentMap = simulator->simulate();
         graphicPrinter.print(houseToResidentMap, ii);
     }

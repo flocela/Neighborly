@@ -30,8 +30,6 @@ YAxisB2T::YAxisB2T (
     // set _top_most_pixel and _bottom_most_pixel
     _top_most_pixel_y__px = _pc->getPixel(_max_val) - _axis_format.overrunPx() - 1;
     _bottom_most_pixel_y__px = _y_coord__px;
-    std::cout << "max_val: " << _max_val << std::endl;
-    std::cout << "YAxisB2T, maxval pixel: " << _pc->getPixel(_max_val) << std::endl;
 }
 
 void YAxisB2T::print (Renderer* renderer)

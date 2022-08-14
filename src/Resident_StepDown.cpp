@@ -51,7 +51,9 @@ double Resident_StepDown::implCalculateHappiness (
         
     }
     if ( (like + diff) == 0 )
+    {
         return _happiness_at_zero_diversity; // happy to be alone
+    }
     return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
 }
 

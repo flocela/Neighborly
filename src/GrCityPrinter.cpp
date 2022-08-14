@@ -137,6 +137,7 @@ std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsOfHousesFor
     std::map<House *, Resident *> houseToResMap)
 {   
     std::map<Color, std::vector<Coordinate>> colorToCoordinatesMap = {};
+
     for (auto const &x : _coord_to_house_map)
     {   
         Coordinate coord = x.first;
@@ -150,13 +151,15 @@ std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsOfHousesFor
         else
         {
             Resident *res = houseToResMap[house];
+            
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
             if (happinessValue < happinessGoal)
-                colorKey = Color::red_neutral; //getUnhappyColor(res->getGroupNumber());
+                colorKey = _color_map[_res_colors[res->getGroupNumber()]]["unhappy"];
             else
-                colorKey = Color::blue_neutral; //getHappyColor(res->getGroupNumber());
+                colorKey = _color_map[_res_colors[res->getGroupNumber()]]["happy"];
         }
+        
         if (colorToCoordinatesMap.find(colorKey) == colorToCoordinatesMap.end()) // TODO  c++ knows how to do this in one step
         {
             std::vector<Coordinate> newCoordinateVector = {};
