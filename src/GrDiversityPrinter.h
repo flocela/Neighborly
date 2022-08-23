@@ -37,7 +37,8 @@ class GrDiversityPrinter
         );
 
         void print(
-            std::unordered_map<int,std::vector<int>> _num_of_like_diff_per_group,
+            std::unordered_map<Resident*, House*> housePerResident,
+            std::vector<Resident*> residents, // TODO make these const residents
             Renderer* renderer
         );
     

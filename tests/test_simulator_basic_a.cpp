@@ -22,9 +22,9 @@ std::set<T*> getSetOfPointers (vector<unique_ptr<T>>& ts)
 }
 
 template<typename K, typename V>
-std::map<V, K> reverseMap (std::map<K, V> const& orig)
+std::unordered_map<V, K> reverseMap (std::unordered_map<K, V> const& orig)
 {
-    std::map<V, K> returnedMap;
+    std::unordered_map<V, K> returnedMap;
     for (auto const& kv : orig)
     {
         returnedMap.insert(std::pair<V, K>(kv.second, kv.first));
@@ -59,8 +59,8 @@ TEST_CASE("four runs happy resident stays unhappy resident moves")
     residents.push_back(std::move(unhappy));
 
     Simulator_Basic_A simulator{city.get(), getSetOfPointers(residents)};
-    std::map<House*, Resident*> houseToResMap = simulator.simulate();
-    std::map<Resident*, House*> resToHouseMap = reverseMap(houseToResMap);
+    std::unordered_map<House*, Resident*> houseToResMap = simulator.simulate();
+    std::unordered_map<Resident*, House*> resToHouseMap = reverseMap(houseToResMap);
    
     Coordinate currHappyCoord = city->getCoordinate(resToHouseMap[happyPtr]->getAddress());
     Coordinate currUnhappyCoord = city->getCoordinate(resToHouseMap[unhappyPtr]->getAddress());
@@ -118,7 +118,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is the whole cit
 
     // Simulation zero. (first simulation)
     // separate happy and unhappy residents into two maps.
-    std::map<House*, Resident*> housToResMapSimZero = sim.simulate();
+    std::unordered_map<House*, Resident*> housToResMapSimZero = sim.simulate();
 
     std::map<int, int> happyResIDToAddressMapSimZero;
     std::map<int, int> unhappyResIDToAddressMapSimZero;
@@ -142,7 +142,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is the whole cit
 
     // Simulation one.
     // Check previously unhappy residents moved. Previously happy didn't move.
-    std::map<House*, Resident*> housToResMapSimOne = sim.simulate();
+    std::unordered_map<House*, Resident*> housToResMapSimOne = sim.simulate();
 
     std::map<int, int> resIDToAddressSimOne;
     for (auto h2R: housToResMapSimOne)
@@ -205,7 +205,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is zero")
 
     // Simulation zero. (first simulation)
     // separate happy and unhappy residents into two maps.
-    std::map<House*, Resident*> housToResMapSimZero = sim.simulate();
+    std::unordered_map<House*, Resident*> housToResMapSimZero = sim.simulate();
 
     std::map<int, int> happyResIDToAddressMapSimZero;
     std::map<int, int> unhappyResIDToAddressMapSimZero;
@@ -229,7 +229,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is zero")
 
     // Simulation one.
     // Check previously happy and unhappy residents stayed in the same house.
-    std::map<House*, Resident*> housToResMapSimOne = sim.simulate();
+    std::unordered_map<House*, Resident*> housToResMapSimOne = sim.simulate();
 
     std::map<int, int> resIDToAddressSimOne;
     for (auto h2R: housToResMapSimOne)
@@ -292,9 +292,9 @@ TEST_CASE ("2 runs with many residents whose allowable movement is 2.0")
 
     // Simulation zero. (first simulation)
     // Get unhappy residents into one map.
-    std::map<House*, Resident*> housToResMapSimZero = sim.simulate();
+    std::unordered_map<House*, Resident*> housToResMapSimZero = sim.simulate();
 
-    std::map<int, int> unhappyResToHousMapSimZero;
+    std::unordered_map<int, int> unhappyResToHousMapSimZero;
     for (auto h2R : housToResMapSimZero)
     {
         House* house = h2R.first;
@@ -309,7 +309,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is 2.0")
 
     // Simulation one.
     // Check previously unhappy residents only moved 2 units away from orig house.
-    std::map<House*, Resident*> housToResMapSimOne = sim.simulate();
+    std::unordered_map<House*, Resident*> housToResMapSimOne = sim.simulate();
     std::map<int, int> resToHouseMapSimOne;
     for (auto h2R : housToResMapSimOne)
     {

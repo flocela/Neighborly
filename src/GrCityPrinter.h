@@ -39,7 +39,7 @@ class GrCityPrinter
             int topLeftCornerYPx
         );
 
-        void printCity (std::map<House*, Resident*> houseToResMap);
+        void printCity (std::unordered_map<House*, Resident*> houseToResMap);
     
     // __px suffix means the variable is in pixels which correspond to the screen.
     // __cl suffix means the variable is using the map's coordinate system.
@@ -137,9 +137,9 @@ class GrCityPrinter
 
         void addCityXAxis ();
         void addCityYAxis ();
-        void printHouses (std::map<House*, Resident*> houseToResMap);
+        void printHouses (std::unordered_map<House*, Resident*> houseToResMap);
         std::map<Color, std::vector<Coordinate>> createVectorsOfHousesForEachColor (
-            std::map<House*, Resident*> houseToResMap
+            std::unordered_map<House*, Resident*> houseToResMap
         );
 
         Color getHappyColor (int resGroup);

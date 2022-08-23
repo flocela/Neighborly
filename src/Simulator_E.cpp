@@ -4,7 +4,7 @@
 Simulator_E::Simulator_E (City* city, std::vector<Resident*> residents):
     _city{city}, _residents{residents}{}
 
-std::map<House*, Resident*> Simulator_E::simulate()
+std::unordered_map<House*, Resident*> Simulator_E::simulate()
 {   //(void) randomSeed;
     if (!firstSimDone)
     {
@@ -27,7 +27,7 @@ std::map<House*, Resident*> Simulator_E::simulate()
     std::vector<int>::iterator optionalResIt = optionalResIdxs.begin();
 
     std::vector<Resident*> forcedMoveResidents = getResidents(forcedResIdxs);
-    std::map<Resident*, House*> resToOldHouseMapForForcedRes = 
+    std::unordered_map<Resident*, House*> resToOldHouseMapForForcedRes = 
         getHouses(forcedMoveResidents);
     // call openHouses() so that all forcedMoveResidents' houses are available
     // to move into.
@@ -73,12 +73,12 @@ std::map<House*, Resident*> Simulator_E::simulate()
     return _curr_house_to_res_map;
 }
 
-std::set<House*> Simulator_E::getKeysFromMap (std::map<House*, Resident*> theMap)
+std::set<House*> Simulator_E::getKeysFromMap (std::unordered_map<House*, Resident*> theMap)
 {
     std::set<House*> keysToReturn;
-    for (std::map<House*, Resident*>::iterator it = theMap.begin(); it != theMap.end(); ++it)
+    for (auto hR : theMap)
     {
-        keysToReturn.insert(it->first);
+        keysToReturn.insert(hR.first);
     }
     return keysToReturn;
 }
@@ -176,9 +176,9 @@ void Simulator_E::openHouses(std::vector<Resident*> residents){
     }
 }
 
-std::map<Resident*, House*> Simulator_E::getHouses (std::vector<Resident*> residents)
+std::unordered_map<Resident*, House*> Simulator_E::getHouses (std::vector<Resident*> residents)
 {
-    std::map<Resident*, House*> selectResToAddrMap = {};
+    std::unordered_map<Resident*, House*> selectResToAddrMap = {};
     for ( Resident* res : residents)
     {   
         selectResToAddrMap.insert(std::pair<Resident*, House*>(

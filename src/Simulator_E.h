@@ -13,7 +13,7 @@ class Simulator_E
     private:
         City* _city;
         std::vector<Resident*> _residents;
-        std::map<House*, Resident*> _curr_house_to_res_map = {};
+        std::unordered_map<House*, Resident*> _curr_house_to_res_map = {};
         std::map<Resident*, House*> _curr_res_to_house_map = {};
         bool firstSimDone = false;
 
@@ -25,7 +25,7 @@ class Simulator_E
         std::set<int> getSetOfInts (int max);
         std::pair<std::vector<int>, std::vector<int>> getMovingResIdxs ();
         std::vector<Resident*> getResidents (std::vector<int> residentIndices);
-        std::map<Resident*, House*> getHouses(std::vector<Resident*> residents);
+        std::unordered_map<Resident*, House*> getHouses(std::vector<Resident*> residents);
         void openHouses (std::vector<Resident*> residents);
         std::set<House*> filterForOpenHouses (std::set<House*> houses);
         House* findHouseForForcedResHappyAtGoal (
@@ -44,7 +44,7 @@ class Simulator_E
             std::set<House*> openHouses, // open houses within distance of resident
             int chances
         );
-        std::set<House*> getKeysFromMap (std::map<House*, Resident*> theMap);
+        std::set<House*> getKeysFromMap (std::unordered_map<House*, Resident*> theMap);
         House* findHomeForForcedToMoveResident (
             Resident* resident, 
             House* oldHouse, 
@@ -70,7 +70,7 @@ class Simulator_E
         Simulator_E (Simulator_E&& o) noexcept = default;
         Simulator_E& operator= (const Simulator_E& o) = default;
         ~Simulator_E () = default;
-        std::map<House*, Resident*> simulate();
+        std::unordered_map<House*, Resident*> simulate();
 
 };
 

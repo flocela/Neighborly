@@ -31,6 +31,7 @@ class AxisFormat
         void setMajTickLengthPx (int length);
         void setMinTickLengthPx (int length);
         void setTickLengthInsideChartPx (int length);
+        void setTickThicknessPx(int thickness) {_tick_thickness__px = thickness;};
 
         void setTitleLetterHeight (int height);
         void setTitleLineSpacePx (int space);

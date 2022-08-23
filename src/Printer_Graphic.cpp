@@ -31,6 +31,7 @@ Printer_Graphic::Printer_Graphic ( // TODO check if parameters are zero, if stop
 
 void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
 {   
+    _city = cityPtr; // TODO make this const???
     initWindowValues();
     initWindowTitle(title);
     _renderer = std::make_unique<Renderer>(_screen_width__px, _screen_height__px);
@@ -112,20 +113,37 @@ void Printer_Graphic::initRunCounter (int numOfRuns)
 
 
 void Printer_Graphic::print (
-    std::map<House*, Resident*> residentPerHouse,
+    std::unordered_map<House*, Resident*> residentPerHouse,
     int run
 )
 {   
     //(void) residentPerHouse;
     //(void) run;
+    std::unordered_map<Resident*, House*> housePerResident;
+    std::vector<Resident*> residents;
+    for (auto pair : residentPerHouse)
+    {
+        if (pair.second != nullptr) // resident is not nullptr
+        {
+        housePerResident[pair.second] = pair.first;
+        residents.push_back(pair.second);
+        }
+    }
+
     printWindowTitle();
-    std::unordered_map<int,std::vector<int>> numOfLikeDiffPerGroup;
-    _city_printer->printCity(residentPerHouse);
-    _run_counter_printer->print(run);
-    _color_key_for_map_printer->print(_renderer.get());
-    _color_key_for_hap_and_div_printer->print(_renderer.get());
-    _diversity_printer->print(numOfLikeDiffPerGroup, _renderer.get());
-    _happiness_printer->print(numOfLikeDiffPerGroup, _renderer.get());
+    //_city_printer->printCity(residentPerHouse);
+    //_run_counter_printer->print(run);
+    //_color_key_for_map_printer->print(_renderer.get());
+    //_color_key_for_hap_and_div_printer->print(_renderer.get());
+    _dvsty_printer->print(
+        _city,
+        housePerResident,
+        residentPerHouse,
+        run,
+        _renderer.get()
+    );
+    //_diversity_printer->print(housePerResident, residents, _renderer.get());
+    //_happiness_printer->print(housePerResident, residents, _renderer.get());
     _renderer->endFrame();
 } 
 
@@ -171,7 +189,7 @@ void Printer_Graphic::initColorKeyForDivAndHapCharts ()
 
 void Printer_Graphic::initDiversityPrinter ()
 {
-    GrDiversityPrinterSizer grDivPrinterSizer{
+    /*GrDiversityPrinterSizer grDivPrinterSizer{
         _x_space__px,
         (int)(_chart_y_space__px * _diversity_chart_y_axis_fraction),
         _axis_format_X,
@@ -188,7 +206,42 @@ void Printer_Graphic::initDiversityPrinter ()
         0,
         10, // TODO get largest from city map
         "Diversity, Average Number of Disparate Neighbors per Resident per Run"
+    );*/
+
+
+    ////////
+
+    GrChartASizer divSizer(
+        _x_space__px,
+        (int)(_chart_y_space__px * _diversity_chart_y_axis_fraction),
+        _axis_format_X,
+        _axis_format_Y,
+        _chart_title_letter,
+        _resident_keys,
+        0, // x axis
+        _num_of_runs,
+        0, // y axis
+        10, // TODO get largest number of possible neighbors from city
+        1, // unitX
+        20, // unitY
+        4,
+        _x_offset__px,
+        _x_overrun__px,
+        false
     );
+
+    std::set<std::string> moods{"neutral"};
+    _dvsty_printer = std::make_unique<GrDvstyPrinter> (
+        divSizer,
+        _colors,
+        moods,
+        _x_center__px + _inside_border__px,
+        _div_chart_top_y__px,
+        "Diversity, Average Number of Disparate Neighbors per Resident per Run"
+    );
+
+
+
 }
 
 void Printer_Graphic::initHappinessPrinter ()

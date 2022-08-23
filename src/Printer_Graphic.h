@@ -14,6 +14,7 @@
 #include "GrHappinessPrinter.h"
 #include "GrColorKeyPrinter.h"
 #include "Letter.h"
+#include "GrDvstyPrinter.h"
 
 class Printer_Graphic : public Printer
 {   
@@ -39,7 +40,7 @@ class Printer_Graphic : public Printer
         int maxNumOfHousesY (int screenHeight__px);
 
         void print(
-            std::map<House*, Resident*> residentPerHouse,
+            std::unordered_map<House*, Resident*> residentPerHouse,
             int run
         ) override;
 
@@ -50,8 +51,11 @@ class Printer_Graphic : public Printer
         std::unique_ptr<GrRunCPrinter>      _run_counter_printer;
         std::unique_ptr<GrDiversityPrinter> _diversity_printer;
         std::unique_ptr<GrDiversityPrinter> _happiness_printer;
+        std::unique_ptr<GrDvstyPrinter>     _dvsty_printer;
         std::unique_ptr<GrColorKeyPrinter>  _color_key_for_map_printer;
         std::unique_ptr<GrColorKeyPrinter>  _color_key_for_hap_and_div_printer;
+
+        City* _city;
 
         std::map<Coordinate, House*> _coord_to_house_map = {};
         std::unique_ptr<Renderer> _renderer;
@@ -84,8 +88,8 @@ class Printer_Graphic : public Printer
 
         // At the start of the axis, leave a space of cell size or point size times offset.
         // At the end of the axis, leave a space of cell size or point size times overrun.
-        const int x_offset__px  = 2;
-        const int x_overrun__px = 2;
+        const int _x_offset__px  = 2;
+        const int _x_overrun__px = 2;
         const int y_offset__px  = 2;
         const int y_overrun__px = 2;
 

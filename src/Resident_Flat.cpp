@@ -38,7 +38,7 @@ double Resident_Flat::implCalculateHappiness(
 House* Resident_Flat::findHome (
     House* oldHouse,
     std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-    std::map<House*, Resident*> houseToResMap
+    std::unordered_map<House*, Resident*> houseToResMap
 ) const
 {
     (void) houseToResMap;
@@ -52,7 +52,7 @@ House* Resident_Flat::findHome (
 House* Resident_Flat::findBestHome (
     House* oldHouse,
     std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-    std::map<House*, Resident*> houseToResMap
+    std::unordered_map<House*, Resident*> houseToResMap
 ) const
 {
     return findHome(oldHouse, openHousesAndTheirAdjacentHouses, houseToResMap);

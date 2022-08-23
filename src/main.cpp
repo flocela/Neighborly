@@ -183,7 +183,7 @@ int main(int argc, char* argv[])
     }
     graphicPrinter.setColors(groupNumToColorMap);
     graphicPrinter.init(city.get(), numOfRuns, "Neighbors");
-    std::map<House*, Resident*> houseToResidentMap;
+    std::unordered_map<House*, Resident*> houseToResidentMap;
     for (int ii=0; ii< 2; ii++)
     {   
         houseToResidentMap = simulator->simulate();

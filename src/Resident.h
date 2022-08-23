@@ -27,12 +27,13 @@ class Resident{
         double getHappinessGoal () const {
             return _happiness_goal; 
             };
+
+        // Returns the last happiness value that was calculated. See calculateHappiness()
         double getHappiness () const  {
             return _curr_happiness;
-        }; // TODO don't know if this is used.
-        // neighbors vector includes all possible neighbors, so
-        // if a neighbors house is empty, Color::absent should
-        // be added to neighbors
+        };
+
+        // calculateHappiness() updates _curr_happiness, which is used in getHappiness()
         double calculateHappiness (
             std::set<Resident*> neighbors,
             int numOfAdjacentHouses
@@ -40,12 +41,12 @@ class Resident{
         virtual House* findHome (
             House* oldHouse,
             std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-            std::map<House*, Resident*> houseToResMap // This should be const. Or only send a copy of needed neighbors
+            std::unordered_map<House*, Resident*> houseToResMap // This should be const. Or only send a copy of needed neighbors
         ) const = 0;
         virtual House* findBestHome (
             House* oldHouse,
             std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-            std::map<House*, Resident*> houseToResMap// This should be const. Or only send a copy of needed neighbors
+            std::unordered_map<House*, Resident*> houseToResMap// This should be const. Or only send a copy of needed neighbors
         ) const = 0;
         bool operator< (const Resident& other) const;
     private:

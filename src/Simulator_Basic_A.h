@@ -16,7 +16,7 @@ class Simulator_Basic_A: public Simulator
         Simulator_Basic_A& operator= (const Simulator_Basic_A& o) = default;
         ~Simulator_Basic_A () = default;
 
-        std::map<House*, Resident*> simulate() override;
+        std::unordered_map<House*, Resident*> simulate() override;
     
     private:
         City* _city;
@@ -26,7 +26,7 @@ class Simulator_Basic_A: public Simulator
         std::set<Resident*> _residents;
 
         // Only houses that are occupied and their residents
-        std::map<House*, Resident*> _curr_house_to_res_map = {};
+        std::unordered_map<House*, Resident*> _curr_house_to_res_map = {};
 
         // Only residents that have houses and their houses
         std::map<Resident*, House*> _curr_res_to_house_map;
@@ -65,6 +65,9 @@ class Simulator_Basic_A: public Simulator
         bool hasResident (House* house);
         bool hasHouse (Resident* res);
         void updateNeighbors (House* house);
+
+        void calculateHappinessValuesForAllResidents();
+        double calculateHappinessValuesFor(Resident* res);
         
 };
 

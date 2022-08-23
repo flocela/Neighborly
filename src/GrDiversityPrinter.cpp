@@ -79,7 +79,6 @@ GrDiversityPrinter::GrDiversityPrinter (
         (_point_size__px * (_offset_multiplier + _override_multiplier)))
         /(_last_y_idx - _zero_y_idx);
 
-    std::cout << "ypointspacing: " << _y_point_spacing__px << std::endl;
 
     _cross_y__px = _top_left_y__px + _given_space_y__px -_format_x.getAxisHeightPx();
 
@@ -102,10 +101,15 @@ GrDiversityPrinter::GrDiversityPrinter (
 }
 
 void GrDiversityPrinter::print (
-    std::unordered_map<int,std::vector<int>> _num_of_like_diff_per_group,
+    std::unordered_map<Resident*, House*> housePerResident,
+    std::vector<Resident*> residents, // TODO make these const residents
     Renderer* renderer
 )
-{   std::vector<SDL_Rect> rects = {};
+{   (void)housePerResident;
+    (void)residents;
+    (void) renderer;
+    /*
+    std::vector<SDL_Rect> rects = {};
     
     SDL_Rect rect1;
     rect1.w = 10;
@@ -116,11 +120,26 @@ void GrDiversityPrinter::print (
     renderer->setColorToRed();
     rects.push_back(rect1);
     renderer->fillBlocks(rects);
-
-    (void)_num_of_like_diff_per_group;
+    
     _x_axis->print(renderer);
     _y_axis->print(renderer);
     printTitle(renderer);
+
+    double sumOfDisparate Neigbors = 0;
+
+    for (Resident* res : residents)
+    {
+        House* house = housePerResident[res];
+        std::set<House*> adjHouses = _city->getAdjacentHouses(house);
+        std::set<Resident*> adjResidents = getResidentsInTheseHouses(adjHouses);
+        sumResidentHappinessValues =
+            sumResidentHappinessValues + 
+            res->calculateHappiness(adjResidents, adjHouses);
+    }
+
+    double = sumResidentHappinessValues/residents.size();
+*/
+
 }
 
 void GrDiversityPrinter::addXAxis ()

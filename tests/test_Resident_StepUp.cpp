@@ -353,7 +353,7 @@ TEST_CASE("Resident_StepUp findHome()"
         housesAdjToHouse11)
     );
 
-    std::map<House*, Resident*> houseToResMap;
+    std::unordered_map<House*, Resident*> houseToResMap;
     houseToResMap.insert(std::pair<House*, Resident*>(&grHouse8,&grNeighbor01));
     houseToResMap.insert(std::pair<House*, Resident*>(&blHouse16, &blNeighbor01));
         
@@ -435,7 +435,7 @@ TEST_CASE("Resident_StepUp findHome()"
         )
     );
 
-    std::map<House*, Resident*> houseToResMap;
+    std::unordered_map<House*, Resident*> houseToResMap;
     houseToResMap.insert(std::pair<House*, Resident*>(&grHouse7, &grNeighbor01));
     houseToResMap.insert(std::pair<House*, Resident*>(&grHouse8, &grNeighbor02));
     houseToResMap.insert(std::pair<House*, Resident*>(&blHouse16, &blNeighbor01));
@@ -522,7 +522,7 @@ TEST_CASE("Resident_StepUp findBestHome()"
         )
     );
 
-    std::map<House*, Resident*> houseToResMap;
+    std::unordered_map<House*, Resident*> houseToResMap;
     houseToResMap.insert(std::pair<House*, Resident*>(&grHouse7, &grNeighbor01));
     houseToResMap.insert(std::pair<House*, Resident*>(&grHouse8, &grNeighbor02));
     houseToResMap.insert(std::pair<House*, Resident*>(&blHouse16, &blNeighbor01));

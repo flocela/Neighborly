@@ -59,7 +59,7 @@ double Resident_StepUp::implCalculateHappiness (
 House* Resident_StepUp::findHome(
     House* oldHouse,
     std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-    std::map<House*, Resident*> houseToResMap
+    std::unordered_map<House*, Resident*> houseToResMap
 ) const
 {
     for (auto h2N : openHousesAndTheirAdjacentHouses)
@@ -87,7 +87,7 @@ House* Resident_StepUp::findHome(
 House* Resident_StepUp::findBestHome(
     House* oldHouse,
     std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-    std::map<House*, Resident*> houseToResMap
+    std::unordered_map<House*, Resident*> houseToResMap
 ) const
 {
     return findHome(oldHouse, openHousesAndTheirAdjacentHouses, houseToResMap);

@@ -55,7 +55,7 @@ double Resident_Falling::implCalculateHappiness (
 House* Resident_Falling::findHome (
     House* oldHouse,
     std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-    std::map<House*, Resident*> houseToResMap
+    std::unordered_map<House*, Resident*> houseToResMap
 ) const
 {   
     for (auto h2N : openHousesAndTheirAdjacentHouses)
@@ -83,7 +83,7 @@ House* Resident_Falling::findHome (
 House* Resident_Falling::findBestHome (
     House* oldHouse,
     std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-    std::map<House*, Resident*> houseToResMap
+    std::unordered_map<House*, Resident*> houseToResMap
 ) const
 {
     House* bestHouse = oldHouse;
