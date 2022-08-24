@@ -19,8 +19,8 @@ _top_left_y__px{topLeftYPx},
 _x_diff{_sizer.maxX() - _sizer.minX()},
 _y_diff{_sizer.maxY() - _sizer.minY()},
 _title{title},
-_title_x__px{_top_left_x__px + (_x_diff * _sizer.unitX() / 2)},
-_title_y__px{_top_left_y__px},
+_title_x__px{_top_left_x__px + (_x_diff * _sizer.unitX() / 2)}, // TODO not used.
+_title_y__px{_top_left_y__px}, // TODO not used
 _cross_x__px{ _top_left_x__px + (int)(0.5 * ( _sizer.xSpacePx() - _sizer.xAxisLength() ))}, // center graph in column
 _cross_y__px{
     _top_left_y__px + 
@@ -67,12 +67,21 @@ void GrChartA::print (
     bool clear,
     Renderer* renderer
 )
-{   (void) points;
-    (void) renderer;
+{   
     (void) clear;
-
+    renderer->setTextFormats(
+        {100, 100, 100, 100},
+        {0xAA, 0xFF, 0xFF, 0xFF},
+        _sizer.titleLetter().letterHeight()); // TODO law of Demeter
+    renderer->renderText(
+        _top_left_x__px + (_sizer.xSpacePx()/2),
+        _top_left_y__px,
+        _title,
+        1
+    );
     _x_axis.print(renderer);
     _y_axis.print(renderer);
+
 
     std::vector<SDL_Rect> rects{};
     for (Point point : points)

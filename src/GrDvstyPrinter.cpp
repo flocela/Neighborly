@@ -64,7 +64,6 @@ void GrDvstyPrinter::print (
         // TODO emplace
         points.push_back(Point{(double)run, averageNumDiff, _colors[groupNum], "neutral"});
     }
-
     _chart.print(points, false, renderer);
 }
 
