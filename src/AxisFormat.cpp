@@ -91,27 +91,3 @@ void AxisFormat::setLabelSpacePx (int size)
         _label_line_space__px = size;
     }
 }
-
-void AxisFormat::setOffsetPx (int length)
-{ 
-    if (length < 0)
-    {
-        throw std::invalid_argument("offset must be at least zero.");
-    }
-    else
-    {
-        _offset__px = length;
-    }
-}
-
-void AxisFormat::setOverrunPx (int length)
-{ 
-    if (length < 0)
-    {
-        throw std::invalid_argument("overrun must be at least zero.");
-    }
-    else
-    {
-        _overrun__px = length;
-    }
-}

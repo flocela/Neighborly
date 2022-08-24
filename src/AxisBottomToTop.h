@@ -23,6 +23,8 @@ class AxisBottomToTop
             int majTickSpacing,
             int minTickSpacing,  // in units, not pixels
             int labelSpacing, // in units, not in pixels.
+            int startOffsetPx,
+            int endOffsetPx,
             int pxPerUnit 
         );
 
@@ -36,19 +38,19 @@ class AxisBottomToTop
         int _y_cross__px;
         int _min_val;
         int _max_val;
+        int _diff;
         int _min_tick_spacing;
         int _maj_tick_spacing;
         int _label_spacing;
+        int _start_offset__px;
+        int _end_offset__px;
         int _px_per_unit;
+        int _min__px; // y pixel of minimum value
         
         int _top_most_pixel_y__px;
-        int _bottom_most_pixel_y__px;
-        int _min_val__px;
-        int _max_val__px; 
 
         void addVerticalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
-        void addTitle (std::vector<TextRect>& texts);
         
 };
 

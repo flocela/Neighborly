@@ -70,6 +70,10 @@ void Printer_Graphic::determineMinMaxHouseCoords(City* cityPtr)
 
 void Printer_Graphic::setCityPrinter ()
 { 
+    int unitSize = cityPrinterCalculatePxPerUnit();
+    int houseSize = unitSize/2;
+    houseSize = (houseSize % 2 == 0) ? houseSize : (houseSize + 1);
+
     GrCityPrinterSizer cityPrinterSizer = 
         GrCityPrinterSizer (_x_space__px,
                             _city_y_space__px,
@@ -79,7 +83,14 @@ void Printer_Graphic::setCityPrinter ()
                             _min_x_coord,
                             _max_x_coord,
                             _min_y_coord,
-                            _max_y_coord
+                            _max_y_coord,
+                            houseSize,
+                            unitSize,
+                            unitSize,
+                            _x_offset_multiplier * houseSize,
+                            _x_overrun_multiplier * houseSize,
+                            true
+
         );
     
     _city_printer = std::make_unique<GrCityPrinter>(
@@ -90,6 +101,33 @@ void Printer_Graphic::setCityPrinter ()
         _side_border__px,
         _city_map_chart_top_left_y_coord__px
     );
+}
+
+int Printer_Graphic::cityPrinterCalculatePxPerUnit()
+{
+    // start and end offsets are the offset_multiplier times the dot_size__px.
+    // approximate the start and end offsets as offset_multiplier times the cellSize.
+
+    int allowableXAxisLengthPx = _x_space__px - _axis_format_Y.getAxisHeightPx();
+    int numOfCellsX = 
+        (_max_x_coord - _min_x_coord) +
+        (_x_offset_multiplier + _y_offset_multiplier);
+    int xCellSize = allowableXAxisLengthPx/numOfCellsX;
+
+    int allowableYAxisLengthPx = 
+        _city_y_space__px -
+        _chart_title_letter.getHeightIncLSpace() -
+        _axis_format_Y.getAxisHeightPx();
+    int numOfCellsY = 
+        (_max_y_coord - _min_y_coord) +
+        (_x_offset_multiplier + _y_offset_multiplier);
+
+    int yCellSize =  allowableYAxisLengthPx/numOfCellsY;
+
+    int smallestCellSize = std::min(xCellSize, yCellSize);
+    smallestCellSize = (smallestCellSize%2 == 0)? smallestCellSize : (smallestCellSize+1);
+
+    return (smallestCellSize < 4) ? 4 : smallestCellSize;
 }
 
 void Printer_Graphic::setColors (std::unordered_map<int, Color> colors)
@@ -131,10 +169,10 @@ void Printer_Graphic::print (
     }
 
     printWindowTitle();
-    //_city_printer->printCity(residentPerHouse);
-    //_run_counter_printer->print(run);
-    //_color_key_for_map_printer->print(_renderer.get());
-    //_color_key_for_hap_and_div_printer->print(_renderer.get());
+    _city_printer->printCity(residentPerHouse);
+    _run_counter_printer->print(run);
+    _color_key_for_map_printer->print(_renderer.get());
+    _color_key_for_hap_and_div_printer->print(_renderer.get());
     _dvsty_printer->print(
         _city,
         housePerResident,
@@ -222,11 +260,11 @@ void Printer_Graphic::initDiversityPrinter ()
         _num_of_runs,
         0, // y axis
         10, // TODO get largest number of possible neighbors from city
-        1, // unitX
+        20, // unitX
         20, // unitY
-        4,
-        _x_offset__px,
-        _x_overrun__px,
+        _dot_size__px,
+        _x_offset_multiplier * _dot_size__px,
+        _x_overrun_multiplier * _dot_size__px,
         false
     );
 

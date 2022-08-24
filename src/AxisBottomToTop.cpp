@@ -11,6 +11,8 @@ AxisBottomToTop::AxisBottomToTop (
     int majTickSpacing,
     int minTickSpacing,  
     int labelSpacing,
+    int startOffsetPx,
+    int endOffsetPx,
     int pxPerUnit 
 ) : _title{title},
     _axis_format{axisFormat},
@@ -18,21 +20,21 @@ AxisBottomToTop::AxisBottomToTop (
     _y_cross__px{y_coordinate__px},
     _min_val{minVal},
     _max_val{maxVal},
+    _diff{_max_val - _min_val},
     _min_tick_spacing{minTickSpacing},
     _maj_tick_spacing{majTickSpacing},
     _label_spacing{labelSpacing},
-    _px_per_unit{pxPerUnit}
-{
-    int diff = _max_val - _min_val;
-    _top_most_pixel_y__px = 
+    _start_offset__px{startOffsetPx},
+    _end_offset__px{endOffsetPx},
+    _px_per_unit{pxPerUnit},
+    _min__px{_y_cross__px - _start_offset__px},
+    _top_most_pixel_y__px{
         _y_cross__px -
-        _px_per_unit * (diff) -
-        _axis_format.offsetPx() -
-        _axis_format.overrunPx();
-    _bottom_most_pixel_y__px = _y_cross__px; // TODO this is the same as _min_val__px
-    _min_val__px = _y_cross__px;
-    _max_val__px = _y_cross__px + _px_per_unit * (diff); // TODO is this ever used?
-}
+        _px_per_unit * _diff -
+        _start_offset__px-
+        _end_offset__px
+    }
+{}
 
 void AxisBottomToTop::print (Renderer* renderer)
 {
@@ -40,8 +42,6 @@ void AxisBottomToTop::print (Renderer* renderer)
     std::vector<SDL_Rect> rects = {};
     // Tick lables are in texts vector.
     std::vector<TextRect> texts = {};
-
-    //addTitle(texts);
 
     renderer->setColorToMedGrey();
     renderer->setTextFormats(
@@ -52,12 +52,12 @@ void AxisBottomToTop::print (Renderer* renderer)
     texts.clear();
 
     addVerticalLine(rects);
-    //addTicksAndLabels (rects, texts);
+    addTicksAndLabels (rects, texts);
 
-    /*renderer->setTextFormats(
+    renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.labelHeightPx());*/
+        _axis_format.labelHeightPx());
     renderer->fillBlocks(rects);
     renderer->renderTexts(texts);
 
@@ -67,7 +67,7 @@ void AxisBottomToTop::addVerticalLine (std::vector<SDL_Rect>& rects)
 {
     SDL_Rect rect;
     rect.w = _axis_format.axisThicknessPx();
-    rect.h = _bottom_most_pixel_y__px - _top_most_pixel_y__px + 1;
+    rect.h = _y_cross__px  - _top_most_pixel_y__px + 1;
     rect.x = _x_cross__px - rect.w/2; // is the rect.w/2 needed? Is thickness of axis taken into account in rect.y?
     rect.y = _top_most_pixel_y__px;
     rects.push_back(rect);
@@ -85,7 +85,7 @@ void AxisBottomToTop::addTicksAndLabels (
 
     TextRect curText = {
         leftEdgeOfLabelXPx,
-        _min_val__px,
+        _min__px,
         std::to_string(_min_val),
         2
     };
@@ -96,7 +96,7 @@ void AxisBottomToTop::addTicksAndLabels (
     
     while (curVal <= _max_val)
     {
-        int curVal__px = _min_val__px + _px_per_unit * (curVal - _min_val);
+        int curVal__px = _min__px - _px_per_unit * (curVal - _min_val);
 
         if (curVal % _label_spacing == 0) // TODO do all maj ticks get a label?
         {
@@ -104,7 +104,7 @@ void AxisBottomToTop::addTicksAndLabels (
                         _axis_format.majTickLengthPx() +
                         _axis_format.tickLengthInsideChart();
             curRect.w = _axis_format.majTickLengthPx();
-            curRect.y = curVal__px + (_axis_format.tickThickness()/2);
+            curRect.y = curVal__px - (_axis_format.tickThickness()/2);
             rects.push_back(curRect);
 
             curText.text = std::to_string(curVal);
@@ -115,22 +115,10 @@ void AxisBottomToTop::addTicksAndLabels (
         {
             curRect.x = _x_cross__px - _axis_format.minTickLengthPx();
             curRect.w = _axis_format.minTickLengthPx();
-            curRect.y = curVal__px + (_axis_format.tickThickness()/2);
+            curRect.y = curVal__px - (_axis_format.tickThickness()/2);
             rects.push_back(curRect);
         }
         ++curVal;
     }
 
-}
-
-// TODO we don't have have titles on axes anymore.
-void AxisBottomToTop::addTitle (std::vector<TextRect>& texts)
-{
-    TextRect tr = {
-        _x_cross__px - _axis_format.getAxisHeightPx(),
-        _top_most_pixel_y__px + (_bottom_most_pixel_y__px - _top_most_pixel_y__px)/2,
-        _title, 
-        1
-    };
-    texts.push_back(tr);
 }

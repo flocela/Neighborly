@@ -88,10 +88,10 @@ class Printer_Graphic : public Printer
 
         // At the start of the axis, leave a space of cell size or point size times offset.
         // At the end of the axis, leave a space of cell size or point size times overrun.
-        const int _x_offset__px  = 2;
-        const int _x_overrun__px = 2;
-        const int y_offset__px  = 2;
-        const int y_overrun__px = 2;
+        const int _x_offset_multiplier  = 2;
+        const int _x_overrun_multiplier = 2;
+        const int _y_offset_multiplier   = 2;
+        const int _y_overrun_multiplier  = 2;
 
         int _space_between_charts__px = 20; // vertical space
 
@@ -133,6 +133,7 @@ class Printer_Graphic : public Printer
         //DIVERSITY CHART
         double _diversity_chart_y_axis_fraction = 0.4;
         int _div_chart_top_y__px;
+        int _dot_size__px = 4;
 
         // HAPPINESS CHART
         double _hap_chart_y_axis_fraction = 0.6;
@@ -170,6 +171,8 @@ class Printer_Graphic : public Printer
         
         // these are distances.
         void initWindowValues();
+
+        int cityPrinterCalculatePxPerUnit();
 
 
 

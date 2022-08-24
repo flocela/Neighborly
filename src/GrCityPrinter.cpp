@@ -15,6 +15,8 @@ GrCityPrinter::GrCityPrinter (
     _top_left_corner_y__px{topLeftCornerYPx},
     _x_given_space__px{grCityPrinterSizer.getXSpaceLengthPx()},
     _y_given_space__px{grCityPrinterSizer.getYSpaceLengthPx()},
+    _offset__px{grCityPrinterSizer.getStartOffset()},
+    _overrun__px{grCityPrinterSizer.getEndOffset()},
     _axis_format_X{grCityPrinterSizer.getAxisFormatX()},
     _axis_format_Y{grCityPrinterSizer.getAxisFormatX()},
     _title_letter{grCityPrinterSizer.getTitleLetter()},
@@ -26,18 +28,15 @@ GrCityPrinter::GrCityPrinter (
     _axis_format_X.setTitleLetterHeight(0);// axis title is empty string.
     _axis_format_Y.setTitleLetterHeight(0);// axis title is empty string.
     
-    _cell_size__px = calcCellSizePx(); // TODO check if too small. Maybe make an exception in print.
+    _cell_size__px = grCityPrinterSizer.getPixelsPerUnitX(); // TODO check if too small. Maybe make an exception in print.
     _house_size__px = calcHouseSizePx();
 
-    _axis_format_X.setOffsetPx(_cell_size__px * _offset_multiplier);
-    _axis_format_X.setOverrunPx(_cell_size__px * _overrun_multiplier);
-    _axis_format_Y.setOffsetPx(_cell_size__px * _offset_multiplier);
-    _axis_format_Y.setOverrunPx(_cell_size__px * _overrun_multiplier);
+    _x_axis_length__px =
+        _cell_size__px * (_house_max_x - _house_min_x) + 
+        _offset__px + 
+        _overrun__px;
 
-    _x_axis_length__px = _cell_size__px * (_house_max_x - _house_min_x) + 
-                         _offset_multiplier * _cell_size__px + 
-                         _overrun_multiplier * _cell_size__px;
-
+    // center graph in given column
     _cross_hairs_x__px = _top_left_corner_x__px + ((_x_given_space__px - _x_axis_length__px)/2);
     _cross_hairs_y__px = calcYCrossHairsPx();
 
@@ -45,8 +44,8 @@ GrCityPrinter::GrCityPrinter (
     _pixel_converter_y = createPixelConverterY();
 
     _house_min_x__px = _pixel_converter_x->getPixel(_house_min_x);
-    _house_min_y__px = _pixel_converter_y->getPixel(_house_min_y);
     _house_max_x__px = _pixel_converter_x->getPixel(_house_max_x);
+    _house_min_y__px = _pixel_converter_y->getPixel(_house_min_y);
     _house_max_y__px = _pixel_converter_x->getPixel(_house_max_y);
   
     _title_x__px = _cross_hairs_x__px + (_x_axis_length__px/2);
@@ -211,7 +210,7 @@ int GrCityPrinter::calcCellSizePx ()
 {
     // X-direction
     int xAxisLengthPx = _x_given_space__px - _axis_format_Y.getAxisHeightPx(); 
-    int numOfCellsX = (_house_max_x - _house_min_x) + _offset_multiplier + _overrun_multiplier;
+    int numOfCellsX = (_house_max_x - _house_min_x) + _offset__px + _overrun__px;
     int xCellSize = xAxisLengthPx / numOfCellsX;
 
     // Y-direction
@@ -219,7 +218,7 @@ int GrCityPrinter::calcCellSizePx ()
         _y_given_space__px - 
         _title_letter.getHeightIncLSpace() -
         _axis_format_X.getAxisHeightPx();
-    int numOfCellsY = (_house_max_y - _house_min_y) + _offset_multiplier + _overrun_multiplier;
+    int numOfCellsY = (_house_max_y - _house_min_y) + _offset__px + _overrun__px;
     int yCellSize = yAxisLengthPx / numOfCellsY;
     int smallestCellSize = std::min(xCellSize, yCellSize);
     smallestCellSize = (smallestCellSize%2 == 0)? smallestCellSize : (smallestCellSize+1);
@@ -240,13 +239,13 @@ std::unique_ptr<PixelConverter> GrCityPrinter::createPixelConverterX()
 {
     int maxXHouseAxisPixel = 
         _cross_hairs_x__px + 
-        _cell_size__px * _offset_multiplier + 
+        _offset__px + 
         _cell_size__px * (_house_max_x - _house_min_x);
     
 
     return std::make_unique<PixelConverter>(
         _house_min_x,
-        _cross_hairs_x__px + _cell_size__px * _offset_multiplier,
+        _cross_hairs_x__px + _offset__px,
         _house_max_x,
         maxXHouseAxisPixel
     );
@@ -256,12 +255,12 @@ std::unique_ptr<PixelConverter> GrCityPrinter::createPixelConverterY()
 {   
     int maxYHouseAxisPixel = 
         _cross_hairs_y__px + 
-        _cell_size__px * _offset_multiplier + 
+        _offset__px + 
         _cell_size__px * (_house_max_y - _house_min_y);
 
     return std::make_unique<PixelConverter>(
         _house_min_y,
-        _cross_hairs_y__px + _cell_size__px * _offset_multiplier,
+        _cross_hairs_y__px + _offset__px,
         _house_max_y,
         maxYHouseAxisPixel
     );

@@ -20,10 +20,10 @@ GrHappinessPrinter::GrHappinessPrinter (
     _length_of_y_axis__px{_y_given_space__px - _axis_format_X.getAxisHeightPx()}
     
 {  
-    _axis_format_X.setOffsetPx(_offset_multiplier * _point_size__px);
-    _axis_format_X.setOverrunPx(_override_multiplier * _point_size__px);
-    _axis_format_Y.setOffsetPx(_offset_multiplier * _point_size__px);
-    _axis_format_Y.setOverrunPx(_override_multiplier * _point_size__px);
+    //_axis_format_X.setOffsetPx(_offset_multiplier * _point_size__px);
+    //_axis_format_X.setOverrunPx(_override_multiplier * _point_size__px);
+    //_axis_format_Y.setOffsetPx(_offset_multiplier * _point_size__px);
+    //_axis_format_Y.setOverrunPx(_override_multiplier * _point_size__px);
     int xAxisSpaceAllowed = _x_given_space__px - _axis_format_Y.getAxisHeightPx();
     int xAxisSpaceRequiredPx =  _point_size__px * ( 
                                 (_last_run_idx - _zero_run_idx) +

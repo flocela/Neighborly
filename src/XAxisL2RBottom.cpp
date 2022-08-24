@@ -23,7 +23,7 @@ XAxisL2RBottom::XAxisL2RBottom (
     _label_spacing{labelSpacing}
 {
     _left_most_pixel_x__px = _x_coord__px;
-    _right_most_pixel_x__px = _pc->getPixel(_max_val) + _axis_format.overrunPx();
+    _right_most_pixel_x__px = _pc->getPixel(_max_val);
 }
 
 void XAxisL2RBottom::print (Renderer* renderer)

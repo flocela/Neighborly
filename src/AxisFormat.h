@@ -23,9 +23,6 @@ class AxisFormat
         int labelHeightPx () {return _label_letter_height;} // these are the numbers along the axis
         int labelLineSpacePx () {return _label_line_space__px;};
 
-        int offsetPx () {return _offset__px;};
-        int overrunPx () {return _overrun__px;};
-
         int getAxisHeightPx ();
 
         void setMajTickLengthPx (int length);
@@ -38,9 +35,6 @@ class AxisFormat
 
         void setLabelLetterHeight (int size);
         void setLabelSpacePx (int space);
-
-        void setOffsetPx (int offsetPx);
-        void setOverrunPx (int overrunPx);
 
     private:
         // for simplicity, thicknesses can not be set. Both are one.
@@ -55,9 +49,6 @@ class AxisFormat
 
         int _label_letter_height = 22;  
         int _label_line_space__px = 2;
-
-        int _offset__px = 20;
-        int _overrun__px = 20;
 };
 
 #endif

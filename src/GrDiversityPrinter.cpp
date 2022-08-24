@@ -26,10 +26,10 @@ GrDiversityPrinter::GrDiversityPrinter (
     _main_title{title}
     
 {  
-    _format_x.setOffsetPx(_offset_multiplier * _point_size__px);
-    _format_x.setOverrunPx(_override_multiplier * _point_size__px);
-    _format_y.setOffsetPx(_offset_multiplier * _point_size__px);
-    _format_y.setOverrunPx(_override_multiplier * _point_size__px);
+    //_format_x.setOffsetPx(_offset_multiplier * _point_size__px);
+    //_format_x.setOverrunPx(_override_multiplier * _point_size__px);
+   // _format_y.setOffsetPx(_offset_multiplier * _point_size__px);
+    //_format_y.setOverrunPx(_override_multiplier * _point_size__px);
     _format_y.setTitleLetterHeight(0);
     
     int runDiff = _last_run_idx - _zero_run_idx;

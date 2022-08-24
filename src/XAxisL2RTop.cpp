@@ -23,7 +23,7 @@ XAxisL2RTop::XAxisL2RTop (
     _label_spacing{labelSpacing}
 {
     _left_most_pixel_x__px = _x_coord__px;
-    _right_most_pixel_x__px = _pc->getPixel(_max_val) + _axis_format.overrunPx(); 
+    _right_most_pixel_x__px = _pc->getPixel(_max_val);// + _axis_format.overrunPx(); 
 }
 
 void XAxisL2RTop::print (Renderer* renderer)

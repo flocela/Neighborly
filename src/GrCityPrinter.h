@@ -60,8 +60,8 @@ class GrCityPrinter
         int _y_given_space__px;
 
         // cell_size * offsetMultiplier is length from crosshairs to center of first cell.
-        int _offset_multiplier = 2; 
-        int _overrun_multiplier = _offset_multiplier;
+        int _offset__px = 2; 
+        int _overrun__px = _offset__px;
 
         // The coordinate where x and y axes cross on the screen in pixels.
         int _cross_hairs_x__px;

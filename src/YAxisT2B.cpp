@@ -24,7 +24,7 @@ YAxisT2B::YAxisT2B (
 {
     // set _top_most_pixel and _bottom_most_pixel
     _top_most_pixel_y__px = _y_coord__px;
-    _bottom_most_pixel_y__px = _pc->getPixel(_max_val) + _axis_format.overrunPx();
+    _bottom_most_pixel_y__px = _pc->getPixel(_max_val);// + _axis_format.overrunPx();
 }
 
 void YAxisT2B::print (Renderer* renderer)

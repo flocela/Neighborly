@@ -24,6 +24,8 @@ class AxisLeftToRightB
             int majTickSpacing,
             int minTickSpacing,  // in units, not pixels
             int labelSpacing, // in units, not in pixels.
+            int startOffset,
+            int endOffset,
             int pxPerUnit
         );
         // Renders axis from left to right with title at top (used for horizontal axes).
@@ -36,11 +38,14 @@ class AxisLeftToRightB
         AxisFormat _axis_format;
         int _x_cross__px;
         int _y_cross__px;
+        int _zero__px;
         int _min_val;
         int _max_val;
         int _min_tick_spacing;
         int _maj_tick_spacing;
         int _label_spacing;
+        int _start_offset__px;
+        int _end_offset__px;
         int _px_per_unit;
         
         int _left_most_pixel_x__px;

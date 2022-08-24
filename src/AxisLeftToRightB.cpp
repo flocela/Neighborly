@@ -10,23 +10,28 @@ AxisLeftToRightB::AxisLeftToRightB (
     int majTickSpacing,
     int minTickSpacing,
     int labelSpacing,
+    int startOffset,
+    int endOffset,
     int pxPerUnit
 ) : _title{title},
     _axis_format{axisFormat},
     _x_cross__px{xCrossPx},
     _y_cross__px{yCrossPx},
+    _zero__px{_x_cross__px + startOffset},
     _min_val{minVal},
     _max_val{maxVal},
     _min_tick_spacing{minTickSpacing},
     _maj_tick_spacing{majTickSpacing},
     _label_spacing{labelSpacing},
+    _start_offset__px{startOffset},
+    _end_offset__px{endOffset},
     _px_per_unit{pxPerUnit}
 {
     _left_most_pixel_x__px = _x_cross__px;
     _right_most_pixel_x__px = 
         _x_cross__px +
         _px_per_unit * (_max_val - _min_val) +
-        _axis_format.overrunPx();
+        _end_offset__px;
 }
 
 void AxisLeftToRightB::print (Renderer* renderer)
@@ -35,23 +40,17 @@ void AxisLeftToRightB::print (Renderer* renderer)
     std::vector<SDL_Rect> rects = {};
     // Tick lables are in texts vector.
     std::vector<TextRect> texts = {};
-    /*addTitle(texts);
-    renderer->setTextFormats(
-        {100, 100, 100, 100},
-        {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.titleHeightPx());
-    renderer->renderTexts(texts);
-    texts.clear();*/
-    renderer->setColorToRed();
+    
     addHorizontalLine(rects);
-    /*addTicksAndLabels(rects, texts);
+    addTicksAndLabels(rects, texts);
+
     renderer->setColorToMedGrey();
     renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.labelHeightPx());*/
+        _axis_format.labelHeightPx());
     renderer->fillBlocks(rects);
-    //renderer->renderTexts(texts);
+    renderer->renderTexts(texts);
 }
 
 int AxisLeftToRightB::calcHorizontalLineLength()
@@ -83,12 +82,7 @@ void AxisLeftToRightB::addTicksAndLabels (
     int topOfLabelYPx = _y_cross__px +
                         _axis_format.majTickLengthPx() -_axis_format.tickLengthInsideChart() +
                         _axis_format.labelLineSpacePx();
-    TextRect tr{ // TODO not necessary to define tr here.
-        _x_cross__px,
-        topOfLabelYPx,
-        std::to_string(_min_val), 
-        1
-    };
+    TextRect tr;
     SDL_Rect rect;
     rect.w = _axis_format.tickThickness();
     // Todo should put ending label on last maj tick mark.
@@ -96,7 +90,7 @@ void AxisLeftToRightB::addTicksAndLabels (
     int currValue = _min_val;
     while (currValue <= _max_val)
     {
-        int currValue__px = _x_cross__px + (_px_per_unit * (currValue - _min_val));
+        int currValue__px = _zero__px + (_px_per_unit * (currValue - _min_val));
         if (currValue % _label_spacing == 0) // long tick with label
         {   
             rect.x =  currValue__px - ( _axis_format.tickThickness() / 2 );
