@@ -37,7 +37,7 @@ GrCityPrinter::GrCityPrinter (
         _overrun__px;
 
     // center graph in given column
-    _cross_hairs_x__px = _top_left_corner_x__px + ((_x_given_space__px - _x_axis_length__px)/2);
+    _cross_hairs_x__px = ((_x_given_space__px - _x_axis_length__px)/2);
     _cross_hairs_y__px = calcYCrossHairsPx();
 
     _pixel_converter_x = createPixelConverterX();

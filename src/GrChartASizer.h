@@ -93,7 +93,7 @@ public:
     int xSpacePx () { return _x_space__px; }
     int ySpacePx () { return _y_space__px; }
     AxisFormat axisFormatX () { return _a_format_x; }
-    AxisFormat axisFormatY () { return _a_format_x; }
+    AxisFormat axisFormatY () { return _a_format_y; }
     Letter titleLetter () { return _title_letter; }
     Letter keyLetter () { return _key_letter; }
     int minX () { return _min_x; }
@@ -106,6 +106,14 @@ public:
     int hasKey () { return _has_key; }
     int startOffset () { return _start_offset; }
     int endOffset () { return _end_offset; }
+
+    // includes y axis height.
+    int xAxisLength () 
+    { 
+        return (_unit_x * (_max_x - _min_x)) +
+               _start_offset + _end_offset +
+               _a_format_y.getAxisHeightPx();
+    }
 
 
 private:

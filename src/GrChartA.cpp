@@ -21,10 +21,7 @@ _y_diff{_sizer.maxY() - _sizer.minY()},
 _title{title},
 _title_x__px{_top_left_x__px + (_x_diff * _sizer.unitX() / 2)},
 _title_y__px{_top_left_y__px},
-_cross_x__px{
-    _top_left_x__px +
-    _a_format_y.getAxisHeightPx()
-},
+_cross_x__px{ _top_left_x__px + (int)(0.5 * ( _sizer.xSpacePx() - _sizer.xAxisLength() ))}, // center graph in column
 _cross_y__px{
     _top_left_y__px + 
     _sizer.titleLetter().getHeightIncLSpace() +
@@ -73,6 +70,30 @@ void GrChartA::print (
 {   (void) points;
     (void) renderer;
     (void) clear;
+
     _x_axis.print(renderer);
     _y_axis.print(renderer);
+
+    std::vector<SDL_Rect> rects{};
+    for (Point point : points)
+    {
+        int x = 
+            _cross_x__px +
+            _sizer.startOffset() +
+            ( _sizer.unitX() * (point.x() - _sizer.minX())) -
+            _sizer.dotSizePx()/2;
+        int y = _cross_y__px -
+                _sizer.startOffset() -
+                (_sizer.unitY() * (point.y() - _sizer.minY())) +
+                _sizer.dotSizePx()/2;
+        Color color = _color_map[point.color()]["neutral"];
+        std::vector<Coordinate> coordinates;
+        coordinates.push_back(Coordinate(x, y));
+        renderer->addBlocksByColor(
+            _sizer.dotSizePx(),
+            _sizer.dotSizePx(),
+            coordinates,
+            _the_color_rgba[color]
+        );
+    }
 }
