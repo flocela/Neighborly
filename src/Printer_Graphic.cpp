@@ -75,22 +75,23 @@ void Printer_Graphic::setCityPrinter ()
     houseSize = (houseSize % 2 == 0) ? houseSize : (houseSize + 1);
 
     GrCityPrinterSizer cityPrinterSizer = 
-        GrCityPrinterSizer (_x_space__px,
-                            _city_y_space__px,
-                            _axis_format_X,
-                            _axis_format_Y,
-                            _chart_title_letter,
-                            _min_x_coord,
-                            _max_x_coord,
-                            _min_y_coord,
-                            _max_y_coord,
-                            houseSize,
-                            unitSize,
-                            unitSize,
-                            _x_offset_multiplier * houseSize,
-                            _x_overrun_multiplier * houseSize,
-                            true
-
+        GrCityPrinterSizer (
+            _x_space__px,
+            _city_y_space__px,
+            _axis_format_X,
+            _axis_format_Y,
+            _chart_title_letter,
+            _min_x_coord,
+            _max_x_coord,
+            _min_y_coord,
+            _max_y_coord,
+            houseSize,
+            unitSize,
+            unitSize,
+            _x_offset_multiplier * houseSize,
+            _x_overrun_multiplier * houseSize,
+            true,
+            _color_key_letter
         );
     
     _city_printer = std::make_unique<GrCityPrinter>(

@@ -14,6 +14,7 @@
 #include "AxisFormat.h"
 #include "Letter.h"
 #include "GrCityPrinterSizer.h"
+#include "GrColorKeyPrinter.h"
 
 // Takes in a Renderer* and necessary settings to draw the city chart.
 // Remembers this initializing information so user can 
@@ -53,34 +54,47 @@ class GrCityPrinter
         std::map<Coordinate, House*> _coord_to_house_map;
         // This includes sad resident colors and happy resident colors.
         std::unordered_map<int, Color> _res_colors;
-
+       
         int _top_left_corner_x__px;
         int _top_left_corner_y__px;
         int _x_given_space__px;
         int _y_given_space__px;
-
+        
         // cell_size * offsetMultiplier is length from crosshairs to center of first cell.
         int _offset__px = 2; 
         int _overrun__px = _offset__px;
 
-        // The coordinate where x and y axes cross on the screen in pixels.
-        int _cross_hairs_x__px;
-        int _cross_hairs_y__px;
-
+        Letter _title_letter;
         AxisFormat _axis_format_X;
         AxisFormat _axis_format_Y;
-        Letter _title_letter;
-
-        int _title_x__px;
-        int _title_y__px;
-
-        // Does not include any text, just the axis. 
-        int _x_axis_length__px;
 
         // _cell_size is the spacing between ticks on the x and y axes.
         // It is determined as the size of the house plus the surrounding border
         // around the house in pixels.
         int _cell_size__px = 0;
+
+        // min x value for a house using map values not pixels. (most west house)
+        int _house_min_x;
+        // max x value for a house using map values not pixels. (most east house)
+        int _house_max_x;
+        // min y value for a house using map values not pixels. (most north house)
+        int _house_min_y;
+        // max y value for a house using map values not pixels. (most south house) 
+        int _house_max_y;
+
+        // Does not include any text, just the axis. 
+        int _x_axis_length__px;
+
+        // The coordinate where x and y axes cross on the screen in pixels.
+        int _cross_hairs_x__px;
+        int _cross_hairs_y__px;
+        GrColorKeyPrinter _key;
+
+        int _title_x__px;
+        int _title_y__px;
+
+
+
 
         // _house_size__px is derived from _cell_size__px. _house_size__px is the
         // colored part of the cell in pixels. It does not include the border.
@@ -96,14 +110,7 @@ class GrCityPrinter
         int _label_spacing_x;
         int _label_spacing_y;
 
-        // min x value for a house using map values not pixels. (most west house)
-        int _house_min_x;
-        // max x value for a house using map values not pixels. (most east house)
-        int _house_max_x;
-        // min y value for a house using map values not pixels. (most north house)
-        int _house_min_y;
-        // max y value for a house using map values not pixels. (most south house) 
-        int _house_max_y;
+        
 
         // TODO are these _house_min _max __px values used?
         // These are taken at the center of the house.

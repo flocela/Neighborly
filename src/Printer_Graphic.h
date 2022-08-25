@@ -142,7 +142,7 @@ class Printer_Graphic : public Printer
         
 
         // COLOR KEY FOR DIVERSITY AND HAPPINESS CHARTS
-        Letter _color_key_letter_for_map{24, 4};
+        Letter _color_key_letter_for_map{24, 4}; // TODO is this used. Should be replace dby _color_key_letter
 
         // Moves the city's non-changing information into class attributes
         // (which by the way will also not be changing). For example since

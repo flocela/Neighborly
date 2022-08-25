@@ -54,7 +54,6 @@ void GrColorKeyPrinter::print (Renderer* renderer)
             {
                 text = "Group: " + std::to_string(groups[gg]) + " " + moods[mm];
             }
-            
             renderer->renderText(
                 leftPixel + (gg*moods.size() + mm)*_x_column_width + _box_length__px,
                 _y_offset,

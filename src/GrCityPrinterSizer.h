@@ -25,7 +25,8 @@ class GrCityPrinterSizer
             int pixelsPerUnitY,
             int startOffsetPx,
             int endOffsetPx,
-            bool hasKey
+            bool hasKey,
+            Letter keyLetter
         ): _x_space_length__px{xSpaceLengthPx},
            _y_space_length__px{ySpaceLengthPx},
            _axis_format_x{axisFormatX},
@@ -40,7 +41,8 @@ class GrCityPrinterSizer
            _pixels_per_unit_y{pixelsPerUnitY},
            _start_offset__px{startOffsetPx},
            _end_offset__px{endOffsetPx},
-           _has_key{hasKey}
+           _has_key{hasKey},
+           _key_letter{keyLetter}
         {}
 
         int getXSpaceLengthPx () {return _x_space_length__px;}
@@ -56,6 +58,11 @@ class GrCityPrinterSizer
         int getPixelsPerUnitY () { return _pixels_per_unit_y;}
         int getStartOffset () {return _start_offset__px;}
         int getEndOffset () { return _end_offset__px;}
+        int getAxisLengthX () 
+        {
+            return _pixels_per_unit_x * (_max_x - _min_x) + _start_offset__px + _end_offset__px;
+        }
+        Letter getKeyLetter () {return _key_letter;}
 
     private:
         int _x_space_length__px;
@@ -73,6 +80,7 @@ class GrCityPrinterSizer
         int _start_offset__px;
         int _end_offset__px;
         bool _has_key;
+        Letter _key_letter;
 };
 
 #endif
