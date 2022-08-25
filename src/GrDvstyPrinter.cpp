@@ -65,6 +65,7 @@ void GrDvstyPrinter::print (
         points.push_back(Point{(double)run, averageNumDiff, _colors[groupNum], "neutral"});
     }
     _chart.print(points, false, renderer);
+    _key.print(renderer);
 }
 
 std::set<Resident*> GrDvstyPrinter::getResidentsInTheseHouses (

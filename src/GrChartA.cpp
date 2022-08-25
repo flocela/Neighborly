@@ -95,14 +95,14 @@ void GrChartA::print (
                 _sizer.startOffset() -
                 (_sizer.unitY() * (point.y() - _sizer.minY())) +
                 _sizer.dotSizePx()/2;
-        Color color = _color_map[point.color()]["neutral"];
+
         std::vector<Coordinate> coordinates;
         coordinates.push_back(Coordinate(x, y));
         renderer->addBlocksByColor(
             _sizer.dotSizePx(),
             _sizer.dotSizePx(),
             coordinates,
-            _the_color_rgba[color]
+            _the_color_infos[point.color()].rgba
         );
     }
 }

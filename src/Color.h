@@ -56,7 +56,7 @@ inline std::set<Color> _base_colors = {
 };
 
 inline std::map<Color, std::vector<int>> _the_color_rgba = {
-    {Color::red_neutral, {255, 0, 0, 255}},
+    {Color::red_neutral, {244, 67, 54, 255}},
     {Color::red_unhappy, {133, 0, 0, 255}},
     {Color::blue_neutral, {0, 255, 0, 255}},
     {Color::blue_unhappy, {0, 133, 0, 255}},

@@ -25,8 +25,10 @@ class GrColorKeyPrinter
         _moods{moods}
     {
         // just an estimate of space needed for one box plus label. 
+        std::cout << "GrColorKey Printer end of constructor" << std::endl;
         _x_column_width = 200;
         _box_length__px = _title_letter.letterHeight(); // box is the colored square
+        std::cout << "GrColorKey Printer end of constructor" << std::endl;
         
     }
 

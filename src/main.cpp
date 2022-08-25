@@ -184,7 +184,8 @@ int main(int argc, char* argv[])
     graphicPrinter.setColors(groupNumToColorMap);
     graphicPrinter.init(city.get(), numOfRuns, "Neighbors");
     std::unordered_map<House*, Resident*> houseToResidentMap;
-    for (int ii=0; ii< numOfRuns; ii++)
+    //for (int ii=0; ii< numOfRuns; ii++)
+    for (int ii=0; ii< 2; ii++)
     {   
         houseToResidentMap = simulator->simulate();
         graphicPrinter.print(houseToResidentMap, ii);

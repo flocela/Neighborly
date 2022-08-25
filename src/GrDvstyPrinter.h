@@ -8,6 +8,7 @@
 #include "renderer.h"
 #include "City.h"
 #include "Resident.h"
+#include "GrColorKeyPrinter.h"
 
 class GrDvstyPrinter {
 
@@ -22,7 +23,15 @@ public:
     ):
     _chart{sizer, colors, moods, topLeftXPx, topLeftYPx, title},
     _colors{colors},
-    _moods{moods}
+    _moods{moods},
+    _key{
+        topLeftXPx,
+        topLeftYPx + sizer.titleLetter().getHeightIncLSpace(),
+        sizer.xSpacePx(),
+        sizer.keyLetter(),
+        _colors,
+        _moods
+    }
     {}
 
     // TODO this should be const Resident and const House
@@ -37,6 +46,7 @@ private:
     GrChartA _chart;
     std::unordered_map<int, Color> _colors;
     std::set<std::string> _moods;
+    GrColorKeyPrinter _key;
 
     std::set<Resident*> getResidentsInTheseHouses (
         std::set<House*> houses,

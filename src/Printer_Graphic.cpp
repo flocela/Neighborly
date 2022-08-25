@@ -171,8 +171,8 @@ void Printer_Graphic::print (
     printWindowTitle();
     _city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
-    _color_key_for_map_printer->print(_renderer.get());
-    _color_key_for_hap_and_div_printer->print(_renderer.get());
+    //_color_key_for_map_printer->print(_renderer.get());
+    //_color_key_for_hap_and_div_printer->print(_renderer.get());
     _dvsty_printer->print(
         _city,
         housePerResident,
@@ -255,7 +255,7 @@ void Printer_Graphic::initDiversityPrinter ()
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,
-        _resident_keys,
+        _color_key_letter,
         0, // x axis
         _num_of_runs,
         0, // y axis
