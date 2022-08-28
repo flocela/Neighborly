@@ -28,10 +28,10 @@ _cross_y__px{
     _sizer.dotSizePx() * (_sizer.startOffset() + _sizer.endOffset()) +
     _sizer.unitY() * _y_diff
 },
-_tick_spacing_min_x{(_x_diff <= 100)? 1 : 5},
-_tick_spacing_min_y{(_y_diff <= 100)? 1 : 5},
-_tick_spacing_maj_x{(_x_diff <= 100)? 2 : 10},
-_tick_spacing_maj_y{(_y_diff <= 100)? 2 : 10},
+_tick_spacing_min_x{(sizer.unitX() > 10)? 1 : 5},
+_tick_spacing_min_y{(sizer.unitY() > 10)? 1 : 5},
+_tick_spacing_maj_x{(sizer.unitX() > 10)? 5 : 10},
+_tick_spacing_maj_y{(sizer.unitY() > 10)? 5 : 10},
 _x_axis{
     "",
     _a_format_x,

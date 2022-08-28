@@ -50,9 +50,10 @@ void GrHapPrinter::print (
     {
         int groupNum = jj.first;
         int countInGroup = jj.second;
-        double averageNumDiff = (double)happiness_sum_Per_group[groupNum]/countInGroup;
+        double aveHappiness = (double)happiness_sum_Per_group[groupNum]/countInGroup;
         // TODO emplace
-        points.push_back(Point{(double)run, averageNumDiff, _colors[groupNum], "neutral"});
+        points.push_back(Point{(double)run, aveHappiness, _colors[groupNum], "neutral"});
+        std::cout << "run, aveHappiness, color: " << run << ", " << aveHappiness << ", " << _colors[groupNum] << std::endl;
     }
     _chart.print(points, false, renderer);
     _key.print(renderer);
