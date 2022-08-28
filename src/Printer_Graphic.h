@@ -15,6 +15,7 @@
 #include "GrColorKeyPrinter.h"
 #include "Letter.h"
 #include "GrDvstyPrinter.h"
+#include "GrHapPrinter.h"
 
 class Printer_Graphic : public Printer
 {   
@@ -50,7 +51,7 @@ class Printer_Graphic : public Printer
         std::unique_ptr<GrCityPrinter>      _city_printer;
         std::unique_ptr<GrRunCPrinter>      _run_counter_printer;
         std::unique_ptr<GrDiversityPrinter> _diversity_printer;
-        std::unique_ptr<GrDiversityPrinter> _happiness_printer;
+        std::unique_ptr<GrHapPrinter>     _happiness_printer;
         std::unique_ptr<GrDvstyPrinter>     _dvsty_printer;
         std::unique_ptr<GrColorKeyPrinter>  _color_key_for_map_printer;
         std::unique_ptr<GrColorKeyPrinter>  _color_key_for_hap_and_div_printer;
@@ -93,7 +94,7 @@ class Printer_Graphic : public Printer
         const int _y_offset_multiplier   = 2;
         const int _y_overrun_multiplier  = 2;
 
-        int _space_between_charts__px = 20; // vertical space
+        int _space_between_charts__px = 30; // vertical space
 
         // * RUNS COUNTER *// 
         // Sits center, below window title
@@ -131,12 +132,12 @@ class Printer_Graphic : public Printer
         Letter _color_key_letter{24, 4};
         
         //DIVERSITY CHART
-        double _diversity_chart_y_axis_fraction = 0.4;
+        double _diversity_chart_y_axis_fraction = 0.3;
         int _div_chart_top_y__px;
         int _dot_size__px = 4;
 
         // HAPPINESS CHART
-        double _hap_chart_y_axis_fraction = 0.6;
+        double _hap_chart_y_axis_fraction = 0.7;
         int _hap_chart_top_y__px;
 
         

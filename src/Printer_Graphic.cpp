@@ -182,7 +182,13 @@ void Printer_Graphic::print (
         _renderer.get()
     );
     //_diversity_printer->print(housePerResident, residents, _renderer.get());
-    //_happiness_printer->print(housePerResident, residents, _renderer.get());
+    _happiness_printer->print(
+        _city,
+        housePerResident,
+        residentPerHouse,
+        run,
+        _renderer.get()
+    );
     _renderer->endFrame();
 } 
 
@@ -257,7 +263,7 @@ void Printer_Graphic::initDiversityPrinter ()
         _axis_format_Y,
         _chart_title_letter,
         _color_key_letter,
-        0, // x axis
+        0, // x axis min value
         _num_of_runs,
         0, // y axis
         10, // TODO get largest number of possible neighbors from city
@@ -279,13 +285,31 @@ void Printer_Graphic::initDiversityPrinter ()
         "Diversity, Average Number of Disparate Neighbors per Resident per Run"
     );
 
+    _renderer->setColorToRed();
+    std::vector<SDL_Rect> rects = {};
+
+    SDL_Rect rect;
+    rect.w  =10;
+    rect.h = ((int)(_chart_y_space__px * _diversity_chart_y_axis_fraction));
+    rect.x = _x_center__px;
+    rect.y = _div_chart_top_y__px;
+    rects.push_back(rect);
+
+    rect.w  =10;
+    rect.h = _space_between_charts__px;
+    rect.x = _x_center__px;
+    rect.y = 
+        _div_chart_top_y__px +
+        ((int)(_chart_y_space__px * _diversity_chart_y_axis_fraction)) + 5;
+    rects.push_back(rect);
+    _renderer->fillBlocks(rects);
 
 
 }
 
 void Printer_Graphic::initHappinessPrinter ()
 {
-    GrDiversityPrinterSizer grHapPrinterSizer{
+    /*GrDiversityPrinterSizer grHapPrinterSizer{
         _x_space__px,
         (int)(_chart_y_space__px * _hap_chart_y_axis_fraction),
         _axis_format_X,
@@ -302,7 +326,47 @@ void Printer_Graphic::initHappinessPrinter ()
         0,
         100,
         "Average Happiness per Group per Run"
+    );*/
+
+    GrChartASizer divSizer(
+        _x_space__px,
+        (int)(_chart_y_space__px * _hap_chart_y_axis_fraction),
+        _axis_format_X,
+        _axis_format_Y,
+        _chart_title_letter,
+        _color_key_letter,
+        0, // x axis min value
+        _num_of_runs,
+        0, // y axis min value
+        100, // 
+        20, // unit X
+        5,
+        _dot_size__px,
+        _x_offset_multiplier * _dot_size__px,
+        _x_overrun_multiplier * _dot_size__px,
+        false
     );
+
+    std::set<std::string> moods{"neutral"};
+    _happiness_printer = std::make_unique<GrHapPrinter> (
+        divSizer,
+        _colors,
+        moods,
+        _x_center__px + _inside_border__px,
+        _hap_chart_top_y__px,
+        "Happiness, Average Happiness per Resident (shown as a percentage)"
+    );
+
+    _renderer->setColorToRed();
+    std::vector<SDL_Rect> rects = {};
+
+    SDL_Rect rect;
+    rect.w  = 10;
+    rect.h = ((int)(_chart_y_space__px * _hap_chart_y_axis_fraction));
+    rect.x = _x_center__px;
+    rect.y = _hap_chart_top_y__px;
+    rects.push_back(rect);
+    _renderer->fillBlocks(rects);
 }
 
 int Printer_Graphic::maxNumOfHousesX (int screenWidth__px)

@@ -87,10 +87,11 @@ void GrChartA::print (
     for (Point point : points)
     {
         int x = 
-            _cross_x__px +
-            _sizer.startOffset() +
-            ( _sizer.unitX() * (point.x() - _sizer.minX())) -
-            _sizer.dotSizePx()/2;
+            _cross_x__px +                                      // cross hairs
+            _sizer.startOffset() +                              // space between crosshairs and min_value
+            ( _sizer.unitX() * (point.x() - _sizer.minX()) ) -  // px_per_unit * ( x - min value)
+            _sizer.dotSizePx()/2;                               // x is left edge of dot
+            
         int y = _cross_y__px -
                 _sizer.startOffset() -
                 (_sizer.unitY() * (point.y() - _sizer.minY())) +

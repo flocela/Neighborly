@@ -3,6 +3,7 @@
 
 #include "AxisFormat.h"
 #include "Letter.h"
+#include <iostream>
 
 class GrChartASizer
 {
@@ -43,20 +44,21 @@ public:
        _has_key{hasKey}
     {
 
-        if (unitX != 1 && (unitX%10 != 0) && unitX != 100)
+        if (unitX <= 0) // TODO should also check if even (see tick line thicknesses)
         {
-            throw std::invalid_argument("unitX must be 1 or a multiple of 10");
+            throw std::invalid_argument("unitX must be positive");
         }
 
-        if (unitY != 1 && (unitY%10 != 0) && unitY != 100)
+        if (unitY <= 0)
         {
-            throw std::invalid_argument("unitY must be 1or multiple of 10");
+            throw std::invalid_argument("unitY must be positive");
         }
 
         // actual number of y pixels, not given number of y space in pixels.
         int num_y_px = 
             ((_max_y - _min_y) * _unit_y) +
-            (_dot_size__px * (_start_offset + _end_offset)) +
+            _start_offset +
+            _end_offset + // TODO at this point _start_offset and _end_offset have already taken _dot_size into account
             _title_letter.getHeightIncLSpace() +
             _a_format_x.getAxisHeightPx();
 
@@ -64,11 +66,13 @@ public:
         
         int num_x_px = 
             ((_max_x - _min_x) * _unit_x) +
-            (_dot_size__px * (_start_offset + _end_offset)) +
+            _start_offset +
+            _end_offset +
             _a_format_y.getAxisHeightPx();
         
         if (num_y_px > _y_space__px)
         {
+            std::cout << "GrChartASizer: num_y_px, _y_space_px: " << num_y_px << ", " << _y_space__px << std::endl;
             throw std::invalid_argument("y-axis is too large");
         }
 
