@@ -288,6 +288,7 @@ void Printer_Graphic::initDiversityPrinter ()
     _renderer->setColorToRed();
     std::vector<SDL_Rect> rects = {};
 
+    std::cout << "Printer_Graphic x: " << _x_center__px << std::endl;
     SDL_Rect rect;
     rect.w  =10;
     rect.h = ((int)(_chart_y_space__px * _diversity_chart_y_axis_fraction));
@@ -395,6 +396,7 @@ void Printer_Graphic::printWindowTitle ()
                               {0xAA, 0xFF, 0xFF, 0xFF},
                               _window_title.letterHeight());
     _renderer->renderText(_window_title_x__px, _window_title_y__px, _window_title_string, 1);
+    std::cout << "Printer_Graphic: _window_title_x__px: " << _window_title_x__px << std::endl;
 }
 
 void Printer_Graphic::initWindowValues ()

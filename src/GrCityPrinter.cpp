@@ -122,7 +122,7 @@ void GrCityPrinter::printTitle()
     _renderer->setTextFormats({100, 100, 100, 100},
                               {0xAA, 0xFF, 0xFF, 0xFF},
                               _title_letter.letterHeight());
-    _renderer->renderText(_title_x__px, _title_y__px, _main_title, 4);
+    _renderer->renderText(_title_x__px, _title_y__px, _main_title, 1);
 }
 
 void GrCityPrinter::printXAxis()
@@ -254,36 +254,5 @@ int GrCityPrinter::calcHouseSizePx ()
     int houseSize = _cell_size__px / 2;
     
     return ( houseSize % 2 == 0) ? houseSize : (houseSize + 1);
-}
-
-std::unique_ptr<PixelConverter> GrCityPrinter::createPixelConverterX()
-{
-    int maxXHouseAxisPixel = 
-        _cross_hairs_x__px + 
-        _offset__px + 
-        _cell_size__px * (_house_max_x - _house_min_x);
-    
-
-    return std::make_unique<PixelConverter>(
-        _house_min_x,
-        _cross_hairs_x__px + _offset__px,
-        _house_max_x,
-        maxXHouseAxisPixel
-    );
-}
-
-std::unique_ptr<PixelConverter> GrCityPrinter::createPixelConverterY()
-{   
-    int maxYHouseAxisPixel = 
-        _cross_hairs_y__px + 
-        _offset__px + 
-        _cell_size__px * (_house_max_y - _house_min_y);
-
-    return std::make_unique<PixelConverter>(
-        _house_min_y,
-        _cross_hairs_y__px + _offset__px,
-        _house_max_y,
-        maxYHouseAxisPixel
-    );
 }
 

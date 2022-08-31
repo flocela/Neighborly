@@ -162,8 +162,6 @@ class GrCityPrinter
         int calcHouseSizePx();
         int calcXAxisLengthPx();
         int calcYAxisLengthPx();
-        std::unique_ptr<PixelConverter> createPixelConverterX();
-        std::unique_ptr<PixelConverter> createPixelConverterY();
 
         void printTitle();
         void printXAxis();
