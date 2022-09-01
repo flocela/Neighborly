@@ -12,22 +12,7 @@
 #include "GrDiversityPrinter.h"
 #include "GrHappinessPrinterSizer.h"
 
-// Shows a City Map, the current run number, 
-// a Happiness Chart, and a Diversity Chart.
-// The Window Title and current run number will take up 100 pixels at top.
-// The bottom border will take 20 pixels at the bottom.
-// The writable vertical length = _screen_height - Window Title - bottom border.
-// Allow 0.4 of the writable vertical length for the City Map Chart.
-// Allow 0.3 of the writable vertical length for the Happiness Chart.
-// Allow 0.3 of the writable vertical length for the Diversity Chart.
-// The left and right borders are 10 px. So,
-// the writable horizontal length = _screen_width - left border - right border.
-Printer_Graphic::Printer_Graphic ( // TODO check if parameters are zero, if stop
-    const int screen_width, // TODO screen_width and screen_height do not have to be const
-    const int screen_height
-):  _screen_width__px{screen_width},
-    _screen_height__px{screen_height}
-{}
+
 
 void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
 {   

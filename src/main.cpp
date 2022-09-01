@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
     vector<unique_ptr<ResidentsFactory>> residentFactories   = initResidentFactories();
     vector<ResidentsFactory*>            resFactoryPointers  = getPointers(residentFactories);
     
-    Printer_Graphic graphicPrinter{SCREEN_WIDTH, SCREEN_HEIGHT};
+    Printer_Graphic graphicPrinter{};
 
     SimulationComponents components;
     int randomSeed = 1;

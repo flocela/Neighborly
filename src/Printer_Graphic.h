@@ -17,14 +17,12 @@
 #include "GrDvstyPrinter.h"
 #include "GrHapPrinter.h"
 
+//  Displays CityMap, Diversity Chart, and HappinessChart.
+//  Uses a screen width and height of 2400px.
 class Printer_Graphic : public Printer
 {   
     public:
-        Printer_Graphic() = delete;
-        Printer_Graphic (
-            const int screen_width,
-            const int screen_height
-        );
+        Printer_Graphic () = default;
         Printer_Graphic (const Printer_Graphic& obj) = default;
         Printer_Graphic (Printer_Graphic&& obj) noexcept = default;
         Printer_Graphic& operator= (const Printer_Graphic& obj) = default;
@@ -64,8 +62,8 @@ class Printer_Graphic : public Printer
         int _num_of_types_of_residents = 2;
 
         // * FOR WINDOW * //
-        int _screen_width__px;
-        int _screen_height__px;
+        int _screen_width__px  = 2400;
+        int _screen_height__px = 1200;
 
         int _top_border__px    = 10;
         int _bottom_border__px = 10;
@@ -94,7 +92,7 @@ class Printer_Graphic : public Printer
         const int _y_offset_multiplier   = 2;
         const int _y_overrun_multiplier  = 2;
 
-        int _space_between_charts__px = 30; // vertical space
+        int _space_between_charts__px = 35; // vertical space
 
         // * RUNS COUNTER *// 
         // Sits center, below window title
