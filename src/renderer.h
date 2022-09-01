@@ -57,6 +57,9 @@ class Renderer {
 			Coordinate coordinate,
 			std::vector<int> rgba
 		);
+
+		void setWidthMultiplier (double multiplier);
+		double widthMultiplier() { return _width_multiplier; }
 		
  	private:
   		SDL_Window *sdl_window;
@@ -68,6 +71,7 @@ class Renderer {
 		SDL_Color _text_color;
 		SDL_Color _text_background_color;
 		int _font_height;
+		double _width_multiplier = 0.3;
 
 		bool initVideo ();
 		bool linuxSettings ();
@@ -83,6 +87,8 @@ class Renderer {
 			SDL_Color backgroundColor,
 			int centered
 		);
+
+		
 
 };
 

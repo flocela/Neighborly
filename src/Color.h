@@ -57,12 +57,15 @@ inline std::set<Color> _base_colors = {
 
 inline std::map<Color, std::vector<int>> _the_color_rgba = {
     {Color::red_neutral, {244, 67, 54, 255}},
-    {Color::red_unhappy, {133, 0, 0, 255}},
-    {Color::blue_neutral, {0, 255, 0, 255}},
-    {Color::blue_unhappy, {0, 133, 0, 255}},
-    {Color::green_neutral, {0, 0, 255, 255}},
-    {Color::green_unhappy, {0, 0, 133, 255}},
-    {Color::absent,  {128, 128, 128, 255}}
+    {Color::red_happy, {255, 64, 129, 255}},
+    {Color::red_unhappy, {198, 40, 40, 255}},
+    {Color::blue_neutral, {41, 182, 246, 255}},
+    {Color::blue_happy, {0, 229, 255, 255}},
+    {Color::blue_unhappy, {1, 87, 155, 255}},
+    {Color::green_neutral, {46, 125, 50, 255}},
+    {Color::green_happy, {118, 255, 3, 255}},
+    {Color::green_unhappy, {27, 94, 32, 255}},
+    {Color::absent,  {60, 60, 60, 255}}
 };
 
 inline std::unordered_map<Color, ColorInfo> _the_color_infos = {

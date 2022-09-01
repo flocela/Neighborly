@@ -82,7 +82,7 @@ class Printer_Graphic : public Printer
         // * COMMON TO ALL CHARTS * //
         AxisFormat _axis_format_X{};
         AxisFormat _axis_format_Y{};
-        Letter _chart_title_letter = Letter(28, 4); // used for Num Of Runs, City Map, Diversity...
+        Letter _chart_title_letter = Letter(30, 6); // used for Num Of Runs, City Map, Diversity...
         int _x_space_length__px; // total x space minus the side borders
         int _x_space__px; // space per chart
         int _x_center__px; // center of screen

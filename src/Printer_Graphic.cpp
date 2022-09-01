@@ -76,7 +76,7 @@ void Printer_Graphic::setCityPrinter ()
 
     GrCityPrinterSizer cityPrinterSizer = 
         GrCityPrinterSizer (
-            _x_space__px,
+            _x_space__px - ( 2 * _side_border__px),
             _city_y_space__px,
             _axis_format_X,
             _axis_format_Y,
@@ -284,28 +284,6 @@ void Printer_Graphic::initDiversityPrinter ()
         _div_chart_top_y__px,
         "Diversity, Average Number of Disparate Neighbors per Resident per Run"
     );
-
-    _renderer->setColorToRed();
-    std::vector<SDL_Rect> rects = {};
-
-    std::cout << "Printer_Graphic x: " << _x_center__px << std::endl;
-    SDL_Rect rect;
-    rect.w  =10;
-    rect.h = ((int)(_chart_y_space__px * _diversity_chart_y_axis_fraction));
-    rect.x = _x_center__px;
-    rect.y = _div_chart_top_y__px;
-    rects.push_back(rect);
-
-    rect.w  =10;
-    rect.h = _space_between_charts__px;
-    rect.x = _x_center__px;
-    rect.y = 
-        _div_chart_top_y__px +
-        ((int)(_chart_y_space__px * _diversity_chart_y_axis_fraction)) + 5;
-    rects.push_back(rect);
-    _renderer->fillBlocks(rects);
-
-
 }
 
 void Printer_Graphic::initHappinessPrinter ()

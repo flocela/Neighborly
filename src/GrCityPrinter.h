@@ -84,17 +84,16 @@ class GrCityPrinter
 
         // Does not include any text, just the axis. 
         int _x_axis_length__px;
+        
+        
 
         // The coordinate where x and y axes cross on the screen in pixels.
         int _cross_hairs_x__px;
-        int _cross_hairs_y__px;
         GrColorKeyPrinter _key;
+        int _cross_hairs_y__px;
 
         int _title_x__px;
         int _title_y__px;
-
-
-
 
         // _house_size__px is derived from _cell_size__px. _house_size__px is the
         // colored part of the cell in pixels. It does not include the border.

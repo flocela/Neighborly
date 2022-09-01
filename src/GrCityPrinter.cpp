@@ -30,19 +30,21 @@ GrCityPrinter::GrCityPrinter (
         _offset__px + 
         _overrun__px},
     _cross_hairs_x__px{(_x_given_space__px - _x_axis_length__px)/2},
-    _cross_hairs_y__px{
-        _top_left_corner_y__px +
-        _title_letter.getHeightIncLSpace() +
-        _axis_format_X.getAxisHeightPx()
-    },
     _key{
-        _top_left_corner_x__px,
+        _cross_hairs_x__px,
         _top_left_corner_y__px + _title_letter.getHeightIncLSpace(),
-        _x_given_space__px,
+        _x_axis_length__px,
         grCityPrinterSizer.getKeyLetter(),
         _res_colors,
         {"happy", "unhappy"}
     },
+    _cross_hairs_y__px{
+        _top_left_corner_y__px +
+        _title_letter.getHeightIncLSpace() +
+        _key.getHeightPx() + 
+        _axis_format_X.getAxisHeightPx()
+    },
+    
     
     _pixel_converter_x{ std::make_unique<PixelConverter>(
         _house_min_x,
@@ -221,9 +223,10 @@ int GrCityPrinter::labelSpacing (int axisLength__coord)
 
 int GrCityPrinter::calcYCrossHairsPx ()
 {
+    std::cout << "GrCityPrinter _key.getHeightPx(): " << _key.getHeightPx() << std::endl;
     return _top_left_corner_y__px + 
            _title_letter.getHeightIncLSpace() + 
-           
+           _key.getHeightPx() +
            _axis_format_X.getAxisHeightPx();
 }
 

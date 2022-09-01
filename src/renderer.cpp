@@ -11,6 +11,8 @@
 // Define screen dimensions
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
+
+
 void Renderer::renderText (
     int x, 
     int y, 
@@ -25,8 +27,8 @@ void Renderer::renderText (
     {
         return;
     }
-    // fontSize of 50 seems to work for charts I have.
-    TTF_Font *font = TTF_OpenFont(FONT_PATH, 50);
+    // fontSize doesn't seem to have any difference. Choose 100.
+    TTF_Font *font = TTF_OpenFont(FONT_PATH, 100);
 
     if(!font) {
         printf(
