@@ -17,15 +17,13 @@
 void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
 {   
     _city = cityPtr; // TODO make this const???
-    initWindowValues();
-    initWindowTitle(title);
     _renderer = std::make_unique<Renderer>(_screen_width__px, _screen_height__px);
+    initWindowLengths();
+    initWindowTitle(title);
     initCityMap(cityPtr);
     initRunCounter(numOfRuns);
     initDiversityPrinter();
     initHappinessPrinter();
-    initColorKeyForCityMap();
-    initColorKeyForDivAndHapCharts();
 }
 
 void Printer_Graphic::initCityMap (City* cityPtr) // TODO throw exception if city too large
@@ -157,8 +155,6 @@ void Printer_Graphic::print (
     printWindowTitle();
     _city_printer->printCity(residentPerHouse);
     _run_counter_printer->print(run);
-    //_color_key_for_map_printer->print(_renderer.get());
-    //_color_key_for_hap_and_div_printer->print(_renderer.get());
     _dvsty_printer->print(
         _city,
         housePerResident,
@@ -166,7 +162,6 @@ void Printer_Graphic::print (
         run,
         _renderer.get()
     );
-    //_diversity_printer->print(housePerResident, residents, _renderer.get());
     _happiness_printer->print(
         _city,
         housePerResident,
@@ -191,56 +186,8 @@ void Printer_Graphic::keepScreen()
     }
 }
 
-void Printer_Graphic::initColorKeyForCityMap ()
-{
-    std::set<std::string> moods{"happy", "unhappy"};
-    _color_key_for_map_printer = std::make_unique<GrColorKeyPrinter>(
-        _side_border__px,
-        _top_border__px + _window_title.getHeightIncLSpace() + _chart_title_letter.getHeightIncLSpace(),
-        _x_space__px,
-        _color_key_letter,
-        _colors,
-        moods
-    );
-}
-
-void Printer_Graphic::initColorKeyForDivAndHapCharts ()
-{
-    std::set<std::string> moods{"neutral"};
-    _color_key_for_hap_and_div_printer = std::make_unique<GrColorKeyPrinter>(
-        _x_center__px + _inside_border__px,
-        _color_key_for_div_and_hap_top_y__px,
-        _x_space__px,
-        _color_key_letter,
-        _colors,
-        moods
-    );
-}
-
 void Printer_Graphic::initDiversityPrinter ()
 {
-    /*GrDiversityPrinterSizer grDivPrinterSizer{
-        _x_space__px,
-        (int)(_chart_y_space__px * _diversity_chart_y_axis_fraction),
-        _axis_format_X,
-        _axis_format_Y,
-        _chart_title_letter,
-        0,
-        _num_of_runs
-    };
-    _diversity_printer = std::make_unique<GrDiversityPrinter> (
-        grDivPrinterSizer,
-        _colors,
-        _x_center__px + _inside_border__px,
-        _div_chart_top_y__px,
-        0,
-        10, // TODO get largest from city map
-        "Diversity, Average Number of Disparate Neighbors per Resident per Run"
-    );*/
-
-
-    ////////
-
     GrChartASizer divSizer(
         _x_space__px,
         (int)(_chart_y_space__px * _diversity_chart_y_axis_fraction),
@@ -273,25 +220,6 @@ void Printer_Graphic::initDiversityPrinter ()
 
 void Printer_Graphic::initHappinessPrinter ()
 {
-    /*GrDiversityPrinterSizer grHapPrinterSizer{
-        _x_space__px,
-        (int)(_chart_y_space__px * _hap_chart_y_axis_fraction),
-        _axis_format_X,
-        _axis_format_Y,
-        _chart_title_letter,
-        0,
-        _num_of_runs,
-    };
-    _happiness_printer = std::make_unique<GrDiversityPrinter> (
-        grHapPrinterSizer,
-        _colors,
-        _x_center__px + _inside_border__px,
-        _hap_chart_top_y__px,
-        0,
-        100,
-        "Average Happiness per Group per Run"
-    );*/
-
     GrChartASizer divSizer(
         _x_space__px,
         (int)(_chart_y_space__px * _hap_chart_y_axis_fraction),
@@ -362,7 +290,7 @@ void Printer_Graphic::printWindowTitle ()
     std::cout << "Printer_Graphic: _window_title_x__px: " << _window_title_x__px << std::endl;
 }
 
-void Printer_Graphic::initWindowValues ()
+void Printer_Graphic::initWindowLengths ()
 {
     _x_space_length__px = _screen_width__px - (2 * _side_border__px);
     _x_space__px =  (_screen_width__px/2) - _side_border__px - _inside_border__px;

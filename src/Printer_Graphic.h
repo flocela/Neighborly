@@ -169,7 +169,7 @@ class Printer_Graphic : public Printer
         void initWindowTitle(std::string title);
         
         // these are distances.
-        void initWindowValues();
+        void initWindowLengths();
 
         int cityPrinterCalculatePxPerUnit();
 
