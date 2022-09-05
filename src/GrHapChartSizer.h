@@ -1,14 +1,14 @@
-#ifndef GR_HAPPINESS_PRINTER_SIZER_H
-#define GR_HAPPINESS_PRINTER_SIZER_H
+#ifndef GR_HAP_CHART_SIZER_H
+#define GR_HAP_CHART_SIZER_H
 
 #include "AxisFormat.h"
 #include "Letter.h"
 #include <iostream>
 
-class GrHappinessPrinterSizer 
+class GrHapChartSizer 
 {
     public:
-        GrHappinessPrinterSizer (
+        GrHapChartSizer (
             int xSpaceLengthPx,
             int ySpaceLengthPx,
             AxisFormat axisFormatX,

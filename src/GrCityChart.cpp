@@ -1,8 +1,8 @@
-#include "GrCityPrinter.h"
+#include "GrCityChart.h"
 #include <iostream>
 
-GrCityPrinter::GrCityPrinter (
-    GrCityPrinterSizer grCityPrinterSizer,
+GrCityChart::GrCityChart (
+    GrCityChartSizer grCityChartSizer,
     Renderer* renderer,
     std::unordered_map<const House*, Coordinate> coordToHouseMap,
     std::unordered_map<int, Color> resColors,
@@ -13,18 +13,18 @@ GrCityPrinter::GrCityPrinter (
     _res_colors{resColors},
     _top_left_corner_x__px{topLeftCornerXPx},
     _top_left_corner_y__px{topLeftCornerYPx},
-    _x_given_space__px{grCityPrinterSizer.getXSpaceLengthPx()},
-    _y_given_space__px{grCityPrinterSizer.getYSpaceLengthPx()},
-    _offset__px{grCityPrinterSizer.getStartOffset()},
-    _overrun__px{grCityPrinterSizer.getEndOffset()},
-    _title_letter{grCityPrinterSizer.getTitleLetter()},
-    _axis_format_X{grCityPrinterSizer.getAxisFormatX()},
-    _axis_format_Y{grCityPrinterSizer.getAxisFormatX()},
-    _cell_size__px{grCityPrinterSizer.getPixelsPerUnitX()},
-    _house_min_x{grCityPrinterSizer.getMinX()},
-    _house_max_x{grCityPrinterSizer.getMaxX()},
-    _house_min_y{grCityPrinterSizer.getMinY()},
-    _house_max_y{grCityPrinterSizer.getMaxY()},
+    _x_given_space__px{grCityChartSizer.getXSpaceLengthPx()},
+    _y_given_space__px{grCityChartSizer.getYSpaceLengthPx()},
+    _offset__px{grCityChartSizer.getStartOffset()},
+    _overrun__px{grCityChartSizer.getEndOffset()},
+    _title_letter{grCityChartSizer.getTitleLetter()},
+    _axis_format_X{grCityChartSizer.getAxisFormatX()},
+    _axis_format_Y{grCityChartSizer.getAxisFormatX()},
+    _cell_size__px{grCityChartSizer.getPixelsPerUnitX()},
+    _house_min_x{grCityChartSizer.getMinX()},
+    _house_max_x{grCityChartSizer.getMaxX()},
+    _house_min_y{grCityChartSizer.getMinY()},
+    _house_max_y{grCityChartSizer.getMaxY()},
     _x_axis_length__px{
         _cell_size__px * (_house_max_x - _house_min_x) + 
         _offset__px + 
@@ -34,7 +34,7 @@ GrCityPrinter::GrCityPrinter (
         _cross_hairs_x__px,
         _top_left_corner_y__px + _title_letter.getHeightIncLSpace(),
         _x_axis_length__px,
-        grCityPrinterSizer.getKeyLetter(),
+        grCityChartSizer.getKeyLetter(),
         _res_colors,
         {"happy", "unhappy"}
     },
@@ -74,7 +74,7 @@ GrCityPrinter::GrCityPrinter (
     addCityYAxis();
 }
 
-void GrCityPrinter::addCityXAxis()
+void GrCityChart::addCityXAxis()
 {   
     int length__coord = _house_max_x - _house_min_x;
     _x_axis_utility = std::make_unique<XAxisL2RTop>(
@@ -91,7 +91,7 @@ void GrCityPrinter::addCityXAxis()
     );
 }
 
-void GrCityPrinter::addCityYAxis()
+void GrCityChart::addCityYAxis()
 {   
     int length__coord = _house_max_y - _house_min_x;
     _y_axis_utility = std::make_unique<YAxisT2B>(
@@ -108,7 +108,7 @@ void GrCityPrinter::addCityYAxis()
     );
 }
 
-void GrCityPrinter::printCity(std::unordered_map<const House*, const Resident*> houseToResMap)
+void GrCityChart::printCity(std::unordered_map<const House*, const Resident*> houseToResMap)
 {   
     printTitle();
     printXAxis();
@@ -117,7 +117,7 @@ void GrCityPrinter::printCity(std::unordered_map<const House*, const Resident*> 
     _key.print(_renderer);
 }
 
-void GrCityPrinter::printTitle()
+void GrCityChart::printTitle()
 {   
     _renderer->setTextFormats({100, 100, 100, 100},
                               {0xAA, 0xFF, 0xFF, 0xFF},
@@ -125,18 +125,18 @@ void GrCityPrinter::printTitle()
     _renderer->renderText(_title_x__px, _title_y__px, _main_title, 1);
 }
 
-void GrCityPrinter::printXAxis()
+void GrCityChart::printXAxis()
 {   
     _x_axis_utility->print(_renderer);
 }
 
-void GrCityPrinter::printYAxis()
+void GrCityChart::printYAxis()
 {   //TODO y axis isn't printing the 110 number, the largest y value label
 // TODO don't let cell size become too large either.
     _y_axis_utility->print(_renderer);
 }
 
-void GrCityPrinter::printHouses( std::unordered_map<const House *, const Resident *> houseToResMap )
+void GrCityChart::printHouses( std::unordered_map<const House *, const Resident *> houseToResMap )
 {   
     std::map<Color, std::vector<Coordinate>> coordsPerColor =
         createVectorsOfHousesForEachColor(houseToResMap);
@@ -152,7 +152,7 @@ void GrCityPrinter::printHouses( std::unordered_map<const House *, const Residen
     }
 }
 
-std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsOfHousesForEachColor(
+std::map<Color, std::vector<Coordinate>> GrCityChart::createVectorsOfHousesForEachColor(
     std::unordered_map<const House *, const Resident *> houseToResMap)
 {   
     std::map<Color, std::vector<Coordinate>> colorToCoordinatesMap = {};
@@ -195,32 +195,32 @@ std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsOfHousesFor
     return colorToCoordinatesMap;
 }
 
-Color GrCityPrinter::getHappyColor (int resGroup)
+Color GrCityChart::getHappyColor (int resGroup)
 {
     return _color_map[_res_colors[resGroup]]["happy"];
 }
 
-Color GrCityPrinter::getUnhappyColor (int resGroup)
+Color GrCityChart::getUnhappyColor (int resGroup)
 {
     return _color_map[_res_colors[resGroup]]["unhappy"];
 }
 
-int GrCityPrinter::majTickSpacing (int axisLength__coord)
+int GrCityChart::majTickSpacing (int axisLength__coord)
  {
     return ( axisLength__coord <= 100)? 1 : 5;
  }
         
-int GrCityPrinter::minTickSpacing (int axisLength__coord)
+int GrCityChart::minTickSpacing (int axisLength__coord)
 {
     return (axisLength__coord <= 100)? 1 : 5;
 }
 
-int GrCityPrinter::labelSpacing (int axisLength__coord)
+int GrCityChart::labelSpacing (int axisLength__coord)
 {
     return (axisLength__coord <= 10)? 1 : 10;
 }
 
-int GrCityPrinter::calcYCrossHairsPx ()
+int GrCityChart::calcYCrossHairsPx ()
 {
     return _top_left_corner_y__px + 
            _title_letter.getHeightIncLSpace() + 
@@ -228,7 +228,7 @@ int GrCityPrinter::calcYCrossHairsPx ()
            _axis_format_X.getAxisHeightPx();
 }
 
-int GrCityPrinter::calcCellSizePx ()
+int GrCityChart::calcCellSizePx ()
 {
     // X-direction
     int xAxisLengthPx = _x_given_space__px - _axis_format_Y.getAxisHeightPx(); 
@@ -248,7 +248,7 @@ int GrCityPrinter::calcCellSizePx ()
     return (smallestCellSize < 4)? 4: smallestCellSize;
 }
 
-int GrCityPrinter::calcHouseSizePx ()
+int GrCityChart::calcHouseSizePx ()
 {
     if (_cell_size__px < 4)
         return 0;

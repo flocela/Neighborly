@@ -1,5 +1,5 @@
-#ifndef GR_HAP_PRINTER_H
-#define GR_HAP_PRINTER_H
+#ifndef GR_DVSTY_CHART_H
+#define GR_DVSTY_CHART_H
 
 #include "unordered_map"
 #include "Color.h"
@@ -10,16 +10,18 @@
 #include "Resident.h"
 #include "GrColorKeyPrinter.h"
 
-class GrHapPrinter {
+class GrDvstyChart {
 
 public:
-    GrHapPrinter (
+    GrDvstyChart (
         GrChartASizer sizer,
         std::unordered_map<int, Color> colors,
         std::set<std::string> moods,
         int topLeftXPx,
         int topLeftYPx,
-        std::string title
+        std::string title,
+        std::unordered_map<const House*, std::set<const House*>> neighbors
+
     ):
     _chart{sizer, colors, moods, topLeftXPx, topLeftYPx, title},
     _colors{colors},
@@ -31,12 +33,14 @@ public:
         sizer.keyLetter(),
         _colors,
         _moods
-    }
+    },
+    _neighbors{neighbors}
     {}
 
     // TODO this should be const Resident and const House
     void print (
         std::unordered_map<const Resident*, const House*> housePerResident, // TODO why can't I make this const
+        std::unordered_map<const House*, const Resident*> residentPerHouse,
         int run,
         Renderer* renderer);
 
@@ -45,10 +49,11 @@ private:
     std::unordered_map<int, Color> _colors;
     std::set<std::string> _moods;
     GrColorKeyPrinter _key;
+    std::unordered_map<const House*, std::set<const House*>> _neighbors;
 
-    std::set<Resident*> getResidentsInTheseHouses (
-        std::set<House*> houses,
-        const std::unordered_map<House*, Resident*> residentPerHouse);
+    std::set<const Resident*> getResidentsInTheseHouses (
+        std::set<const House*> houses,
+        const std::unordered_map<const House*, const Resident*> residentPerHouse);
 
 };
 

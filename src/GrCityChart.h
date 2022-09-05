@@ -1,5 +1,5 @@
-#ifndef GR_CITY_PRINTER_H
-#define GR_CITY_PRINTER_H
+#ifndef GR_CITY_CHART_H
+#define GR_CITY_CHART_H
 
 #include "renderer.h"
 #include "Coordinate.h"
@@ -13,7 +13,7 @@
 #include "PixelConverter.h"
 #include "AxisFormat.h"
 #include "Letter.h"
-#include "GrCityPrinterSizer.h"
+#include "GrCityChartSizer.h"
 #include "GrColorKeyPrinter.h"
 
 // Takes in a Renderer* and necessary settings to draw the city chart.
@@ -28,11 +28,11 @@
 // Allow 300 pixels to the left of x-axis for the axis labels and
 // the chart's key.
 // Allow 100 pixels above the y axis for the y-axis labels and the chart title.
-class GrCityPrinter
+class GrCityChart
 {
     public:
-        GrCityPrinter (
-            GrCityPrinterSizer grCityPrinterSizer,
+        GrCityChart (
+            GrCityChartSizer grCityChartSizer,
             Renderer* renderer,
             std::unordered_map<const House*, Coordinate> coordToHouseMap,
             std::unordered_map<int, Color> resColors,

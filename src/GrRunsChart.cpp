@@ -1,6 +1,6 @@
-#include "GrRunCPrinter.h"
+#include "GrRunsChart.h"
 
-void GrRunCPrinter::print (int numOfRuns)
+void GrRunsChart::print (int numOfRuns)
 {   
     _renderer->setTextFormats(
         {100, 100, 100, 100}, 

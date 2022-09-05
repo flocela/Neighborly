@@ -1,16 +1,16 @@
-#ifndef GR_RUN_C_PRINTER_H
-#define GR_RUN_C_PRINTER_H
+#ifndef GR_RUNS_CHART_H
+#define GR_RUNS_CHART_H
 
 #include "renderer.h"
 #include <iostream>
 #include "Letter.h"
 
 // Graphic Run Counter Printer (prints the current run number).
-class GrRunCPrinter
+class GrRunsChart
 {
     public:
-        GrRunCPrinter () = delete;
-        GrRunCPrinter ( 
+        GrRunsChart () = delete;
+        GrRunsChart ( 
             Renderer* renderer,
             int topLeftCornerXPx,
             int topLeftCornerYPx,
@@ -27,11 +27,11 @@ class GrRunCPrinter
             _title_letter{titleLetter},
             _max_num_of_runs{maxNumOfRuns}
         {}
-        GrRunCPrinter (const GrRunCPrinter& obj) = default;
-        GrRunCPrinter (GrRunCPrinter&& obj) noexcept = default;
-        GrRunCPrinter& operator= (const GrRunCPrinter& obj) = default;
-        GrRunCPrinter& operator= (GrRunCPrinter&& obj) noexcept = default;
-        ~GrRunCPrinter () = default;
+        GrRunsChart (const GrRunsChart& obj) = default;
+        GrRunsChart (GrRunsChart&& obj) noexcept = default;
+        GrRunsChart& operator= (const GrRunsChart& obj) = default;
+        GrRunsChart& operator= (GrRunsChart&& obj) noexcept = default;
+        ~GrRunsChart () = default;
 
         void print (int numOfRuns);
     

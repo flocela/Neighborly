@@ -1,16 +1,16 @@
-#ifndef GR_CITY_PRINTER_SIZER_H
-#define GR_CITY_PRINTER_SIZER_H
+#ifndef GR_CITY_CHART_SIZER_H
+#define GR_CITY_CHART_SIZER_H
 
 #include "AxisFormat.h"
 #include "Letter.h"
 
-// Used to determine how large the cell sizes will be in the GrCityPrinter.
-// Also is taken as an argument in the GrCityPrinter
-class GrCityPrinterSizer 
+// Used to determine how large the cell sizes will be in the GrCityChart.
+// Also is taken as an argument in the GrCityChart
+class GrCityChartSizer 
 {   
     public:
 
-        GrCityPrinterSizer (
+        GrCityChartSizer (
             int xSpaceLengthPx,
             int ySpaceLengthPx,
             AxisFormat axisFormatX,

@@ -181,7 +181,6 @@ int main(int argc, char* argv[])
         group_nums_iter++;
         color_iter++;
     }
-    graphicPrinter.setColors(groupNumToColorMap);
 
     std::vector<const House*> houses = city->getHouses();
     std::unordered_map<const House*, std::set<const House*>> neighbors;
@@ -190,7 +189,13 @@ int main(int argc, char* argv[])
         neighbors[house] = city->getAdjacentHouses(house);
     }
 
-    graphicPrinter.init(city->getCoordinatesPerHouse(), neighbors, numOfRuns, "Neighbors");
+    graphicPrinter.init(
+        city->getCoordinatesPerHouse(),
+        neighbors, numOfRuns,
+        groupNumToColorMap,
+        "Neighbors"
+    );
+    
     std::unordered_map<const House*, Resident*> houseToResidentMap;
     //for (int ii=0; ii< numOfRuns; ii++)
     for (int ii=0; ii< 2; ii++)

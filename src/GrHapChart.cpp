@@ -1,6 +1,6 @@
-#include "GrHapPrinter.h"
+#include "GrHapChart.h"
 
-void GrHapPrinter::print (
+void GrHapChart::print (
     std::unordered_map<const Resident*, const House*> housePerResident,
     int run,
     Renderer* renderer
@@ -55,7 +55,7 @@ void GrHapPrinter::print (
     _key.print(renderer);
 }
 
-std::set<Resident*> GrHapPrinter::getResidentsInTheseHouses (
+std::set<Resident*> GrHapChart::getResidentsInTheseHouses (
     std::set<House*> houses,
     const std::unordered_map<House*, Resident*> residentPerHouse
 )

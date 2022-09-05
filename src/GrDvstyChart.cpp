@@ -1,6 +1,6 @@
-#include "GrDvstyPrinter.h"
+#include "GrDvstyChart.h"
 
-void GrDvstyPrinter::print (
+void GrDvstyChart::print (
     std::unordered_map<const Resident*, const House*> housePerResident,
     std::unordered_map<const House*, const Resident*> residentPerHouse,
     int run,
@@ -67,7 +67,7 @@ void GrDvstyPrinter::print (
     _key.print(renderer);
 }
 
-std::set<const Resident*> GrDvstyPrinter::getResidentsInTheseHouses (
+std::set<const Resident*> GrDvstyChart::getResidentsInTheseHouses (
     std::set<const House*> houses,
     const std::unordered_map<const House*, const Resident*> residentPerHouse
 )

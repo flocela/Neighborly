@@ -8,30 +8,29 @@
 #include <iostream>
 #include "XAxisL2RTop.h"
 #include "YAxisT2B.h"
-#include "GrCityPrinter.h"
-#include "GrDiversityPrinter.h"
-#include "GrHappinessPrinterSizer.h"
 
 
 
 void Printer_Graphic::init (
     std::unordered_map<const House*, Coordinate > coordPerHouse,
     std::unordered_map<const House*, std::set<const House*>> neighbors,
-    int numOfRuns, 
+    int numOfRuns,
+    std::unordered_map<int, Color> colors,
     std::string title
 )
 {   
     _coordinates_per_house = coordPerHouse;
+    _colors = colors;
     _renderer = std::make_unique<Renderer>(_screen_width__px, _screen_height__px);
     initWindowLengths();
     initWindowTitle(title);
-    initCityMap();
-    initRunCounter(numOfRuns);
-    initDiversityPrinter(neighbors);
-    initHappinessPrinter();
+    initCityChart();
+    initRunsChart(numOfRuns);
+    initDvstyChart(neighbors);
+    initHapChart();
 }
 
-void Printer_Graphic::initCityMap () // TODO throw exception if city too large
+void Printer_Graphic::initCityChart () // TODO throw exception if city too large
 {
     determineMinMaxHouseCoords();
     setCityPrinter();
@@ -61,8 +60,8 @@ void Printer_Graphic::setCityPrinter ()
     int houseSize = unitSize/2;
     houseSize = (houseSize % 2 == 0) ? houseSize : (houseSize + 1);
 
-    GrCityPrinterSizer cityPrinterSizer = 
-        GrCityPrinterSizer (
+    GrCityChartSizer cityPrinterSizer = 
+        GrCityChartSizer (
             _x_space__px - ( 2 * _side_border__px),
             _city_y_space__px,
             _axis_format_X,
@@ -81,7 +80,7 @@ void Printer_Graphic::setCityPrinter ()
             _color_key_letter
         );
    
-    _city_printer = std::make_unique<GrCityPrinter>(
+    _city_chart = std::make_unique<GrCityChart>(
         cityPrinterSizer,
         _renderer.get(),
         _coordinates_per_house,
@@ -118,16 +117,11 @@ int Printer_Graphic::cityPrinterCalculatePxPerUnit()
     return (smallestCellSize < 4) ? 4 : smallestCellSize;
 }
 
-void Printer_Graphic::setColors (std::unordered_map<int, Color> colors)
-{
-    _colors = colors;
-}
-
-void Printer_Graphic::initRunCounter (int numOfRuns)
+void Printer_Graphic::initRunsChart (int numOfRuns)
 {   
     _num_of_runs = numOfRuns;
 
-    _run_counter_printer = std::make_unique<GrRunCPrinter>(
+    _runs_chart = std::make_unique<GrRunsChart>(
         _renderer.get(), 
         _side_border__px, 
         _run_counter_top_y__px,
@@ -155,18 +149,18 @@ void Printer_Graphic::print (
     }
 
     printWindowTitle();
-    _city_printer->printCity(residentPerHouse);
+    _city_chart->printCity(residentPerHouse);
 
-    _run_counter_printer->print(run);
+    _runs_chart->print(run);
 
-    _dvsty_printer->print(
+    _dvsty_chart->print(
         housePerResident,
         residentPerHouse,
         run,
         _renderer.get()
     );
 
-    _happiness_printer->print(
+    _happiness_chart->print(
         housePerResident,
         run,
         _renderer.get()
@@ -188,7 +182,7 @@ void Printer_Graphic::keepScreen()
     }
 }
 
-void Printer_Graphic::initDiversityPrinter (
+void Printer_Graphic::initDvstyChart (
     std::unordered_map<const House*, std::set<const House*>> neighbors
 )
 {
@@ -212,7 +206,7 @@ void Printer_Graphic::initDiversityPrinter (
     );
 
     std::set<std::string> moods{"neutral"};
-    _dvsty_printer = std::make_unique<GrDvstyPrinter> (
+    _dvsty_chart = std::make_unique<GrDvstyChart> (
         divSizer,
         _colors,
         moods,
@@ -223,7 +217,7 @@ void Printer_Graphic::initDiversityPrinter (
     );
 }
 
-void Printer_Graphic::initHappinessPrinter ()
+void Printer_Graphic::initHapChart ()
 {   
     GrChartASizer divSizer(
         _x_space__px,
@@ -245,7 +239,7 @@ void Printer_Graphic::initHappinessPrinter ()
     );
 
     std::set<std::string> moods{"neutral"};
-    _happiness_printer = std::make_unique<GrHapPrinter> (
+    _happiness_chart = std::make_unique<GrHapChart> (
         divSizer,
         _colors,
         moods,
@@ -319,7 +313,6 @@ void Printer_Graphic::initWindowLengths ()
     _city_map_chart_top_left_y_coord__px = 
         _color_key_for_city_map_top_y__px +
         _chart_title_letter.getHeightIncLSpace(); // color key for city map
-    
 
     // DIVERSITY CHART, HAPPINESS CHART
     _chart_y_space__px = 

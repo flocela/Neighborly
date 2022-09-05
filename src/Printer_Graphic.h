@@ -1,7 +1,7 @@
 #ifndef PRINTER_Graphic_H
 #define PRINTER_Graphic_H
 
-#include "GrCityPrinter.h"
+#include "GrCityChart.h"
 #include "Printer.h"
 #include "renderer.h"
 #include <thread>
@@ -9,13 +9,11 @@
 #include "House.h"
 #include <vector>
 #include "Color.h"
-#include "GrRunCPrinter.h"
-#include "GrDiversityPrinter.h"
-#include "GrHappinessPrinter.h"
+#include "GrRunsChart.h"
 #include "GrColorKeyPrinter.h"
 #include "Letter.h"
-#include "GrDvstyPrinter.h"
-#include "GrHapPrinter.h"
+#include "GrDvstyChart.h"
+#include "GrHapChart.h"
 
 //  Displays CityMap, Diversity Chart, and HappinessChart.
 //  Uses a screen width and height of 2400px.
@@ -29,13 +27,13 @@ class Printer_Graphic : public Printer
         Printer_Graphic& operator= (Printer_Graphic&& obj) noexcept = default;
         ~Printer_Graphic () = default;
 
-        void initCityMap (); // make private
-        void setColors (std::unordered_map<int, Color> colors); // make private
-        void initRunCounter (int numOfRuns); // make private
+        void initCityChart (); // make private
+        void initRunsChart (int numOfRuns); // make private
         void init (
             std::unordered_map<const House*, Coordinate > coordPerHouse,
             std::unordered_map<const House*, std::set<const House*>> neighbors,
             int numOfRuns,
+            std::unordered_map<int, Color> colors,
             std::string title
         );
         int maxNumOfHousesX (int screenWidth__px);
@@ -49,13 +47,10 @@ class Printer_Graphic : public Printer
         void keepScreen();
     
     private:
-        std::unique_ptr<GrCityPrinter>      _city_printer;
-        std::unique_ptr<GrRunCPrinter>      _run_counter_printer;
-        std::unique_ptr<GrDiversityPrinter> _diversity_printer;
-        std::unique_ptr<GrHapPrinter>       _happiness_printer;
-        std::unique_ptr<GrDvstyPrinter>     _dvsty_printer;
-        std::unique_ptr<GrColorKeyPrinter>  _color_key_for_map_printer;
-        std::unique_ptr<GrColorKeyPrinter>  _color_key_for_hap_and_div_printer;
+        std::unique_ptr<GrCityChart>  _city_chart;
+        std::unique_ptr<GrRunsChart>  _runs_chart;
+        std::unique_ptr<GrHapChart>   _happiness_chart;
+        std::unique_ptr<GrDvstyChart> _dvsty_chart;
 
         City* _city;
 
@@ -162,9 +157,9 @@ class Printer_Graphic : public Printer
         // set up the graph where the residents will be plotted.
         void setCityPrinter ();
 
-        void initDiversityPrinter(std::unordered_map<const House*, std::set<const House*>> neighbors);
+        void initDvstyChart(std::unordered_map<const House*, std::set<const House*>> neighbors);
 
-        void initHappinessPrinter();
+        void initHapChart();
 
         void printWindowTitle();
 
