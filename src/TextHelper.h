@@ -16,7 +16,7 @@ class TextHelper
         {}
 
         std::string createText (
-            std::map<House*, Resident*> residentPerHouse,
+            std::map<const House*, Resident*> residentPerHouse,
             int run
         ) const;
     private:

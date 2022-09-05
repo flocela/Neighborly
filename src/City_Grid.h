@@ -30,30 +30,32 @@ class City_Grid: public City
 
         int getSize() const override;
 
-        std::vector<House*> getHouses () const override;
+        std::vector<const House*> getHouses () const override;
         
         double dist (
             const int& from_address, 
             const int& to_address
         ) const override;
 
-        std::set<House*> getAdjacentHouses (House* house) const override;
+        std::set<const House*> getAdjacentHouses (const House* house) const override;
 
         std::set<House*> getHousesWithinDistance (
-            House* house, 
+            const House* house, 
             double allowableDist
         ) const override;
 
-        std::set<House*> getNumberOfUnoccupiedNearHouses (
-            House* house,
+        std::set<const House*> getNumberOfUnoccupiedNearHouses (
+            const House* house,
             double allowableDistance,
-            std::set<House*> notOccupied,
+            std::set<const House*> notOccupied,
             int count
         ) const override;
         
         Coordinate getCoordinate (const int& address) const override;
 
         bool equals(const City_Grid& other) const;
+
+        std::unordered_map<const House*, Coordinate> getCoordinatesPerHouse();
 
     private:
         int _width;
@@ -72,7 +74,7 @@ class City_Grid: public City
         // Returns houses that are within a boxed area around @house.
         // Width and height of box are 2 x allowableDist. @house is at center.
         std::set<House*> getHousesWithinBoxedDistance (
-            House* house,
+            const House* house,
             double allowableDist
         ) const;
         

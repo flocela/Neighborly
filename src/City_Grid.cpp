@@ -26,8 +26,8 @@ int City_Grid::getSize() const
 	return _houses.size();
 }
 
-std::vector<House*> City_Grid::getHouses () const
-{	std::vector<House*> houses;
+std::vector<const House*> City_Grid::getHouses () const
+{	std::vector<const House*> houses;
 	for (auto& house : _houses) // TODO maybe const auto&
 	{	
 		houses.push_back(house.get());
@@ -42,7 +42,7 @@ double City_Grid::dist (const int& fromAddress, const int& toAddress) const
   	return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
 }
 
-std::set<House*> City_Grid::getAdjacentHouses (House* house) const
+std::set<const House*> City_Grid::getAdjacentHouses (const House* house) const
 {
 	int address = house->getAddress();
 	int x = get_x(address);
@@ -50,7 +50,7 @@ std::set<House*> City_Grid::getAdjacentHouses (House* house) const
 	int lastIdx_x = _width - 1;
 	int lastIdx_y = _width - 1;
 	
-	std::set<House*> adjacentHouses = {};
+	std::set<const House*> adjacentHouses = {};
 	if (x != 0)
 	{
 		adjacentHouses.insert(_addrToHouseMap.at(address - _width));
@@ -77,7 +77,7 @@ std::set<House*> City_Grid::getAdjacentHouses (House* house) const
 
 
 std::set<House*> City_Grid::getHousesWithinDistance (
-	House* house, 
+	const House* house, 
 	double allowableDist
 ) const
 { 
@@ -109,7 +109,7 @@ std::set<House*> City_Grid::getHousesWithinDistance (
 }
 
 std::set<House*> City_Grid::getHousesWithinBoxedDistance (
-            House* house,
+            const House* house,
             double allowableDist
 ) const
 {
@@ -135,14 +135,14 @@ std::set<House*> City_Grid::getHousesWithinBoxedDistance (
 	return boxedHouses;
 }
 
-std::set<House*> City_Grid::getNumberOfUnoccupiedNearHouses (
-	House* origHouse,
+std::set<const House*> City_Grid::getNumberOfUnoccupiedNearHouses (
+	const House* origHouse,
 	double allowableDistance,
-	std::set<House*> notOccupied,
+	std::set<const House*> notOccupied,
 	int count
 ) const
 {	
-	std::set<House*> returnedHouses;
+	std::set<const House*> returnedHouses;
 
 	if (count == 0)
 		return returnedHouses;
@@ -194,14 +194,14 @@ std::set<House*> City_Grid::getNumberOfUnoccupiedNearHouses (
 		}
 	}
 	possibleHouses = decreasedPossibleHouses;
-	while (true) // TODO these while(trues) seem unsafe.
+	while (true) // TODO these while(trues) seem unsafe. 
 	{
 		if ( (int)returnedHouses.size() == count || possibleHouses.empty() )
 			return returnedHouses;
 		House* currHouse = selectRandom(possibleHouses);
 		returnedHouses.insert(currHouse);
 		possibleHouses.erase(currHouse);
-	}
+	} // TODO why is this while loop at the end? Doesn't contribute to returned houses???
 }
 
 int City_Grid::get_x (const int& address) const
@@ -260,5 +260,17 @@ House* City_Grid::selectRandom (std::set<House*>& setOfHouses) const
     std::set<House*>::iterator it = std::begin(setOfHouses);
     std::advance(it, r);
     return *it;
+}
+
+std::unordered_map<const House*, Coordinate> City_Grid::getCoordinatesPerHouse()
+{
+	
+	std::unordered_map<const House*, Coordinate> coordinatesPerHouse{};
+	for (auto& pair : _addrToHouseMap)
+	{
+		Coordinate coord = getCoordinate(pair.first);
+		coordinatesPerHouse.emplace(std::pair{pair.second, coord});
+	}
+	return coordinatesPerHouse;
 }
 

@@ -3,15 +3,15 @@
 #include <algorithm>
 #include <iomanip>
 
-bool pComp(House* a, House* b) {return *a < *b; }
+bool pComp(const House* a, const House* b) {return *a < *b; }
 
 std::string TextHelper::createText (
-    std::map<House*, Resident*> residentPerHouse,
+    std::map<const House*, Resident*> residentPerHouse,
     int run
     ) const
 {
     (void) residentPerHouse;
-    for (House* h : _city_ptr->getHouses())
+    for (const House* h : _city_ptr->getHouses())
     {
         _city_ptr->getCoordinate(h->getAddress());
     }
@@ -23,10 +23,10 @@ std::string TextHelper::createText (
     
     std::set<int> seenColors;
     std::set<Resident*> seenResidents;
-    std::vector<House*> housesInOrder;
+    std::vector<const House*> housesInOrder;
     for (auto h2r : residentPerHouse)
     {   
-        House* house = h2r.first;
+        const House* house = h2r.first;
         Resident* res = h2r.second;
         housesInOrder.push_back(house);
         if (seenColors.count(res->getGroupNumber()) == 0)
@@ -36,7 +36,7 @@ std::string TextHelper::createText (
         }
     }
     std::sort(housesInOrder.begin(), housesInOrder.end(), pComp);
-    for (House* house : housesInOrder)
+    for (const House* house : housesInOrder)
     {
         Resident* res = residentPerHouse[house];
         s1 << std::setw(3) << res->getID() << ", ";

@@ -13,25 +13,25 @@ class Simulator_E
     private:
         City* _city;
         std::vector<Resident*> _residents;
-        std::unordered_map<House*, Resident*> _curr_house_to_res_map = {};
-        std::map<Resident*, House*> _curr_res_to_house_map = {};
+        std::unordered_map<const House*, Resident*> _curr_house_to_res_map = {};
+        std::map<Resident*, const House*> _curr_res_to_house_map = {};
         bool firstSimDone = false;
 
         // selectRandom deletes the integer that is returned from @setOfInt
         int selectRandom (std::set<int>& setOfInts) const;
-        House* selectRandom (std::set<House*>& setOfHouses) const;
+        const House* selectRandom (std::set<const House*>& setOfHouses) const;
         void firstSimulation ();
-        std::set<House*> getSetOfHouses ();
+        std::set<const House*> getSetOfHouses ();
         std::set<int> getSetOfInts (int max);
         std::pair<std::vector<int>, std::vector<int>> getMovingResIdxs ();
         std::vector<Resident*> getResidents (std::vector<int> residentIndices);
-        std::unordered_map<Resident*, House*> getHouses(std::vector<Resident*> residents);
+        std::unordered_map<Resident*, const House*> getHouses(std::vector<Resident*> residents);
         void openHouses (std::vector<Resident*> residents);
         std::set<House*> filterForOpenHouses (std::set<House*> houses);
-        House* findHouseForForcedResHappyAtGoal (
+        const House* findHouseForForcedResHappyAtGoal (
             Resident* res,
             House* oldHouse,
-            std::set<House*> openHouses // open houses within distance of resident
+            std::set<const House*> openHouses // open houses within distance of resident
         );
         House* findHouseForForcedResHappyAtBest (
             Resident* res,
@@ -44,24 +44,24 @@ class Simulator_E
             std::set<House*> openHouses, // open houses within distance of resident
             int chances
         );
-        std::set<House*> getKeysFromMap (std::unordered_map<House*, Resident*> theMap);
-        House* findHomeForForcedToMoveResident (
+        std::set<const House*> getKeysFromMap (std::unordered_map<const House*, Resident*> theMap);
+        const House* findHomeForForcedToMoveResident (
             Resident* resident, 
-            House* oldHouse, 
+            const House* oldHouse, 
             int count
         );
-        House* findHomeForOptionalMoveResident (
+        const House* findHomeForOptionalMoveResident (
             Resident* resident, 
             House* oldHouse, 
             int count
         );
 
         // Returns the neighbors for each house in @houses.
-        std::map<House*, std::set<House*>> getSetsOfNeighbors (std::set<House*> houses);
+        std::map<const House*, std::set<const House*>> getSetsOfNeighbors (std::set<House*> houses);
 
-        void moveResidentIntoHouse (Resident* res, House* house);
+        void moveResidentIntoHouse (Resident* res, const House* house);
         void openHouse (Resident* res);
-        std::set<Resident*> getResidentsInHouses (std::set<House*> houses);
+        std::set<Resident*> getResidentsInHouses (std::set<const House*> houses);
 
     public:
         Simulator_E (City* city, std::vector<Resident*> residents);
@@ -70,7 +70,7 @@ class Simulator_E
         Simulator_E (Simulator_E&& o) noexcept = default;
         Simulator_E& operator= (const Simulator_E& o) = default;
         ~Simulator_E () = default;
-        std::unordered_map<House*, Resident*> simulate();
+        std::unordered_map<const House*, Resident*> simulate();
 
 };
 

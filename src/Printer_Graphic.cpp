@@ -14,33 +14,37 @@
 
 
 
-void Printer_Graphic::init (City* cityPtr, int numOfRuns, std::string title)
+void Printer_Graphic::init (
+    std::unordered_map<const House*, Coordinate > coordPerHouse,
+    std::unordered_map<const House*, std::set<const House*>> neighbors,
+    int numOfRuns, 
+    std::string title
+)
 {   
-    _city = cityPtr; // TODO make this const???
+    _coordinates_per_house = coordPerHouse;
     _renderer = std::make_unique<Renderer>(_screen_width__px, _screen_height__px);
     initWindowLengths();
     initWindowTitle(title);
-    initCityMap(cityPtr);
+    initCityMap();
     initRunCounter(numOfRuns);
-    initDiversityPrinter();
+    initDiversityPrinter(neighbors);
     initHappinessPrinter();
 }
 
-void Printer_Graphic::initCityMap (City* cityPtr) // TODO throw exception if city too large
+void Printer_Graphic::initCityMap () // TODO throw exception if city too large
 {
-    determineMinMaxHouseCoords(cityPtr);
+    determineMinMaxHouseCoords();
     setCityPrinter();
 }
 
-void Printer_Graphic::determineMinMaxHouseCoords(City* cityPtr)
+void Printer_Graphic::determineMinMaxHouseCoords()
 {
     // Determine the min and max house coordinates for x and y.
-    std::vector<House*> houses = cityPtr->getHouses();
-    for (House* house : houses)
+    for (auto& pair : _coordinates_per_house)
     {   // Coordinates are not in pixels! Think of them as the house number.
-        Coordinate coord =  cityPtr->getCoordinate(house->getAddress());
-        _coord_to_house_map[coord] = house;
-        if (coord.getX() > _max_x_coord)
+        Coordinate coord =  pair.second;
+        //std::cout << "PrinterGraphic: (x, y): (" << coord->getX() << ", " << coord->getY() << ")" << std::endl; 
+       if (coord.getX() > _max_x_coord)
             _max_x_coord = coord.getX();
         if (coord.getX() < _min_x_coord)
             _min_x_coord = coord.getX();
@@ -76,11 +80,11 @@ void Printer_Graphic::setCityPrinter ()
             true,
             _color_key_letter
         );
-    
+   
     _city_printer = std::make_unique<GrCityPrinter>(
         cityPrinterSizer,
         _renderer.get(),
-        _coord_to_house_map,
+        _coordinates_per_house,
         _colors,
         _side_border__px,
         _city_map_chart_top_left_y_coord__px
@@ -120,7 +124,7 @@ void Printer_Graphic::setColors (std::unordered_map<int, Color> colors)
 }
 
 void Printer_Graphic::initRunCounter (int numOfRuns)
-{
+{   
     _num_of_runs = numOfRuns;
 
     _run_counter_printer = std::make_unique<GrRunCPrinter>(
@@ -135,14 +139,12 @@ void Printer_Graphic::initRunCounter (int numOfRuns)
 
 
 void Printer_Graphic::print (
-    std::unordered_map<House*, Resident*> residentPerHouse,
+    std::unordered_map<const House*, const Resident*> residentPerHouse,
     int run
 )
 {   
-    //(void) residentPerHouse;
-    //(void) run;
-    std::unordered_map<Resident*, House*> housePerResident;
-    std::vector<Resident*> residents;
+    std::unordered_map<const Resident*, const House*> housePerResident;
+    std::vector<const Resident*> residents;
     for (auto pair : residentPerHouse)
     {
         if (pair.second != nullptr) // resident is not nullptr
@@ -154,18 +156,18 @@ void Printer_Graphic::print (
 
     printWindowTitle();
     _city_printer->printCity(residentPerHouse);
+
     _run_counter_printer->print(run);
+
     _dvsty_printer->print(
-        _city,
         housePerResident,
         residentPerHouse,
         run,
         _renderer.get()
     );
+
     _happiness_printer->print(
-        _city,
         housePerResident,
-        residentPerHouse,
         run,
         _renderer.get()
     );
@@ -186,7 +188,9 @@ void Printer_Graphic::keepScreen()
     }
 }
 
-void Printer_Graphic::initDiversityPrinter ()
+void Printer_Graphic::initDiversityPrinter (
+    std::unordered_map<const House*, std::set<const House*>> neighbors
+)
 {
     GrChartASizer divSizer(
         _x_space__px,
@@ -214,12 +218,13 @@ void Printer_Graphic::initDiversityPrinter ()
         moods,
         _x_center__px + _inside_border__px,
         _div_chart_top_y__px,
-        "Diversity, Average Number of Disparate Neighbors per Resident per Run"
+        "Diversity, Average Number of Disparate Neighbors per Resident per Run",
+        neighbors
     );
 }
 
 void Printer_Graphic::initHappinessPrinter ()
-{
+{   
     GrChartASizer divSizer(
         _x_space__px,
         (int)(_chart_y_space__px * _hap_chart_y_axis_fraction),
@@ -287,7 +292,6 @@ void Printer_Graphic::printWindowTitle ()
                               {0xAA, 0xFF, 0xFF, 0xFF},
                               _window_title.letterHeight());
     _renderer->renderText(_window_title_x__px, _window_title_y__px, _window_title_string, 1);
-    std::cout << "Printer_Graphic: _window_title_x__px: " << _window_title_x__px << std::endl;
 }
 
 void Printer_Graphic::initWindowLengths ()

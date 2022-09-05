@@ -16,7 +16,7 @@ class Simulator_Basic_A: public Simulator
         Simulator_Basic_A& operator= (const Simulator_Basic_A& o) = default;
         ~Simulator_Basic_A () = default;
 
-        std::unordered_map<House*, Resident*> simulate() override;
+        std::unordered_map<const House*, Resident*> simulate() override;
     
     private:
         City* _city;
@@ -26,13 +26,13 @@ class Simulator_Basic_A: public Simulator
         std::set<Resident*> _residents;
 
         // Only houses that are occupied and their residents
-        std::unordered_map<House*, Resident*> _curr_house_to_res_map = {};
+        std::unordered_map<const House*, Resident*> _curr_house_to_res_map = {};
 
         // Only residents that have houses and their houses
-        std::map<Resident*, House*> _curr_res_to_house_map;
+        std::map<Resident*, const House*> _curr_res_to_house_map;
 
         // All unoccupied houses
-        std::set<House*> _open_houses;
+        std::set<const House*> _open_houses;
 
         // In first simulation, no resident has a house. And all residents are assigned a house.
         void firstSimulation ();
@@ -50,19 +50,19 @@ class Simulator_Basic_A: public Simulator
         // Adds the house (now the old house) into the _open_houses set.
         // Then adds @res and @newHouse into said maps.
         // Removes @newHouse from _open_houses.
-        void moveResidentIntoHouse (Resident* res, House* newHouse);
+        void moveResidentIntoHouse (Resident* res, const House* newHouse);
 
         void updateResident (Resident* res);
 
         // Returns residents that live in @houses. If a house is empty, then 
         // returned set will be smaller than @houses.
-        std::set<Resident*> getResidentsInTheseHouses(std::set<House*> houses);
-        House* selectRandomWithinMovingDist (std::set<House*> setOfHouses, House* origHouse, double allowedMovement);
-        House* selectRandom (std::set<House*>& setOfHouses) const;
+        std::set<Resident*> getResidentsInTheseHouses(std::set<const House*> houses);
+        const House* selectRandomWithinMovingDist (std::set<const House*> setOfHouses, House* origHouse, double allowedMovement);
+        const House* selectRandom (std::set<const House*>& setOfHouses) const;
 
-        House* getCurrHouse (Resident* res);
-        Resident* getCurrResident (House* house);
-        bool hasResident (House* house);
+        const House* getCurrHouse (Resident* res);
+        Resident* getCurrResident (const House* house);
+        bool hasResident (const House* house);
         bool hasHouse (Resident* res);
         void updateNeighbors (House* house);
 

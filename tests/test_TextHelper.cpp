@@ -187,8 +187,8 @@ TEST_CASE("TextHelper create text()")
     int cityWidth = 5;
     std::string title = "title";
     City_Grid city{cityWidth};
-    std::vector<House*> houses = city.getHouses();
-    std::map<House*, Resident*> residentPerHouse{  
+    std::vector<const House*> houses = city.getHouses();
+    std::map<const House*, Resident*> residentPerHouse{  
         {houses[6], &blueNeighbor006},
         {houses[7], &blueNeighbor007},
         {houses[8], &blueNeighbor008},

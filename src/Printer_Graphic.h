@@ -29,17 +29,20 @@ class Printer_Graphic : public Printer
         Printer_Graphic& operator= (Printer_Graphic&& obj) noexcept = default;
         ~Printer_Graphic () = default;
 
-        void initCityMap (City* cityPtr); // make private
+        void initCityMap (); // make private
         void setColors (std::unordered_map<int, Color> colors); // make private
         void initRunCounter (int numOfRuns); // make private
-        void initColorKeyForCityMap();
-        void initColorKeyForDivAndHapCharts();
-        void init (City* cityPtr, int numOfRuns, std::string title);
+        void init (
+            std::unordered_map<const House*, Coordinate > coordPerHouse,
+            std::unordered_map<const House*, std::set<const House*>> neighbors,
+            int numOfRuns,
+            std::string title
+        );
         int maxNumOfHousesX (int screenWidth__px);
         int maxNumOfHousesY (int screenHeight__px);
 
         void print(
-            std::unordered_map<House*, Resident*> residentPerHouse,
+            std::unordered_map<const House*, const Resident*> residentPerHouse,
             int run
         ) override;
 
@@ -49,14 +52,14 @@ class Printer_Graphic : public Printer
         std::unique_ptr<GrCityPrinter>      _city_printer;
         std::unique_ptr<GrRunCPrinter>      _run_counter_printer;
         std::unique_ptr<GrDiversityPrinter> _diversity_printer;
-        std::unique_ptr<GrHapPrinter>     _happiness_printer;
+        std::unique_ptr<GrHapPrinter>       _happiness_printer;
         std::unique_ptr<GrDvstyPrinter>     _dvsty_printer;
         std::unique_ptr<GrColorKeyPrinter>  _color_key_for_map_printer;
         std::unique_ptr<GrColorKeyPrinter>  _color_key_for_hap_and_div_printer;
 
         City* _city;
 
-        std::map<Coordinate, House*> _coord_to_house_map = {};
+        std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
         std::unique_ptr<Renderer> _renderer;
         std::unordered_map<int, Color> _colors;
         int _num_of_types_of_residents = 2;
@@ -118,6 +121,7 @@ class Printer_Graphic : public Printer
         int _city_label_spacing_x; // label spacing on x axis
         int _city_label_spacing_y; // label spacing on y axis
         
+        // TODO these have to be updated before they are used.
         //   House coordinates from the city, not in pixels.
         int _min_x_coord = INT32_MAX; // top left corner of grid 
 		int _min_y_coord = INT32_MAX; // top left corner of grid
@@ -138,8 +142,6 @@ class Printer_Graphic : public Printer
         double _hap_chart_y_axis_fraction = 0.7;
         int _hap_chart_top_y__px;
 
-        
-
         // COLOR KEY FOR DIVERSITY AND HAPPINESS CHARTS
         Letter _color_key_letter_for_map{24, 4}; // TODO is this used. Should be replace dby _color_key_letter
 
@@ -149,7 +151,7 @@ class Printer_Graphic : public Printer
         // initialize _coord_to_house_map. 
         // Since, the city's most west, east, north, and south coordinates
         // will not change, set _min_x_coord and the like.
-        void determineMinMaxHouseCoords (City* cityPtr);
+        void determineMinMaxHouseCoords ();
 
         // determines _cell_size and _house_size.
         void setCityMapInfo ();
@@ -160,7 +162,7 @@ class Printer_Graphic : public Printer
         // set up the graph where the residents will be plotted.
         void setCityPrinter ();
 
-        void initDiversityPrinter();
+        void initDiversityPrinter(std::unordered_map<const House*, std::set<const House*>> neighbors);
 
         void initHappinessPrinter();
 

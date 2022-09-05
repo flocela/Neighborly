@@ -4,7 +4,7 @@
 GrCityPrinter::GrCityPrinter (
     GrCityPrinterSizer grCityPrinterSizer,
     Renderer* renderer,
-    std::map<Coordinate, House*> coordToHouseMap,
+    std::unordered_map<const House*, Coordinate> coordToHouseMap,
     std::unordered_map<int, Color> resColors,
     int topLeftCornerXPx,
     int topLeftCornerYPx
@@ -43,22 +43,20 @@ GrCityPrinter::GrCityPrinter (
         _title_letter.getHeightIncLSpace() +
         _key.getHeightPx() + 
         _axis_format_X.getAxisHeightPx()
-    },
-    
-    
-    _pixel_converter_x{ std::make_unique<PixelConverter>(
+    }
+   
+{   
+    _pixel_converter_x = std::make_unique<PixelConverter>(
         _house_min_x,
         _cross_hairs_x__px + _offset__px,
         _house_max_x,
-        _cross_hairs_x__px + _offset__px + _cell_size__px * (_house_max_x - _house_min_x))
-    },
-    _pixel_converter_y{ std::make_unique<PixelConverter>(
+        _cross_hairs_x__px + _offset__px + _cell_size__px * (_house_max_x - _house_min_x));
+    _pixel_converter_y = std::make_unique<PixelConverter>(
         _house_min_y,
         _cross_hairs_y__px + _offset__px,
         _house_max_y,
-        _cross_hairs_y__px + _offset__px + _cell_size__px * (_house_max_y - _house_min_y))
-    }
-{  
+        _cross_hairs_y__px + _offset__px + _cell_size__px * (_house_max_y - _house_min_y));
+    
     _axis_format_X.setTitleLetterHeight(0);// axis title is empty string.
     _axis_format_Y.setTitleLetterHeight(0);// axis title is empty string.
     
@@ -110,7 +108,7 @@ void GrCityPrinter::addCityYAxis()
     );
 }
 
-void GrCityPrinter::printCity(std::unordered_map<House*, Resident*> houseToResMap)
+void GrCityPrinter::printCity(std::unordered_map<const House*, const Resident*> houseToResMap)
 {   
     printTitle();
     printXAxis();
@@ -138,7 +136,7 @@ void GrCityPrinter::printYAxis()
     _y_axis_utility->print(_renderer);
 }
 
-void GrCityPrinter::printHouses( std::unordered_map<House *, Resident *> houseToResMap )
+void GrCityPrinter::printHouses( std::unordered_map<const House *, const Resident *> houseToResMap )
 {   
     std::map<Color, std::vector<Coordinate>> coordsPerColor =
         createVectorsOfHousesForEachColor(houseToResMap);
@@ -155,14 +153,15 @@ void GrCityPrinter::printHouses( std::unordered_map<House *, Resident *> houseTo
 }
 
 std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsOfHousesForEachColor(
-    std::unordered_map<House *, Resident *> houseToResMap)
+    std::unordered_map<const House *, const Resident *> houseToResMap)
 {   
     std::map<Color, std::vector<Coordinate>> colorToCoordinatesMap = {};
 
     for (auto const &x : _coord_to_house_map)
     {   
-        Coordinate coord = x.first;
-        House *house = x.second;
+        const House* house = x.first;
+        Coordinate coord = x.second;
+
         Color colorKey;
         if (houseToResMap.find(house) == houseToResMap.end())
         {
@@ -171,7 +170,7 @@ std::map<Color, std::vector<Coordinate>> GrCityPrinter::createVectorsOfHousesFor
         }
         else
         {
-            Resident *res = houseToResMap[house];
+            const Resident *res = houseToResMap[house];
             
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
@@ -223,7 +222,6 @@ int GrCityPrinter::labelSpacing (int axisLength__coord)
 
 int GrCityPrinter::calcYCrossHairsPx ()
 {
-    std::cout << "GrCityPrinter _key.getHeightPx(): " << _key.getHeightPx() << std::endl;
     return _top_left_corner_y__px + 
            _title_letter.getHeightIncLSpace() + 
            _key.getHeightPx() +

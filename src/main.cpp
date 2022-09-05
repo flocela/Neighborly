@@ -182,13 +182,26 @@ int main(int argc, char* argv[])
         color_iter++;
     }
     graphicPrinter.setColors(groupNumToColorMap);
-    graphicPrinter.init(city.get(), numOfRuns, "Neighbors");
-    std::unordered_map<House*, Resident*> houseToResidentMap;
+
+    std::vector<const House*> houses = city->getHouses();
+    std::unordered_map<const House*, std::set<const House*>> neighbors;
+    for (const House* house : houses)
+    {
+        neighbors[house] = city->getAdjacentHouses(house);
+    }
+
+    graphicPrinter.init(city->getCoordinatesPerHouse(), neighbors, numOfRuns, "Neighbors");
+    std::unordered_map<const House*, Resident*> houseToResidentMap;
     //for (int ii=0; ii< numOfRuns; ii++)
     for (int ii=0; ii< 2; ii++)
     {   
         houseToResidentMap = simulator->simulate();
-        graphicPrinter.print(houseToResidentMap, ii);
+        std::unordered_map<const House*, const Resident*> constMap;
+        for (auto& pair : houseToResidentMap)
+        {
+            constMap[pair.first] = pair.second;
+        }
+        graphicPrinter.print(constMap, ii);
     }
     Printer_CMDLine cmdLinePrinter{numOfRuns, city.get()};
     //cmdLinePrinter.print(houseToResidentMap, numOfRuns, "Title");

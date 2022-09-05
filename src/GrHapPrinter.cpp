@@ -1,15 +1,11 @@
 #include "GrHapPrinter.h"
 
 void GrHapPrinter::print (
-    City* city, 
-    std::unordered_map<Resident*, House*> housePerResident,
-    std::unordered_map<House*, Resident*> residentPerHouse,
+    std::unordered_map<const Resident*, const House*> housePerResident,
     int run,
     Renderer* renderer
 )
 {
-    (void)city;
-    (void)residentPerHouse;
     /*(void)housePerResident;
     (void)renderer;*/
 
@@ -22,7 +18,7 @@ void GrHapPrinter::print (
 
     for (auto& pair : housePerResident)
     {
-        Resident* res = pair.first;
+        const Resident* res = pair.first;
         int resGroupNumber = res->getGroupNumber();
         if (happiness_sum_Per_group.find(resGroupNumber) != happiness_sum_Per_group.end())
         {

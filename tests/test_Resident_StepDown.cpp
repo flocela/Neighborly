@@ -322,13 +322,13 @@ TEST_CASE("Resident_StepDown findHome()"
         0.5   // stepDown Diversity x-value
     };
 
-    House& oldHouse = hh0; // resident's current house
-    House& grHouse8 = hh8;  // green_neutral resident lives in house 8
-    House& blHouse16 = hh16; // blue_neutral resident lives in house 16
-    House& house11 = hh11; // next to blue_neutral resident
-    House& house13 = hh13; // next to green_neutral resident
+    const House& oldHouse = hh0; // resident's current house
+    const House& grHouse8 = hh8;  // green_neutral resident lives in house 8
+    const House& blHouse16 = hh16; // blue_neutral resident lives in house 16
+    const House& house11 = hh11; // next to blue_neutral resident
+    const House& house13 = hh13; // next to green_neutral resident
 
-    std::set<House*> housesAdjToHouse13;
+    std::set<const House*> housesAdjToHouse13;
     housesAdjToHouse13.insert(&hh7);
     housesAdjToHouse13.insert(&hh8);
     housesAdjToHouse13.insert(&hh9);
@@ -338,7 +338,7 @@ TEST_CASE("Resident_StepDown findHome()"
     housesAdjToHouse13.insert(&hh18);
     housesAdjToHouse13.insert(&hh19);
 
-    std::set<House*> housesAdjToHouse11;
+    std::set<const House*> housesAdjToHouse11;
     housesAdjToHouse11.insert(&hh5);
     housesAdjToHouse11.insert(&hh6);
     housesAdjToHouse11.insert(&hh7);
@@ -348,20 +348,20 @@ TEST_CASE("Resident_StepDown findHome()"
     housesAdjToHouse11.insert(&hh16);
     housesAdjToHouse11.insert(&hh17);
 
-    std::map<House*, std::set<House*>> openHousesAndTheirAdjHouses;
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    std::map<const House*, std::set<const House*>> openHousesAndTheirAdjHouses;
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house13,
         housesAdjToHouse13
         )
     );
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house11,
         housesAdjToHouse11)
     );
 
-    std::unordered_map<House*, Resident*> houseToResMap;
-    houseToResMap.insert(std::pair<House*, Resident*>(&grHouse8,&greenNeighbor1));
-    houseToResMap.insert(std::pair<House*, Resident*>(&blHouse16, &blueNeighbor1));
+    std::unordered_map<const House*, Resident*> houseToResMap;
+    houseToResMap.insert(std::pair<const House*, Resident*>(&grHouse8,&greenNeighbor1));
+    houseToResMap.insert(std::pair<const House*, Resident*>(&blHouse16, &blueNeighbor1));
         
     REQUIRE(
         greenResident.findHome(
@@ -388,22 +388,22 @@ TEST_CASE("Resident_StepDown findHome()"
         0.5  // drop location 
     };
 
-    House& oldHouse  = hh0;  // resident's current house
-    House& grHouse7  = hh7;  // green_neutral resident lives in house 7
-    House& grHouse8  = hh8;  // green_neutral resident lives in house 8
-    House& blHouse16 = hh16; // blue_neutral resident lives in house 16
-    House& house2  = hh2;  // next to two green_neutral residents (happiness = 1.0)
-    House& house11 = hh11; // next to one blue_neutral resident + one green_neutral resident (happiness = 0.0)
-    House& house12 = hh12; // next to two green_neutral + one blue_neutral residents (happiness = 1.0)
+    const House& oldHouse  = hh0;  // resident's current house
+    const House& grHouse7  = hh7;  // green_neutral resident lives in house 7
+    const House& grHouse8  = hh8;  // green_neutral resident lives in house 8
+    const House& blHouse16 = hh16; // blue_neutral resident lives in house 16
+    const House& house2  = hh2;  // next to two green_neutral residents (happiness = 1.0)
+    const House& house11 = hh11; // next to one blue_neutral resident + one green_neutral resident (happiness = 0.0)
+    const House& house12 = hh12; // next to two green_neutral + one blue_neutral residents (happiness = 1.0)
 
-    std::set<House*> housesAdjToHouse2;
+    std::set<const House*> housesAdjToHouse2;
     housesAdjToHouse2.insert(&hh1);
     housesAdjToHouse2.insert(&hh3);
     housesAdjToHouse2.insert(&hh6);
     housesAdjToHouse2.insert(&hh7);
     housesAdjToHouse2.insert(&hh8);
 
-    std::set<House*> housesAdjToHouse11;
+    std::set<const House*> housesAdjToHouse11;
     housesAdjToHouse11.insert(&hh5);
     housesAdjToHouse11.insert(&hh6);
     housesAdjToHouse11.insert(&hh7);
@@ -413,7 +413,7 @@ TEST_CASE("Resident_StepDown findHome()"
     housesAdjToHouse11.insert(&hh16);
     housesAdjToHouse11.insert(&hh17);
 
-    std::set<House*> housesAdjToHouse12;
+    std::set<const House*> housesAdjToHouse12;
     housesAdjToHouse12.insert(&hh6);
     housesAdjToHouse12.insert(&hh7);
     housesAdjToHouse12.insert(&hh8);
@@ -423,30 +423,30 @@ TEST_CASE("Resident_StepDown findHome()"
     housesAdjToHouse12.insert(&hh17);
     housesAdjToHouse12.insert(&hh18);
 
-    std::map<House*, std::set<House*>> openHousesAndTheirAdjHouses;
+    std::map<const House*, std::set<const House*>> openHousesAndTheirAdjHouses;
 
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house12,
         housesAdjToHouse12
         )
     );
 
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house2,
         housesAdjToHouse2)
     );
 
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house11,
         housesAdjToHouse11)
     );
 
-    std::unordered_map<House*, Resident*> houseToResMap;
-    houseToResMap.insert(std::pair<House*, Resident*>(&grHouse7,&greenNeighbor1));
-    houseToResMap.insert(std::pair<House*, Resident*>(&grHouse8,&greenNeighbor2));
-    houseToResMap.insert(std::pair<House*, Resident*>(&blHouse16, &blueNeighbor1));
+    std::unordered_map<const House*, Resident*> houseToResMap;
+    houseToResMap.insert(std::pair<const House*, Resident*>(&grHouse7,&greenNeighbor1));
+    houseToResMap.insert(std::pair<const House*, Resident*>(&grHouse8,&greenNeighbor2));
+    houseToResMap.insert(std::pair<const House*, Resident*>(&blHouse16, &blueNeighbor1));
     
-    House* answerHouse = greenResident.findHome(
+    const House* answerHouse = greenResident.findHome(
             &oldHouse,
             openHousesAndTheirAdjHouses,
             houseToResMap
@@ -469,14 +469,14 @@ TEST_CASE("Resident_StepDown findBestHome()"
         0.5  // drop location 
     };
 
-    House& oldHouse  = hh0;  // resident's current house
-    House& grHouse7  = hh7;  // green_neutral resident lives in house 7
-    House& grHouse8  = hh8;  // green_neutral resident lives in house 8
-    House& blHouse16 = hh16; // blue_neutral resident lives in house 16
-    House& house11 = hh11; // next to one blue_neutral resident + one green_neutral resident (happiness = 0.0)
-    House& house12 = hh12; // next to two green_neutral + one blue_neutral residents (happiness = 1.0)
+    const House& oldHouse  = hh0;  // resident's current house
+    const House& grHouse7  = hh7;  // green_neutral resident lives in house 7
+    const House& grHouse8  = hh8;  // green_neutral resident lives in house 8
+    const House& blHouse16 = hh16; // blue_neutral resident lives in house 16
+    const House& house11 = hh11; // next to one blue_neutral resident + one green_neutral resident (happiness = 0.0)
+    const House& house12 = hh12; // next to two green_neutral + one blue_neutral residents (happiness = 1.0)
 
-    std::set<House*> housesAdjToHouse11;
+    std::set<const House*> housesAdjToHouse11;
     housesAdjToHouse11.insert(&hh5);
     housesAdjToHouse11.insert(&hh6);
     housesAdjToHouse11.insert(&hh7);
@@ -486,7 +486,7 @@ TEST_CASE("Resident_StepDown findBestHome()"
     housesAdjToHouse11.insert(&hh16);
     housesAdjToHouse11.insert(&hh17);
 
-    std::set<House*> housesAdjToHouse12;
+    std::set<const House*> housesAdjToHouse12;
     housesAdjToHouse12.insert(&hh6);
     housesAdjToHouse12.insert(&hh7);
     housesAdjToHouse12.insert(&hh8);
@@ -496,25 +496,25 @@ TEST_CASE("Resident_StepDown findBestHome()"
     housesAdjToHouse12.insert(&hh17);
     housesAdjToHouse12.insert(&hh18);
 
-    std::map<House*, std::set<House*>> openHousesAndTheirAdjHouses;
+    std::map<const House*, std::set<const House*>> openHousesAndTheirAdjHouses;
 
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house12,
         housesAdjToHouse12
         )
     );
 
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house11,
         housesAdjToHouse11)
     );
 
-    std::unordered_map<House*, Resident*> houseToResMap;
-    houseToResMap.insert(std::pair<House*, Resident*>(&grHouse7,&greenNeighbor1));
-    houseToResMap.insert(std::pair<House*, Resident*>(&grHouse8,&greenNeighbor2));
-    houseToResMap.insert(std::pair<House*, Resident*>(&blHouse16, &blueNeighbor1));
+    std::unordered_map<const House*, Resident*> houseToResMap;
+    houseToResMap.insert(std::pair<const House*, Resident*>(&grHouse7,&greenNeighbor1));
+    houseToResMap.insert(std::pair<const House*, Resident*>(&grHouse8,&greenNeighbor2));
+    houseToResMap.insert(std::pair<const House*, Resident*>(&blHouse16, &blueNeighbor1));
     
-    House* answerHouse = greenResident.findHome(
+    const House* answerHouse = greenResident.findHome(
             &oldHouse,
             openHousesAndTheirAdjHouses,
             houseToResMap

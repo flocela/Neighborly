@@ -6,6 +6,7 @@
 #include <memory>
 #include "Coordinate.h"
 #include "House.h"
+#include <unordered_map>
 
 class City
 {
@@ -17,7 +18,7 @@ class City
         virtual int getSize() const = 0;
 
         // Returns all the houses in the city.
-        virtual std::vector<House*> getHouses () const = 0;
+        virtual std::vector<const House*> getHouses () const = 0;
 
         virtual double dist (
             const int& from_address, 
@@ -25,11 +26,11 @@ class City
         ) const = 0;
 
         // Returns all houses considered to be adjacent by city.
-        virtual std::set<House*> getAdjacentHouses(House* house) const = 0;
+        virtual std::set<const House*> getAdjacentHouses (const House* house) const = 0;
 
         // Returns all houses within distance except for @house.
         virtual std::set<House*> getHousesWithinDistance (
-            House* house, 
+            const House* house, 
             double distance
         ) const = 0;
 
@@ -38,15 +39,17 @@ class City
         // May return less than @count houses because there are not
         // @count number of houses that are unoccupied and within @distance.
         // @house not included in returned set.
-        virtual std::set<House*> getNumberOfUnoccupiedNearHouses (
-            House* house,
+        virtual std::set<const House*> getNumberOfUnoccupiedNearHouses (
+            const House* house,
             double distance,
-            std::set<House*> occupied,
+            std::set<const House*> occupied,
             int count
         ) const = 0;
 
         // Returns coordinate of house (x, y).
         virtual Coordinate getCoordinate(const int& address) const = 0;
+
+        virtual std::unordered_map<const House*, Coordinate > getCoordinatesPerHouse() = 0;
 };
 
 #endif

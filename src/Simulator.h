@@ -8,7 +8,7 @@
 class Simulator
 {
     public:
-        virtual std::unordered_map<House*, Resident*> simulate() = 0;
+        virtual std::unordered_map<const House*, Resident*> simulate() = 0;
 };
 
 #endif

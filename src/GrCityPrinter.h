@@ -34,13 +34,13 @@ class GrCityPrinter
         GrCityPrinter (
             GrCityPrinterSizer grCityPrinterSizer,
             Renderer* renderer,
-            std::map<Coordinate, House*> coordToHouseMap,
+            std::unordered_map<const House*, Coordinate> coordToHouseMap,
             std::unordered_map<int, Color> resColors,
             int topLeftCornerXPx,
             int topLeftCornerYPx
         );
 
-        void printCity (std::unordered_map<House*, Resident*> houseToResMap);
+        void printCity (std::unordered_map<const House*, const Resident*> houseToResMap);
     
     // __px suffix means the variable is in pixels which correspond to the screen.
     // __cl suffix means the variable is using the map's coordinate system.
@@ -51,7 +51,7 @@ class GrCityPrinter
     private:
         std::string _main_title = "City Map";
         Renderer* _renderer;
-        std::map<Coordinate, House*> _coord_to_house_map;
+        std::unordered_map<const House*, Coordinate> _coord_to_house_map;
         // This includes sad resident colors and happy resident colors.
         std::unordered_map<int, Color> _res_colors;
        
@@ -109,8 +109,6 @@ class GrCityPrinter
         int _label_spacing_x;
         int _label_spacing_y;
 
-        
-
         // TODO are these _house_min _max __px values used?
         // These are taken at the center of the house.
         // minimum x value for a house in pixels. (most west house)
@@ -143,9 +141,9 @@ class GrCityPrinter
 
         void addCityXAxis ();
         void addCityYAxis ();
-        void printHouses (std::unordered_map<House*, Resident*> houseToResMap);
+        void printHouses (std::unordered_map<const House*, const Resident*> houseToResMap);
         std::map<Color, std::vector<Coordinate>> createVectorsOfHousesForEachColor (
-            std::unordered_map<House*, Resident*> houseToResMap
+            std::unordered_map<const House*, const Resident*> houseToResMap
         );
 
         Color getHappyColor (int resGroup);

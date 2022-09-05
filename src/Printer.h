@@ -8,7 +8,7 @@
 
 class Printer
 {   public:
-        virtual void print(std::unordered_map<House*, Resident*> residentPerHouse, int run) = 0;
+        virtual void print(std::unordered_map<const House*, const Resident*> residentPerHouse, int run) = 0;
 };
 
 #endif

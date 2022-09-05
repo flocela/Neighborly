@@ -23,16 +23,16 @@ class Resident_Rising: public Resident
 
         std::string toStrBasic () const override;
         
-        House* findHome(
-            House* oldHouse,
-            std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-            std::unordered_map<House*, Resident*> houseToResMap
+        const House* findHome(
+            const House* oldHouse,
+            std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
+            std::unordered_map<const House*, Resident*> houseToResMap
         ) const override;
 
-        House* findBestHome(
-            House* oldHouse,
-            std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-            std::unordered_map<House*, Resident*> houseToResMap
+        const House* findBestHome(
+            const House* oldHouse,
+            std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
+            std::unordered_map<const House*, Resident*> houseToResMap
         ) const override;
 
     private:

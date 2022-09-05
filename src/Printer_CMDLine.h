@@ -13,7 +13,7 @@ class Printer_CMDLine : public Printer
         );
         
         void print(
-            std::unordered_map<House*, Resident*> residentPerHouse,
+            std::unordered_map<const House*, const Resident*> residentPerHouse,
             int run
         ) override;
 

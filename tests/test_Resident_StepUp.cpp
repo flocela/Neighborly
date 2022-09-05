@@ -276,31 +276,31 @@ TEST_CASE("Resident_StepUp toStrBasic()")
 //    3   8   13   18   23
 //    4   9   14   19   24
 
-House hs000 = House{0};
-House hs001 = House{1};
-House hs002 = House{2};
-House hs003 = House{3};
-House hs004 = House{4};
-House hs005 = House{5};
-House hs006 = House{6};
-House hs007 = House{7};
-House hs008 = House{8};
-House hs009 = House{9};
-House hs010 = House{10};
-House hs011 = House{11};
-House hs012 = House{12};
-House hs013 = House{13};
-House hs014 = House{14};
-House hs015 = House{15};
-House hs016 = House{16};
-House hs017 = House{17};
-House hs018 = House{18};
-House hs019 = House{19};
-House hs020 = House{20};
-House hs021 = House{21};
-House hs022 = House{22};
-House hs023 = House{23};
-House hs024 = House{24};
+const House hs000 = House{0};
+const House hs001 = House{1};
+const House hs002 = House{2};
+const House hs003 = House{3};
+const House hs004 = House{4};
+const House hs005 = House{5};
+const House hs006 = House{6};
+const House hs007 = House{7};
+const House hs008 = House{8};
+const House hs009 = House{9};
+const House hs010 = House{10};
+const House hs011 = House{11};
+const House hs012 = House{12};
+const House hs013 = House{13};
+const House hs014 = House{14};
+const House hs015 = House{15};
+const House hs016 = House{16};
+const House hs017 = House{17};
+const House hs018 = House{18};
+const House hs019 = House{19};
+const House hs020 = House{20};
+const House hs021 = House{21};
+const House hs022 = House{22};
+const House hs023 = House{23};
+const House hs024 = House{24};
 
 TEST_CASE("Resident_StepUp findHome()"
     " green_neutral resident has choice of one green_neutral neigbor or one blue_neutral neighbor,"
@@ -316,13 +316,13 @@ TEST_CASE("Resident_StepUp findHome()"
         0.5   // location of rise
     };
 
-    House& oldHouse = hs000;  // resident's current house
-    House& grHouse8 = hs008;  // green_neutral resident lives in house 8
-    House& blHouse16 = hs016; // blue_neutral resident lives in house 16
-    House& house11 = hs011;   // next to blue_neutral resident
-    House& house13 = hs013;   // next to green_neutral resident
+    const House& oldHouse = hs000;  // resident's current house
+    const House& grHouse8 = hs008;  // green_neutral resident lives in house 8
+    const House& blHouse16 = hs016; // blue_neutral resident lives in house 16
+    const House& house11 = hs011;   // next to blue_neutral resident
+    const House& house13 = hs013;   // next to green_neutral resident
 
-    std::set<House*> housesAdjToHouse13;
+    std::set<const House*> housesAdjToHouse13;
     housesAdjToHouse13.insert(&hs007);
     housesAdjToHouse13.insert(&hs008);
     housesAdjToHouse13.insert(&hs009);
@@ -332,7 +332,7 @@ TEST_CASE("Resident_StepUp findHome()"
     housesAdjToHouse13.insert(&hs018);
     housesAdjToHouse13.insert(&hs019);
 
-    std::set<House*> housesAdjToHouse11;
+    std::set<const House*> housesAdjToHouse11;
     housesAdjToHouse11.insert(&hs005);
     housesAdjToHouse11.insert(&hs006);
     housesAdjToHouse11.insert(&hs007);
@@ -342,20 +342,20 @@ TEST_CASE("Resident_StepUp findHome()"
     housesAdjToHouse11.insert(&hs016);
     housesAdjToHouse11.insert(&hs017);
 
-    std::map<House*, std::set<House*>> openHousesAndTheirAdjHouses;
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    std::map<const House*, std::set<const House*>> openHousesAndTheirAdjHouses;
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house13,
         housesAdjToHouse13
         )
     );
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house11,
         housesAdjToHouse11)
     );
 
-    std::unordered_map<House*, Resident*> houseToResMap;
-    houseToResMap.insert(std::pair<House*, Resident*>(&grHouse8,&grNeighbor01));
-    houseToResMap.insert(std::pair<House*, Resident*>(&blHouse16, &blNeighbor01));
+    std::unordered_map<const House*, Resident*> houseToResMap;
+    houseToResMap.insert(std::pair<const House*, Resident*>(&grHouse8,&grNeighbor01));
+    houseToResMap.insert(std::pair<const House*, Resident*>(&blHouse16, &blNeighbor01));
         
     REQUIRE(
         greenResident.findHome(
@@ -382,22 +382,22 @@ TEST_CASE("Resident_StepUp findHome()"
         0.65  // location of rise
     };
 
-    House& oldHouse = hs000;  // resident's current house
-    House& grHouse7 = hs007;   // green_neutral resident lives in house 7
-    House& grHouse8 = hs008;   // green_neutral resident lives in house 8
-    House& blHouse16 = hs016;  // blue_neutral resident lives in house 16
-    House& house2  = hs002; // next to two green_neutral residents (happiness = 1.0)
-    House& house11 = hs011; // next to one green_neutral + one blue_neutral residents (happiness = 0.0)
-    House& house12 = hs012; // next to two green_neutral + one blue_neutral residents (happiness = 1.0)
+    const House& oldHouse = hs000;  // resident's current house
+    const House& grHouse7 = hs007;   // green_neutral resident lives in house 7
+    const House& grHouse8 = hs008;   // green_neutral resident lives in house 8
+    const House& blHouse16 = hs016;  // blue_neutral resident lives in house 16
+    const House& house2  = hs002; // next to two green_neutral residents (happiness = 1.0)
+    const House& house11 = hs011; // next to one green_neutral + one blue_neutral residents (happiness = 0.0)
+    const House& house12 = hs012; // next to two green_neutral + one blue_neutral residents (happiness = 1.0)
 
-    std::set<House*> housesAdjToHouse2;
+    std::set<const House*> housesAdjToHouse2;
     housesAdjToHouse2.insert(&hs001);
     housesAdjToHouse2.insert(&hs003);
     housesAdjToHouse2.insert(&hs006);
     housesAdjToHouse2.insert(&hs007);
     housesAdjToHouse2.insert(&hs008);
 
-    std::set<House*> housesAdjToHouse11;
+    std::set<const House*> housesAdjToHouse11;
     housesAdjToHouse11.insert(&hs005);
     housesAdjToHouse11.insert(&hs006);
     housesAdjToHouse11.insert(&hs007);
@@ -407,7 +407,7 @@ TEST_CASE("Resident_StepUp findHome()"
     housesAdjToHouse11.insert(&hs016);
     housesAdjToHouse11.insert(&hs017);
 
-    std::set<House*> housesAdjToHouse12;
+    std::set<const House*> housesAdjToHouse12;
     housesAdjToHouse12.insert(&hs006);
     housesAdjToHouse12.insert(&hs007);
     housesAdjToHouse12.insert(&hs008);
@@ -417,30 +417,30 @@ TEST_CASE("Resident_StepUp findHome()"
     housesAdjToHouse12.insert(&hs017);
     housesAdjToHouse12.insert(&hs018);
 
-    std::map<House*, std::set<House*>> openHousesAndTheirAdjHouses;
+    std::map<const House*, std::set<const House*>> openHousesAndTheirAdjHouses;
 
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house2,
         housesAdjToHouse2)
     );
 
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house11,
         housesAdjToHouse11)
     );
 
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house12,
         housesAdjToHouse12
         )
     );
 
-    std::unordered_map<House*, Resident*> houseToResMap;
-    houseToResMap.insert(std::pair<House*, Resident*>(&grHouse7, &grNeighbor01));
-    houseToResMap.insert(std::pair<House*, Resident*>(&grHouse8, &grNeighbor02));
-    houseToResMap.insert(std::pair<House*, Resident*>(&blHouse16, &blNeighbor01));
+    std::unordered_map<const House*, Resident*> houseToResMap;
+    houseToResMap.insert(std::pair<const House*, Resident*>(&grHouse7, &grNeighbor01));
+    houseToResMap.insert(std::pair<const House*, Resident*>(&grHouse8, &grNeighbor02));
+    houseToResMap.insert(std::pair<const House*, Resident*>(&blHouse16, &blNeighbor01));
     
-    House* answerHouse = blueResident.findHome(
+    const House* answerHouse = blueResident.findHome(
             &oldHouse,
             openHousesAndTheirAdjHouses,
             houseToResMap
@@ -469,22 +469,22 @@ TEST_CASE("Resident_StepUp findBestHome()"
         0.65  // location of rise
     };
 
-    House& oldHouse = hs000;  // resident's current house
-    House& grHouse7 = hs007;   // green_neutral resident lives in house 7
-    House& grHouse8 = hs008;   // green_neutral resident lives in house 8
-    House& blHouse16 = hs016;  // blue_neutral resident lives in house 16
-    House& house2  = hs002; // next to two green_neutral residents (happiness = 1.0)
-    House& house11 = hs011; // next to one green_neutral + one blue_neutral residents (happiness = 0.0)
-    House& house12 = hs012; // next to two green_neutral + one blue_neutral residents (happiness = 1.0)
+    const House& oldHouse = hs000;  // resident's current house
+    const House& grHouse7 = hs007;   // green_neutral resident lives in house 7
+    const House& grHouse8 = hs008;   // green_neutral resident lives in house 8
+    const House& blHouse16 = hs016;  // blue_neutral resident lives in house 16
+    const House& house2  = hs002; // next to two green_neutral residents (happiness = 1.0)
+    const House& house11 = hs011; // next to one green_neutral + one blue_neutral residents (happiness = 0.0)
+    const House& house12 = hs012; // next to two green_neutral + one blue_neutral residents (happiness = 1.0)
 
-    std::set<House*> housesAdjToHouse2;
+    std::set<const House*> housesAdjToHouse2;
     housesAdjToHouse2.insert(&hs001);
     housesAdjToHouse2.insert(&hs003);
     housesAdjToHouse2.insert(&hs006);
     housesAdjToHouse2.insert(&hs007);
     housesAdjToHouse2.insert(&hs008);
 
-    std::set<House*> housesAdjToHouse11;
+    std::set<const House*> housesAdjToHouse11;
     housesAdjToHouse11.insert(&hs005);
     housesAdjToHouse11.insert(&hs006);
     housesAdjToHouse11.insert(&hs007);
@@ -494,7 +494,7 @@ TEST_CASE("Resident_StepUp findBestHome()"
     housesAdjToHouse11.insert(&hs016);
     housesAdjToHouse11.insert(&hs017);
 
-    std::set<House*> housesAdjToHouse12;
+    std::set<const House*> housesAdjToHouse12;
     housesAdjToHouse12.insert(&hs006);
     housesAdjToHouse12.insert(&hs007);
     housesAdjToHouse12.insert(&hs008);
@@ -504,30 +504,30 @@ TEST_CASE("Resident_StepUp findBestHome()"
     housesAdjToHouse12.insert(&hs017);
     housesAdjToHouse12.insert(&hs018);
 
-    std::map<House*, std::set<House*>> openHousesAndTheirAdjHouses;
+    std::map<const House*, std::set<const House*>> openHousesAndTheirAdjHouses;
 
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house2,
         housesAdjToHouse2)
     );
 
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house11,
         housesAdjToHouse11)
     );
 
-    openHousesAndTheirAdjHouses.insert(std::pair<House*, std::set<House*>>(
+    openHousesAndTheirAdjHouses.insert(std::pair<const House*, std::set<const House*>>(
         &house12,
         housesAdjToHouse12
         )
     );
 
-    std::unordered_map<House*, Resident*> houseToResMap;
-    houseToResMap.insert(std::pair<House*, Resident*>(&grHouse7, &grNeighbor01));
-    houseToResMap.insert(std::pair<House*, Resident*>(&grHouse8, &grNeighbor02));
-    houseToResMap.insert(std::pair<House*, Resident*>(&blHouse16, &blNeighbor01));
+    std::unordered_map<const House*, Resident*> houseToResMap;
+    houseToResMap.insert(std::pair<const House*, Resident*>(&grHouse7, &grNeighbor01));
+    houseToResMap.insert(std::pair<const House*, Resident*>(&grHouse8, &grNeighbor02));
+    houseToResMap.insert(std::pair<const House*, Resident*>(&blHouse16, &blNeighbor01));
     
-    House* answerHouse = blueResident.findBestHome(
+    const House* answerHouse = blueResident.findBestHome(
             &oldHouse,
             openHousesAndTheirAdjHouses,
             houseToResMap

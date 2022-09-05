@@ -36,9 +36,7 @@ public:
 
     // TODO this should be const Resident and const House
     void print (
-        City* city, // TODO why can't I make this const
-        std::unordered_map<Resident*, House*> housePerResident, // TODO why can't I make this const
-        std::unordered_map<House*, Resident*> residentPerHouse,
+        std::unordered_map<const Resident*, const House*> housePerResident, // TODO why can't I make this const
         int run,
         Renderer* renderer);
 

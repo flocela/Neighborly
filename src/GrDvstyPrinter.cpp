@@ -1,9 +1,8 @@
 #include "GrDvstyPrinter.h"
 
 void GrDvstyPrinter::print (
-    City* city, 
-    std::unordered_map<Resident*, House*> housePerResident,
-    std::unordered_map<House*, Resident*> residentPerHouse,
+    std::unordered_map<const Resident*, const House*> housePerResident,
+    std::unordered_map<const House*, const Resident*> residentPerHouse,
     int run,
     Renderer* renderer
 )
@@ -19,15 +18,15 @@ void GrDvstyPrinter::print (
     // number of residents per group
     std::unordered_map<int, int> count_residents_Per_group;
 
-    for (std::pair<Resident*, House*> ii : housePerResident)
+    for (std::pair<const Resident*, const House*> ii : housePerResident)
     {
-        Resident* res = ii.first;
-        House* house = ii.second;
+        const Resident* res = ii.first;
+        const House* house = ii.second;
         int groupNumForRes = res->getGroupNumber();
-        std::set<House*> adjHouses = city->getAdjacentHouses(house);
-        std::set<Resident*> adjResidents = getResidentsInTheseHouses(adjHouses, residentPerHouse);
+        std::set<const House*> adjHouses = _neighbors[house];
+        std::set<const Resident*> adjResidents = getResidentsInTheseHouses(adjHouses, residentPerHouse);
 
-        for (Resident* adj : adjResidents)
+        for (const Resident* adj : adjResidents)
         {
             int groupNumForAdj = adj->getGroupNumber();
             if (groupNumForAdj == groupNumForRes)
@@ -68,13 +67,13 @@ void GrDvstyPrinter::print (
     _key.print(renderer);
 }
 
-std::set<Resident*> GrDvstyPrinter::getResidentsInTheseHouses (
-    std::set<House*> houses,
-    const std::unordered_map<House*, Resident*> residentPerHouse
+std::set<const Resident*> GrDvstyPrinter::getResidentsInTheseHouses (
+    std::set<const House*> houses,
+    const std::unordered_map<const House*, const Resident*> residentPerHouse
 )
 {
-    std::set<Resident*> residents;
-    for (House* house : houses)
+    std::set<const Resident*> residents;
+    for (const House* house : houses)
     {
         if (residentPerHouse.find(house) != residentPerHouse.end())
         {

@@ -38,15 +38,15 @@ class Resident{
             std::set<Resident*> neighbors,
             int numOfAdjacentHouses
         );
-        virtual House* findHome (
-            House* oldHouse,
-            std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-            std::unordered_map<House*, Resident*> houseToResMap // This should be const. Or only send a copy of needed neighbors
+        virtual const House* findHome (
+            const House* oldHouse,
+            std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
+            std::unordered_map<const House*, Resident*> houseToResMap // This should be const. Or only send a copy of needed neighbors
         ) const = 0;
-        virtual House* findBestHome (
-            House* oldHouse,
-            std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-            std::unordered_map<House*, Resident*> houseToResMap// This should be const. Or only send a copy of needed neighbors
+        virtual const House* findBestHome (
+            const House* oldHouse,
+            std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
+            std::unordered_map<const House*, Resident*> houseToResMap// This should be const. Or only send a copy of needed neighbors
         ) const = 0;
         bool operator< (const Resident& other) const;
     private:

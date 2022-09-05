@@ -1,14 +1,21 @@
 #include "PixelConverter.h"
 #include <iostream>
 
-
+// TODO check that division by zero isn't happening
 PixelConverter::PixelConverter (
     int minVal,
     int minPixel,
     int maxVal,
     int maxPixel
-) : _min_val{minVal}, _min_pixel{minPixel}, _cell_size__px{(maxPixel - minPixel) / (maxVal - minVal)}
-{}
+) //_min_val{minVal},
+    //_min_pixel{minPixel},_cell_size__px{ (maxPixel - minPixel) / (maxVal - minVal)}
+{
+    std::cout << "minVal, minPixel, maxVal, maxPixel: " 
+    << minVal << ", "<< minPixel << ", " << maxVal << ", " << maxPixel << std::endl;
+    _min_val = minVal;
+    _min_pixel = minPixel;
+    _cell_size__px = (maxPixel - minPixel) / (maxVal - minVal);
+}
 
 
 int PixelConverter::getPixel(int value)

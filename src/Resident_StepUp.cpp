@@ -56,18 +56,18 @@ double Resident_StepUp::implCalculateHappiness (
     return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
 }
 
-House* Resident_StepUp::findHome(
-    House* oldHouse,
-    std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-    std::unordered_map<House*, Resident*> houseToResMap
+const House* Resident_StepUp::findHome(
+    const House* oldHouse,
+    std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
+    std::unordered_map<const House*, Resident*> houseToResMap
 ) const
 {
     for (auto h2N : openHousesAndTheirAdjacentHouses)
     {
-        House* currHouse = h2N.first;
-        std::set<House*> setOfAdjHouses = h2N.second;
+        const House* currHouse = h2N.first;
+        std::set<const House*> setOfAdjHouses = h2N.second;
         std::set<Resident*> currHouseAdjacentResidents;
-        for (House* nH : setOfAdjHouses)
+        for (const House* nH : setOfAdjHouses)
         {
             if (houseToResMap.count(nH) > 0)
                 currHouseAdjacentResidents.insert(houseToResMap.at(nH));
@@ -84,10 +84,10 @@ House* Resident_StepUp::findHome(
     return oldHouse;
 }
 
-House* Resident_StepUp::findBestHome(
-    House* oldHouse,
-    std::map<House*, std::set<House*>> openHousesAndTheirAdjacentHouses,
-    std::unordered_map<House*, Resident*> houseToResMap
+const House* Resident_StepUp::findBestHome(
+    const House* oldHouse,
+    std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
+    std::unordered_map<const House*, Resident*> houseToResMap
 ) const
 {
     return findHome(oldHouse, openHousesAndTheirAdjacentHouses, houseToResMap);
