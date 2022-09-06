@@ -71,7 +71,6 @@ void Printer_Graphic::setCityChart (int unitSize)
             _max_y_coord,
             houseSize,
             unitSize,
-            unitSize,
             _x_offset_multiplier * houseSize,
             _x_overrun_multiplier * houseSize,
             true,

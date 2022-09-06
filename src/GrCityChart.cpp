@@ -20,7 +20,7 @@ GrCityChart::GrCityChart (
     _title_letter{grCityChartSizer.getTitleLetter()},
     _axis_format_X{grCityChartSizer.getAxisFormatX()},
     _axis_format_Y{grCityChartSizer.getAxisFormatX()},
-    _cell_size__px{grCityChartSizer.getPixelsPerUnitX()},
+    _cell_size__px{grCityChartSizer.getPixelsPerUnit()},
     _house_min_x{grCityChartSizer.getMinX()},
     _house_max_x{grCityChartSizer.getMaxX()},
     _house_min_y{grCityChartSizer.getMinY()},
