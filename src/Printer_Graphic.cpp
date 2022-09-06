@@ -9,8 +9,6 @@
 #include "XAxisL2RTop.h"
 #include "YAxisT2B.h"
 
-
-
 void Printer_Graphic::init (
     std::unordered_map<const House*, Coordinate > coordPerHouse,
     std::unordered_map<const House*, std::set<const House*>> neighbors,
@@ -33,7 +31,8 @@ void Printer_Graphic::init (
 void Printer_Graphic::initCityChart () // TODO throw exception if city too large
 {
     determineMinMaxHouseCoords();
-    setCityPrinter();
+    int pixelsPerHouseUnit = cityPrinterCalculatePxPerUnit();
+    setCityChart(pixelsPerHouseUnit);
 }
 
 void Printer_Graphic::determineMinMaxHouseCoords()
@@ -54,9 +53,8 @@ void Printer_Graphic::determineMinMaxHouseCoords()
     }
 }
 
-void Printer_Graphic::setCityPrinter ()
+void Printer_Graphic::setCityChart (int unitSize)
 { 
-    int unitSize = cityPrinterCalculatePxPerUnit();
     int houseSize = unitSize/2;
     houseSize = (houseSize % 2 == 0) ? houseSize : (houseSize + 1);
 
@@ -294,45 +292,35 @@ void Printer_Graphic::initWindowLengths ()
     _x_space__px =  (_screen_width__px/2) - _side_border__px - _inside_border__px;
     _x_center__px = _screen_width__px/2;
 
+    // RUNS CHART centered below window title
     _run_counter_top_y__px = _top_border__px + _window_title.getHeightIncLSpace();
 
-    // MAP OF CITY HOUSES CHART // left column
+    // Left colulmn holds CITY CHART
     _city_y_space__px = 
         _screen_height__px -
         _top_border__px -
         _window_title.getHeightIncLSpace() -
-        (2*_chart_title_letter.getHeightIncLSpace()) - // Runs counter and color key
+        _chart_title_letter.getHeightIncLSpace() - // Runs chart
         _bottom_border__px;
 
-    // Color key for city map sits below run counter
-    _color_key_for_city_map_top_y__px = 
-        _run_counter_top_y__px +
-        _chart_title_letter.getHeightIncLSpace(); // Run counter
-
-    // City map sits below color key for city map
+    // City chart sits below runs counter chart
     _city_map_chart_top_left_y_coord__px = 
-        _color_key_for_city_map_top_y__px +
-        _chart_title_letter.getHeightIncLSpace(); // color key for city map
+        _run_counter_top_y__px +
+        _chart_title_letter.getHeightIncLSpace(); // Runs chart
 
-    // DIVERSITY CHART, HAPPINESS CHART
+    // Right column holds DIVERSITY CHART and HAPPINESS CHART
     _chart_y_space__px = 
         _screen_height__px -
         _top_border__px -
         _window_title.getHeightIncLSpace() -
-        (2 *_chart_title_letter.getHeightIncLSpace()) - // Runs counter and color key
+        _chart_title_letter.getHeightIncLSpace() - // Runs chart
         _bottom_border__px -
         _space_between_charts__px;
-    
-    // Color key for diversity and happiness charts sits below run counter
-    _color_key_for_div_and_hap_top_y__px =
-        _top_border__px +
-        _window_title.getHeightIncLSpace() +
-        _chart_title_letter.getHeightIncLSpace(); // Run counter
 
-    // Diversity chart sits below color key for Diversity and Happiness charts
+    // Diversity chart sits below runs counter chart
     _div_chart_top_y__px = 
-        _color_key_for_div_and_hap_top_y__px +
-        _chart_title_letter.getHeightIncLSpace(); // color key for div and hap charts
+        _run_counter_top_y__px +
+        _chart_title_letter.getHeightIncLSpace(); // Runs chart
 
     // Happiness chart sits below Diversity chart
     _hap_chart_top_y__px =

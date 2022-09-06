@@ -155,7 +155,7 @@ class Printer_Graphic : public Printer
         // like where to put grid (graphOrigin), x and y axis offsets,
         // cell_size, rgba for residents' colors and the like. Basically 
         // set up the graph where the residents will be plotted.
-        void setCityPrinter ();
+        void setCityChart (int unitSize);
 
         void initDvstyChart(std::unordered_map<const House*, std::set<const House*>> neighbors);
 
