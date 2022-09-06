@@ -21,7 +21,7 @@ class GrCityChartSizer
             int minY, // minimum y value for a house. (most north house)
             int maxY, // maximum y value for a house. (most south house)
             int dotSizePx,
-            int pixelsPerUnitX,
+            int pixelsPerUnitX, // TODO chose the smaller of these two, or only have one
             int pixelsPerUnitY,
             int startOffsetPx,
             int endOffsetPx,
@@ -43,7 +43,13 @@ class GrCityChartSizer
            _end_offset__px{endOffsetPx},
            _has_key{hasKey},
            _key_letter{keyLetter}
-        {}
+        {
+            _pixels_per_unit_x = std::min(_pixels_per_unit_x, _pixels_per_unit_y);
+            _pixels_per_unit_y = std::min(_pixels_per_unit_x, _pixels_per_unit_y);
+            int tickThickness = (_pixels_per_unit_y%2==0) ? 2 : 1;
+            _axis_format_x.setTickThicknessPx(tickThickness);
+            _axis_format_y.setTickThicknessPx(tickThickness);
+        }
 
         int getXSpaceLengthPx () {return _x_space_length__px;}
         int getYSpaceLengthPx () {return _y_space_length__px;}
@@ -54,6 +60,7 @@ class GrCityChartSizer
         int getMaxX () {return _max_x;}
         int getMinY () {return _min_y;}
         int getMaxY () {return _max_y;}
+        int getDotSize__px () {return _dot_size__px;}
         int getPixelsPerUnitX () {return _pixels_per_unit_x;}
         int getPixelsPerUnitY () { return _pixels_per_unit_y;}
         int getStartOffset () {return _start_offset__px;}

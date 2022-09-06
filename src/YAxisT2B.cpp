@@ -40,7 +40,7 @@ void YAxisT2B::print (Renderer* renderer)
     renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.titleHeightPx());
+        _axis_format.labelHeightPx());
     renderer->renderTexts(texts);
     texts.clear();
 
@@ -112,6 +112,7 @@ void YAxisT2B::addTicksAndLabels (
             curRect.y = curVal__px - (_axis_format.tickThickness()/2);
             rects.push_back(curRect);
         }
+
         ++curVal;
     }
 }

@@ -47,7 +47,7 @@ void AxisBottomToTop::print (Renderer* renderer)
     renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.titleHeightPx());
+        _axis_format.labelHeightPx());
     renderer->renderTexts(texts);
     texts.clear();
 

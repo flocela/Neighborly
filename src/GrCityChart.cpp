@@ -43,24 +43,19 @@ GrCityChart::GrCityChart (
         _title_letter.getHeightIncLSpace() +
         _key.getHeightPx() + 
         _axis_format_X.getAxisHeightPx()
-    }
-   
-{   
-    _pixel_converter_x = std::make_unique<PixelConverter>(
+    },
+    _pixel_converter_x{std::make_unique<PixelConverter>(
         _house_min_x,
         _cross_hairs_x__px + _offset__px,
         _house_max_x,
-        _cross_hairs_x__px + _offset__px + _cell_size__px * (_house_max_x - _house_min_x));
-    _pixel_converter_y = std::make_unique<PixelConverter>(
+        _cross_hairs_x__px + _offset__px + _cell_size__px * (_house_max_x - _house_min_x))},
+    _pixel_converter_y{std::make_unique<PixelConverter>(
         _house_min_y,
         _cross_hairs_y__px + _offset__px,
         _house_max_y,
-        _cross_hairs_y__px + _offset__px + _cell_size__px * (_house_max_y - _house_min_y));
-    
-    _axis_format_X.setTitleLetterHeight(0);// axis title is empty string.
-    _axis_format_Y.setTitleLetterHeight(0);// axis title is empty string.
-    
-    _house_size__px = calcHouseSizePx();
+        _cross_hairs_y__px + _offset__px + _cell_size__px * (_house_max_y - _house_min_y))}
+{   
+    _house_size__px = grCityChartSizer.getDotSize__px();
 
     _house_min_x__px = _pixel_converter_x->getPixel(_house_min_x);
     _house_max_x__px = _pixel_converter_x->getPixel(_house_max_x);
@@ -185,11 +180,16 @@ std::map<Color, std::vector<Coordinate>> GrCityChart::createVectorsOfHousesForEa
             std::vector<Coordinate> newCoordinateVector = {};
             colorToCoordinatesMap[colorKey] = newCoordinateVector;
         }
-        
+
         int pixelsX = _pixel_converter_x->getPixel(coord.getX()) - _house_size__px / 2;
         int pixelsY = _pixel_converter_y->getPixel(coord.getY()) - _house_size__px / 2;
         Coordinate pixelCoord{pixelsX, pixelsY};
         colorToCoordinatesMap[colorKey].push_back(pixelCoord);
+        if (coord.getX() == 0 && coord.getY() == 0)
+        {
+            std::cout << "GrCityChart x,y: " << pixelsX << ", " << pixelsY << std::endl;
+            std::cout << "GrCityChar w: " << _house_size__px << std::endl;
+        }
         
     }
     return colorToCoordinatesMap;
@@ -240,6 +240,7 @@ int GrCityChart::calcCellSizePx ()
         _y_given_space__px - 
         _title_letter.getHeightIncLSpace() -
         _axis_format_X.getAxisHeightPx();
+
     int numOfCellsY = (_house_max_y - _house_min_y) + _offset__px + _overrun__px;
     int yCellSize = yAxisLengthPx / numOfCellsY;
     int smallestCellSize = std::min(xCellSize, yCellSize);
@@ -254,6 +255,6 @@ int GrCityChart::calcHouseSizePx ()
         return 0;
     int houseSize = _cell_size__px / 2;
     
-    return ( houseSize % 2 == 0) ? houseSize : (houseSize + 1);
+    return ( _cell_size__px % 2 == 0) ? houseSize : (houseSize + 1);
 }
 

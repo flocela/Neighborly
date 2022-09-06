@@ -28,7 +28,7 @@ class Printer_Graphic : public Printer
         ~Printer_Graphic () = default;
 
         void initCityChart (); // make private
-        void initRunsChart (int numOfRuns); // make private
+        void initRunsChart (); // make private
         void init (
             std::unordered_map<const House*, Coordinate > coordPerHouse,
             std::unordered_map<const House*, std::set<const House*>> neighbors,
@@ -72,8 +72,6 @@ class Printer_Graphic : public Printer
         std::string _window_title_string = "Neighbors";
         int _window_title_x__px;// top left corner of text
         int _window_title_y__px = _top_border__px; // top left corner of text
-        
-        Letter _resident_keys = Letter (12, 2); // shows resident next to its colored square
 
         // * COMMON TO ALL CHARTS * //
         AxisFormat _axis_format_X{};
@@ -168,7 +166,7 @@ class Printer_Graphic : public Printer
         // these are distances.
         void initWindowLengths();
 
-        int cityPrinterCalculatePxPerUnit();
+        int cityChartCalculatePxPerUnit();
 
 
 

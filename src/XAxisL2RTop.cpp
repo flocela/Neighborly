@@ -36,7 +36,7 @@ void XAxisL2RTop::print (Renderer* renderer)
     renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.titleHeightPx());
+        _axis_format.labelHeightPx());
     renderer->renderTexts(texts);
     texts.clear();
     addHorizontalLine(rects);
@@ -108,7 +108,7 @@ void XAxisL2RTop::addTicksAndLabels (
             rect.y = _y_coord__px - ( _axis_format.minTickLengthPx() );
             rects.push_back(rect);
         }
-        
+
         ++currValue;
     }
 }

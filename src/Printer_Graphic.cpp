@@ -20,10 +20,11 @@ void Printer_Graphic::init (
     _coordinates_per_house = coordPerHouse;
     _colors = colors;
     _renderer = std::make_unique<Renderer>(_screen_width__px, _screen_height__px);
+    _num_of_runs = numOfRuns;
     initWindowLengths();
     initWindowTitle(title);
     initCityChart();
-    initRunsChart(numOfRuns);
+    initRunsChart();
     initDvstyChart(neighbors);
     initHapChart();
 }
@@ -31,7 +32,7 @@ void Printer_Graphic::init (
 void Printer_Graphic::initCityChart () // TODO throw exception if city too large
 {
     determineMinMaxHouseCoords();
-    int pixelsPerHouseUnit = cityPrinterCalculatePxPerUnit();
+    int pixelsPerHouseUnit = cityChartCalculatePxPerUnit();
     setCityChart(pixelsPerHouseUnit);
 }
 
@@ -39,10 +40,9 @@ void Printer_Graphic::determineMinMaxHouseCoords()
 {
     // Determine the min and max house coordinates for x and y.
     for (auto& pair : _coordinates_per_house)
-    {   // Coordinates are not in pixels! Think of them as the house number.
+    {
         Coordinate coord =  pair.second;
-        //std::cout << "PrinterGraphic: (x, y): (" << coord->getX() << ", " << coord->getY() << ")" << std::endl; 
-       if (coord.getX() > _max_x_coord)
+        if (coord.getX() > _max_x_coord)
             _max_x_coord = coord.getX();
         if (coord.getX() < _min_x_coord)
             _min_x_coord = coord.getX();
@@ -56,11 +56,11 @@ void Printer_Graphic::determineMinMaxHouseCoords()
 void Printer_Graphic::setCityChart (int unitSize)
 { 
     int houseSize = unitSize/2;
-    houseSize = (houseSize % 2 == 0) ? houseSize : (houseSize + 1);
+    houseSize =  ((unitSize - houseSize) % 2 == 0) ? houseSize : (houseSize + 1);
 
     GrCityChartSizer cityPrinterSizer = 
         GrCityChartSizer (
-            _x_space__px - ( 2 * _side_border__px),
+            _x_space__px,
             _city_y_space__px,
             _axis_format_X,
             _axis_format_Y,
@@ -88,7 +88,7 @@ void Printer_Graphic::setCityChart (int unitSize)
     );
 }
 
-int Printer_Graphic::cityPrinterCalculatePxPerUnit()
+int Printer_Graphic::cityChartCalculatePxPerUnit()
 {
     // start and end offsets are the offset_multiplier times the dot_size__px.
     // approximate the start and end offsets as offset_multiplier times the cellSize.
@@ -96,29 +96,29 @@ int Printer_Graphic::cityPrinterCalculatePxPerUnit()
     int allowableXAxisLengthPx = _x_space__px - _axis_format_Y.getAxisHeightPx();
     int numOfCellsX = 
         (_max_x_coord - _min_x_coord) +
-        (_x_offset_multiplier + _y_offset_multiplier);
+        (_x_offset_multiplier + _x_overrun_multiplier);
     int xCellSize = allowableXAxisLengthPx/numOfCellsX;
 
     int allowableYAxisLengthPx = 
         _city_y_space__px -
         _chart_title_letter.getHeightIncLSpace() -
+        _color_key_letter.getHeightIncLSpace() - 
         _axis_format_Y.getAxisHeightPx();
+
     int numOfCellsY = 
         (_max_y_coord - _min_y_coord) +
-        (_x_offset_multiplier + _y_offset_multiplier);
+        (_y_offset_multiplier + _y_overrun_multiplier);
 
     int yCellSize =  allowableYAxisLengthPx/numOfCellsY;
 
     int smallestCellSize = std::min(xCellSize, yCellSize);
-    smallestCellSize = (smallestCellSize%2 == 0)? smallestCellSize : (smallestCellSize+1);
-
+    
+    // TODO what todo about smallest acceptable size??
     return (smallestCellSize < 4) ? 4 : smallestCellSize;
 }
 
-void Printer_Graphic::initRunsChart (int numOfRuns)
+void Printer_Graphic::initRunsChart ()
 {   
-    _num_of_runs = numOfRuns;
-
     _runs_chart = std::make_unique<GrRunsChart>(
         _renderer.get(), 
         _side_border__px, 
@@ -127,57 +127,6 @@ void Printer_Graphic::initRunsChart (int numOfRuns)
         _chart_title_letter.getHeightIncLSpace(),
         _chart_title_letter,
         _num_of_runs );
-}
-
-
-void Printer_Graphic::print (
-    std::unordered_map<const House*, const Resident*> residentPerHouse,
-    int run
-)
-{   
-    std::unordered_map<const Resident*, const House*> housePerResident;
-    std::vector<const Resident*> residents;
-    for (auto pair : residentPerHouse)
-    {
-        if (pair.second != nullptr) // resident is not nullptr
-        {
-        housePerResident[pair.second] = pair.first;
-        residents.push_back(pair.second);
-        }
-    }
-
-    printWindowTitle();
-    _city_chart->printCity(residentPerHouse);
-
-    _runs_chart->print(run);
-
-    _dvsty_chart->print(
-        housePerResident,
-        residentPerHouse,
-        run,
-        _renderer.get()
-    );
-
-    _happiness_chart->print(
-        housePerResident,
-        run,
-        _renderer.get()
-    );
-    _renderer->endFrame();
-} 
-
-void Printer_Graphic::keepScreen()
-{
-    SDL_Event e;
-    int counter = 0;
-    while (SDL_WaitEvent(&e) != 0)
-    {   
-        counter ++;
-        if (e.type == SDL_QUIT)
-        {
-            break;
-        }
-    }
 }
 
 void Printer_Graphic::initDvstyChart (
@@ -245,17 +194,56 @@ void Printer_Graphic::initHapChart ()
         _hap_chart_top_y__px,
         "Happiness, Average Happiness per Resident (shown as a percentage)"
     );
+}
 
-    _renderer->setColorToRed();
-    std::vector<SDL_Rect> rects = {};
+void Printer_Graphic::print (
+    std::unordered_map<const House*, const Resident*> residentPerHouse,
+    int run
+)
+{   
+    std::unordered_map<const Resident*, const House*> housePerResident;
+    std::vector<const Resident*> residents;
+    for (auto pair : residentPerHouse)
+    {
+        if (pair.second != nullptr) // resident is not nullptr
+        {
+        housePerResident[pair.second] = pair.first;
+        residents.push_back(pair.second);
+        }
+    }
 
-    SDL_Rect rect;
-    rect.w  = 10;
-    rect.h = ((int)(_chart_y_space__px * _hap_chart_y_axis_fraction));
-    rect.x = _x_center__px;
-    rect.y = _hap_chart_top_y__px;
-    rects.push_back(rect);
-    _renderer->fillBlocks(rects);
+    printWindowTitle();
+    _city_chart->printCity(residentPerHouse);
+
+    _runs_chart->print(run);
+
+    _dvsty_chart->print(
+        housePerResident,
+        residentPerHouse,
+        run,
+        _renderer.get()
+    );
+
+    _happiness_chart->print(
+        housePerResident,
+        run,
+        _renderer.get()
+    );
+    _renderer->endFrame();
+} 
+
+void Printer_Graphic::keepScreen()
+{
+    SDL_Event e;
+    int counter = 0;
+    while (SDL_WaitEvent(&e) != 0)
+    {   
+        counter ++;
+        if (e.type == SDL_QUIT)
+        {
+            break;
+        }
+    }
 }
 
 int Printer_Graphic::maxNumOfHousesX (int screenWidth__px)
@@ -329,4 +317,3 @@ void Printer_Graphic::initWindowLengths ()
         _space_between_charts__px;
 
 }
-

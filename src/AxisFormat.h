@@ -17,9 +17,6 @@ class AxisFormat
         int minTickLengthPx () {return _min_tick_length__px;};
         int tickLengthInsideChart() {return _tick_length_inside_chart__px;};
 
-        int titleHeightPx (){return _title_letter_height;}
-        int titleLineSpacePx () {return _title_line_space__px;};
-
         int labelHeightPx () {return _label_letter_height;} // these are the numbers along the axis
         int labelLineSpacePx () {return _label_line_space__px;};
 
@@ -29,9 +26,6 @@ class AxisFormat
         void setMinTickLengthPx (int length);
         void setTickLengthInsideChartPx (int length);
         void setTickThicknessPx(int thickness) {_tick_thickness__px = thickness;};
-
-        void setTitleLetterHeight (int height);
-        void setTitleLineSpacePx (int space);
 
         void setLabelLetterHeight (int size);
         void setLabelSpacePx (int space);
@@ -43,9 +37,6 @@ class AxisFormat
         int _maj_tick_length__px = 10;
         int _min_tick_length__px = 2;
         int _tick_length_inside_chart__px = 2; // does not include thickness of axis
-
-        int _title_letter_height = 22;
-        int _title_line_space__px = 2; // space below letters
 
         int _label_letter_height = 22;  
         int _label_line_space__px = 2;

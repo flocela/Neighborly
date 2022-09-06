@@ -3,9 +3,7 @@
 
 int AxisFormat::getAxisHeightPx ()
 {
-    return _title_letter_height +
-           _title_line_space__px +
-           _label_letter_height +
+    return _label_letter_height +
            _label_line_space__px +
            (_maj_tick_length__px - _tick_length_inside_chart__px);
 
@@ -51,22 +49,6 @@ void AxisFormat::setTickLengthInsideChartPx (int length)
     }
 }
 
-void AxisFormat::setTitleLetterHeight (int size)
-{ 
-    _title_letter_height = size;
-}
-
-void AxisFormat::setTitleLineSpacePx (int size)
-{ 
-    if (size < 0)
-    {
-        throw std::invalid_argument("line spacing must be at least zero.");
-    }
-    else
-    {
-        _title_line_space__px = size;
-    }
-}
 
 void AxisFormat::setLabelLetterHeight (int size)
 { 
