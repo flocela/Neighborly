@@ -6,7 +6,7 @@
 std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents (
     std::vector<ResidentsFactory*> residentsFactories,
     int maxResidentCount,
-    std::set<Color> colors // these are the colors that the residents can be.
+    std::set<BaseColor> colors // these are the colors that the residents can be.
 )
 {   
     (void) maxResidentCount;
@@ -42,7 +42,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents
 std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
     std::vector<ResidentsFactory*> residentsFactories,
     int maxResidentCount,
-    std::set<Color> colors
+    std::set<BaseColor> colors
 
 )
 {   
@@ -64,15 +64,15 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
 
         int numOfResidents = askForNumOfResidents(
             allowedNumOfResidents, 
-            colorInfo._my_string
+            colorInfo._base_name
         );
         
         int choice = askForGroupResidentType(
-            colorInfo._my_string, 
+            colorInfo._base_name, 
             residentsFactories
         );
 
-        double happinessGoal = askForHappinessGoalForGroup(colorInfo._my_string);
+        double happinessGoal = askForHappinessGoalForGroup(colorInfo._base_name);
 
         auto newResidents = residentsFactories[choice]->createResidents(
             _ui,
@@ -86,28 +86,28 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
             residents.emplace_back(std::move(r));
 
         numOfResidentsCreated += newResidents.size();
-        updateAvailableColors(colorInfo._my_color);
+        updateAvailableColors(colorInfo._base_color);
     }
     
     return residents;
 }
 
-void ResidentsMaker_CMDLine::initColors (std::set<Color> colors)
+void ResidentsMaker_CMDLine::initColors (std::set<BaseColor> colors)
 {
-    for (Color color : colors)
+    for (BaseColor color : colors)
         _available_colors.push_back(color);
 }
 
 ColorInfo ResidentsMaker_CMDLine::askForGroupColor (int groupIdx)
 {
     std::vector<std::string> colorStrings = {};
-    for (Color color : _available_colors)
-        colorStrings.push_back(_the_color_infos[color]._my_string);
+    for (BaseColor color : _available_colors)
+        colorStrings.push_back(_colorrs_map[color][Mood::neutral]._base_name);
 
     std::vector<std::string> number = {" first", " second", " third", " fourth"};
     std::string prompt = _which_group_color_prompt.insert(30, number[groupIdx]);
     int colorIdx = _ui.menu(prompt, colorStrings);
-    return _the_color_infos[_available_colors[colorIdx]];
+    return _colorrs_map[_available_colors[colorIdx]][Mood::neutral];
 }
 
 double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (std::string color)
@@ -198,7 +198,7 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupHappiness (std::strin
         _group_happiness_range_prompt};
 }
 
-void ResidentsMaker_CMDLine::updateAvailableColors(Color color)
+void ResidentsMaker_CMDLine::updateAvailableColors(BaseColor color)
 {
     std::size_t ii = 0;
     for (;ii < _available_colors.size(); ++ii)

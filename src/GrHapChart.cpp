@@ -47,9 +47,9 @@ void GrHapChart::print (
         int groupNum = jj.first;
         int countInGroup = jj.second;
         double aveHappiness = (double)happiness_sum_Per_group[groupNum]/countInGroup;
+        // TODO points doesn't need Mood.
         // TODO emplace
-        points.push_back(Point{(double)run, aveHappiness, _colors[groupNum], "neutral"});
-        std::cout << "run, aveHappiness, color: " << run << ", " << aveHappiness << ", " << _colors[groupNum] << std::endl;
+        points.push_back(Point{(double)run, aveHappiness, _colorrs_map[_colors[groupNum]][Mood::neutral]._my_color});
     }
     _chart.print(points, false, renderer);
     _key.print(renderer);

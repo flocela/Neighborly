@@ -2,32 +2,33 @@
 #define POINT_H
 
 #include "Color.h"
+#include <vector>
 
+// TODO point doesn't need mood
 class Point
 {
 public:
     Point(
         double x,
         double y,
-        Color color,
-        std::string mood
+        Color color
     ):
     _x{x},
     _y{y},
     _color{color},
-    _mood{mood}
+    _rgba{_the_color_rgba[color]} // TODO make rgba a reference
     {}
 
     double x () {return _x;}
     double y () {return _y;}
     Color color () { return _color;}
-    std::string mood () { return _mood;}
+    std::vector<int> rgba () { return _rgba;}
 
 private:
     double _x;
     double _y;
-    Color _color;
-    std::string _mood;
+    Color _color; // maybe just hold rgba, don't hold color since not asked for ever.
+    std::vector<int> _rgba;
 
 };
 

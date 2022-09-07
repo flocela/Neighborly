@@ -15,8 +15,8 @@ class GrColorKeyPrinter
         int topLeftCornerYPx,
         int xSpaceLengthPx,
         Letter titleLetter,
-        std::unordered_map<int, Color> colors, // group number to Color
-        std::set<std::string> moods // keys for colors, e.g. happy, sad, neutral
+        std::unordered_map<int, BaseColor> colors, // group number to Color
+        std::set<Mood> moods // keys for colors, e.g. happy, sad, neutral
     ):
         _x_offset{topLeftCornerXPx},
         _y_offset{topLeftCornerYPx},
@@ -42,8 +42,8 @@ class GrColorKeyPrinter
     int _x_column_width = 0;
     int _box_length__px = 0;
     int _box_spacer__px = 12;
-    std::unordered_map<int, Color> _colors;
-    std::set<std::string> _moods;
+    std::unordered_map<int, BaseColor> _colors;
+    std::set<Mood> _moods;
 
 };
 

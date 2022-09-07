@@ -61,7 +61,9 @@ void GrDvstyChart::print (
         int countInGroup = jj.second;
         double averageNumDiff = (double)count_diff_neighbors_Per_group[groupNum]/countInGroup;
         // TODO emplace
-        points.push_back(Point{(double)run, averageNumDiff, _colors[groupNum], "neutral"});
+        // TODO is Diversity chart always Mood::neutral:
+        // TODO why is run a double?
+        points.push_back(Point{(double)run, averageNumDiff, _colorrs_map[_colors[groupNum]][Mood::neutral]._my_color});
     }
     _chart.print(points, false, renderer);
     _key.print(renderer);

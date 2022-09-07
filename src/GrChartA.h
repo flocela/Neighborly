@@ -15,8 +15,8 @@ class GrChartA
 public:
     GrChartA ( 
         GrChartASizer sizer,
-        std::unordered_map<int, Color> colors,
-        std::set<std::string> moods,
+        std::unordered_map<int, BaseColor> colors,
+        std::set<Mood> moods,
         int topLeftXPx, // top left corner of chart
         int topLeftYPx, // top left corner of chart
         std::string title
@@ -31,8 +31,8 @@ private:
     GrChartASizer _sizer;
     AxisFormat _a_format_x;
     AxisFormat _a_format_y;
-    std::unordered_map<int, Color> _colors;
-    std::set<std::string> _moods;
+    std::unordered_map<int, BaseColor> _colors;
+    std::set<Mood> _moods;
     int _top_left_x__px;
     int _top_left_y__px;
     int _x_diff; // max minus min axis values

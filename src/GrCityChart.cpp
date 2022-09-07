@@ -5,7 +5,7 @@ GrCityChart::GrCityChart (
     GrCityChartSizer grCityChartSizer,
     Renderer* renderer,
     std::unordered_map<const House*, Coordinate> coordToHouseMap,
-    std::unordered_map<int, Color> resColors,
+    std::unordered_map<int, BaseColor> resColors,
     int topLeftCornerXPx,
     int topLeftCornerYPx
 ) : _renderer{renderer},
@@ -36,7 +36,7 @@ GrCityChart::GrCityChart (
         _x_axis_length__px,
         grCityChartSizer.getKeyLetter(),
         _res_colors,
-        {"happy", "unhappy"}
+        std::set<Mood>{Mood::happy, Mood::unhappy}
     },
     _cross_hairs_y__px{
         _top_left_corner_y__px +
@@ -143,7 +143,7 @@ void GrCityChart::printHouses( std::unordered_map<const House *, const Resident 
             _house_size__px,
             _house_size__px,
             colorToCoordVector.second,
-            _the_color_infos[colorToCoordVector.first].rgba);
+            _the_color_rgba[colorToCoordVector.first]);
     }
 }
 
@@ -170,9 +170,9 @@ std::map<Color, std::vector<Coordinate>> GrCityChart::createVectorsOfHousesForEa
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
             if (happinessValue < happinessGoal)
-                colorKey = _color_map[_res_colors[res->getGroupNumber()]]["unhappy"];
+                colorKey = _colorrs_map[_res_colors[res->getGroupNumber()]][Mood::unhappy]._my_color;
             else
-                colorKey = _color_map[_res_colors[res->getGroupNumber()]]["happy"];
+                colorKey = _colorrs_map[_res_colors[res->getGroupNumber()]][Mood::happy]._my_color;
         }
         
         if (colorToCoordinatesMap.find(colorKey) == colorToCoordinatesMap.end()) // TODO  c++ knows how to do this in one step
@@ -185,24 +185,9 @@ std::map<Color, std::vector<Coordinate>> GrCityChart::createVectorsOfHousesForEa
         int pixelsY = _pixel_converter_y->getPixel(coord.getY()) - _house_size__px / 2;
         Coordinate pixelCoord{pixelsX, pixelsY};
         colorToCoordinatesMap[colorKey].push_back(pixelCoord);
-        if (coord.getX() == 0 && coord.getY() == 0)
-        {
-            std::cout << "GrCityChart x,y: " << pixelsX << ", " << pixelsY << std::endl;
-            std::cout << "GrCityChar w: " << _house_size__px << std::endl;
-        }
         
     }
     return colorToCoordinatesMap;
-}
-
-Color GrCityChart::getHappyColor (int resGroup)
-{
-    return _color_map[_res_colors[resGroup]]["happy"];
-}
-
-Color GrCityChart::getUnhappyColor (int resGroup)
-{
-    return _color_map[_res_colors[resGroup]]["unhappy"];
 }
 
 int GrCityChart::majTickSpacing (int axisLength__coord)

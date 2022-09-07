@@ -9,41 +9,27 @@ void GrColorKeyPrinter::print (Renderer* renderer)
         _title_letter.letterHeight()
     );
 
-    std::vector<int> groups;
-    for (std::unordered_map<int, Color>::iterator itr = _colors.begin(); itr != _colors.end(); ++itr)
+    std::vector<int> groupIds;
+    for (std::unordered_map<int, BaseColor>::iterator itr = _colors.begin(); itr != _colors.end(); ++itr)
     {
-        groups.push_back(itr->first);
+        groupIds.push_back(itr->first);
     }
 
-    std::vector<std::string> moods;
-    for (std::set<std::string>::iterator itr = _moods.begin(); itr != _moods.end(); ++itr)
-    {
-        std::string cur = *itr;
-        moods.push_back(cur);
-    }
+    std::sort(groupIds.begin(), groupIds.end());
 
-    std::sort(groups.begin(), groups.end());
-    std::sort(moods.begin(), moods.end());
-
-    int columnWidth = _x_space_length__px/(groups.size() * moods.size());
+    int columnWidth = _x_space_length__px/(groupIds.size() * _moods.size());
     std::vector<std::pair<Color, std::string>> keys;
     int longestString = 0;
 
-    for (int gg=0; gg<(int)groups.size(); ++gg)
+    for (int& groupId : groupIds)
     {
-        for (int mm=0; mm<(int)moods.size(); ++mm)
+        BaseColor baseColor = _colors[groupId];
+        for (auto mood : _moods)
         {
-            int group_id = groups[gg];
-            Color color = _colors[group_id];
-
-            std::string text;
-            if (moods[mm] == "neutral")
+            std::string text = "Group: " + std::to_string(groupId);
+            if (mood != Mood::neutral)
             {
-                text = "Group: " + std::to_string(group_id);
-            }
-            else
-            {
-                text = "Group: " + std::to_string(group_id) + " " + moods[mm];
+                text = text + " " + _colorrs_map[baseColor][Mood::neutral]._mood_name;
             }
 
             int textWidth =  
@@ -54,7 +40,7 @@ void GrColorKeyPrinter::print (Renderer* renderer)
             {
                 longestString = textWidth;
             }
-            keys.push_back(std::pair{_color_map[color][moods[mm]], text});
+            keys.push_back({_colorrs_map[baseColor][mood]._my_color, text});
         }
     }
 

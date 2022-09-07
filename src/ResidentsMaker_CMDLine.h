@@ -23,13 +23,14 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         std::vector<std::unique_ptr<Resident>> makeResidents (
             std::vector<ResidentsFactory*> residentsFactories,
             int maxNumOfResidents,
-            std::set<Color> colors // these are the colors that the residents can be.
+            std::set<BaseColor> colors // these are the colors that the residents can be.
         )
         override;
+        // change colors to an iterator<BaseColor> type.
         std::vector<std::unique_ptr<Resident>> makeBaseResidents (
             std::vector<ResidentsFactory*> residentsFactories,
             int maxNumOfResidents,
-            std::set<Color> colors // these are the colors that the residents can be.
+            std::set<BaseColor> colors // these are the colors that the residents can be.
         )
         override;
 
@@ -48,8 +49,8 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         Question_Int createQuestionHowManyResidents (int count, std::string color);
         Question_Double createQuestionGroupHappiness(std::string color);
 
-        void initColors (std::set<Color> colorInfos);
-        void updateAvailableColors (Color color);
+        void initColors (std::set<BaseColor> colorInfos);
+        void updateAvailableColors (BaseColor color);
         std::vector<std::string>  getFactoryNames (
             std::vector<ResidentsFactory*> residentsFactories
         );
@@ -57,7 +58,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         UI_CMDLine _ui = UI_CMDLine{};
 
         // map of color strings, is diminished as users use their colors.
-        std::vector<Color> _available_colors;
+        std::vector<BaseColor> _available_colors;
 
         // Prompt for what is this group's color question.
         std::string _which_group_color_prompt = "What will be the color of your"

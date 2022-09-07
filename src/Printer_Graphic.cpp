@@ -13,7 +13,7 @@ void Printer_Graphic::init (
     std::unordered_map<const House*, Coordinate > coordPerHouse,
     std::unordered_map<const House*, std::set<const House*>> neighbors,
     int numOfRuns,
-    std::unordered_map<int, Color> colors,
+    std::unordered_map<int, BaseColor> colors,
     std::string title
 )
 {   
@@ -151,7 +151,7 @@ void Printer_Graphic::initDvstyChart (
         false
     );
 
-    std::set<std::string> moods{"neutral"};
+    std::set<Mood> moods{Mood::neutral};
     _dvsty_chart = std::make_unique<GrDvstyChart> (
         divSizer,
         _colors,
@@ -184,7 +184,7 @@ void Printer_Graphic::initHapChart ()
         false
     );
 
-    std::set<std::string> moods{"neutral"};
+    std::set<Mood> moods{Mood::neutral};
     _happiness_chart = std::make_unique<GrHapChart> (
         divSizer,
         _colors,

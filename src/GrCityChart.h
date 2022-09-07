@@ -35,7 +35,7 @@ class GrCityChart
             GrCityChartSizer grCityChartSizer,
             Renderer* renderer,
             std::unordered_map<const House*, Coordinate> coordToHouseMap,
-            std::unordered_map<int, Color> resColors,
+            std::unordered_map<int, BaseColor> resColors,
             int topLeftCornerXPx,
             int topLeftCornerYPx
         );
@@ -53,7 +53,7 @@ class GrCityChart
         Renderer* _renderer;
         std::unordered_map<const House*, Coordinate> _coord_to_house_map;
         // This includes sad resident colors and happy resident colors.
-        std::unordered_map<int, Color> _res_colors;
+        std::unordered_map<int, BaseColor> _res_colors;
        
         int _top_left_corner_x__px;
         int _top_left_corner_y__px;
@@ -145,9 +145,6 @@ class GrCityChart
         std::map<Color, std::vector<Coordinate>> createVectorsOfHousesForEachColor (
             std::unordered_map<const House*, const Resident*> houseToResMap
         );
-
-        Color getHappyColor (int resGroup);
-        Color getUnhappyColor (int resGroup);
 
         int majTickSpacing (int axisLength__coord);
         int minTickSpacing (int axisLength__coord);

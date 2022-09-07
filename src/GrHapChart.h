@@ -15,8 +15,8 @@ class GrHapChart {
 public:
     GrHapChart (
         GrChartASizer sizer,
-        std::unordered_map<int, Color> colors,
-        std::set<std::string> moods,
+        std::unordered_map<int, BaseColor> colors,
+        std::set<Mood> moods,
         int topLeftXPx,
         int topLeftYPx,
         std::string title
@@ -42,8 +42,8 @@ public:
 
 private:
     GrChartA _chart;
-    std::unordered_map<int, Color> _colors;
-    std::set<std::string> _moods;
+    std::unordered_map<int, BaseColor> _colors;
+    std::set<Mood> _moods;
     GrColorKeyPrinter _key;
 
     std::set<Resident*> getResidentsInTheseHouses (

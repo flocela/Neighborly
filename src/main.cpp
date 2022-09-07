@@ -158,8 +158,15 @@ int main(int argc, char* argv[])
         ResidentsMaker_CMDLine residentsMaker{};
         //vector<unique_ptr<Resident>> residents = 
         //    residentsMaker.makeResidents(residentFactoryPointers, city->getSize(), _the_color_Infos);
+
+        std::set<BaseColor> baseColors;
+        for (auto& x : _colorrs_map)
+        {
+            baseColors.insert(x.first);
+        }
+
         residents = 
-            residentsMaker.makeBaseResidents(resFactoryPointers, city->getSize(), _base_colors);
+            residentsMaker.makeBaseResidents(resFactoryPointers, city->getSize(), baseColors);
     
         std::set<Resident*> residentPtrs = {};
         for (auto& resident: residents)
@@ -172,14 +179,14 @@ int main(int argc, char* argv[])
     }
     ;
     //TODO only have 2 groups.
-    std::unordered_map<int, Color> groupNumToColorMap;
+    std::unordered_map<int, BaseColor> groupNumToColorMap;
     std::set<int>::iterator group_nums_iter = components.groupNumbers.begin();
-    std::unordered_map<Color, std::unordered_map<std::string, Color>>::iterator color_iter = _color_map.begin();
-    while ( group_nums_iter != components.groupNumbers.end() && color_iter != _color_map.end() )
+    auto iter = _colorrs_map.begin();
+    while ( group_nums_iter != components.groupNumbers.end() && iter != _colorrs_map.end() )
     {
-        groupNumToColorMap.insert(std::pair<int, Color>(*group_nums_iter, color_iter->first));
+        groupNumToColorMap.insert(std::pair<int, BaseColor>(*group_nums_iter, (*iter).first));
         group_nums_iter++;
-        color_iter++;
+        iter++;
     }
 
     std::vector<const House*> houses = city->getHouses();

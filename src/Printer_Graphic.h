@@ -33,7 +33,7 @@ class Printer_Graphic : public Printer
             std::unordered_map<const House*, Coordinate > coordPerHouse,
             std::unordered_map<const House*, std::set<const House*>> neighbors,
             int numOfRuns,
-            std::unordered_map<int, Color> colors,
+            std::unordered_map<int, BaseColor> colors,
             std::string title
         );
         int maxNumOfHousesX (int screenWidth__px);
@@ -56,7 +56,7 @@ class Printer_Graphic : public Printer
 
         std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
         std::unique_ptr<Renderer> _renderer;
-        std::unordered_map<int, Color> _colors;
+        std::unordered_map<int, BaseColor> _colors;
         int _num_of_types_of_residents = 2;
 
         // * FOR WINDOW * //

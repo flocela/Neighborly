@@ -3,12 +3,12 @@
 
 GrChartA::GrChartA ( 
         GrChartASizer sizer,
-        std::unordered_map<int, Color> colors,
-        std::set<std::string> moods,
+        std::unordered_map<int, BaseColor> colors,
+        std::set<Mood> moods,
         int topLeftXPx, // top left corner of chart
         int topLeftYPx, // top left corner of chart
         std::string title
-):
+): // TODO does GrChartA really need _colors or _moods
 _sizer{sizer},
 _a_format_x{sizer.axisFormatX()},
 _a_format_y{sizer.axisFormatY()},
@@ -103,7 +103,7 @@ void GrChartA::print (
             _sizer.dotSizePx(),
             _sizer.dotSizePx(),
             coordinates,
-            _the_color_infos[point.color()].rgba
+            point.rgba()
         );
     }
 }
