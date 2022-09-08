@@ -17,7 +17,6 @@ void GrColorKeyPrinter::print (Renderer* renderer)
 
     std::sort(groupIds.begin(), groupIds.end());
 
-    int columnWidth = _x_space_length__px/(groupIds.size() * _moods.size());
     std::vector<std::pair<Color, std::string>> keys;
     int longestString = 0;
 
@@ -44,15 +43,10 @@ void GrColorKeyPrinter::print (Renderer* renderer)
         }
     }
 
-    // possibly make column widths smaller
-    if ( (longestString + _box_length__px + _box_spacer__px + 50) * (int)keys.size() < _x_space_length__px )
-    {
-        columnWidth = longestString+ _box_length__px + _box_spacer__px + 50;
-    }
+    int columnWidth = longestString + _box_length__px + _box_spacer__px + 30;
 
-    int left = _x_offset + (_x_space_length__px/2) - (columnWidth * keys.size()/2);
-
-    int counter = 1;
+    int left = _x_offset + (_x_space_length__px/2) - ((double)columnWidth * keys.size()/2);
+    int counter = 0;
     for (auto& key : keys)
     {
         std::string name = key.second;
@@ -64,15 +58,16 @@ void GrColorKeyPrinter::print (Renderer* renderer)
         // left edge of colored box
         int boxX =
             left +
-            (counter * columnWidth/2) - 
+            (counter * columnWidth) +
+            (0.5 * columnWidth) -
             ((textWidth + _box_length__px + _box_spacer__px )/2);
 
         int textX = boxX + _box_length__px + _box_spacer__px;
 
         renderer->addBlock(
-            _box_length__px/2,
-            _box_length__px/2,
-            Coordinate(boxX,_y_offset + _box_length__px/4),
+            _box_length__px,
+            _box_length__px,
+            Coordinate(boxX,_y_offset + ((_title_letter.letterHeight() - _box_length__px)/2)),
             _the_color_rgba[key.first]
         );
         
@@ -82,7 +77,7 @@ void GrColorKeyPrinter::print (Renderer* renderer)
             name,
             4
         );
-        counter = counter + 2;
+        counter += 1;
     }
 }
 

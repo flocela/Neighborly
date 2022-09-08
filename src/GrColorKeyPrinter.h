@@ -25,9 +25,7 @@ class GrColorKeyPrinter
         _colors{colors},
         _moods{moods}
     {   
-        // just an estimate of space needed for one box plus label. 
-        _x_column_width = 200;
-        _box_length__px = _title_letter.letterHeight(); // box is the colored square
+        _box_length__px = _title_letter.letterHeight()/2; // box is the colored square
     }
 
     void print (Renderer* renderer);
@@ -39,9 +37,8 @@ class GrColorKeyPrinter
     int _y_offset = 0;
     int _x_space_length__px = 0;
     Letter _title_letter;
-    int _x_column_width = 0;
     int _box_length__px = 0;
-    int _box_spacer__px = 12;
+    int _box_spacer__px = 6;
     std::unordered_map<int, BaseColor> _colors;
     std::set<Mood> _moods;
 

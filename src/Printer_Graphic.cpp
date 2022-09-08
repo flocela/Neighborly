@@ -113,7 +113,7 @@ int Printer_Graphic::cityChartCalculatePxPerUnit()
     int yCellSize =  allowableYAxisLengthPx/numOfCellsY;
 
     int smallestCellSize = std::min(xCellSize, yCellSize);
-    
+
     // TODO what todo about smallest acceptable size??
     return (smallestCellSize < 4) ? 4 : smallestCellSize;
 }

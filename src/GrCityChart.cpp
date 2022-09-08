@@ -25,15 +25,15 @@ GrCityChart::GrCityChart (
     _house_max_x{grCityChartSizer.getMaxX()},
     _house_min_y{grCityChartSizer.getMinY()},
     _house_max_y{grCityChartSizer.getMaxY()},
-    _x_axis_length__px{
+    _x_axis_length__px{  // TODO is calculating axis length here necessary?
         _cell_size__px * (_house_max_x - _house_min_x) + 
         _cell_size__px * _offset_m + 
         _cell_size__px * _overrun_m},
     _cross_hairs_x__px{(_x_given_space__px - _x_axis_length__px)/2},
     _key{
         _cross_hairs_x__px,
-        _top_left_corner_y__px + _title_letter.getHeightIncLSpace(),
-        _x_axis_length__px,
+        _top_left_corner_y__px + _title_letter.getHeightIncLSpace(), // center key along x axis length
+        _x_axis_length__px, // center key along x axis length
         grCityChartSizer.getKeyLetter(),
         _res_colors,
         std::set<Mood>{Mood::happy, Mood::unhappy}
