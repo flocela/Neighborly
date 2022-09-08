@@ -30,6 +30,7 @@ AxisLeftToRightB::AxisLeftToRightB (
     _left_most_pixel_x__px = _x_cross__px;
     _right_most_pixel_x__px = 
         _x_cross__px +
+        _start_offset__px +
         _px_per_unit * (_max_val - _min_val) +
         _end_offset__px;
 }
@@ -88,9 +89,9 @@ void AxisLeftToRightB::addTicksAndLabels (
     // Todo should put ending label on last maj tick mark.
     // Ticks and labels.
     int currValue = _min_val;
-    while (currValue <= _max_val)
-    {
-        int currValue__px = _zero__px + (_px_per_unit * (currValue - _min_val));
+    int currValue__px = _zero__px + (_px_per_unit * (currValue - _min_val));
+    while (currValue__px <= _right_most_pixel_x__px)
+    {  
         if (currValue % _label_spacing == 0) // long tick with label
         {   
             rect.x =  currValue__px - ( _axis_format.tickThickness() / 2 );
@@ -110,6 +111,7 @@ void AxisLeftToRightB::addTicksAndLabels (
         }
         
         ++currValue;
+        currValue__px = _zero__px + (_px_per_unit * (currValue - _min_val));
     }
 }
 

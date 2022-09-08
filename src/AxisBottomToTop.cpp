@@ -93,11 +93,10 @@ void AxisBottomToTop::addTicksAndLabels (
     SDL_Rect curRect;
     curRect.h = _axis_format.tickThickness();
     int curVal = _min_val;
-    
-    while (curVal <= _max_val)
-    {
-        int curVal__px = _min__px - _px_per_unit * (curVal - _min_val);
+    int curVal__px = _min__px - _px_per_unit * (curVal - _min_val);
 
+    while (curVal__px >= _top_most_pixel_y__px)
+    {   
         if (curVal % _label_spacing == 0) // TODO do all maj ticks get a label?
         {
             curRect.x = _x_cross__px - 
@@ -119,6 +118,7 @@ void AxisBottomToTop::addTicksAndLabels (
             rects.push_back(curRect);
         }
         ++curVal;
+        curVal__px = _min__px - _px_per_unit * (curVal - _min_val);
     }
 
 }
