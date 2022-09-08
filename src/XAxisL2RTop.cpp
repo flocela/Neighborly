@@ -10,7 +10,8 @@ XAxisL2RTop::XAxisL2RTop (
     int maxVal,
     int majTickSpacing,
     int minTickSpacing,
-    int labelSpacing
+    int labelSpacing,
+    int overrunPx
 ) : _title{title},
     _pc{pixelConverter},
     _axis_format{axisFormat},
@@ -20,10 +21,12 @@ XAxisL2RTop::XAxisL2RTop (
     _max_val{maxVal},
     _min_tick_spacing{minTickSpacing},
     _maj_tick_spacing{majTickSpacing},
-    _label_spacing{labelSpacing}
+    _label_spacing{labelSpacing},
+    _overrun__px{overrunPx}
 {
     _left_most_pixel_x__px = _x_coord__px;
-    _right_most_pixel_x__px = _pc->getPixel(_max_val);// + _axis_format.overrunPx(); 
+    std::cout << "XAxisL2RTop overrunPx: " << _overrun__px << std::endl;
+    _right_most_pixel_x__px = _pc->getPixel(_max_val) + overrunPx;
 }
 
 void XAxisL2RTop::print (Renderer* renderer)
@@ -86,10 +89,9 @@ void XAxisL2RTop::addTicksAndLabels (
     
     // Ticks and labels.
     int currValue = _min_val;
-    int rightMostPixel__px = _pc->getValue(_right_most_pixel_x__px);
-    while (currValue <= rightMostPixel__px)
+    int currValue__px = _pc->getPixel(currValue);
+    while (currValue__px <= _right_most_pixel_x__px)
     {
-        int currValue__px = _pc->getPixel(currValue);
         if (currValue % _label_spacing == 0) // long tick with label
         {   
             rect.x =  currValue__px - ( _axis_format.tickThickness() / 2 );
@@ -110,6 +112,7 @@ void XAxisL2RTop::addTicksAndLabels (
         }
 
         ++currValue;
+        currValue__px = _pc->getPixel(currValue);
     }
 }
 

@@ -29,6 +29,7 @@ class AxisFormat
 
         void setLabelLetterHeight (int size);
         void setLabelSpacePx (int space);
+    
 
     private:
         // for simplicity, thicknesses can not be set. Both are one.

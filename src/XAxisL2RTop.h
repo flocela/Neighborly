@@ -24,7 +24,8 @@ class XAxisL2RTop
             int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal.
             int majTickSpacing,
             int minTickSpacing,  // in units, not pixels
-            int labelSpacing // in units, not in pixels.
+            int labelSpacing, // in units, not in pixels.
+            int overrunPx
         );
         // Renders axis from left to right with title at top (used for horizontal axes).
         void print (Renderer* renderer);
@@ -42,6 +43,7 @@ class XAxisL2RTop
         int _min_tick_spacing;
         int _maj_tick_spacing;
         int _label_spacing;
+        int _overrun__px;
         
         int _left_most_pixel_x__px;
         int _right_most_pixel_x__px;

@@ -82,7 +82,8 @@ void GrCityChart::addCityXAxis()
         _house_max_x,
         majTickSpacing(length__coord),
         minTickSpacing(length__coord),
-        labelSpacing(length__coord)
+        labelSpacing(length__coord),
+        _overrun_m * _cell_size__px
     );
 }
 
@@ -99,7 +100,8 @@ void GrCityChart::addCityYAxis()
         _house_max_y,
         majTickSpacing(length__coord),
         minTickSpacing(length__coord),
-        labelSpacing(length__coord)
+        labelSpacing(length__coord),
+        _overrun_m * _cell_size__px
     );
 }
 

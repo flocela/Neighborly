@@ -10,7 +10,8 @@ YAxisT2B::YAxisT2B (
     int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal.
     int majTickSpacing,
     int minTickSpacing,  // in units, not pixels
-    int labelSpacing // in units, not in pixels.
+    int labelSpacing, // in units, not in pixels.
+    int overrunPx
 ) : _title{title},
     _pc{pixelConverter},
     _axis_format{axisFormat},
@@ -20,11 +21,12 @@ YAxisT2B::YAxisT2B (
     _max_val{maxVal},
     _min_tick_spacing{minTickSpacing},
     _maj_tick_spacing{majTickSpacing},
-    _label_spacing{labelSpacing}
+    _label_spacing{labelSpacing},
+    _overrun__px{overrunPx}
 {
     // set _top_most_pixel and _bottom_most_pixel
     _top_most_pixel_y__px = _y_coord__px;
-    _bottom_most_pixel_y__px = _pc->getPixel(_max_val);// + _axis_format.overrunPx();
+    _bottom_most_pixel_y__px = _pc->getPixel(_max_val) + _overrun__px;
 }
 
 void YAxisT2B::print (Renderer* renderer)
@@ -87,11 +89,9 @@ void YAxisT2B::addTicksAndLabels (
     SDL_Rect curRect;
     curRect.h = _axis_format.tickThickness();
     int curVal = _min_val;
-    
-    while (curVal <= _max_val)
+    int curVal__px = _pc->getPixel(curVal);
+    while (curVal__px <= _bottom_most_pixel_y__px)
     {
-        int curVal__px = _pc->getPixel(curVal);
-
         if (curVal % _label_spacing == 0) // TODO do all maj ticks get a label?
         {
             curRect.x = _x_coord__px - 
@@ -114,6 +114,7 @@ void YAxisT2B::addTicksAndLabels (
         }
 
         ++curVal;
+        curVal__px = _pc->getPixel(curVal);
     }
 }
 
