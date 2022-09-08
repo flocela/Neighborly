@@ -23,8 +23,8 @@ public:
         int unitX,
         int unitY,
         int dotSizePx,
-        int startOffset,
-        int endOffset,
+        int startOffsetMultiplier,
+        int endOffsetMultiplier,
         bool hasKey
     ) :_x_space__px{xSpacePx},
        _y_space__px{ySpacePx},
@@ -39,8 +39,9 @@ public:
        _unit_x{unitX},
        _unit_y{unitY},
        _dot_size__px{dotSizePx},
-       _start_offset{startOffset},
-       _end_offset{endOffset},
+       _start_offset_m{startOffsetMultiplier},
+       _end_offset_m{endOffsetMultiplier
+       },
        _has_key{hasKey}
     {
 
@@ -57,8 +58,8 @@ public:
         // actual number of y pixels, not given number of y space in pixels.
         int num_y_px = 
             ((_max_y - _min_y) * _unit_y) +
-            _start_offset +
-            _end_offset + // TODO at this point _start_offset and _end_offset have already taken _dot_size into account
+            _dot_size__px * _start_offset_m +
+            _dot_size__px * _end_offset_m +
             _title_letter.getHeightIncLSpace() +
             _a_format_x.getAxisHeightPx();
 
@@ -66,8 +67,8 @@ public:
         
         int num_x_px = 
             ((_max_x - _min_x) * _unit_x) +
-            _start_offset +
-            _end_offset +
+            _dot_size__px * _start_offset_m +
+            _dot_size__px * _end_offset_m +
             _a_format_y.getAxisHeightPx();
         
         if (num_y_px > _y_space__px)
@@ -99,6 +100,7 @@ public:
     AxisFormat axisFormatX () { return _a_format_x; }
     AxisFormat axisFormatY () { return _a_format_y; }
     Letter titleLetter () { return _title_letter; }
+    int keyLetterHeight () { return _key_letter.getHeightIncLSpace();}
     Letter keyLetter () { return _key_letter; }
     int minX () { return _min_x; }
     int minY () { return _min_y; }
@@ -108,14 +110,15 @@ public:
     int unitY () { return _unit_y; }
     int dotSizePx () { return _dot_size__px; }
     int hasKey () { return _has_key; }
-    int startOffset () { return _start_offset; }
-    int endOffset () { return _end_offset; }
+    int startOffsetM () { return _start_offset_m; }
+    int endOffsetM () { return _end_offset_m; }
 
-    // includes y axis height.
+    // includes y axis height. // TODO no one uses this.
     int xAxisLength () 
     { 
         return (_unit_x * (_max_x - _min_x)) +
-               _start_offset + _end_offset +
+                _unit_x * _start_offset_m + 
+                _unit_x * _end_offset_m +
                _a_format_y.getAxisHeightPx();
     }
 
@@ -137,8 +140,8 @@ private:
     // Offsets are multipliers.
     // Length of axis before minimum value is _start_offset times _dot_size.
     // Length of axis after maximum value is _end_offset times _dot_size.
-    int _start_offset; 
-    int _end_offset;
+    int _start_offset_m; 
+    int _end_offset_m;
 
     bool _has_key;
 

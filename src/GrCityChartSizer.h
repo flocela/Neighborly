@@ -22,8 +22,8 @@ class GrCityChartSizer
             int maxY, // maximum y value for a house. (most south house)
             int dotSizePx,
             int pixelsPerUnit, // both x and y direction
-            int startOffsetPx,
-            int endOffsetPx,
+            int startOffsetMultiplier,
+            int endOffsetMultiplier,
             bool hasKey,
             Letter keyLetter
         ): _x_space_length__px{xSpaceLengthPx},
@@ -37,8 +37,8 @@ class GrCityChartSizer
            _max_y{maxY},
            _dot_size__px{dotSizePx},
            _pixels_per_unit{pixelsPerUnit},
-           _start_offset__px{startOffsetPx},
-           _end_offset__px{endOffsetPx},
+           _start_offset_m{startOffsetMultiplier},
+           _end_offset_m{endOffsetMultiplier},
            _has_key{hasKey},
            _key_letter{keyLetter}
         {
@@ -58,11 +58,13 @@ class GrCityChartSizer
         int getMaxY () {return _max_y;}
         int getDotSize__px () {return _dot_size__px;}
         int getPixelsPerUnit () {return _pixels_per_unit;}
-        int getStartOffset () {return _start_offset__px;}
-        int getEndOffset () { return _end_offset__px;}
+        int getStartOffsetMultiplier () {return _start_offset_m;}
+        int getEndOffsetMultiplier () { return _end_offset_m;}
         int getAxisLengthX () 
         {
-            return _pixels_per_unit * (_max_x - _min_x) + _start_offset__px + _end_offset__px;
+            return _pixels_per_unit * (_max_x - _min_x) + 
+                   _pixels_per_unit * _start_offset_m + 
+                   _pixels_per_unit * _end_offset_m;
         }
         Letter getKeyLetter () {return _key_letter;}
 
@@ -78,8 +80,8 @@ class GrCityChartSizer
         int _max_y; // coordiante y-value of south most house
         int _dot_size__px;
         int _pixels_per_unit;
-        int _start_offset__px;
-        int _end_offset__px;
+        int _start_offset_m;
+        int _end_offset_m;
         bool _has_key;
         Letter _key_letter;
 };

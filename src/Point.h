@@ -9,7 +9,7 @@ class Point
 {
 public:
     Point(
-        double x,
+        double x, // TODO why do these have to doubles?
         double y,
         Color color
     ):

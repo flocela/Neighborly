@@ -54,7 +54,7 @@ inline std::unordered_map<BaseColor, std::unordered_map<Mood,ColorInfo>> _colorr
             { Color::blue_happy,
               BaseColor::blue,
               "blue",
-              Mood::neutral,
+              Mood::happy,
               "happy", 
               {0, 229, 255, 255} }},
         { Mood::unhappy,
@@ -84,7 +84,7 @@ inline std::unordered_map<BaseColor, std::unordered_map<Mood,ColorInfo>> _colorr
             { Color::red_unhappy, 
               BaseColor::red,
               "red",
-              Mood::happy,
+              Mood::unhappy,
               "unhappy", 
               {198, 40, 40, 255} }}    
     }},

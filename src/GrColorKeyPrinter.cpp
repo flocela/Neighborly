@@ -29,7 +29,7 @@ void GrColorKeyPrinter::print (Renderer* renderer)
             std::string text = "Group: " + std::to_string(groupId);
             if (mood != Mood::neutral)
             {
-                text = text + " " + _colorrs_map[baseColor][Mood::neutral]._mood_name;
+                text = text + " " + _colorrs_map[baseColor][mood]._mood_name;
             }
 
             int textWidth =  
@@ -88,5 +88,5 @@ void GrColorKeyPrinter::print (Renderer* renderer)
 
  int GrColorKeyPrinter::getHeightPx ()
 {
-    return _title_letter.letterHeight();
+    return _title_letter.getHeightIncLSpace();
 }

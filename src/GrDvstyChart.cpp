@@ -7,69 +7,64 @@ void GrDvstyChart::print (
     Renderer* renderer
 )
 {
-    /*(void)city;
-    (void)housePerResident;
-    (void)residentPerHouse;
-    (void)renderer;*/
+    std::unordered_map<int, int> num_of_diff_neighbors_Per_group;
 
-    // count the number of different neighbors for each group.
-    std::unordered_map<int, int> count_diff_neighbors_Per_group;
-
-    // number of residents per group
-    std::unordered_map<int, int> count_residents_Per_group;
+    std::unordered_map<int, int> num_of_residents_Per_group;
 
     for (std::pair<const Resident*, const House*> ii : housePerResident)
     {
         const Resident* res = ii.first;
         const House* house = ii.second;
-        int groupNumForRes = res->getGroupNumber();
+
+        int groupId = res->getGroupNumber();
         std::set<const House*> adjHouses = _neighbors[house];
-        std::set<const Resident*> adjResidents = getResidentsInTheseHouses(adjHouses, residentPerHouse);
+        std::set<const Resident*> adjResidents = getResidentsInHouses(adjHouses, residentPerHouse);
 
         for (const Resident* adj : adjResidents)
         {
-            int groupNumForAdj = adj->getGroupNumber();
-            if (groupNumForAdj == groupNumForRes)
+            int neighborGroupId = adj->getGroupNumber();
+            if (neighborGroupId == groupId)
             {
                 continue;
             }
-            if (count_diff_neighbors_Per_group.find(groupNumForAdj) == count_diff_neighbors_Per_group.end())
+            if (num_of_diff_neighbors_Per_group.find(neighborGroupId) == num_of_diff_neighbors_Per_group.end())
             {
-                count_diff_neighbors_Per_group[groupNumForAdj] = 1;
+                num_of_diff_neighbors_Per_group[neighborGroupId] = 1;
             }
             else
             {
-                count_diff_neighbors_Per_group[groupNumForAdj] = count_diff_neighbors_Per_group[groupNumForAdj] + 1;
+                num_of_diff_neighbors_Per_group[neighborGroupId] += 1;
             }
         }
 
-        if (count_residents_Per_group.find(groupNumForRes) == count_residents_Per_group.end())
+        if (num_of_residents_Per_group.find(groupId) == num_of_residents_Per_group.end())
         {
-            count_residents_Per_group[groupNumForRes] = 1;
+            num_of_residents_Per_group[groupId] = 1;
         }
         else
         {
-            count_residents_Per_group[groupNumForRes] = count_residents_Per_group[groupNumForRes] + 1;
+            num_of_residents_Per_group[groupId] += 1;
         }
         
     }
 
     std::vector<Point> points;
-    for (auto jj : count_residents_Per_group)
+    for (auto jj : num_of_residents_Per_group)
     {
-        int groupNum = jj.first;
+        int groupId = jj.first;
         int countInGroup = jj.second;
-        double averageNumDiff = (double)count_diff_neighbors_Per_group[groupNum]/countInGroup;
-        // TODO emplace
-        // TODO is Diversity chart always Mood::neutral:
-        // TODO why is run a double?
-        points.push_back(Point{(double)run, averageNumDiff, _colorrs_map[_colors[groupNum]][Mood::neutral]._my_color});
+        double averageNumOfDiffNeighbors = 
+            (double)num_of_diff_neighbors_Per_group[groupId]/countInGroup;
+        points.emplace_back( Point{
+            (double)run, 
+            averageNumOfDiffNeighbors,
+            _colorrs_map[_colors[groupId]][Mood::neutral]._my_color} );
     }
     _chart.print(points, false, renderer);
     _key.print(renderer);
 }
 
-std::set<const Resident*> GrDvstyChart::getResidentsInTheseHouses (
+std::set<const Resident*> GrDvstyChart::getResidentsInHouses (
     std::set<const House*> houses,
     const std::unordered_map<const House*, const Resident*> residentPerHouse
 )

@@ -61,8 +61,8 @@ class GrCityChart
         int _y_given_space__px;
         
         // cell_size * offsetMultiplier is length from crosshairs to center of first cell.
-        int _offset__px = 2; 
-        int _overrun__px = _offset__px;
+        int _offset_m = 1; 
+        int _overrun_m = _offset_m;
 
         Letter _title_letter;
         AxisFormat _axis_format_X;
@@ -151,7 +151,6 @@ class GrCityChart
 
         int labelSpacing (int axisLength);
 
-        int calcYCrossHairsPx();
         int calcCellSizePx();
         int calcHouseSizePx();
         int calcXAxisLengthPx();

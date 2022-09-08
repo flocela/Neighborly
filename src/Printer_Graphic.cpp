@@ -71,8 +71,8 @@ void Printer_Graphic::setCityChart (int unitSize)
             _max_y_coord,
             houseSize,
             unitSize,
-            _x_offset_multiplier * houseSize,
-            _x_overrun_multiplier * houseSize,
+            _x_offset_multiplier,
+            _x_overrun_multiplier,
             true,
             _color_key_letter
         );
@@ -95,7 +95,8 @@ int Printer_Graphic::cityChartCalculatePxPerUnit()
     int allowableXAxisLengthPx = _x_space__px - _axis_format_Y.getAxisHeightPx();
     int numOfCellsX = 
         (_max_x_coord - _min_x_coord) +
-        (_x_offset_multiplier + _x_overrun_multiplier);
+        _x_offset_multiplier +
+        _x_overrun_multiplier;
     int xCellSize = allowableXAxisLengthPx/numOfCellsX;
 
     int allowableYAxisLengthPx = 
@@ -106,7 +107,8 @@ int Printer_Graphic::cityChartCalculatePxPerUnit()
 
     int numOfCellsY = 
         (_max_y_coord - _min_y_coord) +
-        (_y_offset_multiplier + _y_overrun_multiplier);
+        _y_offset_multiplier +
+        _y_overrun_multiplier;
 
     int yCellSize =  allowableYAxisLengthPx/numOfCellsY;
 
@@ -146,8 +148,8 @@ void Printer_Graphic::initDvstyChart (
         20, // unitX
         20, // unitY
         _dot_size__px,
-        _x_offset_multiplier * _dot_size__px,
-        _x_overrun_multiplier * _dot_size__px,
+        _x_offset_multiplier,
+        _x_overrun_multiplier,
         false
     );
 
@@ -179,8 +181,8 @@ void Printer_Graphic::initHapChart ()
         20, // unit X
         5,
         _dot_size__px,
-        _x_offset_multiplier * _dot_size__px,
-        _x_overrun_multiplier * _dot_size__px,
+        _x_offset_multiplier,
+        _x_overrun_multiplier,
         false
     );
 

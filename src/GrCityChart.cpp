@@ -15,8 +15,8 @@ GrCityChart::GrCityChart (
     _top_left_corner_y__px{topLeftCornerYPx},
     _x_given_space__px{grCityChartSizer.getXSpaceLengthPx()},
     _y_given_space__px{grCityChartSizer.getYSpaceLengthPx()},
-    _offset__px{grCityChartSizer.getStartOffset()},
-    _overrun__px{grCityChartSizer.getEndOffset()},
+    _offset_m{grCityChartSizer.getStartOffsetMultiplier()},
+    _overrun_m{grCityChartSizer.getEndOffsetMultiplier()},
     _title_letter{grCityChartSizer.getTitleLetter()},
     _axis_format_X{grCityChartSizer.getAxisFormatX()},
     _axis_format_Y{grCityChartSizer.getAxisFormatX()},
@@ -27,8 +27,8 @@ GrCityChart::GrCityChart (
     _house_max_y{grCityChartSizer.getMaxY()},
     _x_axis_length__px{
         _cell_size__px * (_house_max_x - _house_min_x) + 
-        _offset__px + 
-        _overrun__px},
+        _cell_size__px * _offset_m + 
+        _cell_size__px * _overrun_m},
     _cross_hairs_x__px{(_x_given_space__px - _x_axis_length__px)/2},
     _key{
         _cross_hairs_x__px,
@@ -46,14 +46,14 @@ GrCityChart::GrCityChart (
     },
     _pixel_converter_x{std::make_unique<PixelConverter>(
         _house_min_x,
-        _cross_hairs_x__px + _offset__px,
+        _cross_hairs_x__px + _cell_size__px * _offset_m,
         _house_max_x,
-        _cross_hairs_x__px + _offset__px + _cell_size__px * (_house_max_x - _house_min_x))},
+        _cross_hairs_x__px + _cell_size__px * _offset_m + _cell_size__px * (_house_max_x - _house_min_x))},
     _pixel_converter_y{std::make_unique<PixelConverter>(
         _house_min_y,
-        _cross_hairs_y__px + _offset__px,
+        _cross_hairs_y__px +  _cell_size__px * _offset_m,
         _house_max_y,
-        _cross_hairs_y__px + _offset__px + _cell_size__px * (_house_max_y - _house_min_y))}
+        _cross_hairs_y__px +  _cell_size__px * _offset_m + _cell_size__px * (_house_max_y - _house_min_y))}
 {   
     _house_size__px = grCityChartSizer.getDotSize__px();
 
@@ -205,28 +205,22 @@ int GrCityChart::labelSpacing (int axisLength__coord)
     return (axisLength__coord <= 10)? 1 : 10;
 }
 
-int GrCityChart::calcYCrossHairsPx ()
-{
-    return _top_left_corner_y__px + 
-           _title_letter.getHeightIncLSpace() + 
-           _key.getHeightPx() +
-           _axis_format_X.getAxisHeightPx();
-}
-
 int GrCityChart::calcCellSizePx ()
 {
     // X-direction
-    int xAxisLengthPx = _x_given_space__px - _axis_format_Y.getAxisHeightPx(); 
-    int numOfCellsX = (_house_max_x - _house_min_x) + _offset__px + _overrun__px;
+    int xAxisLengthPx = _x_given_space__px - _axis_format_Y.getAxisHeightPx();
+    // TODO should divide _offset_m and _overrun_m by 2. Since only half of the cell is counted.
+    int numOfCellsX = (_house_max_x - _house_min_x) + _offset_m + _overrun_m;
     int xCellSize = xAxisLengthPx / numOfCellsX;
 
     // Y-direction
     int yAxisLengthPx = 
         _y_given_space__px - 
         _title_letter.getHeightIncLSpace() -
+        _key.getHeightPx() - 
         _axis_format_X.getAxisHeightPx();
 
-    int numOfCellsY = (_house_max_y - _house_min_y) + _offset__px + _overrun__px;
+    int numOfCellsY = (_house_max_y - _house_min_y) + _offset_m + _overrun_m;
     int yCellSize = yAxisLengthPx / numOfCellsY;
     int smallestCellSize = std::min(xCellSize, yCellSize);
     smallestCellSize = (smallestCellSize%2 == 0)? smallestCellSize : (smallestCellSize+1);
