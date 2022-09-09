@@ -25,7 +25,6 @@ XAxisL2RTop::XAxisL2RTop (
     _overrun__px{overrunPx}
 {
     _left_most_pixel_x__px = _x_coord__px;
-    std::cout << "XAxisL2RTop overrunPx: " << _overrun__px << std::endl;
     _right_most_pixel_x__px = _pc->getPixel(_max_val) + overrunPx;
 }
 

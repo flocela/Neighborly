@@ -151,7 +151,6 @@ class GrCityChart
 
         int labelSpacing (int axisLength);
 
-        int calcCellSizePx();
         int calcHouseSizePx();
         int calcXAxisLengthPx();
         int calcYAxisLengthPx();

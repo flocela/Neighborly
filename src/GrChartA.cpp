@@ -26,8 +26,8 @@ _cross_y__px{
     _top_left_y__px + 
     _sizer.titleLetter().getHeightIncLSpace() +
     _sizer.keyLetterHeight() +
-    _sizer.dotSizePx() * _sizer.startOffsetM() +
-    _sizer.dotSizePx() * _sizer.endOffsetM() +
+    _sizer.unitY() * _sizer.startOffsetM() +
+    _sizer.unitY() * _sizer.endOffsetM() +
     _sizer.unitY() * _y_diff
 },
 _tick_spacing_min_x{(sizer.unitX() > 10)? 1 : 5},
@@ -44,8 +44,8 @@ _x_axis{
     _tick_spacing_maj_x,
     _tick_spacing_min_x,
     _tick_spacing_maj_x,
-    _sizer.dotSizePx() * sizer.startOffsetM(),
-    _sizer.dotSizePx() * sizer.endOffsetM(),
+    _sizer.unitX() * sizer.startOffsetM(),
+    _sizer.unitX() * sizer.endOffsetM(),
     _sizer.unitX()
 },
 _y_axis{
@@ -58,8 +58,8 @@ _y_axis{
     _tick_spacing_maj_y,
     _tick_spacing_min_y,
     _tick_spacing_maj_y,
-    _sizer.dotSizePx() * sizer.startOffsetM(),
-    _sizer.dotSizePx() * sizer.endOffsetM(),
+    _sizer.unitY() * sizer.startOffsetM(),
+    _sizer.unitY() * sizer.endOffsetM(),
     _sizer.unitY()
 }
 {}
@@ -90,12 +90,12 @@ void GrChartA::print (
     {
         int x = 
             _cross_x__px +                                      // cross hairs
-            _sizer.dotSizePx() * _sizer.startOffsetM() +        // space between crosshairs and min_value
+            _sizer.unitX() * _sizer.startOffsetM() +        // space between crosshairs and min_value
             ( _sizer.unitX() * (point.x() - _sizer.minX()) ) -  // px_per_unit * ( x - min value)
             _sizer.dotSizePx()/2;                               // x is left edge of dot
             
         int y = _cross_y__px -
-                _sizer.dotSizePx() * _sizer.startOffsetM() -
+                _sizer.unitY() * _sizer.startOffsetM() -
                 (_sizer.unitY() * (point.y() - _sizer.minY())) +
                 _sizer.dotSizePx()/2;
 
