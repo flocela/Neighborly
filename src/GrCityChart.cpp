@@ -8,7 +8,8 @@ GrCityChart::GrCityChart (
     std::unordered_map<int, BaseColor> resColors,
     int topLeftCornerXPx,
     int topLeftCornerYPx
-) : _renderer{renderer},
+) : 
+    _renderer{renderer},
     _coord_to_house_map{coordToHouseMap},
     _res_colors{resColors},
     _top_left_corner_x__px{topLeftCornerXPx},

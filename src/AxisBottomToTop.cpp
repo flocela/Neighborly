@@ -120,5 +120,4 @@ void AxisBottomToTop::addTicksAndLabels (
         ++curVal;
         curVal__px = _min__px - _px_per_unit * (curVal - _min_val);
     }
-
 }

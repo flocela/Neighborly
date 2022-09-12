@@ -11,7 +11,7 @@ public:
     // unitX and unitY can only by 1, 10, or 100.
     GrChartASizer (
         int xSpacePx, // given space in x direction
-        int ySpacePx,
+        int ySpacePx, // given space in y direction
         AxisFormat aFormatX,
         AxisFormat aFormatY,
         Letter titleLetter,
@@ -44,7 +44,6 @@ public:
        },
        _has_key{hasKey}
     {
-
         if (unitX <= 0) // TODO should also check if even (see tick line thicknesses)
         {
             throw std::invalid_argument("unitX must be positive");
@@ -55,25 +54,25 @@ public:
             throw std::invalid_argument("unitY must be positive");
         }
 
-        // actual number of y pixels, not given number of y space in pixels.
+        // number of y pixels compared to given number of y pixels,
         int num_y_px = 
             ((_max_y - _min_y) * _unit_y) +
-            _dot_size__px * _start_offset_m +
-            _dot_size__px * _end_offset_m +
+            _unit_y * _start_offset_m +
+            _unit_y * _end_offset_m +
             _title_letter.getHeightIncLSpace() +
+            _key_letter.getHeightIncLSpace() + 
             _a_format_x.getAxisHeightPx();
 
         num_y_px = (_has_key)? (num_y_px + _key_letter.getHeightIncLSpace()) : num_y_px;
         
         int num_x_px = 
             ((_max_x - _min_x) * _unit_x) +
-            _dot_size__px * _start_offset_m +
-            _dot_size__px * _end_offset_m +
+            _unit_x * _start_offset_m +
+            _unit_x * _end_offset_m +
             _a_format_y.getAxisHeightPx();
         
         if (num_y_px > _y_space__px)
         {
-            std::cout << "GrChartASizer: num_y_px, _y_space_px: " << num_y_px << ", " << _y_space__px << std::endl;
             throw std::invalid_argument("y-axis is too large");
         }
 
@@ -100,7 +99,8 @@ public:
     AxisFormat axisFormatX () { return _a_format_x; }
     AxisFormat axisFormatY () { return _a_format_y; }
     Letter titleLetter () { return _title_letter; }
-    int keyLetterHeight () { return _key_letter.getHeightIncLSpace();}
+    int keyLetterHeightInclSpace () { return _key_letter.getHeightIncLSpace();}
+    int keyLetterHeight () { return _key_letter.letterHeight();}
     Letter keyLetter () { return _key_letter; }
     int minX () { return _min_x; }
     int minY () { return _min_y; }

@@ -24,9 +24,9 @@ void Printer_Graphic::init (
     initWindowLengths();
     initWindowTitle(title);
     initCityChart();
-    initRunsChart();
+    //initRunsChart();
     initDvstyChart(neighbors);
-    initHapChart();
+    //initHapChart();
 }
 
 void Printer_Graphic::initCityChart () // TODO throw exception if city too large
@@ -60,7 +60,7 @@ void Printer_Graphic::setCityChart (int unitSize)
 
     GrCityChartSizer cityPrinterSizer = 
         GrCityChartSizer (
-            _x_space__px,
+            _x_chart_space__px,
             _city_y_space__px,
             _axis_format_X,
             _axis_format_Y,
@@ -92,7 +92,7 @@ int Printer_Graphic::cityChartCalculatePxPerUnit()
     // start and end offsets are the offset_multiplier times the dot_size__px.
     // approximate the start and end offsets as offset_multiplier times the cellSize.
 
-    int allowableXAxisLengthPx = _x_space__px - _axis_format_Y.getAxisHeightPx();
+    int allowableXAxisLengthPx = _x_chart_space__px - _axis_format_Y.getAxisHeightPx();
     int numOfCellsX = 
         (_max_x_coord - _min_x_coord) +
         _x_offset_multiplier +
@@ -135,7 +135,7 @@ void Printer_Graphic::initDvstyChart (
 )
 {
     GrChartASizer divSizer(
-        _x_space__px,
+        _x_chart_space__px,
         (int)(_chart_y_space__px * _diversity_chart_y_axis_fraction),
         _axis_format_X,
         _axis_format_Y,
@@ -144,9 +144,9 @@ void Printer_Graphic::initDvstyChart (
         0, // x axis min value
         _num_of_runs,
         0, // y axis
-        10, // TODO get largest number of possible neighbors from city
-        20, // unitX
-        20, // unitY
+        20, // TODO get largest number of possible neighbors from city
+        6, // unitX // unitX needs to be set. Has to be larger than dot size plus 2
+        10, // unitY // unitY needs to be set. No smaller than 10, or it shows too small.
         _dot_size__px,
         _x_offset_multiplier,
         _x_overrun_multiplier,
@@ -168,7 +168,7 @@ void Printer_Graphic::initDvstyChart (
 void Printer_Graphic::initHapChart ()
 {   
     GrChartASizer divSizer(
-        _x_space__px,
+        _x_chart_space__px,
         (int)(_chart_y_space__px * _hap_chart_y_axis_fraction),
         _axis_format_X,
         _axis_format_Y,
@@ -216,7 +216,7 @@ void Printer_Graphic::print (
     printWindowTitle();
     _city_chart->printCity(residentPerHouse);
 
-    _runs_chart->print(run);
+    //_runs_chart->print(run);
 
     _dvsty_chart->print(
         housePerResident,
@@ -225,11 +225,11 @@ void Printer_Graphic::print (
         _renderer.get()
     );
 
-    _happiness_chart->print(
+    /*_happiness_chart->print(
         housePerResident,
         run,
         _renderer.get()
-    );
+    );*/
     _renderer->endFrame();
 } 
 
@@ -278,7 +278,7 @@ void Printer_Graphic::printWindowTitle ()
 void Printer_Graphic::initWindowLengths ()
 {
     _x_space_length__px = _screen_width__px - (2 * _side_border__px);
-    _x_space__px =  (_screen_width__px/2) - _side_border__px - _inside_border__px;
+    _x_chart_space__px =  (_screen_width__px/2) - _side_border__px - _inside_border__px;
     _x_center__px = _screen_width__px/2;
 
     // RUNS CHART centered below window title

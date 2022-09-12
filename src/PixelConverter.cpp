@@ -10,8 +10,6 @@ PixelConverter::PixelConverter (
 ) //_min_val{minVal},
     //_min_pixel{minPixel},_cell_size__px{ (maxPixel - minPixel) / (maxVal - minVal)}
 {
-    std::cout << "minVal, minPixel, maxVal, maxPixel: " 
-    << minVal << ", "<< minPixel << ", " << maxVal << ", " << maxPixel << std::endl;
     _min_val = minVal;
     _min_pixel = minPixel;
     _cell_size__px = (maxPixel - minPixel) / (maxVal - minVal);
