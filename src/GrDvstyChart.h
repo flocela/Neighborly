@@ -20,10 +20,11 @@ GrDvstyChart (
     int topLeftXPx,
     int topLeftYPx,
     std::string title,
-    std::unordered_map<const House*, std::set<const House*>> neighbors
-
+    std::unordered_map<const House*, std::set<const House*>> neighbors,
+    int maxNumOfNeighbors,
+    int maxRuns
 ):
-    _chart{sizer, colors, moods, topLeftXPx, topLeftYPx, title},
+    _chart{sizer, colors, moods, topLeftXPx, topLeftYPx, title, 0, maxRuns, 0, maxNumOfNeighbors},
     _colors{colors},
     _moods{moods},
     _key{

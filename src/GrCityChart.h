@@ -33,14 +33,16 @@ class GrCityChart
     public:
         GrCityChart (
             GrCityChartSizer grCityChartSizer,
-            Renderer* renderer,
             std::unordered_map<const House*, Coordinate> coordToHouseMap,
             std::unordered_map<int, BaseColor> resColors,
             int topLeftCornerXPx,
             int topLeftCornerYPx
         );
 
-        void printCity (std::unordered_map<const House*, const Resident*> houseToResMap);
+        void print (
+            std::unordered_map<const House*, const Resident*> houseToResMap,
+            Renderer* renderer
+        );
     
     // __px suffix means the variable is in pixels which correspond to the screen.
     // __cl suffix means the variable is using the map's coordinate system.
@@ -50,7 +52,6 @@ class GrCityChart
     // coordinate system in pixels.
     private:
         std::string _main_title = "City Map";
-        Renderer* _renderer;
         std::unordered_map<const House*, Coordinate> _coord_to_house_map;
         // This includes sad resident colors and happy resident colors.
         std::unordered_map<int, BaseColor> _res_colors;
@@ -141,7 +142,10 @@ class GrCityChart
 
         void addCityXAxis ();
         void addCityYAxis ();
-        void printHouses (std::unordered_map<const House*, const Resident*> houseToResMap);
+        void printHouses (
+            std::unordered_map<const House*, const Resident*> houseToResMap,
+            Renderer* renderer
+        );
         std::map<Color, std::vector<Coordinate>> createVectorsOfHousesForEachColor (
             std::unordered_map<const House*, const Resident*> houseToResMap
         );
@@ -155,9 +159,9 @@ class GrCityChart
         int calcXAxisLengthPx();
         int calcYAxisLengthPx();
 
-        void printTitle();
-        void printXAxis();
-        void printYAxis();
+        void printTitle (Renderer* renderer);
+        void printXAxis (Renderer* renderer);
+        void printYAxis (Renderer* renderer);
         
 
 };

@@ -27,6 +27,7 @@ AxisBottomToTop::AxisBottomToTop (
     _start_offset__px{startOffsetPx},
     _end_offset__px{endOffsetPx},
     _px_per_unit{pxPerUnit},
+    _tick_thickness__px{ _px_per_unit%2==0? 2 : 1 },
     _min__px{_y_cross__px - _start_offset__px},
     _top_most_pixel_y__px{
         _y_cross__px -
@@ -91,7 +92,7 @@ void AxisBottomToTop::addTicksAndLabels (
     };
 
     SDL_Rect curRect;
-    curRect.h = _axis_format.tickThickness();
+    curRect.h = _tick_thickness__px;
     int curVal = _min_val;
     int curVal__px = _min__px - _px_per_unit * (curVal - _min_val);
 
@@ -103,7 +104,7 @@ void AxisBottomToTop::addTicksAndLabels (
                         _axis_format.majTickLengthPx() +
                         _axis_format.tickLengthInsideChart();
             curRect.w = _axis_format.majTickLengthPx();
-            curRect.y = curVal__px - (_axis_format.tickThickness()/2);
+            curRect.y = curVal__px - (_tick_thickness__px/2);
             rects.push_back(curRect);
 
             curText.text = std::to_string(curVal);
@@ -114,7 +115,7 @@ void AxisBottomToTop::addTicksAndLabels (
         {
             curRect.x = _x_cross__px - _axis_format.minTickLengthPx();
             curRect.w = _axis_format.minTickLengthPx();
-            curRect.y = curVal__px - (_axis_format.tickThickness()/2);
+            curRect.y = curVal__px - (_tick_thickness__px/2);
             rects.push_back(curRect);
         }
         ++curVal;

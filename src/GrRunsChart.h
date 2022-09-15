@@ -11,21 +11,19 @@ class GrRunsChart
     public:
         GrRunsChart () = delete;
         GrRunsChart ( 
-            Renderer* renderer,
             int topLeftCornerXPx,
             int topLeftCornerYPx,
             int xSpaceLengthPx,
             int ySpaceLengthPx,
             Letter titleLetter,
-            int maxNumOfRuns
+            int widthMultiplier
         ):
-            _renderer{renderer},
             _x_offset{topLeftCornerXPx},
             _y_offset{topLeftCornerYPx},
             _x_space_length__px{xSpaceLengthPx},
             _y_space_length__px{ySpaceLengthPx},
             _title_letter{titleLetter},
-            _max_num_of_runs{maxNumOfRuns}
+            _width_multiplier{widthMultiplier}
         {}
         GrRunsChart (const GrRunsChart& obj) = default;
         GrRunsChart (GrRunsChart&& obj) noexcept = default;
@@ -33,16 +31,15 @@ class GrRunsChart
         GrRunsChart& operator= (GrRunsChart&& obj) noexcept = default;
         ~GrRunsChart () = default;
 
-        void print (int numOfRuns);
+        void print (int numOfRuns, Renderer* renderer);
     
     private:
-        Renderer* _renderer;
         int _x_offset = 0;
         int _y_offset = 0;
         int _x_space_length__px = 0;
         int _y_space_length__px = 0;
         Letter _title_letter;
-        int _max_num_of_runs = 0;
+        int _width_multiplier; // TODO use _widht_multiplier
         int _num_of_runs = 0;
 };
 

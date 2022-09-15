@@ -45,6 +45,7 @@ class AxisBottomToTop
         int _start_offset__px;
         int _end_offset__px;
         int _px_per_unit;
+        int _tick_thickness__px;
         int _min__px; // y pixel of minimum value
         
         int _top_most_pixel_y__px;

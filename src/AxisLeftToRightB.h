@@ -1,5 +1,5 @@
-#ifndef AXIS_LEFT_TO_RIGHT_H
-#define AXIS_LEFT_TO_RIGHT_H
+#ifndef AXIS_LEFT_TO_RIGHT_B__H
+#define AXIS_LEFT_TO_RIGHT_B__H
 
 #include <string>
 #include "SDL.h"
@@ -47,6 +47,7 @@ class AxisLeftToRightB
         int _start_offset__px;
         int _end_offset__px;
         int _px_per_unit;
+        int _tick_thickness__px;
         
         int _left_most_pixel_x__px;
         int _right_most_pixel_x__px;

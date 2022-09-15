@@ -66,7 +66,7 @@ void Renderer::renderText (
         }
 
         // Account for spacing between letters and line height
-        textRect.w = 0.3 * letterHeight * textString.length();
+        textRect.w = _width_multiplier * letterHeight * textString.length();
         textRect.h = letterHeight; 
         
         SDL_FreeSurface(textSurface);

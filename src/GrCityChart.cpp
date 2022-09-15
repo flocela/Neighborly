@@ -3,13 +3,11 @@
 
 GrCityChart::GrCityChart (
     GrCityChartSizer grCityChartSizer,
-    Renderer* renderer,
     std::unordered_map<const House*, Coordinate> coordToHouseMap,
     std::unordered_map<int, BaseColor> resColors,
     int topLeftCornerXPx,
     int topLeftCornerYPx
-) : 
-    _renderer{renderer},
+): 
     _coord_to_house_map{coordToHouseMap},
     _res_colors{resColors},
     _top_left_corner_x__px{topLeftCornerXPx},
@@ -106,35 +104,41 @@ void GrCityChart::addCityYAxis()
     );
 }
 
-void GrCityChart::printCity(std::unordered_map<const House*, const Resident*> houseToResMap)
+void GrCityChart::print(
+    std::unordered_map<const House*, const Resident*> houseToResMap,
+    Renderer* renderer
+)
 {   
-    printTitle();
-    printXAxis();
-    printYAxis();
-    printHouses(houseToResMap);
-    _key.print(_renderer);
+    printTitle(renderer);
+    printXAxis(renderer);
+    printYAxis(renderer);
+    printHouses(houseToResMap, renderer);
+    _key.print(renderer);
 }
 
-void GrCityChart::printTitle()
+void GrCityChart::printTitle(Renderer* renderer)
 {   
-    _renderer->setTextFormats({100, 100, 100, 100},
+    renderer->setTextFormats({100, 100, 100, 100},
                               {0xAA, 0xFF, 0xFF, 0xFF},
                               _title_letter.letterHeight());
-    _renderer->renderText(_title_x__px, _title_y__px, _main_title, 1);
+    renderer->renderText(_title_x__px, _title_y__px, _main_title, 1);
 }
 
-void GrCityChart::printXAxis()
+void GrCityChart::printXAxis(Renderer* renderer)
 {   
-    _x_axis_utility->print(_renderer);
+    _x_axis_utility->print(renderer);
 }
 
-void GrCityChart::printYAxis()
+void GrCityChart::printYAxis(Renderer* renderer)
 {   //TODO y axis isn't printing the 110 number, the largest y value label
 // TODO don't let cell size become too large either.
-    _y_axis_utility->print(_renderer);
+    _y_axis_utility->print(renderer);
 }
 
-void GrCityChart::printHouses( std::unordered_map<const House *, const Resident *> houseToResMap )
+void GrCityChart::printHouses (
+    std::unordered_map<const House *, const Resident *> houseToResMap,
+    Renderer* renderer
+)
 {   
     std::map<Color, std::vector<Coordinate>> coordsPerColor =
         createVectorsOfHousesForEachColor(houseToResMap);
@@ -142,7 +146,7 @@ void GrCityChart::printHouses( std::unordered_map<const House *, const Resident 
     
     for (auto const &colorToCoordVector : coordsPerColor)
     {
-        _renderer->addBlocksByColor(
+        renderer->addBlocksByColor(
             _house_size__px,
             _house_size__px,
             colorToCoordVector.second,

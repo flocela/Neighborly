@@ -58,7 +58,7 @@ class Renderer {
 			std::vector<int> rgba
 		);
 
-		void setWidthMultiplier (double multiplier);
+		void setWidthMultiplier (double multiplier) {_width_multiplier = multiplier;};
 		double widthMultiplier() { return _width_multiplier; }
 		
  	private:

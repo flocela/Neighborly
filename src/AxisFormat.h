@@ -11,21 +11,21 @@ class AxisFormat
         AxisFormat& operator= (const AxisFormat& o) = default;
         ~AxisFormat () = default;
 
-        int axisThicknessPx () { return _axis_thickness__px;};
-        int tickThickness () {return _tick_thickness__px;};
-        int majTickLengthPx () { return _maj_tick_length__px;};
-        int minTickLengthPx () {return _min_tick_length__px;};
-        int tickLengthInsideChart() {return _tick_length_inside_chart__px;};
+        int axisThicknessPx () { return _axis_thickness__px;}
+        int tickThickness () {return _tick_thickness__px;} // TODO not a format, dependent on unit size
+        int majTickLengthPx () { return _maj_tick_length__px;}
+        int minTickLengthPx () {return _min_tick_length__px;}
+        int tickLengthInsideChart() {return _tick_length_inside_chart__px;}
 
         int labelHeightPx () {return _label_letter_height;} // these are the numbers along the axis
-        int labelLineSpacePx () {return _label_line_space__px;};
+        int labelLineSpacePx () {return _label_line_space__px;}
 
         int getAxisHeightPx ();
 
         void setMajTickLengthPx (int length);
         void setMinTickLengthPx (int length);
         void setTickLengthInsideChartPx (int length);
-        void setTickThicknessPx(int thickness) {_tick_thickness__px = thickness;};
+        void setTickThicknessPx(int thickness) {_tick_thickness__px = thickness;}
 
         void setLabelLetterHeight (int size);
         void setLabelSpacePx (int space);

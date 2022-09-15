@@ -19,7 +19,11 @@ public:
         std::set<Mood> moods,
         int topLeftXPx, // top left corner of chart
         int topLeftYPx, // top left corner of chart
-        std::string title
+        std::string title,
+        int minX,
+        int maxX,
+        int minY, 
+        int maxY
     );
 
     void print (
@@ -35,10 +39,15 @@ private:
     std::set<Mood> _moods;
     int _top_left_x__px;
     int _top_left_y__px;
+    int _min_x;
+    int _max_x;
+    int _min_y;
+    int _max_y;
     int _x_diff; // max minus min axis values
     int _y_diff; // max minus min axis values
     std::string _title;
-
+    int _unit__px; // unit size, same in x and y direction.
+    int _dot__px; // dot size, same in x and y directions. Dot is inside of the unit.
     int _title_x__px; // center placement of _title
     int _title_y__px;
 
@@ -52,6 +61,17 @@ private:
 
     AxisLeftToRightB _x_axis;
     AxisBottomToTop _y_axis;
+
+    int calcUnitSizePx ();
+    int calcDotSizePx (int unitSizePx);
+    int calcXAxisLength () {
+        return (
+            _unit__px * _x_diff +
+            _unit__px * _sizer.startOffsetM() +
+            _unit__px * _sizer.endOffsetM() +
+            _a_format_y.getAxisHeightPx()
+        );
+    }
 };
 
 #endif

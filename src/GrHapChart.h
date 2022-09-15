@@ -19,9 +19,12 @@ public:
         std::set<Mood> moods,
         int topLeftXPx,
         int topLeftYPx,
-        std::string title
+        std::string title,
+        int numRuns,
+        int minY,
+        int maxY
     ):
-    _chart{sizer, colors, moods, topLeftXPx, topLeftYPx, title},
+    _chart{sizer, colors, moods, topLeftXPx, topLeftYPx, title, 0, numRuns, minY, maxY},
     _colors{colors},
     _moods{moods},
     _key{

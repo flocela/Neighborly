@@ -116,8 +116,6 @@ int main(int argc, char* argv[])
     vector<CityFactory*>                 cityFactoryPointers = getPointers(cityFactories);
     vector<unique_ptr<ResidentsFactory>> residentFactories   = initResidentFactories();
     vector<ResidentsFactory*>            resFactoryPointers  = getPointers(residentFactories);
-    
-    Printer_Graphic graphicPrinter{};
 
     SimulationComponents components;
     int randomSeed = 1;
@@ -196,12 +194,13 @@ int main(int argc, char* argv[])
         neighbors[house] = city->getAdjacentHouses(house);
     }
 
-    graphicPrinter.init(
-        city->getCoordinatesPerHouse(),
-        neighbors, numOfRuns,
+    Printer_Graphic graphicPrinter{
+        "Neighbors",
         groupNumToColorMap,
-        "Neighbors"
-    );
+        city->getCoordinatesPerHouse(),
+        neighbors,
+        numOfRuns
+    };
     
     std::unordered_map<const House*, Resident*> houseToResidentMap;
     //for (int ii=0; ii< numOfRuns; ii++)

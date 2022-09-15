@@ -25,7 +25,8 @@ AxisLeftToRightB::AxisLeftToRightB (
     _label_spacing{labelSpacing},
     _start_offset__px{startOffset},
     _end_offset__px{endOffset},
-    _px_per_unit{pxPerUnit}
+    _px_per_unit{pxPerUnit},
+    _tick_thickness__px{_px_per_unit%2==0? 2 : 1}
 {
     _left_most_pixel_x__px = _x_cross__px;
     _right_most_pixel_x__px = 
@@ -85,7 +86,7 @@ void AxisLeftToRightB::addTicksAndLabels (
                         _axis_format.labelLineSpacePx();
     TextRect tr;
     SDL_Rect rect;
-    rect.w = _axis_format.tickThickness();
+    rect.w = _tick_thickness__px;
     // Todo should put ending label on last maj tick mark.
     // Ticks and labels.
     int currValue = _min_val;
@@ -94,7 +95,7 @@ void AxisLeftToRightB::addTicksAndLabels (
     {  
         if (currValue % _label_spacing == 0) // long tick with label
         {   
-            rect.x =  currValue__px - ( _axis_format.tickThickness() / 2 );
+            rect.x =  currValue__px - ( _tick_thickness__px / 2 );
             rect.h = _axis_format.majTickLengthPx();
             rect.y = _y_cross__px - _axis_format.tickLengthInsideChart();
             std::string label = std::to_string(currValue);
@@ -104,7 +105,7 @@ void AxisLeftToRightB::addTicksAndLabels (
         }
         else if (currValue % _min_tick_spacing == 0) // shorter tick
         {   
-            rect.x =  currValue__px - ( _axis_format.tickThickness() / 2 );
+            rect.x =  currValue__px - ( _tick_thickness__px / 2 );
             rect.h = _axis_format.minTickLengthPx();
             rect.y = _y_cross__px + _axis_format.axisThicknessPx();
             rects.push_back(rect);
