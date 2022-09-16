@@ -17,31 +17,14 @@ Printer_Graphic::Printer_Graphic (
     int numOfRuns
 )
 {
-    if (colors.size() > 2)
-        throw(std::invalid_argument("Printer Graphic only prints two types of residents."));
-
-    // TODO minx and miny may not be at zero
-    // TODO max x and maxy may not be the same value
-    std::vector<int> minsAndMaxCoords = determineMinMaxHouseCoords(coordPerHouse);
-    if (minsAndMaxCoords[1] > 110 || minsAndMaxCoords[3] > 110)
-         throw(std::invalid_argument("Max x and max y coordinates must be < 110."));
-
-    int maxNumOfNeighbors = determineMaxNumberOfNeighbors(neighbors);
-    if (_max_number_of_neighbors > 12)
-        throw(std::invalid_argument("Can't print more than 12 neighbors."));
-
-    // TODO what really is the max number of runs?
-    std::cout << "PrinterGraphic numOfRuns: " << numOfRuns << std::endl;
-    if (numOfRuns > 200) 
-        throw(std::invalid_argument("Can't print more than 100 runs."));
+    _window_title->setTitle(title);
 
     _colors = colors;
 
     _num_of_runs = numOfRuns;
 
-    _window_title->setTitle(title);
-
     _coordinates_per_house = coordPerHouse;
+    std::vector<int> minsAndMaxCoords = determineMinMaxHouseCoords(_coordinates_per_house);
 
     // one unit is the house and the border around the house
     int pixelsPerHouseUnit = cityChartCalculatePxPerUnit(
@@ -61,6 +44,8 @@ Printer_Graphic::Printer_Graphic (
 
     
     /* DIVERSITY CHART */
+
+    int maxNumOfNeighbors = determineMaxNumberOfNeighbors(neighbors);
         
     _dvsty_chart = createDvstyChart(neighbors, maxNumOfNeighbors, numOfRuns);
     
@@ -68,7 +53,6 @@ Printer_Graphic::Printer_Graphic (
     /* HAPPINESS CHART */
 
     _happiness_chart = createHapChart(numOfRuns);
-    
     
 }
 
@@ -279,17 +263,4 @@ void Printer_Graphic::keepScreen()
             break;
         }
     }
-}
-
-int Printer_Graphic::maxNumOfHousesX (int screenWidth__px)
-{   (void)screenWidth__px;
-    //TODO figure this out
-    return 100;
-}
-
-int Printer_Graphic::maxNumOfHousesY (int screenWidth__px)
-{
-    (void)screenWidth__px;
-    //TODO figure this out
-    return 100;
 }

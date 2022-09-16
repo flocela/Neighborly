@@ -35,8 +35,11 @@ public:
     Printer_Graphic& operator= (Printer_Graphic&& obj) noexcept = default;
     ~Printer_Graphic () = default;
 
-    int maxNumOfHousesX (int screenWidth__px);
-    int maxNumOfHousesY (int screenHeight__px);
+    int maxNumOfHousesX () {return 100;}
+    int maxNumOfHousesY () {return 100;}
+    int maxNumOfNeighbors () {return 12;}
+    int maxNumOfResidentTypes () {return 2;}
+    int maxNumOfRuns () { return 100;}
 
     void print(
         std::unordered_map<const House*, const Resident*> residentPerHouse,
@@ -49,7 +52,6 @@ private:
     
     std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
     std::unordered_map<int, BaseColor> _colors;
-    int _num_of_types_of_residents = 2;
 
     /* FOR WINDOW */
 
@@ -142,7 +144,7 @@ private:
 
     double _diversity_chart_y_axis_fraction = 0.3;
 
-    int _max_number_of_neighbors = 12;
+    int _max_number_of_neighbors;
     
     GrChartASizer _div_sizer{
         _x_chart_space__px,
