@@ -45,7 +45,7 @@ void GrColorKeyPrinter::print (Renderer* renderer)
 
     int columnWidth = longestString + _box_length__px + _box_spacer__px + 30;
 
-    int left = _x_offset + (_x_space_length__px/2) - ((double)columnWidth * keys.size()/2);
+    int left = _top_left_x__px + (_x_space_length__px/2) - ((double)columnWidth * keys.size()/2);
     int counter = 0;
     for (auto& key : keys)
     {
@@ -67,21 +67,16 @@ void GrColorKeyPrinter::print (Renderer* renderer)
         renderer->addBlock(
             _box_length__px,
             _box_length__px,
-            Coordinate(boxX,_y_offset + ((_title_letter.letterHeight() - _box_length__px)/2)),
+            Coordinate(boxX,_top_left_y__px + ((_title_letter.letterHeight() - _box_length__px)/2)),
             _the_color_rgba[key.first]
         );
         
         renderer->renderText(
             textX,
-            _y_offset,
+            _top_left_y__px,
             name,
             4
         );
         counter += 1;
     }
-}
-
- int GrColorKeyPrinter::getHeightPx ()
-{
-    return _title_letter.getHeightIncLSpace();
 }

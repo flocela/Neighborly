@@ -9,7 +9,7 @@ class GrColorKeyPrinter
 {
     public:
 
-    GrColorKeyPrinter() = delete;
+    GrColorKeyPrinter(); // TODO delete default constructor
     GrColorKeyPrinter (
         int topLeftCornerXPx,
         int topLeftCornerYPx,
@@ -18,8 +18,8 @@ class GrColorKeyPrinter
         std::unordered_map<int, BaseColor> colors, // group number to Color
         std::set<Mood> moods // keys for colors, e.g. happy, sad, neutral
     ):
-        _x_offset{topLeftCornerXPx},
-        _y_offset{topLeftCornerYPx},
+        _top_left_x__px{topLeftCornerXPx},
+        _top_left_y__px{topLeftCornerYPx},
         _x_space_length__px{xSpaceLengthPx},
         _title_letter{titleLetter},
         _colors{colors},
@@ -29,12 +29,17 @@ class GrColorKeyPrinter
     }
 
     void print (Renderer* renderer);
-    int getHeightPx ();
+    int getHeightPx () { return _title_letter.getHeightIncLSpace(); }
+
+    void setTopLeftCorner (int xPx, int yPx) {
+        _top_left_x__px = xPx;
+        _top_left_y__px = yPx;
+    }
 
     private:
 
-    int _x_offset = 0;
-    int _y_offset = 0;
+    int _top_left_x__px = 0;
+    int _top_left_y__px = 0;
     int _x_space_length__px = 0;
     Letter _title_letter;
     int _box_length__px = 0;

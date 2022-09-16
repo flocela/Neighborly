@@ -26,7 +26,7 @@ Printer_Graphic::Printer_Graphic (
     _coordinates_per_house = coordPerHouse;
     std::vector<int> minsAndMaxCoords = determineMinMaxHouseCoords(_coordinates_per_house);
 
-    // one unit is the house and the border around the house
+    // one unit is the house plus the border around the house
     int pixelsPerHouseUnit = cityChartCalculatePxPerUnit(
         minsAndMaxCoords[0],
         minsAndMaxCoords[1],
@@ -129,7 +129,7 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             _x_offset_multiplier,
             _x_overrun_multiplier,
             true,
-            _color_key_letter
+            _chart_key_letter
         );
    
     return std::make_unique<GrCityChart>(
@@ -161,7 +161,7 @@ int Printer_Graphic::cityChartCalculatePxPerUnit(
     int allowableYAxisLengthPx = 
         _city_y_space__px -
         _chart_title_letter.getHeightIncLSpace() -
-        _color_key_letter.getHeightIncLSpace() - 
+        _chart_key_letter.getHeightIncLSpace() - 
         _axis_format_Y.getAxisHeightPx();
 
     int numOfCellsY = 
@@ -173,8 +173,8 @@ int Printer_Graphic::cityChartCalculatePxPerUnit(
 
     int smallestCellSize = std::min(xCellSize, yCellSize);
 
-    // TODO what todo about smallest acceptable size??
-    return (smallestCellSize < 4) ? 4 : smallestCellSize;
+    return (smallestCellSize < _smallest_allowable_cell_size__px) ? 
+        _smallest_allowable_cell_size__px : smallestCellSize;
 }
 
 std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
@@ -183,17 +183,33 @@ std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
     int maxNumOfRuns
 )
 {
+    
+    
     std::set<Mood> moods{Mood::neutral};
     return std::make_unique<GrDvstyChart> (
-        _div_sizer,
         _colors,
         moods,
-        _x_center__px + _col_side_border__px,
-        _div_chart_top_y__px,
-        "Diversity, Average Number of Disparate Neighbors per Resident per Run",
         neighbors,
-        maxNumOfNeighbors,
-        maxNumOfRuns
+        GrColorKeyPrinter{
+            0,
+            0,
+            _div_sizer.xSpacePx(),
+            _chart_key_letter,
+            _colors,
+            moods},
+        GrChartA{
+            _div_sizer,
+            _colors, 
+            moods, 
+            _x_center__px + _col_side_border__px, 
+            _div_chart_top_y__px,
+            "Diversity, Average Number of Disparate Neighbors per Resident per Run",
+            0,
+            maxNumOfRuns,
+            0,
+            maxNumOfNeighbors},
+        _x_center__px + _col_side_border__px,
+        _div_chart_top_y__px
     );
 }
 

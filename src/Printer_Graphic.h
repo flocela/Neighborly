@@ -63,7 +63,7 @@ private:
     );
 
     int _top_border__px        = 10;
-    int _bottom_border__px     = 10;
+    int _bottom_border__px     = 20;
     int _left_right_borders__px = 20;
 
     // total x space minus the side borders
@@ -131,8 +131,8 @@ private:
         _bottom_border__px -
         _space_between_charts__px;
 
-    // Diversity and Happiness charts use the same _color_key_letter and _dot_size__px
-    Letter _color_key_letter{24, 4};
+    // Diversity and Happiness charts use the same dot size and copy of the same color key
+    Letter _chart_key_letter{24, 4};
     int _dot_size__px = 4;
     
 
@@ -152,7 +152,7 @@ private:
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,
-        _color_key_letter,
+        _chart_key_letter,
         _dot_size__px,
         _x_offset_multiplier,
         _x_overrun_multiplier,
@@ -178,7 +178,7 @@ private:
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,
-        _color_key_letter,
+        _chart_key_letter,
         _dot_size__px,
         _x_offset_multiplier,
         _x_overrun_multiplier,
@@ -213,7 +213,7 @@ private:
     // will hold a house (represented by a colored square) and have
     // clear border around the house.
     // difficult to see, if smaller than _smallest_allowable_cell_size__px
-    int _smallest_allowable_cell_size__px = 4; 
+    int _smallest_allowable_cell_size__px = 8; 
     int _cell_size;  // pixels for square cell
     int _house_size; // pixels for colored square house
 

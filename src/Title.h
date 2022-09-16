@@ -9,7 +9,6 @@ class Title : public Sizer
 {
 
 public:
-
     Title (Letter l): _l{l} {}
     Title (Letter l, std::string title): _l{l}, _title{title} {}
     Title (int letterHeight, int lineSpace): _l{Letter{letterHeight, lineSpace}} {}

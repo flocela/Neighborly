@@ -31,6 +31,11 @@ public:
         bool clear,
         Renderer* renderer);
 
+    void setTopLeft (int xPx, int yPx) {
+        _top_left_x__px = xPx;
+        _top_left_y__px = yPx;
+    }
+
 private:
     GrChartASizer _sizer;
     AxisFormat _a_format_x;

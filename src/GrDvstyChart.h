@@ -14,29 +14,30 @@ class GrDvstyChart {
 
 public:
 GrDvstyChart (
-    GrChartASizer sizer,
     std::unordered_map<int, BaseColor> colors,
     std::set<Mood> moods,
-    int topLeftXPx,
-    int topLeftYPx,
-    std::string title,
     std::unordered_map<const House*, std::set<const House*>> neighbors,
-    int maxNumOfNeighbors,
-    int maxRuns
-):
-    _chart{sizer, colors, moods, topLeftXPx, topLeftYPx, title, 0, maxRuns, 0, maxNumOfNeighbors},
-    _colors{colors},
+    GrColorKeyPrinter keyPrinter,
+    GrChartA chartA,
+    int topLeftXPx,
+    int topLeftYPx
+):  _colors{colors},
     _moods{moods},
-    _key{
+    /*_key{
         topLeftXPx,
         topLeftYPx + sizer.titleLetter().getHeightIncLSpace(),
         sizer.xSpacePx(),
         sizer.keyLetter(),
         _colors,
         _moods
-    },
-    _neighbors{neighbors}
-{}
+    },*/
+    _neighbors{neighbors},
+    _key{keyPrinter},
+    _chart{chartA}
+{
+    _key.setTopLeftCorner(topLeftXPx, topLeftYPx);
+    _chart.setTopLeft(topLeftXPx, topLeftYPx + _key.getHeightPx() );
+}
 
 // TODO this should be const Resident and const House
 void print (
@@ -48,11 +49,12 @@ void print (
 
 private:
 
-GrChartA _chart;
+
 std::unordered_map<int, BaseColor> _colors;
 std::set<Mood> _moods;
-GrColorKeyPrinter _key;
 std::unordered_map<const House*, std::set<const House*>> _neighbors;
+GrColorKeyPrinter _key;
+GrChartA _chart;
 
 std::set<const Resident*> getResidentsInHouses (
     std::set<const House*> houses,
