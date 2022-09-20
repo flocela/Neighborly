@@ -30,6 +30,7 @@ class AxisLeftToRightB
         );
         // Renders axis from left to right with title at top (used for horizontal axes).
         void print (Renderer* renderer);
+        void moveCrossHairs (int xPx, int yPx);
 
     
     private:

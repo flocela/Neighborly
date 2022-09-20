@@ -1,15 +1,15 @@
-#ifndef GR_CHART_A_SIZER_H
-#define GR_CHART_A_SIZER_H
+#ifndef PLOT_A_SIZER_H
+#define PLOT_A_SIZER_H
 
 #include "AxisFormat.h"
 #include "Letter.h"
 #include <iostream>
 
-class GrChartASizer
+class PlotASizer
 {
 public:
     // unitX and unitY can only by 1, 10, or 100.
-    GrChartASizer (
+    PlotASizer (
         int xSpacePx, // given space in x direction
         int ySpacePx, // given space in y direction
         AxisFormat aFormatX,

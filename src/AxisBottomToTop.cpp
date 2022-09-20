@@ -122,3 +122,16 @@ void AxisBottomToTop::addTicksAndLabels (
         curVal__px = _min__px - _px_per_unit * (curVal - _min_val);
     }
 }
+
+void AxisBottomToTop::moveCrossHairs (int xPx, int yPx)
+{
+    _x_cross__px = xPx;
+    _y_cross__px = yPx;
+    _min__px = _y_cross__px - _start_offset__px;
+    _top_most_pixel_y__px =
+        _y_cross__px -
+        _px_per_unit * _diff -
+        _start_offset__px -
+        _end_offset__px;
+    std::cout << "AxisBottomToTop moveCrosshairs: y" << _y_cross__px << std::endl;
+}

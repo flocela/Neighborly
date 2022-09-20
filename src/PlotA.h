@@ -1,7 +1,7 @@
-#ifndef GR_CHART_A_H
-#define GR_CHART_A_H
+#ifndef PLOT_A_H
+#define PLOT_A_H
 
-#include "GrChartASizer.h"
+#include "PlotASizer.h"
 #include "unordered_map"
 #include "Color.h"
 #include "Coordinate.h"
@@ -9,17 +9,17 @@
 #include "AxisLeftToRightB.h"
 #include "AxisBottomToTop.h"
 #include "Point.h"
+#include "Plot.h"
 
-class GrChartA
+class PlotA: public Plot
 {
 public:
-    GrChartA ( 
-        GrChartASizer sizer,
+    PlotA ( 
+        PlotASizer sizer,
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
-        int topLeftXPx, // top left corner of chart
-        int topLeftYPx, // top left corner of chart
-        std::string title,
+        int topLeftXPx, // top left corner of plot
+        int topLeftYPx, // top left corner of plot
         int minX,
         int maxX,
         int minY, 
@@ -29,15 +29,23 @@ public:
     void print (
         std::vector<Point> points,
         bool clear,
-        Renderer* renderer);
+        Renderer* renderer) override;
 
-    void setTopLeft (int xPx, int yPx) {
-        _top_left_x__px = xPx;
-        _top_left_y__px = yPx;
+    void moveTopLeft (int xPx, int yPx) override;
+
+    int getTopLeftXPx () override
+    {
+
+        return _top_left_x__px;
+    }
+
+    int getTopLeftYPx () override
+    {
+        return _top_left_y__px;
     }
 
 private:
-    GrChartASizer _sizer;
+    PlotASizer _sizer;
     AxisFormat _a_format_x;
     AxisFormat _a_format_y;
     std::unordered_map<int, BaseColor> _colors;
@@ -50,7 +58,6 @@ private:
     int _max_y;
     int _x_diff; // max minus min axis values
     int _y_diff; // max minus min axis values
-    std::string _title;
     int _unit__px; // unit size, same in x and y direction.
     int _dot__px; // dot size, same in x and y directions. Dot is inside of the unit.
     int _title_x__px; // center placement of _title
@@ -77,6 +84,9 @@ private:
             _a_format_y.getAxisHeightPx()
         );
     }
+
+    int calcCrossXPx (int topLeftX);
+    int calcCrossYPx (int topLeftY);
 };
 
 #endif

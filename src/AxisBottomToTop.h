@@ -30,6 +30,7 @@ class AxisBottomToTop
 
         // Renders axis from bottom to top, title is on left side (used for vertical axes).
         void print (Renderer* renderer);
+        void moveCrossHairs (int xPx, int yPx);
 
     private:
         std::string _title;

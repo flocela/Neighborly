@@ -15,7 +15,8 @@
 #include "Letter.h"
 #include "GrDvstyChart.h"
 #include "GrHapChart.h"
-#include "GrChartASizer.h"
+#include "PlotASizer.h"
+#include "TitleA.h"
 
 //  Displays CityMap, Diversity Chart, and HappinessChart.
 //  Uses a screen width and height of 2400px.
@@ -72,7 +73,7 @@ private:
     // center of screen
     int _x_center__px = _screen_width__px/2;
 
-    std::unique_ptr<Title> _window_title = std::make_unique<Title>(40, 2, _top_border__px, _x_center__px);
+    std::unique_ptr<TitleA> _window_title = std::make_unique<TitleA>(40, 2, _top_border__px, _x_center__px);
 
 
     /* COLUMNS */
@@ -146,7 +147,7 @@ private:
 
     int _max_number_of_neighbors;
     
-    GrChartASizer _div_sizer{
+    PlotASizer _div_sizer{
         _x_chart_space__px,
         ((int)(_chart_y_space__px * _diversity_chart_y_axis_fraction)),
         _axis_format_X,
@@ -172,7 +173,7 @@ private:
 
     double _hap_chart_y_axis_fraction = 0.7;
 
-    GrChartASizer _hap_sizer{
+    PlotASizer _hap_sizer{
         _x_chart_space__px,
         ((int)(_chart_y_space__px * _hap_chart_y_axis_fraction)),
         _axis_format_X,

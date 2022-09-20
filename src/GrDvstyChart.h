@@ -3,12 +3,13 @@
 
 #include "unordered_map"
 #include "Color.h"
-#include "GrChartASizer.h"
-#include "GrChartA.h"
+#include "Plot.h"
 #include "renderer.h"
 #include "City.h"
 #include "Resident.h"
 #include "GrColorKeyPrinter.h"
+#include <memory>
+#include "Title.h"
 
 class GrDvstyChart {
 
@@ -16,27 +17,26 @@ public:
 GrDvstyChart (
     std::unordered_map<int, BaseColor> colors,
     std::set<Mood> moods,
-    std::unordered_map<const House*, std::set<const House*>> neighbors,
-    GrColorKeyPrinter keyPrinter,
-    GrChartA chartA,
+    std::unordered_map<const House*, std::set<const House*>> adjacentNeighbors,
+    std::unique_ptr<Title> title,
+    std::unique_ptr<ColorKey> colorKey,
+    std::unique_ptr<Plot> plot,
     int topLeftXPx,
-    int topLeftYPx
+    int topLeftYPx,
+    int xSpace,
+    int ySpace
 ):  _colors{colors},
     _moods{moods},
-    /*_key{
-        topLeftXPx,
-        topLeftYPx + sizer.titleLetter().getHeightIncLSpace(),
-        sizer.xSpacePx(),
-        sizer.keyLetter(),
-        _colors,
-        _moods
-    },*/
-    _neighbors{neighbors},
-    _key{keyPrinter},
-    _chart{chartA}
-{
-    _key.setTopLeftCorner(topLeftXPx, topLeftYPx);
-    _chart.setTopLeft(topLeftXPx, topLeftYPx + _key.getHeightPx() );
+    _adj_neighbors{adjacentNeighbors},
+    _title{move(title)},
+    _key{move(colorKey)},
+    _plot{std::move(plot)}
+{   
+    (void) ySpace;
+    _title->setTopCenter(topLeftXPx + xSpace/2, topLeftYPx);
+    _key->setTopLeftCorner(topLeftXPx, topLeftYPx + _title->sizeY());
+    _plot->moveTopLeft(topLeftXPx, topLeftYPx + _title->sizeY() + _key->getHeightPx());
+
 }
 
 // TODO this should be const Resident and const House
@@ -52,9 +52,10 @@ private:
 
 std::unordered_map<int, BaseColor> _colors;
 std::set<Mood> _moods;
-std::unordered_map<const House*, std::set<const House*>> _neighbors;
-GrColorKeyPrinter _key;
-GrChartA _chart;
+std::unordered_map<const House*, std::set<const House*>> _adj_neighbors;
+std::unique_ptr<Title> _title;
+std::unique_ptr<ColorKey> _key;
+std::unique_ptr<Plot> _plot;
 
 std::set<const Resident*> getResidentsInHouses (
     std::set<const House*> houses,

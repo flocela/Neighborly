@@ -1,17 +1,16 @@
-#include "GrChartA.h"
+#include "PlotA.h"
 
-GrChartA::GrChartA ( 
-        GrChartASizer sizer,
+PlotA::PlotA ( 
+        PlotASizer sizer,
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
-        int topLeftXPx, // top left corner of chart
-        int topLeftYPx, // top left corner of chart
-        std::string title,
+        int topLeftXPx, // top left corner of plot
+        int topLeftYPx, // top left corner of plot
         int minX,
         int maxX,
         int minY, 
         int maxY
-): // TODO does GrChartA really need _colors or _moods
+): // TODO does PlotA really need _colors or _moods
     _sizer{sizer},
     _a_format_x{sizer.axisFormatX()},
     _a_format_y{sizer.axisFormatY()},
@@ -25,21 +24,11 @@ GrChartA::GrChartA (
     _max_y{maxY},
     _x_diff{maxX - minX},
     _y_diff{maxY - minY},
-    _title{title},
     _unit__px{calcUnitSizePx()},
     _dot__px{calcDotSizePx(_unit__px)},
-    _title_x__px{_top_left_x__px + (_x_diff * _unit__px / 2)}, // TODO not used.
-    _title_y__px{_top_left_y__px}, // TODO not used
     // center graph in column
-    _cross_x__px{ _top_left_x__px + (int)(0.5 * ( _sizer.xSpacePx() - calcXAxisLength() ))}, 
-    _cross_y__px{
-        _top_left_y__px + 
-        _sizer.titleHeight() +
-        _sizer.keyLetterHeightInclSpace() +
-        _unit__px * _sizer.startOffsetM() +
-        _unit__px * _sizer.endOffsetM() +
-        _unit__px * _y_diff
-    },
+    _cross_x__px{ calcCrossXPx(topLeftXPx) }, 
+    _cross_y__px{ calcCrossYPx(topLeftYPx)},
     _tick_spacing_min_x{(_unit__px >= 10)? 1 : 5},
     _tick_spacing_min_y{(_unit__px >= 10)? 1 : 5},
     _tick_spacing_maj_x{(_unit__px > 10)? 5 : 10},
@@ -74,26 +63,15 @@ GrChartA::GrChartA (
     }
 {}
 
-void GrChartA::print (
+void PlotA::print (
     std::vector<Point> points,
     bool clear,
     Renderer* renderer
 )
-{   
+{ 
     (void) clear;
-    renderer->setTextFormats(
-        {100, 100, 100, 100},
-        {0xAA, 0xFF, 0xFF, 0xFF},
-        _sizer.keyLetterHeight()); // TODO law of Demeter
-    renderer->renderText(
-        _top_left_x__px + (_sizer.xSpacePx()/2),
-        _top_left_y__px,
-        _title,
-        1
-    );
     _x_axis.print(renderer);
     _y_axis.print(renderer);
-
 
     std::vector<SDL_Rect> rects{};
     for (Point point : points)
@@ -121,7 +99,7 @@ void GrChartA::print (
     }
 }
 
-int GrChartA::calcUnitSizePx ()
+int PlotA::calcUnitSizePx ()
 {
     int allowableXAxisLengthPx = _sizer.xSpacePx() - _a_format_y.getAxisHeightPx();
     int numOfCellsX = _x_diff + _sizer.startOffsetM() + _sizer.endOffsetM();
@@ -129,8 +107,6 @@ int GrChartA::calcUnitSizePx ()
 
     int allowableYAxisLengthPx =
         _sizer.ySpacePx() -
-        _sizer.titleHeight() -
-        _sizer.keyLetterHeightInclSpace() -
         _sizer.axisFormatYHeight();
 
     int numOfCellsY = _y_diff + _sizer.startOffsetM() + _sizer.endOffsetM();
@@ -142,9 +118,41 @@ int GrChartA::calcUnitSizePx ()
     return (min < _sizer.minUnitSize())? 4 : min;
 }
 
-int GrChartA::calcDotSizePx (int unitSizePx)
+int PlotA::calcDotSizePx (int unitSizePx)
 {
     int dotSize = unitSizePx/2;
     dotSize =  ((unitSizePx - dotSize) % 2 == 0) ? dotSize : (dotSize + 1);
     return dotSize;
 }
+
+int PlotA::calcCrossXPx (int topLeftXPx)
+{
+    return topLeftXPx + (int)(0.5 * ( _sizer.xSpacePx() - calcXAxisLength() ));
+}
+
+int PlotA::calcCrossYPx (int topLeftYPx)
+{
+    std::cout << "PlotA calcCrossYPx: y: " << topLeftYPx << std::endl;
+    return 
+        topLeftYPx + 
+        _unit__px * _sizer.startOffsetM() +
+        _unit__px * _sizer.endOffsetM() +
+        _unit__px * _y_diff;
+}
+
+void PlotA::moveTopLeft (int topLeftXPx, int topLeftYPx)
+{
+    std::cout << "PlotA moveToPleft: y: " << topLeftYPx << std::endl; 
+    _top_left_x__px = topLeftXPx;
+    _top_left_y__px = topLeftYPx;
+
+    _cross_x__px = calcCrossXPx(topLeftXPx);
+    _cross_y__px = calcCrossYPx(topLeftYPx);
+    std::cout << "PLot AmoveTopLeft cross_y__px: " << _cross_y__px << std::endl;
+    _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
+    _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
+
+}
+
+
+

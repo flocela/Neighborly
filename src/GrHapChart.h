@@ -3,8 +3,8 @@
 
 #include "unordered_map"
 #include "Color.h"
-#include "GrChartASizer.h"
-#include "GrChartA.h"
+#include "PlotASizer.h"
+#include "PlotA.h"
 #include "renderer.h"
 #include "City.h"
 #include "Resident.h"
@@ -14,7 +14,7 @@ class GrHapChart {
 
 public:
     GrHapChart (
-        GrChartASizer sizer,
+        PlotASizer sizer,
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
         int topLeftXPx,
@@ -24,7 +24,7 @@ public:
         int minY,
         int maxY
     ):
-    _chart{sizer, colors, moods, topLeftXPx, topLeftYPx, title, 0, numRuns, minY, maxY},
+    _plot{sizer, colors, moods, topLeftXPx, topLeftYPx, 0, numRuns, minY, maxY},
     _colors{colors},
     _moods{moods},
     _key{
@@ -35,7 +35,8 @@ public:
         _colors,
         _moods
     }
-    {}
+    {
+    (void) title;}
 
     // TODO this should be const Resident and const House
     void print (
@@ -44,7 +45,7 @@ public:
         Renderer* renderer);
 
 private:
-    GrChartA _chart;
+    PlotA _plot;
     std::unordered_map<int, BaseColor> _colors;
     std::set<Mood> _moods;
     GrColorKeyPrinter _key;

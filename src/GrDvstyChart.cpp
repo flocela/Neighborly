@@ -17,7 +17,7 @@ void GrDvstyChart::print (
         const House* house = ii.second;
 
         int groupId = res->getGroupNumber();
-        std::set<const House*> adjHouses = _neighbors[house];
+        std::set<const House*> adjHouses = _adj_neighbors[house];
         std::set<const Resident*> adjResidents = getResidentsInHouses(adjHouses, residentPerHouse);
 
         for (const Resident* adj : adjResidents)
@@ -60,8 +60,9 @@ void GrDvstyChart::print (
             averageNumOfDiffNeighbors,
             _colorrs_map[_colors[groupId]][Mood::neutral]._my_color} );
     }
-    _chart.print(points, false, renderer);
-    _key.print(renderer);
+    _title->print(renderer);
+    _plot->print(points, false, renderer);
+    _key->print(renderer);
 }
 
 std::set<const Resident*> GrDvstyChart::getResidentsInHouses (

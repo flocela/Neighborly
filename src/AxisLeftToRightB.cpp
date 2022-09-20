@@ -126,3 +126,16 @@ void AxisLeftToRightB::addTitle (std::vector<TextRect>& texts)
     };
     texts.push_back(tr);
 }
+
+void AxisLeftToRightB::moveCrossHairs (int xPx, int yPx)
+{
+    _x_cross__px = xPx;
+    _y_cross__px = yPx;
+    _zero__px = _x_cross__px + _start_offset__px;
+    _left_most_pixel_x__px = _x_cross__px;
+    _right_most_pixel_x__px = 
+        _x_cross__px +
+        _start_offset__px +
+        _px_per_unit * (_max_val - _min_val) +
+        _end_offset__px;
+}

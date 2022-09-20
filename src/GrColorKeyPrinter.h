@@ -3,9 +3,10 @@
 
 #include "renderer.h"
 #include "Letter.h"
+#include "ColorKey.h"
 
 // Group Color Printer
-class GrColorKeyPrinter
+class GrColorKeyPrinter : public ColorKey
 {
     public:
 

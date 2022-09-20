@@ -183,33 +183,36 @@ std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
     int maxNumOfRuns
 )
 {
-    
-    
     std::set<Mood> moods{Mood::neutral};
+
     return std::make_unique<GrDvstyChart> (
         _colors,
         moods,
         neighbors,
-        GrColorKeyPrinter{
+        std::make_unique<TitleA>(
+            _chart_title_letter,
+            "Diversity, Average Number of Disparate Neighbors per Resident per Run"),
+        std::make_unique<GrColorKeyPrinter>(
             0,
             0,
             _div_sizer.xSpacePx(),
             _chart_key_letter,
             _colors,
-            moods},
-        GrChartA{
+            moods),
+        std::make_unique<PlotA>(
             _div_sizer,
             _colors, 
             moods, 
-            _x_center__px + _col_side_border__px, 
-            _div_chart_top_y__px,
-            "Diversity, Average Number of Disparate Neighbors per Resident per Run",
+            0, 
+            0,
             0,
             maxNumOfRuns,
             0,
-            maxNumOfNeighbors},
+            maxNumOfNeighbors),
         _x_center__px + _col_side_border__px,
-        _div_chart_top_y__px
+        _div_chart_top_y__px,
+        _x_chart_space__px,
+        _diversity_chart_y_axis_fraction
     );
 }
 
