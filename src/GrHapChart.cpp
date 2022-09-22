@@ -14,46 +14,51 @@ void GrHapChart::print (
     std::unordered_map<int, int> happiness_sum_Per_group;
 
     // number of residents per group
-    std::unordered_map<int, int> count_residents_Per_group;
+    std::unordered_map<int, int> total_residents_Per_group;
 
+    // For each resident, add its resident's happiness to the happiness_sum_Per_group.
     for (auto& pair : housePerResident)
     {
         const Resident* res = pair.first;
         int resGroupNumber = res->getGroupNumber();
+
         if (happiness_sum_Per_group.find(resGroupNumber) != happiness_sum_Per_group.end())
         {
-            happiness_sum_Per_group[resGroupNumber] = 
-                happiness_sum_Per_group[resGroupNumber] + res->getHappiness();
+            happiness_sum_Per_group[resGroupNumber] += res->getHappiness();
         }
         else
         {
             happiness_sum_Per_group[resGroupNumber] = res->getHappiness();
         }
 
-        if (count_residents_Per_group.find(resGroupNumber) == count_residents_Per_group.end())
+        if (total_residents_Per_group.find(resGroupNumber) == total_residents_Per_group.end())
         {
-            count_residents_Per_group[resGroupNumber] = 1;
+            total_residents_Per_group[resGroupNumber] = 1;
         }
         else
         {
-            count_residents_Per_group[resGroupNumber] =
-                count_residents_Per_group[resGroupNumber] + 1;
+            total_residents_Per_group[resGroupNumber] =
+                total_residents_Per_group[resGroupNumber] + 1;
         }
     }
 
    std::vector<Point> points;
-    for (auto jj : count_residents_Per_group)
+    for (auto jj : total_residents_Per_group)
     {
         int groupNum = jj.first;
         int countInGroup = jj.second;
         double aveHappiness = (double)happiness_sum_Per_group[groupNum]/countInGroup;
-        // TODO points doesn't need Mood.
-        // TODO emplace
-        points.push_back(Point{(double)run, aveHappiness, _colorrs_map[_colors[groupNum]][Mood::neutral]._my_color});
+        points.emplace_back(
+            Point{
+                (double)run, 
+                aveHappiness, 
+                _colorrs_map[_colors[groupNum]][Mood::neutral]._my_color
+            });
+        std::cout << "GrHapChart point: " << run << ", " << aveHappiness << std::endl;
     }
     _title->print(renderer);
-    _plot.print(points, false, renderer);
-    _key.print(renderer);
+    _key->print(renderer);
+    _plot->print(points, false, renderer);
 }
 
 std::set<Resident*> GrHapChart::getResidentsInTheseHouses (

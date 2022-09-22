@@ -4,11 +4,11 @@
 #include "unordered_map"
 #include "Color.h"
 #include "PlotASizer.h"
-#include "PlotA.h"
+#include "Plot.h"
 #include "renderer.h"
 #include "City.h"
 #include "Resident.h"
-#include "GrColorKeyPrinter.h"
+#include "ColorKey.h"
 #include "Title.h"
 
 class GrHapChart {
@@ -19,28 +19,23 @@ public:
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
         std::unique_ptr<Title> title,
+        std::unique_ptr<ColorKey> colorKey,
+        std::unique_ptr<Plot> plot,
         int topLeftXPx,
         int topLeftYPx,
-        int numRuns,
-        int minY,
-        int maxY,
         int xSpace,
         int ySpace
     ):
-    _plot{sizer, colors, moods, topLeftXPx, topLeftYPx, 0, numRuns, minY, maxY,100, 100}, // TODO it's not 100
     _colors{colors},
     _moods{moods},
     _title{move(title)},
-    _key{
-        topLeftXPx,
-        topLeftYPx + sizer.titleLetter().getHeightIncLSpace(),
-        sizer.keyLetter(),
-        _colors,
-        _moods
-    }
-    {   (void)ySpace;
+    _key{move(colorKey)},
+    _plot{std::move(plot)}
+    {   (void) sizer;
         _title->setTopCenter(topLeftXPx + xSpace/2, topLeftYPx);
-
+        _key->setTopLeftCorner(topLeftXPx + xSpace/2, topLeftYPx + _title->sizeY());
+        _plot->moveTopLeft(topLeftXPx, topLeftYPx + _title->sizeY() + _key->getHeightPx());
+        _plot->setXYSpacePx(xSpace, ySpace - _title->sizeY() - _key->sizeY());
     }
 
     // TODO this should be const Resident and const House
@@ -50,11 +45,11 @@ public:
         Renderer* renderer);
 
 private:
-    PlotA _plot;
     std::unordered_map<int, BaseColor> _colors;
     std::set<Mood> _moods;
     std::unique_ptr<Title> _title;
-    GrColorKeyPrinter _key;
+    std::unique_ptr<ColorKey> _key;
+    std::unique_ptr<Plot> _plot;
 
     std::set<Resident*> getResidentsInTheseHouses (
         std::set<House*> houses,

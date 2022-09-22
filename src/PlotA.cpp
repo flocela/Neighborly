@@ -89,7 +89,7 @@ void PlotA::print (
         int y = 
             _cross_y__px -
             _unit_y__px * _start_offset_m -
-            ( _unit_y__px * (point.y() - _min_y)) +
+            ( _unit_y__px * (point.y() - _min_y)) -
             _dot__px/2;
 
         std::vector<Coordinate> coordinates;

@@ -9,17 +9,19 @@ void GrDvstyChart::print (
 {
     std::unordered_map<int, int> num_of_diff_neighbors_Per_group;
 
-    std::unordered_map<int, int> num_of_residents_Per_group;
+    std::unordered_map<int, int> total_residents_Per_group;
 
     for (std::pair<const Resident*, const House*> ii : housePerResident)
     {
         const Resident* res = ii.first;
         const House* house = ii.second;
-
         int groupId = res->getGroupNumber();
+
         std::set<const House*> adjHouses = _adj_neighbors[house];
         std::set<const Resident*> adjResidents = getResidentsInHouses(adjHouses, residentPerHouse);
 
+        // for each adj resident: does current resident have different groupId than adj neighbor?
+        // if so increase count in num_of_diff_neighbors_Per_group
         for (const Resident* adj : adjResidents)
         {
             int neighborGroupId = adj->getGroupNumber();
@@ -27,6 +29,7 @@ void GrDvstyChart::print (
             {
                 continue;
             }
+            // TODO initialize num_of_diff_neighbotrs_Per_group woth counts of zero, then get rid of this if statement.
             if (num_of_diff_neighbors_Per_group.find(neighborGroupId) == num_of_diff_neighbors_Per_group.end())
             {
                 num_of_diff_neighbors_Per_group[neighborGroupId] = 1;
@@ -37,19 +40,19 @@ void GrDvstyChart::print (
             }
         }
 
-        if (num_of_residents_Per_group.find(groupId) == num_of_residents_Per_group.end())
+        if (total_residents_Per_group.find(groupId) == total_residents_Per_group.end())
         {
-            num_of_residents_Per_group[groupId] = 1;
+            total_residents_Per_group[groupId] = 1;
         }
         else
         {
-            num_of_residents_Per_group[groupId] += 1;
+            total_residents_Per_group[groupId] += 1;
         }
         
     }
 
     std::vector<Point> points;
-    for (auto jj : num_of_residents_Per_group)
+    for (auto jj : total_residents_Per_group)
     {
         int groupId = jj.first;
         int countInGroup = jj.second;

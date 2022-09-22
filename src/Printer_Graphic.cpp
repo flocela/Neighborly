@@ -8,6 +8,7 @@
 #include <iostream>
 #include "XAxisL2RTop.h"
 #include "YAxisT2B.h"
+#include "PlotA.h"
 
 Printer_Graphic::Printer_Graphic (
     std::string title,
@@ -231,13 +232,28 @@ std::unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
             0,
             0,
             "Happiness, Average Happiness per Resident (shown as a percentage)"),
+        std::make_unique<GrColorKeyPrinter>(
+            0,
+            0,
+            _chart_key_letter,
+            _colors,
+            moods),
+        std::make_unique<PlotA>(
+            _div_sizer,
+            _colors, 
+            moods, 
+            0, 
+            0,
+            0,
+            numberOfRuns,
+            0,
+            100, // resident happiness range is from 0 to 100.
+            0,
+            0),
         _x_center__px + _col_side_border__px,
         _hap_chart_top_y__px,
-        numberOfRuns,
-        0,
-        100,
         _x_chart_space__px,
-        _diversity_chart_y_axis_fraction * _chart_y_space__px
+        _hap_chart_y_axis_fraction * _chart_y_space__px
     );
 }
 

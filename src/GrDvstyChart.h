@@ -48,7 +48,6 @@ void print (
 
 private:
 
-
 std::unordered_map<int, BaseColor> _colors;
 std::set<Mood> _moods;
 std::unordered_map<const House*, std::set<const House*>> _adj_neighbors;
