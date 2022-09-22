@@ -45,34 +45,27 @@ PlotA::PlotA (
         _a_format_x,
         _cross_x__px,
         _cross_y__px,
-        minX,
-        maxX,
-        _tick_spacing_maj_x,
-        _tick_spacing_min_x,
-        _tick_spacing_maj_x,
-        _unit_x__px * sizer.startOffsetM(),
-        _unit_x__px * sizer.endOffsetM(),
-        _unit_x__px
+        _min_x,
+        _max_x,
+        _unit_x__px,
+        (_dot__px%2==0)? 2 : 1,
+        sizer.startOffsetM(),
+        sizer.endOffsetM(),
+        
     },
     _y_axis{
         "",
         _a_format_y,
         _cross_x__px,
         _cross_y__px,
-        minY,
-        maxY,
-        _tick_spacing_maj_y,
-        _tick_spacing_min_y,
-        _tick_spacing_maj_y,
-        _unit_y__px * sizer.startOffsetM(),
-        _unit_y__px * sizer.endOffsetM(),
-        _unit_y__px
+        _min_y,
+        _max_y,
+        _unit_y__px,
+        (_dot__px%2==0)? 2 : 1,
+        sizer.startOffsetM(),
+        sizer.endOffsetM(),
     }
-{
-    int tickThickness = (_dot__px%2==0)? 2 : 1;
-    _a_format_x.setTickThicknessPx(tickThickness); // TODO move tick thickness to axes.
-    _a_format_y.setTickThicknessPx(tickThickness);
-}
+{}
 
 void PlotA::print (
     std::vector<Point> points,
@@ -93,7 +86,6 @@ void PlotA::print (
             ( _unit_x__px * (point.x() - _min_x) ) - 
             _dot__px/2;                               
             
-        std::cout << _cross_y__px << ", " << _unit_y__px << ", " << _start_offset_m << ", " << point.y() << ", " << _min_y << ", " << _dot__px << std::endl;
         int y = 
             _cross_y__px -
             _unit_y__px * _start_offset_m -
@@ -188,23 +180,11 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _unit_x__px = calcUnitSizeXPx();
     _unit_y__px = calcUnitSizeYPx();
     _dot__px = calcDotSizePx();
+    int tickThickness = (_dot__px%2==0)? 2 : 1;
     _cross_x__px = calcCrossXPx(_top_left_x__px);
     _cross_y__px = calcCrossYPx (_top_left_y__px);
-    int tickThickness = (_dot__px%2==0)? 2 : 1;
-    _a_format_x.setTickThicknessPx(tickThickness);  // TODO move tick thickness to axes.
-    _a_format_y.setTickThicknessPx(tickThickness);
-    _tick_spacing_min_x = (_unit_x__px >= 10)? 1 : 5;
-    _tick_spacing_min_y = (_unit_y__px >= 10)? 1 : 5;
-    _tick_spacing_maj_x = (_unit_x__px > 10)? 5 : 10;
-    _tick_spacing_maj_y = (_unit_y__px > 10)? 5 : 10;
-    _x_axis.setMinTickSpacing(_tick_spacing_min_x);
-    _x_axis.setMajTickSpacing(_tick_spacing_maj_x);
-    _y_axis.setMinTickSpacing(_tick_spacing_min_y);
-    _y_axis.setMajTickSpacing(_tick_spacing_maj_y);
     _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.setPxPerUnit(_unit_y__px);
-    _y_axis.setOffsetsPx(_unit_y__px * _start_offset_m, _unit_y__px * _end_offset_m);
+    _y_axis.setTickThickness(tickThickness);
 }
-
-

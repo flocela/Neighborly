@@ -7,33 +7,26 @@ AxisLeftToRightB::AxisLeftToRightB (
     int yCrossPx,
     int minVal,
     int maxVal,
-    int majTickSpacing,
-    int minTickSpacing,
-    int labelSpacing,
-    int startOffset,
-    int endOffset,
-    int pxPerUnit
+    int pxPerUnit,
+    int tickThickness,
+    int startOffsetMultiplier,
+    int endOffsetMultiplier
 ) : _title{title},
     _axis_format{axisFormat},
     _x_cross__px{xCrossPx},
     _y_cross__px{yCrossPx},
-    _zero__px{_x_cross__px + startOffset},
     _min_val{minVal},
     _max_val{maxVal},
-    _min_tick_spacing{minTickSpacing},
-    _maj_tick_spacing{majTickSpacing},
-    _label_spacing{labelSpacing},
-    _start_offset__px{startOffset},
-    _end_offset__px{endOffset},
+    _diff{_max_val - _min_val},
     _px_per_unit{pxPerUnit},
-    _tick_thickness__px{_px_per_unit%2==0? 2 : 1}
+    _tick_thickness__px{tickThickness},
+    _min_tick_spacing{calcMinTickSpacing(_px_per_unit)},
+    _maj_tick_spacing{calcMajTickSpacing(_px_per_unit)},
+    _label_spacing{calcLabelSpacing(_px_per_unit)},
+    _start_offset_m{startOffsetMultiplier},
+    _end_offset_m{endOffsetMultiplier}
 {
-    _left_most_pixel_x__px = _x_cross__px;
-    _right_most_pixel_x__px = 
-        _x_cross__px +
-        _start_offset__px +
-        _px_per_unit * (_max_val - _min_val) +
-        _end_offset__px;
+    
 }
 
 void AxisLeftToRightB::print (Renderer* renderer)
@@ -55,23 +48,14 @@ void AxisLeftToRightB::print (Renderer* renderer)
     renderer->renderTexts(texts);
 }
 
-int AxisLeftToRightB::calcHorizontalLineLength()
-{
-    return _right_most_pixel_x__px - _left_most_pixel_x__px;
-}
 
 void AxisLeftToRightB::addHorizontalLine (std::vector<SDL_Rect>& rects)
 {
     SDL_Rect rect;
-    rect.w = calcHorizontalLineLength();
+    rect.w = calcRightMostPixelX() - _x_cross__px;
     rect.h = _axis_format.axisThicknessPx();
     rect.x = _x_cross__px;
     rect.y = _y_cross__px - rect.h/2;
-    
-    //rect.w = 1000;
-    //rect.h = 5;
-    //rect.x = 30;
-    //rect.y = 30;
 
     rects.push_back(rect);
 }
@@ -90,8 +74,10 @@ void AxisLeftToRightB::addTicksAndLabels (
     // Todo should put ending label on last maj tick mark.
     // Ticks and labels.
     int currValue = _min_val;
-    int currValue__px = _zero__px + (_px_per_unit * (currValue - _min_val));
-    while (currValue__px <= _right_most_pixel_x__px)
+    int rightMostPixel = calcRightMostPixelX();
+    int minValPx = _x_cross__px + _px_per_unit * _start_offset_m;
+    int currValue__px = minValPx + (_px_per_unit * (currValue - _min_val));
+    while (currValue__px <= rightMostPixel)
     {  
         if (currValue % _label_spacing == 0) // long tick with label
         {   
@@ -112,30 +98,21 @@ void AxisLeftToRightB::addTicksAndLabels (
         }
         
         ++currValue;
-        currValue__px = _zero__px + (_px_per_unit * (currValue - _min_val));
+        currValue__px = minValPx + (_px_per_unit * (currValue - _min_val));
     }
-}
-
-void AxisLeftToRightB::addTitle (std::vector<TextRect>& texts)
-{
-    TextRect tr = {
-        _left_most_pixel_x__px + (calcHorizontalLineLength()/2), //TODO width of text needs to be taken into account.
-        _y_cross__px - _axis_format.getAxisHeightPx(),
-        _title, 
-        4
-    };
-    texts.push_back(tr);
 }
 
 void AxisLeftToRightB::moveCrossHairs (int xPx, int yPx)
 {
     _x_cross__px = xPx;
     _y_cross__px = yPx;
-    _zero__px = _x_cross__px + _start_offset__px;
-    _left_most_pixel_x__px = _x_cross__px;
-    _right_most_pixel_x__px = 
-        _x_cross__px +
-        _start_offset__px +
-        _px_per_unit * (_max_val - _min_val) +
-        _end_offset__px;
+}
+
+void AxisLeftToRightB::setPxPerUnit (int pixels)
+{
+    _px_per_unit = pixels;
+    _min_tick_spacing = calcMinTickSpacing(_px_per_unit);
+    _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
+    _label_spacing = calcLabelSpacing(_px_per_unit);
+
 }

@@ -21,46 +21,46 @@ class AxisLeftToRightB
             int yCrossPx, // where x and y axis meet
             int minVal, // min value delineated with tick. It is startOffset__px from the start of axis.
             int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal.
-            int majTickSpacing,
-            int minTickSpacing,  // in units, not pixels
-            int labelSpacing, // in units, not in pixels.
-            int startOffset,
-            int endOffset,
-            int pxPerUnit
+            int pxPerUnit,
+            int tickThickness,
+            int startOffsetMultiplier,
+            int endOffsetMultiplier
         );
         // Renders axis from left to right with title at top (used for horizontal axes).
         void print (Renderer* renderer);
         void moveCrossHairs (int xPx, int yPx);
-        void setMinTickSpacing (int spacing) { _min_tick_spacing = spacing; }
-        void setMajTickSpacing (int spacing) { _maj_tick_spacing = spacing; }
+        void setPxPerUnit (int pixels);
+        void setTickThickness (int tickThicknessPx) {_tick_thickness__px = tickThicknessPx;}
     
     private:
         std::string _title;
-        Renderer* _renderer;
         AxisFormat _axis_format;
         int _x_cross__px;
         int _y_cross__px;
-        int _zero__px;
         int _min_val;
         int _max_val;
+        int _diff;
+        int _px_per_unit;
+        int _tick_thickness__px;
         int _min_tick_spacing;
         int _maj_tick_spacing;
         int _label_spacing;
-        int _start_offset__px;
-        int _end_offset__px;
-        int _px_per_unit;
-        int _tick_thickness__px;
-        
-        int _left_most_pixel_x__px;
-        int _right_most_pixel_x__px;
-        int _min_val__px;
-        int _max_val__px; 
+        int _start_offset_m;
+        int _end_offset_m;
 
-        int calcHorizontalLineLength();
         void addHorizontalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
-        void addTitle (std::vector<TextRect>& texts);
 
+        int calcRightMostPixelX ()
+        {
+            std::cout << "px_per_unit, diff, startoffset, end offsetM: ";
+            std::cout << _px_per_unit << ", " << _diff << ", " << _start_offset_m << ", " << _end_offset_m << std::endl;
+            return _x_cross__px + (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
+        }
+
+        int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 5; }
+        int calcMajTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
+        int calcLabelSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
         
 };
 

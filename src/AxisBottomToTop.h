@@ -20,21 +20,17 @@ class AxisBottomToTop
             int y_coordinate__px, // where x and y axis meet
             int minVal, // min value delineated with tick. It is startOffset__px from the start of axis.
             int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal.
-            int majTickSpacing,
-            int minTickSpacing,  // in units, not pixels
-            int labelSpacing, // in units, not in pixels.
-            int startOffsetPx,
-            int endOffsetPx,
-            int pxPerUnit 
+            int pxPerUnit,
+            int tickThickness,
+            int startOffsetMultiplier,
+            int endOffsetMultiplier
         );
 
         // Renders axis from bottom to top, title is on left side (used for vertical axes).
         void print (Renderer* renderer);
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
-        void setMinTickSpacing (int spacing) { _min_tick_spacing = spacing; }
-        void setMajTickSpacing (int spacing) { _maj_tick_spacing = spacing; }
-        void setOffsetsPx (int startOffsetPx, int endOffsetPx);
+        void setTickThickness (int tickThicknessPx) {_tick_thickness__px = tickThicknessPx;}
 
     private:
         std::string _title;
@@ -44,19 +40,24 @@ class AxisBottomToTop
         int _min_val;
         int _max_val;
         int _diff;
-        int _min_tick_spacing;
-        int _maj_tick_spacing;
-        int _label_spacing;
-        int _start_offset__px;
-        int _end_offset__px;
         int _px_per_unit;
         int _tick_thickness__px;
-        int _min__px; // y pixel of minimum value
-        
-        int _top_most_pixel_y__px;
+        int _min_tick_spacing; // in units, not pixels
+        int _maj_tick_spacing; // in units, not pixels
+        int _label_spacing;
+        int _start_offset_m; // start offst multiplier; multiply by _px_per_unit
+        int _end_offset_m; // start offst multiplier; multiply by _px_per_unit
 
         void addVerticalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
+        int calcTopMostPixelY ()
+        {
+            return _y_cross__px - (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
+        }
+        int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 5; }
+        int calcMajTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
+        int calcLabelSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
+        
         
 };
 

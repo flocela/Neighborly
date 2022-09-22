@@ -7,13 +7,11 @@ AxisBottomToTop::AxisBottomToTop (
     int x_coordinate__px, // where x and y axis meet
     int y_coordinate__px, // where x and y axis meet
     int minVal, // min value delineated with tick. It is startOffset__px from the start of axis.
-    int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal.
-    int majTickSpacing,
-    int minTickSpacing,  
-    int labelSpacing,
-    int startOffsetPx,
-    int endOffsetPx,
-    int pxPerUnit 
+    int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal. 
+    int pxPerUnit,
+    int tickThickness,
+    int startOffsetMultiplier,
+    int endOffsetMultiplier
 ) : _title{title},
     _axis_format{axisFormat},
     _x_cross__px{x_coordinate__px},
@@ -21,20 +19,13 @@ AxisBottomToTop::AxisBottomToTop (
     _min_val{minVal},
     _max_val{maxVal},
     _diff{_max_val - _min_val},
-    _min_tick_spacing{minTickSpacing},
-    _maj_tick_spacing{majTickSpacing},
-    _label_spacing{labelSpacing},
-    _start_offset__px{startOffsetPx},
-    _end_offset__px{endOffsetPx},
     _px_per_unit{pxPerUnit},
-    _tick_thickness__px{ _px_per_unit%2==0? 2 : 1 },
-    _min__px{_y_cross__px - _start_offset__px},
-    _top_most_pixel_y__px{
-        _y_cross__px -
-        _px_per_unit * _diff -
-        _start_offset__px-
-        _end_offset__px
-    }
+    _tick_thickness__px{tickThickness},
+    _min_tick_spacing{calcMinTickSpacing(_px_per_unit)},
+    _maj_tick_spacing{calcMajTickSpacing(_px_per_unit)},
+    _label_spacing{calcLabelSpacing(_px_per_unit)},
+    _start_offset_m{startOffsetMultiplier},
+    _end_offset_m{endOffsetMultiplier}
 {}
 
 void AxisBottomToTop::print (Renderer* renderer)
@@ -68,9 +59,9 @@ void AxisBottomToTop::addVerticalLine (std::vector<SDL_Rect>& rects)
 {
     SDL_Rect rect;
     rect.w = _axis_format.axisThicknessPx();
-    rect.h = _y_cross__px  - _top_most_pixel_y__px + 1;
+    rect.h = _y_cross__px  - calcTopMostPixelY() + 1;
     rect.x = _x_cross__px - rect.w/2; // is the rect.w/2 needed? Is thickness of axis taken into account in rect.y?
-    rect.y = _top_most_pixel_y__px;
+    rect.y = calcTopMostPixelY();
     rects.push_back(rect);
 }
         
@@ -84,9 +75,11 @@ void AxisBottomToTop::addTicksAndLabels (
                              _axis_format.tickLengthInsideChart() -
                              _axis_format.labelHeightPx(); // TODO there are no more axis labels
 
+    int minYPx = _y_cross__px - ( _start_offset_m * _px_per_unit );
+
     TextRect curText = {
         leftEdgeOfLabelXPx,
-        _min__px,
+        minYPx,
         std::to_string(_min_val),
         2
     };
@@ -94,9 +87,9 @@ void AxisBottomToTop::addTicksAndLabels (
     SDL_Rect curRect;
     curRect.h = _tick_thickness__px;
     int curVal = _min_val;
-    int curVal__px = _min__px - _px_per_unit * (curVal - _min_val);
+    int curVal__px = minYPx - _px_per_unit * (curVal - _min_val);
 
-    while (curVal__px >= _top_most_pixel_y__px)
+    while (curVal__px >= calcTopMostPixelY())
     {   
         if (curVal % _label_spacing == 0) // TODO do all maj ticks get a label?
         {
@@ -119,7 +112,7 @@ void AxisBottomToTop::addTicksAndLabels (
             rects.push_back(curRect);
         }
         ++curVal;
-        curVal__px = _min__px - _px_per_unit * (curVal - _min_val);
+        curVal__px = minYPx - _px_per_unit * (curVal - _min_val);
     }
 }
 
@@ -127,36 +120,15 @@ void AxisBottomToTop::moveCrossHairs (int xPx, int yPx)
 {
     _x_cross__px = xPx;
     _y_cross__px = yPx;
-    _min__px = _y_cross__px - _start_offset__px;
-    _top_most_pixel_y__px =
-        _y_cross__px -
-        _px_per_unit * _diff -
-        _start_offset__px -
-        _end_offset__px;
 }
 
 void AxisBottomToTop::setPxPerUnit (int pixels)
 {
     _px_per_unit = pixels;
-    _tick_thickness__px = _px_per_unit%2==0? 2:1;
-    _top_most_pixel_y__px = 
-        _y_cross__px -
-        _px_per_unit * _diff -
-        _start_offset__px -
-        _end_offset__px;
-}
+    _min_tick_spacing = calcMinTickSpacing(_px_per_unit);
+    _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
+    _label_spacing = calcLabelSpacing(_px_per_unit);
 
-void AxisBottomToTop::setOffsetsPx (int startOffsetPx, int endOffsetPx)
-{
-    _start_offset__px = startOffsetPx;
-    _end_offset__px = endOffsetPx;
-    _min__px = _y_cross__px - _start_offset__px;
-    
-    _top_most_pixel_y__px =
-        _y_cross__px -
-        _px_per_unit * _diff -
-        _start_offset__px -
-        _end_offset__px;
 }
 
 
