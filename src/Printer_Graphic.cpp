@@ -184,7 +184,6 @@ std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
 )
 {
     std::set<Mood> moods{Mood::neutral};
-    std::cout << "Printer_Graphic createDvstyChart: maxNumOfNeighbors: " << maxNumOfNeighbors << std::endl;
     return std::make_unique<GrDvstyChart> (
         _colors,
         moods,
@@ -227,12 +226,18 @@ std::unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
         _hap_sizer,
         _colors,
         moods,
+        std::make_unique<TitleA>(
+            _chart_title_letter,
+            0,
+            0,
+            "Happiness, Average Happiness per Resident (shown as a percentage)"),
         _x_center__px + _col_side_border__px,
         _hap_chart_top_y__px,
-        "Happiness, Average Happiness per Resident (shown as a percentage)",
         numberOfRuns,
         0,
-        100
+        100,
+        _x_chart_space__px,
+        _diversity_chart_y_axis_fraction * _chart_y_space__px
     );
 }
 

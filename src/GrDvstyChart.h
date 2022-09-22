@@ -35,7 +35,6 @@ GrDvstyChart (
     _title->setTopCenter(topLeftXPx + xSpace/2, topLeftYPx);
     _key->setTopLeftCorner(topLeftXPx + xSpace/2, topLeftYPx + _title->sizeY());
     _plot->moveTopLeft(topLeftXPx, topLeftYPx + _title->sizeY() + _key->getHeightPx());
-    std::cout << "DvstyChart ySpace, title, key: " << ySpace << ", " << _title->sizeY() << ", " << _key->sizeY() << std::endl;
     _plot->setXYSpacePx(xSpace, ySpace - _title->sizeY() - _key->sizeY());
 }
 

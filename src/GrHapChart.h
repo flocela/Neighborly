@@ -9,6 +9,7 @@
 #include "City.h"
 #include "Resident.h"
 #include "GrColorKeyPrinter.h"
+#include "Title.h"
 
 class GrHapChart {
 
@@ -17,16 +18,19 @@ public:
         PlotASizer sizer,
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
+        std::unique_ptr<Title> title,
         int topLeftXPx,
         int topLeftYPx,
-        std::string title,
         int numRuns,
         int minY,
-        int maxY
+        int maxY,
+        int xSpace,
+        int ySpace
     ):
     _plot{sizer, colors, moods, topLeftXPx, topLeftYPx, 0, numRuns, minY, maxY,100, 100}, // TODO it's not 100
     _colors{colors},
     _moods{moods},
+    _title{move(title)},
     _key{
         topLeftXPx,
         topLeftYPx + sizer.titleLetter().getHeightIncLSpace(),
@@ -34,8 +38,10 @@ public:
         _colors,
         _moods
     }
-    {
-    (void) title;}
+    {   (void)ySpace;
+        _title->setTopCenter(topLeftXPx + xSpace/2, topLeftYPx);
+
+    }
 
     // TODO this should be const Resident and const House
     void print (
@@ -47,6 +53,7 @@ private:
     PlotA _plot;
     std::unordered_map<int, BaseColor> _colors;
     std::set<Mood> _moods;
+    std::unique_ptr<Title> _title;
     GrColorKeyPrinter _key;
 
     std::set<Resident*> getResidentsInTheseHouses (

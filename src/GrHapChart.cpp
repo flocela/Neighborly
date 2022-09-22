@@ -51,6 +51,7 @@ void GrHapChart::print (
         // TODO emplace
         points.push_back(Point{(double)run, aveHappiness, _colorrs_map[_colors[groupNum]][Mood::neutral]._my_color});
     }
+    _title->print(renderer);
     _plot.print(points, false, renderer);
     _key.print(renderer);
 }
