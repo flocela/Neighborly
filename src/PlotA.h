@@ -23,7 +23,9 @@ public:
         int minX,
         int maxX,
         int minY, 
-        int maxY
+        int maxY,
+        int xSpacePx,
+        int ySpacePx
     );
 
     void print (
@@ -31,34 +33,49 @@ public:
         bool clear,
         Renderer* renderer) override;
 
-    void moveTopLeft (int xPx, int yPx) override;
+    void moveTopLeft (int xPx, int yPx) override; // TODO combine move TopLeft and setXYSpacePx into one method, so not doing some work twice.
 
-    int getTopLeftXPx () override
-    {
+    void setXYSpacePx (int xSpacePx, int ySpacePx) override;
 
-        return _top_left_x__px;
-    }
+    int getTopLeftXPx () override { return _top_left_x__px;}
 
-    int getTopLeftYPx () override
-    {
-        return _top_left_y__px;
-    }
+    int getTopLeftYPx () override { return _top_left_y__px;}
+
+    int getXSpacePx () override { return _x_space__px; }
+
+    int getYSpacePx () override { return _y_space__px; }
+
 
 private:
-    PlotASizer _sizer;
+
     AxisFormat _a_format_x;
     AxisFormat _a_format_y;
+    int _min_unit__px = 6;
+    // Start offset multiplier is used to determine space from cross haris to first value.
+    // Space to first value is _start_offset_m * _unit_space__px.
+    int _start_offset_m;
+    // End offset multiplier is used to determine how much space follows the last value.
+    // Space after last value is _end_offset_m * _unit_space__px.
+    int _end_offset_m;
+
     std::unordered_map<int, BaseColor> _colors;
     std::set<Mood> _moods;
-    int _top_left_x__px;
-    int _top_left_y__px;
+    int _top_left_x__px = 0;
+    int _top_left_y__px = 0;
     int _min_x;
     int _max_x;
     int _min_y;
     int _max_y;
+    
+
+    // given allowable space in the x and y directions
+    int _x_space__px;
+    int _y_space__px;
+
     int _x_diff; // max minus min axis values
     int _y_diff; // max minus min axis values
-    int _unit__px; // unit size, same in x and y direction.
+    int _unit_x__px; // unit size
+    int _unit_y__px;
     int _dot__px; // dot size, same in x and y directions. Dot is inside of the unit.
     int _title_x__px; // center placement of _title
     int _title_y__px;
@@ -74,17 +91,11 @@ private:
     AxisLeftToRightB _x_axis;
     AxisBottomToTop _y_axis;
 
-    int calcUnitSizePx ();
-    int calcDotSizePx (int unitSizePx);
-    int calcXAxisLength () {
-        return (
-            _unit__px * _x_diff +
-            _unit__px * _sizer.startOffsetM() +
-            _unit__px * _sizer.endOffsetM() +
-            _a_format_y.getAxisHeightPx()
-        );
-    }
+    int calcUnitSizeXPx ();
 
+    // Y unit size is dependent on X unit size. They both have to be odd or even.
+    int calcUnitSizeYPx ();
+    int calcDotSizePx ();
     int calcCrossXPx (int topLeftX);
     int calcCrossYPx (int topLeftY);
 };

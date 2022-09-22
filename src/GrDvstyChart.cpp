@@ -60,6 +60,7 @@ void GrDvstyChart::print (
             averageNumOfDiffNeighbors,
             _colorrs_map[_colors[groupId]][Mood::neutral]._my_color} );
     }
+    
     _title->print(renderer);
     _plot->print(points, false, renderer);
     _key->print(renderer);

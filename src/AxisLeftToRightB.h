@@ -31,7 +31,8 @@ class AxisLeftToRightB
         // Renders axis from left to right with title at top (used for horizontal axes).
         void print (Renderer* renderer);
         void moveCrossHairs (int xPx, int yPx);
-
+        void setMinTickSpacing (int spacing) { _min_tick_spacing = spacing; }
+        void setMajTickSpacing (int spacing) { _maj_tick_spacing = spacing; }
     
     private:
         std::string _title;

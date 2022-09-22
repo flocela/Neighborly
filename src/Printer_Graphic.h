@@ -73,8 +73,12 @@ private:
     // center of screen
     int _x_center__px = _screen_width__px/2;
 
-    std::unique_ptr<TitleA> _window_title = std::make_unique<TitleA>(40, 2, _top_border__px, _x_center__px);
-
+    std::unique_ptr<TitleA> _window_title = std::make_unique<TitleA>(
+        Letter{40, 2},
+        _top_border__px,
+        _x_center__px,
+        "Neighbors"
+    );
 
     /* COLUMNS */
 
@@ -134,7 +138,7 @@ private:
 
     // Diversity and Happiness charts use the same dot size and copy of the same color key
     Letter _chart_key_letter{24, 4};
-    int _dot_size__px = 4;
+    int _min_unit_size__px = 6;
     
 
     /* DIVERSITY CHART */
@@ -148,13 +152,11 @@ private:
     int _max_number_of_neighbors;
     
     PlotASizer _div_sizer{
-        _x_chart_space__px,
-        ((int)(_chart_y_space__px * _diversity_chart_y_axis_fraction)),
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,
         _chart_key_letter,
-        _dot_size__px,
+        _min_unit_size__px,
         _x_offset_multiplier,
         _x_overrun_multiplier,
         true
@@ -174,13 +176,11 @@ private:
     double _hap_chart_y_axis_fraction = 0.7;
 
     PlotASizer _hap_sizer{
-        _x_chart_space__px,
-        ((int)(_chart_y_space__px * _hap_chart_y_axis_fraction)),
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,
         _chart_key_letter,
-        _dot_size__px,
+        _min_unit_size__px,
         _x_offset_multiplier,
         _x_overrun_multiplier,
         true

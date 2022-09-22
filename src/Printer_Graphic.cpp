@@ -169,9 +169,9 @@ int Printer_Graphic::cityChartCalculatePxPerUnit(
         _y_offset_multiplier +
         _y_overrun_multiplier;
 
-    int yCellSize =  allowableYAxisLengthPx/numOfCellsY;
+    int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
 
-    int smallestCellSize = std::min(xCellSize, yCellSize);
+    int smallestCellSize = std::min(xCellSize, yUnitSize);
 
     return (smallestCellSize < _smallest_allowable_cell_size__px) ? 
         _smallest_allowable_cell_size__px : smallestCellSize;
@@ -184,18 +184,19 @@ std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
 )
 {
     std::set<Mood> moods{Mood::neutral};
-
+    std::cout << "Printer_Graphic createDvstyChart: maxNumOfNeighbors: " << maxNumOfNeighbors << std::endl;
     return std::make_unique<GrDvstyChart> (
         _colors,
         moods,
         neighbors,
         std::make_unique<TitleA>(
             _chart_title_letter,
+            0,
+            0,
             "Diversity, Average Number of Disparate Neighbors per Resident per Run"),
         std::make_unique<GrColorKeyPrinter>(
             0,
             0,
-            _div_sizer.xSpacePx(),
             _chart_key_letter,
             _colors,
             moods),
@@ -208,11 +209,13 @@ std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             0,
             maxNumOfRuns,
             0,
-            maxNumOfNeighbors),
+            maxNumOfNeighbors,
+            0,
+            0),
         _x_center__px + _col_side_border__px,
         _div_chart_top_y__px,
         _x_chart_space__px,
-        _diversity_chart_y_axis_fraction
+        _diversity_chart_y_axis_fraction * _chart_y_space__px
     );
 }
 

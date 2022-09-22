@@ -133,5 +133,30 @@ void AxisBottomToTop::moveCrossHairs (int xPx, int yPx)
         _px_per_unit * _diff -
         _start_offset__px -
         _end_offset__px;
-    std::cout << "AxisBottomToTop moveCrosshairs: y" << _y_cross__px << std::endl;
 }
+
+void AxisBottomToTop::setPxPerUnit (int pixels)
+{
+    _px_per_unit = pixels;
+    _tick_thickness__px = _px_per_unit%2==0? 2:1;
+    _top_most_pixel_y__px = 
+        _y_cross__px -
+        _px_per_unit * _diff -
+        _start_offset__px -
+        _end_offset__px;
+}
+
+void AxisBottomToTop::setOffsetsPx (int startOffsetPx, int endOffsetPx)
+{
+    _start_offset__px = startOffsetPx;
+    _end_offset__px = endOffsetPx;
+    _min__px = _y_cross__px - _start_offset__px;
+    
+    _top_most_pixel_y__px =
+        _y_cross__px -
+        _px_per_unit * _diff -
+        _start_offset__px -
+        _end_offset__px;
+}
+
+

@@ -24,13 +24,12 @@ public:
         int minY,
         int maxY
     ):
-    _plot{sizer, colors, moods, topLeftXPx, topLeftYPx, 0, numRuns, minY, maxY},
+    _plot{sizer, colors, moods, topLeftXPx, topLeftYPx, 0, numRuns, minY, maxY,100, 100}, // TODO it's not 100
     _colors{colors},
     _moods{moods},
     _key{
         topLeftXPx,
         topLeftYPx + sizer.titleLetter().getHeightIncLSpace(),
-        sizer.xSpacePx(),
         sizer.keyLetter(),
         _colors,
         _moods

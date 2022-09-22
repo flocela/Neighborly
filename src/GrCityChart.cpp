@@ -32,7 +32,6 @@ GrCityChart::GrCityChart (
     _key{
         _cross_hairs_x__px,
         _top_left_corner_y__px + _title_letter.getHeightIncLSpace(), // center key along x axis length
-        _x_axis_length__px, // center key along x axis length
         grCityChartSizer.getKeyLetter(),
         _res_colors,
         std::set<Mood>{Mood::happy, Mood::unhappy}

@@ -12,16 +12,14 @@ class GrColorKeyPrinter : public ColorKey
 
     GrColorKeyPrinter(); // TODO delete default constructor
     GrColorKeyPrinter (
-        int topLeftCornerXPx,
-        int topLeftCornerYPx,
-        int xSpaceLengthPx,
+        int topCenterXPx,
+        int topCenterYPx,
         Letter titleLetter,
         std::unordered_map<int, BaseColor> colors, // group number to Color
         std::set<Mood> moods // keys for colors, e.g. happy, sad, neutral
     ):
-        _top_left_x__px{topLeftCornerXPx},
-        _top_left_y__px{topLeftCornerYPx},
-        _x_space_length__px{xSpaceLengthPx},
+        _top_center_x__px{topCenterXPx},
+        _top_center_y__px{topCenterYPx},
         _title_letter{titleLetter},
         _colors{colors},
         _moods{moods}
@@ -30,23 +28,30 @@ class GrColorKeyPrinter : public ColorKey
     }
 
     void print (Renderer* renderer);
-    int getHeightPx () { return _title_letter.getHeightIncLSpace(); }
+    int getHeightPx () { return _title_letter.getHeightIncLSpace(); } // TODO use sizeY() instead. delete this function
+    int sizeX () override;
+    int sizeY () override { return _title_letter.getHeightIncLSpace(); }
+    void setCharWidthMultiplier (double multiplier) { _char_width_multiplier = multiplier;}
 
     void setTopLeftCorner (int xPx, int yPx) {
-        _top_left_x__px = xPx;
-        _top_left_y__px = yPx;
+        _top_center_x__px = xPx;
+        _top_center_y__px = yPx;
     }
 
     private:
 
-    int _top_left_x__px = 0;
-    int _top_left_y__px = 0;
-    int _x_space_length__px = 0;
+    int _top_center_x__px = 0;
+    int _top_center_y__px = 0;
+    int _column_border__px = 15;
     Letter _title_letter;
     int _box_length__px = 0;
     int _box_spacer__px = 6;
     std::unordered_map<int, BaseColor> _colors;
     std::set<Mood> _moods;
+
+    // only used to find sizeX()
+    // determines the width of each letter based on the height of each letter.
+    double _char_width_multiplier = .3;
 
 };
 

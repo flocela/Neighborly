@@ -8,33 +8,28 @@
 class PlotASizer
 {
 public:
-    // unitX and unitY can only by 1, 10, or 100.
+    // unitX and unitY can only by 1, 10, or 100. // TODO why can it only be these values?
     PlotASizer (
-        int xSpacePx, // given space in x direction
-        int ySpacePx, // given space in y direction
         AxisFormat aFormatX,
         AxisFormat aFormatY,
         Letter titleLetter,
         Letter keyLetter,
-        int minDotSizePx,
+        int minUnitSizePx,
         int startOffsetMultiplier,
         int endOffsetMultiplier,
         bool hasKey
-    ) :_x_space__px{xSpacePx},
-       _y_space__px{ySpacePx},
+    ) :
        _a_format_x{aFormatX},
        _a_format_y{aFormatY},
        _title_letter{titleLetter},
        _key_letter{keyLetter},
-       _min_unit_size__px{minDotSizePx},
+       _min_unit_size__px{minUnitSizePx},
        _start_offset_m{startOffsetMultiplier},
        _end_offset_m{endOffsetMultiplier
        },
        _has_key{hasKey}
     {}
 
-    int xSpacePx () { return _x_space__px; }
-    int ySpacePx () { return _y_space__px; }
     AxisFormat axisFormatX () { return _a_format_x; }
     AxisFormat axisFormatY () { return _a_format_y; }
     int axisFormatYHeight () { return _a_format_y.getAxisHeightPx();}
@@ -52,8 +47,6 @@ public:
     int maxNumOfYDiff () { return 20;}
 
 private:
-    int _x_space__px; // given space in the x direction
-    int _y_space__px;
     AxisFormat _a_format_x;
     AxisFormat _a_format_y;
     Letter _title_letter;

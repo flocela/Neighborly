@@ -9,17 +9,15 @@ class TitleA: public Title
 {
 
 public:
-    TitleA (Letter l): _l{l} {}
-    TitleA (Letter l, std::string title): _l{l}, _title{title} {}
-    TitleA (int letterHeight, int lineSpace): _l{Letter{letterHeight, lineSpace}} {}
     TitleA (
-        int letterHeight,
-        int lineSpace,
+        Letter letter,
         int topCenterXPx,
-        int topCenterYPx
-    ): _l{Letter{letterHeight, lineSpace}}, 
+        int topCenterYPx,
+        std::string title
+    ): _l{letter}, 
        _top_center_x__px{topCenterXPx}, 
-       _top_center_y__px {topCenterYPx} {}
+       _top_center_y__px {topCenterYPx},
+       _title{title} {}
 
     // returns the number of letters in the title.
     int sizeX() { return _title.length(); }

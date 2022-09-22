@@ -31,6 +31,10 @@ class AxisBottomToTop
         // Renders axis from bottom to top, title is on left side (used for vertical axes).
         void print (Renderer* renderer);
         void moveCrossHairs (int xPx, int yPx);
+        void setPxPerUnit (int pixels);
+        void setMinTickSpacing (int spacing) { _min_tick_spacing = spacing; }
+        void setMajTickSpacing (int spacing) { _maj_tick_spacing = spacing; }
+        void setOffsetsPx (int startOffsetPx, int endOffsetPx);
 
     private:
         std::string _title;

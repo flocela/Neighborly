@@ -43,9 +43,9 @@ void GrColorKeyPrinter::print (Renderer* renderer)
         }
     }
 
-    int columnWidth = longestString + _box_length__px + _box_spacer__px + 30;
+    int columnWidth = longestString + _box_length__px + _box_spacer__px + _column_border__px;
 
-    int left = _top_left_x__px + (_x_space_length__px/2) - ((double)columnWidth * keys.size()/2);
+    int left = _top_center_x__px- ((double)columnWidth * keys.size()/2);
     int counter = 0;
     for (auto& key : keys)
     {
@@ -67,16 +67,47 @@ void GrColorKeyPrinter::print (Renderer* renderer)
         renderer->addBlock(
             _box_length__px,
             _box_length__px,
-            Coordinate(boxX,_top_left_y__px + ((_title_letter.letterHeight() - _box_length__px)/2)),
+            Coordinate(boxX,_top_center_y__px + ((_title_letter.letterHeight() - _box_length__px)/2)),
             _the_color_rgba[key.first]
         );
         
         renderer->renderText(
             textX,
-            _top_left_y__px,
+            _top_center_y__px,
             name,
             4
         );
         counter += 1;
     }
+}
+
+int GrColorKeyPrinter::sizeX ()
+{
+    int longestString = 0;
+
+    for (std::unordered_map<int, BaseColor>::iterator itr = _colors.begin(); itr != _colors.end(); ++itr)
+    {
+        int groupId = itr->first;
+        BaseColor baseColor = itr->second;
+        for (auto mood : _moods)
+        {
+            std::string text = "Group: " + std::to_string(groupId);
+            if (mood != Mood::neutral)
+            {
+                text = text + " " + _colorrs_map[baseColor][mood]._mood_name;
+            }
+
+            int textWidth =  
+                (int)(text.length() *
+                _char_width_multiplier *
+                _title_letter.letterHeight());
+            if (textWidth > longestString)
+            {
+                longestString = textWidth;
+            }
+        }
+    }
+
+    int columnWidth = longestString + _box_length__px + _box_spacer__px + _column_border__px;
+    return _colors.size() * _moods.size() * columnWidth;
 }
