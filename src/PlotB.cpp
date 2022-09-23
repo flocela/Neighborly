@@ -1,6 +1,8 @@
-#include "PlotA.h"
+#include "PlotB.h"
 
-PlotA::PlotA ( 
+// PlotB has the same pixels per unit in the x and y directions
+// It plots the y axis from top to bottom and the x axis from left to right
+PlotB::PlotB ( 
         PlotSizer sizer,
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
@@ -12,7 +14,7 @@ PlotA::PlotA (
         int maxY,
         int xSpacePx,
         int ySpacePx
-): // TODO does PlotA really need _colors or _moods
+): // TODO does PlotB really need _colors or _moods
     _a_format_x{sizer.axisFormatX()},
     _a_format_y{sizer.axisFormatY()},
     _min_unit__px{sizer.minUnitSize()},
@@ -30,16 +32,11 @@ PlotA::PlotA (
     _y_space__px{ySpacePx},
     _x_diff{maxX - minX},
     _y_diff{maxY - minY},
-    _unit_x__px{calcUnitSizeXPx()},
-    _unit_y__px{calcUnitSizeYPx()},
+    _unit__px{calcUnitSizePx()},
     _dot__px{calcDotSizePx()},
     // center graph in column
     _cross_x__px{ calcCrossXPx(topLeftXPx) }, 
     _cross_y__px{ calcCrossYPx(topLeftYPx) },
-    _tick_spacing_min_x{(_unit_x__px >= 10)? 1 : 5}, // TODO not used. tick spacing determined in axes Delete
-    _tick_spacing_min_y{(_unit_y__px >= 10)? 1 : 5},
-    _tick_spacing_maj_x{(_unit_x__px > 10)? 5 : 10},
-    _tick_spacing_maj_y{(_unit_y__px > 10)? 5 : 10},
     _x_axis{
         "",
         _a_format_x,
@@ -47,7 +44,7 @@ PlotA::PlotA (
         _cross_y__px,
         _min_x,
         _max_x,
-        _unit_x__px,
+        _unit__px,
         (_dot__px%2==0)? 2 : 1,
         sizer.startOffsetM(),
         sizer.endOffsetM(),
@@ -60,20 +57,20 @@ PlotA::PlotA (
         _cross_y__px,
         _min_y,
         _max_y,
-        _unit_y__px,
+        _unit__px,
         (_dot__px%2==0)? 2 : 1,
         sizer.startOffsetM(),
         sizer.endOffsetM(),
     }
 {}
 
-void PlotA::print (
+void PlotB::print (
     std::vector<Point> points,
     bool clear,
     Renderer* renderer
 )
 { 
-    (void) clear;
+    (void) clear; // TODO
     _x_axis.print(renderer);
     _y_axis.print(renderer);
 
@@ -82,14 +79,14 @@ void PlotA::print (
     {
         int x = 
             _cross_x__px +                                      
-            _unit_x__px *_start_offset_m +      
-            ( _unit_x__px * (point.x() - _min_x) ) - 
+            _unit__px *_start_offset_m +      
+            ( _unit__px * (point.x() - _min_x) ) - 
             _dot__px/2;                               
             
         int y = 
-            _cross_y__px -
-            _unit_y__px * _start_offset_m -
-            ( _unit_y__px * (point.y() - _min_y)) -
+            _cross_y__px +
+            _unit__px * _start_offset_m +
+            ( _unit__px * (point.y() - _min_y)) -
             _dot__px/2;
 
         std::vector<Coordinate> coordinates;
@@ -103,7 +100,7 @@ void PlotA::print (
     }
 }
 
-int PlotA::calcUnitSizeXPx ()
+int PlotB::calcUnitSizePx ()
 {
     if (_x_space__px <= 0 || _y_space__px <= 0)
     {
@@ -114,54 +111,39 @@ int PlotA::calcUnitSizeXPx ()
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX; // TODO dividing by zero is dangerous
 
-    return std::max(xUnitSize, _min_unit__px);
-}
-
-int PlotA::calcUnitSizeYPx ()
-{
-    if (_x_space__px <= 0 || _y_space__px <= 0)
-    {
-        return _min_unit__px;
-    }
-
     int allowableYAxisLengthPx = _y_space__px - _a_format_x.getAxisHeightPx();
-
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
+    int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;  // TODO dividing by zero is dangerous
 
-    
-    // TODO dividing by zero is dangerous
-    int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
+    int unitSize = std::min(xUnitSize, yUnitSize);
 
-    yUnitSize = std::max(yUnitSize, _min_unit__px);
-
-    yUnitSize = ((_unit_x__px % 2 + _unit_y__px % 2) == 1)? yUnitSize + 1 : yUnitSize;
-
-    return yUnitSize;
+    return std::max(unitSize, _min_unit__px);
 }
 
-int PlotA::calcDotSizePx ()
+int PlotB::calcDotSizePx ()
 {
-    int unitSizePx = std::min(_unit_x__px, _unit_y__px);
+    int unitSizePx = std::min(_unit__px, _unit__px);
     int dotSize = unitSizePx/2;
     dotSize =  ((unitSizePx - dotSize) % 2 == 0) ? dotSize : (dotSize + 1);
     return dotSize;
 }
 
-int PlotA::calcCrossXPx (int topLeftXPx)
+int PlotB::calcCrossXPx (int topLeftXPx)
 {
     int xAxisLength = 
-        (_unit_x__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _a_format_y.getAxisHeightPx();
+        (_unit__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _a_format_y.getAxisHeightPx();
 
+    // center axis in column
     return topLeftXPx + (int)(0.5 * ( _x_space__px - xAxisLength ));
 }
 
-int PlotA::calcCrossYPx (int topLeftYPx) // TODO, I think I should be calling this more often, instead of repeating this calculation
+int PlotB::calcCrossYPx (int topLeftYPx) // TODO, I think I should be calling this more often, instead of repeating this calculation
 {
     return 
-        topLeftYPx + _unit_y__px * (_start_offset_m + _end_offset_m + _y_diff);
+        topLeftYPx + _a_format_x.getAxisHeightPx();
 }
 
-void PlotA::moveTopLeft (int topLeftXPx, int topLeftYPx)
+void PlotB::moveTopLeft (int topLeftXPx, int topLeftYPx)
 {
     _top_left_x__px = topLeftXPx;
     _top_left_y__px = topLeftYPx;
@@ -173,18 +155,17 @@ void PlotA::moveTopLeft (int topLeftXPx, int topLeftYPx)
 
 }
 
-void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) { 
+void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) { 
     _x_space__px = xSpacePx;
     _y_space__px = ySpacePx;
     
-    _unit_x__px = calcUnitSizeXPx();
-    _unit_y__px = calcUnitSizeYPx();
+    _unit__px = calcUnitSizePx();
     _dot__px = calcDotSizePx();
     int tickThickness = (_dot__px%2==0)? 2 : 1;
     _cross_x__px = calcCrossXPx(_top_left_x__px);
     _cross_y__px = calcCrossYPx (_top_left_y__px);
     _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
-    _y_axis.setPxPerUnit(_unit_y__px);
+    _y_axis.setPxPerUnit(_unit__px);
     _y_axis.setTickThickness(tickThickness);
 }

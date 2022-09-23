@@ -1,7 +1,7 @@
-#include "AxisBottomToTop.h"
+#include "AxisBottomToTopL.h"
 #include <iomanip>
 
-AxisBottomToTop::AxisBottomToTop (
+AxisBottomToTopL::AxisBottomToTopL (
     std::string title,
     AxisFormat axisFormat,
     int x_coordinate__px, // where x and y axis meet
@@ -28,7 +28,7 @@ AxisBottomToTop::AxisBottomToTop (
     _end_offset_m{endOffsetMultiplier}
 {}
 
-void AxisBottomToTop::print (Renderer* renderer)
+void AxisBottomToTopL::print (Renderer* renderer)
 {
     // All lines and ticks are drawn as SDL_Rects, which are held in rects vector.
     std::vector<SDL_Rect> rects = {};
@@ -55,7 +55,7 @@ void AxisBottomToTop::print (Renderer* renderer)
 
 }
 
-void AxisBottomToTop::addVerticalLine (std::vector<SDL_Rect>& rects)
+void AxisBottomToTopL::addVerticalLine (std::vector<SDL_Rect>& rects)
 {
     SDL_Rect rect;
     rect.w = _axis_format.axisThicknessPx();
@@ -65,7 +65,7 @@ void AxisBottomToTop::addVerticalLine (std::vector<SDL_Rect>& rects)
     rects.push_back(rect);
 }
         
-void AxisBottomToTop::addTicksAndLabels (
+void AxisBottomToTopL::addTicksAndLabels (
     std::vector<SDL_Rect>& rects, 
     std::vector<TextRect>& texts
 )
@@ -116,13 +116,13 @@ void AxisBottomToTop::addTicksAndLabels (
     }
 }
 
-void AxisBottomToTop::moveCrossHairs (int xPx, int yPx)
+void AxisBottomToTopL::moveCrossHairs (int xPx, int yPx)
 {
     _x_cross__px = xPx;
     _y_cross__px = yPx;
 }
 
-void AxisBottomToTop::setPxPerUnit (int pixels)
+void AxisBottomToTopL::setPxPerUnit (int pixels)
 {
     _px_per_unit = pixels;
     _min_tick_spacing = calcMinTickSpacing(_px_per_unit);

@@ -15,6 +15,7 @@
 #include "Letter.h"
 #include "GrCityChartSizer.h"
 #include "GrColorKeyPrinter.h"
+#include "Title.h"
 
 // Takes in a Renderer* and necessary settings to draw the city chart.
 // Remembers this initializing information so user can 
@@ -35,8 +36,10 @@ class GrCityChart
             GrCityChartSizer grCityChartSizer,
             std::unordered_map<const House*, Coordinate> coordToHouseMap,
             std::unordered_map<int, BaseColor> resColors,
+            std::unique_ptr<Title> title,
             int topLeftCornerXPx,
-            int topLeftCornerYPx
+            int topLeftCornerYPx,
+            int xSpace
         );
 
         void print (
@@ -55,10 +58,12 @@ class GrCityChart
         std::unordered_map<const House*, Coordinate> _coord_to_house_map;
         // This includes sad resident colors and happy resident colors.
         std::unordered_map<int, BaseColor> _res_colors;
+
+        std::unique_ptr<Title> _title;
        
         int _top_left_corner_x__px;
         int _top_left_corner_y__px;
-        int _x_given_space__px;
+        int _x_space__px;
         int _y_given_space__px;
         
         // cell_size * offsetMultiplier is length from crosshairs to center of first cell.

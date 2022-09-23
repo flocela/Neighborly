@@ -1,20 +1,20 @@
-#ifndef PLOT_A_H
-#define PLOT_A_H
+#ifndef PLOT_B_H
+#define PLOT_B_H
 
 #include "PlotSizer.h"
 #include "unordered_map"
 #include "Color.h"
 #include "Coordinate.h"
 #include "AxisFormat.h"
-#include "AxisLeftToRightB.h"
-#include "AxisBottomToTopL.h"
+#include "AxisLeftToRightT.h"
+#include "AxisTopToBottomL.h"
 #include "Point.h"
 #include "Plot.h"
 
-class PlotA: public Plot
+class PlotB: public Plot
 {
 public:
-    PlotA ( 
+    PlotB ( 
         PlotSizer sizer,
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
@@ -74,8 +74,7 @@ private:
 
     int _x_diff; // max minus min axis values
     int _y_diff; // max minus min axis values
-    int _unit_x__px; // unit size
-    int _unit_y__px;
+    int _unit__px; // pixels per unit
     int _dot__px; // dot size, same in x and y directions. Dot is inside of the unit.
     int _title_x__px; // center placement of _title
     int _title_y__px;
@@ -83,18 +82,13 @@ private:
     int _cross_x__px; // where x and y axes cross
     int _cross_y__px; 
 
-    int _tick_spacing_min_x; // spacing for minor ticks
-    int _tick_spacing_min_y;
-    int _tick_spacing_maj_x; // spacing for major ticks, major ticks have label
-    int _tick_spacing_maj_y;
-
-    AxisLeftToRightB _x_axis;
-    AxisBottomToTopL _y_axis;
+    AxisLeftToRightT _x_axis;
+    AxisTopToBottomL _y_axis;
 
     int calcUnitSizeXPx ();
 
     // Y unit size is dependent on X unit size. They both have to be odd or even.
-    int calcUnitSizeYPx ();
+    int calcUnitSizePx ();
     int calcDotSizePx ();
     int calcCrossXPx (int topLeftX);
     int calcCrossYPx (int topLeftY);

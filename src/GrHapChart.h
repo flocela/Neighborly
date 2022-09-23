@@ -3,7 +3,7 @@
 
 #include "unordered_map"
 #include "Color.h"
-#include "PlotASizer.h"
+#include "PlotSizer.h"
 #include "Plot.h"
 #include "renderer.h"
 #include "City.h"
@@ -15,7 +15,7 @@ class GrHapChart {
 
 public:
     GrHapChart (
-        PlotASizer sizer,
+        PlotSizer sizer,
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
         std::unique_ptr<Title> title,

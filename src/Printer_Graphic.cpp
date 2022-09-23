@@ -137,8 +137,14 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
         cityPrinterSizer,
         _coordinates_per_house,
         _colors,
+        std::make_unique<TitleA>(
+            _chart_title_letter,
+            0,
+            0,
+            "City Map"),
         _left_right_borders__px,
-        _city_map_chart_top_left_y_coord__px
+        _city_map_chart_top_left_y_coord__px,
+        _x_chart_space__px
     );
 }
 

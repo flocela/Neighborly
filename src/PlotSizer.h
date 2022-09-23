@@ -1,15 +1,15 @@
-#ifndef PLOT_A_SIZER_H
-#define PLOT_A_SIZER_H
+#ifndef PLOT_SIZER_H
+#define PLOT_SIZER_H
 
 #include "AxisFormat.h"
 #include "Letter.h"
 #include <iostream>
 
-class PlotASizer
+class PlotSizer
 {
 public:
     // unitX and unitY can only by 1, 10, or 100. // TODO why can it only be these values?
-    PlotASizer (
+    PlotSizer (
         AxisFormat aFormatX,
         AxisFormat aFormatY,
         Letter titleLetter,

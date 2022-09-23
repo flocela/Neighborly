@@ -15,7 +15,7 @@
 #include "Letter.h"
 #include "GrDvstyChart.h"
 #include "GrHapChart.h"
-#include "PlotASizer.h"
+#include "PlotSizer.h"
 #include "TitleA.h"
 
 //  Displays CityMap, Diversity Chart, and HappinessChart.
@@ -151,7 +151,7 @@ private:
 
     int _max_number_of_neighbors;
     
-    PlotASizer _div_sizer{
+    PlotSizer _div_sizer{
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,
@@ -175,7 +175,7 @@ private:
 
     double _hap_chart_y_axis_fraction = 0.7;
 
-    PlotASizer _hap_sizer{
+    PlotSizer _hap_sizer{
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,
@@ -201,7 +201,7 @@ private:
     // City map chart is in the left column and sits below number of runs chart
     int _city_map_chart_top_left_y_coord__px = 
         _runs_chart_top_y__px +
-        _chart_title_letter.getHeightIncLSpace(); // Number of Runs chart
+        _chart_title_letter.getHeightIncLSpace(); // Number of Runs chart// TODO get height of runs from the runs chart height
     
     int _city_y_space__px = 
         _screen_height__px -
