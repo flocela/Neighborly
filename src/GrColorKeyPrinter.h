@@ -33,7 +33,7 @@ class GrColorKeyPrinter : public ColorKey
     int sizeY () override { return _title_letter.getHeightIncLSpace(); }
     void setCharWidthMultiplier (double multiplier) { _char_width_multiplier = multiplier;}
 
-    void setTopLeftCorner (int xPx, int yPx) {
+    void setTopCenter (int xPx, int yPx) {
         _top_center_x__px = xPx;
         _top_center_y__px = yPx;
     }

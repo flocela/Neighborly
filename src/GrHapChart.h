@@ -33,7 +33,7 @@ public:
     _plot{std::move(plot)}
     {   (void) sizer;
         _title->setTopCenter(topLeftXPx + xSpace/2, topLeftYPx);
-        _key->setTopLeftCorner(topLeftXPx + xSpace/2, topLeftYPx + _title->sizeY());
+        _key->setTopCenter(topLeftXPx + xSpace/2, topLeftYPx + _title->sizeY());
         _plot->moveTopLeft(topLeftXPx, topLeftYPx + _title->sizeY() + _key->getHeightPx());
         _plot->setXYSpacePx(xSpace, ySpace - _title->sizeY() - _key->sizeY());
     }

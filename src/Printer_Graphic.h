@@ -137,7 +137,7 @@ private:
         _space_between_charts__px;
 
     // Diversity and Happiness charts use the same dot size and copy of the same color key
-    Letter _chart_key_letter{24, 4};
+    Letter _chart_key_letter{24, 20};
     int _min_unit_size__px = 6;
     
 

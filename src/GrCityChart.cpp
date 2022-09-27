@@ -6,6 +6,7 @@ GrCityChart::GrCityChart (
     std::unordered_map<const House*, Coordinate> coordToHouseMap,
     std::unordered_map<int, BaseColor> resColors,
     std::unique_ptr<Title> title,
+    std::unique_ptr<GrColorKeyPrinter> key,
     int topLeftCornerXPx,
     int topLeftCornerYPx,
     int xSpace
@@ -13,6 +14,7 @@ GrCityChart::GrCityChart (
     _coord_to_house_map{coordToHouseMap},
     _res_colors{resColors},
     _title{move(title)},
+    _key{move(key)},
     _top_left_corner_x__px{topLeftCornerXPx},
     _top_left_corner_y__px{topLeftCornerYPx},
     _x_space__px{xSpace},
@@ -32,17 +34,10 @@ GrCityChart::GrCityChart (
         _cell_size__px * _offset_m + 
         _cell_size__px * _overrun_m},
     _cross_hairs_x__px{(_x_space__px - _x_axis_length__px)/2},
-    _key{
-        _cross_hairs_x__px,
-        _top_left_corner_y__px + _title_letter.getHeightIncLSpace(), // center key along x axis length
-        grCityChartSizer.getKeyLetter(),
-        _res_colors,
-        std::set<Mood>{Mood::happy, Mood::unhappy}
-    },
     _cross_hairs_y__px{
         _top_left_corner_y__px +
         _title_letter.getHeightIncLSpace() +
-        _key.getHeightPx() + 
+        _key->getHeightPx() + 
         _axis_format_X.getAxisHeightPx()
     },
     _pixel_converter_x{std::make_unique<PixelConverter>(
@@ -57,6 +52,7 @@ GrCityChart::GrCityChart (
         _cross_hairs_y__px +  _cell_size__px * _offset_m + _cell_size__px * (_house_max_y - _house_min_y))}
 {   
     _title->setTopCenter(topLeftCornerXPx + xSpace/2, topLeftCornerYPx);
+    _key->setTopCenter(topLeftCornerXPx + xSpace/2, topLeftCornerYPx + _title->sizeY());
     _house_size__px = grCityChartSizer.getDotSize__px();
 
     _house_min_x__px = _pixel_converter_x->getPixel(_house_min_x);
@@ -117,7 +113,7 @@ void GrCityChart::print(
     printXAxis(renderer);
     printYAxis(renderer);
     printHouses(houseToResMap, renderer);
-    _key.print(renderer);
+    _key->print(renderer);
 }
 
 void GrCityChart::printTitle(Renderer* renderer)

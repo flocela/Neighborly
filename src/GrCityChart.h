@@ -37,6 +37,7 @@ class GrCityChart
             std::unordered_map<const House*, Coordinate> coordToHouseMap,
             std::unordered_map<int, BaseColor> resColors,
             std::unique_ptr<Title> title,
+            std::unique_ptr<GrColorKeyPrinter> key,
             int topLeftCornerXPx,
             int topLeftCornerYPx,
             int xSpace
@@ -60,6 +61,7 @@ class GrCityChart
         std::unordered_map<int, BaseColor> _res_colors;
 
         std::unique_ptr<Title> _title;
+        std::unique_ptr<GrColorKeyPrinter> _key;
        
         int _top_left_corner_x__px;
         int _top_left_corner_y__px;
@@ -91,11 +93,8 @@ class GrCityChart
         // Does not include any text, just the axis. 
         int _x_axis_length__px;
         
-        
-
         // The coordinate where x and y axes cross on the screen in pixels.
         int _cross_hairs_x__px;
-        GrColorKeyPrinter _key;
         int _cross_hairs_y__px;
 
         int _title_x__px;

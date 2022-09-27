@@ -114,6 +114,8 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
     int houseSize = unitSize/2;
     houseSize =  ((unitSize - houseSize) % 2 == 0) ? houseSize : (houseSize + 1);
 
+    std::set<Mood> moods{Mood::happy, Mood::unhappy};
+
     GrCityChartSizer cityPrinterSizer = 
         GrCityChartSizer (
             _x_chart_space__px,
@@ -142,6 +144,12 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             0,
             0,
             "City Map"),
+        std::make_unique<GrColorKeyPrinter>(
+            0,
+            0,
+            _chart_key_letter,
+            _colors,
+            moods),
         _left_right_borders__px,
         _city_map_chart_top_left_y_coord__px,
         _x_chart_space__px
