@@ -59,7 +59,7 @@ void AxisTopToBottomL::addVerticalLine (std::vector<SDL_Rect>& rects)
 {
     SDL_Rect rect;
     rect.w = _axis_format.axisThicknessPx();
-    rect.h = _y_cross__px  - calcBotMostPixelY() + 1; // TODO, do I need this 1, or should it be thickness?
+    rect.h = calcBotMostPixelY() - _y_cross__px + 1; // TODO, do I need this 1, or should it be thickness?
     rect.x = _x_cross__px - rect.w/2; // is the rect.w/2 needed? Is thickness of axis taken into account in rect.y?
     rect.y = _y_cross__px;
     rects.push_back(rect);

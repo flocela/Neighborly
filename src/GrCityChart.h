@@ -16,6 +16,7 @@
 #include "GrCityChartSizer.h"
 #include "GrColorKeyPrinter.h"
 #include "Title.h"
+#include "Plot.h"
 
 // Takes in a Renderer* and necessary settings to draw the city chart.
 // Remembers this initializing information so user can 
@@ -38,6 +39,7 @@ class GrCityChart
             std::unordered_map<int, BaseColor> resColors,
             std::unique_ptr<Title> title,
             std::unique_ptr<GrColorKeyPrinter> key,
+            std::unique_ptr<Plot> plot,
             int topLeftCornerXPx,
             int topLeftCornerYPx,
             int xSpace
@@ -62,6 +64,7 @@ class GrCityChart
 
         std::unique_ptr<Title> _title;
         std::unique_ptr<GrColorKeyPrinter> _key;
+        std::unique_ptr<Plot> _plot;
        
         int _top_left_corner_x__px;
         int _top_left_corner_y__px;
@@ -150,7 +153,7 @@ class GrCityChart
             std::unordered_map<const House*, const Resident*> houseToResMap,
             Renderer* renderer
         );
-        std::map<Color, std::vector<Coordinate>> createVectorsOfHousesForEachColor (
+        std::unordered_map<Color, std::vector<Point>> createVectorsOfHousesForEachColor (
             std::unordered_map<const House*, const Resident*> houseToResMap
         );
 
@@ -167,7 +170,6 @@ class GrCityChart
         void printXAxis (Renderer* renderer);
         void printYAxis (Renderer* renderer);
         
-
 };
 
 #endif

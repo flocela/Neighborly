@@ -54,7 +54,6 @@ void GrHapChart::print (
                 aveHappiness, 
                 _colorrs_map[_colors[groupNum]][Mood::neutral]._my_color
             });
-        std::cout << "GrHapChart point: " << run << ", " << aveHappiness << std::endl;
     }
     _title->print(renderer);
     _key->print(renderer);

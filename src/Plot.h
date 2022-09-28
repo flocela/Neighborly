@@ -12,6 +12,11 @@ public:
 
     virtual void print ( std::vector<Point> points, bool clear, Renderer* renderer ) = 0;
 
+    virtual void print (
+        std::unordered_map<Color, std::vector<Point>> pointsPerColor,
+        bool clear,
+        Renderer* renderer) = 0;
+
     virtual void moveTopLeft (int xPx, int yPx) = 0;
 
     virtual void setXYSpacePx (int xSpacePx, int ySpacePx) = 0;

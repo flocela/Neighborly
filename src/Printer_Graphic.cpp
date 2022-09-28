@@ -9,6 +9,7 @@
 #include "XAxisL2RTop.h"
 #include "YAxisT2B.h"
 #include "PlotA.h"
+#include "PlotB.h"
 
 Printer_Graphic::Printer_Graphic (
     std::string title,
@@ -134,7 +135,7 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             true,
             _chart_key_letter
         );
-   
+    
     return std::make_unique<GrCityChart>(
         cityPrinterSizer,
         _coordinates_per_house,
@@ -150,6 +151,18 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             _chart_key_letter,
             _colors,
             moods),
+        std::make_unique<PlotB>(
+            _city_sizer,
+            _colors, 
+            moods, 
+            0, 
+            0,
+            minXCoord, 
+            maxXCoord,
+            minYCoord, 
+            maxYCoord,
+            0,
+            0),
         _left_right_borders__px,
         _city_map_chart_top_left_y_coord__px,
         _x_chart_space__px
@@ -169,7 +182,7 @@ int Printer_Graphic::cityChartCalculatePxPerUnit(
     int allowableXAxisLengthPx = _x_chart_space__px - _axis_format_Y.getAxisHeightPx();
     int numOfCellsX = 
         (maxXCoord - minXCoord) +
-        _x_offset_multiplier +
+        _x_offset_multiplier + // TODO this is a multiplier not an offset
         _x_overrun_multiplier;
     int xCellSize = allowableXAxisLengthPx/numOfCellsX;
 

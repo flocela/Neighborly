@@ -84,12 +84,17 @@ void Renderer::renderText (
     else if (centered == 3) // align to right side
     {
         textRect.x = x - textRect.w;
-        textRect.y = y;
+        textRect.y = y - 0.5 * textRect.h;
     }
     else if (centered == 4) // align to left side
     {
         textRect.x = x;
         textRect.y = y;
+    }
+    else if (centered == 5) // move up height of rect and center horizontally
+    {
+        textRect.x = x - textRect.w/2;
+        textRect.y = y - textRect.h;
     }
     
     // Draw text

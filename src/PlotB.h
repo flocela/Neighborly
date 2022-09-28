@@ -33,6 +33,11 @@ public:
         bool clear,
         Renderer* renderer) override;
 
+    void print (
+        std::unordered_map<Color, std::vector<Point>> pointsPerColor,
+        bool clear,
+        Renderer* renderer) override;
+
     void moveTopLeft (int xPx, int yPx) override; // TODO combine move TopLeft and setXYSpacePx into one method, so not doing some work twice.
 
     void setXYSpacePx (int xSpacePx, int ySpacePx) override;

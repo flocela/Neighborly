@@ -64,7 +64,7 @@ void AxisLeftToRightT::addTicksAndLabels (
     std::vector<SDL_Rect>& rects, 
     std::vector<TextRect>& texts
 )
-{   
+{  
     int topOfLabelYPx = _y_cross__px -
                         _axis_format.majTickLengthPx() + _axis_format.tickLengthInsideChart() - // TODO make this one value I can get from axis format
                         _axis_format.labelLineSpacePx();
@@ -95,7 +95,7 @@ void AxisLeftToRightT::addTicksAndLabels (
             tick.y = majTickYPx;
                 
             std::string label = std::to_string(currValue);
-            tr = {currValue__px, topOfLabelYPx, label, 1};
+            tr = {currValue__px, topOfLabelYPx, label, 5};
             texts.push_back(tr);
         }
         else if (currValue % _min_tick_spacing == 0) // minor tick

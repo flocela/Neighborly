@@ -7,6 +7,7 @@ GrCityChart::GrCityChart (
     std::unordered_map<int, BaseColor> resColors,
     std::unique_ptr<Title> title,
     std::unique_ptr<GrColorKeyPrinter> key,
+    std::unique_ptr<Plot> plot,
     int topLeftCornerXPx,
     int topLeftCornerYPx,
     int xSpace
@@ -15,6 +16,7 @@ GrCityChart::GrCityChart (
     _res_colors{resColors},
     _title{move(title)},
     _key{move(key)},
+    _plot{move(plot)},
     _top_left_corner_x__px{topLeftCornerXPx},
     _top_left_corner_y__px{topLeftCornerYPx},
     _x_space__px{xSpace},
@@ -53,6 +55,8 @@ GrCityChart::GrCityChart (
 {   
     _title->setTopCenter(topLeftCornerXPx + xSpace/2, topLeftCornerYPx);
     _key->setTopCenter(topLeftCornerXPx + xSpace/2, topLeftCornerYPx + _title->sizeY());
+    _plot->moveTopLeft(topLeftCornerXPx, topLeftCornerYPx + _title->sizeY() + _key->getHeightPx());
+    _plot->setXYSpacePx(xSpace, _y_given_space__px - _title->sizeY() - _key->sizeY());
     _house_size__px = grCityChartSizer.getDotSize__px();
 
     _house_min_x__px = _pixel_converter_x->getPixel(_house_min_x);
@@ -63,8 +67,8 @@ GrCityChart::GrCityChart (
     _title_x__px = _cross_hairs_x__px + (_x_axis_length__px/2);
     _title_y__px = _top_left_corner_y__px;
 
-    addCityXAxis();
-    addCityYAxis();
+    //addCityXAxis();
+    //addCityYAxis();
 }
 
 void GrCityChart::addCityXAxis()
@@ -107,12 +111,18 @@ void GrCityChart::print(
     std::unordered_map<const House*, const Resident*> houseToResMap,
     Renderer* renderer
 )
-{   
+{   (void)houseToResMap;
     //printTitle(renderer);
     _title->print(renderer);
-    printXAxis(renderer);
-    printYAxis(renderer);
-    printHouses(houseToResMap, renderer);
+    //printXAxis(renderer);
+    //printYAxis(renderer);
+    //printHouses(houseToResMap, renderer);
+    std::cout << "GrCityChart print" << std::endl;
+    _plot->print(
+        createVectorsOfHousesForEachColor(houseToResMap),
+        false,
+        renderer
+    );
     _key->print(renderer);
 }
 
@@ -139,25 +149,18 @@ void GrCityChart::printHouses (
     std::unordered_map<const House *, const Resident *> houseToResMap,
     Renderer* renderer
 )
-{   
-    std::map<Color, std::vector<Coordinate>> coordsPerColor =
+{   (void) renderer;
+    std::unordered_map<Color, std::vector<Point>> pointsPerColor =
         createVectorsOfHousesForEachColor(houseToResMap);
     
+    //_plot->print(pointsPerColor, false, renderer);
     
-    for (auto const &colorToCoordVector : coordsPerColor)
-    {
-        renderer->addBlocksByColor(
-            _house_size__px,
-            _house_size__px,
-            colorToCoordVector.second,
-            _the_color_rgba[colorToCoordVector.first]);
-    }
 }
 
-std::map<Color, std::vector<Coordinate>> GrCityChart::createVectorsOfHousesForEachColor(
+std::unordered_map<Color, std::vector<Point>> GrCityChart::createVectorsOfHousesForEachColor(
     std::unordered_map<const House *, const Resident *> houseToResMap)
 {   
-    std::map<Color, std::vector<Coordinate>> colorToCoordinatesMap = {};
+    std::unordered_map<Color, std::vector<Point>> colorToCoordinatesMap = {};
 
     for (auto const &x : _coord_to_house_map)
     {   
@@ -184,14 +187,14 @@ std::map<Color, std::vector<Coordinate>> GrCityChart::createVectorsOfHousesForEa
         
         if (colorToCoordinatesMap.find(colorKey) == colorToCoordinatesMap.end()) // TODO  c++ knows how to do this in one step
         {
-            std::vector<Coordinate> newCoordinateVector = {};
-            colorToCoordinatesMap[colorKey] = newCoordinateVector;
+            std::vector<Point> newPointVector = {};
+            colorToCoordinatesMap[colorKey] = newPointVector;
         }
 
-        int pixelsX = _pixel_converter_x->getPixel(coord.getX()) - _house_size__px / 2;
-        int pixelsY = _pixel_converter_y->getPixel(coord.getY()) - _house_size__px / 2;
-        Coordinate pixelCoord{pixelsX, pixelsY};
-        colorToCoordinatesMap[colorKey].push_back(pixelCoord);
+        //int pixelsX = _pixel_converter_x->getPixel(coord.getX()) - _house_size__px / 2;
+        //int pixelsY = _pixel_converter_y->getPixel(coord.getY()) - _house_size__px / 2;
+        Point point{(double)coord.getX(), (double)coord.getY(), colorKey};
+        colorToCoordinatesMap[colorKey].push_back(point);
         
     }
     return colorToCoordinatesMap;

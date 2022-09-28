@@ -36,7 +36,7 @@ class AxisFormat
         int _axis_thickness__px = 1;
         int _tick_thickness__px = 2;
         int _maj_tick_length__px = 10;
-        int _min_tick_length__px = 2;
+        int _min_tick_length__px = 4;
         int _tick_length_inside_chart__px = 2; // does not include thickness of axis
 
         int _label_letter_height = 22;  

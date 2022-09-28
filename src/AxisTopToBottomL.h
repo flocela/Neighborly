@@ -54,7 +54,7 @@ class AxisTopToBottomL
         {
             return _y_cross__px + (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
         }
-        int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 1; }
+        int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 5; }
         int calcMajTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
         int calcLabelSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
         

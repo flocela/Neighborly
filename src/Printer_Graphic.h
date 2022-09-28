@@ -137,7 +137,7 @@ private:
         _space_between_charts__px;
 
     // Diversity and Happiness charts use the same dot size and copy of the same color key
-    Letter _chart_key_letter{24, 20};
+    Letter _chart_key_letter{24, 12};
     int _min_unit_size__px = 6;
     
 
@@ -217,6 +217,17 @@ private:
     int _smallest_allowable_cell_size__px = 8; 
     int _cell_size;  // pixels for square cell
     int _house_size; // pixels for colored square house
+
+    PlotSizer _city_sizer{
+        _axis_format_X,
+        _axis_format_Y,
+        _chart_title_letter,
+        _chart_key_letter,
+        _min_unit_size__px,
+        _x_offset_multiplier,
+        _x_overrun_multiplier,
+        true
+    };
 
     std::unique_ptr<GrCityChart>  _city_chart;
 

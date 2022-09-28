@@ -53,8 +53,6 @@ class AxisLeftToRightT
 
         int calcRightMostPixelX ()
         {
-            std::cout << "px_per_unit, diff, startoffset, end offsetM: ";
-            std::cout << _px_per_unit << ", " << _diff << ", " << _start_offset_m << ", " << _end_offset_m << std::endl;
             return _x_cross__px + (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
         }
 

@@ -103,6 +103,50 @@ void PlotA::print (
     }
 }
 
+void PlotA::print (
+    std::unordered_map<Color, std::vector<Point>> pointsPerColor,
+    bool clear,
+    Renderer* renderer
+)
+{
+    (void) clear;
+    _x_axis.print(renderer);
+    _y_axis.print(renderer);
+
+    std::vector<SDL_Rect> rects{};
+    for (auto& pair : pointsPerColor)
+    {
+        Color color = pair.first;
+        std::vector<Point> points = pair.second;
+
+        std::vector<Coordinate> coordinates;
+        for (Point point : points)
+        {
+            int x = 
+            _cross_x__px +                                      
+            _unit_x__px *_start_offset_m +      
+            ( _unit_x__px * (point.x() - _min_x) ) - 
+            _dot__px/2;                               
+            
+            int y = 
+            _cross_y__px -
+            _unit_y__px * _start_offset_m -
+            ( _unit_y__px * (point.y() - _min_y)) -
+            _dot__px/2;
+
+            coordinates.push_back(Coordinate(x, y));
+        }
+
+        renderer->addBlocksByColor(
+            _dot__px,
+            _dot__px,
+            coordinates,
+            _the_color_rgba[color]
+        );
+    }
+
+}
+
 int PlotA::calcUnitSizeXPx ()
 {
     if (_x_space__px <= 0 || _y_space__px <= 0)
@@ -187,4 +231,6 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.setPxPerUnit(_unit_y__px);
     _y_axis.setTickThickness(tickThickness);
+    // TODO set x axis PxPerUnit.
+    // TODO set x axis tick thickness
 }
