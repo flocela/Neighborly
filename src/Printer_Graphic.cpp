@@ -111,33 +111,10 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
     int minYCoord, 
     int maxYCoord
 )
-{ 
-    int houseSize = unitSize/2;
-    houseSize =  ((unitSize - houseSize) % 2 == 0) ? houseSize : (houseSize + 1);
-
+{   (void)unitSize;
     std::set<Mood> moods{Mood::happy, Mood::unhappy};
-
-    GrCityChartSizer cityPrinterSizer = 
-        GrCityChartSizer (
-            _x_chart_space__px,
-            _city_y_space__px,
-            _axis_format_X,
-            _axis_format_Y,
-            _chart_title_letter,
-            minXCoord,
-            maxXCoord,
-            minYCoord,
-            maxYCoord,
-            houseSize,
-            unitSize,
-            _x_offset_multiplier,
-            _x_overrun_multiplier,
-            true,
-            _chart_key_letter
-        );
     
     return std::make_unique<GrCityChart>(
-        cityPrinterSizer,
         _coordinates_per_house,
         _colors,
         std::make_unique<TitleA>(
@@ -152,7 +129,7 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             _colors,
             moods),
         std::make_unique<PlotB>(
-            _city_sizer,
+            _city_plot_sizer,
             _colors, 
             moods, 
             0, 
@@ -165,7 +142,8 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             0),
         _left_right_borders__px,
         _city_map_chart_top_left_y_coord__px,
-        _x_chart_space__px
+        _x_chart_space__px,
+        _chart_y_space__px
     );
 }
 
@@ -303,7 +281,6 @@ void Printer_Graphic::print (
     _window_title->print(_renderer.get());
 
     _runs_chart->print(run, _renderer.get());
-
     _city_chart->print(residentPerHouse, _renderer.get());
 
     _dvsty_chart->print(

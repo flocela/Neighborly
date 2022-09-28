@@ -103,10 +103,10 @@ private:
 
     // At the start of the axis, leave a space of cell size or point size times offset.
     // At the end of the axis, leave a space of cell size or point size times overrun.
-    const int _x_offset_multiplier  = 1;
-    const int _x_overrun_multiplier = 1;
-    const int _y_offset_multiplier  = 1;
-    const int _y_overrun_multiplier = 1;
+    const int _x_offset_multiplier  = 2;
+    const int _x_overrun_multiplier = 2;
+    const int _y_offset_multiplier  = 2;
+    const int _y_overrun_multiplier = 2;
 
     // vertical space
     int _space_between_charts__px = 30;
@@ -218,7 +218,7 @@ private:
     int _cell_size;  // pixels for square cell
     int _house_size; // pixels for colored square house
 
-    PlotSizer _city_sizer{
+    PlotSizer _city_plot_sizer{
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,

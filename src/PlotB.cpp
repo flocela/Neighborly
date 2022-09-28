@@ -106,7 +106,7 @@ void PlotB::print (
     bool clear,
     Renderer* renderer
 )
-{   std::cout << "PlotB print" << std::endl;
+{   
     (void) clear;
     _x_axis.print(renderer);
     _y_axis.print(renderer);
@@ -134,8 +134,6 @@ void PlotB::print (
 
             coordinates.push_back(Coordinate(x, y));
         }
-
-        
 
         renderer->addBlocksByColor(
             _dot__px,

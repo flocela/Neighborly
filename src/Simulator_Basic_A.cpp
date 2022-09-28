@@ -150,10 +150,6 @@ const House* Simulator_Basic_A::getCurrHouse (Resident* res)
 Resident* Simulator_Basic_A::getCurrResident (const House* house)
 {
     Resident* currRes = _curr_house_to_res_map.at(house);
-    if (currRes == nullptr)
-    {
-        std::cout << "getCurrResident is returning a nullpointer" << std::endl;
-    }
     return currRes;
 }
 

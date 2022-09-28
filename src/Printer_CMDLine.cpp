@@ -15,6 +15,5 @@ void Printer_CMDLine::print(std::unordered_map<const House*, const Resident*> re
 {   
     (void)residentPerHouse;
     (void)run;
-    //std::cout << textHelper.createText(residentPerHouse, run);
 
 } 
