@@ -54,7 +54,6 @@ PlotA::PlotA (
         
     },
     _y_axis{
-        "",
         _a_format_y,
         _cross_x__px,
         _cross_y__px,

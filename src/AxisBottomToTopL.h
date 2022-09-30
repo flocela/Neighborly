@@ -10,11 +10,11 @@
 #include "AxisFormat.h"
 #include "TextRect.h"
 
+// Vertical axis, numbers run from bottom to top. Labels are on the left.
 class AxisBottomToTopL
 {
     public:
         AxisBottomToTopL (
-            std::string title,
             AxisFormat axisFormat,
             int x_coordinate__px, // where x and y axis meet
             int y_coordinate__px, // where x and y axis meet
@@ -26,20 +26,17 @@ class AxisBottomToTopL
             int endOffsetMultiplier
         );
 
-        // Renders axis from bottom to top, title is on left side (used for vertical axes).
         void print (Renderer* renderer);
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
         void setTickThickness (int tickThicknessPx) {_tick_thickness__px = tickThicknessPx;}
 
     private:
-        std::string _title;
         AxisFormat _axis_format;
         int _x_cross__px;
         int _y_cross__px;
         int _min_val;
         int _max_val;
-        int _diff;
         int _px_per_unit;
         int _tick_thickness__px;
         int _min_tick_spacing; // in units, not pixels

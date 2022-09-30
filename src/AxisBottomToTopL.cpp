@@ -2,7 +2,6 @@
 #include <iomanip>
 
 AxisBottomToTopL::AxisBottomToTopL (
-    std::string title,
     AxisFormat axisFormat,
     int x_coordinate__px, // where x and y axis meet
     int y_coordinate__px, // where x and y axis meet
@@ -12,13 +11,12 @@ AxisBottomToTopL::AxisBottomToTopL (
     int tickThickness,
     int startOffsetMultiplier,
     int endOffsetMultiplier
-) : _title{title},
+) : 
     _axis_format{axisFormat},
     _x_cross__px{x_coordinate__px},
     _y_cross__px{y_coordinate__px},
     _min_val{minVal},
     _max_val{maxVal},
-    _diff{_max_val - _min_val},
     _px_per_unit{pxPerUnit},
     _tick_thickness__px{tickThickness},
     _min_tick_spacing{calcMinTickSpacing(_px_per_unit)},
@@ -94,10 +92,11 @@ void AxisBottomToTopL::addTicksAndLabels (
         if (curVal % _maj_tick_spacing == 0)
         {
             majRect.y = curVal__px - (_tick_thickness__px/2);
-            rects.push_back(majRect);
-
+            
             curText.text = std::to_string(curVal);
             curText.yPixel = curVal__px;
+
+            rects.push_back(majRect);
             texts.push_back(curText);
         }
         else if (curVal % _min_tick_spacing == 0)
@@ -112,7 +111,8 @@ void AxisBottomToTopL::addTicksAndLabels (
 
 int AxisBottomToTopL::calcTopMostPixelY ()
 {
-    return _y_cross__px - (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
+    int diff = _max_val - _min_val;
+    return _y_cross__px - (_px_per_unit * (diff + _start_offset_m + _end_offset_m));
 }
 
 void AxisBottomToTopL::moveCrossHairs (int xPx, int yPx)
