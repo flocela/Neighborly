@@ -53,8 +53,6 @@ void AxisTopToBottomL::addVerticalLine (std::vector<SDL_Rect>& rects)
         calcBotMostPixelY() - _y_cross__px + 1
     };
 
-    std::cout <<"AxisTopToBottomL: " << rect.x << ", " << rect.y << ", " << rect.w << ", " << rect.h << std::endl;
-
     rects.push_back(rect);
 }
 
