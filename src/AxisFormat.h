@@ -16,6 +16,14 @@ class AxisFormat
         int majTickLengthPx () { return _maj_tick_length__px;}
         int minTickLengthPx () {return _min_tick_length__px;}
         int tickLengthInsideChart() {return _tick_length_inside_chart__px;}
+        int majTickLengthOutsideChart () 
+        {
+            return _maj_tick_length__px - _tick_length_inside_chart__px;
+        }
+        int minTickLengthOutsideChart () 
+        {
+            return _min_tick_length__px - _tick_length_inside_chart__px;
+        }
 
         int labelHeightPx () {return _label_letter_height;} // these are the numbers along the axis
         int labelLineSpacePx () {return _label_line_space__px;}

@@ -44,19 +44,15 @@ class AxisBottomToTopL
         int _tick_thickness__px;
         int _min_tick_spacing; // in units, not pixels
         int _maj_tick_spacing; // in units, not pixels
-        int _label_spacing;
         int _start_offset_m; // start offst multiplier; multiply by _px_per_unit
         int _end_offset_m; // start offst multiplier; multiply by _px_per_unit
+        int _text_spacer = 3;
 
         void addVerticalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
-        int calcTopMostPixelY ()
-        {
-            return _y_cross__px - (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
-        }
+        int calcTopMostPixelY ();
         int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 5; }
         int calcMajTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
-        int calcLabelSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
         
         
 };
