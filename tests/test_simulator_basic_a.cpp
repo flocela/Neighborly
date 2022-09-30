@@ -322,7 +322,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is 2.0")
     // Test originally unhappy residents didn't move more than 2 units.
     for (auto r2HSimZero :  unhappyResToHousMapSimZero)
     {
-        double distance = city.dist(
+        double distance = city.getDist(
             r2HSimZero.second,
             resToHouseMapSimOne[r2HSimZero.first]
         );

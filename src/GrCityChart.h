@@ -15,7 +15,6 @@
 #include "GrColorKeyPrinter.h"
 #include "Title.h"
 #include "Plot.h"
-#include "Chart.h"
 
 // Takes in a Renderer* and necessary settings to draw the city chart.
 // Remembers this initializing information so user can 

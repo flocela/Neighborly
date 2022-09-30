@@ -57,7 +57,7 @@ void Simulator_Basic_A::moveResidentIfUnhappy (Resident* res)
     double happiness = calculateHappinessValuesFor(res);
     if ( happiness < res->getHappinessGoal() )
     {   
-        std::set<const House*> readyHouses = _city->getNumberOfUnoccupiedNearHouses(
+        std::set<const House*> readyHouses = _city->getANumberOfUnoccupiedNearHouses(
             _curr_res_to_house_map.at(res),
             res->getAllowedMovementDistance(),
             _open_houses,
@@ -121,7 +121,7 @@ const House* Simulator_Basic_A::selectRandomWithinMovingDist (
     while (setOfHouses.size() > 0)
     {
         const House* randomHouse = selectRandom(setOfHouses);
-        if (_city->dist(origHouse->getAddress(), randomHouse->getAddress()) <= allowedMovement)
+        if (_city->getDist(origHouse->getAddress(), randomHouse->getAddress()) <= allowedMovement)
             return randomHouse;
         else
             setOfHouses.erase(randomHouse);

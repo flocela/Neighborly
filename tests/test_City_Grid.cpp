@@ -9,7 +9,7 @@
 TEST_CASE("getSize()")
 {
     City_Grid city = City_Grid(6);
-    REQUIRE( city.getSize() == 36 );
+    REQUIRE( city.getNumOfHouses() == 36 );
     REQUIRE( city.getHouses().size() == 36);
 }
 
@@ -19,7 +19,7 @@ TEST_CASE("dist()")
     std::vector<const House*> houses = city.getHouses();
     const int a1  = houses[1]->getAddress();
     const int a28 = houses[28]->getAddress();
-    REQUIRE( city.dist(a1, a28) == sqrt( (3 * 3) + (4 * 4) ) );
+    REQUIRE( city.getDist(a1, a28) == sqrt( (3 * 3) + (4 * 4) ) );
 }
 
 TEST_CASE("getAdjacentHouses() for corner house (3 neighbors) ")
@@ -114,7 +114,7 @@ TEST_CASE("getNumberOfUnoccupiedNearHouses() distance is 1")
 
     const House* house = houses[19];
     std::set<const House*> nearHouses = 
-        city.getNumberOfUnoccupiedNearHouses(house, 1.0, occupiedHouses, count);
+        city.getANumberOfUnoccupiedNearHouses(house, 1.0, occupiedHouses, count);
 
     std::set<const House*> actualNearHouses = {};
     actualNearHouses.insert(houses[13]);
@@ -129,13 +129,4 @@ TEST_CASE("getCoordinate() for a given address")
     REQUIRE(city.getCoordinate(0) == Coordinate(0,0));
     REQUIRE(city.getCoordinate(1) == Coordinate(0,1));
     REQUIRE(city.getCoordinate(27) == Coordinate(4,3));
-}
-
-TEST_CASE("equals()")
-{
-    City_Grid a = City_Grid(6);
-    City_Grid b = City_Grid(6);
-    City_Grid c = City_Grid(7);
-    REQUIRE (a.equals(b));
-    REQUIRE (!a.equals(c));
 }

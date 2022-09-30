@@ -15,12 +15,12 @@ class City
         virtual ~City() = default;
 
         // Returns the number of addresses.
-        virtual int getSize() const = 0;
+        virtual int getNumOfHouses() const = 0;
 
         // Returns all the houses in the city.
         virtual std::vector<const House*> getHouses () const = 0;
 
-        virtual double dist (
+        virtual double getDist (
             const int& from_address, 
             const int& to_address
         ) const = 0;
@@ -39,11 +39,11 @@ class City
         // May return less than @count houses because there are not
         // @count number of houses that are unoccupied and within @distance.
         // @house not included in returned set.
-        virtual std::set<const House*> getNumberOfUnoccupiedNearHouses (
+        virtual std::set<const House*> getANumberOfUnoccupiedNearHouses (
             const House* house,
             double distance,
             std::set<const House*> occupied,
-            int count
+            size_t count
         ) const = 0;
 
         // Returns coordinate of house (x, y).

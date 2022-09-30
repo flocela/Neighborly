@@ -15,66 +15,69 @@ City_Grid::City_Grid (int width):
   		for (int jj=0; jj<width; ++jj)
         { 
 		  int addr = (ii*width) + jj;
-          _houses.push_back(std::make_unique<House>(addr));
-		  _addrToHouseMap[addr] = (_houses[addr]).get();
+          _houses.emplace_back(std::make_unique<House>(addr));
+		  _house_per_address[addr] = (_houses[addr]).get();
         }
   	}
 }
 
-int City_Grid::getSize() const
+int City_Grid::getNumOfHouses() const
 {
 	return _houses.size();
 }
 
 std::vector<const House*> City_Grid::getHouses () const
 {	std::vector<const House*> houses;
-	for (auto& house : _houses) // TODO maybe const auto&
+	for (auto& house : _houses)
 	{	
 		houses.push_back(house.get());
 	}
 	return houses;
 }
 
-double City_Grid::dist (const int& fromAddress, const int& toAddress) const
+double City_Grid::getDist (const int& fromAddress, const int& toAddress) const
 {
 	double x_dist = fabs( get_x(fromAddress) - get_x(toAddress) );
-	double y_dist = fabs( get_y(fromAddress) - get_y(toAddress));
+	double y_dist = fabs( get_y(fromAddress) - get_y(toAddress) );
   	return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
 }
 
 std::set<const House*> City_Grid::getAdjacentHouses (const House* house) const
 {
+	int largestAddress = getNumOfHouses() - 1;
 	int address = house->getAddress();
-	int x = get_x(address);
-	int y = get_y(address);
-	int lastIdx_x = _width - 1;
-	int lastIdx_y = _width - 1;
 	
 	std::set<const House*> adjacentHouses = {};
-	if (x != 0)
+
+	int topLeft = address - _width - 1;
+
+	for (int ii=0; ii<=2; ++ii)
 	{
-		adjacentHouses.insert(_addrToHouseMap.at(address - _width));
-		if (y != 0)
-			adjacentHouses.insert(_addrToHouseMap.at(address - _width - 1));
-		if (y != lastIdx_y)
-			adjacentHouses.insert(_addrToHouseMap.at(address - _width + 1));
+		// add neighbors from row above.
+		int neighbor = topLeft + ii;
+		if (neighbor >= 0 && neighbor <= largestAddress)
+		{
+			adjacentHouses.insert(_houses[neighbor].get());
+		}
+
+		// add neighbors from left and right
+		neighbor = topLeft + _width + ii;
+		if (neighbor >= 0 && neighbor <= largestAddress && neighbor != address)
+		{
+			adjacentHouses.insert(_houses[neighbor].get());
+		}
+
+		// add neighbors from row below.
+		neighbor = topLeft + 2 * _width + ii;
+		if (neighbor >= 0 && neighbor <= largestAddress)
+		{
+			adjacentHouses.insert(_houses[neighbor].get());
+		}
 	}
-	if (x != lastIdx_x)
-	{
-		adjacentHouses.insert(_addrToHouseMap.at(address + _width));
-		if (y != 0)
-			adjacentHouses.insert(_addrToHouseMap.at(address + _width - 1));
-		if (y != lastIdx_y)
-			adjacentHouses.insert(_addrToHouseMap.at(address + _width + 1));
-	}
-	if (y != 0)
-		adjacentHouses.insert(_addrToHouseMap.at(address - 1));
-	if (y != lastIdx_y)
-		adjacentHouses.insert(_addrToHouseMap.at(address + 1));
+
+
 	return adjacentHouses;
 }
-
-
 
 std::set<House*> City_Grid::getHousesWithinDistance (
 	const House* house, 
@@ -82,14 +85,16 @@ std::set<House*> City_Grid::getHousesWithinDistance (
 ) const
 { 
 	std::set<House*> nearHouses;
-
-	// create box area around @house. Width and height are 2 x allowableDist
+	// create a box area around @house, and only check houses inside box.
+	// box area's width and height are 2 x allowableDist rounded up,
 	// and @house is at center.
 	int origAddress = house->getAddress();
-	int minX = getMinXLine(get_x(origAddress), allowableDist);
-	int maxX = getMaxXLine(get_x(origAddress), allowableDist);
-	int minY = getMinYLine(get_y(origAddress), allowableDist);
-	int maxY = getMaxYLine(get_y(origAddress), allowableDist);
+	int origX = get_x(origAddress);
+	int origY = get_y(origAddress);
+	int minX = std::max(origX - (int)std::ceil(allowableDist), _minX);
+	int maxX = std::min(origX + (int)std::ceil(allowableDist), _maxX);
+	int minY = std::max(origY - (int)std::ceil(allowableDist), _minY);
+	int maxY = std::min(origY + (int)std::ceil(allowableDist), _maxY);
 	
 	int topLeftAddress = minX * _width + minY;
 	int yDiff = maxY - minY;
@@ -99,9 +104,9 @@ std::set<House*> City_Grid::getHousesWithinDistance (
 		{	
 			int otherAddress = ii + jj;
 			if ( otherAddress != origAddress && 
-				 dist(origAddress, otherAddress) <= allowableDist )
+				 getDist(origAddress, otherAddress) <= allowableDist )
 			{
-				nearHouses.insert(_addrToHouseMap.at(otherAddress));
+				nearHouses.insert(_house_per_address.at(otherAddress));
 			}
 		}
 	}
@@ -114,11 +119,15 @@ std::set<House*> City_Grid::getHousesWithinBoxedDistance (
 ) const
 {
 	std::set<House*> boxedHouses;
+
 	int origAddress = house->getAddress();
-	int minX = getMinXLine(get_x(origAddress), allowableDist);
-	int maxX = getMaxXLine(get_x(origAddress), allowableDist);
-	int minY = getMinYLine(get_y(origAddress), allowableDist);
-	int maxY = getMaxYLine(get_y(origAddress), allowableDist);
+	int origX = get_x(origAddress);
+	int origY = get_y(origAddress);
+	int minX = std::max(origX - (int)(allowableDist), _minX);
+	int maxX = std::min(origX + (int)(allowableDist), _maxX);
+	int minY = std::max(origY - (int)(allowableDist), _minY);
+	int maxY = std::min(origY + (int)(allowableDist), _maxY);
+
 	int topLeftAddress = minX * _width + minY;
 	int yDiff = maxY - minY;
 	for (int ii=topLeftAddress; ii<=maxX*_width; ii+=_width)
@@ -135,11 +144,11 @@ std::set<House*> City_Grid::getHousesWithinBoxedDistance (
 	return boxedHouses;
 }
 
-std::set<const House*> City_Grid::getNumberOfUnoccupiedNearHouses (
+std::set<const House*> City_Grid::getANumberOfUnoccupiedNearHouses (
 	const House* origHouse,
 	double allowableDistance,
 	std::set<const House*> notOccupied,
-	int count
+	size_t count
 ) const
 {	
 	std::set<const House*> returnedHouses;
@@ -147,61 +156,37 @@ std::set<const House*> City_Grid::getNumberOfUnoccupiedNearHouses (
 	if (count == 0)
 		return returnedHouses;
 	
-	// First possibleHouses consists of houses within a boxed distance from
-	// @origHouse.
-	std::set<House*> possibleHouses = getHousesWithinBoxedDistance (
+	// closeHouses consists of houses within a boxed distance from
+	// @origHouse. They may or may not be occupied.
+	std::set<House*> closeHouses = getHousesWithinBoxedDistance (
 		origHouse,
-		allowableDistance
+		(int)std::ceil(allowableDistance)
 	);
 
-	int tries = 0;
-	while (true)
+	std::set<House*> unoccupiedAndCloseHouses;
+	for (House* house : closeHouses)
 	{
-		if ( (int)returnedHouses.size() == count || possibleHouses.empty() )
-			return returnedHouses;
-		
-		// If we're not getting an unoccupied house within the allowable distance 
-		// about a quarter of the time, then most boxed houses are occupied or
-		// are not within the allowable distance. 
-		// Break, then remove occupied houses and houses farther than allowable distance
-		// from boxedHouses, then continue.
-		int houseAddress = origHouse->getAddress();
-		if ( tries/4 > (int)returnedHouses.size() && tries > 5 )
+		if (notOccupied.find(house) != notOccupied.end())
 		{
-			break;
+			unoccupiedAndCloseHouses.insert(house);
 		}
-		House* currHouse = selectRandom(possibleHouses);
-		if ( notOccupied.count(currHouse) > 0 &&
-			 dist(currHouse->getAddress(), houseAddress) <= allowableDistance )
-		{
-			returnedHouses.insert(currHouse);
-			possibleHouses.erase(currHouse);
-		}
-		++tries;
 	}
 
-	// This is a continuation from the break caused by not selecting unoccupied houses
-	// with allowable distance often enough. Go through possibleHouses and remove
-	// occupied houses and houses farther than allowable distance from origHouse.
-	std::set<House*> decreasedPossibleHouses;
-	int origHouseAddress = origHouse->getAddress();
-	for ( House* boxedHouse : possibleHouses )
+	while (true)
 	{
-		if ( notOccupied.count(boxedHouse) > 0 &&
-			 dist(boxedHouse->getAddress(), origHouseAddress) <= allowableDistance )
+		if (returnedHouses.size() >= count || unoccupiedAndCloseHouses.empty())
 		{
-			decreasedPossibleHouses.insert(boxedHouse);
-		}
-	}
-	possibleHouses = decreasedPossibleHouses;
-	while (true) // TODO these while(trues) seem unsafe. 
-	{
-		if ( (int)returnedHouses.size() == count || possibleHouses.empty() )
 			return returnedHouses;
-		House* currHouse = selectRandom(possibleHouses);
-		returnedHouses.insert(currHouse);
-		possibleHouses.erase(currHouse);
-	} // TODO why is this while loop at the end? Doesn't contribute to returned houses???
+		}
+
+		House* currHouse = selectRandom(unoccupiedAndCloseHouses);
+		if (getDist(currHouse->getAddress(), origHouse->getAddress()) <= allowableDistance)
+		{
+			returnedHouses.insert(currHouse);
+		}
+		unoccupiedAndCloseHouses.erase(currHouse);
+	}
+
 }
 
 int City_Grid::get_x (const int& address) const
@@ -215,43 +200,11 @@ int City_Grid::get_y (const int& address) const
 	return (address%_width);
 }
 
-
-
-// TODO is this ever used.
-bool City_Grid::equals (const City_Grid& other) const{
-  	if ( other._houses.size() == this->_houses.size() )
-      return true;
-	return false;
-}
-
 Coordinate City_Grid::getCoordinate(const int& address) const
 {
 	return Coordinate{get_x(address), get_y(address)};
 }
 
-int City_Grid::getMinXLine (int origX, int allowableDist) const
-{
-	int calculatedMinX = origX - std::floor(allowableDist);
-	return calculatedMinX < _minX ? _minX : calculatedMinX;
-}
-
-int City_Grid::getMaxXLine (int origX, int allowableDist) const
-{
-	int calculatedMaxX = origX + std::floor(allowableDist);
-	return calculatedMaxX > _maxX ? _maxX : calculatedMaxX;
-}
-
-int City_Grid::getMinYLine (int origY, int allowableDist) const
-{
-	int calculatedMinY = origY - std::floor(allowableDist);
-	return calculatedMinY < _minY ? _minY : calculatedMinY;
-}
-
-int City_Grid::getMaxYLine (int origY, int allowableDist) const
-{
-	int calculatedMaxY = origY + std::floor(allowableDist);
-	return calculatedMaxY > _maxY ? _maxY : calculatedMaxY;
-}
 
 House* City_Grid::selectRandom (std::set<House*>& setOfHouses) const
 {
@@ -266,10 +219,10 @@ std::unordered_map<const House*, Coordinate> City_Grid::getCoordinatesPerHouse()
 {
 	
 	std::unordered_map<const House*, Coordinate> coordinatesPerHouse{};
-	for (auto& pair : _addrToHouseMap)
+	for (auto& pair : _house_per_address)
 	{
 		Coordinate coord = getCoordinate(pair.first);
-		coordinatesPerHouse.emplace(std::pair{pair.second, coord});
+		coordinatesPerHouse.emplace(std::pair<House*, Coordinate>{pair.second, coord});
 	}
 	return coordinatesPerHouse;
 }
