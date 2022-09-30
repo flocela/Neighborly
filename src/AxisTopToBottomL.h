@@ -14,7 +14,6 @@ class AxisTopToBottomL
 {
     public:
         AxisTopToBottomL (
-            std::string title,
             AxisFormat axisFormat,
             int x_coordinate__px, // where x and y axis meet
             int y_coordinate__px, // where x and y axis meet
@@ -33,7 +32,6 @@ class AxisTopToBottomL
         void setTickThickness (int tickThicknessPx) {_tick_thickness__px = tickThicknessPx;}
 
     private:
-        std::string _title;
         AxisFormat _axis_format;
         int _x_cross__px;
         int _y_cross__px;
@@ -44,19 +42,14 @@ class AxisTopToBottomL
         int _tick_thickness__px;
         int _min_tick_spacing; // in units, not pixels
         int _maj_tick_spacing; // in units, not pixels
-        int _label_spacing;
         int _start_offset_m; // start offst multiplier; multiply by _px_per_unit
         int _end_offset_m; // start offst multiplier; multiply by _px_per_unit
 
         void addVerticalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
-        int calcBotMostPixelY ()
-        {
-            return _y_cross__px + (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
-        }
+        int calcBotMostPixelY ();
         int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 5; }
         int calcMajTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
-        int calcLabelSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
         
         
 };

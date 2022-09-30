@@ -41,7 +41,6 @@ PlotA::PlotA (
     _tick_spacing_maj_x{(_unit_x__px > 10)? 5 : 10},
     _tick_spacing_maj_y{(_unit_y__px > 10)? 5 : 10},
     _x_axis{
-        "",
         _a_format_x,
         _cross_x__px,
         _cross_y__px,

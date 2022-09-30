@@ -65,8 +65,8 @@ void AxisBottomToTopL::addTicksAndLabels (
 
     TextRect curText{
         majTickXPx - _text_spacer,
-        minYPx,
-        std::to_string(_min_val),
+        curVal__px,
+        std::to_string(curVal),
         3
     };
 

@@ -1,7 +1,6 @@
 #include "AxisLeftToRightT.h"
 
 AxisLeftToRightT::AxisLeftToRightT (
-    std::string title,
     AxisFormat axisFormat,
     int xCrossPx,
     int yCrossPx,
@@ -11,7 +10,7 @@ AxisLeftToRightT::AxisLeftToRightT (
     int tickThickness,
     int startOffsetMultiplier,
     int endOffsetMultiplier
-) : _title{title},
+) :
     _axis_format{axisFormat},
     _x_cross__px{xCrossPx},
     _y_cross__px{yCrossPx},

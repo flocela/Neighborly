@@ -1,13 +1,8 @@
 #ifndef AXIS_LEFT_TO_RIGHT_B__H
 #define AXIS_LEFT_TO_RIGHT_B__H
 
-#include <string>
-#include "SDL.h"
 #include "renderer.h"
-#include "Coordinate.h"
-#include "PixelConverter.h"
 #include "AxisFormat.h"
-#include <memory>
 #include "TextRect.h"
 
 
@@ -15,7 +10,6 @@ class AxisLeftToRightB
 {
     public:
         AxisLeftToRightB (
-            std::string title,
             AxisFormat axisFormat,
             int xCrossPx, // where x and y axis meet
             int yCrossPx, // where x and y axis meet
@@ -33,32 +27,25 @@ class AxisLeftToRightB
         void setTickThickness (int tickThicknessPx) {_tick_thickness__px = tickThicknessPx;}
     
     private:
-        std::string _title;
         AxisFormat _axis_format;
         int _x_cross__px;
         int _y_cross__px;
         int _min_val;
         int _max_val;
-        int _diff;
         int _px_per_unit;
         int _tick_thickness__px;
         int _min_tick_spacing;
         int _maj_tick_spacing;
-        int _label_spacing;
         int _start_offset_m;
         int _end_offset_m;
 
         void addHorizontalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
 
-        int calcRightMostPixelX ()
-        {
-             return _x_cross__px + (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
-        }
+        int calcRightMostPixelX ();
 
         int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 5; }
         int calcMajTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
-        int calcLabelSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
         
 };
 

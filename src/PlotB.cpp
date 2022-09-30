@@ -38,7 +38,6 @@ PlotB::PlotB (
     _cross_x__px{ calcCrossXPx(topLeftXPx) }, 
     _cross_y__px{ calcCrossYPx(topLeftYPx) },
     _x_axis{
-        "",
         _a_format_x,
         _cross_x__px,
         _cross_y__px,
@@ -51,7 +50,6 @@ PlotB::PlotB (
         
     },
     _y_axis{
-        "",
         _a_format_y,
         _cross_x__px,
         _cross_y__px,

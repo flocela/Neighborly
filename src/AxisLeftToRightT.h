@@ -15,7 +15,6 @@ class AxisLeftToRightT
 {
     public:
         AxisLeftToRightT (
-            std::string title,
             AxisFormat axisFormat,
             int xCrossPx, // where x and y axis meet
             int yCrossPx, // where x and y axis meet
