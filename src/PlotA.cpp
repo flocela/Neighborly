@@ -153,7 +153,7 @@ int PlotA::calcUnitSizeXPx ()
         return _min_unit__px;
     }
 
-    int allowableXAxisLengthPx = _x_space__px - _a_format_y.getAxisHeightPx();
+    int allowableXAxisLengthPx = _x_space__px - _a_format_y.getAxisSizePx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX; // TODO dividing by zero is dangerous
 
@@ -167,7 +167,7 @@ int PlotA::calcUnitSizeYPx ()
         return _min_unit__px;
     }
 
-    int allowableYAxisLengthPx = _y_space__px - _a_format_x.getAxisHeightPx();
+    int allowableYAxisLengthPx = _y_space__px - _a_format_x.getAxisSizePx();
 
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
 
@@ -193,7 +193,7 @@ int PlotA::calcDotSizePx ()
 int PlotA::calcCrossXPx (int topLeftXPx)
 {
     int xAxisLength = 
-        (_unit_x__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _a_format_y.getAxisHeightPx();
+        (_unit_x__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _a_format_y.getAxisSizePx();
 
     return topLeftXPx + (int)(0.5 * ( _x_space__px - xAxisLength ));
 }

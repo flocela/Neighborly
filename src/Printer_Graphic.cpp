@@ -6,8 +6,6 @@
 #include <thread>
 #include <chrono>
 #include <iostream>
-#include "XAxisL2RTop.h"
-#include "YAxisT2B.h"
 #include "PlotA.h"
 #include "PlotB.h"
 
@@ -157,7 +155,7 @@ int Printer_Graphic::cityChartCalculatePxPerUnit(
     // start and end offsets are the offset_multiplier times the dot_size__px.
     // approximate the start and end offsets as offset_multiplier times the cellSize.
 
-    int allowableXAxisLengthPx = _x_chart_space__px - _axis_format_Y.getAxisHeightPx();
+    int allowableXAxisLengthPx = _x_chart_space__px - _axis_format_Y.getAxisSizePx();
     int numOfCellsX = 
         (maxXCoord - minXCoord) +
         _x_offset_multiplier + // TODO this is a multiplier not an offset
@@ -168,7 +166,7 @@ int Printer_Graphic::cityChartCalculatePxPerUnit(
         _city_y_space__px -
         _chart_title_letter.getHeightIncLSpace() -
         _chart_key_letter.getHeightIncLSpace() - 
-        _axis_format_Y.getAxisHeightPx();
+        _axis_format_Y.getAxisSizePx();
 
     int numOfCellsY = 
         (maxYCoord - minYCoord) +

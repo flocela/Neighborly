@@ -32,7 +32,7 @@ public:
 
     AxisFormat axisFormatX () { return _a_format_x; }
     AxisFormat axisFormatY () { return _a_format_y; }
-    int axisFormatYHeight () { return _a_format_y.getAxisHeightPx();}
+    int axisFormatYHeight () { return _a_format_y.getAxisSizePx();}
     Letter titleLetter () { return _title_letter; }
     int titleHeight () { return _title_letter.getHeightIncLSpace();}
     int keyLetterHeightInclSpace () { return _key_letter.getHeightIncLSpace();}

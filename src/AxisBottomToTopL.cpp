@@ -1,5 +1,4 @@
 #include "AxisBottomToTopL.h"
-#include <iomanip>
 
 AxisBottomToTopL::AxisBottomToTopL (
     AxisFormat axisFormat,

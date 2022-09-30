@@ -7,8 +7,6 @@
 #include "Resident.h"
 #include <vector>
 #include "House.h"
-#include "XAxisL2RTop.h"
-#include "YAxisT2B.h"
 #include <memory>
 #include "PixelConverter.h"
 #include "AxisFormat.h"

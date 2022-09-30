@@ -1,12 +1,8 @@
 #ifndef AXIS_BOTTOM_TO_TOP_L_H
 #define AXIS_BOTTOM_TO_TOP_L_H
 
-#include <string>
-#include <memory>
-#include "SDL.h"
 #include "renderer.h"
-#include "Coordinate.h"
-#include "PixelConverter.h"
+#include "SDL.h"
 #include "AxisFormat.h"
 #include "TextRect.h"
 

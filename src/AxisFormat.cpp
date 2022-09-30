@@ -1,7 +1,6 @@
 #include "AxisFormat.h"
-#include <iostream>
 
-int AxisFormat::getAxisHeightPx ()
+int AxisFormat::getAxisSizePx ()
 {
     return _label_letter_height +
            _label_line_space__px +
@@ -11,14 +10,7 @@ int AxisFormat::getAxisHeightPx ()
 
 void AxisFormat::setMajTickLengthPx (int length)
 { 
-    if (length < 1)
-    {
-        throw std::invalid_argument("maj tick length must be at least 1.");
-    }
-    else
-    {
-        _axis_thickness__px = length;
-    } 
+    _axis_thickness__px = length;
 }
 
 void AxisFormat::setMinTickLengthPx (int length)
