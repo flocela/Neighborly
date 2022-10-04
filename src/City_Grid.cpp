@@ -1,15 +1,18 @@
 #include "City_Grid.h"
 #include <iostream>
 #include <math.h>
+#include <chrono>
+#include <ctime>
 
-
+// This class has to be tested.
 City_Grid::City_Grid (int width):
 	City(),
 	_width{width},
-	_maxX{_width },
-	_maxY{_width }
+	_maxX{_width - 1 },
+	_maxY{_width  - 1}
 {	
 	_houses.reserve(_width * _width);
+	std::cout << "width: " << _width << std::endl;
   	for (int ii=0; ii<width; ++ii)
   	{
   		for (int jj=0; jj<width; ++jj)
@@ -75,15 +78,16 @@ std::set<const House*> City_Grid::getAdjacentHouses (const House* house) const
 		}
 	}
 
-
 	return adjacentHouses;
 }
 
+// TODO, this method needs to be properly tested.
+// Does not include @house in returned set.
 std::set<House*> City_Grid::getHousesWithinDistance (
 	const House* house, 
 	double allowableDist
 ) const
-{ 
+{ 	auto start = std::chrono::system_clock::now();
 	std::set<House*> nearHouses;
 	// create a box area around @house, and only check houses inside box.
 	// box area's width and height are 2 x allowableDist rounded up,
@@ -95,53 +99,84 @@ std::set<House*> City_Grid::getHousesWithinDistance (
 	int maxX = std::min(origX + (int)std::ceil(allowableDist), _maxX);
 	int minY = std::max(origY - (int)std::ceil(allowableDist), _minY);
 	int maxY = std::min(origY + (int)std::ceil(allowableDist), _maxY);
-	
-	int topLeftAddress = minX * _width + minY;
-	int yDiff = maxY - minY;
-	for (int ii=topLeftAddress; ii<=maxX*_width; ii+=_width)
+
+	// y values less than and equal to origY
+	int yy = minY;
+	for (; yy<=origY; ++yy)
 	{	
-		for (int jj=0; jj<=yDiff; jj++)
-		{	
-			int otherAddress = ii + jj;
-			if ( otherAddress != origAddress && 
-				 getDist(origAddress, otherAddress) <= allowableDist )
-			{
-				nearHouses.insert(_house_per_address.at(otherAddress));
-			}
+		// above origAddress
+		int curAddress = (yy*_width + origX);
+
+		if ( getDist(origAddress, curAddress) <= allowableDist )
+			break;
+	} 
+	int curLeftX = origX;
+	int curRightX = origX;
+	for (; yy<=origY; ++yy)
+	{
+
+		int curLeftAddress = (yy*_width + curLeftX);
+		while ( curLeftX-1 >= minX && getDist(origAddress, curLeftAddress -1) <= allowableDist )
+		{
+			curLeftX--;
+			curLeftAddress = (yy*_width) + curLeftX;
+		}
+
+		int curRightAddress = (yy*_width) + curRightX;
+		while ( curRightX + 1 <= maxX && getDist(origAddress, curRightAddress + 1) <= allowableDist )
+		{
+			curRightX++;
+			curRightAddress = (yy*_width + curRightX);
+		}
+		for (int xx=curLeftX; xx<=curRightX; ++xx)
+		{
+			int address = (yy * _width) + xx;
+			nearHouses.insert(_house_per_address.at(address));
 		}
 	}
+	// y values greater than origY
+	yy = maxY;
+	for (; yy>origY; --yy)
+	{
+		// below origAddress
+		int curAddress = (yy*_width + origX);
+		if (getDist(origAddress, curAddress) <= allowableDist)
+		{
+			break;
+		}
+	}
+
+	curLeftX = origX;
+	curRightX = origX;
+	for (; yy>origY; --yy)
+	{
+		int curLeftAddress = (yy*_width + curLeftX);
+		while (curLeftX-1 >= minX && getDist(origAddress, curLeftAddress - 1) <= allowableDist)
+		{
+			curLeftX--;
+			curLeftAddress = (yy*_width) + curLeftX;
+		}
+		int curRightAddress = (yy*_width) + curRightX;
+		while ( curRightX+1 <= maxX && getDist(origAddress, curRightAddress+1) <= allowableDist )
+		{
+			curRightX++;
+			curRightAddress = (yy*_width) + curRightX;
+		}
+
+		for (int xx=curLeftX; xx<=curRightX; ++xx)
+		{	
+			int address = (yy * _width) + xx;
+			nearHouses.insert(_house_per_address.at(address));
+		}
+	}
+
+	auto end = std::chrono::system_clock::now();
+
+	std::chrono::duration<double> elapsed_sec = end - start;
+
+	std::cout << "elapsed time: " << elapsed_sec.count() << "s" << std::endl;
+
 	return nearHouses;
-}
-
-std::set<House*> City_Grid::getHousesWithinBoxedDistance (
-            const House* house,
-            double allowableDist
-) const
-{
-	std::set<House*> boxedHouses;
-
-	int origAddress = house->getAddress();
-	int origX = get_x(origAddress);
-	int origY = get_y(origAddress);
-	int minX = std::max(origX - (int)(allowableDist), _minX);
-	int maxX = std::min(origX + (int)(allowableDist), _maxX);
-	int minY = std::max(origY - (int)(allowableDist), _minY);
-	int maxY = std::min(origY + (int)(allowableDist), _maxY);
-
-	int topLeftAddress = minX * _width + minY;
-	int yDiff = maxY - minY;
-	for (int ii=topLeftAddress; ii<=maxX*_width; ii+=_width)
-	{	
-		for (int jj=0; jj<=yDiff; jj++)
-		{	
-			int otherAddress = ii + jj;
-			if ( otherAddress != origAddress )
-			{
-				boxedHouses.insert(_houses[otherAddress].get());
-			}
-		}
-	}
-	return boxedHouses;
 }
 
 std::set<const House*> City_Grid::getANumberOfUnoccupiedNearHouses (
@@ -156,11 +191,9 @@ std::set<const House*> City_Grid::getANumberOfUnoccupiedNearHouses (
 	if (count == 0)
 		return returnedHouses;
 	
-	// closeHouses consists of houses within a boxed distance from
-	// @origHouse. They may or may not be occupied.
-	std::set<House*> closeHouses = getHousesWithinBoxedDistance (
+	std::set<House*> closeHouses = getHousesWithinDistance (
 		origHouse,
-		(int)std::ceil(allowableDistance)
+		allowableDistance
 	);
 
 	std::set<House*> unoccupiedAndCloseHouses;
@@ -180,10 +213,7 @@ std::set<const House*> City_Grid::getANumberOfUnoccupiedNearHouses (
 		}
 
 		House* currHouse = selectRandom(unoccupiedAndCloseHouses);
-		if (getDist(currHouse->getAddress(), origHouse->getAddress()) <= allowableDistance)
-		{
-			returnedHouses.insert(currHouse);
-		}
+		returnedHouses.insert(currHouse);
 		unoccupiedAndCloseHouses.erase(currHouse);
 	}
 

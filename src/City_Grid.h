@@ -69,13 +69,6 @@ private:
     //TODO try to use _within_dist_map
     std::map<std::pair<int, double>, std::vector<int>> _within_dist_map;
 
-    // Returns houses that are within a boxed area around @house.
-    // Width and height of box are 2 x allowableDist. @house is at center.
-    std::set<House*> getHousesWithinBoxedDistance (
-        const House* house,
-        double allowableDist
-    ) const;
-
     // Returns a random house from @setOfHouses.
     House* selectRandom (std::set<House*>& setOfHouses) const;
     
