@@ -1,5 +1,7 @@
 #include "Simulator_Basic_A.h"
 #include <iostream>
+#include <chrono>
+#include <ctime>
 
 Simulator_Basic_A::Simulator_Basic_A (City* city, std::set<Resident*> residents):
     _city{city}, _residents{residents}
@@ -31,11 +33,15 @@ std::unordered_map<const House*, Resident*> Simulator_Basic_A::simulate ()
             }
         } 
     }
-
+    auto start = std::chrono::system_clock::now();
+	
     for (Resident* res : _residents)
     {   
         moveResidentIfUnhappy(res);
     }
+    auto end = std::chrono::system_clock::now();
+	std::chrono::duration<double> elapsed_sec = end - start;
+	std::cout << "elapsed time: " << elapsed_sec.count() << "s" << std::endl;
     calculateHappinessValuesForAllResidents();
     return _curr_house_to_res_map;
 }

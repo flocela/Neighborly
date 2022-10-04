@@ -1,8 +1,6 @@
 #include "City_Grid.h"
 #include <iostream>
 #include <math.h>
-#include <chrono>
-#include <ctime>
 
 // This class has to be tested.
 City_Grid::City_Grid (int width):
@@ -83,15 +81,12 @@ std::set<const House*> City_Grid::getAdjacentHouses (const House* house) const
 
 // TODO, this method needs to be properly tested.
 // Does not include @house in returned set.
+// TODO what if allowableDist == 0?
 std::set<House*> City_Grid::getHousesWithinDistance (
 	const House* house, 
 	double allowableDist
 ) const
-{ 	auto start = std::chrono::system_clock::now();
-	std::set<House*> nearHouses;
-	// create a box area around @house, and only check houses inside box.
-	// box area's width and height are 2 x allowableDist rounded up,
-	// and @house is at center.
+{ 	std::set<House*> nearHouses;
 	int origAddress = house->getAddress();
 	int origX = get_x(origAddress);
 	int origY = get_y(origAddress);
@@ -100,7 +95,8 @@ std::set<House*> City_Grid::getHousesWithinDistance (
 	int minY = std::max(origY - (int)std::ceil(allowableDist), _minY);
 	int maxY = std::min(origY + (int)std::ceil(allowableDist), _maxY);
 
-	// y values less than and equal to origY
+	// houses within allowableDistance trace out a circle. 
+	// find houses within allowableDistance above or equal original house.
 	int yy = minY;
 	for (; yy<=origY; ++yy)
 	{	
@@ -134,11 +130,10 @@ std::set<House*> City_Grid::getHousesWithinDistance (
 			nearHouses.insert(_house_per_address.at(address));
 		}
 	}
-	// y values greater than origY
+	// find houses within allowableDistance below original house
 	yy = maxY;
 	for (; yy>origY; --yy)
 	{
-		// below origAddress
 		int curAddress = (yy*_width + origX);
 		if (getDist(origAddress, curAddress) <= allowableDist)
 		{
@@ -169,12 +164,6 @@ std::set<House*> City_Grid::getHousesWithinDistance (
 			nearHouses.insert(_house_per_address.at(address));
 		}
 	}
-
-	auto end = std::chrono::system_clock::now();
-
-	std::chrono::duration<double> elapsed_sec = end - start;
-
-	std::cout << "elapsed time: " << elapsed_sec.count() << "s" << std::endl;
 
 	return nearHouses;
 }
@@ -221,13 +210,13 @@ std::set<const House*> City_Grid::getANumberOfUnoccupiedNearHouses (
 
 int City_Grid::get_x (const int& address) const
 {
-	return (address/_width);
+	return (address%_width);
 
 }
 
 int City_Grid::get_y (const int& address) const
 {
-	return (address%_width);
+	return (address/_width);
 }
 
 Coordinate City_Grid::getCoordinate(const int& address) const
