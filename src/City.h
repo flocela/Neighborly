@@ -25,7 +25,7 @@ class City
             const int& to_address
         ) const = 0;
 
-        // Returns all houses considered to be adjacent by city.
+        // Returns all houses adjacent to house.
         virtual std::set<const House*> getAdjacentHouses (const House* house) const = 0;
 
         // Returns all houses within distance except for @house.

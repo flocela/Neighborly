@@ -57,11 +57,7 @@ private:
     int _minY = 0;
     int _maxX;
     int _maxY;
-
-    // Houses are in order. [0, 1, 2, 3, 4, 5, 6, 7, 8] for a grid
-    // 0  1  2
-    // 3  4  5
-    // 6  7  8
+    
     std::vector<std::unique_ptr<House>> _houses;
 
     std::map<int, House*> _house_per_address;

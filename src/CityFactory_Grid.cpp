@@ -2,6 +2,7 @@
 
 #include "City_Grid.h"
 
+// TODO CityFactory_Grid is not checked
 std::unique_ptr<City> CityFactory_Grid::createCity (
     UI& ui,
     int deltaX, 

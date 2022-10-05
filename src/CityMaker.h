@@ -6,6 +6,7 @@
 #include "City.h"
 #include "CityFactory.h"
 
+// TODO CityMaker.h not checked
 class CityMaker
 {
     public:

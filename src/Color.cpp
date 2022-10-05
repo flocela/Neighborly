@@ -1,7 +1,7 @@
 
 #include "Color.h"
 
-
+// TODO check Color.h operator <<
 std::ostream& operator<<(std::ostream& os, Color const& obj)
 { 
     std::string colorString;

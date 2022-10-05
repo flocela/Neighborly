@@ -27,7 +27,7 @@ public:
         std::string title,
         std::unordered_map<int, BaseColor> colors,
         std::unordered_map<const House*, Coordinate > coordPerHouse,
-        std::unordered_map<const House*, std::set<const House*>> neighbors,
+        std::unordered_map<const House*, std::set<const House*>> neighborHouses,
         int numOfRuns
     );
     Printer_Graphic (const Printer_Graphic& obj) = default;

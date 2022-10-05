@@ -7,6 +7,7 @@
 #include <string>
 #include <memory>
 
+// TODO CityFactory is not checked
 class CityFactory
 {
     public:

@@ -10,7 +10,6 @@ City_Grid::City_Grid (int width):
 	_maxY{_width  - 1}
 {	
 	_houses.reserve(_width * _width);
-	std::cout << "width: " << _width << std::endl;
   	for (int ii=0; ii<width; ++ii)
   	{
   		for (int jj=0; jj<width; ++jj)
@@ -164,6 +163,8 @@ std::set<House*> City_Grid::getHousesWithinDistance (
 			nearHouses.insert(_house_per_address.at(address));
 		}
 	}
+
+	// TODO don't erase @house from set.
 
 	return nearHouses;
 }

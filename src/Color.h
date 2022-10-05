@@ -36,7 +36,6 @@ struct ColorInfo
     Mood _mood;
     std::string _mood_name;
     std::vector<int> rgba;
-    //std::ostream& toStream (std::ostream& ost) const;
 };
 
 
@@ -112,12 +111,6 @@ inline std::unordered_map<BaseColor, std::unordered_map<Mood,ColorInfo>> _colorr
               {27, 94, 32, 255} }}
     }}
 };
-
-/*
-std::ostream& operator<< (std::ostream& ost, const ColorInfo& c)
-{
-    return c.toStream(ost);
-}*/
 
 inline std::map<Color, std::vector<int>> _the_color_rgba = {
     {Color::red_neutral, _colorrs_map[BaseColor::red][Mood::neutral].rgba},

@@ -1,5 +1,8 @@
 #include "GrDvstyChart.h"
 
+#include <chrono>
+#include <ctime>
+
 void GrDvstyChart::print (
     std::unordered_map<const Resident*, const House*> housePerResident,
     std::unordered_map<const House*, const Resident*> residentPerHouse,
@@ -8,8 +11,14 @@ void GrDvstyChart::print (
 )
 {
     std::unordered_map<int, int> num_of_diff_neighbors_Per_group;
+    for (auto& pair : _colors)
+    {
+        num_of_diff_neighbors_Per_group[pair.first] = 0;
+    }
 
     std::unordered_map<int, int> total_residents_Per_group;
+
+    auto start1 = std::chrono::system_clock::now();
 
     for (std::pair<const Resident*, const House*> ii : housePerResident)
     {
@@ -18,26 +27,22 @@ void GrDvstyChart::print (
         int groupId = res->getGroupNumber();
 
         std::set<const House*> adjHouses = _adj_neighbors[house];
-        std::set<const Resident*> adjResidents = getResidentsInHouses(adjHouses, residentPerHouse);
 
-        // for each adj resident: does current resident have different groupId than adj neighbor?
-        // if so increase count in num_of_diff_neighbors_Per_group
-        for (const Resident* adj : adjResidents)
+        for (const House* adjHouse : adjHouses)
         {
-            int neighborGroupId = adj->getGroupNumber();
+            if (residentPerHouse.find(adjHouse) == residentPerHouse.end())
+                continue;
+            const Resident* adjResident = residentPerHouse.at(adjHouse);
+            int neighborGroupId = adjResident->getGroupNumber();
+
+            // for each adj resident: does current resident have different groupId than adj neighbor?
+            // if so increase count in num_of_diff_neighbors_Per_group
             if (neighborGroupId == groupId)
             {
                 continue;
             }
-            // TODO initialize num_of_diff_neighbotrs_Per_group woth counts of zero, then get rid of this if statement.
-            if (num_of_diff_neighbors_Per_group.find(neighborGroupId) == num_of_diff_neighbors_Per_group.end())
-            {
-                num_of_diff_neighbors_Per_group[neighborGroupId] = 1;
-            }
-            else
-            {
-                num_of_diff_neighbors_Per_group[neighborGroupId] += 1;
-            }
+            num_of_diff_neighbors_Per_group[neighborGroupId] +=1;
+
         }
 
         if (total_residents_Per_group.find(groupId) == total_residents_Per_group.end())
@@ -50,6 +55,10 @@ void GrDvstyChart::print (
         }
         
     }
+
+    auto end1 = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_sec1 = end1 - start1;
+    std::cout << "elapsed time for dvsitychart 1st for loop: " << elapsed_sec1.count() << "s" << std::endl;
 
     std::vector<Point> points;
     for (auto jj : total_residents_Per_group)
@@ -78,7 +87,7 @@ std::set<const Resident*> GrDvstyChart::getResidentsInHouses (
     for (const House* house : houses)
     {
         if (residentPerHouse.find(house) != residentPerHouse.end())
-        {
+        {   
             residents.insert(residentPerHouse.at(house));
         }
     }

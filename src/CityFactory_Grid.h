@@ -4,6 +4,7 @@
 #include "CityFactory.h"
 #include "Question_Int.h"
 
+// TODO CityFactory.h is not checked
 class CityFactory_Grid: public CityFactory
 {
     public:
