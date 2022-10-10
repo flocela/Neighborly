@@ -50,7 +50,7 @@ SimulationComponents MainExamples::userChoosesExample ()
                     5,   // allowed movement
                     50,  // happiness goal
                     100, // happiness value at zero diversity
-                    10,  // happiness value at one diverstiy
+                    90,  // happiness value at one diverstiy
                     0.8  // diversity where drop happens
                 ));
             }
@@ -61,7 +61,7 @@ SimulationComponents MainExamples::userChoosesExample ()
                     2,
                     20,
                     50,
-                    60,
+                    100,
                     10,
                     0.25
                 ));

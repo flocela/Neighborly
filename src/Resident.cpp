@@ -20,9 +20,14 @@ Resident::Resident (
 double Resident::calculateHappiness ( 
     std::set<Resident*> neighbors,
     int numOfAdjacentHouses
-)
+) const
 {
-    _curr_happiness = implCalculateHappiness (neighbors, numOfAdjacentHouses);
+    return implCalculateHappiness (neighbors, numOfAdjacentHouses);
+}
+
+double Resident::setHappiness (std::set<Resident*> neighbors, int numOfAdjacentHouses)
+{
+    _curr_happiness = calculateHappiness(neighbors, numOfAdjacentHouses);
     return _curr_happiness;
 }
 

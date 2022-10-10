@@ -194,7 +194,7 @@ int main(int argc, char* argv[])
     std::unordered_map<const House*, std::set<const House*>> neighbors;
     for (const House* house : houses)
     {
-        neighbors[house] = city->getAdjacentHouses(house);
+        neighbors[house] = city->getAdjacentHouses(house->getAddress());
     }
 
     Printer_Graphic graphicPrinter{
@@ -207,7 +207,7 @@ int main(int argc, char* argv[])
     
     std::unordered_map<const House*, Resident*> houseToResidentMap;
     //for (int ii=0; ii< numOfRuns; ii++)
-    for (int ii=0; ii< 2; ii++)
+    for (int ii=0; ii< numOfRuns; ii++)
     {   
         auto start = std::chrono::system_clock::now();
 

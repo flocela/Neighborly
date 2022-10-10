@@ -42,10 +42,9 @@ double City_Grid::getDist (const int& fromAddress, const int& toAddress) const
   	return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
 }
 
-std::set<const House*> City_Grid::getAdjacentHouses (const House* house) const
+std::set<const House*> City_Grid::getAdjacentHouses (int address) const
 {
 	int largestAddress = getNumOfHouses() - 1;
-	int address = house->getAddress();
 	
 	std::set<const House*> adjacentHouses = {};
 
@@ -78,14 +77,12 @@ std::set<const House*> City_Grid::getAdjacentHouses (const House* house) const
 	return adjacentHouses;
 }
 
-// TODO, this method needs to be properly tested.
-// Does not include @house in returned set.
-// TODO what if allowableDist == 0?
-std::set<House*> City_Grid::getHousesWithinDistance (
-	const House* house, 
-	double allowableDist
-) const
-{ 	std::set<House*> nearHouses;
+void City_Grid::populateHousesWithinDistance (
+        const House* house,
+        double allowableDist,
+        std::unordered_set<const House*>& nearHouses
+    ) const
+{
 	int origAddress = house->getAddress();
 	int origX = get_x(origAddress);
 	int origY = get_y(origAddress);
@@ -113,20 +110,21 @@ std::set<House*> City_Grid::getHousesWithinDistance (
 		int curLeftAddress = (yy*_width + curLeftX);
 		while ( curLeftX-1 >= minX && getDist(origAddress, curLeftAddress -1) <= allowableDist )
 		{
-			curLeftX--;
+			--curLeftX;
 			curLeftAddress = (yy*_width) + curLeftX;
 		}
 
 		int curRightAddress = (yy*_width) + curRightX;
 		while ( curRightX + 1 <= maxX && getDist(origAddress, curRightAddress + 1) <= allowableDist )
 		{
-			curRightX++;
+			++curRightX;
 			curRightAddress = (yy*_width + curRightX);
 		}
 		for (int xx=curLeftX; xx<=curRightX; ++xx)
 		{
-			int address = (yy * _width) + xx;
-			nearHouses.insert(_house_per_address.at(address));
+			//int address = (yy * _width) + xx;
+			House* house = _house_per_address.at((yy * _width) + xx);
+			nearHouses.insert(house);
 		}
 	}
 	// find houses within allowableDistance below original house
@@ -147,66 +145,142 @@ std::set<House*> City_Grid::getHousesWithinDistance (
 		int curLeftAddress = (yy*_width + curLeftX);
 		while (curLeftX-1 >= minX && getDist(origAddress, curLeftAddress - 1) <= allowableDist)
 		{
-			curLeftX--;
+			--curLeftX;
 			curLeftAddress = (yy*_width) + curLeftX;
 		}
 		int curRightAddress = (yy*_width) + curRightX;
 		while ( curRightX+1 <= maxX && getDist(origAddress, curRightAddress+1) <= allowableDist )
 		{
-			curRightX++;
+			++curRightX;
 			curRightAddress = (yy*_width) + curRightX;
 		}
 
 		for (int xx=curLeftX; xx<=curRightX; ++xx)
 		{	
-			int address = (yy * _width) + xx;
-			nearHouses.insert(_house_per_address.at(address));
+			House* house = _house_per_address.at((yy * _width) + xx);
+			nearHouses.insert(house);
 		}
 	}
-
-	// TODO don't erase @house from set.
-
-	return nearHouses;
 }
 
-std::set<const House*> City_Grid::getANumberOfUnoccupiedNearHouses (
-	const House* origHouse,
-	double allowableDistance,
-	std::set<const House*> notOccupied,
-	size_t count
+// TODO, this method needs to be properly tested.
+// Does not include @house in returned set.
+// TODO what if allowableDist == 0?
+std::unordered_set<const House*> City_Grid::getHousesWithinDistance (
+	const House* house, 
+	double allowableDist,
+	std::unordered_set<House*>& nearHouses,
+	std::set<const House*> notOccupied
 ) const
-{	
-	std::set<const House*> returnedHouses;
+{ 	//std::set<House*> nearHouses;
+	int origAddress = house->getAddress();
+	int origX = get_x(origAddress);
+	int origY = get_y(origAddress);
+	int minX = std::max(origX - (int)std::ceil(allowableDist), _minX);
+	int maxX = std::min(origX + (int)std::ceil(allowableDist), _maxX);
+	int minY = std::max(origY - (int)std::ceil(allowableDist), _minY);
+	int maxY = std::min(origY + (int)std::ceil(allowableDist), _maxY);
 
-	if (count == 0)
+	// houses within allowableDistance trace out a circle. 
+	// find houses within allowableDistance above or equal original house.
+	int yy = minY;
+	for (; yy<=origY; ++yy)
+	{	
+		// above origAddress
+		int curAddress = (yy*_width + origX);
+
+		if ( getDist(origAddress, curAddress) <= allowableDist )
+			break;
+	} 
+	int curLeftX = origX;
+	int curRightX = origX;
+	for (; yy<=origY; ++yy)
+	{
+
+		int curLeftAddress = (yy*_width + curLeftX);
+		while ( curLeftX-1 >= minX && getDist(origAddress, curLeftAddress -1) <= allowableDist )
+		{
+			--curLeftX;
+			curLeftAddress = (yy*_width) + curLeftX;
+		}
+
+		int curRightAddress = (yy*_width) + curRightX;
+		while ( curRightX + 1 <= maxX && getDist(origAddress, curRightAddress + 1) <= allowableDist )
+		{
+			++curRightX;
+			curRightAddress = (yy*_width + curRightX);
+		}
+		for (int xx=curLeftX; xx<=curRightX; ++xx)
+		{
+			//int address = (yy * _width) + xx;
+			House* house = _house_per_address.at((yy * _width) + xx);
+			if (notOccupied.find(house) != notOccupied.end())
+			{
+				nearHouses.insert(house);
+			}
+		}
+	}
+	// find houses within allowableDistance below original house
+	yy = maxY;
+	for (; yy>origY; --yy)
+	{
+		int curAddress = (yy*_width + origX);
+		if (getDist(origAddress, curAddress) <= allowableDist)
+		{
+			break;
+		}
+	}
+
+	curLeftX = origX;
+	curRightX = origX;
+	for (; yy>origY; --yy)
+	{
+		int curLeftAddress = (yy*_width + curLeftX);
+		while (curLeftX-1 >= minX && getDist(origAddress, curLeftAddress - 1) <= allowableDist)
+		{
+			--curLeftX;
+			curLeftAddress = (yy*_width) + curLeftX;
+		}
+		int curRightAddress = (yy*_width) + curRightX;
+		while ( curRightX+1 <= maxX && getDist(origAddress, curRightAddress+1) <= allowableDist )
+		{
+			++curRightX;
+			curRightAddress = (yy*_width) + curRightX;
+		}
+
+		for (int xx=curLeftX; xx<=curRightX; ++xx)
+		{	
+			House* house = _house_per_address.at((yy * _width) + xx);
+			if (notOccupied.find(house) != notOccupied.end())
+			{
+				nearHouses.insert(house);
+			}
+		}
+	}
+
+	unsigned int count = 1;
+	std::unordered_set<const House*> returnedHouses;
+	if (returnedHouses.size() >= count || nearHouses.empty())
+	{
 		return returnedHouses;
+	}
+
+	std::unordered_set<House*>::iterator itr;
 	
-	std::set<House*> closeHouses = getHousesWithinDistance (
-		origHouse,
-		allowableDistance
-	);
-
-	std::set<House*> unoccupiedAndCloseHouses;
-	for (House* house : closeHouses)
+	//House* currHouse = selectRandom(unoccupiedAndCloseHouses);
+	for ( itr = nearHouses.begin(); itr != nearHouses.end(); itr++)
 	{
-		if (notOccupied.find(house) != notOccupied.end())
+		if (returnedHouses.size() >= count)
 		{
-			unoccupiedAndCloseHouses.insert(house);
+			break;
 		}
+		returnedHouses.insert(*itr);
+		//unoccupiedAndCloseHouses.erase(currHouse);
 	}
 
-	while (true)
-	{
-		if (returnedHouses.size() >= count || unoccupiedAndCloseHouses.empty())
-		{
-			return returnedHouses;
-		}
-
-		House* currHouse = selectRandom(unoccupiedAndCloseHouses);
-		returnedHouses.insert(currHouse);
-		unoccupiedAndCloseHouses.erase(currHouse);
-	}
-
+	return returnedHouses;
+	// TODO don't erase @house from set.
+	//return nearHouses;
 }
 
 int City_Grid::get_x (const int& address) const
@@ -226,11 +300,11 @@ Coordinate City_Grid::getCoordinate(const int& address) const
 }
 
 
-House* City_Grid::selectRandom (std::set<House*>& setOfHouses) const
+const House* City_Grid::selectRandom (std::unordered_set<const House*>& setOfHouses) const
 {
 	int size = setOfHouses.size();
     int r = rand() % size;
-    std::set<House*>::iterator it = std::begin(setOfHouses);
+    std::unordered_set<const House*>::iterator it = std::begin(setOfHouses);
     std::advance(it, r);
     return *it;
 }

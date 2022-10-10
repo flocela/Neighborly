@@ -28,7 +28,7 @@ TEST_CASE("getAdjacentHouses() for corner house (3 neighbors) ")
     std::vector<const House*> houses = city.getHouses();
 
     const House* cornerHouse = houses[0]; // house[0] is at (0,0).
-    std::set<const House*> adjToCorner = city.getAdjacentHouses(cornerHouse);
+    std::set<const House*> adjToCorner = city.getAdjacentHouses(cornerHouse->getAddress());
     std::set<const House*> actualAdjToCorner = {};
     actualAdjToCorner.insert(houses[1]);
     actualAdjToCorner.insert(houses[6]);
@@ -43,7 +43,7 @@ TEST_CASE("getAdjacentHouses() for edge house (5 neighbors)")
     std::vector<const House*> houses = city.getHouses();
 
     const House* edgeHouse = houses[12];
-    std::set<const House*> adjToEdgeHoues = city.getAdjacentHouses(edgeHouse);
+    std::set<const House*> adjToEdgeHoues = city.getAdjacentHouses(edgeHouse->getAddress());
     std::set<const House*> actualAdj = {};
     actualAdj.insert(houses[6]);
     actualAdj.insert(houses[7]);
@@ -60,7 +60,7 @@ TEST_CASE("getAdjacentHouses() for house in middle of grid (8 neighbors)")
     std::vector<const House*> houses = city.getHouses();
 
     const House* house = houses[15];
-    std::set<const House*> adjToHouse = city.getAdjacentHouses(house);
+    std::set<const House*> adjToHouse = city.getAdjacentHouses(house->getAddress());
     std::set<const House*> actualAdj = {};
     actualAdj.insert(houses[8]);
     actualAdj.insert(houses[9]);
@@ -73,7 +73,7 @@ TEST_CASE("getAdjacentHouses() for house in middle of grid (8 neighbors)")
 
     REQUIRE( adjToHouse == actualAdj );
 }
-
+/*
 TEST_CASE("getHousesWithinDistance() distance is 2.1")
 {
     City_Grid city = City_Grid(6);
@@ -101,27 +101,8 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1")
     actualNearHouseAddresses.insert(houses[12]->getAddress());
     
     REQUIRE( nearAddresses == actualNearHouseAddresses );
-}
+}*/
 
-TEST_CASE("getNumberOfUnoccupiedNearHouses() distance is 1")
-{
-    City_Grid city = City_Grid(6);
-    std::vector<const House*> houses = city.getHouses();
-    std::set<const House*> occupiedHouses;
-    occupiedHouses.insert(houses[18]);
-    occupiedHouses.insert(houses[20]);
-    int count = 4;
-
-    const House* house = houses[19];
-    std::set<const House*> nearHouses = 
-        city.getANumberOfUnoccupiedNearHouses(house, 1.0, occupiedHouses, count);
-
-    std::set<const House*> actualNearHouses = {};
-    actualNearHouses.insert(houses[13]);
-    actualNearHouses.insert(houses[25]);
-    
-    REQUIRE( nearHouses == actualNearHouses );
-}
 
 TEST_CASE("getCoordinate() for a given address")
 {

@@ -34,19 +34,20 @@ public:
 
     std::vector<const House*> getHouses () const override;
     
-    std::set<const House*> getAdjacentHouses (const House* house) const override;
+    std::set<const House*> getAdjacentHouses (int address) const override;
 
     //TODO only used in SimulatorE, so if SimulatorE is deleted, then delete this method.
-    std::set<House*> getHousesWithinDistance (
+    std::unordered_set<const House*> getHousesWithinDistance (
         const House* house, 
-        double allowableDist
+        double allowableDist,
+        std::unordered_set<House*>& nearHouses,
+        std::set<const House*> notOccupied
     ) const override;
 
-    std::set<const House*> getANumberOfUnoccupiedNearHouses (
+    void populateHousesWithinDistance (
         const House* house,
-        double allowableDistance,
-        std::set<const House*> notOccupied,
-        size_t count
+        double allowableDist,
+        std::unordered_set<const House*>& nearHouses
     ) const override;
     
     std::unordered_map<const House*, Coordinate> getCoordinatesPerHouse();
@@ -66,7 +67,7 @@ private:
     std::map<std::pair<int, double>, std::vector<int>> _within_dist_map;
 
     // Returns a random house from @setOfHouses.
-    House* selectRandom (std::set<House*>& setOfHouses) const;
+    const House* selectRandom (std::unordered_set<const House*>& setOfHouses) const;
     
     // Returns x value of @address
     int get_x (const int& address) const;

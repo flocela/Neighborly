@@ -51,12 +51,14 @@ std::unordered_map<const House*, Resident*> Simulator_E::simulate()
         { 
             Resident* curr = _residents[*optionalResIt];
             const House* oldHouse = _curr_res_to_house_map[curr];
-            std::set<House*> nearOpenHouses = filterForOpenHouses(
-                _city->getHousesWithinDistance(
+            std::unordered_set<House*> nearHouses;
+            _city->getHousesWithinDistance(
                     oldHouse,
-                    25
-                )
-            );
+                    25,
+                    nearHouses,
+                    std::set<const House*>()
+                );
+            std::unordered_set<House*> nearOpenHouses = filterForOpenHouses(nearHouses);
             // TODO what if openHouses is empty?
             const House* newHouse = curr->findHome(
                 oldHouse,
@@ -189,9 +191,9 @@ std::unordered_map<Resident*, const House*> Simulator_E::getHouses (std::vector<
     return selectResToAddrMap;
 } 
 
-std::set<House*> Simulator_E::filterForOpenHouses (std::set<House*> houses)
+std::unordered_set<House*> Simulator_E::filterForOpenHouses (std::unordered_set<House*> houses)
 {
-    std::set<House*> openHouses;
+    std::unordered_set<House*> openHouses;
     for (House* house : houses)
     {
         if (_curr_house_to_res_map.count(house) != 0)
@@ -211,7 +213,7 @@ House* Simulator_E::findHouseForOptionalMoveRes (
 {
     openHouses.erase(oldHouse);
     
-    std::set<const House*> adjacentHouses = _city->getAdjacentHouses(oldHouse);
+    std::set<const House*> adjacentHouses = _city->getAdjacentHouses(oldHouse->getAddress());
     std::set<Resident*> adjacentResidents = getResidentsInHouses(adjacentHouses);
     double oldAddressHappinesss = res->getHappiness();
     double highHappiness = oldAddressHappinesss;
@@ -221,7 +223,7 @@ House* Simulator_E::findHouseForOptionalMoveRes (
     {  
         if (chances == 0)
             break;
-        std::set<const House*> adjacentHouses = _city->getAdjacentHouses(house);
+        std::set<const House*> adjacentHouses = _city->getAdjacentHouses(house->getAddress());
         std::set<Resident*> adjacentResidents = getResidentsInHouses(adjacentHouses);
         double happiness = res->getHappiness();
         highHappiness = happiness > highHappiness ? happiness : highHappiness;
@@ -257,7 +259,7 @@ const House* Simulator_E::findHouseForForcedResHappyAtGoal (
 
     for (const House* house : openHouses)
     {
-        std::set<const House*> adjacentHouses = _city->getAdjacentHouses(house);
+        std::set<const House*> adjacentHouses = _city->getAdjacentHouses(house->getAddress());
         std::set<Resident*> adjacentResidents = getResidentsInHouses(adjacentHouses);
         double happiness = res->getHappiness();
         if (happiness >= res->getHappinessGoal())
@@ -289,7 +291,7 @@ House* Simulator_E::findHouseForForcedResHappyAtBest (
 
     for (House* house : openHouses)
     {
-        std::set<const House*> adjacentHouses = _city->getAdjacentHouses(house);
+        std::set<const House*> adjacentHouses = _city->getAdjacentHouses(house->getAddress());
         std::set<Resident*> adjacentResidents = getResidentsInHouses(adjacentHouses);
         double happiness = res->getHappiness();
         if (happiness > highHappiness)
@@ -308,9 +310,12 @@ const House* Simulator_E::findHomeForForcedToMoveResident (
 )
 {   (void) count;
     std::set<const House*> occupied = getKeysFromMap(_curr_house_to_res_map);
-    std::set<House*> nearOpenHouses = _city->getHousesWithinDistance(
+    std::unordered_set<House*> nearOpenHouses;
+     _city->getHousesWithinDistance(
         oldHouse,
-        100
+        100,
+        nearOpenHouses,
+        std::set<const House*>()
     );
     //TODO if closeOpenHouses is empty.
     const House* newHome = resident->findHome(
@@ -329,9 +334,13 @@ const House* Simulator_E::findHomeForOptionalMoveResident (
 )
 {   (void) count;
     std::set<const House*> occupied = getKeysFromMap(_curr_house_to_res_map);
-    std::set<House*> nearOpenHouses = _city->getHousesWithinDistance(
+
+    std::unordered_set<House*> nearOpenHouses;
+    _city->getHousesWithinDistance(
         oldHouse,
-        100
+        100,
+        nearOpenHouses,
+        std::set<const House*>()
     );
     //TODO if closeOpenHouses is empty.
     const House* newHouse = resident->findBestHome(
@@ -365,13 +374,13 @@ void Simulator_E::openHouse (Resident* res)
 }
 
 std::map<const House*, std::set<const House*>> Simulator_E::getSetsOfNeighbors (
-    std::set<House*> houses
+    std::unordered_set<House*> houses
 )
 {
     std::map<const House*, std::set<const House*>> setsOfNeighbors;
     for (House* house : houses)
     {
-        std::set<const House*> neighbors = _city->getAdjacentHouses(house);
+        std::set<const House*> neighbors = _city->getAdjacentHouses(house->getAddress());
         setsOfNeighbors.insert(std::pair<House*, std::set<const House*>>(house, neighbors));
     }
     return setsOfNeighbors;

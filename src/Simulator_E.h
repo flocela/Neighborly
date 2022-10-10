@@ -7,6 +7,7 @@
 #include <map>
 #include <set>
 #include <utility>
+#include <unordered_set>
 
 class Simulator_E
 {
@@ -27,7 +28,7 @@ class Simulator_E
         std::vector<Resident*> getResidents (std::vector<int> residentIndices);
         std::unordered_map<Resident*, const House*> getHouses(std::vector<Resident*> residents);
         void openHouses (std::vector<Resident*> residents);
-        std::set<House*> filterForOpenHouses (std::set<House*> houses);
+        std::unordered_set<House*> filterForOpenHouses (std::unordered_set<House*> houses);
         const House* findHouseForForcedResHappyAtGoal (
             Resident* res,
             House* oldHouse,
@@ -57,7 +58,7 @@ class Simulator_E
         );
 
         // Returns the neighbors for each house in @houses.
-        std::map<const House*, std::set<const House*>> getSetsOfNeighbors (std::set<House*> houses);
+        std::map<const House*, std::set<const House*>> getSetsOfNeighbors (std::unordered_set<House*> houses);
 
         void moveResidentIntoHouse (Resident* res, const House* house);
         void openHouse (Resident* res);

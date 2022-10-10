@@ -33,11 +33,11 @@ class Resident{
             return _curr_happiness;
         };
 
-        // calculateHappiness() updates _curr_happiness, which is used in getHappiness()
-        double calculateHappiness (
-            std::set<Resident*> neighbors,
-            int numOfAdjacentHouses
-        );
+        double calculateHappiness (std::set<Resident*> neighbors, int numOfAdjacentHouses) const;
+
+        // calculates happiness, sets resident's happiness and returns the calculated happiness
+        double setHappiness (std::set<Resident*> neighbors, int numOfAdjacentHouses);
+
         virtual const House* findHome (
             const House* oldHouse,
             std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
