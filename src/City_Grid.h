@@ -44,7 +44,7 @@ public:
         std::set<const House*> notOccupied
     ) const override;
 
-    void populateHousesWithinDistance (
+    void findHousesWithinDistance (
         const House* house,
         double allowableDist,
         std::unordered_set<const House*>& nearHouses
@@ -62,9 +62,6 @@ private:
     std::vector<std::unique_ptr<House>> _houses;
 
     std::map<int, House*> _house_per_address;
-
-    //TODO try to use _within_dist_map
-    std::map<std::pair<int, double>, std::vector<int>> _within_dist_map;
 
     // Returns a random house from @setOfHouses.
     const House* selectRandom (std::unordered_set<const House*>& setOfHouses) const;

@@ -77,7 +77,7 @@ std::set<const House*> City_Grid::getAdjacentHouses (int address) const
 	return adjacentHouses;
 }
 
-void City_Grid::populateHousesWithinDistance (
+void City_Grid::findHousesWithinDistance (
         const House* house,
         double allowableDist,
         std::unordered_set<const House*>& nearHouses

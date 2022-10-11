@@ -50,7 +50,7 @@ void Simulator_Basic_A::moveResident (Resident* res)
 {  
     const House* currHouse = _curr_res_to_house_map[res];
     std::unordered_set<const House*> nearHouses;  
-    _city->populateHousesWithinDistance(
+    _city->findHousesWithinDistance(
         currHouse,
         res->getAllowedMovementDistance(),
         nearHouses

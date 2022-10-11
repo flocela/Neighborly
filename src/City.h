@@ -37,7 +37,7 @@ class City
             std::set<const House*> notOccupied
         ) const = 0;
 
-        virtual void populateHousesWithinDistance (
+        virtual void findHousesWithinDistance (
         const House* house,
         double allowableDist,
         std::unordered_set<const House*>& nearHouses
