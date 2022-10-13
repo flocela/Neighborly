@@ -75,8 +75,8 @@ private:
 
     std::unique_ptr<TitleA> _window_title = std::make_unique<TitleA>(
         Letter{40, 2},
-        _top_border__px,
         _x_center__px,
+        _top_border__px,
         "Neighbors"
     );
 

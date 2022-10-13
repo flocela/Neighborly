@@ -4,13 +4,9 @@
 #include <map>
 #include <utility>
 #include <thread>
-#include <chrono>
 #include <iostream>
 #include "PlotA.h"
 #include "PlotB.h"
-
-#include <chrono>
-#include <ctime>
 
 Printer_Graphic::Printer_Graphic (
     std::string title,
@@ -58,6 +54,43 @@ Printer_Graphic::Printer_Graphic (
     _happiness_chart = createHapChart(numOfRuns);
     
 }
+
+void Printer_Graphic::print (
+    std::unordered_map<const House*, const Resident*> residentPerHouse,
+    int run
+)
+{   
+    std::unordered_map<const Resident*, const House*> housePerResident;
+    std::vector<const Resident*> residents;
+    for (auto pair : residentPerHouse)
+    {
+        if (pair.second != nullptr) // resident is not nullptr
+        {
+        housePerResident[pair.second] = pair.first;
+        residents.push_back(pair.second);
+        }
+    }
+
+
+    _window_title->print(_renderer.get());
+    _runs_chart->print(run, _renderer.get());
+    _city_chart->print(residentPerHouse, _renderer.get());
+
+    _dvsty_chart->print(
+        housePerResident,
+        residentPerHouse,
+        run,
+        _renderer.get()
+    );
+
+    _happiness_chart->print(
+        housePerResident,
+        run,
+        _renderer.get()
+    );
+
+    _renderer->endFrame();
+} 
 
 std::vector<int> Printer_Graphic::determineMinMaxHouseCoords(
     std::unordered_map<const House*, Coordinate > coordPerHouse
@@ -262,68 +295,6 @@ std::unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
         _hap_chart_y_axis_fraction * _chart_y_space__px
     );
 }
-
-void Printer_Graphic::print (
-    std::unordered_map<const House*, const Resident*> residentPerHouse,
-    int run
-)
-{   
-    auto start1 = std::chrono::system_clock::now();
-    std::unordered_map<const Resident*, const House*> housePerResident;
-    std::vector<const Resident*> residents;
-    for (auto pair : residentPerHouse)
-    {
-        if (pair.second != nullptr) // resident is not nullptr
-        {
-        housePerResident[pair.second] = pair.first;
-        residents.push_back(pair.second);
-        }
-    }
-    auto end1 = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_sec1 = end1 - start1;
-    std::cout << "elapsed time for housePerResident: " << elapsed_sec1.count() << "s" << std::endl;
-
-
-    auto start2 = std::chrono::system_clock::now();
-
-    _window_title->print(_renderer.get());
-
-    auto end2 = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_sec2 = end2 - start2;
-    std::cout << "elapsed time for printing title: " << elapsed_sec2.count() << "s" << std::endl;
-
-    _runs_chart->print(run, _renderer.get());
-    _city_chart->print(residentPerHouse, _renderer.get());
-
-
-    auto start3 = std::chrono::system_clock::now();
-
-    _dvsty_chart->print(
-        housePerResident,
-        residentPerHouse,
-        run,
-        _renderer.get()
-    );
-
-    auto end3 = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_sec3 = end3 - start3;
-    std::cout << "elapsed time for printing dvsity: " << elapsed_sec3.count() << "s" << std::endl;
-
-    
-    auto start4 = std::chrono::system_clock::now();
-
-    _happiness_chart->print(
-        housePerResident,
-        run,
-        _renderer.get()
-    );
-
-    auto end4 = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_sec4 = end4 - start4;
-    std::cout << "elapsed time for printing happiness: " << elapsed_sec4.count() << "s" << std::endl;
-
-    _renderer->endFrame();
-} 
 
 void Printer_Graphic::keepScreen()
 {
