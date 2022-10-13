@@ -63,7 +63,10 @@ PlotA::PlotA (
         sizer.startOffsetM(),
         sizer.endOffsetM(),
     }
-{}
+{
+    std::cout << "_x_space, minx, maxX, unit_x__px: " << _x_space__px << ", " << _min_x << ", " << _max_x << ", " << _unit_x__px << std::endl;
+
+}
 
 void PlotA::print (
     std::vector<Point> points,
@@ -226,9 +229,9 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _cross_x__px = calcCrossXPx(_top_left_x__px);
     _cross_y__px = calcCrossYPx (_top_left_y__px);
     _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
+    _x_axis.setPxPerUnit(_unit_x__px);
+    _x_axis.setTickThickness(tickThickness);
     _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.setPxPerUnit(_unit_y__px);
     _y_axis.setTickThickness(tickThickness);
-    // TODO set x axis PxPerUnit.
-    // TODO set x axis tick thickness
 }

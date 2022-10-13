@@ -44,8 +44,26 @@ class AxisLeftToRightB
 
         int calcRightMostPixelX ();
 
-        int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 5; }
-        int calcMajTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
+        int calcMinTickSpacing (int pixelsPerUnit) {
+
+            if (_max_val - _min_val < 10)
+            {
+                return 1;
+            }
+
+            return (pixelsPerUnit >= 10)? 1 : 5;
+        
+        }
+        int calcMajTickSpacing (int pixelsPerUnit) { 
+            
+            if (_max_val - _min_val < 10)
+            {
+                return 1;
+            }
+            
+            return (pixelsPerUnit > 10)? 5 : 10; 
+            
+        }
         
 };
 

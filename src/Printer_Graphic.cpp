@@ -16,6 +16,8 @@ Printer_Graphic::Printer_Graphic (
     int numOfRuns
 )
 {
+    std::cout << "Printer_Graphic x_space_px: " << _x_space__px << std::endl;
+    std::cout << "PrinterGraphic x_chart_space__px: " << _x_chart_space__px << std::endl;
     _window_title->setTitle(title);
 
     _colors = colors;
@@ -224,6 +226,11 @@ std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
 )
 {
     std::set<Mood> moods{Mood::neutral};
+
+    std::cout << "createDvstyChart _x_chart_space__px: " << _x_chart_space__px << std::endl;
+    std::cout << "createDvstyChart _y_space__px: " << (_diversity_chart_y_axis_fraction * _chart_y_space__px) << std::endl;
+
+
     return std::make_unique<GrDvstyChart> (
         _colors,
         moods,

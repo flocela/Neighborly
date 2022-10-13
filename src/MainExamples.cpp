@@ -70,7 +70,7 @@ SimulationComponents MainExamples::userChoosesExample ()
                 components.city.get(),
                 getSetOfPointers(components.residents)
             );
-            components.numOfRuns = 5;
+            components.numOfRuns = 10;
             
             break;
         }

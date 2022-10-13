@@ -1,8 +1,5 @@
 #include "GrDvstyChart.h"
 
-#include <chrono>
-#include <ctime>
-
 void GrDvstyChart::print (
     std::unordered_map<const Resident*, const House*> housePerResident,
     std::unordered_map<const House*, const Resident*> residentPerHouse,
@@ -17,8 +14,6 @@ void GrDvstyChart::print (
     }
 
     std::unordered_map<int, int> total_residents_Per_group;
-
-    auto start1 = std::chrono::system_clock::now();
 
     for (std::pair<const Resident*, const House*> ii : housePerResident)
     {
@@ -55,10 +50,6 @@ void GrDvstyChart::print (
         }
         
     }
-
-    auto end1 = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_sec1 = end1 - start1;
-    std::cout << "elapsed time for dvsitychart 1st for loop: " << elapsed_sec1.count() << "s" << std::endl;
 
     std::vector<Point> points;
     for (auto jj : total_residents_Per_group)

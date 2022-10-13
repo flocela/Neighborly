@@ -209,15 +209,8 @@ int main(int argc, char* argv[])
     //for (int ii=0; ii< numOfRuns; ii++)
     for (int ii=0; ii< numOfRuns; ii++)
     {   
-        auto start = std::chrono::system_clock::now();
-
         houseToResidentMap = simulator->simulate();
 
-        auto end = std::chrono::system_clock::now();
-	    std::chrono::duration<double> elapsed_sec = end - start;
-	    std::cout << "elapsed time for simulation: " << elapsed_sec.count() << "s" << std::endl;
-
-        auto start2 = std::chrono::system_clock::now();
         std::unordered_map<const House*, const Resident*> constMap;
         for (auto& pair : houseToResidentMap)
         {
@@ -225,9 +218,6 @@ int main(int argc, char* argv[])
         }
         graphicPrinter.print(constMap, ii);
 
-        auto end2 = std::chrono::system_clock::now();
-	    std::chrono::duration<double> elapsed_sec2 = end2 - start2;
-	    std::cout << "elapsed time for printing: " << elapsed_sec2.count() << "s" << std::endl;
     }
     Printer_CMDLine cmdLinePrinter{numOfRuns, city.get()};
     //cmdLinePrinter.print(houseToResidentMap, numOfRuns, "Title");
