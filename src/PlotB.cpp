@@ -63,43 +63,6 @@ PlotB::PlotB (
 {}
 
 void PlotB::print (
-    std::vector<Point> points,
-    bool clear,
-    Renderer* renderer
-)
-{ 
-    (void) clear; // TODO
-    
-    _x_axis.print(renderer);
-    _y_axis.print(renderer);
-
-    std::vector<SDL_Rect> rects{};
-    for (Point point : points)
-    {
-        int x = 
-            _cross_x__px +                                      
-            _unit__px *_start_offset_m +      
-            ( _unit__px * (point.x() - _min_x) ) - 
-            _dot__px/2;                               
-            
-        int y = 
-            _cross_y__px +
-            _unit__px * _start_offset_m +
-            ( _unit__px * (point.y() - _min_y)) -
-            _dot__px/2;
-
-        std::vector<Coordinate> coordinates;
-        coordinates.push_back(Coordinate(x, y));
-        renderer->addBlocksByColor(
-            _dot__px,
-            _dot__px,
-            coordinates,
-            point.rgba()
-        );
-    }
-}
-
-void PlotB::print (
     std::unordered_map<Color, std::vector<Point>> pointsPerColor,
     bool clear,
     Renderer* renderer
@@ -186,7 +149,7 @@ int PlotB::calcCrossYPx (int topLeftYPx) // TODO, I think I should be calling th
         topLeftYPx + _a_format_x.getAxisSizePx();
 }
 
-void PlotB::moveTopLeft (int topLeftXPx, int topLeftYPx)
+void PlotB::setTopLeft (int topLeftXPx, int topLeftYPx)
 {
     _top_left_x__px = topLeftXPx;
     _top_left_y__px = topLeftYPx;

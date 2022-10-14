@@ -115,7 +115,7 @@ private:
     /* RUNS COUNTER */
 
     // Sits center, below window title
-    int _runs_chart_top_y__px = _top_border__px + _window_title->sizeY();
+    int _runs_chart_top_y__px = _top_border__px + _window_title->sizeYPx();
     std::unique_ptr<GrRunsChart> _runs_chart = std::make_unique<GrRunsChart>(
         _left_right_borders__px, 
         _runs_chart_top_y__px,
@@ -131,7 +131,7 @@ private:
     int _chart_y_space__px = 
         _screen_height__px -
         _top_border__px -
-        _window_title->sizeY() -
+        _window_title->sizeYPx() -
         _chart_title_letter.getHeightIncLSpace() - // Runs chart
         _bottom_border__px -
         _space_between_charts__px;
@@ -206,7 +206,7 @@ private:
     int _city_y_space__px = 
         _screen_height__px -
         _top_border__px -
-        _window_title->sizeY() -
+        _window_title->sizeYPx() -
         _chart_title_letter.getHeightIncLSpace() - // Number of Runs Chart height // TODO get from chart not from letter given to chart
         _bottom_border__px;
 

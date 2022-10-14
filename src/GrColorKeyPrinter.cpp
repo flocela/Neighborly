@@ -81,7 +81,7 @@ void GrColorKeyPrinter::print (Renderer* renderer)
     }
 }
 
-int GrColorKeyPrinter::sizeX ()
+int GrColorKeyPrinter::sizeXPx ()
 {
     int longestString = 0;
 

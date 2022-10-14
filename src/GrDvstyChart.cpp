@@ -51,21 +51,23 @@ void GrDvstyChart::print (
         
     }
 
-    std::vector<Point> points;
+    std::unordered_map<Color, std::vector<Point>> pointsPerColor;
     for (auto jj : total_residents_Per_group)
     {
         int groupId = jj.first;
         int countInGroup = jj.second;
         double averageNumOfDiffNeighbors = 
-            (double)num_of_diff_neighbors_Per_group[groupId]/countInGroup;
-        points.emplace_back( Point{
-            (double)run, 
-            averageNumOfDiffNeighbors,
-            _colorrs_map[_colors[groupId]][Mood::neutral]._my_color} );
+            (double)num_of_diff_neighbors_Per_group[groupId]/countInGroup; // TODO count in group shoudl not be be zero
+       
+        Color c = _colorrs_map[_colors[groupId]][Mood::neutral]._my_color;
+        pointsPerColor.insert({
+            c,
+            std::vector<Point>( 1, Point((double)run, averageNumOfDiffNeighbors, c) )
+        });
     }
     
     _title->print(renderer);
-    _plot->print(points, false, renderer);
+    _plot->print(pointsPerColor, false, renderer);
     _key->print(renderer);
 }
 

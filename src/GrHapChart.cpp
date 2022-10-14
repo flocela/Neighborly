@@ -42,22 +42,21 @@ void GrHapChart::print (
         }
     }
 
-   std::vector<Point> points;
+   std::unordered_map<Color, std::vector<Point>> pointsPerColor;
     for (auto jj : total_residents_Per_group)
     {
         int groupNum = jj.first;
         int countInGroup = jj.second;
         double aveHappiness = (double)happiness_sum_Per_group[groupNum]/countInGroup;
-        points.emplace_back(
-            Point{
-                (double)run, 
-                aveHappiness, 
-                _colorrs_map[_colors[groupNum]][Mood::neutral]._my_color
-            });
+        Color c = _colorrs_map[_colors[groupNum]][Mood::neutral]._my_color;
+        pointsPerColor.insert({
+            c,
+            std::vector<Point>( 1, Point( (double)run, aveHappiness, c) )
+        });
     }
     _title->print(renderer);
     _key->print(renderer);
-    _plot->print(points, false, renderer);
+    _plot->print(pointsPerColor, false, renderer);
 }
 
 std::set<Resident*> GrHapChart::getResidentsInTheseHouses (

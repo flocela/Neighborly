@@ -20,10 +20,10 @@ public:
        _title{title} {}
 
     // returns the number of letters in the title.
-    int sizeX() { return _title.length(); }
+    int sizeXPx() { return _title.length(); }
 
     // returns the size of the size of the title including line space below the title
-    int sizeY() { return _l.getHeightIncLSpace(); }
+    int sizeYPx() { return _l.getHeightIncLSpace(); }
 
     void setLetterHeight (int height) { _l.setLetterHeight(height);}
 

@@ -63,46 +63,7 @@ PlotA::PlotA (
         sizer.startOffsetM(),
         sizer.endOffsetM(),
     }
-{
-    std::cout << "_x_space, minx, maxX, unit_x__px: " << _x_space__px << ", " << _min_x << ", " << _max_x << ", " << _unit_x__px << std::endl;
-
-}
-
-void PlotA::print (
-    std::vector<Point> points,
-    bool clear,
-    Renderer* renderer
-)
-{ 
-    (void) clear;
-    _x_axis.print(renderer);
-    _y_axis.print(renderer);
-
-    std::vector<SDL_Rect> rects{};
-    for (Point point : points)
-    {
-        int x = 
-            _cross_x__px +                                      
-            _unit_x__px *_start_offset_m +      
-            ( _unit_x__px * (point.x() - _min_x) ) - 
-            _dot__px/2;                               
-            
-        int y = 
-            _cross_y__px -
-            _unit_y__px * _start_offset_m -
-            ( _unit_y__px * (point.y() - _min_y)) -
-            _dot__px/2;
-
-        std::vector<Coordinate> coordinates;
-        coordinates.push_back(Coordinate(x, y));
-        renderer->addBlocksByColor(
-            _dot__px,
-            _dot__px,
-            coordinates,
-            point.rgba()
-        );
-    }
-}
+{}
 
 void PlotA::print (
     std::unordered_map<Color, std::vector<Point>> pointsPerColor,
@@ -206,7 +167,7 @@ int PlotA::calcCrossYPx (int topLeftYPx) // TODO, I think I should be calling th
         topLeftYPx + _unit_y__px * (_start_offset_m + _end_offset_m + _y_diff);
 }
 
-void PlotA::moveTopLeft (int topLeftXPx, int topLeftYPx)
+void PlotA::setTopLeft (int topLeftXPx, int topLeftYPx)
 {
     _top_left_x__px = topLeftXPx;
     _top_left_y__px = topLeftYPx;

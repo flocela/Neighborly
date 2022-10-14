@@ -11,7 +11,7 @@ public:
     Point(
         double x, // TODO why do these have to doubles?
         double y,
-        Color color
+        Color color // TODO, color isn't used.
     ):
     _x{x},
     _y{y},

@@ -28,9 +28,8 @@ class GrColorKeyPrinter : public ColorKey
     }
 
     void print (Renderer* renderer);
-    int getHeightPx () { return _title_letter.getHeightIncLSpace(); } // TODO use sizeY() instead. delete this function
-    int sizeX () override;
-    int sizeY () override { return _title_letter.getHeightIncLSpace(); }
+    int sizeXPx () override;
+    int sizeYPx () override { return _title_letter.getHeightIncLSpace(); }
     void setCharWidthMultiplier (double multiplier) { _char_width_multiplier = multiplier;}
 
     void setTopCenter (int xPx, int yPx) {

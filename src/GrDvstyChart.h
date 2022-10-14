@@ -33,9 +33,9 @@ GrDvstyChart (
     _plot{std::move(plot)}
 {   
     _title->setTopCenter(topLeftXPx + xSpace/2, topLeftYPx);
-    _key->setTopCenter(topLeftXPx + xSpace/2, topLeftYPx + _title->sizeY());
-    _plot->moveTopLeft(topLeftXPx, topLeftYPx + _title->sizeY() + _key->getHeightPx());
-    _plot->setXYSpacePx(xSpace, ySpace - _title->sizeY() - _key->sizeY());
+    _key->setTopCenter(topLeftXPx + xSpace/2, topLeftYPx + _title->sizeYPx());
+    _plot->setTopLeft(topLeftXPx, topLeftYPx + _title->sizeYPx() + _key->sizeYPx());
+    _plot->setXYSpacePx(xSpace, ySpace - _title->sizeYPx() - _key->sizeYPx());
 }
 
 // TODO this should be const Resident and const House
