@@ -19,10 +19,8 @@ public:
        _top_center_y__px {topCenterYPx},
        _title{title} {}
 
-    // returns the number of letters in the title.
-    int sizeXPx() { return _title.length(); }
+    int sizeXPx() { return _title.length() * _l.letterHeight() * _l.widthMultiplier(); }
 
-    // returns the size of the title including line space below the title
     int sizeYPx() { return _l.getHeightIncLSpace(); }
 
     void setLetterHeight (int height) { _l.setLetterHeight(height);}

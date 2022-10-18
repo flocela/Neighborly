@@ -25,6 +25,10 @@ public:
     virtual int getXSpacePx () = 0;
 
     virtual int getYSpacePx () = 0;
+
+    virtual int sizeXPx () = 0;
+
+    virtual int sizeYPx () = 0;
     
 };
 

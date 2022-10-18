@@ -46,6 +46,9 @@ void print (
     Renderer* renderer
 );
 
+int sizeXPx();
+int sizeYPx();
+
 private:
 
 std::unordered_map<int, BaseColor> _colors;

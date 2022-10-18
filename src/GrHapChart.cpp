@@ -75,3 +75,13 @@ std::set<Resident*> GrHapChart::getResidentsInTheseHouses (
 
     return residents;
 }
+
+int GrHapChart::sizeXPx ()
+{
+    return _plot->sizeXPx();
+}
+
+int GrHapChart::sizeYPx ()
+{
+    return _title->sizeYPx() + _key->sizeYPx() + _plot->sizeYPx();
+}

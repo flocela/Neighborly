@@ -44,6 +44,9 @@ public:
         int run,
         Renderer* renderer);
 
+    int sizeXPx();
+    int sizeYPx();
+
 private:
     std::unordered_map<int, BaseColor> _colors;
     std::set<Mood> _moods;

@@ -87,3 +87,13 @@ std::set<const Resident*> GrDvstyChart::getResidentsInHouses (
 
     return residents;
 }
+
+int GrDvstyChart::sizeXPx ()
+{
+    return _plot->sizeXPx();
+}
+
+int GrDvstyChart::sizeYPx ()
+{
+    return _title->sizeYPx() + _key->sizeYPx() + _plot->sizeYPx();
+}

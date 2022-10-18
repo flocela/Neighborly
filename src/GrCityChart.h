@@ -47,6 +47,9 @@ class GrCityChart
             std::unordered_map<const House*, const Resident*> houseToResMap,
             Renderer* renderer
         );
+
+        int sizeXPx();
+        int sizeYPx();
     
     // __px suffix means the variable is in pixels which correspond to the screen.
     // __cl suffix means the variable is using the map's coordinate system.

@@ -83,3 +83,13 @@ std::unordered_map<Color, std::vector<Point>> GrCityChart::createVectorsOfHouses
     }
     return colorToCoordinatesMap;
 }
+
+int GrCityChart::sizeXPx ()
+{
+    return _plot->sizeXPx();
+}
+
+int GrCityChart::sizeYPx ()
+{
+    return _title->sizeYPx() + _key->sizeYPx() + _plot->sizeYPx();
+}
