@@ -178,3 +178,23 @@ void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _x_axis.setTickThickness(tickThickness);
 
 }
+
+int PlotB::sizeYPx()
+{  
+    // subraction takes care of double counting of horizontal axis' thickness.
+    // axis is always at least 1 px, so subtract at least one pixel.
+    // otherwise, subtract half the axis thickness.
+    return 
+        _y_axis.sizeYPx() +
+        _x_axis.sizeYPx() -
+        (_a_format_x.axisThicknessPx() == 1? 1 : _a_format_x.axisThicknessPx()/2);
+    
+}
+
+int PlotB::sizeXPx ()
+{
+    return
+        _y_axis.sizeXPx() +
+        _x_axis.sizeXPx() - 
+        (_a_format_y.axisThicknessPx() == 1? 1 : _a_format_y.axisThicknessPx()/2);
+}

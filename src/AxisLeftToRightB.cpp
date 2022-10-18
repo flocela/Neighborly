@@ -36,7 +36,7 @@ void AxisLeftToRightB::print (Renderer* renderer)
     renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.labelHeightPx());
+        _axis_format.labelHeightPx()); // TODO don't set TextFormats
     renderer->fillBlocks(rects);
     renderer->renderTexts(texts);
 }
@@ -47,7 +47,7 @@ void AxisLeftToRightB::addHorizontalLine (std::vector<SDL_Rect>& rects)
     SDL_Rect rect{
         _x_cross__px,
         _y_cross__px - _axis_format.axisThicknessPx()/2,
-        calcRightMostPixelX() - _x_cross__px,
+        axisLengthPx(),
         _axis_format.axisThicknessPx(),
     };
     rects.push_back(rect);
@@ -79,6 +79,8 @@ void AxisLeftToRightB::addTicksAndLabels (
         currValue__px,
         topOfLabelYPx,
         std::to_string(curVal),
+        _axis_format.labelHeightPx(),
+        _axis_format.labelWidthMultiplier(),
         1
     };
 
@@ -133,4 +135,23 @@ void AxisLeftToRightB::setPxPerUnit (int pixels)
     _min_tick_spacing = calcMinTickSpacing(_px_per_unit);
     _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
 
+}
+
+int AxisLeftToRightB::axisLengthPx ()
+{
+   return calcRightMostPixelX() - _x_cross__px + 1; // TODO is this +1 correct?
+}
+
+int AxisLeftToRightB::sizeXPx ()
+{
+    return axisLengthPx();
+}
+
+int AxisLeftToRightB::sizeYPx ()
+{
+    return 
+        _axis_format.axisThicknessPx() +
+        _axis_format.majTickLengthOutsideChart() +
+        _axis_format.labelLineSpacePx() +
+        _axis_format.labelHeightPx();
 }

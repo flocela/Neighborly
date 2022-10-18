@@ -30,12 +30,32 @@ class Renderer {
 		void renderText (
 			int x, 
 			int y,
-			std::string text,
-			int centered
+			std::string textString,
+			int letterHeight,
+			double widthMultiplier,
+			SDL_Color textColor,
+			SDL_Color textBackgroundColor,
+			int position
+		);
+
+		void renderText (
+			int x, 
+			int y,
+			std::string textString,
+			int letterHeight,
+			double widthMultiplier,
+			int position
 		);
 
 		void renderTexts (std::vector<TextRect> texts);
 
+		void renderTexts (
+			std::vector<TextRect> texts,
+			SDL_Color textColor,
+			SDL_Color textBackgroundColor
+		);
+
+		// TODO remove, I set text formats when priting text
 		void setTextFormats (
 			SDL_Color textColor,
 			SDL_Color textBackgroundColor,
@@ -68,27 +88,16 @@ class Renderer {
   		const std::size_t screen_width;
   		const std::size_t screen_height;
 
-		SDL_Color _text_color;
-		SDL_Color _text_background_color;
+
+		SDL_Color _text_color = {100, 100, 100, 100};
+		SDL_Color _text_background_color = {0xAA, 0xFF, 0xFF, 0xFF};
 		int _font_height;
-		double _width_multiplier = 0.3;
+		double _width_multiplier = 0.3; // TODO is passed in with every render text, shoudl be deleted.
 
 		bool initVideo ();
 		bool linuxSettings ();
 		bool initWindow ();
 		bool initRenderer ();
-
-		void renderText (
-			int x, 
-			int y, 
-			int fontSize,
-			std::string text,
-			SDL_Color textColor,
-			SDL_Color backgroundColor,
-			int centered
-		);
-
-		
 
 };
 

@@ -80,6 +80,10 @@ private:
         "Neighbors"
     );
 
+    // text color and text background color
+    SDL_Color textColor = {100, 100, 100, 100};
+	SDL_Color textBackgroundColor = {0xAA, 0xFF, 0xFF, 0xFF};
+
     /* COLUMNS */
 
     // Two columns: City Map chart is in the left. Diversity and Happiness charts are in the right.

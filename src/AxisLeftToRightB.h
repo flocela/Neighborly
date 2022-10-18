@@ -25,6 +25,9 @@ class AxisLeftToRightB
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
         void setTickThickness (int tickThicknessPx) {_tick_thickness__px = tickThicknessPx;}
+
+        int sizeYPx();
+        int sizeXPx();
     
     private:
         AxisFormat _axis_format;
@@ -64,6 +67,8 @@ class AxisLeftToRightB
             return (pixelsPerUnit > 10)? 5 : 10; 
             
         }
+
+        int axisLengthPx();
         
 };
 

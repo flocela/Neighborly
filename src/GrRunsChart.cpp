@@ -11,5 +11,7 @@ void GrRunsChart::print (int numOfRuns, Renderer* renderer)
         _x_offset + (_x_space_length__px/2), 
         _y_offset,
         "Runs: " + std::to_string(numOfRuns) + " ",
+        _title_letter.letterHeight(),
+        _title_letter.widthMultiplier(),
         1);
 }

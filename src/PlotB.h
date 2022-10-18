@@ -45,6 +45,10 @@ public:
 
     int getYSpacePx () override { return _y_space__px; }
 
+    // returns the size of the Plot in x and y directions
+    int sizeYPx();
+    int sizeXPx();
+
 
 private:
 

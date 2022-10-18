@@ -109,6 +109,26 @@ void PlotA::print (
 
 }
 
+int PlotA::sizeYPx()
+{  
+    // subraction takes care of double counting of horizontal axis' thickness.
+    // axis is always at least 1 px, so subtract at least one pixel.
+    // otherwise, subtract half the axis thickness.
+    return 
+        _y_axis.sizeYPx() +
+        _x_axis.sizeYPx() -
+        (_a_format_x.axisThicknessPx() == 1? 1 : _a_format_x.axisThicknessPx()/2);
+    
+}
+
+int PlotA::sizeXPx ()
+{
+    return
+        _y_axis.sizeXPx() +
+        _x_axis.sizeXPx() - 
+        (_a_format_y.axisThicknessPx() == 1? 1 : _a_format_y.axisThicknessPx()/2);
+}
+
 int PlotA::calcUnitSizeXPx ()
 {
     if (_x_space__px <= 0 || _y_space__px <= 0)

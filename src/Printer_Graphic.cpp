@@ -16,8 +16,6 @@ Printer_Graphic::Printer_Graphic (
     int numOfRuns
 )
 {
-    std::cout << "Printer_Graphic x_space_px: " << _x_space__px << std::endl;
-    std::cout << "PrinterGraphic x_chart_space__px: " << _x_chart_space__px << std::endl;
     _window_title->setTitle(title);
 
     _colors = colors;

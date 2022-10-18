@@ -41,16 +41,23 @@ public:
 
     int getTopLeftYPx () override { return _top_left_y__px;}
 
+    // This is the amount of space given to the Plot. It may be bigger than this because 
+    // of the minimumUnitSize from the sizer
     int getXSpacePx () override { return _x_space__px; }
 
+    // This is the amount of space given to the Plot. It may be bigger than this because 
+    // of the minimumUnitSize from the sizer
     int getYSpacePx () override { return _y_space__px; }
 
+    // returns the size of the Plot in x and y directions
+    int sizeYPx();
+    int sizeXPx();
 
 private:
 
     AxisFormat _a_format_x;
     AxisFormat _a_format_y;
-    int _min_unit__px = 6;
+    int _min_unit__px = 6; // TODO should this be set here, it's set int the constructor
     // Start offset multiplier is used to determine space from cross haris to first value.
     // Space to first value is _start_offset_m * _unit_space__px.
     int _start_offset_m;

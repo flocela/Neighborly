@@ -30,6 +30,11 @@ class AxisTopToBottomL
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
         void setTickThickness (int tickThicknessPx) {_tick_thickness__px = tickThicknessPx;}
+        // returns the size of Axis
+        int sizeYPx();
+
+        // returns the size of the Axis
+        int sizeXPx();
 
     private:
         AxisFormat _axis_format;
@@ -47,9 +52,10 @@ class AxisTopToBottomL
 
         void addVerticalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
-        int calcBotMostPixelY ();
+        int calcBotMostPixelYPx ();
         int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 5; }
         int calcMajTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
+        int axisLengthPx();
         
         
 };

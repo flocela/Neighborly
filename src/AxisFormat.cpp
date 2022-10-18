@@ -65,3 +65,8 @@ void AxisFormat::setLabelSpacePx (int size)
         _label_line_space__px = size;
     }
 }
+
+void AxisFormat::setLabelWidthMultiplier (double widthMultiplier)
+{
+    _label_width_multiplier = widthMultiplier;
+}

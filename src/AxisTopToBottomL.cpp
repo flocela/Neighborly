@@ -50,13 +50,13 @@ void AxisTopToBottomL::addVerticalLine (std::vector<SDL_Rect>& rects)
         _x_cross__px - _axis_format.axisThicknessPx()/2,
         _y_cross__px,
         _axis_format.axisThicknessPx(),
-        calcBotMostPixelY() - _y_cross__px + 1
+        axisLengthPx()
     };
 
     rects.push_back(rect);
 }
 
-int AxisTopToBottomL::calcBotMostPixelY ()
+int AxisTopToBottomL::calcBotMostPixelYPx ()
 {
     int diff = _max_val - _min_val;
     return _y_cross__px + (_px_per_unit * (diff + _start_offset_m + _end_offset_m));
@@ -78,6 +78,8 @@ void AxisTopToBottomL::addTicksAndLabels (
         _x_cross__px - _axis_format.majTickLengthOutsideChart(),
         curVal__px,
         std::to_string(_min_val),
+        _axis_format.labelHeightPx(),
+        _axis_format.labelWidthMultiplier(),
         3
     };
 
@@ -95,7 +97,7 @@ void AxisTopToBottomL::addTicksAndLabels (
         _tick_thickness__px
     };
     
-    int botMostPixelY = calcBotMostPixelY();
+    int botMostPixelY = calcBotMostPixelYPx();
 
     while (curVal__px <= botMostPixelY)
     {   
@@ -133,4 +135,21 @@ void AxisTopToBottomL::setPxPerUnit (int pixels)
 
 }
 
+int AxisTopToBottomL::sizeXPx ()
+{
+    return 
+        (_max_val/10) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
+        _axis_format.labelLineSpacePx() + // TODO should be line spacer from _axis_format
+        _axis_format.majTickLengthOutsideChart() +
+        _axis_format.axisThicknessPx();
+}
 
+int AxisTopToBottomL::sizeYPx()
+{
+    return axisLengthPx();
+}
+
+int AxisTopToBottomL::axisLengthPx()
+{
+    return calcBotMostPixelYPx() - _y_cross__px + 1; // TODO is this correct?
+}

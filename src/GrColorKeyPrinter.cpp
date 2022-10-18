@@ -6,7 +6,7 @@ void GrColorKeyPrinter::print (Renderer* renderer)
     renderer->setTextFormats(
         {100, 100, 100, 100}, 
         {0xAA, 0xFF, 0xFF, 0xFF}, 
-        _title_letter.letterHeight()
+        _label_letter.letterHeight()
     );
 
     std::vector<int> groupIds;
@@ -34,7 +34,7 @@ void GrColorKeyPrinter::print (Renderer* renderer)
             int textWidth =  
                 (int)(text.length() *
                 renderer->widthMultiplier() *
-                _title_letter.letterHeight());
+                _label_letter.letterHeight());
             if (textWidth > longestString)
             {
                 longestString = textWidth;
@@ -53,7 +53,7 @@ void GrColorKeyPrinter::print (Renderer* renderer)
         int textWidth =  
             (int)(name.length() *
             renderer->widthMultiplier() *
-            _title_letter.letterHeight());
+            _label_letter.letterHeight());
 
         // left edge of colored box
         int boxX =
@@ -67,7 +67,7 @@ void GrColorKeyPrinter::print (Renderer* renderer)
         renderer->addBlock(
             _box_length__px,
             _box_length__px,
-            Coordinate(boxX,_top_center_y__px + ((_title_letter.letterHeight() - _box_length__px)/2)),
+            Coordinate(boxX,_top_center_y__px + ((_label_letter.letterHeight() - _box_length__px)/2)),
             _the_color_rgba[key.first]
         );
         
@@ -75,6 +75,8 @@ void GrColorKeyPrinter::print (Renderer* renderer)
             textX,
             _top_center_y__px,
             name,
+            _label_letter.letterHeight(),
+            _label_letter.widthMultiplier(),
             4
         );
         counter += 1;
@@ -100,7 +102,7 @@ int GrColorKeyPrinter::sizeXPx ()
             int textWidth =  
                 (int)(text.length() *
                 _char_width_multiplier *
-                _title_letter.letterHeight());
+                _label_letter.letterHeight());
             if (textWidth > longestString)
             {
                 longestString = textWidth;

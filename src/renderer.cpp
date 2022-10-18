@@ -15,12 +15,13 @@
 
 void Renderer::renderText (
     int x, 
-    int y, 
+    int y,
+    std::string textString,
     int letterHeight,
-	std::string textString,
+    double widthMultiplier,
 	SDL_Color textColor,
 	SDL_Color backgroundColor,
-    int centered
+    int position
 )
 {
     if (textString.size() == 0)
@@ -39,7 +40,7 @@ void Renderer::renderText (
     }
 
     SDL_Texture *text = NULL;
-    SDL_Rect textRect;
+    SDL_Rect sdlRect;
 
     SDL_Surface *textSurface = TTF_RenderText_Shaded(
         font, 
@@ -66,57 +67,97 @@ void Renderer::renderText (
         }
 
         // Account for spacing between letters and line height
-        textRect.w = _width_multiplier * letterHeight * textString.length();
-        textRect.h = letterHeight; 
+        sdlRect.w = widthMultiplier * letterHeight * textString.length();
+        sdlRect.h = letterHeight; 
         
         SDL_FreeSurface(textSurface);
     }
-    if (centered == 1) // centered horizontally
+    if (position == 1) // centered horizontally
     {
-        textRect.x = x - textRect.w/2;
-        textRect.y = y;
+        sdlRect.x = x - sdlRect.w/2;
+        sdlRect.y = y;
     }
-    else if (centered == 2) // centered vertically
+    else if (position == 2) // centered vertically
     {
-        textRect.x = x;
-        textRect.y = y - 0.5 * textRect.h;
+        sdlRect.x = x;
+        sdlRect.y = y - 0.5 * sdlRect.h;
     }
-    else if (centered == 3) // align to right side
+    else if (position == 3) // align to right side
     {
-        textRect.x = x - textRect.w;
-        textRect.y = y - 0.5 * textRect.h;
+        sdlRect.x = x - sdlRect.w;
+        sdlRect.y = y - 0.5 * sdlRect.h;
     }
-    else if (centered == 4) // align to left side
+    else if (position == 4) // align to left side
     {
-        textRect.x = x;
-        textRect.y = y;
+        sdlRect.x = x;
+        sdlRect.y = y;
     }
-    else if (centered == 5) // move up height of rect and center horizontally
+    else if (position == 5) // move up height of rect and center horizontally
     {
-        textRect.x = x - textRect.w/2;
-        textRect.y = y - textRect.h;
+        sdlRect.x = x - sdlRect.w/2;
+        sdlRect.y = y - sdlRect.h;
     }
     
     // Draw text
-    SDL_RenderCopy(sdl_renderer, text, NULL, &textRect);
+    SDL_RenderCopy(sdl_renderer, text, NULL, &sdlRect);
 }
 
 void Renderer::renderText (
     int x, 
     int y,
-    std::string text,
-    int centered
+    std::string textString,
+    int letterHeight,
+    double widthMultiplier,
+    int position
 )
 {
     renderText(
         x,
         y,
-        _font_height,
-        text,
+        textString,
+        letterHeight,
+        widthMultiplier,
         _text_color,
         _text_background_color,
-        centered
-    );
+        position);
+}
+
+void Renderer::renderTexts (std::vector<TextRect> texts)
+{
+    for (TextRect tr : texts)
+    {
+       renderText(
+           tr.xPixel, 
+           tr.yPixel, 
+           tr.text,
+           tr.letterHeight,
+           tr.widthMultiplier,
+           _text_color,
+           _text_background_color,
+           tr.position
+           );
+    }
+}
+
+void Renderer::renderTexts (
+    std::vector<TextRect> texts,
+    SDL_Color textColor,
+    SDL_Color textBackgroundColor
+)
+{
+    for (TextRect tr : texts)
+    {
+       renderText(
+           tr.xPixel, 
+           tr.yPixel, 
+           tr.text,
+           tr.letterHeight,
+           tr.widthMultiplier,
+           textColor,
+           textBackgroundColor,
+           tr.position
+           );
+    }
 }
 
 void Renderer::setTextFormats (
@@ -298,10 +339,3 @@ void Renderer::fillBlocks (std::vector<SDL_Rect> blocks)
     }
 }
 
-void Renderer::renderTexts (std::vector<TextRect> texts)
-{
-    for (TextRect tr : texts)
-    {
-       renderText(tr.xPixel, tr.yPixel, tr.text, tr.position);
-    }
-}

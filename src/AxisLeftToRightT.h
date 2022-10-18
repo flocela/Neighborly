@@ -30,6 +30,9 @@ class AxisLeftToRightT
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
         void setTickThickness (int tickThicknessPx) {_tick_thickness__px = tickThicknessPx;}
+
+        int sizeYPx();
+        int sizeXPx();
     
     private:
         std::string _title;
@@ -58,6 +61,8 @@ class AxisLeftToRightT
         int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 5; }
         int calcMajTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
         int calcLabelSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
+
+        int axisLengthPx();
         
 };
 

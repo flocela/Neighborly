@@ -28,3 +28,8 @@ void Letter::setLineSpace (int space)
         _line_space = space;
     }
 }
+
+void Letter::setWidthMultiplier (double widthMultiplier)
+{
+    _width_multiplier = widthMultiplier;
+}

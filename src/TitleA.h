@@ -22,7 +22,7 @@ public:
     // returns the number of letters in the title.
     int sizeXPx() { return _title.length(); }
 
-    // returns the size of the size of the title including line space below the title
+    // returns the size of the title including line space below the title
     int sizeYPx() { return _l.getHeightIncLSpace(); }
 
     void setLetterHeight (int height) { _l.setLetterHeight(height);}
@@ -45,7 +45,13 @@ public:
         renderer->setTextFormats({100, 100, 100, 100},
                                  {0xAA, 0xFF, 0xFF, 0xFF},
                                  _l.letterHeight());
-        renderer->renderText(_top_center_x__px, _top_center_y__px, _title, 1);
+        renderer->renderText(
+            _top_center_x__px,
+            _top_center_y__px,
+            _title,
+            _l.letterHeight(),
+            _l.widthMultiplier(),
+            1);
     }
 
 private:

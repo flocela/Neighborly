@@ -26,6 +26,7 @@ class AxisFormat
 
         int labelHeightPx () {return _label_letter_height;} // these are the numbers along the axis
         int labelLineSpacePx () {return _label_line_space__px;}
+        double labelWidthMultiplier () {return _label_width_multiplier;}
 
         // How much space is taken up by the height of the labels and the ticks.
         // On a vertical axis, can be thought of as how wide the axis is.
@@ -38,6 +39,7 @@ class AxisFormat
 
         void setLabelLetterHeight (int size);
         void setLabelSpacePx (int space);
+        void setLabelWidthMultiplier (double widhtMultiplier); 
     
 
     private:
@@ -46,8 +48,10 @@ class AxisFormat
         int _min_tick_length__px = 4;
         int _tick_length_inside_chart__px = 2; // does not include thickness of axis
 
-        int _label_letter_height = 22;  
+        int _label_letter_height = 22;
         int _label_line_space__px = 2;
+        // width multiplier is used when rendering the text. 
+        double _label_width_multiplier = 0.3;
 };
 
 #endif
