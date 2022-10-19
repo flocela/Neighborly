@@ -46,6 +46,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createBaseResi
     int howMany = 13;
     double movement = 2.0;
     double happinessAtZero = 1.0;
+    double happinessWithZeroNeighbors = 100.0;
     double happinessAtOne = 0.5;
     double locationOfDrop = 0.5;
 
@@ -57,6 +58,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createBaseResi
             groupNumber,
             movement,
             happinessGoal,
+            happinessWithZeroNeighbors,
             happinessAtZero,
             happinessAtOne,
             locationOfDrop
@@ -89,6 +91,15 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
         _movmentOrigPrompt,
         _movementTypePrompt,
         _movemenRangePrompt
+    };
+
+    Question_Double qHappinessWithZeroNeighbors{
+        3,
+        0.0,
+        100.0,
+        _happinessWithZeroNeighborsPrompt,
+        _happinessWithZeroNeighborsTypePrompt,
+        _happinessWithZeroNeighborsRangePrompt
     };
 
     Question_Double qHappinessAtZero{
@@ -131,6 +142,13 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
         " these residents from the user."
     );
 
+    double happinessWithZeroNeighbors = askUserForDouble(
+        ui,
+        qHappinessWithZeroNeighbors,
+        "Can not get information needed to determine the happiness value with"
+        " zero neighbors."
+    );
+
     double happinessAtZero = askUserForDouble(
         ui,
         qHappinessAtZero,
@@ -160,6 +178,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
             groupNumber,
             movement,
             happinessGoal,
+            happinessWithZeroNeighbors,
             happinessAtZero,
             happinessAtOne,
             locationOfDrop

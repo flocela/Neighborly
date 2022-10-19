@@ -6,9 +6,11 @@ Resident_Falling::Resident_Falling (
     int groupNumber,
     double allowedMovementDistance,
     double happinessGoal,
+    double happinessWithZeroNeighbors,
     double happinessValueAtZeroDiversity,
     double happinessValueAtOneDiversity):
     Resident(id, groupNumber, allowedMovementDistance, happinessGoal),
+    _happiness_with_zero_neighbors(happinessWithZeroNeighbors),
     _happiness_at_zero_diversity(happinessValueAtZeroDiversity),
     _happiness_at_one_diversity(happinessValueAtOneDiversity),
     _happiness_func{
@@ -35,6 +37,8 @@ double Resident_Falling::implCalculateHappiness (
     int numOfAdjacentHouses
 ) const
 {
+    if (neighbors.empty())
+        return _happiness_with_zero_neighbors;
     int like  = 0;
     int diff  = 0;
     for (Resident* res : neighbors)

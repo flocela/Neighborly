@@ -14,6 +14,7 @@ Resident_StepDown blueNeighbor006{
     1, // color
     0.0,         // movement
     0.25,        // happiness goal
+    1.0,
     0.75,        // happiness at zero diversity
     0.25,        // happiness at one diversity
     0.5          // diversity where drop happens
@@ -23,7 +24,8 @@ Resident_StepDown blueNeighbor007{
     7,
     1,
     0.0,  
-    0.25, 
+    0.25,
+    1.0,
     0.75, 
     0.25, 
     0.5   
@@ -33,7 +35,8 @@ Resident_StepDown blueNeighbor008{
     8,
     1,
     0.0,  
-    0.25, 
+    0.25,
+    1.0,
     0.75, 
     0.25, 
     0.5   
@@ -43,7 +46,8 @@ Resident_StepDown blueNeighbor011{
     11,
     1,
     0.0,  
-    0.25, 
+    0.25,
+    1.0, 
     0.75, 
     0.25, 
     0.5   
@@ -53,7 +57,8 @@ Resident_StepDown blueNeighbor012{
     12,
     1,
     0.0,  
-    0.25, 
+    0.25,
+    1.0, 
     0.75, 
     0.25, 
     0.5   
@@ -63,7 +68,8 @@ Resident_StepDown blueNeighbor016{
     16,
     1,
     0.0,  
-    0.25, 
+    0.25,
+    1.0, 
     0.75, 
     0.25, 
     0.5   
@@ -73,7 +79,8 @@ Resident_StepDown blueNeighbor018{
     18,
     1, 
     0.0,  
-    0.25, 
+    0.25,
+    1.0, 
     0.75, 
     0.25, 
     0.5   
@@ -83,7 +90,8 @@ Resident_StepDown redNeighbor013{
     13,
     3, 
     0.0,  
-    0.25, 
+    0.25,
+    1.0, 
     0.75, 
     0.25, 
     0.5   
@@ -93,7 +101,8 @@ Resident_StepDown redNeighbor014{
     14,
     3, 
     0.0,  
-    0.25, 
+    0.25,
+    1.0, 
     0.75, 
     0.25, 
     0.5   
@@ -103,7 +112,8 @@ Resident_StepDown redNeighbor017{
     17,
     3, 
     0.0,  
-    0.25, 
+    0.25,
+    1.0, 
     0.75, 
     0.25, 
     0.5   
@@ -113,7 +123,8 @@ Resident_StepDown redNeighbor019{
     19,
     3,
     0.0,  
-    0.25, 
+    0.25,
+    1.0, 
     0.75, 
     0.25, 
     0.5   
@@ -123,7 +134,8 @@ Resident_StepDown redNeighbor022{
     22,
     3, 
     0.0,  
-    0.25, 
+    0.25,
+    1.0,
     0.75, 
     0.25, 
     0.5   
@@ -133,7 +145,8 @@ Resident_StepDown redNeighbor023{
     23,
     3, 
     0.0,  
-    0.25, 
+    0.25,
+    1.0,
     0.75, 
     0.25, 
     0.5   
@@ -143,7 +156,8 @@ Resident_StepDown redNeighbor024{
     24,
     3,
     0.0,  
-    0.25, 
+    0.25,
+    1.0,
     0.75, 
     0.25, 
     0.5   

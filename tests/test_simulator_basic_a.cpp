@@ -90,6 +90,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is the whole cit
             1, // color
             5.0,         // movement
             0.5,         // happiness goal
+            1.0,
             0.75,        // happiness at diversity of zero
             0.25,        // happiness at diversity of one
             0.5          // diversity where drop happens
@@ -104,6 +105,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is the whole cit
             3, // color
             5.0,        // movement
             0.5,        // happiness goal
+            1.0,
             0.75,       // happiness at diversity of zero
             0.25,       // happiness at diversity of one
             0.5
@@ -177,6 +179,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is zero")
             1, // color
             0.0,         // NO movement
             0.5,         // happiness goal
+            1.0,
             0.75,        // happiness at diversity of zero
             0.25,        // happiness at diversity of one
             0.5          // diversity where drop happens
@@ -191,6 +194,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is zero")
             3, // color
             0.0,        // NO movement
             0.5,        // happiness goal
+            1.0,
             0.75,       // happiness at diversity of zero
             0.25,       // happiness at diversity of one
             0.5         // diversity where drop happens
@@ -264,6 +268,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is 2.0")
             1, // color
             2.0,         // allowable movement
             0.5,         // happiness goal
+            1.0,
             0.75,        // happiness at diversity of zero
             0.25,        // happiness at diversity of one
             0.5          // diversity where drop happens
@@ -278,6 +283,7 @@ TEST_CASE ("2 runs with many residents whose allowable movement is 2.0")
             3, // color
             2.0,        // allowable movement
             0.5,        // happiness goal
+            1.0,
             0.75,       // happiness at diversity of zero
             0.25,       // happiness at diversity of one
             0.5         // diversity where drop happens

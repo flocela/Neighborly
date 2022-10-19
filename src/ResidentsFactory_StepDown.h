@@ -66,7 +66,17 @@ class ResidentsFactory_StepDown: public ResidentsFactory
             "Nope, that's not a number, i.e. 0.2 or 13.0";
         std::string _movemenRangePrompt = 
             "That number is not positive. It must be 0.0 or greater.";
-                                        
+
+        /*  Prompts for the Happiness Value when resident has no neighbors.    */
+        std::string _happinessWithZeroNeighborsPrompt  = 
+            "What happiness value will \"StepDown Residents\" have when they have"
+            " zero neighbors?";
+        std::string _happinessWithZeroNeighborsTypePrompt  = 
+            "Nope, that's not a number, i.e. 0.2 or 30.0";
+        std::string _happinessWithZeroNeighborsRangePrompt = 
+            "That number is too small or too large. Should be between 0.0 and 100.0"
+            " inclusive.";
+
         /*  Prompts for the Happiness Value when the Diversity is zero for 
             this group of residents.    */
         std::string _happinessAtZeroOrigPrompt  = 

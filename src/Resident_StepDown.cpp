@@ -6,10 +6,12 @@ Resident_StepDown::Resident_StepDown (
     int groupNumber,
     double allowedMovementDistance,
     double happinessGoal,
+    double happinessWithZeroNeighbors,
     double happinessValueAtZeroDiversity,
     double happinessValueAtOneDiversity,
     double diversityWhereDropHappens):
     Resident(id, groupNumber, allowedMovementDistance, happinessGoal),
+    _happiness_with_zero_neighbors(happinessWithZeroNeighbors),
     _happiness_at_zero_diversity(happinessValueAtZeroDiversity),
     _happiness_at_one_diversity(happinessValueAtOneDiversity),
     _diversity_where_drop_happens(diversityWhereDropHappens),
@@ -38,6 +40,8 @@ double Resident_StepDown::implCalculateHappiness (
     int numOfAdjacentHouses
 ) const
 {
+    if (neighbors.empty())
+        return _happiness_with_zero_neighbors;
     int like  = 0;
     int diff  = 0;
     for (Resident* res : neighbors)

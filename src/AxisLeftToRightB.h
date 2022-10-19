@@ -25,7 +25,6 @@ class AxisLeftToRightB
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
         void setTickThickness (int tickThicknessPx) {_tick_thickness__px = tickThicknessPx;}
-
         int sizeYPx();
         int sizeXPx();
     
@@ -44,7 +43,6 @@ class AxisLeftToRightB
 
         void addHorizontalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
-
         int calcRightMostPixelX ();
 
         int calcMinTickSpacing (int pixelsPerUnit) {

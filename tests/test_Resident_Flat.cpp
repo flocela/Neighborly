@@ -7,15 +7,15 @@ using Catch::Matchers::Contains;
 // Only arugment that matteres is Color argument.
 Resident_Flat blueNeighbor01{1, 1, 0.0, 0.0, 0.0 };
 
-Resident_StepDown redNeighbor02{2, 3, 0.0, 0.25, 0.1, 0.0, 0.0};
+Resident_StepDown redNeighbor02{2, 3, 0.0, 0.25, 1.0, 0.1, 0.0, 0.0};
 
-Resident_StepDown redNeighbor03{3, 3, 0.0, 0.25, 0.1, 0.0, 0.0};
+Resident_StepDown redNeighbor03{3, 3, 0.0, 0.25, 1.0, 0.1, 0.0, 0.0};
     
-Resident_StepDown greenNeighbor04{4, 2, 0.0, 0.0, 0.1, 0.0, 0.0};
+Resident_StepDown greenNeighbor04{4, 2, 0.0, 0.0, 1.0, 0.1, 0.0, 0.0};
 
-Resident_StepDown greenNeighbor05{5, 2, 0.0, 0.0, 0.1, 0.0, 0.0};
+Resident_StepDown greenNeighbor05{5, 2, 0.0, 0.0, 1.0, 0.1, 0.0, 0.0};
 
-Resident_StepDown greenNeighbor06{6, 2, 0.0, 0.0, 0.1, 0.0, 0.0};
+Resident_StepDown greenNeighbor06{6, 2, 0.0, 0.0, 1.0, 0.1, 0.0, 0.0};
 
 TEST_CASE("Resident_Flat Ctor throws exception if happinessGoal is greater than 1.0.")
 {   

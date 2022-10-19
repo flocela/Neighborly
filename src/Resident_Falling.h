@@ -12,6 +12,7 @@ class Resident_Falling: public Resident
             int id,
             int groupNumber,
             double allowedMovementDistance,
+            double happinessWithZeroNeighbors,
             double happinessGoal,
             double happinessValueAtZeroDiversity,
             double happinessValueAtOneDiversity);
@@ -36,6 +37,7 @@ class Resident_Falling: public Resident
         ) const override;
 
     private:
+        double _happiness_with_zero_neighbors;
         double _happiness_at_zero_diversity;
         double _happiness_at_one_diversity;
         HappinessFunc_Falling _happiness_func;

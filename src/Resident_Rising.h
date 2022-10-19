@@ -13,6 +13,7 @@ class Resident_Rising: public Resident
             int groupNumber,
             double allowedMovementDistance,
             double happinessGoal,
+            double happinessWithZeroNeighbors,
             double happinessValueAtZeroDiversity,
             double happinessValueAtOneDiversity);
         Resident_Rising (const Resident_Rising& obj) = default;
@@ -36,6 +37,7 @@ class Resident_Rising: public Resident
         ) const override;
 
     private:
+        double _happiness_with_zero_neighbors;
         double _happiness_at_zero_diversity;
         double _happiness_at_one_diversity;
         HappinessFunc_Rising _happiness_func;

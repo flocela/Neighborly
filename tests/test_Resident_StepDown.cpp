@@ -27,6 +27,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if happinessGoal is greater t
             2, 
             0.0, 
             1.2, //happinessGoal
+            1.0,
             0.2, 
             0.1,
             0.0
@@ -42,7 +43,8 @@ TEST_CASE("Resident_StepDown Ctor throws exception if happinessGoal is less than
             0, 
             2, 
             0.0, 
-            -0.1, //happinessGoal 
+            -0.1, //happinessGoal
+            1.0,
             0.2, 
             0.1,
             0.0 
@@ -59,6 +61,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if happinessValue at zero is 
             2, 
             0.0, 
             0.0,
+            1.0,
             -0.2, // happinessValueAtZeroDiversity
             0.1,
             0.0
@@ -75,6 +78,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if happinessValue at zero is 
             2, 
             0.0, 
             0.0,
+            1.0,
             1.2, // happinessValueAtZeroDiversity
             0.1,
             0.0
@@ -91,6 +95,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if happinessValue at one is l
             2, 
             0.0, 
             0.0,
+            1.0,
             0.2, 
             -0.1, // happinessValueAtOneDiversity
             0.0
@@ -107,6 +112,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if happinessValue at one is g
             2, 
             0.0, 
             0.0,
+            1.0,
             0.2, 
             1.1, // happinessValueAtOneDiversity
             0.0
@@ -123,6 +129,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if diverstiyWhereDropHappens 
             2, 
             0.0, 
             0.0,
+            1.0,
             0.2, 
             0.1,
             -0.1 //diversityWhereDropHappens
@@ -139,6 +146,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if diverstiyWhereDropHappens 
             2, 
             0.0, 
             0.0,
+            1.0,
             0.2, 
             0.1,
             1.1 //diversityWhereDropHappens
@@ -156,6 +164,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if"
             2, 
             0.0, 
             0.0,
+            1.0,
             0.1, //happinessValueAtZeroDiversity
             0.2, //happinessValueAtOneDiversity
             0.0 
@@ -176,6 +185,7 @@ TEST_CASE("Resident_StepDown Ctor throws exception if"
             2, 
             0.0, 
             0.0,
+            1.0,
             0.2, //happinessValueAtZeroDiversity
             0.2, //happinessValueAtOneDiversity
             0.0 
@@ -195,6 +205,7 @@ TEST_CASE("getHappiness() returns lowered happinessValue at point where drop hap
         2, 
         0.0,  
         0.0,
+        1.0,
         0.2, // happinessValueAtZeroDiversity
         0.1, // happinessValueAtOneDiversity
         0.25  // diversityWhereDropHappens
@@ -219,6 +230,7 @@ TEST_CASE("getHappiness() returns higher happinessValue before diversity drop.")
         2, 
         0.0,  
         0.0, 
+        1.0,
         0.2, // happinessValueAtZeroDiversity
         0.1, // happinessValueAtOneDiversity
         0.5   // diversityWhereDropHappens
@@ -243,6 +255,7 @@ TEST_CASE("getHappines() returns lower happinessValue afterDiversity drop.")
         2, 
         0.0, 
         0.0,
+        1.0,
         0.2,
         0.1,
         0.5
@@ -266,6 +279,7 @@ TEST_CASE("Resident_StepDown toStrBasic()")
         2, 
         0.0,  // allowedMovementDistance
         0.25, // happinessGoal
+        1.0,
         0.75, // happinessValueAtZeroDiversity
         0.25, // happinessValueAtOneDiversity
         0.5   // diversityWhereDropHappens
@@ -317,6 +331,7 @@ TEST_CASE("Resident_StepDown findHome()"
         2, 
         0.0,  // allowed movement
         0.25, // happiness Goal
+        1.0,
         0.5,  // happinessValueAtZeroDiversity
         0.1,  // happinessValueAtOneDiversity
         0.5   // stepDown Diversity x-value
@@ -383,6 +398,7 @@ TEST_CASE("Resident_StepDown findHome()"
         2, 
         0.0, // allowed movement
         0.6, // happiness Goal
+        1.0,
         1.0, // happinessValueAtZeroDiversity
         0.0, // happinessValueAtOneDiversity
         0.5  // drop location 
@@ -464,6 +480,7 @@ TEST_CASE("Resident_StepDown findBestHome()"
         2, 
         0.0, // allowed movement
         0.6, // happiness Goal
+        1.0,
         1.0, // happinessValueAtZeroDiversity
         0.0, // happinessValueAtOneDiversity
         0.5  // drop location 

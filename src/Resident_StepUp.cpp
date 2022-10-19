@@ -6,10 +6,12 @@ Resident_StepUp::Resident_StepUp (
     int groupNumber,
     double allowedMovementDistance,
     double happinessGoal,
+    double happinessValueWithZeroNeighbors,
     double happinessValueAtZeroDiversity,
     double happinessValueAtOneDiversity,
     double diversityWhereRiseHappens):
     Resident(id, groupNumber, allowedMovementDistance, happinessGoal),
+    _happiness_with_zero_neighbors{happinessValueWithZeroNeighbors},
     _happiness_at_zero_diversity{happinessValueAtZeroDiversity},
     _happiness_at_one_diversity{happinessValueAtOneDiversity},
     _diversity_where_rise_happens{diversityWhereRiseHappens},
@@ -39,6 +41,8 @@ double Resident_StepUp::implCalculateHappiness (
     int numOfAdjacentHouses
 ) const
 {
+    if (neighbors.empty())
+        return _happiness_with_zero_neighbors;
     int like  = 0;
     int diff  = 0;
     for (Resident* res : neighbors)

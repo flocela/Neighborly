@@ -27,6 +27,7 @@ TEST_CASE("Resident_StepUp Ctor throws exception if happinessGoal is greater tha
             2, 
             0,
             1.2, // happinessGoal
+            1.0,
             0.0,
             .1,
             0.2
@@ -43,6 +44,7 @@ TEST_CASE("Resident_StepUp Ctor throws exception if happinessGoal is less than 0
             2, 
             0,
             -.1, // happinessGoal
+            1.0,
             0.1,
             0.2,
             0
@@ -59,6 +61,7 @@ TEST_CASE("Resident_StepUp Ctor throws exception if happinessValue at zero is le
             2, 
             0,
             0,
+            1.0,
             -.1, // happinessValueAtZeroDiversity 
             .1,
             0
@@ -75,6 +78,7 @@ TEST_CASE("Resident_StepUp Ctor throws exception if happinessValue at zero is gr
             2, 
             0,
             0,
+            1.0,
             1.2, // happinessValueAtZeroDiversity 
             .1,
             0
@@ -91,6 +95,7 @@ TEST_CASE("Resident_StepUp Ctor throws exception if happinessValue at one is les
             2, 
             0,
             0,
+            1.0,
             0.2,  
             -.1, // happinessValueAtOneDiversity
             0
@@ -107,6 +112,7 @@ TEST_CASE("Resident_StepUp Ctor throws exception if happinessValue at one is gre
             2, 
             0,
             0,
+            1.0,
             0.2,  
             1.1, // happinessValueAtOneDiversity
             0
@@ -123,6 +129,7 @@ TEST_CASE("Resident_StepUp Ctor throws exception if diversityWhereRiseHappens is
             2, 
             0,
             0,
+            1.0,
             0.1,  
             0.2,
             -.1 // diversityWhereRiseHappens
@@ -139,6 +146,7 @@ TEST_CASE("Resident_StepUp Ctor throws exception if diverstiyWhereRiseHappens is
             2, 
             0,
             0,
+            1.0,
             0.1,  
             0.2,
             1.1 // diversityWhereRiseHappens
@@ -156,6 +164,7 @@ TEST_CASE("Resident_StepUp Ctor throws exception if"
             2, 
             0,
             0,
+            1.0,
             .75, //happinessValueAtZeroDiversity
             .25, //happinessValueAtOneDiversity
             0), 
@@ -173,6 +182,7 @@ TEST_CASE("Resident_StepUp Ctor throws exception if"
             2, 
             0,
             0,
+            1.0,
             .75, // happinessValueAtZeroDiversity
             .75, // happinessValueAtOneDiversity
             0), 
@@ -189,6 +199,7 @@ TEST_CASE("getHappines() returns higher happinessValue at point where rise happe
         2, 
         0.0,  
         0.25,
+        1.0,
         0.25, // happinessValueAtZeroDiversity
         0.75, // happinessValueAtOneDiversity
         0.50  // diversityWhereRiseHappens
@@ -212,7 +223,8 @@ TEST_CASE("getHappines() returns lower happinessValue before diversity rise.")
         0, 
         1, 
         0.0,  
-        0.0, 
+        0.0,
+        1.0,
         0.25, // happinessValueAtZeroDiversity
         0.75, // happinessValueAtOneDiversity
         0.5   // diversityWhereRiseHappens
@@ -237,6 +249,7 @@ TEST_CASE("getHappiness() returns higher happinessValue afterDiversity rise.")
         1, 
         0.0, 
         0.0,
+        1.0,
         0.25, // happinessValueAtZeroDiversity
         0.75, // happinessValueAtOneDiversity
         0.5   // diversityWhereRiseHappens
@@ -260,6 +273,7 @@ TEST_CASE("Resident_StepUp toStrBasic()")
         2, 
         0.0,  // allowedMovementDistance 
         0.25, // happinessGoal
+        1.0,
         0.25, // happinessValueAtZeroDiversity
         0.75, // happinessValueAtOneDiversity
         0.5   // diversityWhereRiseHappens
@@ -311,6 +325,7 @@ TEST_CASE("Resident_StepUp findHome()"
         2, 
         0.0,  // allowed movement
         0.25, // happiness Goal
+        1.0,
         0.0,  // happinessValueAtZeroDiversity
         1.0,  // happinessValueAtOneDiversity
         0.5   // location of rise
@@ -377,6 +392,7 @@ TEST_CASE("Resident_StepUp findHome()"
         1, 
         0.0, // allowed movement
         0.6, // happiness Goal
+        1.0,
         0.0, // happinessValueAtZeroDiversity
         1.0, // happinessValueAtOneDiversity
         0.65  // location of rise
@@ -464,6 +480,7 @@ TEST_CASE("Resident_StepUp findBestHome()"
         1, 
         0.0, // allowed movement
         0.6, // happiness Goal
+        1.0,
         0.0, // happinessValueAtZeroDiversity
         1.0, // happinessValueAtOneDiversity
         0.65  // location of rise

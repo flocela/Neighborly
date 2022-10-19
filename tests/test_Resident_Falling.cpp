@@ -27,6 +27,7 @@ TEST_CASE("Resident_Falling Ctor throws exception if happinessGoal is less than 
             2, 
             0.0,
             -0.25, // happiness goal
+            1.0,
             0.2,
             0.1
         ), 
@@ -42,6 +43,7 @@ TEST_CASE("Resident_Falling Ctor throws exception if happinessGoal is greater th
             2, 
             0.0, 
             1.2, // happiness goal
+            1.0,
             0.2, 
             0.1 
         ), 
@@ -58,6 +60,7 @@ TEST_CASE("Resident_Falling Ctor throws exception if happinessValue at zero is l
             2, 
             0.0,
             0.0,
+            1.0,
             -0.3, // value at zero Diversity
             0.1
         ), 
@@ -73,6 +76,7 @@ TEST_CASE("Resident_Falling Ctor throws exception if happinessValue at zero is g
             2, 
             0.0,
             0.0,
+            1.0,
             1.2, // value at zero Diversity
             0.1
         ), 
@@ -88,6 +92,7 @@ TEST_CASE("Resident_Falling Ctor throws exception if happinessValue at one is le
             2, 
             0.0,
             0.0,
+            1.0,
             0.2,
             -0.3 // value at one Diversity
         ), 
@@ -103,6 +108,7 @@ TEST_CASE("Resident_Falling Ctor throws exception if happinessValue at one is gr
             2, 
             0.0,
             0.0,
+            1.0,
             0.2,
             1.2 // value at one Diversity
         ), 
@@ -119,6 +125,7 @@ TEST_CASE("Resident_Falling Ctor throws exception if"
             2, 
             0.0,
             0.0,
+            1.0,
             .25, // value at zero Diversity
             .75  // value at one Diversity
         ), 
@@ -135,6 +142,7 @@ TEST_CASE("Resident_Falling Ctor throws exception if"
             2, 
             0.0,
             0.0,
+            1.0,
             .75,
             .75
         ), 
@@ -150,6 +158,7 @@ TEST_CASE("getHappiness()")
         2, 
         0.0,  
         0.0, 
+        1.0,
         0.8, // happinessValueAtZeroDiversity
         0.2, // happinessValueAtOneDiversity
     };
@@ -171,6 +180,7 @@ TEST_CASE("Resident_Falling toStrBasic()")
         2, 
         0.0,  
         0.25, 
+        1.0,
         0.75, // happinessValueAtZeroDiversity
         0.25, // happinessValueAtOneDiversity
     };
@@ -221,6 +231,7 @@ TEST_CASE("Resident_Falling findHome()"
         2, 
         0.0,  // allowed movement
         0.25, // happiness Goal
+        1.0,
         0.5,  // happinessValueAtZeroDiversity
         0.1,  // happinessValueAtOneDiversity
     };
@@ -285,6 +296,7 @@ TEST_CASE("Resident_Falling findHome()"
         2, 
         0.0,  // allowed movement
         0.6,  // happiness Goal
+        1.0,
         1.0,  // happinessValueAtZeroDiversity
         0.0,  // happinessValueAtOneDiversity
     };
@@ -366,6 +378,7 @@ TEST_CASE("Resident_Falling findBestHome()"
         2, 
         0.0,  // allowed movement
         0.6,  // happiness Goal
+        1.0,
         1.0,  // happinessValueAtZeroDiversity
         0.0,  // happinessValueAtOneDiversity
     };

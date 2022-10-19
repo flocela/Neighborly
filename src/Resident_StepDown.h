@@ -13,6 +13,7 @@ class Resident_StepDown: public Resident
             int groupNumber,
             double allowedMovementDistance,
             double happinessGoal,
+            double happinessWithZeroNeighbors,
             double happinessValueAtZeroDiversity,
             double happinessValueAtOneDiversity,
             double diversityWhereDropHappens);
@@ -37,6 +38,7 @@ class Resident_StepDown: public Resident
         ) const override;
 
     private:
+        double _happiness_with_zero_neighbors;
         double _happiness_at_zero_diversity;
         double _happiness_at_one_diversity;
         double _diversity_where_drop_happens;
