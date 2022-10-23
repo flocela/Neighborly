@@ -27,6 +27,16 @@ public:
         int xSpacePx,
         int ySpacePx
     );
+
+    PlotA (
+        PlotSizer sizer,
+        std::unordered_map<int, BaseColor> colors,
+        std::set<Mood> moods,
+        int minX,
+        int maxX,
+        int minY, 
+        int maxY
+    );
     
     void print (
         std::unordered_map<Color, std::vector<Point>> pointsPerColor,
