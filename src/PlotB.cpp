@@ -62,6 +62,29 @@ PlotB::PlotB (
     }
 {}
 
+PlotB::PlotB (
+        PlotSizer sizer,
+        std::unordered_map<int, BaseColor> colors,
+        std::set<Mood> moods,
+        int minX,
+        int maxX,
+        int minY, 
+        int maxY
+): PlotB(
+    sizer,
+    colors,
+    moods,
+    0,
+    0,
+    minX,
+    maxX,
+    minY,
+    maxY,
+    0,
+    0
+)
+{}
+
 void PlotB::print (
     std::unordered_map<Color, std::vector<Point>> pointsPerColor,
     bool clear,
