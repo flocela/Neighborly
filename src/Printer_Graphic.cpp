@@ -231,12 +231,8 @@ std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
         neighbors,
         std::make_unique<TitleA>(
             _chart_title_letter,
-            0,
-            0,
             "Diversity, Average Number of Disparate Neighbors per Resident per Run"),
         std::make_unique<GrColorKeyPrinter>(
-            0,
-            0,
             _chart_key_letter,
             _colors,
             moods),
@@ -244,9 +240,9 @@ std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             _div_sizer,
             _colors, 
             moods, 
-            0,
+            0, // min number of runs
             maxNumOfRuns,
-            0,
+            0, // min number of neighbors
             maxNumOfNeighbors
         ),
         _x_center__px + _col_side_border__px,
@@ -266,12 +262,8 @@ std::unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
         moods,
         std::make_unique<TitleA>(
             _chart_title_letter,
-            0,
-            0,
             "Happiness, Average Resident Happiness per Group, per Run"),
         std::make_unique<GrColorKeyPrinter>(
-            0,
-            0,
             _chart_key_letter,
             _colors,
             moods),
@@ -279,14 +271,11 @@ std::unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
             _div_sizer,
             _colors, 
             moods, 
-            0, 
-            0,
-            0,
+            0, // minimum number of runs
             numberOfRuns,
-            0,
-            100, // resident happiness range is from 0 to 100.
-            0,
-            0),
+            0, // minimum resident happiness
+            100 // resident happiness range is from 0 to 100.
+        ),
         _x_center__px + _col_side_border__px,
         _hap_chart_top_y__px,
         _x_chart_space__px,

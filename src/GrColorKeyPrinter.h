@@ -28,6 +28,19 @@ class GrColorKeyPrinter : public ColorKey
         _box_length__px = _label_letter.letterHeight()/2; // box is the colored square
     }
 
+    GrColorKeyPrinter (
+        Letter labelLetter,
+        std::unordered_map<int, BaseColor> colors, // group number to Color
+        std::set<Mood> moods // keys for colors, e.g. happy, sad, neutral
+    ): GrColorKeyPrinter(
+        0,
+        0,
+        labelLetter,
+        colors,
+        moods
+    )
+    {}
+
     void print (Renderer* renderer);
     int sizeXPx () override;
     int sizeYPx () override { return _label_letter.getHeightIncLSpace(); }

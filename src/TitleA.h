@@ -17,7 +17,19 @@ public:
     ): _l{letter}, 
        _top_center_x__px{topCenterXPx}, 
        _top_center_y__px {topCenterYPx},
-       _title{title} {}
+       _title{title}
+    {}
+
+    TitleA (
+        Letter letter,
+        std::string title
+    ): TitleA (
+        letter,
+        0,
+        0,
+        title
+    )
+    {}
 
     int sizeXPx() { return _title.length() * _l.letterHeight() * _l.widthMultiplier(); }
 
