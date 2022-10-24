@@ -26,7 +26,7 @@ double Resident_Flat::implCalculateHappiness(
     std::set<Resident*> neighbors,
     int numOfAdjacentHouses
 ) const
-{
+{ // TODO fill out this function
     (void) neighbors;
     int like  = 0;
     int diff  = 0;

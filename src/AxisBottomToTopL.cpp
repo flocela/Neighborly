@@ -43,7 +43,7 @@ void AxisBottomToTopL::print (Renderer* renderer)
 void AxisBottomToTopL::addVerticalLine (std::vector<SDL_Rect>& rects)
 {
     SDL_Rect rect{
-        _x_cross__px - _axis_format.axisThicknessPx()/2,
+        _x_cross__px - _axis_format.axisThicknessPx()/2, // TODO is subtracting half the thickness okay?
         calcTopMostPixelY(),
         _axis_format.axisThicknessPx(),
         axisLengthPx()
@@ -56,15 +56,21 @@ void AxisBottomToTopL::addTicksAndLabels (
     std::vector<TextRect>& texts
 )
 {
-    int minYPx = _y_cross__px - ( _start_offset_m * _px_per_unit );
+    // each tick is a rectangle, minYPx is the top left pixel of that rectangle
+    int minYPx = 
+        _y_cross__px - 
+        ( _start_offset_m * _px_per_unit ) -
+        _px_per_unit - 
+        ((_px_per_unit -_tick_thickness__px) / 2 ) -
+        1;
     int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChart();
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChart();
 
     int curVal = _min_val;
-    int curVal__px = minYPx - _px_per_unit * (curVal - _min_val);
+    int curVal__px = minYPx; // top pixel in tick
 
     TextRect curText{
-        majTickXPx - _text_spacer, // should be line spacer from _axis_format
+        majTickXPx - _text_spacer,
         curVal__px,
         std::to_string(curVal),
         _axis_format.labelHeightPx(),
@@ -74,14 +80,14 @@ void AxisBottomToTopL::addTicksAndLabels (
 
     SDL_Rect majRect{
         majTickXPx,
-        curVal__px - (_tick_thickness__px/2),
+        curVal__px,
         _axis_format.majTickLengthPx(),
         _tick_thickness__px
     };
 
     SDL_Rect minRect{
         minTickXPx,
-        curVal__px - (_tick_thickness__px/2),
+        curVal__px,
         _axis_format.minTickLengthPx(),
         _tick_thickness__px
     };
@@ -92,17 +98,17 @@ void AxisBottomToTopL::addTicksAndLabels (
     {   
         if (curVal % _maj_tick_spacing == 0)
         {
-            majRect.y = curVal__px - (_tick_thickness__px/2);
+            majRect.y = curVal__px;
             
             curText.text = std::to_string(curVal);
-            curText.yPixel = curVal__px;
+            curText.yPixel = curVal__px + (_tick_thickness__px/2);
 
             rects.push_back(majRect);
             texts.push_back(curText);
         }
         else if (curVal % _min_tick_spacing == 0)
         {
-            minRect.y = curVal__px - (_tick_thickness__px/2);
+            minRect.y = curVal__px;
             rects.push_back(minRect);
         }
         ++curVal;
@@ -112,8 +118,8 @@ void AxisBottomToTopL::addTicksAndLabels (
 
 int AxisBottomToTopL::calcTopMostPixelY ()
 {
-    int diff = _max_val - _min_val;
-    return _y_cross__px - (_px_per_unit * (diff + _start_offset_m + _end_offset_m));
+    int numOfUnits = _max_val - _min_val + 1;
+    return _y_cross__px - (_px_per_unit * (numOfUnits + _start_offset_m + _end_offset_m));
 }
 
 void AxisBottomToTopL::moveCrossHairs (int xPx, int yPx)
@@ -134,7 +140,7 @@ int AxisBottomToTopL::sizeXPx ()
 {
     return 
         (_max_val/10) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
-        _text_spacer + // TODO should be line spacer from _axis_format
+        _text_spacer +
         _axis_format.majTickLengthOutsideChart() +
         _axis_format.axisThicknessPx();
 }
@@ -146,7 +152,7 @@ int AxisBottomToTopL::sizeYPx ()
 
 int AxisBottomToTopL::axisLengthPx ()
 {
-    return _y_cross__px - calcTopMostPixelY() + 1; // TODO do I have to add the one?
+    return _y_cross__px - calcTopMostPixelY() + 1;
 }
 
 

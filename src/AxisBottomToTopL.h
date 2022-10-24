@@ -41,7 +41,7 @@ class AxisBottomToTopL
         int _maj_tick_spacing; // in units, not pixels
         int _start_offset_m; // start offst multiplier; multiply by _px_per_unit
         int _end_offset_m; // start offst multiplier; multiply by _px_per_unit
-        int _text_spacer = 3; // TODO should be line_spacer from _axis_format
+        int _text_spacer = 3; // space to the right of labels, and the the left of tick marks
 
         void addVerticalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
