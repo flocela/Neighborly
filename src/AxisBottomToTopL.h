@@ -46,8 +46,8 @@ class AxisBottomToTopL
         void addVerticalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
         int calcTopMostPixelY ();
-        int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 5; }
-        int calcMajTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
+        int calcMinTickSpacing (int pixelsPerUnit);
+        int calcMajTickSpacing (int pixelsPerUnit);
 
         int axisLengthPx ();
         
