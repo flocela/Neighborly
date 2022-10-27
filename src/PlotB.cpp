@@ -136,11 +136,11 @@ int PlotB::calcUnitSizePx ()
         return _min_unit__px;
     }
 
-    int allowableXAxisLengthPx = _x_space__px - _a_format_y.getAxisSizePx();
+    int allowableXAxisLengthPx = _x_space__px - _y_axis.sizeXPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX; // TODO dividing by zero is dangerous
 
-    int allowableYAxisLengthPx = _y_space__px - _a_format_x.getAxisSizePx();
+    int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeYPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;  // TODO dividing by zero is dangerous
 
@@ -160,7 +160,7 @@ int PlotB::calcDotSizePx ()
 int PlotB::calcCrossXPx (int topLeftXPx)
 {
     int xAxisLength = 
-        (_unit__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _a_format_y.getAxisSizePx();
+        (_unit__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _y_axis.sizeXPx();
 
     // center axis in column
     return topLeftXPx + (int)(0.5 * ( _x_space__px - xAxisLength ));
@@ -168,8 +168,7 @@ int PlotB::calcCrossXPx (int topLeftXPx)
 
 int PlotB::calcCrossYPx (int topLeftYPx) // TODO, I think I should be calling this more often, instead of repeating this calculation
 {
-    return 
-        topLeftYPx + _a_format_x.getAxisSizePx();
+    return topLeftYPx + _x_axis.sizeYPx();
 }
 
 void PlotB::setTopLeft (int topLeftXPx, int topLeftYPx)

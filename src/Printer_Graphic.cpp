@@ -22,19 +22,11 @@ Printer_Graphic::Printer_Graphic (
 
     _num_of_runs = numOfRuns;
 
+    // minsAndMaxCoords are coordinates, not pixels.
     _coordinates_per_house = coordPerHouse;
     std::vector<int> minsAndMaxCoords = determineMinMaxHouseCoords(_coordinates_per_house);
 
-    // one unit is the house plus the border around the house
-    int pixelsPerHouseUnit = cityChartCalculatePxPerUnit(
-        minsAndMaxCoords[0],
-        minsAndMaxCoords[1],
-        minsAndMaxCoords[2],
-        minsAndMaxCoords[3]
-    );
-
     _city_chart =  createCityChart(
-        pixelsPerHouseUnit,
         minsAndMaxCoords[0],
         minsAndMaxCoords[1],
         minsAndMaxCoords[2],
@@ -83,11 +75,11 @@ void Printer_Graphic::print (
         _renderer.get()
     );
 
-    _happiness_chart->print(
+    /*_happiness_chart->print(
         housePerResident,
         run,
         _renderer.get()
-    );
+    );*/
 
     _renderer->endFrame();
 } 
@@ -139,13 +131,12 @@ int Printer_Graphic::determineMaxNumberOfNeighbors (
 }
 
 std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
-    int unitSize,
     int minXCoord, 
     int maxXCoord, 
     int minYCoord, 
     int maxYCoord
 )
-{   (void)unitSize;
+{   
     std::set<Mood> moods{Mood::happy, Mood::unhappy};
     
     return std::make_unique<GrCityChart>(
@@ -171,42 +162,6 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
         _x_chart_space__px,
         _chart_y_space__px
     );
-}
-
-int Printer_Graphic::cityChartCalculatePxPerUnit(
-    int minXCoord, 
-    int maxXCoord, 
-    int minYCoord, 
-    int maxYCoord
-)
-{
-    // start and end offsets are the offset_multiplier times the dot_size__px.
-    // approximate the start and end offsets as offset_multiplier times the cellSize.
-
-    int allowableXAxisLengthPx = _x_chart_space__px - _axis_format_Y.getAxisSizePx();
-    int numOfCellsX = 
-        (maxXCoord - minXCoord) +
-        _x_offset_multiplier + // TODO this is a multiplier not an offset
-        _x_overrun_multiplier;
-    int xCellSize = allowableXAxisLengthPx/numOfCellsX;
-
-    int allowableYAxisLengthPx = 
-        _city_y_space__px -
-        _chart_title_letter.getHeightIncLSpace() -
-        _chart_key_letter.getHeightIncLSpace() - 
-        _axis_format_Y.getAxisSizePx();
-
-    int numOfCellsY = 
-        (maxYCoord - minYCoord) +
-        _y_offset_multiplier +
-        _y_overrun_multiplier;
-
-    int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
-
-    int smallestCellSize = std::min(xCellSize, yUnitSize);
-
-    return (smallestCellSize < _smallest_allowable_cell_size__px) ? 
-        _smallest_allowable_cell_size__px : smallestCellSize;
 }
 
 std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (

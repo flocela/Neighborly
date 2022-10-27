@@ -29,6 +29,9 @@ class AxisBottomToTopL
         int sizeXPx();
         int sizeYPx();
 
+        // returns the y-pixel for the top left corner for this yVal.
+        int getYPixelToPrint (double yVal);
+
     private:
         AxisFormat _axis_format;
         int _x_cross__px;
@@ -50,6 +53,7 @@ class AxisBottomToTopL
         int calcMajTickSpacing (int pixelsPerUnit);
 
         int axisLengthPx ();
+        
         
         
 };

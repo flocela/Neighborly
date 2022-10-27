@@ -28,11 +28,6 @@ class AxisFormat
         int labelLineSpacePx () {return _label_line_space__px;}
         double labelWidthMultiplier () {return _label_width_multiplier;}
 
-        // How much space is taken up by the height of the labels and the ticks.
-        // On a vertical axis, can be thought of as how wide the axis is.
-        // On a horizontal axis, can be though of as how tall the axis is.
-        int getAxisSizePx ();
-
         void setMajTickLengthPx (int length);
         void setMinTickLengthPx (int length);
         void setTickLengthInsideChartPx (int length);

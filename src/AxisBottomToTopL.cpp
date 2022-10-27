@@ -56,18 +56,12 @@ void AxisBottomToTopL::addTicksAndLabels (
     std::vector<TextRect>& texts
 )
 {
-    // each tick is a rectangle, minYPx is the top left pixel of that tick's rectangle
-    int minYPx = 
-        _y_cross__px - 
-        ( _start_offset_m * _px_per_unit ) -
-        _px_per_unit - 
-        ((_px_per_unit -_tick_thickness__px) / 2 ) -
-        1;
     int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChart();
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChart();
 
+    // each tick is a rectangle, curVal__px is the top left pixel of that tick's rectangle
     int curVal = _min_val;
-    int curVal__px = minYPx; // top pixel in tick rectangle
+    int curVal__px = getYPixelToPrint(_min_val) + ( (_px_per_unit -_tick_thickness__px) / 2 );
 
     TextRect curText{
         majTickXPx - _text_spacer,
@@ -93,13 +87,12 @@ void AxisBottomToTopL::addTicksAndLabels (
     };
 
     int topMostPixelY = calcTopMostPixelY();
-
     while ( curVal__px >= topMostPixelY )
     {   
         if (curVal % _maj_tick_spacing == 0)
         {
             curText.text = std::to_string(curVal);
-            curText.yPixel = curVal__px + (_tick_thickness__px/2);
+            curText.yPixel = curVal__px;
 
             majRect.y = curVal__px;
             
@@ -112,7 +105,7 @@ void AxisBottomToTopL::addTicksAndLabels (
             rects.push_back(minRect);
         }
         ++curVal;
-        curVal__px = minYPx - _px_per_unit * (curVal - _min_val);
+        curVal__px = getYPixelToPrint(curVal) + ( (_px_per_unit -_tick_thickness__px) / 2 );
     }
 }
 
@@ -165,5 +158,14 @@ int AxisBottomToTopL::calcMajTickSpacing (int pixelsPerUnit)
     return (pixelsPerUnit > 10)? 5 : 10;
 }
 
+int AxisBottomToTopL::getYPixelToPrint (double yVal)
+{
+    int minYPx = 
+        _y_cross__px - 
+        1 * _px_per_unit - 
+        ( _start_offset_m * _px_per_unit ) +
+        1;
 
-
+    return minYPx - _px_per_unit * (yVal - _min_val);
+    
+}

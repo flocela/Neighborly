@@ -40,7 +40,7 @@ public:
     
     void print (
         std::unordered_map<Color, std::vector<Point>> pointsPerColor,
-        bool clear,
+        bool printAxis,
         Renderer* renderer) override;
 
     void setTopLeft (int xPx, int yPx) override; 
@@ -107,6 +107,8 @@ private:
 
     AxisLeftToRightB _x_axis;
     AxisBottomToTopL _y_axis;
+
+    bool _printed_axes = false;
 
     int calcUnitSizeXPx ();
 

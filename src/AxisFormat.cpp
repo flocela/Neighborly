@@ -1,13 +1,5 @@
 #include "AxisFormat.h"
 
-int AxisFormat::getAxisSizePx ()
-{
-    return _label_letter_height +
-           _label_line_space__px +
-           (_maj_tick_length__px - _tick_length_inside_chart__px);
-
-}
-
 void AxisFormat::setMajTickLengthPx (int length)
 { 
     _axis_thickness__px = length;

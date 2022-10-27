@@ -30,6 +30,7 @@ class AxisTopToBottomL
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
         void setTickThickness (int tickThicknessPx) {_tick_thickness__px = tickThicknessPx;}
+        Coordinate getXYPixelToPrint (int xVal, int yVal);
         // returns the size of Axis
         int sizeYPx();
 

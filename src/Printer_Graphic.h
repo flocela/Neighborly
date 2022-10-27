@@ -63,9 +63,9 @@ private:
         _screen_height__px
     );
 
-    int _top_border__px        = 10;
+    int _top_border__px        = 20;
     int _bottom_border__px     = 20;
-    int _left_right_borders__px = 20;
+    int _left_right_borders__px = 40;
 
     // total x space minus the side borders
     int _x_space__px = _screen_width__px - (2 * _left_right_borders__px);
@@ -88,7 +88,7 @@ private:
 
     // Two columns: City Map chart is in the left. Diversity and Happiness charts are in the right.
 
-    int _col_side_border__px = 10; 
+    int _col_side_border__px = 40; 
 
 
     /* COMMON TO ALL CHARTS */
@@ -140,7 +140,7 @@ private:
         _bottom_border__px -
         _space_between_charts__px;
 
-    // Diversity and Happiness charts use the same dot size and copy of the same color key
+    // Diversity and Happiness charts use the same dot size and copy of the same color key //TODO not the same dot size
     Letter _chart_key_letter{24, 12};
     int _min_unit_size__px = 6;
     
@@ -242,7 +242,6 @@ private:
     );
 
     std::unique_ptr<GrCityChart> createCityChart (
-        int unitSize,
         int minXCoord, 
         int maxXCoord, 
         int minYCoord, 
