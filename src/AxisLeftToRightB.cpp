@@ -36,7 +36,7 @@ void AxisLeftToRightB::print (Renderer* renderer)
     renderer->setTextFormats(
         {100, 100, 100, 100},
         {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.labelHeightPx()); // TODO don't set TextFormats
+        _axis_format.labelHeightPx());
     renderer->fillBlocks(rects);
     renderer->renderTexts(texts);
 }
