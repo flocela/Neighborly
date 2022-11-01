@@ -4,8 +4,8 @@ AxisTopToBottomL::AxisTopToBottomL (
     AxisFormat axisFormat,
     int x_coordinate__px, // where x and y axis meet
     int y_coordinate__px, // where x and y axis meet
-    int minVal, // min value delineated with tick. It is startOffset__px from the start of axis.
-    int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal. 
+    int minVal,
+    int maxVal, 
     int pxPerUnit,
     int tickThickness,
     int startOffsetMultiplier,
@@ -47,7 +47,7 @@ void AxisTopToBottomL::print (Renderer* renderer)
 void AxisTopToBottomL::addVerticalLine (std::vector<SDL_Rect>& rects)
 {
     SDL_Rect rect{
-        _x_cross__px - _axis_format.axisThicknessPx()/2,
+        _x_cross__px,
         _y_cross__px,
         _axis_format.axisThicknessPx(),
         axisLengthPx()
@@ -58,8 +58,8 @@ void AxisTopToBottomL::addVerticalLine (std::vector<SDL_Rect>& rects)
 
 int AxisTopToBottomL::calcBotMostPixelYPx ()
 {
-    int diff = _max_val - _min_val;
-    return _y_cross__px + (_px_per_unit * (diff + _start_offset_m + _end_offset_m));
+    int numOfUnits = _max_val - _min_val + 1;
+    return _y_cross__px + (_px_per_unit * (numOfUnits + _start_offset_m + _end_offset_m)) - 1;
 }
         
 void AxisTopToBottomL::addTicksAndLabels (
@@ -67,15 +67,14 @@ void AxisTopToBottomL::addTicksAndLabels (
     std::vector<TextRect>& texts
 )
 {
-    int minYPx = _y_cross__px + ( _start_offset_m * _px_per_unit );
-    int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChart();
-    int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChart();
+    int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChartPx();
+    int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
 
     int curVal = _min_val;
-    int curVal__px = minYPx + _px_per_unit * (curVal - _min_val);
+    int curVal__px = getYPixelForPrinting(_min_val) + ( (_px_per_unit -_tick_thickness__px) / 2 );
 
     TextRect curText = {
-        _x_cross__px - _axis_format.majTickLengthOutsideChart(),
+        _x_cross__px - _axis_format.majTickLengthOutsideChartPx(),
         curVal__px,
         std::to_string(_min_val),
         _axis_format.labelHeightPx(),
@@ -92,7 +91,7 @@ void AxisTopToBottomL::addTicksAndLabels (
 
     SDL_Rect minRect{
         minTickXPx,
-        curVal__px - (_tick_thickness__px/2),
+        curVal__px,
         _axis_format.minTickLengthPx(),
         _tick_thickness__px
     };
@@ -101,9 +100,9 @@ void AxisTopToBottomL::addTicksAndLabels (
 
     while (curVal__px <= botMostPixelY)
     {   
-        if (curVal % _maj_tick_spacing == 0) // TODO do all maj ticks get a label?
+        if (curVal % _maj_tick_spacing == 0)
         {
-            majRect.y = curVal__px - (_tick_thickness__px/2);
+            majRect.y = curVal__px;
             
             curText.text = std::to_string(curVal);
             curText.yPixel = curVal__px;
@@ -113,11 +112,11 @@ void AxisTopToBottomL::addTicksAndLabels (
         }
         else if (curVal % _min_tick_spacing == 0)
         {
-            minRect.y = curVal__px - (_tick_thickness__px/2);
+            minRect.y = curVal__px;
             rects.push_back(minRect);
         }
         ++curVal;
-        curVal__px = minYPx + _px_per_unit * (curVal - _min_val);
+        curVal__px = getYPixelForPrinting(curVal) + ( (_px_per_unit -_tick_thickness__px) / 2 );
     }
 }
 
@@ -140,7 +139,7 @@ int AxisTopToBottomL::sizeXPx ()
     return 
         (_max_val/10) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
         _axis_format.labelLineSpacePx() + // TODO should be line spacer from _axis_format
-        _axis_format.majTickLengthOutsideChart() +
+        _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.axisThicknessPx();
 }
 
@@ -151,5 +150,13 @@ int AxisTopToBottomL::sizeYPx()
 
 int AxisTopToBottomL::axisLengthPx()
 {
-    return calcBotMostPixelYPx() - _y_cross__px + 1; // TODO is this correct?
+    return calcBotMostPixelYPx() - _y_cross__px + 1;
+}
+
+int AxisTopToBottomL::getYPixelForPrinting (double yVal)
+{
+    int minYPx = _y_cross__px + ( _start_offset_m * _px_per_unit );
+
+    return minYPx + _px_per_unit * (yVal - _min_val);
+    
 }

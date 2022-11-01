@@ -64,18 +64,16 @@ void AxisLeftToRightB::addTicksAndLabels (
     std::vector<TextRect>& texts
 )
 {   
-    int tickYPx = _y_cross__px - _axis_format.tickLengthInsideChart();
-
     int curVal = _min_val;
-    int currValue__px = getXPixelToPrint(curVal) + (_px_per_unit - _tick_thickness__px)/2;
+    int curVal__px = getXPixelForPrinting(curVal) + (_px_per_unit - _tick_thickness__px)/2;
 
     int topOfLabelYPx = 
         _y_cross__px +
-        _axis_format.majTickLengthOutsideChart() +
+        _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.labelLineSpacePx();
 
     TextRect curText{
-        currValue__px,
+        curVal__px,
         topOfLabelYPx,
         std::to_string(curVal),
         _axis_format.labelHeightPx(),
@@ -83,15 +81,16 @@ void AxisLeftToRightB::addTicksAndLabels (
         1
     };
 
-    SDL_Rect majRect{
-        currValue__px,
+    int tickYPx = _y_cross__px - _axis_format.tickLengthInsideChartPx();
+    SDL_Rect majTick{
+        curVal__px,
         tickYPx,
         _tick_thickness__px,
         _axis_format.majTickLengthPx()
     };
 
-    SDL_Rect minRect{
-        currValue__px,
+    SDL_Rect minTick{
+        curVal__px,
         tickYPx,
         _tick_thickness__px,
         _axis_format.minTickLengthPx()
@@ -99,26 +98,26 @@ void AxisLeftToRightB::addTicksAndLabels (
 
     int rightMostPixel = calcRightMostPixelX();
     
-    while (currValue__px <= rightMostPixel)
+    while (curVal__px <= rightMostPixel)
     {  
         if (curVal % _maj_tick_spacing == 0)
         {   
-            majRect.x = currValue__px;
+            majTick.x = curVal__px;
 
             curText.text = std::to_string(curVal);
-            curText.xPixel = currValue__px;
+            curText.xPixel = curVal__px;
 
             texts.push_back(curText);
-            rects.push_back(majRect);
+            rects.push_back(majTick);
         }
         else if (curVal % _min_tick_spacing == 0)
         {   
-            minRect.x = currValue__px;
-            rects.push_back(minRect);
+            minTick.x = curVal__px;
+            rects.push_back(minTick);
         }
         
         ++curVal;
-        currValue__px = getXPixelToPrint(curVal) + (_px_per_unit - _tick_thickness__px)/2;
+        curVal__px = getXPixelForPrinting(curVal) + (_px_per_unit - _tick_thickness__px)/2;
     }
 }
 
@@ -133,7 +132,6 @@ void AxisLeftToRightB::setPxPerUnit (int pixels)
     _px_per_unit = pixels;
     _min_tick_spacing = calcMinTickSpacing(_px_per_unit);
     _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
-
 }
 
 int AxisLeftToRightB::axisLengthPx ()
@@ -150,7 +148,7 @@ int AxisLeftToRightB::sizeYPx ()
 {
     return 
         _axis_format.axisThicknessPx() +
-        _axis_format.majTickLengthOutsideChart() +
+        _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.labelLineSpacePx() +
         _axis_format.labelHeightPx();
 }
@@ -175,12 +173,9 @@ int AxisLeftToRightB::calcMajTickSpacing (int pixelsPerUnit)
     return (pixelsPerUnit > 10)? 5 : 10; 
 }
 
-int AxisLeftToRightB::getXPixelToPrint (double xVal)
+int AxisLeftToRightB::getXPixelForPrinting (double xVal)
 {   
-    int minXPx = 
-        _x_cross__px +
-        _start_offset_m * _px_per_unit;
+    int minXPx = _x_cross__px + _start_offset_m * _px_per_unit;
 
     return minXPx + _px_per_unit * (xVal - _min_val);
-
 }

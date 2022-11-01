@@ -14,12 +14,12 @@ class AxisFormat
         int axisThicknessPx () { return _axis_thickness__px;}
         int majTickLengthPx () { return _maj_tick_length__px;}
         int minTickLengthPx () {return _min_tick_length__px;}
-        int tickLengthInsideChart() {return _tick_length_inside_chart__px;}
-        int majTickLengthOutsideChart () 
+        int tickLengthInsideChartPx () {return _tick_length_inside_chart__px;}
+        int majTickLengthOutsideChartPx () 
         {
             return _maj_tick_length__px - _tick_length_inside_chart__px;
         }
-        int minTickLengthOutsideChart () 
+        int minTickLengthOutsideChartPx () 
         {
             return _min_tick_length__px - _tick_length_inside_chart__px;
         }

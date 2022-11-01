@@ -27,8 +27,8 @@ class AxisLeftToRightB
         int sizeYPx();
         int sizeXPx();
 
-        // returns the x-pixel for the top left corner of this xVal
-        int getXPixelToPrint (double xVal);
+        // returns the x-pixel for the top left corner of this xVal's unit
+        int getXPixelForPrinting (double xVal);
     
     private:
         AxisFormat _axis_format;

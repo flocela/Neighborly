@@ -31,11 +31,11 @@ class AxisTopToBottomL
         void setPxPerUnit (int pixels);
         void setTickThickness (int tickThicknessPx) {_tick_thickness__px = tickThicknessPx;}
         Coordinate getXYPixelToPrint (int xVal, int yVal);
-        // returns the size of Axis
         int sizeYPx();
-
-        // returns the size of the Axis
         int sizeXPx();
+
+        // returns the y-pixel for the top left corner for this yVal's unit.
+        int getYPixelForPrinting (double yVal);
 
     private:
         AxisFormat _axis_format;

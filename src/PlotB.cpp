@@ -104,17 +104,8 @@ void PlotB::print (
         std::vector<Coordinate> coordinates;
         for (Point point : points)
         {
-            int x = 
-            _cross_x__px +                                      
-            _unit__px *_start_offset_m +      
-            ( _unit__px * (point.x() - _min_x) ) - 
-            _dot__px/2;                               
-            
-            int y = 
-            _cross_y__px +
-            _unit__px * _start_offset_m +
-            ( _unit__px * (point.y() - _min_y)) -
-            _dot__px/2;
+            int x = _x_axis.getXPixelForPrinting(point.x()) + (_unit__px - _dot__px)/2;
+            int y = _y_axis.getYPixelForPrinting(point.y()) + (_unit__px - _dot__px)/2;
 
             coordinates.push_back(Coordinate(x, y));
         }

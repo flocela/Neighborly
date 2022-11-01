@@ -21,18 +21,15 @@ AxisLeftToRightT::AxisLeftToRightT (
     _tick_thickness__px{tickThickness},
     _min_tick_spacing{calcMinTickSpacing(_px_per_unit)},
     _maj_tick_spacing{calcMajTickSpacing(_px_per_unit)},
-    _label_spacing{calcLabelSpacing(_px_per_unit)},
     _start_offset_m{startOffsetMultiplier},
     _end_offset_m{endOffsetMultiplier}
-{
-    
-}
+{}
 
 void AxisLeftToRightT::print (Renderer* renderer)
 {   
     // All lines and ticks are drawn as SDL_Rects, which are held in rects vector.
     std::vector<SDL_Rect> rects = {};
-    // Tick lables are in texts vector.
+    // Tick labels are in texts vector.
     std::vector<TextRect> texts = {};
     
     addHorizontalLine(rects);
@@ -50,11 +47,12 @@ void AxisLeftToRightT::print (Renderer* renderer)
 
 void AxisLeftToRightT::addHorizontalLine (std::vector<SDL_Rect>& rects)
 {
-    SDL_Rect rect;
-    rect.w = axisLengthPx();
-    rect.h = _axis_format.axisThicknessPx();
-    rect.x = _x_cross__px;
-    rect.y = _y_cross__px - rect.h/2;
+    SDL_Rect rect{
+        _x_cross__px,
+        _y_cross__px,
+        axisLengthPx(),
+        _axis_format.axisThicknessPx()
+    };
 
     rects.push_back(rect);
 }
@@ -63,56 +61,63 @@ void AxisLeftToRightT::addTicksAndLabels (
     std::vector<SDL_Rect>& rects, 
     std::vector<TextRect>& texts
 )
-{  
-    int topOfLabelYPx = _y_cross__px -
-                        _axis_format.majTickLengthPx() + _axis_format.tickLengthInsideChart() - // TODO make this one value I can get from axis format
-                        _axis_format.labelLineSpacePx();
-    TextRect tr;
-    SDL_Rect tick;
-    tick.w = _tick_thickness__px;
-    int majTickYPx = 
+{   
+    int curVal = _min_val;
+    int curVal__px = getXPixelForPrinting(curVal) + (_px_per_unit - _tick_thickness__px)/2;
+
+    int botOfLabelYPx = 
         _y_cross__px -
-        _axis_format.majTickLengthPx() +
-        _axis_format.tickLengthInsideChart();
-    int minTickYPx = 
-        _y_cross__px -
-        _axis_format.minTickLengthPx() +
-        _axis_format.tickLengthInsideChart();
+        _axis_format.majTickLengthOutsideChartPx() -
+        _axis_format.labelLineSpacePx();
+
+    TextRect curText{
+        curVal__px,
+        botOfLabelYPx,
+        std::to_string(curVal),
+        _axis_format.labelHeightPx(),
+        _axis_format.labelWidthMultiplier(),
+        5
+    };
+
+    int majTickYPx = _y_cross__px - _axis_format.majTickLengthOutsideChartPx();
+    int minTickYPx = _y_cross__px - _axis_format.minTickLengthOutsideChartPx();
     
-    // Todo should put ending label on last maj tick mark.
-    // Ticks and labels.
-    int currValue = _min_val;
+    SDL_Rect majTick{
+        curVal__px,
+        majTickYPx,
+        _tick_thickness__px,
+        _axis_format.majTickLengthPx()
+    };
+
+    SDL_Rect minTick{
+        curVal__px,
+        minTickYPx,
+        _tick_thickness__px,
+        _axis_format.minTickLengthPx()
+    };
+    
     int rightMostPixel = calcRightMostPixelX();
-    int minValPx = _x_cross__px + _px_per_unit * _start_offset_m;
-    int currValue__px = minValPx + (_px_per_unit * (currValue - _min_val));
-    while (currValue__px <= rightMostPixel)
+    
+    while (curVal__px <= rightMostPixel)
     {  
-        if (currValue % _label_spacing == 0) // major tick with label
+        if (curVal % _maj_tick_spacing == 0) // major tick with label
         { 
-            tick.h = _axis_format.majTickLengthPx();
-            tick.x =  currValue__px - ( _tick_thickness__px / 2 );
-            tick.y = majTickYPx;
+            majTick.x = curVal__px;
                 
-            std::string label = std::to_string(currValue);
-            tr = {
-                currValue__px,
-                topOfLabelYPx,
-                label,
-                _axis_format.labelHeightPx(),
-                _axis_format.labelWidthMultiplier(),
-                5};
-            texts.push_back(tr);
+            curText.text = std::to_string(curVal);
+            curText.xPixel = curVal__px;
+
+            texts.push_back(curText);
+            rects.push_back(majTick);
         }
-        else if (currValue % _min_tick_spacing == 0) // minor tick
+        else if (curVal % _min_tick_spacing == 0) // minor tick
         {   
-            tick.h = _axis_format.minTickLengthPx();
-            tick.x =  currValue__px - ( _tick_thickness__px / 2 );
-            tick.y = minTickYPx;
+            minTick.x = curVal__px;
+            rects.push_back(minTick);
         }
         
-        rects.push_back(tick);
-        ++currValue;
-        currValue__px = minValPx + (_px_per_unit * (currValue - _min_val));
+        ++curVal;
+        curVal__px = getXPixelForPrinting(curVal) + (_px_per_unit - _tick_thickness__px)/2;
     }
 }
 
@@ -127,13 +132,11 @@ void AxisLeftToRightT::setPxPerUnit (int pixels)
     _px_per_unit = pixels;
     _min_tick_spacing = calcMinTickSpacing(_px_per_unit);
     _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
-    _label_spacing = calcLabelSpacing(_px_per_unit);
-
 }
 
 int AxisLeftToRightT::axisLengthPx ()
 {
-    return calcRightMostPixelX() - _x_cross__px + 1; // TODO is this +1 correct?
+    return calcRightMostPixelX() - _x_cross__px + 1;
 }
 
 int AxisLeftToRightT::sizeXPx ()
@@ -145,7 +148,36 @@ int AxisLeftToRightT::sizeYPx ()
 {
     return 
         _axis_format.axisThicknessPx() +
-        _axis_format.majTickLengthOutsideChart() +
+        _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.labelLineSpacePx() +
         _axis_format.labelHeightPx();
+}
+
+int AxisLeftToRightT::calcRightMostPixelX ()
+{
+    return _x_cross__px + (_px_per_unit * (_diff + 1 + _start_offset_m + _end_offset_m)) - 1;
+}
+
+int AxisLeftToRightT::calcMinTickSpacing (int pixelsPerUnit)
+{ 
+    return (pixelsPerUnit >= 10)? 1 : 5; 
+}
+        
+int AxisLeftToRightT::calcMajTickSpacing (int pixelsPerUnit)
+{ 
+    return (pixelsPerUnit > 10)? 5 : 10; 
+}
+
+int AxisLeftToRightT::calcLabelSpacing (int pixelsPerUnit)
+{ 
+    return (pixelsPerUnit > 10)? 5 : 10; 
+}
+
+int AxisLeftToRightT::getXPixelForPrinting (double xVal)
+{   
+    int minXPx = 
+        _x_cross__px +
+        _start_offset_m * _px_per_unit;
+
+    return minXPx + _px_per_unit * (xVal - _min_val);
 }

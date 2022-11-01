@@ -56,12 +56,12 @@ void AxisBottomToTopL::addTicksAndLabels (
     std::vector<TextRect>& texts
 )
 {
-    int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChart();
-    int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChart();
+    int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChartPx();
+    int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
 
     // each tick is a rectangle, curVal__px is the top left pixel of that tick's rectangle
     int curVal = _min_val;
-    int curVal__px = getYPixelToPrint(_min_val) + ( (_px_per_unit -_tick_thickness__px) / 2 );
+    int curVal__px = getYPixelForPrinting(_min_val) + ( (_px_per_unit -_tick_thickness__px) / 2 );
 
     TextRect curText{
         majTickXPx - _text_spacer,
@@ -91,11 +91,11 @@ void AxisBottomToTopL::addTicksAndLabels (
     {   
         if (curVal % _maj_tick_spacing == 0)
         {
+            majRect.y = curVal__px;
+
             curText.text = std::to_string(curVal);
             curText.yPixel = curVal__px;
 
-            majRect.y = curVal__px;
-            
             rects.push_back(majRect);
             texts.push_back(curText);
         }
@@ -105,7 +105,7 @@ void AxisBottomToTopL::addTicksAndLabels (
             rects.push_back(minRect);
         }
         ++curVal;
-        curVal__px = getYPixelToPrint(curVal) + ( (_px_per_unit -_tick_thickness__px) / 2 );
+        curVal__px = getYPixelForPrinting(curVal) + ( (_px_per_unit -_tick_thickness__px) / 2 );
     }
 }
 
@@ -134,7 +134,7 @@ int AxisBottomToTopL::sizeXPx ()
     return 
         (_max_val/10) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
         _text_spacer +
-        _axis_format.majTickLengthOutsideChart() +
+        _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.axisThicknessPx();
 }
 
@@ -158,7 +158,7 @@ int AxisBottomToTopL::calcMajTickSpacing (int pixelsPerUnit)
     return (pixelsPerUnit > 10)? 5 : 10;
 }
 
-int AxisBottomToTopL::getYPixelToPrint (double yVal)
+int AxisBottomToTopL::getYPixelForPrinting (double yVal)
 {
     int minYPx = 
         _y_cross__px - 

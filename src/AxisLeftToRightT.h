@@ -10,7 +10,7 @@
 #include <memory>
 #include "TextRect.h"
 
-
+// Renders axis from left to right with title at top (used for horizontal axes).
 class AxisLeftToRightT
 {
     public:
@@ -18,14 +18,14 @@ class AxisLeftToRightT
             AxisFormat axisFormat,
             int xCrossPx, // where x and y axis meet
             int yCrossPx, // where x and y axis meet
-            int minVal, // min value delineated with tick. It is startOffset__px from the start of axis.
-            int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal.
+            int minVal,
+            int maxVal,
             int pxPerUnit,
             int tickThickness,
             int startOffsetMultiplier,
             int endOffsetMultiplier
         );
-        // Renders axis from left to right with title at top (used for horizontal axes).
+        
         void print (Renderer* renderer);
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
@@ -33,6 +33,9 @@ class AxisLeftToRightT
 
         int sizeYPx();
         int sizeXPx();
+
+        // returns the x-pixel for the top left corner of this xVal's unit
+        int getXPixelForPrinting (double xVal);
     
     private:
         std::string _title;
@@ -46,21 +49,17 @@ class AxisLeftToRightT
         int _tick_thickness__px;
         int _min_tick_spacing;
         int _maj_tick_spacing;
-        int _label_spacing;
         int _start_offset_m;
         int _end_offset_m;
 
         void addHorizontalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
 
-        int calcRightMostPixelX ()
-        {
-            return _x_cross__px + (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
-        }
+        int calcRightMostPixelX ();
 
-        int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 5; }
-        int calcMajTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
-        int calcLabelSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
+        int calcMinTickSpacing (int pixelsPerUnit);
+        int calcMajTickSpacing (int pixelsPerUnit);
+        int calcLabelSpacing (int pixelsPerUnit);
 
         int axisLengthPx();
         

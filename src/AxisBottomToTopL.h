@@ -29,8 +29,8 @@ class AxisBottomToTopL
         int sizeXPx();
         int sizeYPx();
 
-        // returns the y-pixel for the top left corner for this yVal.
-        int getYPixelToPrint (double yVal);
+        // returns the y-pixel for the top left corner for this yVal's unit.
+        int getYPixelForPrinting (double yVal);
 
     private:
         AxisFormat _axis_format;
