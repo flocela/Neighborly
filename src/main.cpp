@@ -162,7 +162,7 @@ int main(int argc, char* argv[])
 
         // TODO why does Resident Factory need to know how many houses there are?
         residents = 
-            residentsMaker.makeBaseResidents(resFactoryPointers, city->getNumOfHouses(), baseColors);
+            residentsMaker.makeResidents(resFactoryPointers, city->getNumOfHouses(), baseColors);
     
         std::set<Resident*> residentPtrs = {};
         for (auto& resident: residents)

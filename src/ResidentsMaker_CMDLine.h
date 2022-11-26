@@ -50,7 +50,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         Question_Double createQuestionGroupHappiness(std::string color);
 
         void initColors (std::set<BaseColor> colorInfos);
-        void updateAvailableColors (BaseColor color);
+        void initWithBaseColors ();
         std::vector<std::string>  getFactoryNames (
             std::vector<ResidentsFactory*> residentsFactories
         );
@@ -59,6 +59,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
 
         // map of color strings, is diminished as users use their colors.
         std::vector<BaseColor> _available_colors;
+        int _num_of_groups = 2;
 
         // Prompt for what is this group's color question.
         std::string _which_group_color_prompt = "What will be the color of your"

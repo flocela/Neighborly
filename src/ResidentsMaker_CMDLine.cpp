@@ -46,33 +46,37 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
 
 )
 {   
-    if (colors.size() < 3)
-        throw std::invalid_argument( "colorInfos must have at least 3 colors.");
-    initColors(colors);
-    std::vector<std::unique_ptr<Resident>> residents;
+    if (colors.size() < 2)
+    {
+        initWithBaseColors();
+    }
+    else
+    {
+        initColors(colors);
+    }
 
-    int numOfGroups = askForNumOfGroupsOfResidents();
+    std::vector<std::unique_ptr<Resident>> residents;
     
     int numOfResidentsCreated = 0;
-    for (int ii=0; ii<numOfGroups; ++ii)
+    for (int ii=0; ii<_num_of_groups; ++ii)
     {
         int allowedNumOfResidents = maxResidentCount - numOfResidentsCreated;
         if (allowedNumOfResidents <= 0)
             break;
-        
-        ColorInfo colorInfo = askForGroupColor(ii);
+
+        std::string curBaseName = _colorrs_map[_available_colors[0]][Mood::neutral]._base_name;
 
         int numOfResidents = askForNumOfResidents(
             allowedNumOfResidents, 
-            colorInfo._base_name
+            curBaseName
         );
         
         int choice = askForGroupResidentType(
-            colorInfo._base_name, 
+            curBaseName, 
             residentsFactories
         );
 
-        double happinessGoal = askForHappinessGoalForGroup(colorInfo._base_name);
+        double happinessGoal = askForHappinessGoalForGroup(curBaseName);
 
         auto newResidents = residentsFactories[choice]->createResidents(
             _ui,
@@ -86,7 +90,6 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
             residents.emplace_back(std::move(r));
 
         numOfResidentsCreated += newResidents.size();
-        updateAvailableColors(colorInfo._base_color);
     }
     
     return residents;
@@ -96,6 +99,14 @@ void ResidentsMaker_CMDLine::initColors (std::set<BaseColor> colors)
 {
     for (BaseColor color : colors)
         _available_colors.push_back(color);
+}
+
+void ResidentsMaker_CMDLine::initWithBaseColors ()
+{
+    for (auto& x : _colorrs_map)
+    {
+        _available_colors.push_back(x.first);
+    }
 }
 
 ColorInfo ResidentsMaker_CMDLine::askForGroupColor (int groupIdx)
@@ -196,17 +207,6 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupHappiness (std::strin
         _group_happiness_orig_prompt.insert(55, color + " "),
         _group_happiness_range_prompt,
         _group_happiness_range_prompt};
-}
-
-void ResidentsMaker_CMDLine::updateAvailableColors(BaseColor color)
-{
-    std::size_t ii = 0;
-    for (;ii < _available_colors.size(); ++ii)
-    {
-        if (_available_colors[ii] == color)
-            break;
-    }
-    _available_colors.erase(_available_colors.begin() + static_cast<int>(ii));
 }
 
 std::vector<std::string> ResidentsMaker_CMDLine::getFactoryNames (
