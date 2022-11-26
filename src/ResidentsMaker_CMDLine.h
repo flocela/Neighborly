@@ -82,7 +82,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         
         //Prompts for how_many_residents_in_this_group question.
         std::string _how_many_residents_orig_prompt = 
-            "How many residents will be in the group? Must be less than .  ";
+            "How many residents will be in the first group, the group? Must be less than .  ";
         std::string _how_many_residents_type_prompt =
             "Nope that's not a whole number. No decimals.  ";
         std::string _how_many_residents_range_prompt =

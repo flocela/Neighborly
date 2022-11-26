@@ -180,7 +180,7 @@ Question_Int ResidentsMaker_CMDLine::createQuestionHowManyResidents (
 )
 {   
     std::string origPrompt = _how_many_residents_orig_prompt.insert(
-        34, 
+        51, 
         color + " "
     );
     origPrompt = origPrompt.insert(
