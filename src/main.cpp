@@ -39,6 +39,7 @@
 #include "CityFactory_Grid.h"
 #include "CityMaker_CMDLine.h"
 #include "ResidentsFactory_Flat.h"
+#include "ResidentsFactory_StepDown.h"
 #include "ResidentsFactory.h"
 #include "ResidentsMaker_CMDLine.h"
 #include "Printer_Graphic.h"
@@ -160,7 +161,6 @@ int main(int argc, char* argv[])
             baseColors.insert(x.first);
         }
 
-        // TODO why does Resident Factory need to know how many houses there are?
         residents = 
             residentsMaker.makeResidents(resFactoryPointers, city->getNumOfHouses(), baseColors);
     
@@ -227,5 +227,7 @@ vector<unique_ptr<ResidentsFactory>> initResidentFactories()
 {
     vector<unique_ptr<ResidentsFactory>> residentFactories = {};
     residentFactories.emplace_back(std::make_unique<ResidentsFactory_Flat>());
+    residentFactories.emplace_back(std::make_unique<ResidentsFactory_StepDown>());
+
     return residentFactories;
 }

@@ -93,7 +93,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         //Prompts for group_happiness_goal question.
         std::string _group_happiness_orig_prompt = 
             "What will be the happiness goal for all members of the group? The"
-            " number must be between 0 and 1 inclusive.  ";
+            " number must be between 0 and 100 inclusive.  ";
         std::string _group_happiness_type_prompt = 
             "Nope that's not a number. Should look like 0.5 or 0.8.  ";
         std::string _group_happiness_range_prompt =

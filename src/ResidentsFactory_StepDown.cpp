@@ -17,7 +17,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
     Question_Double qHappinessGoal{
         1,
         0.0,
-        1.0,
+        100.0,
         _happinessGoalOrigPrompt,
         _happinessGoalTypePrompt,
         _happinessGoalRangePrompt

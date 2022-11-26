@@ -9,7 +9,7 @@
 class ResidentsFactory_StepDown: public ResidentsFactory
 {
     public:
-        ResidentsFactory_StepDown ();
+        ResidentsFactory_StepDown () = default;
         ResidentsFactory_StepDown (const ResidentsFactory_StepDown& obj) = default;
         ResidentsFactory_StepDown (ResidentsFactory_StepDown&& obj) noexcept = default;
         ResidentsFactory_StepDown& operator= (const ResidentsFactory_StepDown& obj) = default;
@@ -51,11 +51,11 @@ class ResidentsFactory_StepDown: public ResidentsFactory
         /*  Prompts for the happiness goal for this group of residents. */
         std::string _happinessGoalOrigPrompt  = 
             "What should the happiness goal of these residents?  Must be a number"
-            " between 0 and 1 inclusively.";
+            " between 0 and 100 inclusively.";
         std::string _happinessGoalTypePrompt  = 
-            "Nope, that's not a number, i.e. 0.2 or 1.0";
+            "Nope, that's not a number, i.e. 0.2 or 75.0";
         std::string _happinessGoalRangePrompt = 
-            "That number is too small or too large. Should be between 0.0 and 1.0"
+            "That number is too small or too large. Should be between 0.0 and 100"
             " inclusive.";
                                         
         /*  Prompts for the allowed movement for this group of residents.   */
