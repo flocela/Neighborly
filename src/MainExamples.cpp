@@ -1,5 +1,5 @@
 #include "MainExamples.h"
-
+#include <iostream>
 #include <string>
 #include "City_Grid.h"
 #include "Resident_StepDown.h"
@@ -35,7 +35,7 @@ SimulationComponents MainExamples::userChoosesExample ()
         //     Unhappy if 80% or more neighbors are different from themselves.
         // 50  StepDown Residents (Red)
         //     Unhappy if 25% or more neighbors are different from themselves.
-        case 1:
+        case 0:
         {
             components.city = std::make_unique<City_Grid>(110);
             std::set<int> nums;
@@ -77,5 +77,6 @@ SimulationComponents MainExamples::userChoosesExample ()
             break;
         }
     }
+    
     return components;
 }

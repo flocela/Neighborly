@@ -23,11 +23,7 @@ class CityFactory
             int deltaX, 
             int deltaY
         ) = 0;
-        virtual std::unique_ptr<City> createBaseCity (
-            UI& ui,
-            int deltaX, 
-            int deltaY
-        ) = 0;
+        
         virtual std::string toString () = 0;
 };
 

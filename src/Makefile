@@ -136,32 +136,32 @@ RunTests/fast:
 	$(MAKE) -f CMakeFiles/RunTests.dir/build.make CMakeFiles/RunTests.dir/build
 .PHONY : RunTests/fast
 
-AxisBottomToTop.o: AxisBottomToTop.cpp.o
+AxisBottomToTopL.o: AxisBottomToTopL.cpp.o
 
-.PHONY : AxisBottomToTop.o
+.PHONY : AxisBottomToTopL.o
 
 # target to build an object file
-AxisBottomToTop.cpp.o:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.o
-.PHONY : AxisBottomToTop.cpp.o
+AxisBottomToTopL.cpp.o:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o
+.PHONY : AxisBottomToTopL.cpp.o
 
-AxisBottomToTop.i: AxisBottomToTop.cpp.i
+AxisBottomToTopL.i: AxisBottomToTopL.cpp.i
 
-.PHONY : AxisBottomToTop.i
+.PHONY : AxisBottomToTopL.i
 
 # target to preprocess a source file
-AxisBottomToTop.cpp.i:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.i
-.PHONY : AxisBottomToTop.cpp.i
+AxisBottomToTopL.cpp.i:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.i
+.PHONY : AxisBottomToTopL.cpp.i
 
-AxisBottomToTop.s: AxisBottomToTop.cpp.s
+AxisBottomToTopL.s: AxisBottomToTopL.cpp.s
 
-.PHONY : AxisBottomToTop.s
+.PHONY : AxisBottomToTopL.s
 
 # target to generate assembly for a file
-AxisBottomToTop.cpp.s:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.s
-.PHONY : AxisBottomToTop.cpp.s
+AxisBottomToTopL.cpp.s:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.s
+.PHONY : AxisBottomToTopL.cpp.s
 
 AxisFormat.o: AxisFormat.cpp.o
 
@@ -216,6 +216,60 @@ AxisLeftToRightB.s: AxisLeftToRightB.cpp.s
 AxisLeftToRightB.cpp.s:
 	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.s
 .PHONY : AxisLeftToRightB.cpp.s
+
+AxisLeftToRightT.o: AxisLeftToRightT.cpp.o
+
+.PHONY : AxisLeftToRightT.o
+
+# target to build an object file
+AxisLeftToRightT.cpp.o:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o
+.PHONY : AxisLeftToRightT.cpp.o
+
+AxisLeftToRightT.i: AxisLeftToRightT.cpp.i
+
+.PHONY : AxisLeftToRightT.i
+
+# target to preprocess a source file
+AxisLeftToRightT.cpp.i:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.i
+.PHONY : AxisLeftToRightT.cpp.i
+
+AxisLeftToRightT.s: AxisLeftToRightT.cpp.s
+
+.PHONY : AxisLeftToRightT.s
+
+# target to generate assembly for a file
+AxisLeftToRightT.cpp.s:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.s
+.PHONY : AxisLeftToRightT.cpp.s
+
+AxisTopToBottomL.o: AxisTopToBottomL.cpp.o
+
+.PHONY : AxisTopToBottomL.o
+
+# target to build an object file
+AxisTopToBottomL.cpp.o:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o
+.PHONY : AxisTopToBottomL.cpp.o
+
+AxisTopToBottomL.i: AxisTopToBottomL.cpp.i
+
+.PHONY : AxisTopToBottomL.i
+
+# target to preprocess a source file
+AxisTopToBottomL.cpp.i:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.i
+.PHONY : AxisTopToBottomL.cpp.i
+
+AxisTopToBottomL.s: AxisTopToBottomL.cpp.s
+
+.PHONY : AxisTopToBottomL.s
+
+# target to generate assembly for a file
+AxisTopToBottomL.cpp.s:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.s
+.PHONY : AxisTopToBottomL.cpp.s
 
 CityFactory_Grid.o: CityFactory_Grid.cpp.o
 
@@ -363,33 +417,6 @@ Coordinate.cpp.s:
 	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.s
 	$(MAKE) -f CMakeFiles/RunTests.dir/build.make CMakeFiles/RunTests.dir/Coordinate.cpp.s
 .PHONY : Coordinate.cpp.s
-
-GrChartA.o: GrChartA.cpp.o
-
-.PHONY : GrChartA.o
-
-# target to build an object file
-GrChartA.cpp.o:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.o
-.PHONY : GrChartA.cpp.o
-
-GrChartA.i: GrChartA.cpp.i
-
-.PHONY : GrChartA.i
-
-# target to preprocess a source file
-GrChartA.cpp.i:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.i
-.PHONY : GrChartA.cpp.i
-
-GrChartA.s: GrChartA.cpp.s
-
-.PHONY : GrChartA.s
-
-# target to generate assembly for a file
-GrChartA.cpp.s:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.s
-.PHONY : GrChartA.cpp.s
 
 GrCityChart.o: GrCityChart.cpp.o
 
@@ -816,6 +843,60 @@ PixelConverter.s: PixelConverter.cpp.s
 PixelConverter.cpp.s:
 	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.s
 .PHONY : PixelConverter.cpp.s
+
+PlotA.o: PlotA.cpp.o
+
+.PHONY : PlotA.o
+
+# target to build an object file
+PlotA.cpp.o:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.o
+.PHONY : PlotA.cpp.o
+
+PlotA.i: PlotA.cpp.i
+
+.PHONY : PlotA.i
+
+# target to preprocess a source file
+PlotA.cpp.i:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.i
+.PHONY : PlotA.cpp.i
+
+PlotA.s: PlotA.cpp.s
+
+.PHONY : PlotA.s
+
+# target to generate assembly for a file
+PlotA.cpp.s:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.s
+.PHONY : PlotA.cpp.s
+
+PlotB.o: PlotB.cpp.o
+
+.PHONY : PlotB.o
+
+# target to build an object file
+PlotB.cpp.o:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.o
+.PHONY : PlotB.cpp.o
+
+PlotB.i: PlotB.cpp.i
+
+.PHONY : PlotB.i
+
+# target to preprocess a source file
+PlotB.cpp.i:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.i
+.PHONY : PlotB.cpp.i
+
+PlotB.s: PlotB.cpp.s
+
+.PHONY : PlotB.s
+
+# target to generate assembly for a file
+PlotB.cpp.s:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.s
+.PHONY : PlotB.cpp.s
 
 Printer_CMDLine.o: Printer_CMDLine.cpp.o
 
@@ -1362,60 +1443,6 @@ UI_CMDLine.cpp.s:
 	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.s
 	$(MAKE) -f CMakeFiles/RunTests.dir/build.make CMakeFiles/RunTests.dir/UI_CMDLine.cpp.s
 .PHONY : UI_CMDLine.cpp.s
-
-XAxisL2RTop.o: XAxisL2RTop.cpp.o
-
-.PHONY : XAxisL2RTop.o
-
-# target to build an object file
-XAxisL2RTop.cpp.o:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.o
-.PHONY : XAxisL2RTop.cpp.o
-
-XAxisL2RTop.i: XAxisL2RTop.cpp.i
-
-.PHONY : XAxisL2RTop.i
-
-# target to preprocess a source file
-XAxisL2RTop.cpp.i:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.i
-.PHONY : XAxisL2RTop.cpp.i
-
-XAxisL2RTop.s: XAxisL2RTop.cpp.s
-
-.PHONY : XAxisL2RTop.s
-
-# target to generate assembly for a file
-XAxisL2RTop.cpp.s:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.s
-.PHONY : XAxisL2RTop.cpp.s
-
-YAxisT2B.o: YAxisT2B.cpp.o
-
-.PHONY : YAxisT2B.o
-
-# target to build an object file
-YAxisT2B.cpp.o:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.o
-.PHONY : YAxisT2B.cpp.o
-
-YAxisT2B.i: YAxisT2B.cpp.i
-
-.PHONY : YAxisT2B.i
-
-# target to preprocess a source file
-YAxisT2B.cpp.i:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.i
-.PHONY : YAxisT2B.cpp.i
-
-YAxisT2B.s: YAxisT2B.cpp.s
-
-.PHONY : YAxisT2B.s
-
-# target to generate assembly for a file
-YAxisT2B.cpp.s:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.s
-.PHONY : YAxisT2B.cpp.s
 
 main.o: main.cpp.o
 
@@ -1994,15 +2021,21 @@ help:
 	@echo "... edit_cache"
 	@echo "... sdl2-ttf-sample"
 	@echo "... RunTests"
-	@echo "... AxisBottomToTop.o"
-	@echo "... AxisBottomToTop.i"
-	@echo "... AxisBottomToTop.s"
+	@echo "... AxisBottomToTopL.o"
+	@echo "... AxisBottomToTopL.i"
+	@echo "... AxisBottomToTopL.s"
 	@echo "... AxisFormat.o"
 	@echo "... AxisFormat.i"
 	@echo "... AxisFormat.s"
 	@echo "... AxisLeftToRightB.o"
 	@echo "... AxisLeftToRightB.i"
 	@echo "... AxisLeftToRightB.s"
+	@echo "... AxisLeftToRightT.o"
+	@echo "... AxisLeftToRightT.i"
+	@echo "... AxisLeftToRightT.s"
+	@echo "... AxisTopToBottomL.o"
+	@echo "... AxisTopToBottomL.i"
+	@echo "... AxisTopToBottomL.s"
 	@echo "... CityFactory_Grid.o"
 	@echo "... CityFactory_Grid.i"
 	@echo "... CityFactory_Grid.s"
@@ -2018,9 +2051,6 @@ help:
 	@echo "... Coordinate.o"
 	@echo "... Coordinate.i"
 	@echo "... Coordinate.s"
-	@echo "... GrChartA.o"
-	@echo "... GrChartA.i"
-	@echo "... GrChartA.s"
 	@echo "... GrCityChart.o"
 	@echo "... GrCityChart.i"
 	@echo "... GrCityChart.s"
@@ -2066,6 +2096,12 @@ help:
 	@echo "... PixelConverter.o"
 	@echo "... PixelConverter.i"
 	@echo "... PixelConverter.s"
+	@echo "... PlotA.o"
+	@echo "... PlotA.i"
+	@echo "... PlotA.s"
+	@echo "... PlotB.o"
+	@echo "... PlotB.i"
+	@echo "... PlotB.s"
 	@echo "... Printer_CMDLine.o"
 	@echo "... Printer_CMDLine.i"
 	@echo "... Printer_CMDLine.s"
@@ -2123,12 +2159,6 @@ help:
 	@echo "... UI_CMDLine.o"
 	@echo "... UI_CMDLine.i"
 	@echo "... UI_CMDLine.s"
-	@echo "... XAxisL2RTop.o"
-	@echo "... XAxisL2RTop.i"
-	@echo "... XAxisL2RTop.s"
-	@echo "... YAxisT2B.o"
-	@echo "... YAxisT2B.i"
-	@echo "... YAxisT2B.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

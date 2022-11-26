@@ -12,7 +12,7 @@
 class City
 {
     public:
-        enum CityType { grid };
+        enum CityType { grid }; // TODO do I use this enum?
         virtual ~City() = default;
 
         // Returns the number of addresses.

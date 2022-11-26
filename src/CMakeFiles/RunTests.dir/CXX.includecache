@@ -19,6 +19,8 @@ House.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/House.h
 unordered_map
 -
+unordered_set
+-
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/CityFactory.h
 City.h
@@ -57,12 +59,8 @@ City.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/City.h
 map
 -
-utility
--
 House.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/House.h
-memory
--
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.cpp
 Color.h
@@ -80,65 +78,31 @@ set
 unordered_map
 -
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.cpp
-Coordinate.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
-
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
 iostream
 -
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Falling.cpp
-HappinessFunc_Falling.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Falling.h
-
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Falling.h
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Flat.cpp
-HappinessFunc_Flat.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Flat.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Flat.h
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Rising.cpp
-HappinessFunc_Rising.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Rising.h
-
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Rising.h
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepDown.cpp
-HappinessFunc_StepDown.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepDown.h
-iostream
--
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepDown.h
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepUp.cpp
-HappinessFunc_StepUp.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepUp.h
-iostream
--
-
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepUp.h
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/House.cpp
-House.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/House.h
-iostream
--
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/House.h
 string
@@ -156,20 +120,12 @@ stdexcept
 string
 -
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Double.cpp
-Question_Double.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Double.h
-stdexcept
--
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Double.h
-Question.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question.h
-
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Int.cpp
 Question_Int.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Int.h
 stdexcept
+-
+iostream
 -
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Int.h
@@ -906,10 +862,6 @@ algorithm
 cassert
 -
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/main_test.cpp
-catch.hpp
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
-
 /home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_City_Grid.cpp
 catch.hpp
 /home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
@@ -920,62 +872,6 @@ catch.hpp
 iostream
 -
 math.h
--
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_Coordinate.cpp
-catch.hpp
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
-../src/Coordinate.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
-vector
--
-algorithm
--
-sstream
--
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_HappinessFunction_Falling.cpp
-catch.hpp
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
-../src/HappinessFunc_Falling.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Falling.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_HappinessFunction_Flat.cpp
-catch.hpp
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
-../src/HappinessFunc_Flat.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Flat.h
-iostream
--
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_HappinessFunction_Rising.cpp
-catch.hpp
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
-../src/HappinessFunc_Rising.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Rising.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_HappinessFunction_StepDown.cpp
-catch.hpp
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
-../src/HappinessFunc_StepDown.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepDown.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_HappinessFunction_StepUp.cpp
-catch.hpp
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
-../src/HappinessFunc_StepUp.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepUp.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_Printer_CMDLine.cpp
-catch.hpp
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
-../src/Coordinate.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
-vector
--
-algorithm
--
-iostream
 -
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_Resident_Falling.cpp
@@ -1044,28 +940,6 @@ catch.hpp
 vector
 -
 map
--
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_house.cpp
-catch.hpp
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
-iostream
--
-../src/House.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/House.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_question_double.cpp
-catch.hpp
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
-../src/Question_Double.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Double.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_question_int.cpp
-catch.hpp
-/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
-../src/Question_Int.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Int.h
-iostream
 -
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_simulator_basic_a.cpp

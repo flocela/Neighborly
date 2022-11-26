@@ -4,15 +4,16 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTop.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.o"
+  "/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTopL.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightB.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o"
+  "/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightT.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o"
+  "/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisTopToBottomL.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CityFactory_Grid.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/CityFactory_Grid.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CityMaker_CMDLine.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/CityMaker_CMDLine.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/City_Grid.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/City_Grid.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.o"
-  "/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartA.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChart.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrDvstyChart.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o"
@@ -28,6 +29,8 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/MainBaseQuestion.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/MainBaseQuestion.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/MainExamples.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/MainExamples.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/PixelConverter.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.o"
+  "/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotA.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.o"
+  "/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotB.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/Printer_CMDLine.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/Printer_CMDLine.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/Printer_Graphic.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Double.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/Question_Double.cpp.o"
@@ -47,8 +50,6 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/Simulator_E.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/Simulator_E.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/TextHelper.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/UI_CMDLine.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o"
-  "/home/workspace/aminoshbh/sdl2-ttf-sample/src/XAxisL2RTop.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.o"
-  "/home/workspace/aminoshbh/sdl2-ttf-sample/src/YAxisT2B.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/main.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/renderer.cpp.o"
   )

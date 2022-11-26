@@ -6,25 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTop.cpp
-AxisBottomToTop.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTop.h
-iomanip
--
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTopL.cpp
+AxisBottomToTopL.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTopL.h
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTop.h
-string
--
-memory
--
-SDL.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/SDL.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTopL.h
 renderer.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
-Coordinate.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
-PixelConverter.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/PixelConverter.h
+SDL.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/SDL.h
 AxisFormat.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
 TextRect.h
@@ -33,8 +23,6 @@ TextRect.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.cpp
 AxisFormat.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
-iostream
--
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
 stdexcept
@@ -45,6 +33,18 @@ AxisLeftToRightB.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightB.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightB.h
+renderer.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
+AxisFormat.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
+TextRect.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightT.cpp
+AxisLeftToRightT.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightT.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightT.h
 string
 -
 SDL.h
@@ -59,6 +59,28 @@ AxisFormat.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
 memory
 -
+TextRect.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisTopToBottomL.cpp
+AxisTopToBottomL.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisTopToBottomL.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisTopToBottomL.h
+string
+-
+memory
+-
+SDL.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/SDL.h
+renderer.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
+Coordinate.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
+PixelConverter.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PixelConverter.h
+AxisFormat.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
 TextRect.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
 
@@ -74,6 +96,8 @@ Coordinate.h
 House.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/House.h
 unordered_map
+-
+unordered_set
 -
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/CityFactory.h
@@ -135,12 +159,8 @@ City.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/City.h
 map
 -
-utility
--
 House.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/House.h
-memory
--
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.cpp
 Color.h
@@ -158,41 +178,13 @@ set
 unordered_map
 -
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.cpp
-Coordinate.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/ColorKey.h
+renderer.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
+Sizer.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Sizer.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
-iostream
--
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartA.cpp
-GrChartA.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartA.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartA.h
-GrChartASizer.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartASizer.h
-unordered_map
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/unordered_map
-Color.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.h
-Coordinate.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
-AxisFormat.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
-AxisLeftToRightB.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightB.h
-AxisBottomToTop.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTop.h
-Point.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Point.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartASizer.h
-AxisFormat.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
-Letter.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Letter.h
 iostream
 -
 
@@ -215,10 +207,6 @@ vector
 -
 House.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/House.h
-XAxisL2RTop.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/XAxisL2RTop.h
-YAxisT2B.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/YAxisT2B.h
 memory
 -
 PixelConverter.h
@@ -231,6 +219,10 @@ GrCityChartSizer.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChartSizer.h
 GrColorKeyPrinter.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.h
+Title.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Title.h
+Plot.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Plot.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChartSizer.h
 AxisFormat.h
@@ -249,6 +241,10 @@ renderer.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
 Letter.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Letter.h
+ColorKey.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/ColorKey.h
+SDL.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/SDL.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrDvstyChart.cpp
 GrDvstyChart.h
@@ -259,10 +255,8 @@ unordered_map
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/unordered_map
 Color.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.h
-GrChartASizer.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartASizer.h
-GrChartA.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartA.h
+Plot.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Plot.h
 renderer.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
 City.h
@@ -271,6 +265,10 @@ Resident.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident.h
 GrColorKeyPrinter.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.h
+memory
+-
+Title.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Title.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrHapChart.cpp
 GrHapChart.h
@@ -281,18 +279,20 @@ unordered_map
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/unordered_map
 Color.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.h
-GrChartASizer.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartASizer.h
-GrChartA.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartA.h
+PlotSizer.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotSizer.h
+Plot.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Plot.h
 renderer.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
 City.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/City.h
 Resident.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident.h
-GrColorKeyPrinter.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.h
+ColorKey.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/ColorKey.h
+Title.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Title.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrRunsChart.cpp
 GrRunsChart.h
@@ -308,55 +308,25 @@ Letter.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Falling.cpp
-HappinessFunc_Falling.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Falling.h
-
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Falling.h
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Flat.cpp
-HappinessFunc_Flat.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Flat.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Flat.h
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Rising.cpp
-HappinessFunc_Rising.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Rising.h
-
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Rising.h
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepDown.cpp
-HappinessFunc_StepDown.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepDown.h
-iostream
--
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepDown.h
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepUp.cpp
-HappinessFunc_StepUp.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepUp.h
-iostream
--
-
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepUp.h
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/House.cpp
-House.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/House.h
-iostream
--
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/House.h
 string
@@ -414,13 +384,71 @@ Simulator.h
 SimulationComponents.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/SimulationComponents.h
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/PixelConverter.cpp
-PixelConverter.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/PixelConverter.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Plot.h
+vector
+-
+Point.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Point.h
+renderer.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotA.cpp
+PlotA.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotA.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotA.h
+PlotSizer.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotSizer.h
+unordered_map
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/unordered_map
+Color.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.h
+Coordinate.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
+AxisFormat.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
+AxisLeftToRightB.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightB.h
+AxisBottomToTopL.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTopL.h
+Point.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Point.h
+Plot.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Plot.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotB.cpp
+PlotB.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotB.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotB.h
+PlotSizer.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotSizer.h
+unordered_map
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/unordered_map
+Color.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.h
+Coordinate.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
+AxisFormat.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
+AxisLeftToRightT.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightT.h
+AxisTopToBottomL.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisTopToBottomL.h
+Point.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Point.h
+Plot.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Plot.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotSizer.h
+AxisFormat.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
+Letter.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Letter.h
 iostream
 -
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/PixelConverter.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Point.h
 Color.h
@@ -463,16 +491,16 @@ utility
 -
 thread
 -
-chrono
--
 iostream
 -
-XAxisL2RTop.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/XAxisL2RTop.h
-YAxisT2B.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/YAxisT2B.h
+PlotA.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotA.h
+PlotB.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotB.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Printer_Graphic.h
+Title.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Title.h
 GrCityChart.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChart.h
 Printer.h
@@ -499,15 +527,13 @@ GrDvstyChart.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrDvstyChart.h
 GrHapChart.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrHapChart.h
+PlotSizer.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotSizer.h
+TitleA.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/TitleA.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question.h
 string
--
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Double.cpp
-Question_Double.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Double.h
-stdexcept
 -
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Double.h
@@ -519,22 +545,16 @@ Question_Int.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Int.h
 stdexcept
 -
+iostream
+-
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Int.h
 Question.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question.h
 
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_YN.cpp
-Question_YN.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_YN.h
-
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_YN.h
 Question.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/RandSeedGetter.cpp
-RandSeedGetter.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/RandSeedGetter.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/RandSeedGetter.h
 string
@@ -753,6 +773,10 @@ set
 -
 utility
 -
+unordered_set
+-
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Sizer.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextHelper.cpp
 TextHelper.h
@@ -775,6 +799,22 @@ House.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
 string
 -
+SDL.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/SDL.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Title.h
+Sizer.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Sizer.h
+renderer.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/TitleA.h
+Letter.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Letter.h
+renderer.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
+Title.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Title.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/UI.h
 string
@@ -801,50 +841,6 @@ Question_Int.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/UI_CMDLine.h
 UI.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/UI.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/XAxisL2RTop.cpp
-XAxisL2RTop.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/XAxisL2RTop.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/XAxisL2RTop.h
-string
--
-SDL.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/SDL.h
-renderer.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
-Coordinate.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
-PixelConverter.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/PixelConverter.h
-AxisFormat.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
-memory
--
-TextRect.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/YAxisT2B.cpp
-YAxisT2B.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/YAxisT2B.h
-
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/YAxisT2B.h
-string
--
-memory
--
-SDL.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/SDL.h
-renderer.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
-Coordinate.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
-PixelConverter.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/PixelConverter.h
-AxisFormat.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
-TextRect.h
-/home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/main.cpp
 stdio.h
@@ -897,6 +893,10 @@ MainExamples.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/MainExamples.h
 RandSeedGetter.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/RandSeedGetter.h
+chrono
+-
+ctime
+-
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.cpp
 renderer.h

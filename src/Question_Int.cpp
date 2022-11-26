@@ -1,5 +1,6 @@
 #include "Question_Int.h"
 #include <stdexcept>
+#include <iostream>
 
 Question_Int::Question_Int (int id,
                             int min, 
@@ -25,7 +26,8 @@ std::string Question_Int::getPrompt ()
 }
 
 bool Question_Int::tryAnswer (std::string ans)
-{   int intAnswer;
+{   
+    int intAnswer;
     try {
         intAnswer = std::stoi(ans);
     }

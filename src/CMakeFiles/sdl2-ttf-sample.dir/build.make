@@ -57,18 +57,18 @@ include CMakeFiles/sdl2-ttf-sample.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/sdl2-ttf-sample.dir/flags.make
 
-CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
-CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.o: AxisBottomToTop.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.o"
-	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTop.cpp
+CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
+CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o: AxisBottomToTopL.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o"
+	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTopL.cpp
 
-CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.i"
-	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTop.cpp > CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.i
+CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.i"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTopL.cpp > CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.i
 
-CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.s"
-	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTop.cpp -o CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.s
+CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.s"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisBottomToTopL.cpp -o CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.s
 
 CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: AxisFormat.cpp
@@ -96,9 +96,35 @@ CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.s"
 	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightB.cpp -o CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.s
 
+CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
+CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o: AxisLeftToRightT.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o"
+	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightT.cpp
+
+CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.i"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightT.cpp > CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.i
+
+CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.s"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightT.cpp -o CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.s
+
+CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
+CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o: AxisTopToBottomL.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o"
+	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisTopToBottomL.cpp
+
+CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.i"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisTopToBottomL.cpp > CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.i
+
+CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.s"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisTopToBottomL.cpp -o CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.s
+
 CMakeFiles/sdl2-ttf-sample.dir/CityFactory_Grid.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/CityFactory_Grid.cpp.o: CityFactory_Grid.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/CityFactory_Grid.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/CityFactory_Grid.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/CityFactory_Grid.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/CityFactory_Grid.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/CityFactory_Grid.cpp.i: cmake_force
@@ -111,7 +137,7 @@ CMakeFiles/sdl2-ttf-sample.dir/CityFactory_Grid.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/CityMaker_CMDLine.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/CityMaker_CMDLine.cpp.o: CityMaker_CMDLine.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/CityMaker_CMDLine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/CityMaker_CMDLine.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/CityMaker_CMDLine.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/CityMaker_CMDLine.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/CityMaker_CMDLine.cpp.i: cmake_force
@@ -124,7 +150,7 @@ CMakeFiles/sdl2-ttf-sample.dir/CityMaker_CMDLine.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/City_Grid.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/City_Grid.cpp.o: City_Grid.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/City_Grid.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/City_Grid.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/City_Grid.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/City_Grid.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/City_Grid.cpp.i: cmake_force
@@ -137,7 +163,7 @@ CMakeFiles/sdl2-ttf-sample.dir/City_Grid.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.o: Color.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.i: cmake_force
@@ -150,7 +176,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.o: Coordinate.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.i: cmake_force
@@ -161,22 +187,9 @@ CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.s"
 	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.cpp -o CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.s
 
-CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
-CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.o: GrChartA.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.o"
-	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartA.cpp
-
-CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.i"
-	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartA.cpp > CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.i
-
-CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.s"
-	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrChartA.cpp -o CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.s
-
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: GrCityChart.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChart.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.i: cmake_force
@@ -189,7 +202,7 @@ CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o: GrColorKeyPrinter.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.i: cmake_force
@@ -202,7 +215,7 @@ CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o: GrDvstyChart.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrDvstyChart.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.i: cmake_force
@@ -215,7 +228,7 @@ CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o: GrHapChart.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrHapChart.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.i: cmake_force
@@ -228,7 +241,7 @@ CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/GrRunsChart.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/GrRunsChart.cpp.o: GrRunsChart.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrRunsChart.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrRunsChart.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/GrRunsChart.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrRunsChart.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/GrRunsChart.cpp.i: cmake_force
@@ -241,7 +254,7 @@ CMakeFiles/sdl2-ttf-sample.dir/GrRunsChart.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Falling.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Falling.cpp.o: HappinessFunc_Falling.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Falling.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Falling.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Falling.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Falling.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Falling.cpp.i: cmake_force
@@ -254,7 +267,7 @@ CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Falling.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Flat.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Flat.cpp.o: HappinessFunc_Flat.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Flat.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Flat.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Flat.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Flat.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Flat.cpp.i: cmake_force
@@ -267,7 +280,7 @@ CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Flat.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Rising.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Rising.cpp.o: HappinessFunc_Rising.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Rising.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Rising.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Rising.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Rising.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Rising.cpp.i: cmake_force
@@ -280,7 +293,7 @@ CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_Rising.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepDown.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepDown.cpp.o: HappinessFunc_StepDown.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepDown.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepDown.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepDown.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepDown.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepDown.cpp.i: cmake_force
@@ -293,7 +306,7 @@ CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepDown.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepUp.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepUp.cpp.o: HappinessFunc_StepUp.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepUp.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepUp.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepUp.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepUp.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepUp.cpp.i: cmake_force
@@ -306,7 +319,7 @@ CMakeFiles/sdl2-ttf-sample.dir/HappinessFunc_StepUp.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/House.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/House.cpp.o: House.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/House.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/House.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/House.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/House.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/House.cpp.i: cmake_force
@@ -319,7 +332,7 @@ CMakeFiles/sdl2-ttf-sample.dir/House.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Letter.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Letter.cpp.o: Letter.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Letter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Letter.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Letter.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Letter.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Letter.cpp.i: cmake_force
@@ -332,7 +345,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Letter.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/MainBaseQuestion.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/MainBaseQuestion.cpp.o: MainBaseQuestion.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/MainBaseQuestion.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/MainBaseQuestion.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/MainBaseQuestion.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/MainBaseQuestion.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/MainBaseQuestion.cpp.i: cmake_force
@@ -345,7 +358,7 @@ CMakeFiles/sdl2-ttf-sample.dir/MainBaseQuestion.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/MainExamples.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/MainExamples.cpp.o: MainExamples.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/MainExamples.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/MainExamples.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/MainExamples.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/MainExamples.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/MainExamples.cpp.i: cmake_force
@@ -358,7 +371,7 @@ CMakeFiles/sdl2-ttf-sample.dir/MainExamples.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.o: PixelConverter.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/PixelConverter.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.i: cmake_force
@@ -369,9 +382,35 @@ CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.s"
 	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/PixelConverter.cpp -o CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.s
 
+CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
+CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.o: PlotA.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.o"
+	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotA.cpp
+
+CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.i"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotA.cpp > CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.i
+
+CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.s"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotA.cpp -o CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.s
+
+CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
+CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.o: PlotB.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.o"
+	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotB.cpp
+
+CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.i"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotB.cpp > CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.i
+
+CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.s"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotB.cpp -o CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.s
+
 CMakeFiles/sdl2-ttf-sample.dir/Printer_CMDLine.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Printer_CMDLine.cpp.o: Printer_CMDLine.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Printer_CMDLine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Printer_CMDLine.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Printer_CMDLine.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Printer_CMDLine.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Printer_CMDLine.cpp.i: cmake_force
@@ -384,7 +423,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Printer_CMDLine.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: Printer_Graphic.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Printer_Graphic.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.i: cmake_force
@@ -397,7 +436,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Question_Double.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Question_Double.cpp.o: Question_Double.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Question_Double.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Question_Double.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Question_Double.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Double.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Question_Double.cpp.i: cmake_force
@@ -410,7 +449,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Question_Double.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Question_Int.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Question_Int.cpp.o: Question_Int.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Question_Int.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Question_Int.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Question_Int.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Int.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Question_Int.cpp.i: cmake_force
@@ -423,7 +462,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Question_Int.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Question_YN.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Question_YN.cpp.o: Question_YN.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Question_YN.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Question_YN.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Question_YN.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_YN.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Question_YN.cpp.i: cmake_force
@@ -436,7 +475,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Question_YN.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/RandSeedGetter.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/RandSeedGetter.cpp.o: RandSeedGetter.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/RandSeedGetter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/RandSeedGetter.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/RandSeedGetter.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/RandSeedGetter.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/RandSeedGetter.cpp.i: cmake_force
@@ -449,7 +488,7 @@ CMakeFiles/sdl2-ttf-sample.dir/RandSeedGetter.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Resident.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Resident.cpp.o: Resident.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Resident.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Resident.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Resident.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Resident.cpp.i: cmake_force
@@ -462,7 +501,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Resident.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Resident_Falling.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Resident_Falling.cpp.o: Resident_Falling.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Resident_Falling.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Resident_Falling.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Resident_Falling.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident_Falling.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Resident_Falling.cpp.i: cmake_force
@@ -475,7 +514,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Resident_Falling.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Resident_Flat.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Resident_Flat.cpp.o: Resident_Flat.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Resident_Flat.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Resident_Flat.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Resident_Flat.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident_Flat.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Resident_Flat.cpp.i: cmake_force
@@ -488,7 +527,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Resident_Flat.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Resident_Rising.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Resident_Rising.cpp.o: Resident_Rising.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Resident_Rising.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Resident_Rising.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Resident_Rising.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident_Rising.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Resident_Rising.cpp.i: cmake_force
@@ -501,7 +540,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Resident_Rising.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Resident_StepDown.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Resident_StepDown.cpp.o: Resident_StepDown.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Resident_StepDown.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Resident_StepDown.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Resident_StepDown.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident_StepDown.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Resident_StepDown.cpp.i: cmake_force
@@ -514,7 +553,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Resident_StepDown.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Resident_StepUp.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Resident_StepUp.cpp.o: Resident_StepUp.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Resident_StepUp.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Resident_StepUp.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Resident_StepUp.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident_StepUp.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Resident_StepUp.cpp.i: cmake_force
@@ -527,7 +566,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Resident_StepUp.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_Flat.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_Flat.cpp.o: ResidentsFactory_Flat.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_Flat.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_Flat.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_Flat.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsFactory_Flat.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_Flat.cpp.i: cmake_force
@@ -540,7 +579,7 @@ CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_Flat.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_StepDown.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_StepDown.cpp.o: ResidentsFactory_StepDown.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_StepDown.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_StepDown.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_StepDown.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsFactory_StepDown.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_StepDown.cpp.i: cmake_force
@@ -553,7 +592,7 @@ CMakeFiles/sdl2-ttf-sample.dir/ResidentsFactory_StepDown.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o: ResidentsMaker_CMDLine.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsMaker_CMDLine.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.i: cmake_force
@@ -566,7 +605,7 @@ CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Simulator_Basic_A.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Simulator_Basic_A.cpp.o: Simulator_Basic_A.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Simulator_Basic_A.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Simulator_Basic_A.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Simulator_Basic_A.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Simulator_Basic_A.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Simulator_Basic_A.cpp.i: cmake_force
@@ -579,7 +618,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Simulator_Basic_A.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/Simulator_E.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/Simulator_E.cpp.o: Simulator_E.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Simulator_E.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/Simulator_E.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/Simulator_E.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/Simulator_E.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/Simulator_E.cpp.i: cmake_force
@@ -592,7 +631,7 @@ CMakeFiles/sdl2-ttf-sample.dir/Simulator_E.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o: TextHelper.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextHelper.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.i: cmake_force
@@ -605,7 +644,7 @@ CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o: UI_CMDLine.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/UI_CMDLine.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.i: cmake_force
@@ -616,35 +655,9 @@ CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.s"
 	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/UI_CMDLine.cpp -o CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.s
 
-CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
-CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.o: XAxisL2RTop.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.o"
-	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/XAxisL2RTop.cpp
-
-CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.i"
-	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/workspace/aminoshbh/sdl2-ttf-sample/src/XAxisL2RTop.cpp > CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.i
-
-CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.s"
-	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/XAxisL2RTop.cpp -o CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.s
-
-CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
-CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.o: YAxisT2B.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.o"
-	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/YAxisT2B.cpp
-
-CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.i"
-	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/workspace/aminoshbh/sdl2-ttf-sample/src/YAxisT2B.cpp > CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.i
-
-CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.s"
-	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/YAxisT2B.cpp -o CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.s
-
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/main.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.i: cmake_force
@@ -657,7 +670,7 @@ CMakeFiles/sdl2-ttf-sample.dir/main.cpp.s: cmake_force
 
 CMakeFiles/sdl2-ttf-sample.dir/renderer.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/renderer.cpp.o: renderer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/renderer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/renderer.cpp.o"
 	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/renderer.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.cpp
 
 CMakeFiles/sdl2-ttf-sample.dir/renderer.cpp.i: cmake_force
@@ -670,15 +683,16 @@ CMakeFiles/sdl2-ttf-sample.dir/renderer.cpp.s: cmake_force
 
 # Object files for target sdl2-ttf-sample
 sdl2__ttf__sample_OBJECTS = \
-"CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.o" \
+"CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o" \
+"CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o" \
+"CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/CityFactory_Grid.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/CityMaker_CMDLine.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/City_Grid.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.o" \
-"CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o" \
@@ -694,6 +708,8 @@ sdl2__ttf__sample_OBJECTS = \
 "CMakeFiles/sdl2-ttf-sample.dir/MainBaseQuestion.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/MainExamples.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.o" \
+"CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.o" \
+"CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/Printer_CMDLine.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/Question_Double.cpp.o" \
@@ -713,23 +729,22 @@ sdl2__ttf__sample_OBJECTS = \
 "CMakeFiles/sdl2-ttf-sample.dir/Simulator_E.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o" \
-"CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.o" \
-"CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/renderer.cpp.o"
 
 # External object files for target sdl2-ttf-sample
 sdl2__ttf__sample_EXTERNAL_OBJECTS =
 
-sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTop.cpp.o
+sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o
+sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o
+sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/CityFactory_Grid.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/CityMaker_CMDLine.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/City_Grid.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.o
-sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/GrChartA.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o
@@ -745,6 +760,8 @@ sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/Letter.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/MainBaseQuestion.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/MainExamples.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/PixelConverter.cpp.o
+sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/PlotA.cpp.o
+sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/PlotB.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/Printer_CMDLine.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/Question_Double.cpp.o
@@ -764,8 +781,6 @@ sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/Simulator_Basic_A.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/Simulator_E.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o
-sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/XAxisL2RTop.cpp.o
-sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/YAxisT2B.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/renderer.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/build.make
@@ -773,7 +788,7 @@ sdl2-ttf-sample: /usr/lib/x86_64-linux-gnu/libSDL2_ttf.so
 sdl2-ttf-sample: /usr/lib/x86_64-linux-gnu/libSDL2main.a
 sdl2-ttf-sample: /usr/lib/x86_64-linux-gnu/libSDL2.so
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Linking CXX executable sdl2-ttf-sample"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Linking CXX executable sdl2-ttf-sample"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sdl2-ttf-sample.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -10,8 +10,7 @@ std::string UI_CMDLine::getAnswer (Question& question)
     int tries = 0;
     std::string answer = "xx";
     while (tries < 4 && !question.hasValidAnswer())
-    {
-        std::cout << question.getPrompt();
+    {   std::cout << question.getPrompt();
         std::cin >> answer;
         question.tryAnswer(answer);
         tries++;
@@ -20,7 +19,7 @@ std::string UI_CMDLine::getAnswer (Question& question)
 }
 
 int UI_CMDLine::menu (std::string prompt, std::vector<std::string> items) 
-{
+{  
     int size = items.size();
     std::stringstream ssPrompt;
     ssPrompt << prompt << std::endl;
@@ -49,14 +48,14 @@ int UI_CMDLine::menu (std::string prompt, std::vector<std::string> items)
     int tries = 0;
     std::string answer = "xx";
     while (tries < 4 && !chooseMenuItem.hasValidAnswer())
-    {
-        std::cout << chooseMenuItem.getPrompt();
+    {   std::cout << chooseMenuItem.getPrompt();
         std::cin >> answer;
         chooseMenuItem.tryAnswer(answer);
         tries++;
     }
     if (tries >= 4)
         throw "User would not choose a menu item properly.";
-        
-    return stoi(answer);
+    
+    // items are numbered starting with one for the user, but items vector is zero-index based
+    return stoi(answer) - 1;
 }

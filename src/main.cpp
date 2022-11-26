@@ -134,7 +134,6 @@ int main(int argc, char* argv[])
         components = mainExamples.userChoosesExample();
 
         city = std::move(components.city);
-
         residents = std::move(components.residents);
 
         simulator = std::move(components.simulator);
@@ -146,15 +145,10 @@ int main(int argc, char* argv[])
         randomSeed = randSeedGetter.makeSeedForRand();
         srand(randomSeed);
         CityMaker_CMDLine cityMaker{};
-        /*unique_ptr<City> city = cityMaker.makeCity(
+        city = cityMaker.makeCity(
             cityFactoryPointers,
-            MAX_DELTA_X,
-            MAX_DELTA_Y);*/
-        city = cityMaker.makeBaseCity(
-            cityFactoryPointers, 
-            MAX_HOUSES_X, 
-            MAX_HOUSES_Y
-        );
+            MAX_HOUSES_X,
+            MAX_HOUSES_Y);
 
         ResidentsMaker_CMDLine residentsMaker{};
         //vector<unique_ptr<Resident>> residents = 
@@ -166,6 +160,7 @@ int main(int argc, char* argv[])
             baseColors.insert(x.first);
         }
 
+        // TODO why does Resident Factory need to know how many houses there are?
         residents = 
             residentsMaker.makeBaseResidents(resFactoryPointers, city->getNumOfHouses(), baseColors);
     
@@ -176,7 +171,6 @@ int main(int argc, char* argv[])
         }
         
         simulator = std::make_unique<Simulator_Basic_A>(city.get(), residentPtrs);
-
     }
     ;
     //TODO only have 2 groups.
@@ -189,14 +183,13 @@ int main(int argc, char* argv[])
         group_nums_iter++;
         iter++;
     }
-
     std::vector<const House*> houses = city->getHouses();
+
     std::unordered_map<const House*, std::set<const House*>> neighbors;
     for (const House* house : houses)
-    {
+    {   
         neighbors[house] = city->getAdjacentHouses(house->getAddress());
     }
-
     Printer_Graphic graphicPrinter{
         "Neighbors",
         groupNumToColorMap,
@@ -204,13 +197,11 @@ int main(int argc, char* argv[])
         neighbors,
         numOfRuns
     };
-    
     std::unordered_map<const House*, Resident*> houseToResidentMap;
-    //for (int ii=0; ii< numOfRuns; ii++)
     for (int ii=0; ii< numOfRuns; ii++)
     {   
         houseToResidentMap = simulator->simulate();
-
+        
         std::unordered_map<const House*, const Resident*> constMap;
         for (auto& pair : houseToResidentMap)
         {

@@ -18,15 +18,3 @@ std::unique_ptr<City> CityMaker_CMDLine::makeCity (
                             namesOfCityFactories);
     return cityFactories[cityChoice]->createCity(_ui, maxDeltaX, maxDeltaY);
 }
-
-std::unique_ptr<City> CityMaker_CMDLine::makeBaseCity (
-    std::vector<CityFactory*> cityFactories,
-    int maxDeltaX,
-    int maxDeltaY
-)
-{
-    (void) maxDeltaX;
-    (void) maxDeltaY;
-    int cityChoice = 0;
-    return cityFactories[cityChoice]->createBaseCity(_ui, maxDeltaX, maxDeltaY);
-}

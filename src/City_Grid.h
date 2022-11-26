@@ -8,14 +8,14 @@
 class City_Grid: public City
 {
 public:
-
-    // _width is the width of the square grid.
-    // For exampleA _width of 3 would result in
+    // Grid is a square grid.
+    // Example of address counting is as follows:
+    //  _width of 3 would result in
     // 0  1  2
     // 3  4  5
     // 6  7  8
-    // Address 3 is 2 units away from address 5 in the x direction.
-    // Address 1 is 2 units away from address 7 in the y direction.
+    // x runs from left to right.
+    // y runs from top to bottom.
     // Line containing 0 and 2 addresses is the most north.
     // Line containing 0 and 6 addresses is the most west.
     // Houses adjacent to 4 are 0, 1, 2, 3, 5, 6, 7, 8.
@@ -37,6 +37,7 @@ public:
     std::set<const House*> getAdjacentHouses (int address) const override;
 
     //TODO only used in SimulatorE, so if SimulatorE is deleted, then delete this method.
+    //If not then check this method.
     std::unordered_set<const House*> getHousesWithinDistance (
         const House* house, 
         double allowableDist,
@@ -44,6 +45,7 @@ public:
         std::set<const House*> notOccupied
     ) const override;
 
+    // TODO shouldn't be using a refernce to get houses. Should return them.
     void findHousesWithinDistance (
         const House* house,
         double allowableDist,
@@ -54,10 +56,10 @@ public:
 
 private:
     int _width;
-    int _minX = 0;
-    int _minY = 0;
-    int _maxX;
-    int _maxY;
+    int _minX = 0; // smallest x value
+    int _minY = 0; // smallest y value
+    int _maxX;     // largest x value
+    int _maxY;     // largest y value
     
     std::vector<std::unique_ptr<House>> _houses;
 

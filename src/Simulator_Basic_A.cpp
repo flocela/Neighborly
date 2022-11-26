@@ -3,7 +3,7 @@
 
 Simulator_Basic_A::Simulator_Basic_A (City* city, std::set<Resident*> residents):
     _city{city}, _residents{residents}
-{
+{   
     for (const House* house : _city->getHouses())
     {   
         _open_houses.insert(house);
@@ -13,7 +13,7 @@ Simulator_Basic_A::Simulator_Basic_A (City* city, std::set<Resident*> residents)
 std::unordered_map<const House*, Resident*> Simulator_Basic_A::simulate ()
 {   
     if (!_first_simulation_done)
-    {
+    {   
         firstSimulation();
         _first_simulation_done = true;
     }
@@ -39,9 +39,13 @@ void Simulator_Basic_A::firstSimulation ()
     for (Resident* res : _residents)
     {   
         const House* house = selectRandom(_open_houses);
+        
         _curr_house_to_res_map.insert(std::pair<const House*, Resident*>(house, res));
+        
         _curr_res_to_house_map.insert(std::pair<Resident*, const House*>(res, house));
+        
         _open_houses.erase(house);
+        
     }
 
 }

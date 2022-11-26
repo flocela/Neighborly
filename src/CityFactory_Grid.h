@@ -4,7 +4,7 @@
 #include "CityFactory.h"
 #include "Question_Int.h"
 
-// TODO CityFactory.h is not checked
+// CityFactory_Grid creates a City_Grid.
 class CityFactory_Grid: public CityFactory
 {
     public:
@@ -20,15 +20,10 @@ class CityFactory_Grid: public CityFactory
             int deltaX, 
             int deltaY
         ) override;
-        std::unique_ptr<City> createBaseCity (
-            UI& ui, 
-            int deltaX, 
-            int deltaY
-        ) override;
+        
         std::string toString () override;
     private:
         int askForGridWidth(UI& ui, int maxWidth);
-        Question_Int createQuestionGridWidth (int maxWidth);
 
         // Width of grid prompts for question
         std::string _width_of_grid_orig_prompt =
@@ -41,7 +36,7 @@ class CityFactory_Grid: public CityFactory
             "That number is either too small or too large. Minimum allowed width"
             " is 1, maximum allowed width is .  ";
         std::string _width_of_grid_failure = 
-            "Can not get information needed to make a city from the user.";
+            "Can not get information from the user in order to make a city.";
 };
 
 #endif

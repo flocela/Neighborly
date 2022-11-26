@@ -26,13 +26,9 @@ int City_Grid::getNumOfHouses() const
 	return _houses.size();
 }
 
-std::vector<const House*> City_Grid::getHouses () const
-{	std::vector<const House*> houses;
-	for (auto& house : _houses)
-	{	
-		houses.push_back(house.get());
-	}
-	return houses;
+Coordinate City_Grid::getCoordinate(const int& address) const
+{
+	return Coordinate{get_x(address), get_y(address)};
 }
 
 double City_Grid::getDist (const int& fromAddress, const int& toAddress) const
@@ -40,6 +36,16 @@ double City_Grid::getDist (const int& fromAddress, const int& toAddress) const
 	double x_dist = fabs( get_x(fromAddress) - get_x(toAddress) );
 	double y_dist = fabs( get_y(fromAddress) - get_y(toAddress) );
   	return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
+}
+
+std::vector<const House*> City_Grid::getHouses () const
+{	
+	std::vector<const House*> houses;
+	for (auto& house : _houses)
+	{	
+		houses.push_back(house.get());
+	}
+	return houses;
 }
 
 std::set<const House*> City_Grid::getAdjacentHouses (int address) const
@@ -82,78 +88,72 @@ void City_Grid::findHousesWithinDistance (
         double allowableDist,
         std::unordered_set<const House*>& nearHouses
     ) const
-{
+{	
 	int origAddress = house->getAddress();
 	int origX = get_x(origAddress);
 	int origY = get_y(origAddress);
-	int minX = std::max(origX - (int)std::ceil(allowableDist), _minX);
-	int maxX = std::min(origX + (int)std::ceil(allowableDist), _maxX);
-	int minY = std::max(origY - (int)std::ceil(allowableDist), _minY);
-	int maxY = std::min(origY + (int)std::ceil(allowableDist), _maxY);
+	int minX = std::max(origX - (int)std::floor(allowableDist), _minX);
+	int maxX = std::min(origX + (int)std::floor(allowableDist), _maxX);
+	int minY = std::max(origY - (int)std::floor(allowableDist), _minY);
+	int maxY = std::min(origY + (int)std::floor(allowableDist), _maxY);
 
 	// houses within allowableDistance trace out a circle. 
-	// find houses within allowableDistance above or equal original house.
-	int yy = minY;
-	for (; yy<=origY; ++yy)
-	{	
-		// above origAddress
-		int curAddress = (yy*_width + origX);
 
-		if ( getDist(origAddress, curAddress) <= allowableDist )
-			break;
-	} 
+	// for each yy less than or equal to the orig house's yy, find houses within allowableDistance.
+	// for each yy, find the minimum LeftX and the maximum RightX
+	// houses need to be within the allowableDistance and still on the grid.
+	int yy = minY;
 	int curLeftX = origX;
 	int curRightX = origX;
 	for (; yy<=origY; ++yy)
 	{
-
 		int curLeftAddress = (yy*_width + curLeftX);
-		while ( curLeftX-1 >= minX && getDist(origAddress, curLeftAddress -1) <= allowableDist )
+		while ( curLeftX >= minX && getDist(origAddress, curLeftAddress) <= allowableDist )
 		{
-			--curLeftX;
 			curLeftAddress = (yy*_width) + curLeftX;
+			--curLeftX;
 		}
+		++curLeftX;
 
 		int curRightAddress = (yy*_width) + curRightX;
-		while ( curRightX + 1 <= maxX && getDist(origAddress, curRightAddress + 1) <= allowableDist )
+		
+		while ( curRightX <= maxX && getDist(origAddress, curRightAddress) <= allowableDist )
 		{
-			++curRightX;
 			curRightAddress = (yy*_width + curRightX);
+			++curRightX;
 		}
+		--curRightX; 
+
 		for (int xx=curLeftX; xx<=curRightX; ++xx)
 		{
-			//int address = (yy * _width) + xx;
 			House* house = _house_per_address.at((yy * _width) + xx);
 			nearHouses.insert(house);
 		}
 	}
-	// find houses within allowableDistance below original house
-	yy = maxY;
-	for (; yy>origY; --yy)
-	{
-		int curAddress = (yy*_width + origX);
-		if (getDist(origAddress, curAddress) <= allowableDist)
-		{
-			break;
-		}
-	}
 
+	// for each yy less than or equal to the orig house's yy, find houses within allowableDistance.
+	// for each yy, find the minimum LeftX and the maximum RightX
+	// houses need to be within the allowableDistance and still on the grid.
+	yy = maxY;
 	curLeftX = origX;
 	curRightX = origX;
 	for (; yy>origY; --yy)
 	{
 		int curLeftAddress = (yy*_width + curLeftX);
-		while (curLeftX-1 >= minX && getDist(origAddress, curLeftAddress - 1) <= allowableDist)
+		while (curLeftX >= minX && getDist(origAddress, curLeftAddress) <= allowableDist)
 		{
-			--curLeftX;
 			curLeftAddress = (yy*_width) + curLeftX;
+			--curLeftX;
 		}
+		++curLeftX;
+
 		int curRightAddress = (yy*_width) + curRightX;
-		while ( curRightX+1 <= maxX && getDist(origAddress, curRightAddress+1) <= allowableDist )
+		while ( curRightX <= maxX && getDist(origAddress, curRightAddress) <= allowableDist )
 		{
-			++curRightX;
 			curRightAddress = (yy*_width) + curRightX;
+			++curRightX;
 		}
+		--curRightX;
 
 		for (int xx=curLeftX; xx<=curRightX; ++xx)
 		{	
@@ -283,22 +283,16 @@ std::unordered_set<const House*> City_Grid::getHousesWithinDistance (
 	//return nearHouses;
 }
 
-int City_Grid::get_x (const int& address) const
+std::unordered_map<const House*, Coordinate> City_Grid::getCoordinatesPerHouse()
 {
-	return (address%_width);
-
+	std::unordered_map<const House*, Coordinate> coordinatesPerHouse{};
+	for (auto& pair : _house_per_address)
+	{
+		Coordinate coord = getCoordinate(pair.first);
+		coordinatesPerHouse.emplace(std::pair<House*, Coordinate>{pair.second, coord});
+	}
+	return coordinatesPerHouse;
 }
-
-int City_Grid::get_y (const int& address) const
-{
-	return (address/_width);
-}
-
-Coordinate City_Grid::getCoordinate(const int& address) const
-{
-	return Coordinate{get_x(address), get_y(address)};
-}
-
 
 const House* City_Grid::selectRandom (std::unordered_set<const House*>& setOfHouses) const
 {
@@ -309,15 +303,13 @@ const House* City_Grid::selectRandom (std::unordered_set<const House*>& setOfHou
     return *it;
 }
 
-std::unordered_map<const House*, Coordinate> City_Grid::getCoordinatesPerHouse()
+int City_Grid::get_x (const int& address) const
 {
-	
-	std::unordered_map<const House*, Coordinate> coordinatesPerHouse{};
-	for (auto& pair : _house_per_address)
-	{
-		Coordinate coord = getCoordinate(pair.first);
-		coordinatesPerHouse.emplace(std::pair<House*, Coordinate>{pair.second, coord});
-	}
-	return coordinatesPerHouse;
+	return (address%_width);
+
 }
 
+int City_Grid::get_y (const int& address) const
+{
+	return (address/_width);
+}

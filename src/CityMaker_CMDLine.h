@@ -14,13 +14,6 @@ class CityMaker_CMDLine: public CityMaker
             int maxDeltaY
         )
         override;
-        
-        std::unique_ptr<City> makeBaseCity (
-            std::vector<CityFactory*> cityFactories,
-            int maxDeltaX,
-            int maxDeltaY
-        )
-        override;
 
     private:
         UI_CMDLine _ui = UI_CMDLine{};  
