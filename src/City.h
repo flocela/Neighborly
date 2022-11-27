@@ -18,6 +18,8 @@ class City
         // Returns the number of addresses.
         virtual int getNumOfHouses() const = 0;
 
+        virtual double getWidth() const = 0;
+
         // Returns all the houses in the city.
         virtual std::vector<const House*> getHouses () const = 0;
 

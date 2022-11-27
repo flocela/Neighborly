@@ -1,49 +1,11 @@
 #include "ResidentsMaker_CMDLine.h"
 #include <iostream>
 
-
-
-std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeBaseResidents (
-    std::vector<ResidentsFactory*> residentsFactories,
-    int maxResidentCount,
-    std::set<BaseColor> colors // these are the colors that the residents can be.
-)
-{   
-    (void) maxResidentCount;
-    if (colors.size() < 3)
-        throw std::invalid_argument( "colorInfos must have at least 3 colors.");
-    initColors(colors);
-
-    std::vector<std::unique_ptr<Resident>> residents;
-
-    auto residentsGroup1 = residentsFactories[0]->createBaseResidents (
-         _ui,
-        0,
-        30,
-        0.5,
-        1);
-
-    auto residentsGroup2 = residentsFactories[0]->createBaseResidents (
-        _ui,
-        13,
-        50,
-        0.5,
-        2);
-
-    for (auto& r: residentsGroup1)
-        residents.emplace_back(std::move(r));
-
-    for (auto& r: residentsGroup2)
-        residents.emplace_back(std::move(r));
-    
-    return residents;
-}
-
 std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
     std::vector<ResidentsFactory*> residentsFactories,
     int maxResidentCount,
-    std::set<BaseColor> colors
-
+    std::set<BaseColor> colors,
+    double maxAllowableMovement
 )
 {   
     if (colors.size() < 2)
@@ -64,25 +26,31 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
         if (allowedNumOfResidents <= 0)
             break;
 
-        std::string curBaseName = _colorrs_map[_available_colors[0]][Mood::neutral]._base_name;
+        std::string curColBaseName = _colorrs_map[_available_colors[0]][Mood::neutral]._base_name;
 
         int numOfResidents = askForNumOfResidents(
             allowedNumOfResidents, 
-            curBaseName
+            curColBaseName
         );
         
         int choice = askForGroupResidentType(
-            curBaseName, 
+            curColBaseName, 
             residentsFactories
         );
 
-        double happinessGoal = askForHappinessGoalForGroup(curBaseName);
+        double happinessGoal = askForHappinessGoalForGroup(curColBaseName);
+
+        double allowedMovement = askForAllowedMovementForGroup(
+            curColBaseName,
+            maxAllowableMovement
+        );
 
         auto newResidents = residentsFactories[choice]->createResidents(
             _ui,
             numOfResidentsCreated,
             numOfResidents,
             happinessGoal,
+            allowedMovement,
             ii
             );
 
@@ -129,6 +97,19 @@ double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (std::string color)
         return std::stod(question.getAnswer());
     else
         throw _group_happiness_failure.insert(56, color + " ");
+}
+
+double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
+    std::string color, 
+    double maxAllowedMovement
+)
+{
+    Question_Double question = createQuestionGroupAllowableMovement(color, maxAllowedMovement);
+    _ui.getAnswer(question);
+    if (question.hasValidAnswer())
+        return std::stod(question.getAnswer());
+    else //TODO check this failure prompt puts group color in the right spot
+        throw _group_movement_failure.insert(69, color + " ");
 }
 
 int ResidentsMaker_CMDLine::askForNumOfGroupsOfResidents()
@@ -205,8 +186,22 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupHappiness (std::strin
         0.0,
         1.0,
         _group_happiness_orig_prompt.insert(55, color + " "),
-        _group_happiness_range_prompt,
+        _group_happiness_type_prompt,
         _group_happiness_range_prompt};
+}
+
+Question_Double ResidentsMaker_CMDLine::createQuestionGroupAllowableMovement (
+    std::string color, 
+    double maxAllowedMovement
+)
+{
+    return Question_Double{
+        3,
+        0.0,
+        maxAllowedMovement,
+        _group_movement_orig_promt.insert(9, color + " "),
+        _group_movement_type_prompt,
+        _group_movement_range_prompt};
 }
 
 std::vector<std::string> ResidentsMaker_CMDLine::getFactoryNames (

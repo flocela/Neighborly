@@ -16,24 +16,12 @@ class ResidentsFactory_StepDown: public ResidentsFactory
         ResidentsFactory_StepDown& operator= (ResidentsFactory_StepDown&& obj) noexcept = default;
         ~ResidentsFactory_StepDown() = default;
 
-        std::vector<std::unique_ptr<Resident>> createResidents (
-            UI& ui,
-            int firstID,
-            int maxCount, 
-            int groupNumber
-        ) override;
         std::vector<std::unique_ptr<Resident>> createResidents(
             UI& ui,
             int firstID, 
             int maxCount, 
             double happinessGoal,
-            int groupNumber
-        ) override;
-        std::vector<std::unique_ptr<Resident>> createBaseResidents(
-            UI& ui,
-            int firstID, 
-            int maxCount, 
-            double happinessGoal,
+            double allowedMovement,
             int groupNumber
         ) override;
         std::string toString () override;

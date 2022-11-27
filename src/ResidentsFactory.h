@@ -15,25 +15,12 @@ class ResidentsFactory
         ResidentsFactory& operator= (const ResidentsFactory& obj) = default;
         ResidentsFactory& operator= (ResidentsFactory&& obj) noexcept = default;
         virtual ~ResidentsFactory() = default;
-
-        virtual std::vector<std::unique_ptr<Resident>> createResidents(
-            UI& ui, 
-            int firstID,
-            int count, 
-            int groupNumber
-        ) = 0;
         virtual std::vector<std::unique_ptr<Resident>> createResidents(
             UI& ui,
             int firstID, 
-            int count, 
+            int count, //TODO make this max allowable number of residents
             double happinessGoal,
-            int groupNumber
-        ) = 0;
-        virtual std::vector<std::unique_ptr<Resident>> createBaseResidents(
-            UI& ui,
-            int firstID, 
-            int count, 
-            double happinessGoal,
+            double allowedMovement,
             int groupNumber
         ) = 0;
         virtual std::string toString () = 0;

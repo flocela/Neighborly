@@ -26,6 +26,11 @@ int City_Grid::getNumOfHouses() const
 	return _houses.size();
 }
 
+double City_Grid::getWidth() const
+{
+	return _width;
+}
+
 Coordinate City_Grid::getCoordinate(const int& address) const
 {
 	return Coordinate{get_x(address), get_y(address)};

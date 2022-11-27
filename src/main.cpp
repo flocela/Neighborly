@@ -162,7 +162,11 @@ int main(int argc, char* argv[])
         }
 
         residents = 
-            residentsMaker.makeResidents(resFactoryPointers, city->getNumOfHouses(), baseColors);
+            residentsMaker.makeResidents(
+                resFactoryPointers,
+                city->getNumOfHouses(),
+                baseColors, city->getWidth()/2
+            );
     
         std::set<Resident*> residentPtrs = {};
         for (auto& resident: residents)

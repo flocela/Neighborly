@@ -23,21 +23,15 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         std::vector<std::unique_ptr<Resident>> makeResidents (
             std::vector<ResidentsFactory*> residentsFactories,
             int maxNumOfResidents,
-            std::set<BaseColor> colors // these are the colors that the residents can be.
-        )
-        override;
-        // change colors to an iterator<BaseColor> type.
-        std::vector<std::unique_ptr<Resident>> makeBaseResidents (
-            std::vector<ResidentsFactory*> residentsFactories,
-            int maxNumOfResidents,
-            std::set<BaseColor> colors // these are the colors that the residents can be.
+            std::set<BaseColor> colors,
+            double maxAllowableMovement
         )
         override;
 
     private:
-        
         ColorInfo askForGroupColor (int groupIdx);
         double askForHappinessGoalForGroup (std::string color);
+        double askForAllowedMovementForGroup (std::string color, double maxAllowedMovement);
         int askForNumOfGroupsOfResidents ();
         int askForNumOfResidents (int count, std::string color);
         int askForGroupResidentType (
@@ -48,6 +42,10 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         Question_Int createQuestionHowManyResidentGroups ();
         Question_Int createQuestionHowManyResidents (int count, std::string color);
         Question_Double createQuestionGroupHappiness(std::string color);
+        Question_Double createQuestionGroupAllowableMovement(
+            std::string color,
+            double maxAllowedMovement
+        );
 
         void initColors (std::set<BaseColor> colorInfos);
         void initWithBaseColors ();
@@ -100,6 +98,18 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
             "That's too small or too large. Should be between 0 and 1 inclusive.  ";
         std::string _group_happiness_failure = 
             "Could not determine the happiness goal for members of group.";
+
+        /*  Prompts for the allowed movement for this group of residents.   */
+        std::string _group_movement_orig_promt  = 
+            "When the residents move, how far away can their new house be from"
+            " their original house? Must be a positive number.  ";
+        std::string _group_movement_type_prompt  = 
+            "Nope, that's not a number, i.e. 0.2 or 13.0";
+        std::string _group_movement_range_prompt = 
+            "That number is not positive. It must be 0.0 or greater.  ";
+        std::string _group_movement_failure =
+            "Can not get information needed to determine the allowed movement for these"
+            " residents from the user.  ";
 
 };
 

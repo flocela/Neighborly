@@ -28,6 +28,8 @@ public:
 
     int getNumOfHouses() const override;
 
+    double getWidth() const override;
+
     Coordinate getCoordinate (const int& address) const override;
 
     double getDist ( const int& from_address,  const int& to_address) const override;

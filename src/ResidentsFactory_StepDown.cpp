@@ -8,70 +8,11 @@ std::string ResidentsFactory_StepDown::toString ()
 }
 
 std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
-    UI& ui, 
-    int firstID,
-    int maxCount,
-    int groupNumber
-)
-{   
-    Question_Double qHappinessGoal{
-        1,
-        0.0,
-        100.0,
-        _happinessGoalOrigPrompt,
-        _happinessGoalTypePrompt,
-        _happinessGoalRangePrompt
-    };
-
-    double happinessGoal = askUserForDouble(
-        ui,
-        qHappinessGoal,
-        "Can not get information needed to determine the happiness goal for"
-        " these residents from the user."
-    );
-    
-    return createResidents(ui, firstID, maxCount, happinessGoal, groupNumber);
-}
-
-std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createBaseResidents (
     UI& ui,
     int firstID, 
     int maxCount,
     double happinessGoal,
-    int groupNumber
-)
-{   
-    (void) ui;
-    (void) maxCount;
-    int howMany = 13;
-    double movement = 2.0;
-    double happinessAtZero = 1.0;
-    double happinessWithZeroNeighbors = 100.0;
-    double happinessAtOne = 0.5;
-    double locationOfDrop = 0.5;
-
-    std::vector<std::unique_ptr<Resident>> residents = {};
-    for ( int ii=0; ii<howMany; ++ii)
-    {
-        residents.push_back(std::make_unique<Resident_StepDown>(
-            firstID+ii,
-            groupNumber,
-            movement,
-            happinessGoal,
-            happinessWithZeroNeighbors,
-            happinessAtZero,
-            happinessAtOne,
-            locationOfDrop
-        ));
-    }
-    return residents;
-}
-
-std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
-    UI& ui,
-    int firstID, 
-    int maxCount,
-    double happinessGoal,
+    double allowedMovement,
     int groupNumber
 )
 {   
@@ -82,15 +23,6 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
         _howManyOrigPrompt + std::to_string(maxCount) + ".",
         _howManyTypePrompt,
         _howManyRangePrompt + std::to_string(maxCount) + "."
-    };
-
-    Question_Double qMovement{
-        2,
-        0.0,
-        std::numeric_limits<double>::max(),
-        _movmentOrigPrompt,
-        _movementTypePrompt,
-        _movemenRangePrompt
     };
 
     Question_Double qHappinessWithZeroNeighbors{
@@ -134,13 +66,6 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
         "Can not get information needed to determine number of residents from the"
         " user."
     );
-    
-    double movement = askUserForDouble(
-        ui,
-        qMovement,
-        "Can not get information needed to determine the allowed movement for"
-        " these residents from the user."
-    );
 
     double happinessWithZeroNeighbors = askUserForDouble(
         ui,
@@ -176,7 +101,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
         residents.push_back(std::make_unique<Resident_StepDown>(
             firstID+ii,
             groupNumber,
-            movement,
+            allowedMovement,
             happinessGoal,
             happinessWithZeroNeighbors,
             happinessAtZero,
