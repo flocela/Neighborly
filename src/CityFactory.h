@@ -25,6 +25,9 @@ class CityFactory
         ) = 0;
         
         virtual std::string toString () = 0;
+
+        // returns the name of the type of cities that are produced.
+        virtual std::string nameOfCities () = 0; 
 };
 
 #endif

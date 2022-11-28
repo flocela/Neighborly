@@ -5,7 +5,7 @@
 bool MainBaseQuestion::askUserToUsePremadeExamples ()
 {
     return (0 == ui.menu(
-        "First time? Maybe just run one of the examples. ",
+        "\nFirst time here? Maybe just run one of the examples. \nType 1 or 2.",
         std::vector<std::string>{"Use an example. ", "Choose my own simulation. "}
     )); 
 }

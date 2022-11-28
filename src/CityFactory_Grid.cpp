@@ -18,13 +18,18 @@ std::string CityFactory_Grid::toString ()
     return "CityFactory_Grid";
 }
 
+std::string CityFactory_Grid::nameOfCities () 
+{
+    return "Grid City";
+}
+
 int CityFactory_Grid::askForGridWidth(UI& ui, int maxWidth)
 {
     Question_Int question{
         0,
         1,
         maxWidth,
-        _width_of_grid_orig_prompt.insert(126, std::to_string(maxWidth)),
+        _width_of_grid_orig_prompt.insert(109, std::to_string(maxWidth)),
         _width_of_grid_type_prompt,
         _width_of_grid_range_prompt.insert(99, std::to_string(maxWidth))
     };

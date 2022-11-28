@@ -22,13 +22,14 @@ class CityFactory_Grid: public CityFactory
         ) override;
         
         std::string toString () override;
+        std::string nameOfCities () override; 
     private:
         int askForGridWidth(UI& ui, int maxWidth);
 
         // Width of grid prompts for question
         std::string _width_of_grid_orig_prompt =
-            "Enter the width of the grid, as in how many houses wide each side"
-            " will be. The minimum width is 1 house. The maximum width is  houses.  ";
+            "\nEnter the width of the grid, (how many houses per side)?"
+            " The minimum width is 1 house. The maximum width is  houses.  ";
         std::string _width_of_grid_type_prompt = 
             "Nope, that's not a whole number. Should be a number without any"
             " decimals.  ";
