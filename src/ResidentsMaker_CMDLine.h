@@ -41,7 +41,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         
         Question_Int createQuestionHowManyResidentGroups ();
         Question_Int createQuestionHowManyResidents (int count, std::string color);
-        Question_Double createQuestionGroupHappiness(std::string color);
+        Question_Double createQuestionGroupHappinessGoal(std::string color);
         Question_Double createQuestionGroupAllowableMovement(
             std::string color,
             double maxAllowedMovement

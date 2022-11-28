@@ -26,7 +26,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
         if (allowedNumOfResidents <= 0)
             break;
 
-        std::string curColBaseName = _colorrs_map[_available_colors[0]][Mood::neutral]._base_name;
+        std::string curColBaseName = _colorrs_map[_available_colors[ii]][Mood::neutral]._base_name;
 
         int numOfResidents = askForNumOfResidents(
             allowedNumOfResidents, 
@@ -91,7 +91,7 @@ ColorInfo ResidentsMaker_CMDLine::askForGroupColor (int groupIdx)
 
 double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (std::string color)
 {
-    Question_Double question = createQuestionGroupHappiness(color);
+    Question_Double question = createQuestionGroupHappinessGoal(color);
     _ui.getAnswer(question);
     if (question.hasValidAnswer())
         return std::stod(question.getAnswer());
@@ -179,12 +179,12 @@ Question_Int ResidentsMaker_CMDLine::createQuestionHowManyResidents (
     };
 }
 
-Question_Double ResidentsMaker_CMDLine::createQuestionGroupHappiness (std::string color)
+Question_Double ResidentsMaker_CMDLine::createQuestionGroupHappinessGoal (std::string color)
 {
     return Question_Double{
         2,
         0.0,
-        1.0,
+        100.0,
         _group_happiness_orig_prompt.insert(55, color + " "),
         _group_happiness_type_prompt,
         _group_happiness_range_prompt};

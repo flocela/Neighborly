@@ -27,16 +27,14 @@ class ResidentsFactory_Flat: public ResidentsFactory
         std::string toString () override;
     
     private:
-                        
-        
-                                        
+                                               
         /*  Prompts for the Happiness Value when the Diversity is zero for 
             this group of residents.    */
         std::string _happinessValueOrigPrompt  = 
             "\"Flat Residents\" always have the same happiness value"
             " regardless of the diversity of their neighbors. Enter the happiness"
             " value for these \"Flat Residents\".  The happiness value"
-            " must be between 0.0 and 1.0 inclusive.  ";
+            " must be between 0.0 and 100.0 inclusive.  ";
         std::string _happinessValueTypePrompt  = 
             "Nope, that's not a number, i.e. 0.2 or 1.0";
         std::string _happinessValueRangePrompt = 

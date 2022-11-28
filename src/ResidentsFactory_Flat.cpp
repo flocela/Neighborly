@@ -19,7 +19,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     Question_Double qHappinessValue{
         3,
         0.0,
-        1.0,
+        100.0,
         _happinessValueOrigPrompt,
         _happinessValueTypePrompt,
         _happinessValueRangePrompt
@@ -30,8 +30,8 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
         qHappinessValue,
         _happinessValueFailure
     );
-
     std::vector<std::unique_ptr<Resident>> residents = {};
+
     for ( int ii=0; ii<count; ++ii)
     {
         residents.push_back(
@@ -71,7 +71,7 @@ double ResidentsFactory_Flat::askUserForDouble (
 {
     ui.getAnswer(question);
     if (question.hasValidAnswer())
-    {
+    {   
         return std::stod(question.getAnswer());
     }
     else

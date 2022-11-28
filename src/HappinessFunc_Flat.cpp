@@ -1,10 +1,13 @@
 #include "HappinessFunc_Flat.h"
+#include <iostream>
 
 HappinessFunc_Flat::HappinessFunc_Flat(double happinessValue): 
     _result{happinessValue}
 {   
-    if (_result  < 0.0 || _result  > 1.0)
-       throw "HappinessValue must be between 0.0 and 1.0 inclusive.";
+    if (_result  < 0.0 || _result  > 100.0) // TODO this  error doesn't show , all I get is terminate called after throwing an instace of 'char const*'
+    { 
+        throw "HappinessValue must be between 0.0 and 1.0 inclusive.";
+    }
 }
 
 double HappinessFunc_Flat::getHappiness ( 

@@ -13,7 +13,8 @@ class Resident_Flat: public Resident
             int groupNumber,
             double allowedMovementDistance,
             double happinessGoal,
-            double happinessValue);
+            double happinessValue
+            );
         Resident_Flat (const Resident_Flat& obj) = default;
         Resident_Flat (Resident_Flat&& obj) noexcept = default;
         Resident_Flat& operator= (const Resident_Flat& obj) = default;
