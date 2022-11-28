@@ -142,7 +142,7 @@ int main(int argc, char* argv[])
     }
     else
     {
-        RandSeedGetter randSeedGetter;
+        RandSeedGetter randSeedGetter; 
         randomSeed = randSeedGetter.makeSeedForRand();
         srand(randomSeed);
         CityMaker_CMDLine cityMaker{};

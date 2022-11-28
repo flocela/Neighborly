@@ -7,15 +7,23 @@ std::string ResidentsFactory_Flat::toString ()
     return "Flat Residents Factory";
 }
 
+std::string ResidentsFactory_Flat::residentType ()
+{
+    return "Flat Residents";
+}
+
 std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     UI& ui,
     int firstID, 
     int count, 
     double happinessGoal,
     double allowedMovement,
-    int groupNumber
+    int groupNumber,
+    BaseColor baseColor
 )
 {   
+    std::string curColBaseName = _colorrs_map[baseColor][Mood::neutral]._base_name;
+    _happinessValueOrigPrompt.insert(132, curColBaseName + " ");
     Question_Double qHappinessValue{
         3,
         0.0,

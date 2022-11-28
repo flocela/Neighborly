@@ -7,15 +7,21 @@ std::string ResidentsFactory_StepDown::toString ()
     return "Step Down Residents Factory";
 }
 
+std::string ResidentsFactory_StepDown::residentType ()
+{
+    return "Step Down Residents";
+}
+
 std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     UI& ui,
     int firstID, 
     int maxCount,
     double happinessGoal,
     double allowedMovement,
-    int groupNumber
+    int groupNumber,
+    BaseColor baseColor
 )
-{   
+{   (void) baseColor;
     Question_Int qHowMany{
         0,
         1,

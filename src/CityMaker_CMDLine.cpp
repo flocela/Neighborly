@@ -18,8 +18,8 @@ std::unique_ptr<City> CityMaker_CMDLine::makeCity (
 
     if (cityFactories.size() == 1)
     {
-        std::cout << "\nWell, there's only one type of city to choose. So your city type will be " <<
-        cityFactories[0]->nameOfCities() << std::endl;
+        std::cout << "\nWell, there's only one type of city to choose from. So your city type will be " <<
+        cityFactories[0]->nameOfCities() << "." << std::endl;
         return cityFactories[cityChoice]->createCity(_ui, maxDeltaX, maxDeltaY);
     }
     else

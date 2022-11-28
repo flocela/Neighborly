@@ -64,7 +64,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
             " group? Choose a color by typing the corresponding number.";
         
         // Prompt for what is this group's type (as in Resident_Flat or StepDown)
-        std::string _which_type_prompt = "All of residents in the group will"
+        std::string _which_type_prompt = "\nAll of residents in the group will"
             " be which type of residents? Choose their resident type by typing"
             " the corresponding number.";
 
@@ -80,8 +80,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         
         //Prompts for how_many_residents_in_this_group question.
         std::string _how_many_residents_orig_prompt = 
-            "\nHow many residents will be in the first group, the group? Maximum number of total"
-            " residents is  .  ";
+            "\nHow many residents will be in the group? Maximum allowable number is  .  ";
         std::string _how_many_residents_type_prompt =
             "Nope that's not a whole number. No decimals.  ";
         std::string _how_many_residents_range_prompt =
@@ -91,23 +90,23 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
 
         //Prompts for group_happiness_goal question.
         std::string _group_happiness_orig_prompt = 
-            "What will be the happiness goal for all members of the group? The"
+            "\nWhat will be the happiness goal for all members of the group? The"
             " number must be between 0 and 100 inclusive.  ";
         std::string _group_happiness_type_prompt = 
             "Nope that's not a number. Should look like 0.5 or 0.8.  ";
         std::string _group_happiness_range_prompt =
-            "That's too small or too large. Should be between 0 and 1 inclusive.  ";
+            "That's too small or too large. Should be between 0 and 100 inclusive.  ";
         std::string _group_happiness_failure = 
             "Could not determine the happiness goal for members of group.";
 
         /*  Prompts for the allowed movement for this group of residents.   */
-        std::string _group_movement_orig_promt  = 
-            "When the residents move, how far away can their new house be from"
-            " their original house? Must be a positive number.  ";
+        std::string _group_movement_orig_prompt  = 
+            "\nWhen the residents move, how far away can their new house be from"
+            " their original house? Must be less than .  ";
         std::string _group_movement_type_prompt  = 
-            "Nope, that's not a number, i.e. 0.2 or 13.0";
+            "Nope, that's not a number, i.e. 0.2 or 13.0. ";
         std::string _group_movement_range_prompt = 
-            "That number is not positive. It must be 0.0 or greater.  ";
+            "That number must be between 0 and . ";
         std::string _group_movement_failure =
             "Can not get information needed to determine the allowed movement for these"
             " residents from the user.  ";

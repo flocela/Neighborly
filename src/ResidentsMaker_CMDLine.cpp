@@ -1,5 +1,7 @@
 #include "ResidentsMaker_CMDLine.h"
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 
 std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
     std::vector<ResidentsFactory*> residentsFactories,
@@ -51,7 +53,8 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
             numOfResidents,
             happinessGoal,
             allowedMovement,
-            ii
+            ii,
+            _available_colors[ii]
             );
 
         for (auto& r: newResidents)
@@ -140,7 +143,8 @@ int ResidentsMaker_CMDLine::askForGroupResidentType (
 )
 {
     std::vector<std::string> factoryNames = getFactoryNames(residentsFactories);
-    return _ui.menu(_which_type_prompt.insert(24, color + " "), factoryNames);
+    std::string prompt = _which_type_prompt;
+    return _ui.menu(prompt.insert(25, color + " "), factoryNames);
 }
 
 Question_Int ResidentsMaker_CMDLine::createQuestionHowManyResidentGroups()
@@ -160,20 +164,20 @@ Question_Int ResidentsMaker_CMDLine::createQuestionHowManyResidents (
     std::string color
 )
 {   
-    std::string origPrompt = _how_many_residents_orig_prompt.insert(
-        52, 
+    std::string prompt = _how_many_residents_orig_prompt;
+    prompt.insert(
+        35, 
         color + " "
     );
-    origPrompt = origPrompt.insert(
-        origPrompt.size() - 4,
+    prompt.insert(
+        prompt.size() - 4,
         std::to_string(count)
     );
-
     return Question_Int{
         1,
         1,
         count,
-        origPrompt,
+        prompt,
         _how_many_residents_type_prompt,
         _how_many_residents_range_prompt
     };
@@ -185,7 +189,7 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupHappinessGoal (std::s
         2,
         0.0,
         100.0,
-        _group_happiness_orig_prompt.insert(55, color + " "),
+        _group_happiness_orig_prompt.insert(56, color + " "),
         _group_happiness_type_prompt,
         _group_happiness_range_prompt};
 }
@@ -195,13 +199,18 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupAllowableMovement (
     double maxAllowedMovement
 )
 {
+    _group_movement_orig_prompt.insert(10, color + " ");
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(1) << maxAllowedMovement;
+    std::string str_mov = stream.str();
+    _group_movement_orig_prompt.insert(111, str_mov);
     return Question_Double{
         3,
         0.0,
         maxAllowedMovement,
-        _group_movement_orig_promt.insert(9, color + " "),
+        _group_movement_orig_prompt,
         _group_movement_type_prompt,
-        _group_movement_range_prompt};
+        _group_movement_range_prompt.insert(34, str_mov)};
 }
 
 std::vector<std::string> ResidentsMaker_CMDLine::getFactoryNames (
@@ -210,13 +219,7 @@ std::vector<std::string> ResidentsMaker_CMDLine::getFactoryNames (
     std::vector<std::string> residentsFactoryNames = {};
     for (ResidentsFactory* residentFactory: residentsFactories)
     {
-        residentsFactoryNames.push_back(residentFactory->toString());
+        residentsFactoryNames.push_back(residentFactory->residentType());
     }
     return residentsFactoryNames;
 }
-
-
-
-
-
-

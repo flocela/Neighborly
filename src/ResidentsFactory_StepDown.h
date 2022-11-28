@@ -22,9 +22,12 @@ class ResidentsFactory_StepDown: public ResidentsFactory
             int maxCount, 
             double happinessGoal,
             double allowedMovement,
-            int groupNumber
+            int groupNumber,
+            BaseColor baseColor
         ) override;
         std::string toString () override;
+        std::string residentType () override;
+        
     private:
         /*  Prompts for how many residents in this group. Prompts aren't complete.
             Need to have the maximum number of residents allowed.   */

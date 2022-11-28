@@ -21,9 +21,11 @@ class ResidentsFactory
             int count, //TODO make this max allowable number of residents
             double happinessGoal,
             double allowedMovement,
-            int groupNumber
+            int groupNumber,
+            BaseColor baseColor
         ) = 0;
         virtual std::string toString () = 0;
+        virtual std::string residentType () = 0;
 };
 
 #endif
