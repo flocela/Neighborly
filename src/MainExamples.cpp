@@ -28,7 +28,7 @@ SimulationComponents MainExamples::userChoosesExample ()
             "finicky residents with a small city",
             "finicky residents with a large city"}
         );
-    switch (chosenExample)
+    switch (chosenExample) // TODO only one type of example is listed in this switch statement
     {
         // 120 x 120 city with 14,400 houses. 
         // 200 StepDown (Blue)
@@ -38,10 +38,13 @@ SimulationComponents MainExamples::userChoosesExample ()
         case 0:
         {
             components.city = std::make_unique<City_Grid>(110);
-            std::set<int> nums;
-            nums.insert(1);
-            nums.insert(2);
-            components.groupNumbers = nums;
+            int groupNumber = 0;
+            for (auto& x : _colorrs_map)
+            {
+                components.resGroupColors.insert({groupNumber, x.first});
+                ++groupNumber;
+            }
+
             for (int ii=0; ii<4000; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(

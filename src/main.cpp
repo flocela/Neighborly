@@ -123,10 +123,11 @@ int main(int argc, char* argv[])
 
     SimulationComponents components;
     int randomSeed = 1;
+    std::unordered_map<int, BaseColor> colorPerGroupNumber;
 
     MainBaseQuestion mainQuestion;
     bool usesExamples = mainQuestion.askUserToUsePremadeExamples();
-    
+
     if (usesExamples)
     {   
         srand(randomSeed);
@@ -139,6 +140,7 @@ int main(int argc, char* argv[])
 
         simulator = std::move(components.simulator);
         numOfRuns = components.numOfRuns;
+        colorPerGroupNumber = components.resGroupColors;
     }
     else
     {
@@ -151,23 +153,26 @@ int main(int argc, char* argv[])
             MAX_HOUSES_X,
             MAX_HOUSES_Y);
 
-        ResidentsMaker_CMDLine residentsMaker{};
-        //vector<unique_ptr<Resident>> residents = 
-        //    residentsMaker.makeResidents(residentFactoryPointers, city->getSize(), _the_color_Infos);
-
-        std::set<BaseColor> baseColors;
-        for (auto& x : _colorrs_map)
+        // Only two groups of residents
+        std::vector<BaseColor> baseColors;
+        auto iter = _colorrs_map.begin();
+        for (int ii=0; ii<2; ++ii)
         {
-            baseColors.insert(x.first);
+            baseColors.push_back((*iter).first);
         }
 
-        residents = 
+        ResidentsMaker_CMDLine residentsMaker{};
+        ResidentsGroupInfo resGroupInfo = 
             residentsMaker.makeResidents(
                 resFactoryPointers,
                 city->getNumOfHouses(),
-                baseColors, city->getWidth()/2
+                2, // currenlty only allowing two group
+                baseColors,
+                city->getWidth()/2
             );
-    
+
+        residents = std::move(resGroupInfo._residents);
+        colorPerGroupNumber = resGroupInfo._base_color_per_group_num;
         std::set<Resident*> residentPtrs = {};
         for (auto& resident: residents)
         {
@@ -175,17 +180,6 @@ int main(int argc, char* argv[])
         }
         
         simulator = std::make_unique<Simulator_Basic_A>(city.get(), residentPtrs);
-    }
-    ;
-    //TODO only have 2 groups.
-    std::unordered_map<int, BaseColor> groupNumToColorMap;
-    std::set<int>::iterator group_nums_iter = components.groupNumbers.begin();
-    auto iter = _colorrs_map.begin();
-    while ( group_nums_iter != components.groupNumbers.end() && iter != _colorrs_map.end() )
-    {
-        groupNumToColorMap.insert(std::pair<int, BaseColor>(*group_nums_iter, (*iter).first));
-        group_nums_iter++;
-        iter++;
     }
     std::vector<const House*> houses = city->getHouses();
 
@@ -196,7 +190,7 @@ int main(int argc, char* argv[])
     }
     Printer_Graphic graphicPrinter{
         "Neighbors",
-        groupNumToColorMap,
+        colorPerGroupNumber,
         city->getCoordinatesPerHouse(),
         neighbors,
         numOfRuns

@@ -3,23 +3,18 @@
 #include <iomanip>
 #include <sstream>
 
-std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
+ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
     std::vector<ResidentsFactory*> residentsFactories,
     int maxResidentCount,
-    std::set<BaseColor> colors,
+    int maxNumOfGroupsOfResidents, // currently only two groups allowed.
+    std::vector<BaseColor> colors,
     double maxAllowableMovement
 )
 {   
-    if (colors.size() < 2)
-    {
-        initWithBaseColors();
-    }
-    else
-    {
-        initColors(colors);
-    }
-
-    std::vector<std::unique_ptr<Resident>> residents;
+    _num_of_groups = maxNumOfGroupsOfResidents;
+    _num_of_groups = 2; // currently only two groups allowed.
+    initColors(colors);
+    ResidentsGroupInfo resGroupInfo;
     
     int numOfResidentsCreated = 0;
     for (int ii=0; ii<_num_of_groups; ++ii)
@@ -28,22 +23,23 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
         if (allowedNumOfResidents <= 0)
             break;
 
-        std::string curColBaseName = _colorrs_map[_available_colors[ii]][Mood::neutral]._base_name;
+        std::string curColorBaseName = _colorrs_map[_available_colors[ii]][Mood::neutral]._base_name;
+        resGroupInfo._base_color_per_group_num.insert({ii, _available_colors[ii]});
 
         int numOfResidents = askForNumOfResidents(
             allowedNumOfResidents, 
-            curColBaseName
+            curColorBaseName
         );
         
         int choice = askForGroupResidentType(
-            curColBaseName, 
+            curColorBaseName, 
             residentsFactories
         );
 
-        double happinessGoal = askForHappinessGoalForGroup(curColBaseName);
+        double happinessGoal = askForHappinessGoalForGroup(curColorBaseName);
 
         double allowedMovement = askForAllowedMovementForGroup(
-            curColBaseName,
+            curColorBaseName,
             maxAllowableMovement
         );
 
@@ -58,26 +54,17 @@ std::vector<std::unique_ptr<Resident>> ResidentsMaker_CMDLine::makeResidents (
             );
 
         for (auto& r: newResidents)
-            residents.emplace_back(std::move(r));
+            resGroupInfo._residents.emplace_back(std::move(r));
 
         numOfResidentsCreated += newResidents.size();
     }
     
-    return residents;
+    return resGroupInfo;
 }
 
-void ResidentsMaker_CMDLine::initColors (std::set<BaseColor> colors)
+void ResidentsMaker_CMDLine::initColors (std::vector<BaseColor> colors)
 {
-    for (BaseColor color : colors)
-        _available_colors.push_back(color);
-}
-
-void ResidentsMaker_CMDLine::initWithBaseColors ()
-{
-    for (auto& x : _colorrs_map)
-    {
-        _available_colors.push_back(x.first);
-    }
+    _available_colors = colors;
 }
 
 ColorInfo ResidentsMaker_CMDLine::askForGroupColor (int groupIdx)

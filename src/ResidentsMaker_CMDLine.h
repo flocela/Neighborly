@@ -19,11 +19,11 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         ResidentsMaker_CMDLine () = default;
         ~ResidentsMaker_CMDLine () = default;
 
-        // Only allows 1 to 3 groups of residents.
-        std::vector<std::unique_ptr<Resident>> makeResidents (
+        ResidentsGroupInfo makeResidents (
             std::vector<ResidentsFactory*> residentsFactories,
             int maxNumOfResidents,
-            std::set<BaseColor> colors,
+            int maxNumberOfGroupsOfResidents, // Currently just using two groups!
+            std::vector<BaseColor> colors,
             double maxAllowableMovement
         )
         override;
@@ -38,6 +38,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
             std::string color, 
             std::vector<ResidentsFactory*> residentsFactories
         );
+        int _num_of_groups = 2;
         
         Question_Int createQuestionHowManyResidentGroups ();
         Question_Int createQuestionHowManyResidents (int count, std::string color);
@@ -47,8 +48,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
             double maxAllowedMovement
         );
 
-        void initColors (std::set<BaseColor> colorInfos);
-        void initWithBaseColors ();
+        void initColors (std::vector<BaseColor> colors);
         std::vector<std::string>  getFactoryNames (
             std::vector<ResidentsFactory*> residentsFactories
         );
@@ -57,7 +57,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
 
         // map of color strings, is diminished as users use their colors.
         std::vector<BaseColor> _available_colors;
-        int _num_of_groups = 2;
+        
 
         // Prompt for what is this group's color question.
         std::string _which_group_color_prompt = "What will be the color of your"
