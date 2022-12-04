@@ -101,7 +101,8 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
 
         /*  Prompts for the allowed movement for this group of residents.   */
         std::string _group_movement_orig_prompt  = 
-            "\nWhen the residents move, how far away can their new house be from"
+            "\nThe simulator you choose may restrict the residents' movements."
+            " If so, when the residents move, how far away can their new house be from"
             " their original house? Must be less than .  ";
         std::string _group_movement_type_prompt  = 
             "Nope, that's not a number, i.e. 0.2 or 13.0. ";

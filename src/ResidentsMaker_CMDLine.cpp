@@ -186,18 +186,18 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupAllowableMovement (
     double maxAllowedMovement
 )
 {
-    _group_movement_orig_prompt.insert(10, color + " ");
+    _group_movement_orig_prompt.insert(81, color + " ");
     std::stringstream stream;
     stream << std::fixed << std::setprecision(1) << maxAllowedMovement;
     std::string str_mov = stream.str();
-    _group_movement_orig_prompt.insert(111, str_mov);
+    _group_movement_orig_prompt.insert(184, str_mov);
     return Question_Double{
         3,
         0.0,
         maxAllowedMovement,
         _group_movement_orig_prompt,
         _group_movement_type_prompt,
-        _group_movement_range_prompt.insert(34, str_mov)};
+        _group_movement_range_prompt.insert(35, str_mov)};
 }
 
 std::vector<std::string> ResidentsMaker_CMDLine::getFactoryNames (
