@@ -67,6 +67,7 @@ void ResidentsMaker_CMDLine::initColors (std::vector<BaseColor> colors)
     _available_colors = colors;
 }
 
+// TODO probably get rid of this, definitely make copy of prompt before changing it.
 ColorInfo ResidentsMaker_CMDLine::askForGroupColor (int groupIdx)
 {
     std::vector<std::string> colorStrings = {};
@@ -104,7 +105,11 @@ double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
     if (question.hasValidAnswer())
         return std::stod(question.getAnswer());
     else //TODO check this failure prompt puts group color in the right spot
-        throw _group_movement_failure.insert(69, color + " ");
+    {
+        std::string failure_message = _group_movement_failure;
+        throw failure_message.insert(69, color + " ");
+    }
+        
 }
 
 int ResidentsMaker_CMDLine::askForNumOfGroupsOfResidents()
@@ -165,7 +170,7 @@ Question_Int ResidentsMaker_CMDLine::createQuestionHowManyResidents (
         color + " "
     );
     prompt.insert(
-        prompt.size() - 4,
+        prompt.size() - 3,
         std::to_string(count)
     );
     return Question_Int{
@@ -202,7 +207,7 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupAllowableMovement (
     std::stringstream stream;
     stream << std::fixed << std::setprecision(1) << maxAllowedMovement;
     std::string str_mov = stream.str();
-    orig_prompt.insert(184, str_mov);
+    orig_prompt.insert(179 + color.size(), str_mov);
     return Question_Double{
         3,
         0.0,

@@ -29,13 +29,13 @@ class CityFactory_Grid: public CityFactory
         // Width of grid prompts for question
         std::string _width_of_grid_orig_prompt =
             "\nEnter the width of the grid, (how many houses per side)?"
-            " The minimum width is 1 house. The maximum width is  houses.  ";
+            " The minimum width is 1 house. The maximum width is  houses. _";
         std::string _width_of_grid_type_prompt = 
             "Nope, that's not a whole number. Should be a number without any"
-            " decimals.  ";
+            " decimals. _";
         std::string _width_of_grid_range_prompt = 
             "That number is either too small or too large. Minimum allowed width"
-            " is 1, maximum allowed width is .  ";
+            " is 1, maximum allowed width is . _";
         std::string _width_of_grid_failure = 
             "Can not get information from the user in order to make a city.";
 };

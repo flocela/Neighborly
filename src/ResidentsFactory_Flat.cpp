@@ -23,12 +23,13 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
 )
 {   
     std::string curColBaseName = _colorrs_map[baseColor][Mood::neutral]._base_name;
-    _happinessValueOrigPrompt.insert(132, curColBaseName + " ");
+    std:: string _happiness_orig_prompt = _happinessValueOrigPrompt;
+    _happiness_orig_prompt.insert(134, curColBaseName + " ");
     Question_Double qHappinessValue{
         3,
         0.0,
         100.0,
-        _happinessValueOrigPrompt,
+        _happiness_orig_prompt,
         _happinessValueTypePrompt,
         _happinessValueRangePrompt
     };

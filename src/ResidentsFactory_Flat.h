@@ -32,15 +32,15 @@ class ResidentsFactory_Flat: public ResidentsFactory
         /*  Prompts for the Happiness Value when the Diversity is zero for 
             this group of residents.    */
         std::string _happinessValueOrigPrompt  = 
-            "\n\"Flat Residents\" have the same happiness value"
+            "\n\"Flat Residents\" have a constant happiness value"
             " regardless of the diversity of their neighbors. Enter the happiness"
-            " value for these Flat Residents.  The happiness value"
-            " must be between 0.0 and 100.0 inclusive.  ";
+            " value for these flat residents.  The happiness value"
+            " must be between 0.0 and 100.0 inclusive. _";
         std::string _happinessValueTypePrompt  = 
-            "Nope, that's not a number, i.e. 0.2 or 1.0";
+            "Nope, that's not a number, i.e. 0.2 or 15.0. _";
         std::string _happinessValueRangePrompt = 
-            "That number is too small or too large. Should be between 0.0 and 1.0"
-            " inclusive.  ";
+            "That number is too small or too large. Should be between 0.0 and 100.0"
+            " inclusive. _";
         std::string _happinessValueFailure = 
             "Can not get information needed to determine the happiness value for"
             " these residents from the user.  ";
