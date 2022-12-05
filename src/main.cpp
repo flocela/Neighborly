@@ -159,6 +159,7 @@ int main(int argc, char* argv[])
         for (int ii=0; ii<2; ++ii)
         {
             baseColors.push_back((*iter).first);
+            ++iter;
         }
 
         ResidentsMaker_CMDLine residentsMaker{};
@@ -181,6 +182,7 @@ int main(int argc, char* argv[])
         
         simulator = std::make_unique<Simulator_Basic_A>(city.get(), residentPtrs);
     }
+
     std::vector<const House*> houses = city->getHouses();
 
     std::unordered_map<const House*, std::set<const House*>> neighbors;

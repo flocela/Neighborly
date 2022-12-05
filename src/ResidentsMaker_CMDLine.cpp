@@ -84,9 +84,14 @@ double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (std::string color)
     Question_Double question = createQuestionGroupHappinessGoal(color);
     _ui.getAnswer(question);
     if (question.hasValidAnswer())
+    {
         return std::stod(question.getAnswer());
+    }  
     else
-        throw _group_happiness_failure.insert(56, color + " ");
+    {   std::string failure_message = _group_happiness_failure;
+        throw failure_message.insert(56, color + " ");
+    }
+        
 }
 
 double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
@@ -119,8 +124,11 @@ int ResidentsMaker_CMDLine::askForNumOfResidents(int count, std::string color)
     _ui.getAnswer(question);
     if (question.hasValidAnswer())
         return std::stoi(question.getAnswer());
-    else
-        throw _how_many_residents_failure.insert(48 , color + " ");
+    else{
+        std::string failure_message = _how_many_residents_failure;
+        throw failure_message.insert(48 , color + " ");
+    }
+        
 }
 
 int ResidentsMaker_CMDLine::askForGroupResidentType (
@@ -172,11 +180,12 @@ Question_Int ResidentsMaker_CMDLine::createQuestionHowManyResidents (
 
 Question_Double ResidentsMaker_CMDLine::createQuestionGroupHappinessGoal (std::string color)
 {
+    std::string orig_prompt = _group_happiness_orig_prompt;
     return Question_Double{
         2,
         0.0,
         100.0,
-        _group_happiness_orig_prompt.insert(56, color + " "),
+        orig_prompt.insert(56, color + " "),
         _group_happiness_type_prompt,
         _group_happiness_range_prompt};
 }
@@ -185,19 +194,22 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupAllowableMovement (
     std::string color, 
     double maxAllowedMovement
 )
-{
-    _group_movement_orig_prompt.insert(81, color + " ");
+{  
+    std::string orig_prompt = _group_movement_orig_prompt;
+    std::string range_prompt = _group_movement_range_prompt;
+
+    orig_prompt.insert(81, color + " ");
     std::stringstream stream;
     stream << std::fixed << std::setprecision(1) << maxAllowedMovement;
     std::string str_mov = stream.str();
-    _group_movement_orig_prompt.insert(184, str_mov);
+    orig_prompt.insert(184, str_mov);
     return Question_Double{
         3,
         0.0,
         maxAllowedMovement,
-        _group_movement_orig_prompt,
+        orig_prompt,
         _group_movement_type_prompt,
-        _group_movement_range_prompt.insert(35, str_mov)};
+        range_prompt.insert(35, str_mov)};
 }
 
 std::vector<std::string> ResidentsMaker_CMDLine::getFactoryNames (

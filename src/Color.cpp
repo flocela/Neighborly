@@ -33,3 +33,27 @@ std::ostream& operator<<(std::ostream& os, Color const& obj)
     os << colorString;
     return os;
 }
+
+// TODO check Color.h operator <<
+std::ostream& operator<<(std::ostream& os, BaseColor const& obj)
+{ 
+    std::string colorString;
+
+    switch (obj)
+    {
+        case BaseColor::green:
+            colorString = "green";
+            break;
+        case BaseColor::blue:
+            colorString = "blue";
+            break;
+        case BaseColor::red:
+            colorString = "red";
+            break;
+        default:
+            colorString = "unknown";
+            break;
+    }
+    os << colorString;
+    return os;
+}

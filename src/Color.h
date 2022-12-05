@@ -27,6 +27,7 @@ enum class BaseColor {red, blue, green};
 enum class Mood {neutral, unhappy, happy};
 
 std::ostream& operator<<(std::ostream& os, Color const& obj);
+std::ostream& operator<<(std::ostream& os, BaseColor const& obj);
 
 struct ColorInfo
 {
