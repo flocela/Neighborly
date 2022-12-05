@@ -5,7 +5,7 @@ Question_Int RandSeedGetter::createQuestionForSeed ()
     return Question_Int{
         0,
         1,
-        2147483647,
+        2147483647, // Ask the compiler how big an int is
         _seed_orig_prompt,
         _seed_type_prompt,
         _seed_range_prompt

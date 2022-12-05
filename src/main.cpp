@@ -55,6 +55,7 @@
 #include "SimulationComponents.h"
 #include "MainExamples.h"
 #include "RandSeedGetter.h"
+#include "UINumOfRunsGetter.h"
 
 #include <chrono>
 #include <ctime>
@@ -179,6 +180,9 @@ int main(int argc, char* argv[])
         {
             residentPtrs.insert(resident.get());
         }
+
+        UINumOfRunsGetter runsGetter;
+        numOfRuns = runsGetter.getNumOfRunsFromUser();
         
         simulator = std::make_unique<Simulator_Basic_A>(city.get(), residentPtrs);
     }

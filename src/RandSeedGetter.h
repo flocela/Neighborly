@@ -24,7 +24,7 @@ class RandSeedGetter
             " 2,147,483,647. _";
         std::string _seed_failure_str = 
             "Could not determine what the random number seed should be from"
-            " the user. _";
+            " the user.";
 
 };
 
