@@ -52,6 +52,20 @@ void Printer_Graphic::print (
     int run
 )
 {   
+
+    _renderer->setColorToRed();
+    SDL_Rect rect {
+        5,
+        0,
+        5,
+        1195
+    };
+    _renderer->fillBlock(rect);
+
+    std::cout << "PrinterGraphic _city_map_chart_top_left_y_coord__px: " << _city_map_chart_top_left_y_coord__px << std::endl;
+    std::cout << "PrinterGraphic _city_y_space__px: " << _city_y_space__px << std::endl;
+
+
     std::unordered_map<const Resident*, const House*> housePerResident;
     std::vector<const Resident*> residents;
     for (auto pair : residentPerHouse)

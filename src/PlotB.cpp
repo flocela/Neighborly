@@ -92,9 +92,13 @@ void PlotB::print (
 )
 {   
     (void) clear;
-    _x_axis.print(renderer);
-    _y_axis.print(renderer);
-
+    if (!_axis_is_printed) 
+    {
+        _x_axis.print(renderer);
+        _y_axis.print(renderer);
+        _axis_is_printed = true;
+    }
+    
     std::vector<SDL_Rect> rects{};
     for (auto& pair : pointsPerColor)
     {
@@ -104,8 +108,8 @@ void PlotB::print (
         std::vector<Coordinate> coordinates;
         for (Point point : points)
         {
-            int x = _x_axis.getXPixelForPrinting(point.x()) + (_unit__px - _dot__px)/2;
-            int y = _y_axis.getYPixelForPrinting(point.y()) + (_unit__px - _dot__px)/2;
+            int x = _x_axis.getXPixelForPrinting(point.x()) - (_dot__px)/2;
+            int y = _y_axis.getYPixelForPrinting(point.y()) - (_dot__px)/2;
 
             coordinates.push_back(Coordinate(x, y));
         }

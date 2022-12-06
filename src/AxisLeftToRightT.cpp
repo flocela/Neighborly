@@ -63,7 +63,7 @@ void AxisLeftToRightT::addTicksAndLabels (
 )
 {   
     int curVal = _min_val;
-    int curVal__px = getXPixelForPrinting(curVal) + (_px_per_unit - _tick_thickness__px)/2;
+    int curVal__px = getXPixelForPrinting(curVal) - (_tick_thickness__px)/2;
 
     int botOfLabelYPx = 
         _y_cross__px -
@@ -117,7 +117,7 @@ void AxisLeftToRightT::addTicksAndLabels (
         }
         
         ++curVal;
-        curVal__px = getXPixelForPrinting(curVal) + (_px_per_unit - _tick_thickness__px)/2;
+        curVal__px = getXPixelForPrinting(curVal) - (_tick_thickness__px)/2;
     }
 }
 
@@ -155,7 +155,7 @@ int AxisLeftToRightT::sizeYPx ()
 
 int AxisLeftToRightT::calcRightMostPixelX ()
 {
-    return _x_cross__px + (_px_per_unit * (_diff + 1 + _start_offset_m + _end_offset_m)) - 1;
+    return _x_cross__px + (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
 }
 
 int AxisLeftToRightT::calcMinTickSpacing (int pixelsPerUnit)

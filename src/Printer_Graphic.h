@@ -115,7 +115,6 @@ private:
     // vertical space
     int _space_between_charts__px = 30;
 
-
     /* RUNS COUNTER */
 
     // Sits center, below window title

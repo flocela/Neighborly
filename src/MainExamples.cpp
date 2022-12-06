@@ -37,7 +37,7 @@ SimulationComponents MainExamples::userChoosesExample ()
         //     Unhappy if 25% or more neighbors are different from themselves.
         case 0:
         {
-            components.city = std::make_unique<City_Grid>(110);
+            components.city = std::make_unique<City_Grid>(120);
             int groupNumber = 0;
             for (auto& x : _colorrs_map)
             {
@@ -45,7 +45,7 @@ SimulationComponents MainExamples::userChoosesExample ()
                 ++groupNumber;
             }
 
-            for (int ii=0; ii<4000; ++ii)
+            for (int ii=0; ii<20; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(
                     ii,  // id
@@ -58,7 +58,7 @@ SimulationComponents MainExamples::userChoosesExample ()
                     0.8  // diversity where drop happens
                 ));
             }
-            for (int jj=4001; jj<5000; ++jj)
+            for (int jj=21; jj<41; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(
                     jj,

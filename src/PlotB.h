@@ -81,7 +81,6 @@ private:
     int _min_y;
     int _max_y;
     
-
     // given allowable space in the x and y directions
     int _x_space__px;
     int _y_space__px;
@@ -106,6 +105,8 @@ private:
     int calcDotSizePx ();
     int calcCrossXPx (int topLeftX);
     int calcCrossYPx (int topLeftY);
+
+    bool _axis_is_printed = false;
 };
 
 #endif

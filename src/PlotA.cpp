@@ -102,7 +102,7 @@ void PlotA::print (
         _printed_axes = true;
     }
 
-    std::vector<SDL_Rect> rects{};
+    std::vector<SDL_Rect> rects{}; // TODO is this used?
     for (auto& pair : pointsPerColor)
     {
         Color color = pair.first;

@@ -58,8 +58,8 @@ void AxisTopToBottomL::addVerticalLine (std::vector<SDL_Rect>& rects)
 
 int AxisTopToBottomL::calcBotMostPixelYPx ()
 {
-    int numOfUnits = _max_val - _min_val + 1;
-    return _y_cross__px + (_px_per_unit * (numOfUnits + _start_offset_m + _end_offset_m)) - 1;
+    int numOfUnits = _max_val - _min_val;
+    return _y_cross__px + (_px_per_unit * (numOfUnits + _start_offset_m + _end_offset_m));
 }
         
 void AxisTopToBottomL::addTicksAndLabels (
@@ -71,8 +71,7 @@ void AxisTopToBottomL::addTicksAndLabels (
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
 
     int curVal = _min_val;
-    int curVal__px = getYPixelForPrinting(_min_val) + ( (_px_per_unit -_tick_thickness__px) / 2 );
-
+    int curVal__px = getYPixelForPrinting(_min_val) - (_tick_thickness__px) / 2 ;
     TextRect curText = {
         _x_cross__px - _axis_format.majTickLengthOutsideChartPx(),
         curVal__px,
@@ -116,7 +115,7 @@ void AxisTopToBottomL::addTicksAndLabels (
             rects.push_back(minRect);
         }
         ++curVal;
-        curVal__px = getYPixelForPrinting(curVal) + ( (_px_per_unit -_tick_thickness__px) / 2 );
+        curVal__px = getYPixelForPrinting(curVal) - (_tick_thickness__px/ 2 ) ;
     }
 }
 
@@ -156,7 +155,6 @@ int AxisTopToBottomL::axisLengthPx()
 int AxisTopToBottomL::getYPixelForPrinting (double yVal)
 {
     int minYPx = _y_cross__px + ( _start_offset_m * _px_per_unit );
-
     return minYPx + _px_per_unit * (yVal - _min_val);
     
 }
