@@ -39,8 +39,9 @@ SimulationComponents MainExamples::userChoosesExample ()
         {
             components.city = std::make_unique<City_Grid>(15);
 
+            // Only two groups. Group #1 and Group #2
             auto iter = _colorrs_map.begin();
-            for (int ii=0; ii<2; ++ii)
+            for (int ii=1; ii<3; ++ii)
             {
                 components.resGroupColors.insert({ii, (*iter).first});
                 ++iter;

@@ -53,18 +53,14 @@ void Printer_Graphic::print (
 )
 {   
 
-    _renderer->setColorToRed();
+    /*_renderer->setColorToRed();
     SDL_Rect rect {
         5,
         0,
         5,
         1195
     };
-    _renderer->fillBlock(rect);
-
-    std::cout << "PrinterGraphic _city_map_chart_top_left_y_coord__px: " << _city_map_chart_top_left_y_coord__px << std::endl;
-    std::cout << "PrinterGraphic _city_y_space__px: " << _city_y_space__px << std::endl;
-
+    _renderer->fillBlock(rect);*/
 
     std::unordered_map<const Resident*, const House*> housePerResident;
     std::vector<const Resident*> residents;
@@ -76,7 +72,6 @@ void Printer_Graphic::print (
         residents.push_back(pair.second);
         }
     }
-
 
     _window_title->print(_renderer.get());
     _runs_chart->print(run, _renderer.get());
@@ -152,7 +147,7 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
 )
 {   
     std::set<Mood> moods{Mood::happy, Mood::unhappy};
-    
+
     return std::make_unique<GrCityChart>(
         _coordinates_per_house,
         _colors,

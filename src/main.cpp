@@ -154,10 +154,10 @@ int main(int argc, char* argv[])
             MAX_HOUSES_X,
             MAX_HOUSES_Y);
 
-        // Only two groups of residents
+        // Only two groups of residents. Group 1 and Group 2.
         std::vector<BaseColor> baseColors;
         auto iter = _colorrs_map.begin();
-        for (int ii=0; ii<2; ++ii)
+        for (int ii=1; ii<3; ++ii) 
         {
             baseColors.push_back((*iter).first);
             ++iter;
@@ -194,6 +194,7 @@ int main(int argc, char* argv[])
     {   
         neighbors[house] = city->getAdjacentHouses(house->getAddress());
     }
+    
     Printer_Graphic graphicPrinter{
         "Neighbors",
         colorPerGroupNumber,
