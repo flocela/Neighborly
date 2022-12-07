@@ -38,12 +38,12 @@ Printer_Graphic::Printer_Graphic (
 
     int maxNumOfNeighbors = determineMaxNumberOfNeighbors(neighbors);
         
-    _dvsty_chart = createDvstyChart(neighbors, maxNumOfNeighbors, numOfRuns);
+    _dvsty_chart = createDvstyChart(neighbors, maxNumOfNeighbors, _num_of_runs);
     
 
     /* HAPPINESS CHART */
 
-    _happiness_chart = createHapChart(numOfRuns);
+    _happiness_chart = createHapChart(_num_of_runs);
     
 }
 
@@ -197,7 +197,7 @@ std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             _colors, 
             moods, 
             0, // min number of runs
-            maxNumOfRuns,
+            maxNumOfRuns -1,
             0, // min number of neighbors
             maxNumOfNeighbors
         ),

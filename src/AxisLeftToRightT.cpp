@@ -155,7 +155,7 @@ int AxisLeftToRightT::sizeYPx ()
 
 int AxisLeftToRightT::calcRightMostPixelX ()
 {
-    return _x_cross__px + (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
+    return _x_cross__px + (_px_per_unit * (_diff + _start_offset_m + _end_offset_m)) - 1;
 }
 
 int AxisLeftToRightT::calcMinTickSpacing (int pixelsPerUnit)

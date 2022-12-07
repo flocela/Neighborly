@@ -55,7 +55,7 @@ void AxisLeftToRightB::addHorizontalLine (std::vector<SDL_Rect>& rects)
 
 int AxisLeftToRightB::calcRightMostPixelX ()
 {
-    int numOfUnits = _max_val - _min_val + 1;
+    int numOfUnits = _max_val - _min_val;
     return _x_cross__px + (_px_per_unit * (numOfUnits + _start_offset_m + _end_offset_m)) - 1;
 }
 
@@ -65,7 +65,7 @@ void AxisLeftToRightB::addTicksAndLabels (
 )
 {   
     int curVal = _min_val;
-    int curVal__px = getXPixelForPrinting(curVal) + (_px_per_unit - _tick_thickness__px)/2;
+    int curVal__px = getXPixelForPrinting(curVal) - (_tick_thickness__px/2);
 
     int topOfLabelYPx = 
         _y_cross__px +
@@ -117,7 +117,7 @@ void AxisLeftToRightB::addTicksAndLabels (
         }
         
         ++curVal;
-        curVal__px = getXPixelForPrinting(curVal) + (_px_per_unit - _tick_thickness__px)/2;
+        curVal__px = getXPixelForPrinting(curVal) - (_tick_thickness__px/2);
     }
 }
 

@@ -141,6 +141,7 @@ int main(int argc, char* argv[])
 
         simulator = std::move(components.simulator);
         numOfRuns = components.numOfRuns;
+        std::cout << "main components.numOfRuns: " << components.numOfRuns << std::endl;
         colorPerGroupNumber = components.resGroupColors;
     }
     else
@@ -195,6 +196,7 @@ int main(int argc, char* argv[])
         neighbors[house] = city->getAdjacentHouses(house->getAddress());
     }
     
+    std::cout << "main numofRuns: " << numOfRuns << std::endl;
     Printer_Graphic graphicPrinter{
         "Neighbors",
         colorPerGroupNumber,

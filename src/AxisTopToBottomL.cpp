@@ -59,7 +59,7 @@ void AxisTopToBottomL::addVerticalLine (std::vector<SDL_Rect>& rects)
 int AxisTopToBottomL::calcBotMostPixelYPx ()
 {
     int numOfUnits = _max_val - _min_val;
-    return _y_cross__px + (_px_per_unit * (numOfUnits + _start_offset_m + _end_offset_m));
+    return _y_cross__px + (_px_per_unit * (numOfUnits + _start_offset_m + _end_offset_m)) + 1;
 }
         
 void AxisTopToBottomL::addTicksAndLabels (

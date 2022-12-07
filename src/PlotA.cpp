@@ -63,7 +63,9 @@ PlotA::PlotA (
         sizer.startOffsetM(),
         sizer.endOffsetM(),
     }
-{}
+{
+    std::cout << "PlotA ySpacePx: " << ySpacePx << std::endl;
+}
 
 PlotA::PlotA (
     PlotSizer sizer,
@@ -114,8 +116,8 @@ void PlotA::print (
             // dot is a square.
             // x is the x-pixel of the top left pixel of dot-square
             // y is the y_pixel of the top left pixel of sot-square
-            int x = _x_axis.getXPixelForPrinting(point.x()) + (_unit_x__px - _dot__px)/2;                 
-            int y = _y_axis.getYPixelForPrinting(point.y()) + (_unit_y__px - _dot__px)/2;
+            int x = _x_axis.getXPixelForPrinting(point.x()) - (_dot__px/2);                 
+            int y = _y_axis.getYPixelForPrinting(point.y()) - (_dot__px/2);
             pixelCoordinates.push_back(Coordinate(x, y));
         }
 
@@ -157,7 +159,7 @@ int PlotA::calcUnitSizeXPx ()
     }
 
     int allowableXAxisLengthPx = _x_space__px - _y_axis.sizeXPx();
-    int numOfCellsX = _x_diff + 1 + _start_offset_m + _end_offset_m;
+    int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX; // TODO dividing by zero is dangerous
 
     return std::max(xUnitSize, _min_unit__px);
@@ -171,9 +173,11 @@ int PlotA::calcUnitSizeYPx ()
     }
 
     int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeXPx();
+    std::cout << "PlotA alllowableYAxisLengthPx: " << allowableYAxisLengthPx << std::endl;
 
-    int numOfCellsY = _y_diff + 1 + _start_offset_m + _end_offset_m;
+    int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
 
+    std::cout << "_y_diff: " << _y_diff << std::endl;
     
     // TODO dividing by zero is dangerous
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
@@ -182,7 +186,7 @@ int PlotA::calcUnitSizeYPx ()
 
     // both unit sizes must be odd, or both must be even
     yUnitSize = ((_unit_x__px % 2 + _unit_y__px % 2) == 1)? yUnitSize + 1 : yUnitSize;
-
+    std::cout << "Plot A yUnitSize: " << yUnitSize << std::endl;
     return yUnitSize;
 }
 
@@ -194,10 +198,11 @@ int PlotA::calcDotSizePx ()
     return dotSize;
 }
 
+// x-axis is centered in column.
 int PlotA::calcCrossXPx (int topLeftXPx)
 {
     int xAxisLength = 
-        (_unit_x__px * ( _x_diff + 1 + _start_offset_m + _end_offset_m)) + _y_axis.sizeXPx();
+        (_unit_x__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _y_axis.sizeXPx();
 
     return topLeftXPx + (int)(0.5 * ( _x_space__px - xAxisLength ));
 }
@@ -205,7 +210,7 @@ int PlotA::calcCrossXPx (int topLeftXPx)
 int PlotA::calcCrossYPx (int topLeftYPx) // TODO, I think I should be calling this more often, instead of repeating this calculation
 {
     return 
-        topLeftYPx + _unit_y__px * (_y_diff + 1 + _start_offset_m + _end_offset_m);
+        topLeftYPx + _unit_y__px * (_y_diff + _start_offset_m + _end_offset_m);
 }
 
 void PlotA::setTopLeft (int topLeftXPx, int topLeftYPx)
