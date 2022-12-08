@@ -113,7 +113,7 @@ private:
     const int _y_overrun_multiplier = 1;
 
     // vertical space
-    int _space_between_charts__px = 30;
+    int _space_between_charts__px = 10;
 
     /* RUNS COUNTER */
 

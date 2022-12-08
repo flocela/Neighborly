@@ -7,63 +7,55 @@ void GrDvstyChart::print (
     Renderer* renderer
 )
 {
-    std::unordered_map<int, int> num_of_diff_neighbors_Per_group;
+    std::unordered_map<int, int> num_of_residents_Per_groupId;
+    std::unordered_map<int, int> num_of_diff_neighbors_Per_group_id;
     for (auto& pair : _colors)
     {
-        num_of_diff_neighbors_Per_group[pair.first] = 0;
+        num_of_diff_neighbors_Per_group_id[pair.first] = 0;
+        num_of_residents_Per_groupId[pair.first] = 0;
     }
-
-    std::unordered_map<int, int> total_residents_Per_group;
 
     for (std::pair<const Resident*, const House*> ii : housePerResident)
     {
         const Resident* res = ii.first;
-        const House* house = ii.second;
-        int groupId = res->getGroupNumber();
+        const House*    res_house = ii.second;
+        int             res_groupId = res->getGroupNumber();
 
-        std::set<const House*> adjHouses = _adj_neighbors[house];
+        std::set<const House*> adj_houses_to_res = _adj_neighbors[res_house];
 
-        for (const House* adjHouse : adjHouses)
+        for (const House* adjHouse : adj_houses_to_res)
         {
-            if (residentPerHouse.find(adjHouse) == residentPerHouse.end())
-                continue;
-            const Resident* adjResident = residentPerHouse.at(adjHouse);
-            int neighborGroupId = adjResident->getGroupNumber();
-
-            // for each adj resident: does current resident have different groupId than adj neighbor?
-            // if so increase count in num_of_diff_neighbors_Per_group
-            if (neighborGroupId == groupId)
+            // if adjHouse is not empty
+            if (residentPerHouse.find(adjHouse) != residentPerHouse.end())
             {
-                continue;
+                // adjacent resident's groupId
+                int adj_res_groupId = (residentPerHouse.at(adjHouse))->getGroupNumber();
+                if (adj_res_groupId != res_groupId)
+                {
+                    num_of_diff_neighbors_Per_group_id[adj_res_groupId] +=1;
+                }
             }
-            num_of_diff_neighbors_Per_group[neighborGroupId] +=1;
-
         }
 
-        if (total_residents_Per_group.find(groupId) == total_residents_Per_group.end())
-        {
-            total_residents_Per_group[groupId] = 1;
-        }
-        else
-        {
-            total_residents_Per_group[groupId] += 1;
-        }
+        num_of_residents_Per_groupId[res_groupId] += 1;
         
     }
 
     std::unordered_map<Color, std::vector<Point>> pointsPerColor;
-    for (auto jj : total_residents_Per_group)
+    for (auto pair : num_of_residents_Per_groupId)
     {
-        int groupId = jj.first;
-        int countInGroup = jj.second;
+        int groupId = pair.first;
+        int num_of_res_in_group = pair.second;
+
         double averageNumOfDiffNeighbors = 
-            (double)num_of_diff_neighbors_Per_group[groupId]/countInGroup; // TODO count in group shoudl not be be zero
+            (double)num_of_diff_neighbors_Per_group_id[groupId]/num_of_res_in_group; // TODO count in group shoudl not be be zero
        
         Color c = _colorrs_map[_colors[groupId]][Mood::neutral]._my_color;
         pointsPerColor.insert({
             c,
             std::vector<Point>( 1, Point((double)run, averageNumOfDiffNeighbors, c) )
         });
+        std::cout << "GrDvstyChart point, c: " << (double)num_of_diff_neighbors_Per_group_id[groupId] << "/" << num_of_res_in_group << averageNumOfDiffNeighbors << ", " << c << std::endl;
     }
     
     _title->print(renderer);

@@ -84,11 +84,11 @@ void Printer_Graphic::print (
         _renderer.get()
     );
 
-    /*_happiness_chart->print(
+    _happiness_chart->print(
         housePerResident,
         run,
         _renderer.get()
-    );*/
+    );
 
     _renderer->endFrame();
 } 
