@@ -19,8 +19,9 @@ class HappinessFunc_StepDown: public HappinessFunc
         // An exception is thrown in if @happinessValueAtZeroDiversity is less than
         // or equal to @happinessValueAtOneDiversity.
         HappinessFunc_StepDown (
-            double happinessAtZeroDiversity, 
-            double happinessAtOneDiversity, 
+            double happinessWithZeroNeighbors,
+            double highHappinessValue, 
+            double lowHappinessValue, 
             double stepDownHappensAt
         );
         HappinessFunc_StepDown () = delete;
@@ -35,7 +36,8 @@ class HappinessFunc_StepDown: public HappinessFunc
                              int num_of_diff_neighbors) const override;
     private:
         double _happiness_at_zero_diversity;
-        double _happiness_at_one_diversity;
+        double _high_happiness_value;
+        double _low_happiness_value;
         double _where_drop_happens;
 };
 

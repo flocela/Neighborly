@@ -36,12 +36,12 @@ ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
             residentsFactories
         );
 
-        double happinessGoal = askForHappinessGoalForGroup(curColorBaseName);
-
         double allowedMovement = askForAllowedMovementForGroup(
             curColorBaseName,
             maxAllowableMovement
         );
+
+        double happinessGoal = askForHappinessGoalForGroup(curColorBaseName);
 
         auto newResidents = residentsFactories[choice]->createResidents(
             _ui,
@@ -214,7 +214,7 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupAllowableMovement (
         maxAllowedMovement,
         orig_prompt,
         _group_movement_type_prompt,
-        range_prompt.insert(35, str_mov)};
+        range_prompt.insert(34, str_mov)};
 }
 
 std::vector<std::string> ResidentsMaker_CMDLine::getFactoryNames (

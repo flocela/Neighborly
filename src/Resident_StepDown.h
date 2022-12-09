@@ -14,8 +14,8 @@ class Resident_StepDown: public Resident
             double allowedMovementDistance,
             double happinessGoal,
             double happinessWithZeroNeighbors,
-            double happinessValueAtZeroDiversity,
-            double happinessValueAtOneDiversity,
+            double highHappinessValue,
+            double lowHappinessValue,
             double diversityWhereDropHappens);
         Resident_StepDown (const Resident_StepDown& obj) = default;
         Resident_StepDown (Resident_StepDown&& obj) noexcept = default;
@@ -39,9 +39,9 @@ class Resident_StepDown: public Resident
 
     private:
         double _happiness_with_zero_neighbors;
-        double _happiness_at_zero_diversity;
-        double _happiness_at_one_diversity;
-        double _diversity_where_drop_happens;
+        double _high_happiness_value;
+        double _low_hapiness_value;
+        double _diversity_drop;
         HappinessFunc_StepDown _happiness_func;
         
     protected:

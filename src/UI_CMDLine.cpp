@@ -15,6 +15,7 @@ std::string UI_CMDLine::getAnswer (Question& question)
         question.tryAnswer(answer);
         tries++;
     }
+    std::cout << "UI_CMDLine answer: " << answer << std::endl;
     return answer;
 }
 

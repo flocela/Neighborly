@@ -55,7 +55,6 @@ void GrDvstyChart::print (
             c,
             std::vector<Point>( 1, Point((double)run, averageNumOfDiffNeighbors, c) )
         });
-        std::cout << "GrDvstyChart point, c: " << (double)num_of_diff_neighbors_Per_group_id[groupId] << "/" << num_of_res_in_group << averageNumOfDiffNeighbors << ", " << c << std::endl;
     }
     
     _title->print(renderer);

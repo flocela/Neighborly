@@ -25,7 +25,8 @@ std::string Question_Double::getPrompt ()
 }
 
 bool Question_Double::tryAnswer (std::string ans)
-{   double doubleAnswer;
+{   
+    double doubleAnswer;
     try {
         doubleAnswer = std::stod(ans);
     }

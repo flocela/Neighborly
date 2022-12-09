@@ -19,7 +19,7 @@ class ResidentsFactory_StepDown: public ResidentsFactory
         std::vector<std::unique_ptr<Resident>> createResidents(
             UI& ui,
             int firstID, 
-            int maxCount, 
+            int count, 
             double happinessGoal,
             double allowedMovement,
             int groupNumber,
@@ -29,74 +29,52 @@ class ResidentsFactory_StepDown: public ResidentsFactory
         std::string residentType () override;
         
     private:
-        /*  Prompts for how many residents in this group. Prompts aren't complete.
-            Need to have the maximum number of residents allowed.   */
-        std::string _howManyOrigPrompt  = 
-            "How many \"StepDown Residents\" should there be? Must be less than . _";
-        std::string _howManyTypePrompt  =
-            "Nope, that's not a whole number. Should be a number without any"
-            " decimals. _";
-        std::string _howManyRangePrompt = 
-            "That number is too small or too large. Should be between 1 and . _";
 
-        /*  Prompts for the happiness goal for this group of residents. */
-        std::string _happinessGoalOrigPrompt  = 
-            "What should the happiness goal of these residents?  Must be a number"
-            " between 0 and 100 inclusively. _";
-        std::string _happinessGoalTypePrompt  = 
-            "Nope, that's not a number, i.e. 0.2 or 75.0. _";
-        std::string _happinessGoalRangePrompt = 
-            "That number is too small or too large. Should be between 0.0 and 100"
-            " inclusive. _";
-                                        
-        /*  Prompts for the allowed movement for this group of residents.   */
-        std::string _movmentOrigPrompt  = 
-            "When these residents move, how far away can their new house be from"
-            "their  original house? Must be a positive number. _";
-        std::string _movementTypePrompt  = 
-            "Nope, that's not a number, i.e. 0.2 or 13.0. _";
-        std::string _movemenRangePrompt = 
-            "That number is not positive. It must be 0.0 or greater. _";
-
-        /*  Prompts for the Happiness Value when resident has no neighbors.    */
+        /*  Prompts for the Happiness Value when the Diversity is zero for 
+            this group of residents.    */
         std::string _happinessWithZeroNeighborsPrompt  = 
-            "What happiness value will \"StepDown Residents\" have when they have"
-            " zero neighbors? _";
+            "\nStepDown residents measure diversity as the number of disparate"
+            " neighbors divided by total number of neighbors. When StepDown"
+            " residents have no neighbors their happiness has a special value named"
+            " zero-neighbors. When StepDown Residents have neighbors, StepDown Residents have"
+            " one of two happiness values. They have a high happiness value for diversities"
+            " starting close to zero and up to and including a given diversity named diversity-drop."
+            " Then they have a lower happiness value after the"
+            " diversity-drop. Enter the happiness value when the residents have no neighbors. _";
         std::string _happinessWithZeroNeighborsTypePrompt  = 
-            "Nope, that's not a number, i.e. 0.2 or 30.0. _";
+            "Nope, that's not a number, i.e. 0.2 or 13.0. _";
         std::string _happinessWithZeroNeighborsRangePrompt = 
             "That number is too small or too large. Should be between 0.0 and 100.0"
             " inclusive. _";
 
-        /*  Prompts for the Happiness Value when the Diversity is zero for 
-            this group of residents.    */
-        std::string _happinessAtZeroOrigPrompt  = 
-            "\"StepDown Residents\" start at a high happiness value at zero"
-            " diversity, then drop to a lower happiness value after a certain"
-            " diversity. Enter the starting, higher happiness value found at"
-            " diversity 0.0. The happiness value must be between 0.0 and 1.0"
+        /*  Prompts for the higher Happiness Value when the Diversity is close to zero and 
+            up to and including the diversity-drop for this group of residents.    */
+        std::string _high_happiness_value_prompt  = 
+            "\nEnter the higher happiness value found close to"
+            " diversity 0.0 and continuing onto the diversity-drop. The happiness value"
+            " must be between 0.0 and 100.0"
             " inclusive. _";
-        std::string _happinessAtZeroTypePrompt  = 
+        std::string _high_happiness_value_type_prompt  = 
             "Nope, that's not a number, i.e. 0.2 or 13.0. _";
-        std::string _happinessAtZeroRangePrompt = 
+        std::string _high_happiness_value_range_prompt = 
             "That number is too small or too large. Should be between 0.0 and 100.0"
             " inclusive. _";
         
-        /*  Prompts for the HappinessValue when the Diversity is one for
+        /*  Prompts for the HappinessValue for diversity after the diversity-drop for
             this group of residents.    */
-        std::string _happinessAtOneOrigPrompt  = 
-            "Enter the later, lower happiness value found at diversity 0.0."
-            " The happiness value must be between 0.0 and 100.0 inclusive. _";
-        std::string _happinessAtOneTypePrompt  = 
+        std::string _low_happiness_value_prompt  = 
+            "\nEnter the lower happiness value found after the diversity-drop."
+            " The happiness value must be between 0.0 and  inclusive. _";
+        std::string _low_happiness_value_type_prompt  = 
             "Nope, that's not a number, i.e. 0.2 or 55.0. _";
-        std::string _happinessAtOneRangePrompt = 
+        std::string _low_happiness_value_range_prompt = 
             "That number is too small or too large. Should be between 0.0 and"
-            " 100.0 inclusive. _";
+            "  inclusive. _";
 
         /*  Prompts for the location where the happiness drop happens along the
             diverstity axis.   */
         std::string _dropLocationOrigPrompt  = 
-            "Enter the point at which the happiness value drops. This will be"
+            "Enter the point at which the happiness value drops, the drop-diversity. This will be"
             " the diversity value where the happiness drops from the higher value"
             " to the lower value. The diversity value must be between 0.0 and 100.0"
             " inclusive. _";

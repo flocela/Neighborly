@@ -2,7 +2,7 @@
 #include "../src/HappinessFunc_StepDown.h"
 
 using Catch::Matchers::Contains;
-
+/*
 TEST_CASE(
     "HappinessFunc_StepDown Constructor throws invalid argument exception"
     "when starting value is less than 0.0"
@@ -90,4 +90,4 @@ TEST_CASE(
     REQUIRE(hf.getHappiness(10, 8, 2) == .9);
     REQUIRE(hf.getHappiness(4, 1, 3) == .1);
     REQUIRE(hf.getHappiness(10, 1, 8) == .1);
-}
+}*/

@@ -7,17 +7,18 @@ Resident_StepDown::Resident_StepDown (
     double allowedMovementDistance,
     double happinessGoal,
     double happinessWithZeroNeighbors,
-    double happinessValueAtZeroDiversity,
-    double happinessValueAtOneDiversity,
+    double highHappinessValue,
+    double lowHappinessValue,
     double diversityWhereDropHappens):
     Resident(id, groupNumber, allowedMovementDistance, happinessGoal),
     _happiness_with_zero_neighbors(happinessWithZeroNeighbors),
-    _happiness_at_zero_diversity(happinessValueAtZeroDiversity),
-    _happiness_at_one_diversity(happinessValueAtOneDiversity),
-    _diversity_where_drop_happens(diversityWhereDropHappens),
+    _high_happiness_value(highHappinessValue),
+    _low_hapiness_value(lowHappinessValue),
+    _diversity_drop(diversityWhereDropHappens),
     _happiness_func{
-        happinessValueAtZeroDiversity, 
-        happinessValueAtOneDiversity, 
+        happinessWithZeroNeighbors,
+        highHappinessValue,
+        lowHappinessValue, 
         diversityWhereDropHappens
     }
 {}
@@ -29,9 +30,10 @@ std::string Resident_StepDown::toStrBasic() const
         ", " + std::to_string(getGroupNumber()) +
         ", " + std::to_string(getAllowedMovementDistance()) +
         ", " + std::to_string(getHappinessGoal()) +
-        ", " + std::to_string(_happiness_at_zero_diversity) +
-        ", " + std::to_string(_happiness_at_one_diversity) +
-        ", " + std::to_string(_diversity_where_drop_happens) +
+        ", " + std::to_string(_happiness_with_zero_neighbors) +
+        ", " + std::to_string(_high_happiness_value) +
+        ", " + std::to_string(_low_hapiness_value) +
+        ", " + std::to_string(_diversity_drop) +
         ")"; 
 }
 
@@ -53,10 +55,6 @@ double Resident_StepDown::implCalculateHappiness (
         else
             diff++;
         
-    }
-    if ( (like + diff) == 0 )
-    {
-        return _happiness_at_zero_diversity; // happy to be alone
     }
     return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
 }

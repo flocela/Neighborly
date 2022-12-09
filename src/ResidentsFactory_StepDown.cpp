@@ -1,6 +1,8 @@
 #include "ResidentsFactory_StepDown.h"
 #include <limits>
 #include "Resident_StepDown.h"
+#include <sstream>
+#include <iomanip>
 
 std::string ResidentsFactory_StepDown::toString ()
 {
@@ -15,21 +17,13 @@ std::string ResidentsFactory_StepDown::residentType ()
 std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     UI& ui,
     int firstID, 
-    int maxCount,
+    int count,
     double happinessGoal,
     double allowedMovement,
     int groupNumber,
     BaseColor baseColor
 )
 {   (void) baseColor;
-    Question_Int qHowMany{
-        0,
-        1,
-        maxCount,
-        _howManyOrigPrompt + std::to_string(maxCount) + ".",
-        _howManyTypePrompt,
-        _howManyRangePrompt + std::to_string(maxCount) + "."
-    };
 
     Question_Double qHappinessWithZeroNeighbors{
         3,
@@ -40,59 +34,64 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
         _happinessWithZeroNeighborsRangePrompt
     };
 
-    Question_Double qHappinessAtZero{
+    double happinessWithZeroNeighbors = askUserForDouble(
+    ui,
+    qHappinessWithZeroNeighbors,
+    "Can not get information needed to determine the happiness value with"
+    " zero neighbors."
+    );
+
+    Question_Double qHighHappinessValue{
         3,
         0.0,
-        1.0,
-        _happinessAtZeroOrigPrompt,
-        _happinessAtZeroTypePrompt,
-        _happinessAtZeroRangePrompt
+        100.0,
+        _high_happiness_value_prompt,
+        _high_happiness_value_type_prompt,
+        _high_happiness_value_range_prompt
     };
 
-    Question_Double qHappinessAtOne{
-        4,
-        0.0,
-        1.0,
-        _happinessAtOneOrigPrompt,
-        _happinessAtOneTypePrompt,
-        _happinessAtOneRangePrompt};
-
-    Question_Double qHappinessDropLocation{
-        5,
-        0.0,
-        1.0,
-        _dropLocationOrigPrompt,
-        _dropLocationTypePrompt,
-        _dropLocationRangePrompt
-    };
-    
-    int howMany = askUserForInt(
+    double highHappinessValue = askUserForDouble(
         ui,
-        qHowMany, 
-        "Can not get information needed to determine number of residents from the"
-        " user."
-    );
-
-    double happinessWithZeroNeighbors = askUserForDouble(
-        ui,
-        qHappinessWithZeroNeighbors,
-        "Can not get information needed to determine the happiness value with"
-        " zero neighbors."
-    );
-
-    double happinessAtZero = askUserForDouble(
-        ui,
-        qHappinessAtZero,
+        qHighHappinessValue,
         "Can not get information needed to determine the happiness value at"
         " zero for these residents from the user."
     );
 
-    double happinessAtOne = askUserForDouble(
+    std::cout << "ResidentsFactory_StepDown highHappinessValue: " << highHappinessValue << std::endl;
+
+    std::string copy_low_happiness_value_prompt = _low_happiness_value_prompt;
+    std::string copy_low_happiness_range_prompt = _low_happiness_value_range_prompt;
+    std::stringstream high_val_stream;
+    high_val_stream << std::fixed << std::setprecision(1) << highHappinessValue;
+    std::cout << "ResidentsFactory_StepDown high_val_stream: " << high_val_stream.str() << std::endl;
+    Question_Double qLowHappinessValue{
+        4,
+        0,
+        highHappinessValue,
+        copy_low_happiness_value_prompt.insert(
+            copy_low_happiness_value_prompt.size()-13,
+            high_val_stream.str()),
+        _low_happiness_value_type_prompt,
+        copy_low_happiness_range_prompt.insert(
+            copy_low_happiness_range_prompt.size() - 13,
+            high_val_stream.str())
+    };
+
+    double lowHappinessValue = askUserForDouble(
         ui,
-        qHappinessAtOne,
+        qLowHappinessValue,
         "Can not get information needed to determine the happiness value at"
         " one for these residents from the user."
     );
+
+    Question_Double qHappinessDropLocation{
+    5,
+    0.0,
+    100.0,
+    _dropLocationOrigPrompt,
+    _dropLocationTypePrompt,
+    _dropLocationRangePrompt
+    };
 
     double locationOfDrop = askUserForDouble(
         ui,
@@ -102,7 +101,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
     );
 
     std::vector<std::unique_ptr<Resident>> residents = {};
-    for ( int ii=0; ii<howMany; ++ii)
+    for ( int ii=0; ii<count; ++ii)
     {
         residents.push_back(std::make_unique<Resident_StepDown>(
             firstID+ii,
@@ -110,29 +109,12 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
             allowedMovement,
             happinessGoal,
             happinessWithZeroNeighbors,
-            happinessAtZero,
-            happinessAtOne,
+            highHappinessValue,
+            lowHappinessValue,
             locationOfDrop
         ));
     }
     return residents;
-}
-
-int ResidentsFactory_StepDown::askUserForInt (
-    UI& ui, 
-    Question_Int question, 
-    std::string failureString
-)
-{
-    ui.getAnswer(question);
-    if (question.hasValidAnswer())
-    {
-        return std::stoi(question.getAnswer());
-    }
-    else
-    {
-        throw failureString;
-    }
 }
 
 double ResidentsFactory_StepDown::askUserForDouble (
