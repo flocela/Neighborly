@@ -65,21 +65,21 @@ void Simulator_Basic_A::moveResident (Resident* res)
         return;
     else
     {  
-        
-        std::vector<const House*> toRemove;
-        for (const House* house : nearHouses)
+        // remove houses in nearHouses set that are not open.
+        std::unordered_set<const House*>::iterator iter = nearHouses.begin();
+        while (iter != nearHouses.end())
         {
-            if (_open_houses.find(house) == _open_houses.end())
+            if (_open_houses.find(*iter) == _open_houses.end())
             {
-                toRemove.emplace_back(house);
+                std::unordered_set<const House*>::iterator copy = iter;
+                ++iter;
+                nearHouses.erase(*copy);
+            }
+            else
+            {
+                ++iter;
             }
         }
-
-        for (const House* toRemoveH : toRemove)
-        {
-            nearHouses.erase(toRemoveH);
-        }
-
         int count = _count;
         while (count > 0)
         {
