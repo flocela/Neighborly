@@ -18,15 +18,17 @@ std::unordered_map<const House*, Resident*> Simulator_Basic_A::simulate ()
         _first_simulation_done = true;
     }
     else
-    {   
+    {   int count  = 0;
         for (Resident* res : _residents)
         {   
             if ( calculateHappinessValueFor(res, _curr_res_to_house_map[res]->getAddress()) <
                 res->getHappinessGoal() )
             {
                 moveResident(res);
+                ++count;
             }
         }
+        std::cout << "SimBA moved/total: " << count << "/" << _residents.size() << std::endl;
     }
     
     setHappinessValuesForAllResidents();

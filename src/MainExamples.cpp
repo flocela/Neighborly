@@ -37,7 +37,7 @@ SimulationComponents MainExamples::userChoosesExample ()
         //     Unhappy if 25% or more neighbors are different from themselves.
         case 0:
         {
-            components.city = std::make_unique<City_Grid>(20);
+            components.city = std::make_unique<City_Grid>(50);
 
             // Only two groups. Group #1 and Group #2
             auto iter = _colorrs_map.begin();
@@ -47,30 +47,30 @@ SimulationComponents MainExamples::userChoosesExample ()
                 ++iter;
             }
 
-            for (int ii=0; ii<75; ++ii)
+            for (int ii=0; ii<1000; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(
                     ii,  // id
                     1,   // group number
-                    5,   // allowed movement
-                    50,  // happiness goal
-                    100, // happiness value with zero neighbors
+                    10,   // allowed movement
+                    80,  // happiness goal
+                    70, // happiness value with zero neighbors
                     100, // happiness value at zero diversity
-                    90,  // happiness value at one diverstiy
-                    0.8  // diversity where drop happens
+                    70,  // happiness value at one diverstiy
+                    0.25  // diversity where drop happens
                 ));
             }
-            for (int jj=76; jj<200; ++jj)
+            for (int jj=1001; jj<2000; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_StepDown>(
                     jj,
                     2,
-                    20,
-                    50,
-                    100, // happiness value with zero neighbors
+                    40,
+                    80,
+                    70, // happiness value with zero neighbors
                     100,
-                    10,
-                    0.25
+                    50,
+                    0.4
                 ));
             }
             components.simulator = std::make_unique<Simulator_Basic_A>(

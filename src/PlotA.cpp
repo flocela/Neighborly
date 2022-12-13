@@ -63,9 +63,7 @@ PlotA::PlotA (
         sizer.startOffsetM(),
         sizer.endOffsetM(),
     }
-{
-    std::cout << "PlotA ySpacePx: " << ySpacePx << std::endl;
-}
+{}
 
 PlotA::PlotA (
     PlotSizer sizer,
@@ -173,11 +171,8 @@ int PlotA::calcUnitSizeYPx ()
     }
 
     int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeXPx();
-    std::cout << "PlotA alllowableYAxisLengthPx: " << allowableYAxisLengthPx << std::endl;
 
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
-
-    std::cout << "_y_diff: " << _y_diff << std::endl;
     
     // TODO dividing by zero is dangerous
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
@@ -186,7 +181,6 @@ int PlotA::calcUnitSizeYPx ()
 
     // both unit sizes must be odd, or both must be even
     yUnitSize = ((_unit_x__px % 2 + _unit_y__px % 2) == 1)? yUnitSize + 1 : yUnitSize;
-    std::cout << "Plot A yUnitSize: " << yUnitSize << std::endl;
     return yUnitSize;
 }
 

@@ -169,7 +169,7 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
         _left_right_borders__px,
         _city_map_chart_top_left_y_coord__px,
         _x_chart_space__px,
-        _chart_y_space__px
+        _city_y_space__px
     );
 }
 

@@ -74,7 +74,7 @@ class ResidentsFactory_StepDown: public ResidentsFactory
         /*  Prompts for the location where the happiness drop happens along the
             diverstity axis.   */
         std::string _dropLocationOrigPrompt  = 
-            "Enter the point at which the happiness value drops, the drop-diversity. This will be"
+            "\nEnter the point at which the happiness value drops, the drop-diversity. This will be"
             " the diversity value where the happiness drops from the higher value"
             " to the lower value. The diversity value must be between 0.0 and 100.0"
             " inclusive. _";

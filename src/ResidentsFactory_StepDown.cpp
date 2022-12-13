@@ -57,13 +57,11 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
         " zero for these residents from the user."
     );
 
-    std::cout << "ResidentsFactory_StepDown highHappinessValue: " << highHappinessValue << std::endl;
-
     std::string copy_low_happiness_value_prompt = _low_happiness_value_prompt;
     std::string copy_low_happiness_range_prompt = _low_happiness_value_range_prompt;
     std::stringstream high_val_stream;
     high_val_stream << std::fixed << std::setprecision(1) << highHappinessValue;
-    std::cout << "ResidentsFactory_StepDown high_val_stream: " << high_val_stream.str() << std::endl;
+    
     Question_Double qLowHappinessValue{
         4,
         0,

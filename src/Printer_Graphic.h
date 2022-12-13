@@ -132,12 +132,12 @@ private:
 
     // Right column holds the diversity chart and happiness chart
     int _chart_y_space__px = 
-        _screen_height__px -
-        _top_border__px -
-        _window_title->sizeYPx() -
-        _chart_title_letter.getHeightIncLSpace() - // Runs chart
-        _bottom_border__px -
-        _space_between_charts__px;
+        _screen_height__px - //1200
+        _top_border__px - //20
+        _window_title->sizeYPx() - //42
+        _chart_title_letter.getHeightIncLSpace() - // Runs chart //36
+        _bottom_border__px - //20
+        _space_between_charts__px; //10
 
     // Diversity and Happiness charts use the same dot size and copy of the same color key //TODO not the same dot size
     Letter _chart_key_letter{24, 12};
