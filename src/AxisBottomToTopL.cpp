@@ -130,9 +130,10 @@ void AxisBottomToTopL::setPxPerUnit (int pixels)
 }
 
 int AxisBottomToTopL::sizeXPx ()
-{
+{  
+    // Three is max number of digits in the y-axis label.
     return 
-        (_max_val/10) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
+        (3) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
         _text_spacer +
         _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.axisThicknessPx();

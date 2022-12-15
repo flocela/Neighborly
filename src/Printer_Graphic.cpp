@@ -197,7 +197,7 @@ std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             _colors, 
             moods, 
             0, // min number of runs
-            maxNumOfRuns -1,
+            maxNumOfRuns,
             0, // min number of neighbors
             maxNumOfNeighbors
         ),

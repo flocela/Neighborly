@@ -28,7 +28,7 @@ std::unordered_map<const House*, Resident*> Simulator_Basic_A::simulate ()
                 ++count;
             }
         }
-        std::cout << "SimBA moved/total: " << count << "/" << _residents.size() << std::endl;
+        //std::cout << "SimBA moved/total: " << count << "/" << _residents.size() << std::endl;
     }
     
     setHappinessValuesForAllResidents();

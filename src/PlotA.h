@@ -10,6 +10,7 @@
 #include "AxisBottomToTopL.h"
 #include "Point.h"
 #include "Plot.h"
+#include <utility>
 
 class PlotA: public Plot
 {
@@ -67,7 +68,7 @@ private:
 
     AxisFormat _a_format_x;
     AxisFormat _a_format_y;
-    int _min_unit__px = 6; // TODO should this be set here, it's set int the constructor
+    int _min_unit__px = 6; // This is not a must, but try to have _min_unit__px TODO should this be set here, it's set int the constructor
     // Start offset multiplier is used to determine space from cross haris to first value.
     // Space to first value is _start_offset_m * _unit_space__px.
     int _start_offset_m;
@@ -110,10 +111,7 @@ private:
 
     bool _printed_axes = false;
 
-    int calcUnitSizeXPx ();
-
-    // Y unit size is dependent on X unit size. They both have to be odd or even.
-    int calcUnitSizeYPx ();
+    std::pair<int, int> calcUnitSizeXAndYPx ();
     int calcDotSizePx ();
     int calcCrossXPx (int topLeftX);
     int calcCrossYPx (int topLeftY);

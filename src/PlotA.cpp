@@ -30,8 +30,8 @@ PlotA::PlotA (
     _y_space__px{ySpacePx},
     _x_diff{maxX - minX},
     _y_diff{maxY - minY},
-    _unit_x__px{calcUnitSizeXPx()},
-    _unit_y__px{calcUnitSizeYPx()},
+    _unit_x__px{calcUnitSizeXAndYPx().first}, // TODO can this be done once?
+    _unit_y__px{calcUnitSizeXAndYPx().second},
     _dot__px{calcDotSizePx()},
     // center graph in column
     _cross_x__px{ calcCrossXPx(topLeftXPx) }, 
@@ -149,39 +149,52 @@ int PlotA::sizeXPx ()
         (_a_format_y.axisThicknessPx() == 1? 1 : _a_format_y.axisThicknessPx()/2);
 }
 
-int PlotA::calcUnitSizeXPx ()
+// TODO maybe combine calcUnitSizeYPX with CalcUnitSizeXPx. One shouldn't be done without the other, but
+// the code doesn't reflect that. What to do if there is no unit size that works. too much data?
+// min_px doesn't make sense. The allowableLength takes care of that.
+std::pair<int, int> PlotA::calcUnitSizeXAndYPx ()
 {
     if (_x_space__px <= 0 || _y_space__px <= 0)
     {
-        return _min_unit__px;
+        return {_min_unit__px, _min_unit__px}; // this should really throw an error
     }
 
+    // first try at x-unit size
     int allowableXAxisLengthPx = _x_space__px - _y_axis.sizeXPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX; // TODO dividing by zero is dangerous
+    xUnitSize = std::max(xUnitSize, _min_unit__px);
 
-    return std::max(xUnitSize, _min_unit__px);
-}
-
-int PlotA::calcUnitSizeYPx ()
-{
-    if (_x_space__px <= 0 || _y_space__px <= 0)
-    {
-        return _min_unit__px;
-    }
-
+    // first try at y-unit size
     int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeXPx();
-
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
-    
     // TODO dividing by zero is dangerous
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
 
-    yUnitSize = std::max(yUnitSize, _min_unit__px);
-
-    // both unit sizes must be odd, or both must be even
-    yUnitSize = ((_unit_x__px % 2 + _unit_y__px % 2) == 1)? yUnitSize + 1 : yUnitSize;
-    return yUnitSize;
+    // _unit_x__px and _unit_y__px must both be odd or both be even. But unit sizes must also
+    // try to be larger than _min_unit__px
+    if ( ( (xUnitSize % 2 + yUnitSize % 2) == 1 ) &&
+         xUnitSize == _min_unit__px &&
+         yUnitSize == _min_unit__px
+       ) // both unit sizes are not odd or both even, and both unit sizes are _min_unit__px in size
+    {   
+        // one of the unit sizes must become smaller than _min_unit__px
+        --xUnitSize;
+    }
+    else if  ( ( (xUnitSize % 2 + yUnitSize % 2) == 1 ) && yUnitSize == _min_unit__px )
+    {   
+        --xUnitSize;
+    }
+    else if ( ( (xUnitSize % 2 + yUnitSize % 2) == 1 ) && xUnitSize == _min_unit__px )
+    {   
+        --yUnitSize;
+    }
+    else if ( (xUnitSize % 2 + yUnitSize % 2) == 1 )
+    {   
+        --xUnitSize;
+    }
+    
+    return {xUnitSize, yUnitSize};
 }
 
 int PlotA::calcDotSizePx ()
@@ -222,9 +235,9 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _x_space__px = xSpacePx;
     _y_space__px = ySpacePx;
     
-    _unit_x__px = calcUnitSizeXPx();
-    _unit_y__px = calcUnitSizeYPx();
-    _dot__px = calcDotSizePx();
+    std::pair<int, int> unit_sizes = calcUnitSizeXAndYPx();
+    _unit_x__px = unit_sizes.first;
+    _unit_y__px = unit_sizes.second;
 
     int tickThickness = (_dot__px%2==0)? 2 : 1;
 
