@@ -12,13 +12,16 @@
 class City
 {
     public:
-        enum CityType { grid }; // TODO do I use this enum?
         virtual ~City() = default;
 
-        // Returns the number of addresses.
+        // total number of addresses. Same as total number of houses.
         virtual int getNumOfHouses() const = 0;
 
+        // largest distance between any two houses (inclusively) in x direction.
         virtual double getWidth() const = 0;
+
+        // largest distance between any two houses (inclusively) in y direction.
+        virtual double getHeight() const = 0;
 
         // Returns all the houses in the city.
         virtual std::vector<const House*> getHouses () const = 0;

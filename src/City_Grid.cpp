@@ -31,6 +31,11 @@ double City_Grid::getWidth() const
 	return _width;
 }
 
+double City_Grid::getHeight() const
+{
+	return _width;
+}
+
 Coordinate City_Grid::getCoordinate(const int& address) const
 {
 	return Coordinate{get_x(address), get_y(address)};

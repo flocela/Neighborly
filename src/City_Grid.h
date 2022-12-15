@@ -30,6 +30,8 @@ public:
 
     double getWidth() const override;
 
+    double getHeight() const override;
+
     Coordinate getCoordinate (const int& address) const override;
 
     double getDist ( const int& from_address,  const int& to_address) const override;
