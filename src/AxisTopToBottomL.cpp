@@ -133,6 +133,11 @@ void AxisTopToBottomL::setPxPerUnit (int pixels)
 
 }
 
+void AxisTopToBottomL::setTickThickness (int tickThicknessPx)
+{
+    _tick_thickness__px = tickThicknessPx;
+}
+
 int AxisTopToBottomL::sizeXPx ()
 {
     return 

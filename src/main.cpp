@@ -196,7 +196,6 @@ int main(int argc, char* argv[])
         neighbors[house] = city->getAdjacentHouses(house->getAddress());
     }
     
-    std::cout << "main numofRuns: " << numOfRuns << std::endl;
     Printer_Graphic graphicPrinter{
         "Neighbors",
         colorPerGroupNumber,

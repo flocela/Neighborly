@@ -129,6 +129,11 @@ void AxisBottomToTopL::setPxPerUnit (int pixels)
 
 }
 
+void AxisBottomToTopL::setTickThickness (int tickThicknessPx) 
+{
+    _tick_thickness__px = tickThicknessPx;
+}
+
 int AxisBottomToTopL::sizeXPx ()
 {  
     // Three is max number of digits in the y-axis label.

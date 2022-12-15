@@ -29,7 +29,7 @@ class AxisLeftToRightT
         void print (Renderer* renderer);
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
-        void setTickThickness (int tickThicknessPx) {_tick_thickness__px = tickThicknessPx;}
+        void setTickThickness (int tickThicknessPx);
 
         int sizeYPx();
         int sizeXPx();

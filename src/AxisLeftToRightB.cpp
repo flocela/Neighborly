@@ -134,6 +134,11 @@ void AxisLeftToRightB::setPxPerUnit (int pixels)
     _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
 }
 
+void AxisLeftToRightB::setTickThickness (int tickThicknessPx)
+{
+    _tick_thickness__px = tickThicknessPx;
+}
+
 int AxisLeftToRightB::axisLengthPx ()
 {
    return calcRightMostPixelX() - _x_cross__px + 1;

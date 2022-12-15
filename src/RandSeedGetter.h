@@ -15,7 +15,7 @@ class RandSeedGetter
         Question_Int createQuestionForSeed ();
 
         std::string _seed_orig_prompt = 
-            "\nWhat will be the seed for the random number generator be in the simulations? "
+            "\nWhat will the seed for the random number generator be in the simulations? "
             " Must be a positive integer. _";
         std::string _seed_type_prompt = 
             "Nope, that's not a positive whole number. _";
