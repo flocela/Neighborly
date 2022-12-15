@@ -166,12 +166,13 @@ int main(int argc, char* argv[])
 
         ResidentsMaker_CMDLine residentsMaker{};
         ResidentsGroupInfo resGroupInfo = 
-            residentsMaker.makeResidents(
+            residentsMaker.makeResidents
+            (
                 resFactoryPointers,
                 city->getNumOfHouses(),
                 2, // currenlty only allowing two group
                 baseColors,
-                city->getWidth()/2
+                std::min(city->getWidth()/2, city->getHeight()/2)
             );
 
         residents = std::move(resGroupInfo._residents);
