@@ -91,7 +91,7 @@ void PlotB::print (
     Renderer* renderer
 )
 {   
-    (void) clear;
+    (void) clear;// TODO no need to pass in clear. will always clear.
     if (!_axis_is_printed) 
     {
         _x_axis.print(renderer);

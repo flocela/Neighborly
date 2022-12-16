@@ -35,11 +35,30 @@ void GrCityChart::print(
 {   
     _title->print(renderer);
     _plot->print(
+        createVectorsForClearingPlot(),
+        false,
+        renderer
+    );
+    _plot->print(
         createVectorsOfHousesForEachColor(houseToResMap),
         false,
         renderer
     );
     _key->print(renderer);
+}
+
+std::unordered_map<Color, std::vector<Point>> GrCityChart::createVectorsForClearingPlot ()
+{
+    std::unordered_map<Color, std::vector<Point>> colorToCoordinatesMap = {};
+
+    for (auto const& x : _coord_to_house_map)
+    {
+        Coordinate coord = x.second;
+
+        Point point{(double)coord.getX(), (double)coord.getY(), Color::absent};
+        colorToCoordinatesMap[Color::absent].push_back(point);
+    }
+    return colorToCoordinatesMap;
 }
 
 std::unordered_map<Color, std::vector<Point>> GrCityChart::createVectorsOfHousesForEachColor(

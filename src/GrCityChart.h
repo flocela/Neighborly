@@ -85,6 +85,8 @@ class GrCityChart
         std::unordered_map<Color, std::vector<Point>> createVectorsOfHousesForEachColor (
             std::unordered_map<const House*, const Resident*> houseToResMap
         );
+
+        std::unordered_map<Color, std::vector<Point>> createVectorsForClearingPlot ();
         
 };
 
