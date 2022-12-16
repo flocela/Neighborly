@@ -31,9 +31,10 @@ class City
             const int& to_address
         ) const = 0;
 
-        // Returns all houses adjacent to house.
+        // Returns all houses adjacent to address of house.
         virtual std::set<const House*> getAdjacentHouses (int address) const = 0;
 
+        // TODO may delete this if not being used by SimulatorE.
         // Returns all houses within distance except for @house.
         virtual std::unordered_set<const House*> getHousesWithinDistance (
             const House* house, 
@@ -42,10 +43,9 @@ class City
             std::set<const House*> notOccupied
         ) const = 0;
 
-        virtual void findHousesWithinDistance (
-        const House* house,
-        double allowableDist,
-        std::unordered_set<const House*>& nearHouses
+        virtual std::unordered_set<const House*> findHousesWithinDistance (
+            const House* house,
+            double allowableDist
         ) const = 0;
 
         // Returns coordinate of house (x, y).

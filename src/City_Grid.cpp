@@ -93,12 +93,13 @@ std::set<const House*> City_Grid::getAdjacentHouses (int address) const
 	return adjacentHouses;
 }
 
-void City_Grid::findHousesWithinDistance (
+std::unordered_set<const House*> City_Grid::findHousesWithinDistance (
         const House* house,
-        double allowableDist,
-        std::unordered_set<const House*>& nearHouses
+        double allowableDist
     ) const
 {	
+	std::unordered_set<const House*> nearHouses{};
+
 	int origAddress = house->getAddress();
 	int origX = get_x(origAddress);
 	int origY = get_y(origAddress);
@@ -171,6 +172,7 @@ void City_Grid::findHousesWithinDistance (
 			nearHouses.insert(house);
 		}
 	}
+	return nearHouses;
 }
 
 // TODO, this method needs to be properly tested.

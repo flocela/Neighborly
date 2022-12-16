@@ -50,10 +50,9 @@ public:
     ) const override;
 
     // TODO shouldn't be using a refernce to get houses. Should return them.
-    void findHousesWithinDistance (
+    std::unordered_set<const House*> findHousesWithinDistance (
         const House* house,
-        double allowableDist,
-        std::unordered_set<const House*>& nearHouses
+        double allowableDist
     ) const override;
     
     std::unordered_map<const House*, Coordinate> getCoordinatesPerHouse();

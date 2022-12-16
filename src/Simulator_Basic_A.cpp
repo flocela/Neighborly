@@ -55,11 +55,10 @@ void Simulator_Basic_A::firstSimulation ()
 void Simulator_Basic_A::moveResident (Resident* res)
 {  
     const House* currHouse = _curr_res_to_house_map[res];
-    std::unordered_set<const House*> nearHouses;  
-    _city->findHousesWithinDistance(
+    std::unordered_set<const House*> nearHouses = _city->findHousesWithinDistance
+    (
         currHouse,
-        res->getAllowedMovementDistance(),
-        nearHouses
+        res->getAllowedMovementDistance()
     );
     if (nearHouses.size() == 0)
         return;
