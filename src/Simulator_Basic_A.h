@@ -26,10 +26,10 @@ class Simulator_Basic_A: public Simulator
         std::set<Resident*> _residents;
 
         // Only houses that are occupied and their residents
-        std::unordered_map<const House*, Resident*> _curr_house_to_res_map = {};
+        std::unordered_map<const House*, Resident*> _res_per_house_map = {};
 
         // Only residents that have houses and their houses
-        std::unordered_map<Resident*, const House*> _curr_res_to_house_map;
+        std::unordered_map<Resident*, const House*> _house_per_resident_map;
 
         // All unoccupied houses
         std::unordered_set<const House*> _open_houses;
@@ -60,7 +60,7 @@ class Simulator_Basic_A: public Simulator
         std::set<Resident*> getResidentsInTheseHouses(std::set<const House*> houses);
         const House* selectRandom (std::unordered_set<const House*>& setOfHouses) const;
 
-        const House* getCurrHouse (Resident* res);
+        const House* _get_res_cur_house (Resident* res);
         Resident* getCurrResident (const House* house);
         bool hasResident (const House* house);
         bool hasHouse (Resident* res);
