@@ -32,11 +32,9 @@ public:
 
     double getHeight() const override;
 
-    Coordinate getCoordinate (const int& address) const override;
+    std::vector<const House*> getHouses () const override;
 
     double getDist ( const int& from_address,  const int& to_address) const override;
-
-    std::vector<const House*> getHouses () const override;
     
     std::set<const House*> getAdjacentHouses (int address) const override;
 
@@ -54,6 +52,8 @@ public:
         const House* house,
         double allowableDist
     ) const override;
+
+    Coordinate getCoordinate (const int& address) const override;
     
     std::unordered_map<const House*, Coordinate> getCoordinatesPerHouse();
 
