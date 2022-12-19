@@ -1,14 +1,16 @@
 #include "CityMaker_CMDLine.h"
 #include "UI_CMDLine.h"
 
+using namespace std;
+
 // TODO CityMaker_CMDLine.cpp not checked
-std::unique_ptr<City> CityMaker_CMDLine::makeCity (
-    std::vector<CityFactory*> cityFactories,
+unique_ptr<City> CityMaker_CMDLine::makeCity (
+    vector<CityFactory*> cityFactories,
     int maxDeltaX,
     int maxDeltaY
 )
 {
-    std::vector<std::string> namesOfCityFactories = {};
+    vector<string> namesOfCityFactories = {};
     for (auto& factory : cityFactories)
     {
         namesOfCityFactories.push_back(factory->cityType());
@@ -18,19 +20,17 @@ std::unique_ptr<City> CityMaker_CMDLine::makeCity (
 
     if (cityFactories.size() == 1)
     {
-        std::cout << "\nWell, there's only one type of city, so your city type will be " <<
-        cityFactories[0]->cityType() << ". " << std::endl;
-        return cityFactories[cityChoice]->createCity(_ui, maxDeltaX, maxDeltaY);
+        cout << "\nWell, there's only one type of city, so your city type will be " <<
+        cityFactories[0]->cityType() << ". " << endl;
     }
     else
     {
-        int cityChoice = 
+        cityChoice = 
             _ui.menu("Choose a city type by typing the"
             " corresponding number. _",
             namesOfCityFactories
-            );
-        return cityFactories[cityChoice]->createCity(_ui, maxDeltaX, maxDeltaY);
+            );   
     }
-    
-    
+    return cityFactories[cityChoice]->createCity(_ui, maxDeltaX, maxDeltaY);
+
 }
