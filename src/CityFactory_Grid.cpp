@@ -1,44 +1,41 @@
 #include "CityFactory_Grid.h"
-
 #include "City_Grid.h"
 
-std::unique_ptr<City> CityFactory_Grid::createCity (
+using namespace std;
+
+unique_ptr<City> CityFactory_Grid::createCity (
     UI& ui,
     int deltaX, 
     int deltaY
 )
 {
-    
-    int width = askForGridWidth(ui, std::min(deltaX, deltaY));
-    return std::make_unique<City_Grid>(width);
+    int width = askForGridWidth(ui, min(deltaX, deltaY));
+    return make_unique<City_Grid>(width);
 }
 
-std::string CityFactory_Grid::toString ()
-{
-    return "CityFactory_Grid";
-}
-
-std::string CityFactory_Grid::nameOfCities () 
+string CityFactory_Grid::cityType () 
 {
     return "Grid City";
 }
 
 int CityFactory_Grid::askForGridWidth(UI& ui, int maxWidth)
-{
+{   
+    string _width_of_grid_orig_prompt_copy = _width_of_grid_orig_prompt;
+    string _width_of_grid_range_promt_copy = _width_of_grid_range_prompt;
+
     Question_Int question{
-        0,
-        1,
-        maxWidth,
-        _width_of_grid_orig_prompt.insert(109, std::to_string(maxWidth)),
+        0, //id
+        1, // min number of houses
+        maxWidth, // max number of houses
+        _width_of_grid_orig_prompt_copy.insert(109, to_string(maxWidth)),
         _width_of_grid_type_prompt,
-        _width_of_grid_range_prompt.insert(99, std::to_string(maxWidth))
+        _width_of_grid_range_promt_copy.insert(99, to_string(maxWidth))
     };
 
     ui.getAnswer(question);
     if (question.hasValidAnswer()){
-        return std::stoi(question.getAnswer());
+        return stoi(question.getAnswer());
     }
-        
     else
         throw _width_of_grid_failure;
 }

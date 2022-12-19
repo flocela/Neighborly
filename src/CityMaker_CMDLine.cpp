@@ -11,7 +11,7 @@ std::unique_ptr<City> CityMaker_CMDLine::makeCity (
     std::vector<std::string> namesOfCityFactories = {};
     for (auto& factory : cityFactories)
     {
-        namesOfCityFactories.push_back(factory->nameOfCities());
+        namesOfCityFactories.push_back(factory->cityType());
     }
 
     int cityChoice = 0;
@@ -19,7 +19,7 @@ std::unique_ptr<City> CityMaker_CMDLine::makeCity (
     if (cityFactories.size() == 1)
     {
         std::cout << "\nWell, there's only one type of city, so your city type will be " <<
-        cityFactories[0]->nameOfCities() << ". " << std::endl;
+        cityFactories[0]->cityType() << ". " << std::endl;
         return cityFactories[cityChoice]->createCity(_ui, maxDeltaX, maxDeltaY);
     }
     else

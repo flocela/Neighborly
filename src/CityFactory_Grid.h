@@ -17,12 +17,12 @@ class CityFactory_Grid: public CityFactory
 
         std::unique_ptr<City> createCity (
             UI& ui, 
-            int deltaX, 
-            int deltaY
+            int max_width, 
+            int max_height
         ) override;
         
-        std::string toString () override;
-        std::string nameOfCities () override; 
+        std::string cityType () override;
+
     private:
         int askForGridWidth(UI& ui, int maxWidth);
 

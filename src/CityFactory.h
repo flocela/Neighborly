@@ -20,14 +20,12 @@ class CityFactory
 
         virtual std::unique_ptr<City> createCity (
             UI& ui, 
-            int deltaX, 
-            int deltaY
+            int max_width, 
+            int max_height
         ) = 0;
-        
-        virtual std::string toString () = 0;
 
         // returns the name of the type of cities that are produced.
-        virtual std::string nameOfCities () = 0; 
+        virtual std::string cityType () = 0; 
 };
 
 #endif

@@ -325,7 +325,6 @@ const House* City_Grid::selectRandom (unordered_set<const House*>& setOfHouses) 
 int City_Grid::get_x (const int& address) const
 {
 	return (address%_width);
-
 }
 
 int City_Grid::get_y (const int& address) const
