@@ -7,8 +7,6 @@
 #include <set>
 #include <unordered_map>
 
-// TODO do these really have to be inline?
-
 enum class Color { 
     red_neutral, 
     red_unhappy, 
@@ -38,7 +36,6 @@ struct ColorInfo
     std::string _mood_name;
     std::vector<int> rgba;
 };
-
 
 // TODO for red green color blindness, change green to yellow.
 inline std::unordered_map<BaseColor, std::unordered_map<Mood,ColorInfo>> _colorrs_map {

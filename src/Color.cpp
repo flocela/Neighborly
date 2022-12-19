@@ -1,10 +1,10 @@
-
 #include "Color.h"
 
-// TODO check Color.h operator <<
-std::ostream& operator<<(std::ostream& os, Color const& obj)
+using namespace std;
+
+ostream& operator<<(ostream& os, Color const& obj)
 { 
-    std::string colorString;
+    string colorString;
 
     switch (obj)
     {
@@ -34,10 +34,9 @@ std::ostream& operator<<(std::ostream& os, Color const& obj)
     return os;
 }
 
-// TODO check Color.h operator <<
-std::ostream& operator<<(std::ostream& os, BaseColor const& obj)
+ostream& operator<<(ostream& os, BaseColor const& obj)
 { 
-    std::string colorString;
+    string colorString;
 
     switch (obj)
     {
