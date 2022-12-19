@@ -26,7 +26,7 @@ class CityFactory_Grid: public CityFactory
     private:
         int askForGridWidth(UI& ui, int maxWidth);
 
-        // Width of grid prompts for question
+        // prompts to determine with of grid
         std::string _width_of_grid_orig_prompt =
             "\nEnter the width of the grid, (how many houses per side)?"
             " The minimum width is 1 house. The maximum width is  houses. _";
