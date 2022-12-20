@@ -1,16 +1,17 @@
 #ifndef TITLE_H
 #define TITLE_H
 
-#include "Sizer.h"
 #include "renderer.h"
 
-class Title : public Sizer
+class Title
 {
 
 public:
     virtual void print (Renderer* render) = 0;
     virtual void setTopCenter (int xPx, int yPx) = 0;
-
+    virtual int sizeXPx() = 0;
+    virtual int sizeYPx() = 0;
+    
 };
 
 #endif

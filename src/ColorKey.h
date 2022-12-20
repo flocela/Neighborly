@@ -2,9 +2,8 @@
 #define COLOR_KEY_H
 
 #include "renderer.h"
-#include "Sizer.h"
 
-class ColorKey : public Sizer
+class ColorKey
 {
 
 public:
