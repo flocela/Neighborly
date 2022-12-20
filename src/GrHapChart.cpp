@@ -48,7 +48,7 @@ void GrHapChart::print (
         int groupNum = jj.first;
         int countInGroup = jj.second;
         double aveHappiness = (double)happiness_sum_Per_group[groupNum]/countInGroup;
-        Color c = _colorrs_map[_colors[groupNum]][Mood::neutral]._my_color;
+        Color c = _colorrs_map[_colors[groupNum]][Mood::neutral]._color;
         pointsPerColor.insert({
             c,
             std::vector<Point>( 1, Point( (double)run, aveHappiness, c) )

@@ -34,7 +34,7 @@ void GrColorKeyPrinter::print (Renderer* renderer)
                 label = label + " " + _colorrs_map[baseColor][mood]._mood_name;
             }
 
-            color_and_label.push_back({_colorrs_map[baseColor][mood]._my_color, label});
+            color_and_label.push_back({_colorrs_map[baseColor][mood]._color, label});
 
             int textWidth = (int)(label.length() *
                 renderer->widthMultiplier() *

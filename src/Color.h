@@ -29,7 +29,7 @@ std::ostream& operator<<(std::ostream& os, BaseColor const& obj);
 
 struct ColorInfo
 {
-    Color _my_color;
+    Color _color;
     BaseColor _base_color;
     std::string _base_name;
     Mood _mood;

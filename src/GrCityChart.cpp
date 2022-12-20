@@ -1,18 +1,20 @@
 #include "GrCityChart.h"
 #include <iostream>
 
+using namespace std;
+
 GrCityChart::GrCityChart (
-    std::unordered_map<const House*, Coordinate> coordToHouseMap,
-    std::unordered_map<int, BaseColor> resColors,
-    std::unique_ptr<Title> title,
-    std::unique_ptr<GrColorKeyPrinter> key,
-    std::unique_ptr<Plot> plot,
+    unordered_map<const House*, Coordinate> coordToHouseMap,
+    unordered_map<int, BaseColor> resColors,
+    unique_ptr<Title> title,
+    unique_ptr<GrColorKeyPrinter> key,
+    unique_ptr<Plot> plot,
     int topLeftCornerXPx,
     int topLeftCornerYPx,
     int xSpace,
     int ySpace
 ): 
-    _coord_to_house_map{coordToHouseMap},
+    _house_per_coordinate{coordToHouseMap},
     _res_colors{resColors},
     _title{move(title)},
     _key{move(key)},
@@ -29,11 +31,12 @@ GrCityChart::GrCityChart (
 }
 
 void GrCityChart::print(
-    std::unordered_map<const House*, const Resident*> houseToResMap,
+    unordered_map<const House*, const Resident*> houseToResMap,
     Renderer* renderer
 )
 {   
     _title->print(renderer);
+    _key->print(renderer);
     _plot->print(
         createVectorsForClearingPlot(),
         false,
@@ -44,62 +47,64 @@ void GrCityChart::print(
         false,
         renderer
     );
-    _key->print(renderer);
+    
 }
 
-std::unordered_map<Color, std::vector<Point>> GrCityChart::createVectorsForClearingPlot ()
+unordered_map<Color, vector<Point>> GrCityChart::createVectorsForClearingPlot ()
 {
-    std::unordered_map<Color, std::vector<Point>> colorToCoordinatesMap = {};
+    // every house needs to have a Color::absent point.
+    unordered_map<Color, vector<Point>> pointsPerColor = {};
 
-    for (auto const& x : _coord_to_house_map)
+    for (auto const& x : _house_per_coordinate)
     {
         Coordinate coord = x.second;
 
         Point point{(double)coord.getX(), (double)coord.getY(), Color::absent};
-        colorToCoordinatesMap[Color::absent].push_back(point);
+        pointsPerColor[Color::absent].push_back(point);
     }
-    return colorToCoordinatesMap;
+    return pointsPerColor;
 }
 
-std::unordered_map<Color, std::vector<Point>> GrCityChart::createVectorsOfHousesForEachColor(
-    std::unordered_map<const House *, const Resident *> houseToResMap)
+unordered_map<Color, vector<Point>> GrCityChart::createVectorsOfHousesForEachColor(
+    unordered_map<const House *, const Resident *> residentPerHouse)
 {   
-    std::unordered_map<Color, std::vector<Point>> colorToCoordinatesMap = {};
+    unordered_map<Color, vector<Point>> pointsPerColor = {};
 
-    for (auto const &x : _coord_to_house_map)
+    for (auto const &x : _house_per_coordinate)
     {   
         const House* house = x.first;
         Coordinate coord = x.second;
 
         Color colorKey;
-        if (houseToResMap.find(house) == houseToResMap.end())
+        if (residentPerHouse.find(house) == residentPerHouse.end())
         {
             // No resident has this address. So this house is empty.
             colorKey = Color::absent;
         }
         else
         {
-            const Resident *res = houseToResMap[house];
+            const Resident *res = residentPerHouse[house];
             
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
             if (happinessValue < happinessGoal)
-                colorKey = _colorrs_map[_res_colors[res->getGroupNumber()]][Mood::unhappy]._my_color;
+                colorKey = _colorrs_map[_res_colors[res->getGroupNumber()]][Mood::unhappy]._color;
             else
-                colorKey = _colorrs_map[_res_colors[res->getGroupNumber()]][Mood::happy]._my_color;
-        }
-        
-        if (colorToCoordinatesMap.find(colorKey) == colorToCoordinatesMap.end()) // TODO  c++ knows how to do this in one step
-        {
-            std::vector<Point> newPointVector = {};
-            colorToCoordinatesMap[colorKey] = newPointVector;
+                colorKey = _colorrs_map[_res_colors[res->getGroupNumber()]][Mood::happy]._color;
         }
 
         Point point{(double)coord.getX(), (double)coord.getY(), colorKey};
-        colorToCoordinatesMap[colorKey].push_back(point);
+        
+        if (pointsPerColor.find(colorKey) == pointsPerColor.end())
+        {
+            vector<Point> newPointVector = {};
+            pointsPerColor[colorKey] = newPointVector;
+        }
+
+        pointsPerColor[colorKey].push_back(point);
         
     }
-    return colorToCoordinatesMap;
+    return pointsPerColor;
 }
 
 int GrCityChart::sizeXPx ()

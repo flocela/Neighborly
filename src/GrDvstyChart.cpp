@@ -50,7 +50,7 @@ void GrDvstyChart::print (
         double averageNumOfDiffNeighbors = 
             (double)num_of_diff_neighbors_Per_group_id[groupId]/num_of_res_in_group; // TODO count in group shoudl not be be zero
        
-        Color c = _colorrs_map[_colors[groupId]][Mood::neutral]._my_color;
+        Color c = _colorrs_map[_colors[groupId]][Mood::neutral]._color;
         pointsPerColor.insert({
             c,
             std::vector<Point>( 1, Point((double)run, averageNumOfDiffNeighbors, c) )
