@@ -213,7 +213,6 @@ std::unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
     std::set<Mood> moods{Mood::neutral};
 
     return std::make_unique<GrHapChart> (
-        _hap_sizer,
         _colors,
         moods,
         std::make_unique<TitleA>(
