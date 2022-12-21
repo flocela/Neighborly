@@ -1,5 +1,5 @@
 #include "Color.h"
-
+#include <iostream>
 using namespace std;
 
 ostream& operator<<(ostream& os, Color const& obj)
@@ -8,23 +8,32 @@ ostream& operator<<(ostream& os, Color const& obj)
 
     switch (obj)
     {
-        case Color::green_neutral:
-            colorString = "green_neutral";
-            break;
-        case Color::green_unhappy:
-            colorString = "green_unhappy";
-            break;
         case Color::red_neutral:
-            colorString = "red_neutral";
+            colorString = _colorrs_map[BaseColor::red][Mood::neutral].toString();
             break;
         case Color::red_unhappy:
-            colorString = "red_unhappy";
+            colorString = _colorrs_map[BaseColor::red][Mood::unhappy].toString();
+            break;
+        case Color::red_happy:
+            colorString = _colorrs_map[BaseColor::red][Mood::happy].toString();
             break;
         case Color::blue_neutral:
-            colorString = "blue_neutral";
+            colorString = _colorrs_map[BaseColor::blue][Mood::neutral].toString();
             break;
         case Color::blue_unhappy:
-            colorString = "blue_unhappy";
+            colorString = _colorrs_map[BaseColor::blue][Mood::unhappy].toString();
+            break;
+        case Color::blue_happy:
+            colorString = _colorrs_map[BaseColor::blue][Mood::happy].toString();
+            break;
+        case Color::green_neutral:
+            colorString = _colorrs_map[BaseColor::green][Mood::neutral].toString();
+            break;
+        case Color::green_unhappy:
+            colorString = _colorrs_map[BaseColor::green][Mood::unhappy].toString();
+            break;
+        case Color::green_happy:
+            colorString = _colorrs_map[BaseColor::green][Mood::happy].toString();
             break;
         default:
             colorString = "unknown";

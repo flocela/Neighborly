@@ -35,6 +35,8 @@ struct ColorInfo
     Mood _mood;
     std::string _mood_name;
     std::vector<int> rgba;
+
+    std::string toString() { return _base_name + "_" + _mood_name;}
 };
 
 // TODO for red green color blindness, change green to yellow.

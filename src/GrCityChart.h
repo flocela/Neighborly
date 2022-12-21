@@ -11,7 +11,6 @@
 #include "PixelConverter.h"
 #include "AxisFormat.h"
 #include "Letter.h"
-#include "GrCityChartSizer.h"
 #include "GrColorKeyPrinter.h"
 #include "Title.h"
 #include "Plot.h"
@@ -20,44 +19,44 @@
 class GrCityChart
 {
 public:
-    GrCityChart (
-        std::unordered_map<const House*, Coordinate> coordToHouseMap,
-        std::unordered_map<int, BaseColor> resColors,
-        std::unique_ptr<Title> title,
-        std::unique_ptr<GrColorKeyPrinter> key,
-        std::unique_ptr<Plot> plot,
-        int topLeftCornerXPx,
-        int topLeftCornerYPx,
-        int xSpace,
-        int ySpace
-    );
+GrCityChart (
+    std::unordered_map<const House*, Coordinate> coordToHouseMap,
+    std::unordered_map<int, BaseColor> resColors,
+    std::unique_ptr<Title> title,
+    std::unique_ptr<GrColorKeyPrinter> key,
+    std::unique_ptr<Plot> plot,
+    int topLeftCornerXPx,
+    int topLeftCornerYPx,
+    int xSpace,
+    int ySpace
+);
 
-    void print (
-        std::unordered_map<const House*, const Resident*> houseToResMap,
-        Renderer* renderer
-    );
+void print (
+    std::unordered_map<const House*, const Resident*> houseToResMap,
+    Renderer* renderer
+);
 
-    int sizeXPx();
-    int sizeYPx();
+int sizeXPx();
+int sizeYPx();
 
 private:
-    std::unordered_map<const House*, Coordinate> _house_per_coordinate;
-    std::unordered_map<int, BaseColor> _res_colors;
+std::unordered_map<const House*, Coordinate> _house_per_coordinate;
+std::unordered_map<int, BaseColor> _res_colors;
 
-    std::unique_ptr<Title> _title;
-    std::unique_ptr<GrColorKeyPrinter> _key;
-    std::unique_ptr<Plot> _plot;
-    
-    int _top_left_corner_x__px;
-    int _top_left_corner_y__px;
-    int _x_space__px;
-    int _y_space__px;
+std::unique_ptr<Title> _title;
+std::unique_ptr<GrColorKeyPrinter> _key;
+std::unique_ptr<Plot> _plot;
 
-    std::unordered_map<Color, std::vector<Point>> createVectorsOfHousesForEachColor (
-        std::unordered_map<const House*, const Resident*> residentPerHouse
-    );
+int _top_left_corner_x__px;
+int _top_left_corner_y__px;
+int _x_space__px;
+int _y_space__px;
 
-    std::unordered_map<Color, std::vector<Point>> createVectorsForClearingPlot ();
+std::unordered_map<Color, std::vector<Point>> createVectorsOfHousesForEachColor (
+    std::unordered_map<const House*, const Resident*> residentPerHouse
+);
+
+std::unordered_map<Color, std::vector<Point>> createVectorsForClearingPlot ();
     
 };
 
