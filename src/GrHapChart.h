@@ -55,11 +55,6 @@ private:
     std::unique_ptr<ColorKey> _key;
     std::unique_ptr<Plot> _plot;
 
-    std::set<Resident*> getResidentsInTheseHouses (
-        std::set<House*> houses,
-        const std::unordered_map<House*, Resident*> residentPerHouse
-    );
-
 };
 
 #endif
