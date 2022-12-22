@@ -52,15 +52,14 @@ public:
     int getLineSpace () { return _l.lineSpace(); }
 
     void print (Renderer* renderer) override {
-        renderer->setTextFormats({100, 100, 100, 100},
-                                 {0xAA, 0xFF, 0xFF, 0xFF},
-                                 _l.letterHeight());
         renderer->renderText(
             _top_center_x__px,
             _top_center_y__px,
             _title,
             _l.letterHeight(),
             _l.widthMultiplier(),
+            _text_color,
+            _text_background_color,
             1);
     }
 
@@ -69,6 +68,8 @@ private:
     int _top_center_x__px = 0;
     int _top_center_y__px = 0;
     std::string _title = "";
+    SDL_Color _text_color = {100, 100, 100, 100};
+    SDL_Color _text_background_color = {0xAA, 0xFF, 0xFF, 0xFF};
 
 };
 

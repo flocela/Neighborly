@@ -33,18 +33,13 @@ Printer_Graphic::Printer_Graphic (
         minsAndMaxCoords[3]
     );
 
-    
-    /* DIVERSITY CHART */
-
     int maxNumOfNeighbors = determineMaxNumberOfNeighbors(neighbors);
         
     _dvsty_chart = createDvstyChart(neighbors, maxNumOfNeighbors, _num_of_runs);
     
-
-    /* HAPPINESS CHART */
-
     _happiness_chart = createHapChart(_num_of_runs);
-    
+
+    _runs_chart = createRunsChart(_num_of_runs);
 }
 
 void Printer_Graphic::print (
@@ -235,6 +230,18 @@ std::unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
         _hap_chart_top_y__px,
         _x_chart_space__px,
         _hap_chart_y_axis_fraction * _chart_y_space__px
+    );
+}
+
+std::unique_ptr<GrRunsChart> Printer_Graphic::createRunsChart (int numOfRuns)
+{
+    return std::make_unique<GrRunsChart> (
+        _left_right_borders__px, 
+        _runs_chart_top_y__px,
+        _x_space__px,
+        _chart_title_letter.getHeightIncLSpace(),
+        _chart_title_letter,
+        numOfRuns
     );
 }
 

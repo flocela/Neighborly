@@ -29,12 +29,8 @@ void AxisTopToBottomL::print (Renderer* renderer)
     std::vector<SDL_Rect> rects = {};
     std::vector<TextRect> texts = {};
 
+    // TODO think about removing these setColor and setTextFormats
     renderer->setColorToMedGrey();
-    renderer->setTextFormats(
-        {100, 100, 100, 100},
-        {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.labelHeightPx()
-    );
 
     addVerticalLine(rects);
     addTicksAndLabels (rects, texts);
@@ -78,6 +74,8 @@ void AxisTopToBottomL::addTicksAndLabels (
         std::to_string(_min_val),
         _axis_format.labelHeightPx(),
         _axis_format.labelWidthMultiplier(),
+        _axis_format.textColor(),
+        _axis_format.textBackgroundColor(),
         3
     };
 
@@ -103,8 +101,8 @@ void AxisTopToBottomL::addTicksAndLabels (
         {
             majRect.y = curVal__px;
             
-            curText.text = std::to_string(curVal);
-            curText.yPixel = curVal__px;
+            curText._text = std::to_string(curVal);
+            curText._y_pixel = curVal__px;
 
             rects.push_back(majRect);
             texts.push_back(curText);

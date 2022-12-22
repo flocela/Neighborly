@@ -1,6 +1,7 @@
 #ifndef AXIS_FORMAT_H
 #define AXIS_FORMAT_H
 #include <stdexcept>
+#include "SDL.h"
 
 class AxisFormat
 {
@@ -28,6 +29,8 @@ class AxisFormat
         int labelHeightPx () {return _label_letter_height;} 
         int labelLineSpacePx () {return _label_line_space__px;}
         double labelWidthMultiplier () {return _label_width_multiplier;}
+        SDL_Color textColor () { return _text_color;}
+        SDL_Color textBackgroundColor () { return _text_background_color;}
 
         void setMajTickLengthPx (int length);
         void setMinTickLengthPx (int length);
@@ -36,6 +39,8 @@ class AxisFormat
         void setLabelLetterHeight (int size);
         void setLabelSpacePx (int space);
         void setLabelWidthMultiplier (double widhtMultiplier); 
+        void setTextColor (SDL_Color color);
+        void setTextBackgroundColor (SDL_Color color);
     
 
     private:
@@ -50,6 +55,8 @@ class AxisFormat
         
         // width multiplier is used when rendering the text. 
         double _label_width_multiplier = 0.3;
+        SDL_Color _text_color = {100, 100, 100, 100};
+        SDL_Color _text_background_color = {0xAA, 0xFF, 0xFF, 0xFF};
 };
 
 #endif

@@ -33,10 +33,6 @@ void AxisLeftToRightB::print (Renderer* renderer)
     addTicksAndLabels(rects, texts);
 
     renderer->setColorToMedGrey();
-    renderer->setTextFormats(
-        {100, 100, 100, 100},
-        {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.labelHeightPx());
     renderer->fillBlocks(rects);
     renderer->renderTexts(texts);
 }
@@ -78,6 +74,8 @@ void AxisLeftToRightB::addTicksAndLabels (
         std::to_string(curVal),
         _axis_format.labelHeightPx(),
         _axis_format.labelWidthMultiplier(),
+        _axis_format.textColor(),
+        _axis_format.textBackgroundColor(),
         1
     };
 
@@ -104,8 +102,8 @@ void AxisLeftToRightB::addTicksAndLabels (
         {   
             majTick.x = curVal__px;
 
-            curText.text = std::to_string(curVal);
-            curText.xPixel = curVal__px;
+            curText._text = std::to_string(curVal);
+            curText._x_pixel = curVal__px;
 
             texts.push_back(curText);
             rects.push_back(majTick);

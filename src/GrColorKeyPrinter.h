@@ -59,8 +59,8 @@ private:
     // only used to find sizeX()
     // determines the width of each letter based on the height of each letter.
     double _char_width_multiplier = .3;
-    SDL_Color textColor = {100, 100, 100, 100};
-	SDL_Color textBackgroundColor = {0xAA, 0xFF, 0xFF, 0xFF};
+    SDL_Color _text_color = {100, 100, 100, 100};
+	SDL_Color _text_background_color = {0xAA, 0xFF, 0xFF, 0xFF};
 
 };
 

@@ -6,9 +6,10 @@ using namespace std;
 void GrColorKeyPrinter::print (Renderer* renderer)
 { 
     renderer->setTextFormats(
-        textColor, 
-        textBackgroundColor, 
-        _label_letter.letterHeight()
+        _text_color, 
+        _text_background_color, 
+        _label_letter.letterHeight(),
+        _label_letter.widthMultiplier()
     );
 
     // Create vector of labels and corresponding colors. Put in order of groupIds.
@@ -82,7 +83,9 @@ void GrColorKeyPrinter::print (Renderer* renderer)
             label_top_y__px,
             label,
             _label_letter.letterHeight(),
-            _label_letter.widthMultiplier(),
+            _label_letter.widthMultiplier(), // TODO this is not the same widthMultiplier used in sizeXPx
+            _text_color,
+            _text_background_color,
             4
         );
         counter += 1;

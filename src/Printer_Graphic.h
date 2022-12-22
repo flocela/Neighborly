@@ -119,14 +119,7 @@ private:
 
     // Sits center, below window title
     int _runs_chart_top_y__px = _top_border__px + _window_title->sizeYPx();
-    std::unique_ptr<GrRunsChart> _runs_chart = std::make_unique<GrRunsChart>(
-        _left_right_borders__px, 
-        _runs_chart_top_y__px,
-        _x_space__px,
-        _chart_title_letter.getHeightIncLSpace(),
-        _chart_title_letter,
-        _text_width_multiplier);
-
+    std::unique_ptr<GrRunsChart> _runs_chart;
 
     /* RIGHT COLUMN */
 
@@ -253,6 +246,8 @@ private:
     );
 
     std::unique_ptr<GrHapChart> createHapChart (int numberOfRuns);
+
+    std::unique_ptr<GrRunsChart> createRunsChart (int numOfRuns);
 
     int cityChartCalculatePxPerUnit(
         int minXCoord, 

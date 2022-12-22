@@ -106,8 +106,6 @@ void Renderer::renderText (
     int x, 
     int y,
     std::string textString,
-    int letterHeight,
-    double widthMultiplier,
     int position
 )
 {
@@ -115,8 +113,8 @@ void Renderer::renderText (
         x,
         y,
         textString,
-        letterHeight,
-        widthMultiplier,
+        _font_height,
+        _width_multiplier,
         _text_color,
         _text_background_color,
         position);
@@ -127,35 +125,14 @@ void Renderer::renderTexts (std::vector<TextRect> texts)
     for (TextRect tr : texts)
     {
        renderText(
-           tr.xPixel, 
-           tr.yPixel, 
-           tr.text,
-           tr.letterHeight,
-           tr.widthMultiplier,
-           _text_color,
-           _text_background_color,
-           tr.position
-           );
-    }
-}
-
-void Renderer::renderTexts (
-    std::vector<TextRect> texts,
-    SDL_Color textColor,
-    SDL_Color textBackgroundColor
-)
-{
-    for (TextRect tr : texts)
-    {
-       renderText(
-           tr.xPixel, 
-           tr.yPixel, 
-           tr.text,
-           tr.letterHeight,
-           tr.widthMultiplier,
-           textColor,
-           textBackgroundColor,
-           tr.position
+           tr._x_pixel, 
+           tr._y_pixel, 
+           tr._text,
+           tr._letter_height,
+           tr._width_multiplier,
+           tr._text_color,
+           tr._text_background_color,
+           tr._position
            );
     }
 }
@@ -163,12 +140,14 @@ void Renderer::renderTexts (
 void Renderer::setTextFormats (
     SDL_Color textColor,
     SDL_Color textBackgroundColor,
-    int letterHeight
+    int letterHeight,
+    double widthMultiplier
 )
 {
     _text_color = textColor;
     _text_background_color = textBackgroundColor;
     _font_height = letterHeight;
+    _width_multiplier = widthMultiplier;
 }
 
 Renderer::Renderer(

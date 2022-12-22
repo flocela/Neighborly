@@ -62,3 +62,13 @@ void AxisFormat::setLabelWidthMultiplier (double widthMultiplier)
 {
     _label_width_multiplier = widthMultiplier;
 }
+
+void AxisFormat::setTextColor (SDL_Color color)
+{
+    _text_color = color;
+}
+        
+void AxisFormat::setTextBackgroundColor (SDL_Color color)
+{
+    _text_background_color = color;
+}

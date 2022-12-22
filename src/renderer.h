@@ -42,24 +42,16 @@ class Renderer {
 			int x, 
 			int y,
 			std::string textString,
-			int letterHeight,
-			double widthMultiplier,
 			int position
 		);
 
 		void renderTexts (std::vector<TextRect> texts);
 
-		void renderTexts (
-			std::vector<TextRect> texts,
-			SDL_Color textColor,
-			SDL_Color textBackgroundColor
-		);
-
-		// TODO remove, I set text formats when priting text
 		void setTextFormats (
 			SDL_Color textColor,
 			SDL_Color textBackgroundColor,
-			int fontSize
+			int fontSize,
+			double widthMultiplier
 		);
 
 		// @coordinates: the coordinates are in pixels, not in city coordinates.

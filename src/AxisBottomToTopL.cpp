@@ -32,10 +32,6 @@ void AxisBottomToTopL::print (Renderer* renderer)
     addVerticalLine(rects);
     addTicksAndLabels (rects, texts);
 
-    renderer->setTextFormats(
-        {100, 100, 100, 100},
-        {0xAA, 0xFF, 0xFF, 0xFF},
-        _axis_format.labelHeightPx());
     renderer->fillBlocks(rects);
     renderer->renderTexts(texts);
 }
@@ -69,6 +65,8 @@ void AxisBottomToTopL::addTicksAndLabels (
         std::to_string(curVal),
         _axis_format.labelHeightPx(),
         _axis_format.labelWidthMultiplier(),
+        _axis_format.textColor(),
+        _axis_format.textBackgroundColor(),
         3
     };
 
@@ -93,8 +91,8 @@ void AxisBottomToTopL::addTicksAndLabels (
         {
             majRect.y = curVal__px;
 
-            curText.text = std::to_string(curVal);
-            curText.yPixel = curVal__px;
+            curText._text = std::to_string(curVal);
+            curText._y_pixel = curVal__px;
 
             rects.push_back(majRect);
             texts.push_back(curText);
