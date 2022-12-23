@@ -234,7 +234,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
         _x_center__px + _col_inside_border__px,
         _hap_chart_top_y__px,
         _x_chart_space__px,
-        _hap_chart_y_axis_fraction * _chart_y_space__px
+        (1 - _diversity_chart_y_axis_fraction) * _chart_y_space__px
     );
 }
 

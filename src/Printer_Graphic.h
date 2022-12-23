@@ -74,35 +74,39 @@ private:
     /* COLUMNS */
     /* Two columns: City chart is on the left. Diversity and Happiness charts are on the right.*/
 
-    /* COMMON TO ALL CHARTS */
+    /* COMMON TO ALL OR MOST CHARTS */
 
     AxisFormat _axis_format_X{};
     AxisFormat _axis_format_Y{};
 
-    // _used for Num Of Runs, City, Diversity, and Happiness chart titles
     Letter _chart_title_letter = Letter(30, 6, 0.3); 
-    
+    //TODO not the same dot size
+    Letter _chart_key_letter{24, 12, 0.3};
     // space per chart in the x direction
-    int _x_chart_space__px = _x_center__px - _side_borders__px - _col_inside_border__px; 
+    int _x_chart_space__px = _x_center__px - _side_borders__px - _col_inside_border__px;
 
-    // At the start of the axis, leave a space of cell size or point size times offset.
-    // At the end of the axis, leave a space of cell size or point size times overrun.
+    int _min_unit_size__px = 6; // TODO write note of how this is used. Is it honored?
+
+    // At the start of the axis, leave a space equal to cell size times offset.
+    // At the end of the axis, leave a space equal to cell size times overrun.
     const int _x_offset_multiplier  = 1;
     const int _x_overrun_multiplier = 1;
     const int _y_offset_multiplier  = 1;
     const int _y_overrun_multiplier = 1;
 
-    int _space_between_charts_y__px = 10;
-
-    /* RUNS COUNTER */
     
-    // Sits center, below window title
+
+    /* RUNS COUNTER*/
+    
+    // Sits horizontally at center of window, below window title
     int _runs_chart_top_y__px = _top_border__px + _window_title->sizeYPx();
     std::unique_ptr<GrRunsChart> _runs_chart;
 
     /* RIGHT COLUMN */
 
     // Right column holds the diversity chart and happiness chart
+    int _space_between_charts_y__px = 10;
+
     int _chart_y_space__px = 
         _screen_height__px - //1200
         _top_border__px - //20
@@ -110,11 +114,6 @@ private:
         _chart_title_letter.getHeightIncLSpace() - // Runs chart //36
         _bottom_border__px - //20
         _space_between_charts_y__px; //10
-
-    // Diversity and Happiness charts use the same dot size and copy of the same color key //TODO not the same dot size
-    Letter _chart_key_letter{24, 12, 0.3};
-    int _min_unit_size__px = 6;
-    
 
     /* DIVERSITY CHART */
 
@@ -147,8 +146,6 @@ private:
         _div_chart_top_y__px +
         (_chart_y_space__px * _diversity_chart_y_axis_fraction) +
         _space_between_charts_y__px;
-
-    double _hap_chart_y_axis_fraction = 0.7;
 
     PlotSizer _hap_sizer{
         _axis_format_X,
