@@ -76,7 +76,6 @@ private:
 
     /* COMMON TO ALL CHARTS */
 
-    int _text_width_multiplier = 0.3;
     AxisFormat _axis_format_X{};
     AxisFormat _axis_format_Y{};
 
