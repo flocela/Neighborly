@@ -17,32 +17,35 @@ public:
         int topCenterYPx,
         Letter labelSizing,
         std::unordered_map<int, BaseColor> colors, // group number to Color
-        std::set<Mood> moods // keys for colors, e.g. happy, sad, neutral
+        std::set<Mood> moods, // keys for colors, e.g. happy, sad, neutral
+        SDL_Color textColor,
+        SDL_Color textBackgroundColor
     ):
         _top_center_x__px{topCenterXPx},
         _top_center_y__px{topCenterYPx},
         _label_letter{labelSizing},
         _colors{colors},
         _moods{moods},
-        _box_length__px{_label_letter.letterHeight()/2} // box is the colored square
+        _box_length__px{_label_letter.letterHeight()/2}, // box is the colored square
+        _text_color{textColor},
+        _text_background_color{textBackgroundColor}
     {}
 
     GrColorKeyPrinter (
         Letter labelLetter,
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods
-    ): GrColorKeyPrinter(
-        0,
-        0,
-        labelLetter,
-        colors,
-        moods
-    )
+    ): _label_letter{labelLetter},
+       _colors{colors},
+       _moods{moods},
+       _box_length__px{_label_letter.letterHeight()/2}
     {}
 
     void print (Renderer* renderer);
     void setTopCenter (int xPx, int yPy);
     void setCharWidthMultiplier (double multiplier);
+    void setTextColor (SDL_Color color);
+    void setTextBackgroundColor (SDL_Color color);
     int sizeXPx () override;
     int sizeYPx () override;
     
@@ -56,9 +59,6 @@ private:
     int _box_spacer__px = 6;
     int _column_border__px = 15;
 
-    // only used to find sizeX()
-    // determines the width of each letter based on the height of each letter.
-    double _char_width_multiplier = .3;
     SDL_Color _text_color = {100, 100, 100, 100};
 	SDL_Color _text_background_color = {0xAA, 0xFF, 0xFF, 0xFF};
 

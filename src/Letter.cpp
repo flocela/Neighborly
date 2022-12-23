@@ -1,8 +1,9 @@
 #include "Letter.h"
 
-Letter::Letter (int letterHeight, int lineSpace):
+Letter::Letter (int letterHeight, int lineSpace, double widthMultiplier):
     _letter_height{letterHeight},
-    _line_space{lineSpace}
+    _line_space{lineSpace},
+    _width_multiplier{widthMultiplier}
 {}
 
 void Letter::setLetterHeight (int size)

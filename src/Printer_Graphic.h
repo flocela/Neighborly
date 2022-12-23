@@ -51,59 +51,40 @@ public:
 
 private:
     
-    std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
-    std::unordered_map<int, BaseColor> _colors;
-
     /* FOR WINDOW */
-
     int _screen_width__px  = 2400;
     int _screen_height__px = 1200;
+    std::unordered_map<int, BaseColor> _colors;
+    std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
     std::unique_ptr<Renderer> _renderer = std::make_unique<Renderer>(
         _screen_width__px,
         _screen_height__px
     );
 
-    int _top_border__px        = 20;
-    int _bottom_border__px     = 20;
-    int _left_right_borders__px = 40;
+    int _top_border__px = 20;
+    int _bottom_border__px = 20;
+    int _side_borders__px = 40; // both the left and right borders are this value
+    int _col_inside_border__px = 40;
+    int _x_center__px = _screen_width__px/2; // center of screen
+    int _num_of_runs;
 
-    // total x space minus the side borders
-    int _x_space__px = _screen_width__px - (2 * _left_right_borders__px);
-
-    // center of screen
-    int _x_center__px = _screen_width__px/2;
-
-    std::unique_ptr<TitleA> _window_title = std::make_unique<TitleA>(
-        Letter{40, 2},
-        _x_center__px,
-        _top_border__px,
-        "Neighbors"
-    );
-
-    // text color and text background color
-    SDL_Color textColor = {100, 100, 100, 100};
-	SDL_Color textBackgroundColor = {0xAA, 0xFF, 0xFF, 0xFF};
+    Letter _window_title_letter{40, 2, 0.3};
+    std::unique_ptr<TitleA> _window_title;
 
     /* COLUMNS */
-
-    // Two columns: City Map chart is in the left. Diversity and Happiness charts are in the right.
-
-    int _col_side_border__px = 40; 
-
+    /* Two columns: City chart is on the left. Diversity and Happiness charts are on the right.*/
 
     /* COMMON TO ALL CHARTS */
 
     int _text_width_multiplier = 0.3;
-    int _num_of_runs;
-
     AxisFormat _axis_format_X{};
     AxisFormat _axis_format_Y{};
 
-    // _used for Num Of Runs, City Map, Diversity...
-    Letter _chart_title_letter = Letter(30, 6); 
+    // _used for Num Of Runs, City, Diversity, and Happiness chart titles
+    Letter _chart_title_letter = Letter(30, 6, 0.3); 
     
     // space per chart in the x direction
-    int _x_chart_space__px =  (_screen_width__px/2) - _left_right_borders__px - _col_side_border__px; 
+    int _x_chart_space__px = _x_center__px - _side_borders__px - _col_inside_border__px; 
 
     // At the start of the axis, leave a space of cell size or point size times offset.
     // At the end of the axis, leave a space of cell size or point size times overrun.
@@ -112,11 +93,10 @@ private:
     const int _y_offset_multiplier  = 1;
     const int _y_overrun_multiplier = 1;
 
-    // vertical space
-    int _space_between_charts__px = 10;
+    int _space_between_charts_y__px = 10;
 
     /* RUNS COUNTER */
-
+    
     // Sits center, below window title
     int _runs_chart_top_y__px = _top_border__px + _window_title->sizeYPx();
     std::unique_ptr<GrRunsChart> _runs_chart;
@@ -130,10 +110,10 @@ private:
         _window_title->sizeYPx() - //42
         _chart_title_letter.getHeightIncLSpace() - // Runs chart //36
         _bottom_border__px - //20
-        _space_between_charts__px; //10
+        _space_between_charts_y__px; //10
 
     // Diversity and Happiness charts use the same dot size and copy of the same color key //TODO not the same dot size
-    Letter _chart_key_letter{24, 12};
+    Letter _chart_key_letter{24, 12, 0.3};
     int _min_unit_size__px = 6;
     
 
@@ -167,7 +147,7 @@ private:
     int _hap_chart_top_y__px =
         _div_chart_top_y__px +
         (_chart_y_space__px * _diversity_chart_y_axis_fraction) +
-        _space_between_charts__px;
+        _space_between_charts_y__px;
 
     double _hap_chart_y_axis_fraction = 0.7;
 
@@ -185,7 +165,7 @@ private:
     std::unique_ptr<GrHapChart> _happiness_chart;
 
     // COLOR KEY FOR DIVERSITY AND HAPPINESS CHARTS
-    Letter _color_key_letter_for_map{24, 4}; // TODO is this used. Should be replace dby _color_key_letter
+    Letter _color_key_letter_for_map{24, 4, 0.3}; // TODO is this used. Should be replace dby _color_key_letter
 
     std::vector<int> determineMinMaxHouseCoords (
         std::unordered_map<const House*, Coordinate > coordPerHouse
@@ -228,9 +208,17 @@ private:
     std::unique_ptr<GrCityChart>  _city_chart;
 
 
+
     int determineMaxNumberOfNeighbors (
         std::unordered_map<const House*,
         std::set<const House*>> neighbors
+    );
+
+    std::unique_ptr<TitleA> createWindowTitle (
+        Letter letter,
+        int topCenterX__px,
+        int topCenterY__px,
+        std::string title
     );
 
     std::unique_ptr<GrCityChart> createCityChart (

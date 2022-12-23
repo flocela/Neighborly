@@ -65,6 +65,8 @@ House.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.cpp
 Color.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.h
+iostream
+-
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.h
 ostream
@@ -88,6 +90,12 @@ iostream
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
 
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Flat.cpp
+HappinessFunc_Flat.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Flat.h
+iostream
+-
+
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Flat.h
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
@@ -95,6 +103,12 @@ HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Rising.h
 HappinessFunc.h
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc.h
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepDown.cpp
+HappinessFunc_StepDown.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepDown.h
+iostream
+-
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepDown.h
 HappinessFunc.h
@@ -119,6 +133,16 @@ stdexcept
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question.h
 string
 -
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Double.cpp
+Question_Double.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Double.h
+stdexcept
+-
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Double.h
+Question.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/Question.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Int.cpp
 Question_Int.h
@@ -873,6 +897,20 @@ iostream
 -
 math.h
 -
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_HappinessFunction_Flat.cpp
+catch.hpp
+/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
+../src/HappinessFunc_Flat.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_Flat.h
+iostream
+-
+
+/home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_HappinessFunction_StepDown.cpp
+catch.hpp
+/home/workspace/aminoshbh/sdl2-ttf-sample/tests/catch.hpp
+../src/HappinessFunc_StepDown.h
+/home/workspace/aminoshbh/sdl2-ttf-sample/src/HappinessFunc_StepDown.h
 
 /home/workspace/aminoshbh/sdl2-ttf-sample/tests/test_Resident_Falling.cpp
 catch.hpp

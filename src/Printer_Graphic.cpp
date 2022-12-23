@@ -8,23 +8,21 @@
 #include "PlotA.h"
 #include "PlotB.h"
 
+using namespace std;
+
 Printer_Graphic::Printer_Graphic (
-    std::string title,
-    std::unordered_map<int, BaseColor> colors,
-    std::unordered_map<const House*, Coordinate > coordPerHouse,
-    std::unordered_map<const House*, std::set<const House*>> neighbors,
+    string title,
+    unordered_map<int, BaseColor> colors,
+    unordered_map<const House*, Coordinate > coordPerHouse,
+    unordered_map<const House*, set<const House*>> neighbors,
     int numOfRuns
-)
-{
-    _window_title->setTitle(title);
+): _colors{colors},
+   _coordinates_per_house{coordPerHouse},
+   _num_of_runs{numOfRuns},
+   _window_title{make_unique<TitleA>(_window_title_letter, _x_center__px, _top_border__px, title)}
+{   
 
-    _colors = colors;
-
-    _num_of_runs = numOfRuns;
-
-    // minsAndMaxCoords are coordinates, not pixels.
-    _coordinates_per_house = coordPerHouse;
-    std::vector<int> minsAndMaxCoords = determineMinMaxHouseCoords(_coordinates_per_house);
+    vector<int> minsAndMaxCoords = determineMinMaxHouseCoords(_coordinates_per_house);
 
     _city_chart =  createCityChart(
         minsAndMaxCoords[0],
@@ -32,22 +30,22 @@ Printer_Graphic::Printer_Graphic (
         minsAndMaxCoords[2],
         minsAndMaxCoords[3]
     );
-
+    
     int maxNumOfNeighbors = determineMaxNumberOfNeighbors(neighbors);
         
     _dvsty_chart = createDvstyChart(neighbors, maxNumOfNeighbors, _num_of_runs);
     
     _happiness_chart = createHapChart(_num_of_runs);
-
+    
     _runs_chart = createRunsChart(_num_of_runs);
+    
 }
 
 void Printer_Graphic::print (
-    std::unordered_map<const House*, const Resident*> residentPerHouse,
+    unordered_map<const House*, const Resident*> residentPerHouse,
     int run
 )
 {   
-
     /*_renderer->setColorToRed();
     SDL_Rect rect {
         5,
@@ -57,8 +55,8 @@ void Printer_Graphic::print (
     };
     _renderer->fillBlock(rect);*/
 
-    std::unordered_map<const Resident*, const House*> housePerResident;
-    std::vector<const Resident*> residents;
+    unordered_map<const Resident*, const House*> housePerResident;
+    vector<const Resident*> residents;
     for (auto pair : residentPerHouse)
     {
         if (pair.second != nullptr) // resident is not nullptr
@@ -71,25 +69,22 @@ void Printer_Graphic::print (
     _window_title->print(_renderer.get());
     _runs_chart->print(run, _renderer.get());
     _city_chart->print(residentPerHouse, _renderer.get());
-
     _dvsty_chart->print(
         housePerResident,
         residentPerHouse,
         run,
         _renderer.get()
     );
-
     _happiness_chart->print(
         housePerResident,
         run,
         _renderer.get()
     );
-
     _renderer->endFrame();
 } 
 
-std::vector<int> Printer_Graphic::determineMinMaxHouseCoords(
-    std::unordered_map<const House*, Coordinate > coordPerHouse
+vector<int> Printer_Graphic::determineMinMaxHouseCoords(
+    unordered_map<const House*, Coordinate > coordPerHouse
 )
 {
     // Determine the min and max house coordinates for x and y.
@@ -110,7 +105,7 @@ std::vector<int> Printer_Graphic::determineMinMaxHouseCoords(
         if (coord.getY() < minY)
             minY = coord.getY();
     }
-    std::vector<int> minsAndMaxes;
+    vector<int> minsAndMaxes;
     minsAndMaxes.push_back(minX);
     minsAndMaxes.push_back(maxX);
     minsAndMaxes.push_back(minY);
@@ -120,7 +115,7 @@ std::vector<int> Printer_Graphic::determineMinMaxHouseCoords(
 }
 
 int Printer_Graphic::determineMaxNumberOfNeighbors (
-    std::unordered_map<const House*, std::set<const House*>> neighbors
+    unordered_map<const House*, set<const House*>> neighbors
 )
 {
     int max = 0;
@@ -134,26 +129,36 @@ int Printer_Graphic::determineMaxNumberOfNeighbors (
     return max;
 }
 
-std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
+unique_ptr<TitleA> Printer_Graphic::createWindowTitle (
+    Letter letter,
+    int topCenterX__px,
+    int topCenterY__px,
+    string title
+)
+{
+    return make_unique<TitleA>(letter, topCenterX__px, topCenterY__px, title);
+}
+
+unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
     int minXCoord, 
     int maxXCoord, 
     int minYCoord, 
     int maxYCoord
 )
 {   
-    std::set<Mood> moods{Mood::happy, Mood::unhappy};
+    set<Mood> moods{Mood::happy, Mood::unhappy};
 
-    return std::make_unique<GrCityChart>(
+    return make_unique<GrCityChart>(
         _coordinates_per_house,
         _colors,
-        std::make_unique<TitleA>(
+        make_unique<TitleA>(
             _chart_title_letter,
             "City Map"),
-        std::make_unique<GrColorKeyPrinter>(
+        make_unique<GrColorKeyPrinter>(
             _chart_key_letter,
             _colors,
             moods),
-        std::make_unique<PlotB>(
+        make_unique<PlotB>(
             _city_plot_sizer,
             _colors, 
             moods, 
@@ -161,33 +166,33 @@ std::unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             maxXCoord,
             minYCoord, 
             maxYCoord),
-        _left_right_borders__px,
+        _side_borders__px,
         _city_map_chart_top_left_y_coord__px,
         _x_chart_space__px,
         _city_y_space__px
     );
 }
 
-std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
-    std::unordered_map<const House*, std::set<const House*>> neighbors,
+unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
+    unordered_map<const House*, set<const House*>> neighbors,
     int maxNumOfNeighbors,
     int maxNumOfRuns
 )
 {
-    std::set<Mood> moods{Mood::neutral};
+    set<Mood> moods{Mood::neutral};
 
-    return std::make_unique<GrDvstyChart> (
+    return make_unique<GrDvstyChart> (
         _colors,
         moods,
         neighbors,
-        std::make_unique<TitleA>(
+        make_unique<TitleA>(
             _chart_title_letter,
             "Diversity, Average Number of Disparate Neighbors per Resident per Run"),
-        std::make_unique<GrColorKeyPrinter>(
+        make_unique<GrColorKeyPrinter>(
             _chart_key_letter,
             _colors,
             moods),
-        std::make_unique<PlotA>(
+        make_unique<PlotA>(
             _div_sizer,
             _colors, 
             moods, 
@@ -196,28 +201,28 @@ std::unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             0, // min number of neighbors
             maxNumOfNeighbors
         ),
-        _x_center__px + _col_side_border__px,
+        _x_center__px + _col_inside_border__px,
         _div_chart_top_y__px,
         _x_chart_space__px,
         _diversity_chart_y_axis_fraction * _chart_y_space__px
     );
 }
 
-std::unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
+unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
 {   
-    std::set<Mood> moods{Mood::neutral};
+    set<Mood> moods{Mood::neutral};
 
-    return std::make_unique<GrHapChart> (
+    return make_unique<GrHapChart> (
         _colors,
         moods,
-        std::make_unique<TitleA>(
+        make_unique<TitleA>(
             _chart_title_letter,
             "Happiness, Average Resident Happiness per Group, per Run"),
-        std::make_unique<GrColorKeyPrinter>(
+        make_unique<GrColorKeyPrinter>(
             _chart_key_letter,
             _colors,
             moods),
-        std::make_unique<PlotA>(
+        make_unique<PlotA>(
             _div_sizer,
             _colors, 
             moods, 
@@ -226,19 +231,19 @@ std::unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
             0, // minimum resident happiness
             100 // resident happiness range is from 0 to 100.
         ),
-        _x_center__px + _col_side_border__px,
+        _x_center__px + _col_inside_border__px,
         _hap_chart_top_y__px,
         _x_chart_space__px,
         _hap_chart_y_axis_fraction * _chart_y_space__px
     );
 }
 
-std::unique_ptr<GrRunsChart> Printer_Graphic::createRunsChart (int numOfRuns)
+unique_ptr<GrRunsChart> Printer_Graphic::createRunsChart (int numOfRuns)
 {
-    return std::make_unique<GrRunsChart> (
-        _left_right_borders__px, 
+    return make_unique<GrRunsChart> (
+        _side_borders__px, 
         _runs_chart_top_y__px,
-        _x_space__px,
+        _screen_width__px - (2 * _side_borders__px),
         _chart_title_letter.getHeightIncLSpace(),
         _chart_title_letter,
         numOfRuns

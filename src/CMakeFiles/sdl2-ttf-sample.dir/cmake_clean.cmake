@@ -44,6 +44,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/sdl2-ttf-sample.dir/Simulator_Basic_A.cpp.o"
   "CMakeFiles/sdl2-ttf-sample.dir/Simulator_E.cpp.o"
   "CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o"
+  "CMakeFiles/sdl2-ttf-sample.dir/UINumOfRunsGetter.cpp.o"
   "CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o"
   "CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o"
   "CMakeFiles/sdl2-ttf-sample.dir/renderer.cpp.o"

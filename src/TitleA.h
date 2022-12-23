@@ -13,22 +13,33 @@ public:
         Letter letter,
         int topCenterXPx,
         int topCenterYPx,
-        std::string title
+        std::string title,
+        SDL_Color textColor,
+        SDL_Color textBackgroundColor
     ): _l{letter}, 
        _top_center_x__px{topCenterXPx}, 
        _top_center_y__px {topCenterYPx},
-       _title{title}
+       _title{title},
+       _text_color{textColor},
+       _text_background_color{textBackgroundColor}
+    {}
+
+    TitleA (
+        Letter letter,
+        int topCenterXPx,
+        int topCenterYPx,
+        std::string title
+    ):  _l{letter},
+        _top_center_x__px{topCenterXPx}, 
+        _top_center_y__px {topCenterYPx},
+        _title{title}
     {}
 
     TitleA (
         Letter letter,
         std::string title
-    ): TitleA (
-        letter,
-        0,
-        0,
-        title
-    )
+    ): _l{letter},
+      _title{title}
     {}
 
     int sizeXPx() { return _title.length() * _l.letterHeight() * _l.widthMultiplier(); }
@@ -45,6 +56,16 @@ public:
     void setTopCenter (int xPx, int yPx) override{
         _top_center_x__px = xPx; 
         _top_center_y__px = yPx;
+    }
+
+    void setTextColor (SDL_Color color) 
+    {
+        _text_color = color;
+    }
+
+    void setTextBackgroundColor (SDL_Color color)
+    {
+        _text_background_color = color;
     }
 
     int getLetterHeight () { return _l.letterHeight(); }

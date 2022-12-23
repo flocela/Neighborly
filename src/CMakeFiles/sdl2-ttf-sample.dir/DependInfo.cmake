@@ -49,6 +49,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/Simulator_Basic_A.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/Simulator_Basic_A.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/Simulator_E.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/Simulator_E.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/TextHelper.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o"
+  "/home/workspace/aminoshbh/sdl2-ttf-sample/src/UINumOfRunsGetter.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/UINumOfRunsGetter.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/UI_CMDLine.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/main.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/renderer.cpp.o"

@@ -42,7 +42,7 @@ void AxisFormat::setLabelLetterHeight (int size)
     }
     else
     {
-        _label_letter_height = size;
+        _label_letter.setLetterHeight(size);
     }
 }
 
@@ -54,13 +54,13 @@ void AxisFormat::setLabelSpacePx (int size)
     }
     else
     {
-        _label_line_space__px = size;
+        _label_letter.setLineSpace(size);
     }
 }
 
 void AxisFormat::setLabelWidthMultiplier (double widthMultiplier)
 {
-    _label_width_multiplier = widthMultiplier;
+    _label_letter.setWidthMultiplier(widthMultiplier);
 }
 
 void AxisFormat::setTextColor (SDL_Color color)

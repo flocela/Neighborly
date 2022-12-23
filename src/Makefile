@@ -1414,6 +1414,33 @@ TextHelper.cpp.s:
 	$(MAKE) -f CMakeFiles/RunTests.dir/build.make CMakeFiles/RunTests.dir/TextHelper.cpp.s
 .PHONY : TextHelper.cpp.s
 
+UINumOfRunsGetter.o: UINumOfRunsGetter.cpp.o
+
+.PHONY : UINumOfRunsGetter.o
+
+# target to build an object file
+UINumOfRunsGetter.cpp.o:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/UINumOfRunsGetter.cpp.o
+.PHONY : UINumOfRunsGetter.cpp.o
+
+UINumOfRunsGetter.i: UINumOfRunsGetter.cpp.i
+
+.PHONY : UINumOfRunsGetter.i
+
+# target to preprocess a source file
+UINumOfRunsGetter.cpp.i:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/UINumOfRunsGetter.cpp.i
+.PHONY : UINumOfRunsGetter.cpp.i
+
+UINumOfRunsGetter.s: UINumOfRunsGetter.cpp.s
+
+.PHONY : UINumOfRunsGetter.s
+
+# target to generate assembly for a file
+UINumOfRunsGetter.cpp.s:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/UINumOfRunsGetter.cpp.s
+.PHONY : UINumOfRunsGetter.cpp.s
+
 UI_CMDLine.o: UI_CMDLine.cpp.o
 
 .PHONY : UI_CMDLine.o
@@ -2156,6 +2183,9 @@ help:
 	@echo "... TextHelper.o"
 	@echo "... TextHelper.i"
 	@echo "... TextHelper.s"
+	@echo "... UINumOfRunsGetter.o"
+	@echo "... UINumOfRunsGetter.i"
+	@echo "... UINumOfRunsGetter.s"
 	@echo "... UI_CMDLine.o"
 	@echo "... UI_CMDLine.i"
 	@echo "... UI_CMDLine.s"

@@ -6,6 +6,7 @@ CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o: AxisBottomToTopL.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o: AxisFormat.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o: Color.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o: Coordinate.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o: Letter.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o: TextRect.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o: renderer.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o: /usr/include/SDL2/SDL.h
@@ -54,12 +55,57 @@ CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o: /usr/include/SDL2/close_c
 
 CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: AxisFormat.cpp
 CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: AxisFormat.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: Letter.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_assert.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_atomic.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_audio.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_blendmode.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_clipboard.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_config.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_cpuinfo.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_endian.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_error.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_events.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_filesystem.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_gamecontroller.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_gesture.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_haptic.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_hints.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_joystick.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_keyboard.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_keycode.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_loadso.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_log.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_main.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_messagebox.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_mouse.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_mutex.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_pixels.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_platform.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_power.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_quit.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_rect.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_render.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_rwops.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_scancode.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_stdinc.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_surface.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_system.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_thread.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_timer.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_touch.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_version.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/SDL_video.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/begin_code.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o: /usr/include/SDL2/close_code.h
 
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o: AxisFormat.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o: AxisLeftToRightB.cpp
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o: AxisLeftToRightB.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o: Color.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o: Coordinate.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o: Letter.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o: TextRect.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o: renderer.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o: /usr/include/SDL2/SDL.h
@@ -111,6 +157,7 @@ CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o: AxisLeftToRightT.cpp
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o: AxisLeftToRightT.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o: Color.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o: Coordinate.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o: Letter.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o: PixelConverter.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o: TextRect.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o: renderer.h
@@ -163,6 +210,7 @@ CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o: AxisTopToBottomL.cpp
 CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o: AxisTopToBottomL.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o: Color.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o: Coordinate.h
+CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o: Letter.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o: PixelConverter.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o: TextRect.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o: renderer.h
@@ -251,7 +299,6 @@ CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: ColorKey.h
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: Coordinate.h
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: GrCityChart.cpp
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: GrCityChart.h
-CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: GrCityChartSizer.h
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: GrColorKeyPrinter.h
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: House.h
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: Letter.h
@@ -259,7 +306,6 @@ CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: PixelConverter.h
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: Plot.h
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: Point.h
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: Resident.h
-CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: Sizer.h
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: TextRect.h
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: Title.h
 CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o: renderer.h
@@ -313,7 +359,6 @@ CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o: Coordinate.h
 CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o: GrColorKeyPrinter.cpp
 CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o: GrColorKeyPrinter.h
 CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o: Letter.h
-CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o: Sizer.h
 CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o: TextRect.h
 CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o: renderer.h
 CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o: /usr/include/SDL2/SDL.h
@@ -372,7 +417,6 @@ CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o: Letter.h
 CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o: Plot.h
 CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o: Point.h
 CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o: Resident.h
-CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o: Sizer.h
 CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o: TextRect.h
 CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o: Title.h
 CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o: renderer.h
@@ -433,7 +477,6 @@ CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o: Plot.h
 CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o: PlotSizer.h
 CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o: Point.h
 CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o: Resident.h
-CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o: Sizer.h
 CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o: TextRect.h
 CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o: Title.h
 CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o: renderer.h
@@ -720,7 +763,6 @@ CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: Color.h
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: ColorKey.h
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: Coordinate.h
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: GrCityChart.h
-CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: GrCityChartSizer.h
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: GrColorKeyPrinter.h
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: GrDvstyChart.h
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: GrHapChart.h
@@ -737,7 +779,6 @@ CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: Printer.h
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: Printer_Graphic.cpp
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: Printer_Graphic.h
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: Resident.h
-CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: Sizer.h
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: TextRect.h
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: Title.h
 CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o: TitleA.h
@@ -906,6 +947,7 @@ CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o: Question_Int.h
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o: Question_YN.h
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o: Resident.h
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o: ResidentsFactory.h
+CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o: ResidentsGroupInfo.h
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o: ResidentsMaker.h
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o: ResidentsMaker_CMDLine.cpp
 CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o: ResidentsMaker_CMDLine.h
@@ -937,6 +979,13 @@ CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o: Resident.h
 CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o: TextHelper.cpp
 CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o: TextHelper.h
 
+CMakeFiles/sdl2-ttf-sample.dir/UINumOfRunsGetter.cpp.o: Question.h
+CMakeFiles/sdl2-ttf-sample.dir/UINumOfRunsGetter.cpp.o: Question_Int.h
+CMakeFiles/sdl2-ttf-sample.dir/UINumOfRunsGetter.cpp.o: UI.h
+CMakeFiles/sdl2-ttf-sample.dir/UINumOfRunsGetter.cpp.o: UINumOfRunsGetter.cpp
+CMakeFiles/sdl2-ttf-sample.dir/UINumOfRunsGetter.cpp.o: UINumOfRunsGetter.h
+CMakeFiles/sdl2-ttf-sample.dir/UINumOfRunsGetter.cpp.o: UI_CMDLine.h
+
 CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o: Question.h
 CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o: Question_Int.h
 CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o: UI.h
@@ -954,7 +1003,6 @@ CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: Color.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: ColorKey.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: Coordinate.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: GrCityChart.h
-CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: GrCityChartSizer.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: GrColorKeyPrinter.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: GrDvstyChart.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: GrHapChart.h
@@ -983,17 +1031,19 @@ CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: Resident_Flat.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: Resident_StepDown.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: ResidentsFactory.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: ResidentsFactory_Flat.h
+CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: ResidentsFactory_StepDown.h
+CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: ResidentsGroupInfo.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: ResidentsMaker.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: ResidentsMaker_CMDLine.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: SimulationComponents.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: Simulator.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: Simulator_Basic_A.h
-CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: Sizer.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: TextHelper.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: TextRect.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: Title.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: TitleA.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: UI.h
+CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: UINumOfRunsGetter.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: UI_CMDLine.h
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: main.cpp
 CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o: renderer.h

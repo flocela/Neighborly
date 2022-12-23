@@ -7,6 +7,7 @@ CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/Letter.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
  /usr/include/SDL2/SDL.h
@@ -55,12 +56,57 @@ CMakeFiles/sdl2-ttf-sample.dir/AxisBottomToTopL.cpp.o
 CMakeFiles/sdl2-ttf-sample.dir/AxisFormat.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.cpp
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/Letter.h
+ /usr/include/SDL2/SDL.h
+ /usr/include/SDL2/SDL_assert.h
+ /usr/include/SDL2/SDL_atomic.h
+ /usr/include/SDL2/SDL_audio.h
+ /usr/include/SDL2/SDL_blendmode.h
+ /usr/include/SDL2/SDL_clipboard.h
+ /usr/include/SDL2/SDL_config.h
+ /usr/include/SDL2/SDL_cpuinfo.h
+ /usr/include/SDL2/SDL_endian.h
+ /usr/include/SDL2/SDL_error.h
+ /usr/include/SDL2/SDL_events.h
+ /usr/include/SDL2/SDL_filesystem.h
+ /usr/include/SDL2/SDL_gamecontroller.h
+ /usr/include/SDL2/SDL_gesture.h
+ /usr/include/SDL2/SDL_haptic.h
+ /usr/include/SDL2/SDL_hints.h
+ /usr/include/SDL2/SDL_joystick.h
+ /usr/include/SDL2/SDL_keyboard.h
+ /usr/include/SDL2/SDL_keycode.h
+ /usr/include/SDL2/SDL_loadso.h
+ /usr/include/SDL2/SDL_log.h
+ /usr/include/SDL2/SDL_main.h
+ /usr/include/SDL2/SDL_messagebox.h
+ /usr/include/SDL2/SDL_mouse.h
+ /usr/include/SDL2/SDL_mutex.h
+ /usr/include/SDL2/SDL_pixels.h
+ /usr/include/SDL2/SDL_platform.h
+ /usr/include/SDL2/SDL_power.h
+ /usr/include/SDL2/SDL_quit.h
+ /usr/include/SDL2/SDL_rect.h
+ /usr/include/SDL2/SDL_render.h
+ /usr/include/SDL2/SDL_rwops.h
+ /usr/include/SDL2/SDL_scancode.h
+ /usr/include/SDL2/SDL_stdinc.h
+ /usr/include/SDL2/SDL_surface.h
+ /usr/include/SDL2/SDL_system.h
+ /usr/include/SDL2/SDL_thread.h
+ /usr/include/SDL2/SDL_timer.h
+ /usr/include/SDL2/SDL_touch.h
+ /usr/include/SDL2/SDL_version.h
+ /usr/include/SDL2/SDL_video.h
+ /usr/include/SDL2/begin_code.h
+ /usr/include/SDL2/close_code.h
 CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightB.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisFormat.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightB.cpp
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightB.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/Letter.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
  /usr/include/SDL2/SDL.h
@@ -112,6 +158,7 @@ CMakeFiles/sdl2-ttf-sample.dir/AxisLeftToRightT.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisLeftToRightT.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/Letter.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/PixelConverter.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
@@ -164,6 +211,7 @@ CMakeFiles/sdl2-ttf-sample.dir/AxisTopToBottomL.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/AxisTopToBottomL.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/Letter.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/PixelConverter.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
@@ -252,7 +300,6 @@ CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChart.cpp
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChart.h
- /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChartSizer.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/House.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Letter.h
@@ -260,7 +307,6 @@ CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Plot.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Point.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident.h
- /home/workspace/aminoshbh/sdl2-ttf-sample/src/Sizer.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Title.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
@@ -314,7 +360,6 @@ CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.cpp
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Letter.h
- /home/workspace/aminoshbh/sdl2-ttf-sample/src/Sizer.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
  /usr/include/SDL2/SDL.h
@@ -373,7 +418,6 @@ CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Plot.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Point.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident.h
- /home/workspace/aminoshbh/sdl2-ttf-sample/src/Sizer.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Title.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
@@ -434,7 +478,6 @@ CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/PlotSizer.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Point.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident.h
- /home/workspace/aminoshbh/sdl2-ttf-sample/src/Sizer.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Title.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h
@@ -721,7 +764,6 @@ CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/ColorKey.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChart.h
- /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChartSizer.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrDvstyChart.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrHapChart.h
@@ -738,7 +780,6 @@ CMakeFiles/sdl2-ttf-sample.dir/Printer_Graphic.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Printer_Graphic.cpp
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Printer_Graphic.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident.h
- /home/workspace/aminoshbh/sdl2-ttf-sample/src/Sizer.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Title.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TitleA.h
@@ -907,6 +948,7 @@ CMakeFiles/sdl2-ttf-sample.dir/ResidentsMaker_CMDLine.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_YN.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsFactory.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsGroupInfo.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsMaker.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsMaker_CMDLine.cpp
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsMaker_CMDLine.h
@@ -937,6 +979,13 @@ CMakeFiles/sdl2-ttf-sample.dir/TextHelper.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextHelper.cpp
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextHelper.h
+CMakeFiles/sdl2-ttf-sample.dir/UINumOfRunsGetter.cpp.o
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Int.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/UI.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/UINumOfRunsGetter.cpp
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/UINumOfRunsGetter.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/UI_CMDLine.h
 CMakeFiles/sdl2-ttf-sample.dir/UI_CMDLine.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Question_Int.h
@@ -955,7 +1004,6 @@ CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/ColorKey.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChart.h
- /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChartSizer.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrDvstyChart.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrHapChart.h
@@ -984,17 +1032,19 @@ CMakeFiles/sdl2-ttf-sample.dir/main.cpp.o
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Resident_StepDown.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsFactory.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsFactory_Flat.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsFactory_StepDown.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsGroupInfo.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsMaker.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/ResidentsMaker_CMDLine.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/SimulationComponents.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Simulator.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Simulator_Basic_A.h
- /home/workspace/aminoshbh/sdl2-ttf-sample/src/Sizer.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextHelper.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TextRect.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/Title.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/TitleA.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/UI.h
+ /home/workspace/aminoshbh/sdl2-ttf-sample/src/UINumOfRunsGetter.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/UI_CMDLine.h
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/main.cpp
  /home/workspace/aminoshbh/sdl2-ttf-sample/src/renderer.h

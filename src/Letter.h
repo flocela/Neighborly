@@ -7,7 +7,7 @@ class Letter
 {
     public:
         Letter() = default;
-        Letter(int letterHeight, int lineSpace);
+        Letter(int letterHeight, int lineSpace, double widthMultiplier);
         Letter (const Letter& o) = default;
         Letter (Letter&& o) noexcept = default;
         Letter& operator= (const Letter& o) = default;

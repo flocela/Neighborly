@@ -5,13 +5,6 @@ using namespace std;
 
 void GrColorKeyPrinter::print (Renderer* renderer)
 { 
-    renderer->setTextFormats(
-        _text_color, 
-        _text_background_color, 
-        _label_letter.letterHeight(),
-        _label_letter.widthMultiplier()
-    );
-
     // Create vector of labels and corresponding colors. Put in order of groupIds.
     // While creating vector, keep track of longest string for later use in column size.
     vector<int> groupIds;
@@ -97,10 +90,6 @@ void GrColorKeyPrinter::setTopCenter (int xPx, int yPx) {
         _top_center_y__px = yPx;
 }
 
-void GrColorKeyPrinter::setCharWidthMultiplier (double multiplier) {
-    _char_width_multiplier = multiplier;
-}
-
 int GrColorKeyPrinter::sizeXPx ()
 {
     int longestString = 0;
@@ -119,7 +108,7 @@ int GrColorKeyPrinter::sizeXPx ()
 
             int textWidth =  
                 (int)(text.length() *
-                _char_width_multiplier *
+                _label_letter.widthMultiplier() *
                 _label_letter.letterHeight());
             if (textWidth > longestString)
             {
@@ -130,6 +119,16 @@ int GrColorKeyPrinter::sizeXPx ()
 
     int columnWidth = longestString + _box_length__px + _box_spacer__px + _column_border__px;
     return _colors.size() * _moods.size() * columnWidth;
+}
+
+void GrColorKeyPrinter::setTextColor (SDL_Color color)
+{
+    _text_color = color;
+}
+
+void GrColorKeyPrinter::setTextBackgroundColor (SDL_Color color)
+{
+    _text_background_color = color;
 }
 
 int GrColorKeyPrinter::sizeYPx ()
