@@ -45,9 +45,9 @@ class AxisFormat
     
 
     private:
-        int _axis_thickness__px = 1;
-        int _maj_tick_length__px = 10;
-        int _min_tick_length__px = 4;
+        int _axis_thickness__px{1};
+        int _maj_tick_length__px{10};
+        int _min_tick_length__px{4};
         // _tick_length_inside_chart__px does not include thickness of axis
         int _tick_length_inside_chart__px = 2;
 

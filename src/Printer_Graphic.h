@@ -164,9 +164,6 @@ private:
 
     std::unique_ptr<GrHapChart> _happiness_chart;
 
-    // COLOR KEY FOR DIVERSITY AND HAPPINESS CHARTS
-    Letter _color_key_letter_for_map{24, 4, 0.3}; // TODO is this used. Should be replace dby _color_key_letter
-
     std::vector<int> determineMinMaxHouseCoords (
         std::unordered_map<const House*, Coordinate > coordPerHouse
     );
