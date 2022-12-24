@@ -19,8 +19,50 @@ Printer_Graphic::Printer_Graphic (
 ): _colors{colors},
    _coordinates_per_house{coordPerHouse},
    _num_of_runs{numOfRuns},
-   _window_title{make_unique<TitleA>(_window_title_letter, _x_center__px, _top_border__px, title)}
+   _window_title{make_unique<TitleA>(_window_title_letter, _x_center__px, _top_border__px, title)},
+   _runs_chart_top_y__px{_top_border__px + _window_title->sizeYPx()},
+   _runs_chart{make_unique<GrRunsChart>(
+       _side_borders__px,
+       _runs_chart_top_y__px,
+       _screen_width__px - (2 * _side_borders__px),
+       _chart_title_letter.getHeightIncLSpace(),
+       _chart_title_letter,
+       _num_of_runs)}
 {   
+    int divChartTopLeftYPx = _runs_chart_top_y__px + _runs_chart->sizeYPx();
+    // column space for both the diversity and happiness chart.
+    // note: _space_between_charts_y__px is subtracted.
+    int rtColSpaceYPx = 
+        _screen_height__px -
+        _top_border__px -
+        _window_title->sizeYPx() -
+        _runs_chart->sizeYPx() -
+        _bottom_border__px -
+        _space_between_charts_y__px;
+    int divChartAvailSpaceYPx = _div_chart_y_axis_fraction * rtColSpaceYPx;
+    int maxNumOfNeighbors = determineMaxNumberOfNeighbors(neighbors);
+    _div_chart = createDvstyChart(
+        neighbors,
+        maxNumOfNeighbors,
+        _num_of_runs,
+        divChartTopLeftYPx,
+        divChartAvailSpaceYPx
+    );
+
+    int hapChartTopLeftYPx = 
+        divChartTopLeftYPx +
+        rtColSpaceYPx * (_div_chart_y_axis_fraction) +
+        _space_between_charts_y__px;
+    int hapChartAvailSpaceYPx = (1 - _div_chart_y_axis_fraction) * rtColSpaceYPx;
+
+    _happiness_chart = createHapChart(_num_of_runs, hapChartTopLeftYPx, hapChartAvailSpaceYPx);
+
+    int cityChartAvailSpaceYPx = 
+        _screen_height__px -
+        _top_border__px -
+        _window_title->sizeYPx() -
+        _runs_chart->sizeYPx() -
+        _bottom_border__px;
 
     vector<int> minsAndMaxCoords = determineMinMaxHouseCoords(_coordinates_per_house);
 
@@ -28,17 +70,10 @@ Printer_Graphic::Printer_Graphic (
         minsAndMaxCoords[0],
         minsAndMaxCoords[1],
         minsAndMaxCoords[2],
-        minsAndMaxCoords[3]
-    );
-    
-    int maxNumOfNeighbors = determineMaxNumberOfNeighbors(neighbors);
-        
-    _dvsty_chart = createDvstyChart(neighbors, maxNumOfNeighbors, _num_of_runs);
-    
-    _happiness_chart = createHapChart(_num_of_runs);
-    
-    _runs_chart = createRunsChart(_num_of_runs);
-    
+        minsAndMaxCoords[3],
+        divChartTopLeftYPx, // city chart has the same top left corner y-value as diversity chart.
+        cityChartAvailSpaceYPx
+    ); 
 }
 
 void Printer_Graphic::print (
@@ -69,7 +104,7 @@ void Printer_Graphic::print (
     _window_title->print(_renderer.get());
     _runs_chart->print(run, _renderer.get());
     _city_chart->print(residentPerHouse, _renderer.get());
-    _dvsty_chart->print(
+    _div_chart->print(
         housePerResident,
         residentPerHouse,
         run,
@@ -129,21 +164,13 @@ int Printer_Graphic::determineMaxNumberOfNeighbors (
     return max;
 }
 
-unique_ptr<TitleA> Printer_Graphic::createWindowTitle (
-    Letter letter,
-    int topCenterX__px,
-    int topCenterY__px,
-    string title
-)
-{
-    return make_unique<TitleA>(letter, topCenterX__px, topCenterY__px, title);
-}
-
 unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
     int minXCoord, 
     int maxXCoord, 
     int minYCoord, 
-    int maxYCoord
+    int maxYCoord,
+    int topLeftYPx,
+    int availSpaceYPx
 )
 {   
     set<Mood> moods{Mood::happy, Mood::unhappy};
@@ -167,16 +194,18 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             minYCoord, 
             maxYCoord),
         _side_borders__px,
-        _city_map_chart_top_left_y_coord__px,
-        _x_chart_space__px,
-        _city_y_space__px
+        topLeftYPx,
+        _chart_space_x__px,
+        availSpaceYPx
     );
 }
 
 unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
     unordered_map<const House*, set<const House*>> neighbors,
     int maxNumOfNeighbors,
-    int maxNumOfRuns
+    int maxNumOfRuns,
+    int topLeftYPx,
+    int availSpaceYPx
 )
 {
     set<Mood> moods{Mood::neutral};
@@ -193,7 +222,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             _colors,
             moods),
         make_unique<PlotA>(
-            _div_sizer,
+            _right_col_sizer,
             _colors, 
             moods, 
             0, // min number of runs
@@ -202,13 +231,17 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             maxNumOfNeighbors
         ),
         _x_center__px + _col_inside_border__px,
-        _div_chart_top_y__px,
-        _x_chart_space__px,
-        _diversity_chart_y_axis_fraction * _chart_y_space__px
+        topLeftYPx,
+        _chart_space_x__px,
+        availSpaceYPx
     );
 }
 
-unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
+unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
+    int numberOfRuns,
+    int topLeftYPx,
+    int availSpaceYPx
+)
 {   
     set<Mood> moods{Mood::neutral};
 
@@ -223,7 +256,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
             _colors,
             moods),
         make_unique<PlotA>(
-            _div_sizer,
+            _right_col_sizer,
             _colors, 
             moods, 
             0, // minimum number of runs
@@ -232,21 +265,9 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (int numberOfRuns)
             100 // resident happiness range is from 0 to 100.
         ),
         _x_center__px + _col_inside_border__px,
-        _hap_chart_top_y__px,
-        _x_chart_space__px,
-        (1 - _diversity_chart_y_axis_fraction) * _chart_y_space__px
-    );
-}
-
-unique_ptr<GrRunsChart> Printer_Graphic::createRunsChart (int numOfRuns)
-{
-    return make_unique<GrRunsChart> (
-        _side_borders__px, 
-        _runs_chart_top_y__px,
-        _screen_width__px - (2 * _side_borders__px),
-        _chart_title_letter.getHeightIncLSpace(),
-        _chart_title_letter,
-        numOfRuns
+        topLeftYPx,
+        _chart_space_x__px,
+        availSpaceYPx
     );
 }
 

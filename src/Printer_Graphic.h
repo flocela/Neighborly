@@ -54,23 +54,13 @@ private:
     /* FOR WINDOW */
     int _screen_width__px  = 2400;
     int _screen_height__px = 1200;
-    std::unordered_map<int, BaseColor> _colors;
-    std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
-    std::unique_ptr<Renderer> _renderer = std::make_unique<Renderer>(
-        _screen_width__px,
-        _screen_height__px
-    );
-
     int _top_border__px = 20;
     int _bottom_border__px = 20;
     int _side_borders__px = 40; // both the left and right borders are this value
     int _col_inside_border__px = 40;
     int _x_center__px = _screen_width__px/2; // center of screen
-    int _num_of_runs;
-
     Letter _window_title_letter{40, 2, 0.3};
-    std::unique_ptr<TitleA> _window_title;
-
+    
     /* COLUMNS */
     /* Two columns: City chart is on the left. Diversity and Happiness charts are on the right.*/
 
@@ -78,13 +68,8 @@ private:
 
     AxisFormat _axis_format_X{};
     AxisFormat _axis_format_Y{};
-
     Letter _chart_title_letter = Letter(30, 6, 0.3); 
-    //TODO not the same dot size
     Letter _chart_key_letter{24, 12, 0.3};
-    // space per chart in the x direction
-    int _x_chart_space__px = _x_center__px - _side_borders__px - _col_inside_border__px;
-
     int _min_unit_size__px = 6; // TODO write note of how this is used. Is it honored?
 
     // At the start of the axis, leave a space equal to cell size times offset.
@@ -94,38 +79,25 @@ private:
     const int _y_offset_multiplier  = 1;
     const int _y_overrun_multiplier = 1;
 
-    
+    int _chart_space_x__px = _x_center__px - _side_borders__px - _col_inside_border__px;
 
-    /* RUNS COUNTER*/
+    /* RUNS COUNTER */
+    /* Sits horizontally at center of window, below window title */
     
-    // Sits horizontally at center of window, below window title
-    int _runs_chart_top_y__px = _top_border__px + _window_title->sizeYPx();
-    std::unique_ptr<GrRunsChart> _runs_chart;
-
     /* RIGHT COLUMN */
+    /* Right column holds the diversity chart and happiness chart */
 
-    // Right column holds the diversity chart and happiness chart
     int _space_between_charts_y__px = 10;
 
-    int _chart_y_space__px = 
-        _screen_height__px - //1200
-        _top_border__px - //20
-        _window_title->sizeYPx() - //42
-        _chart_title_letter.getHeightIncLSpace() - // Runs chart //36
-        _bottom_border__px - //20
-        _space_between_charts_y__px; //10
-
     /* DIVERSITY CHART */
+    /* Diversity chart is the right column. Diversity chart sits below number of runs chart*/
 
-    // Diversity chart is the right column
-    // Diversity chart sits below number of runs chart
-    int _div_chart_top_y__px = _runs_chart_top_y__px + _chart_title_letter.getHeightIncLSpace();
+    double _div_chart_y_axis_fraction = 0.3;
 
-    double _diversity_chart_y_axis_fraction = 0.3;
-
-    int _max_number_of_neighbors;
+    int _max_number_of_neighbors; //TODO we need to set this and honor it.
     
-    PlotSizer _div_sizer{
+    // Happiness Chart uses the same PlotSizer
+    PlotSizer _right_col_sizer{
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,
@@ -136,56 +108,12 @@ private:
         true
     };
     
-    std::unique_ptr<GrDvstyChart> _dvsty_chart;
-
-
-    /* HAPPINESS CHART */
-
-    // Happiness chart sits below Diversity chart
-    int _hap_chart_top_y__px =
-        _div_chart_top_y__px +
-        (_chart_y_space__px * _diversity_chart_y_axis_fraction) +
-        _space_between_charts_y__px;
-
-    PlotSizer _hap_sizer{
-        _axis_format_X,
-        _axis_format_Y,
-        _chart_title_letter,
-        _chart_key_letter,
-        _min_unit_size__px,
-        _x_offset_multiplier,
-        _x_overrun_multiplier,
-        true
-    };
-
-    std::unique_ptr<GrHapChart> _happiness_chart;
-
     std::vector<int> determineMinMaxHouseCoords (
         std::unordered_map<const House*, Coordinate > coordPerHouse
     );
 
-
-    /* CITY MAP CHART */
-
-    // City map chart is in the left column and sits below number of runs chart
-    int _city_map_chart_top_left_y_coord__px = 
-        _runs_chart_top_y__px +
-        _chart_title_letter.getHeightIncLSpace(); // Number of Runs chart// TODO get height of runs from the runs chart height
-    
-    int _city_y_space__px = 
-        _screen_height__px -
-        _top_border__px -
-        _window_title->sizeYPx() -
-        _chart_title_letter.getHeightIncLSpace() - // Number of Runs Chart height // TODO get from chart not from letter given to chart
-        _bottom_border__px;
-
-    // Each house is inside of a square cell. The cell 
-    // will hold a house (represented by a colored square) and have
-    // clear border around the house.
-    // difficult to see, if smaller than _smallest_allowable_cell_size__px
-    int _smallest_allowable_cell_size__px = 8; 
-    int _cell_size;  // pixels for square cell
-    int _house_size; // pixels for colored square house
+    /* LEFT COLUMN */
+    /* Left column holds the city chart */
 
     PlotSizer _city_plot_sizer{
         _axis_format_X,
@@ -198,43 +126,46 @@ private:
         true
     };
 
+    /* Results */
+    std::unordered_map<int, BaseColor> _colors;
+    std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
+    std::unique_ptr<Renderer> _renderer = std::make_unique<Renderer>(
+        _screen_width__px,
+        _screen_height__px
+    );
+    int _num_of_runs;
+    std::unique_ptr<TitleA> _window_title;
+    int _runs_chart_top_y__px;
+    std::unique_ptr<GrRunsChart> _runs_chart;
+    std::unique_ptr<GrDvstyChart> _div_chart;
+    std::unique_ptr<GrHapChart> _happiness_chart;
     std::unique_ptr<GrCityChart>  _city_chart;
-
-
 
     int determineMaxNumberOfNeighbors (
         std::unordered_map<const House*,
         std::set<const House*>> neighbors
     );
 
-    std::unique_ptr<TitleA> createWindowTitle (
-        Letter letter,
-        int topCenterX__px,
-        int topCenterY__px,
-        std::string title
-    );
-
     std::unique_ptr<GrCityChart> createCityChart (
         int minXCoord, 
         int maxXCoord, 
         int minYCoord, 
-        int maxYCoord);
+        int maxYCoord,
+        int topLeftYPx,
+        int availSpaceYPx);
 
     std::unique_ptr<GrDvstyChart> createDvstyChart(
         std::unordered_map<const House*, std::set<const House*>> neighbors,
         int maxNumOfNeighbors,
-        int maxNumOfRuns
+        int maxNumOfRuns,
+        int topLeftYPx,
+        int availSpaceYPx
     );
 
-    std::unique_ptr<GrHapChart> createHapChart (int numberOfRuns);
-
-    std::unique_ptr<GrRunsChart> createRunsChart (int numOfRuns);
-
-    int cityChartCalculatePxPerUnit(
-        int minXCoord, 
-        int maxXCoord, 
-        int minYCoord, 
-        int maxYCoord
+    std::unique_ptr<GrHapChart> createHapChart (
+        int numberOfRuns,
+        int topLeftYPx,
+        int availSpaceYPx
     );
 };
 
