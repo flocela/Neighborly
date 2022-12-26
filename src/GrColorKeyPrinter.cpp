@@ -5,6 +5,14 @@ using namespace std;
 
 void GrColorKeyPrinter::print (Renderer* renderer)
 { 
+
+    renderer->addBlock(
+            10,
+            10,
+            Coordinate(600, 20),
+            {0xAA, 0xFF, 0xFF, 0xFF}
+        );
+
     // Create vector of labels and corresponding colors. Put in order of groupIds.
     // While creating vector, keep track of longest string for later use in column size.
     vector<int> groupIds;

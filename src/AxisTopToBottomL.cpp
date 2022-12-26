@@ -138,9 +138,9 @@ void AxisTopToBottomL::setTickThickness (int tickThicknessPx)
 
 int AxisTopToBottomL::sizeXPx ()
 {
+    // todo am I assuming 3 digits in label size? As in 999?
     return 
-        (_max_val/10) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
-        _axis_format.labelLineSpacePx() + // TODO should be line spacer from _axis_format
+        3 * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
         _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.axisThicknessPx();
 }

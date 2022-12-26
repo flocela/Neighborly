@@ -2,7 +2,7 @@
 
 void AxisFormat::setMajTickLengthPx (int length)
 { 
-    _axis_thickness__px = length;
+    _maj_tick_length__px = length;
 }
 
 void AxisFormat::setMinTickLengthPx (int length)
@@ -13,7 +13,7 @@ void AxisFormat::setMinTickLengthPx (int length)
     }
     else
     {
-        _axis_thickness__px = length;
+        _min_tick_length__px = length;
     }
 }
 

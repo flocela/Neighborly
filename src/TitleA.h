@@ -4,6 +4,7 @@
 #include "Letter.h"
 #include "renderer.h"
 #include "Title.h"
+#include <iostream>
 
 class TitleA: public Title
 {

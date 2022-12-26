@@ -156,7 +156,6 @@ int PlotB::calcCrossXPx (int topLeftXPx)
 {
     int xAxisLength = 
         (_unit__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _y_axis.sizeXPx();
-
     // center axis in column
     return topLeftXPx + (int)(0.5 * ( _x_space__px - xAxisLength ));
 }
