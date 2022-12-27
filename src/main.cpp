@@ -196,10 +196,10 @@ int main(int argc, char* argv[])
         neighbors[house] = city->getAdjacentHouses(house->getAddress());
     }
     Printer_Graphic graphicPrinter{
-        "Neighbors",
         colorPerGroupNumber,
         city->getCoordinatesPerHouse(),
         neighbors,
+        "Neighbors",
         numOfRuns
     };
     std::unordered_map<const House*, Resident*> houseToResidentMap;
@@ -212,6 +212,7 @@ int main(int argc, char* argv[])
         {
             constMap[pair.first] = pair.second;
         }
+        std::cout << "main print graphicPrinter" << std::endl;
         graphicPrinter.print(constMap, ii);
 
     }

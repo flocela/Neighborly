@@ -11,15 +11,15 @@
 using namespace std;
 
 Printer_Graphic::Printer_Graphic (
-    string title,
     unordered_map<int, BaseColor> colors,
     unordered_map<const House*, Coordinate > coordPerHouse,
     unordered_map<const House*, set<const House*>> neighbors,
+    string title,
     int numOfRuns
 ): _colors{colors},
    _coordinates_per_house{coordPerHouse},
-   _num_of_runs{numOfRuns},
    _window_title{make_unique<TitleA>(_window_title_letter, _x_center__px, _top_border__px, title)},
+   _num_of_runs{numOfRuns},
    _runs_chart_top_y__px{_top_border__px + _window_title->sizeYPx()},
    _runs_chart{make_unique<GrRunsChart>(
        _side_borders__px,
@@ -29,40 +29,38 @@ Printer_Graphic::Printer_Graphic (
        _chart_title_letter,
        _num_of_runs)}
 {   
-    int divChartTopLeftYPx = _runs_chart_top_y__px + _runs_chart->sizeYPx();
-    // column space for both the diversity and happiness chart.
-    // note: _space_between_charts_y__px is subtracted.
-    int rtColSpaceYPx = 
-        _screen_height__px -
-        _top_border__px -
-        _window_title->sizeYPx() -
-        _runs_chart->sizeYPx() -
-        _bottom_border__px -
-        _space_between_charts_y__px;
-    int divChartAvailSpaceYPx = _div_chart_y_axis_fraction * rtColSpaceYPx;
-    int maxNumOfNeighbors = determineMaxNumberOfNeighbors(neighbors);
-    _div_chart = createDvstyChart(
-        neighbors,
-        maxNumOfNeighbors,
-        _num_of_runs,
-        divChartTopLeftYPx,
-        divChartAvailSpaceYPx
-    );
-
-    int hapChartTopLeftYPx = 
-        divChartTopLeftYPx +
-        rtColSpaceYPx * (_div_chart_y_axis_fraction) +
-        _space_between_charts_y__px;
-    int hapChartAvailSpaceYPx = (1 - _div_chart_y_axis_fraction) * rtColSpaceYPx;
-
-    _happiness_chart = createHapChart(_num_of_runs, hapChartTopLeftYPx, hapChartAvailSpaceYPx);
-
-    int cityChartAvailSpaceYPx = 
+    // column space for left and right columns. Columns sit below the runs chart.
+    int colSpaceYPx = 
         _screen_height__px -
         _top_border__px -
         _window_title->sizeYPx() -
         _runs_chart->sizeYPx() -
         _bottom_border__px;
+
+    // diversity chart and city chart have the same y-value for their top left corners.
+    // they sit below the runs chart.
+    int chartTopLeftYPx = _runs_chart_top_y__px + _runs_chart->sizeYPx();
+
+    int divChartAvailSpaceYPx = _div_chart_y_axis_fraction * colSpaceYPx;
+
+    int maxNumOfNeighbors = determineMaxNumberOfNeighbors(neighbors);
+
+    _div_chart = createDvstyChart(
+        neighbors,
+        maxNumOfNeighbors,
+        _num_of_runs,
+        chartTopLeftYPx,
+        divChartAvailSpaceYPx
+    );
+
+    int hapChartTopLeftYPx = 
+        chartTopLeftYPx +
+        colSpaceYPx * (_div_chart_y_axis_fraction) +
+        _space_between_charts_y__px;
+
+    int hapChartAvailSpaceYPx = (1 - _div_chart_y_axis_fraction) * colSpaceYPx;
+
+    _happiness_chart = createHapChart(_num_of_runs, hapChartTopLeftYPx, hapChartAvailSpaceYPx);
 
     vector<int> minsAndMaxCoords = determineMinMaxHouseCoords(_coordinates_per_house);
 
@@ -71,8 +69,8 @@ Printer_Graphic::Printer_Graphic (
         minsAndMaxCoords[1],
         minsAndMaxCoords[2],
         minsAndMaxCoords[3],
-        divChartTopLeftYPx, // city chart has the same top left corner y-value as diversity chart.
-        cityChartAvailSpaceYPx
+        chartTopLeftYPx,
+        colSpaceYPx // city chart takes up the whole left column.
     ); 
 }
 

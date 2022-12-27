@@ -24,10 +24,10 @@ class Printer_Graphic : public Printer
 {   
 public:
     Printer_Graphic (
-        std::string title,
         std::unordered_map<int, BaseColor> colors,
         std::unordered_map<const House*, Coordinate > coordPerHouse,
         std::unordered_map<const House*, std::set<const House*>> neighborHouses,
+        std::string title,
         int numOfRuns
     );
     Printer_Graphic (const Printer_Graphic& obj) = default;
@@ -50,7 +50,7 @@ public:
     void keepScreen();
 
 private:
-    
+
     /* FOR WINDOW */
     int _screen_width__px  = 2400;
     int _screen_height__px = 1200;
@@ -59,7 +59,26 @@ private:
     int _side_borders__px = 40; // both the left and right borders are this value
     int _col_inside_border__px = 40;
     int _x_center__px = _screen_width__px/2; // center of screen
+
+    std::unordered_map<int, BaseColor> _colors;
+    
+    std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
+
+    std::unique_ptr<Renderer> _renderer = std::make_unique<Renderer>(
+        _screen_width__px,
+        _screen_height__px
+    );
+    
     Letter _window_title_letter{40, 2, 0.3};
+    std::unique_ptr<TitleA> _window_title;
+    
+    int _num_of_runs;
+    int _runs_chart_top_y__px;
+    std::unique_ptr<GrRunsChart> _runs_chart;
+
+    std::unique_ptr<GrDvstyChart> _div_chart;
+    std::unique_ptr<GrHapChart> _happiness_chart;
+    std::unique_ptr<GrCityChart>  _city_chart;
     
     /* COLUMNS */
     /* Two columns: City chart is on the left. Diversity and Happiness charts are on the right.*/
@@ -87,7 +106,7 @@ private:
     /* RIGHT COLUMN */
     /* Right column holds the diversity chart and happiness chart */
 
-    int _space_between_charts_y__px = 10;
+    int _space_between_charts_y__px = 0;
 
     /* DIVERSITY CHART */
     /* Diversity chart is the right column. Diversity chart sits below number of runs chart*/
@@ -125,21 +144,6 @@ private:
         _x_overrun_multiplier,
         true
     };
-
-    /* Results */
-    std::unordered_map<int, BaseColor> _colors;
-    std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
-    std::unique_ptr<Renderer> _renderer = std::make_unique<Renderer>(
-        _screen_width__px,
-        _screen_height__px
-    );
-    int _num_of_runs;
-    std::unique_ptr<TitleA> _window_title;
-    int _runs_chart_top_y__px;
-    std::unique_ptr<GrRunsChart> _runs_chart;
-    std::unique_ptr<GrDvstyChart> _div_chart;
-    std::unique_ptr<GrHapChart> _happiness_chart;
-    std::unique_ptr<GrCityChart>  _city_chart;
 
     int determineMaxNumberOfNeighbors (
         std::unordered_map<const House*,
