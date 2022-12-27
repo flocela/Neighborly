@@ -72,14 +72,6 @@ private:
     Letter _window_title_letter{40, 2, 0.3};
     std::unique_ptr<TitleA> _window_title;
     
-    int _num_of_runs;
-    int _runs_chart_top_y__px;
-    std::unique_ptr<GrRunsChart> _runs_chart;
-
-    std::unique_ptr<GrDvstyChart> _div_chart;
-    std::unique_ptr<GrHapChart> _happiness_chart;
-    std::unique_ptr<GrCityChart>  _city_chart;
-    
     /* COLUMNS */
     /* Two columns: City chart is on the left. Diversity and Happiness charts are on the right.*/
 
@@ -102,20 +94,14 @@ private:
 
     /* RUNS COUNTER */
     /* Sits horizontally at center of window, below window title */
+
+    int _num_of_runs;
+    int _runs_chart_top_y__px;
+    std::unique_ptr<GrRunsChart> _runs_chart;
     
     /* RIGHT COLUMN */
     /* Right column holds the diversity chart and happiness chart */
-
-    int _space_between_charts_y__px = 0;
-
-    /* DIVERSITY CHART */
-    /* Diversity chart is the right column. Diversity chart sits below number of runs chart*/
-
-    double _div_chart_y_axis_fraction = 0.3;
-
-    int _max_number_of_neighbors; //TODO we need to set this and honor it.
     
-    // Happiness Chart uses the same PlotSizer
     PlotSizer _right_col_sizer{
         _axis_format_X,
         _axis_format_Y,
@@ -126,10 +112,20 @@ private:
         _x_overrun_multiplier,
         true
     };
+
+    /* DIVERSITY CHART */
+    /* Diversity chart is the right column. Diversity chart sits below number of runs chart*/
     
-    std::vector<int> determineMinMaxHouseCoords (
-        std::unordered_map<const House*, Coordinate > coordPerHouse
-    );
+    double _div_chart_y_axis_fraction = 0.3;
+
+    int _max_number_of_neighbors; //TODO we need to set this and honor it.
+
+    std::unique_ptr<GrDvstyChart> _div_chart;
+    
+    /* HAPPINESS CHART */
+    /* Happiness chart is the right column. Happiness chart sits below diversity chart*/
+    
+    std::unique_ptr<GrHapChart> _happiness_chart;
 
     /* LEFT COLUMN */
     /* Left column holds the city chart */
@@ -144,6 +140,12 @@ private:
         _x_overrun_multiplier,
         true
     };
+
+    std::vector<int> determineMinMaxHouseCoords (
+        std::unordered_map<const House*, Coordinate > coordPerHouse
+    );
+
+    std::unique_ptr<GrCityChart>  _city_chart;
 
     int determineMaxNumberOfNeighbors (
         std::unordered_map<const House*,

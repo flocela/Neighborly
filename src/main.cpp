@@ -212,7 +212,6 @@ int main(int argc, char* argv[])
         {
             constMap[pair.first] = pair.second;
         }
-        std::cout << "main print graphicPrinter" << std::endl;
         graphicPrinter.print(constMap, ii);
 
     }

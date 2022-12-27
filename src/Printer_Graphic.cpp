@@ -55,8 +55,7 @@ Printer_Graphic::Printer_Graphic (
 
     int hapChartTopLeftYPx = 
         chartTopLeftYPx +
-        colSpaceYPx * (_div_chart_y_axis_fraction) +
-        _space_between_charts_y__px;
+        colSpaceYPx * (_div_chart_y_axis_fraction);
 
     int hapChartAvailSpaceYPx = (1 - _div_chart_y_axis_fraction) * colSpaceYPx;
 
