@@ -51,8 +51,15 @@ void AxisLeftToRightB::addHorizontalLine (std::vector<SDL_Rect>& rects)
 
 int AxisLeftToRightB::calcRightMostPixelX ()
 {
-    int numOfUnits = _max_val - _min_val;
-    return _x_cross__px + (_px_per_unit * (numOfUnits + _start_offset_m + _end_offset_m)) - 1;
+    // getPixel() returns the central pixel if _px_per_unit is even or
+    // the secon central pixel if _px_per_unit is odd.
+    // Add on 1/2 of the _px_per_unit from the start of the central pixel(s)
+    // to get to the end of the unit.
+    int startCentralPixel = (_px_per_unit%2==0)? -1 : 0;
+    return getPixel(_max_val) +
+           startCentralPixel +
+           (_px_per_unit * _end_offset_m) +
+           (_px_per_unit/2);
 }
 
 void AxisLeftToRightB::addTicksAndLabels (
@@ -61,7 +68,7 @@ void AxisLeftToRightB::addTicksAndLabels (
 )
 {   
     int curVal = _min_val;
-    int curVal__px = getXPixelForPrinting(curVal) - (_tick_thickness__px/2);
+    int curVal__px = getPixel(curVal) - _tick_thickness__px/2;
 
     int topOfLabelYPx = 
         _y_cross__px +
@@ -115,7 +122,7 @@ void AxisLeftToRightB::addTicksAndLabels (
         }
         
         ++curVal;
-        curVal__px = getXPixelForPrinting(curVal) - (_tick_thickness__px/2);
+        curVal__px = getPixel(curVal) - _tick_thickness__px/2;
     }
 }
 
@@ -176,7 +183,7 @@ int AxisLeftToRightB::calcMajTickSpacing (int pixelsPerUnit)
     return (pixelsPerUnit > 10)? 5 : 10; 
 }
 
-int AxisLeftToRightB::getXPixelForPrinting (double xVal)
+int AxisLeftToRightB::getPixel (double xVal)
 {   
     int minXPx = _x_cross__px + _start_offset_m * _px_per_unit;
 

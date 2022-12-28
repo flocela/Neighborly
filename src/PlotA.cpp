@@ -114,8 +114,8 @@ void PlotA::print (
             // dot is a square.
             // x is the x-pixel of the top left pixel of dot-square
             // y is the y_pixel of the top left pixel of sot-square
-            int x = _x_axis.getXPixelForPrinting(point.x()) - (_dot__px/2);                 
-            int y = _y_axis.getYPixelForPrinting(point.y()) - (_dot__px/2);
+            int x = _x_axis.getPixel(point.x()) - (_dot__px/2);                 
+            int y = _y_axis.getPixel(point.y()) - (_dot__px/2);
             pixelCoordinates.push_back(Coordinate(x, y));
         }
 

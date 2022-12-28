@@ -29,8 +29,10 @@ class AxisBottomToTopL
         int sizeXPx();
         int sizeYPx();
 
-        // returns the y-pixel for the top left corner for this yVal's unit.
-        int getYPixelForPrinting (double yVal);
+        // returns the y-pixel for yVal. If pxPerUnit is odd, then result is at center of unit.
+        // If pxPerUnit is even, then center is denoted by two pixels,
+        // and the result is the first pixel. (The first pixel is from zero.)
+        int getPixel (double yVal);
 
     private:
         AxisFormat _axis_format;

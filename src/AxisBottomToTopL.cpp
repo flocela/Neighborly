@@ -55,9 +55,8 @@ void AxisBottomToTopL::addTicksAndLabels (
     int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChartPx();
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
 
-    // each tick is a rectangle, curVal__px is the top left pixel of that tick's rectangle
     int curVal = _min_val;
-    int curVal__px = getYPixelForPrinting(_min_val) - ( _tick_thickness__px/2 );
+    int curVal__px = getPixel(_min_val) - ( _tick_thickness__px/2 );
 
     TextRect curText{
         majTickXPx - _text_spacer,
@@ -103,14 +102,13 @@ void AxisBottomToTopL::addTicksAndLabels (
             rects.push_back(minRect);
         }
         ++curVal;
-        curVal__px = getYPixelForPrinting(curVal) - (_tick_thickness__px/2);
+        curVal__px = getPixel(curVal) - (_tick_thickness__px/2);
     }
 }
 
 int AxisBottomToTopL::calcTopMostPixelY ()
 {
-    int numOfUnits = _max_val - _min_val;
-    return _y_cross__px - (_px_per_unit * (numOfUnits + _start_offset_m + _end_offset_m));
+    return getPixel(_max_val) - (_px_per_unit * _end_offset_m) - (_px_per_unit/2);
 }
 
 void AxisBottomToTopL::moveCrossHairs (int xPx, int yPx)
@@ -149,7 +147,7 @@ int AxisBottomToTopL::sizeYPx ()
 
 int AxisBottomToTopL::axisLengthPx ()
 {
-    return _y_cross__px - calcTopMostPixelY();
+    return _y_cross__px - calcTopMostPixelY() + 1;
 }
 
 int AxisBottomToTopL::calcMinTickSpacing (int pixelsPerUnit)
@@ -162,13 +160,11 @@ int AxisBottomToTopL::calcMajTickSpacing (int pixelsPerUnit)
     return (pixelsPerUnit > 10)? 5 : 10;
 }
 
-int AxisBottomToTopL::getYPixelForPrinting (double yVal)
+int AxisBottomToTopL::getPixel (double yVal)
 {
-    int minYPx = 
-        _y_cross__px -
-        ( _start_offset_m * _px_per_unit ) +
-        1;
+    int minYPx = _y_cross__px -_start_offset_m * _px_per_unit;
+    int firstCenterPixel = (_px_per_unit%2 == 0)? 1 : 0; 
 
-    return minYPx - _px_per_unit * (yVal - _min_val);
+    return minYPx - _px_per_unit * (yVal - _min_val) + firstCenterPixel;
     
 }

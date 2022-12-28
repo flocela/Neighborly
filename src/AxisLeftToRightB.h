@@ -27,8 +27,10 @@ class AxisLeftToRightB
         int sizeYPx();
         int sizeXPx();
 
-        // returns the x-pixel for the top left corner of this xVal's unit
-        int getXPixelForPrinting (double xVal);
+        // returns the x-pixel for xVal. If pxPerUnit is odd, then result is at center of unit.
+        // If pxPerUnit is even, then center is denoted by two pixels,
+        // and the result is the second pixel. (The second pixel is from zero.)
+        int getPixel (double xVal);
     
     private:
         AxisFormat _axis_format;
