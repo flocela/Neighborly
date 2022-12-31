@@ -94,7 +94,7 @@ void AxisLeftToRightT::addTicksAndLabels (
         _axis_format.minTickLengthPx()
     };
     
-    int rightMostPixel = calcRightMostPixelX();
+    int rightMostPixel = calcRightMostPixelWithValueX();
     
     while (curVal__px <= rightMostPixel)
     {  
@@ -139,7 +139,8 @@ void AxisLeftToRightT::setTickThickness (int tickThicknessPx)
 
 int AxisLeftToRightT::axisLengthPx ()
 {
-    return calcRightMostPixelX() - _x_cross__px + 1;
+    // note tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
+    return calcRightMostPixelWithValueX() - _x_cross__px + 1 + (_tick_thickness__px)/2;
 }
 
 int AxisLeftToRightT::sizeXPx ()
@@ -156,9 +157,9 @@ int AxisLeftToRightT::sizeYPx ()
         _axis_format.labelHeightPx();
 }
 
-int AxisLeftToRightT::calcRightMostPixelX ()
+int AxisLeftToRightT::calcRightMostPixelWithValueX ()
 {
-    return _x_cross__px + (_px_per_unit * ( (_diff + 1) + _start_offset_m + _end_offset_m));
+    return _x_cross__px + (_px_per_unit * ( _diff + _start_offset_m + _end_offset_m));
 }
 
 int AxisLeftToRightT::calcMinTickSpacing (int pixelsPerUnit)

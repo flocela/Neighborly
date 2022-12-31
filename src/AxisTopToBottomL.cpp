@@ -16,6 +16,7 @@ AxisTopToBottomL::AxisTopToBottomL (
     _y_cross__px{y_coordinate__px},
     _min_val{minVal},
     _max_val{maxVal},
+    _diff{_max_val - _min_val},
     _px_per_unit{pxPerUnit},
     _tick_thickness__px{tickThickness},
     _min_tick_spacing{calcMinTickSpacing(_px_per_unit)},
@@ -54,8 +55,7 @@ void AxisTopToBottomL::addVerticalLine (std::vector<SDL_Rect>& rects)
 
 int AxisTopToBottomL::calcBotMostPixelYPx ()
 {
-    int numOfUnits = _max_val - _min_val;
-    return _y_cross__px + (_px_per_unit * (numOfUnits + _start_offset_m + _end_offset_m)) + 1;
+    return _y_cross__px + (_px_per_unit * ( (_diff + 1) + _start_offset_m + _end_offset_m));
 }
         
 void AxisTopToBottomL::addTicksAndLabels (
