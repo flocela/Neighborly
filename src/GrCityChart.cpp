@@ -14,7 +14,7 @@ GrCityChart::GrCityChart (
     int xSpace,
     int ySpace
 ): 
-    _house_per_coordinate{coordToHouseMap},
+    coordinate_per_house{coordToHouseMap},
     _res_colors{resColors},
     _title{move(title)},
     _key{move(key)},
@@ -24,7 +24,6 @@ GrCityChart::GrCityChart (
     _x_space__px{xSpace},
     _y_space__px{ySpace}
 {   
-    
     _key->setTopCenter(topLeftCornerXPx + xSpace/2, topLeftCornerYPx + _title->sizeYPx());
     _plot->setTopLeft(topLeftCornerXPx, topLeftCornerYPx + _title->sizeYPx() + _key->sizeYPx());
     _plot->setXYSpacePx(xSpace, _y_space__px - _title->sizeYPx() - _key->sizeYPx());
@@ -56,7 +55,7 @@ unordered_map<Color, vector<Point>> GrCityChart::createVectorsForClearingPlot ()
     // every house needs to have a Color::absent point.
     unordered_map<Color, vector<Point>> pointsPerColor = {};
 
-    for (auto const& x : _house_per_coordinate)
+    for (auto const& x : coordinate_per_house)
     {
         Coordinate coord = x.second;
 
@@ -66,21 +65,22 @@ unordered_map<Color, vector<Point>> GrCityChart::createVectorsForClearingPlot ()
     return pointsPerColor;
 }
 
-unordered_map<Color, vector<Point>> GrCityChart::createVectorsOfHousesForEachColor(
-    unordered_map<const House *, const Resident *> residentPerHouse)
+unordered_map<Color, vector<Point>> GrCityChart::createVectorsOfHousesForEachColor (
+    unordered_map<const House *, const Resident *> residentPerHouse
+)
 {   
     unordered_map<Color, vector<Point>> pointsPerColor = {};
 
-    for (auto const &x : _house_per_coordinate)
+    for (auto const &x : coordinate_per_house)
     {   
         const House* house = x.first;
         Coordinate coord = x.second;
 
-        Color colorKey;
-        if (residentPerHouse.find(house) == residentPerHouse.end())
+        Color color; // house color, which is absent if empty, or the resident color if not empty.
+
+        if (residentPerHouse.find(house) == residentPerHouse.end()) // if house is empty
         {
-            // No resident has this address. So this house is empty.
-            colorKey = Color::absent;
+            color = Color::absent;
         }
         else
         {
@@ -89,22 +89,23 @@ unordered_map<Color, vector<Point>> GrCityChart::createVectorsOfHousesForEachCol
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
             if (happinessValue < happinessGoal)
-                colorKey = _colorrs_map[_res_colors[res->getGroupNumber()]][Mood::unhappy]._color;
+                color = _colorrs_map[_res_colors[res->getGroupNumber()]][Mood::unhappy]._color;
             else
-                colorKey = _colorrs_map[_res_colors[res->getGroupNumber()]][Mood::happy]._color;
+                color = _colorrs_map[_res_colors[res->getGroupNumber()]][Mood::happy]._color;
         }
 
-        Point point{(double)coord.getX(), (double)coord.getY(), colorKey};
+        Point point{(double)coord.getX(), (double)coord.getY(), color};
         
-        if (pointsPerColor.find(colorKey) == pointsPerColor.end())
+        if (pointsPerColor.find(color) == pointsPerColor.end())
         {
             vector<Point> newPointVector = {};
-            pointsPerColor[colorKey] = newPointVector;
+            pointsPerColor[color] = newPointVector;
         }
 
-        pointsPerColor[colorKey].push_back(point);
+        pointsPerColor[color].push_back(point);
         
     }
+
     return pointsPerColor;
 }
 
