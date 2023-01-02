@@ -33,10 +33,10 @@ public:
         _key{move(colorKey)},
         _plot{std::move(plot)}
     {   
-        _title->setTopCenter(topLeftXPx + xSpace/2, topLeftYPx);
         _key->setTopCenter(topLeftXPx + xSpace/2, topLeftYPx + _title->sizeYPx());
         _plot->setTopLeft(topLeftXPx, topLeftYPx + _title->sizeYPx() + _key->sizeYPx());
         _plot->setXYSpacePx(xSpace, ySpace - _title->sizeYPx() - _key->sizeYPx());
+        _title->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftYPx);
     }
 
     void print (

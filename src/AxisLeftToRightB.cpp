@@ -16,6 +16,7 @@ AxisLeftToRightB::AxisLeftToRightB (
     _y_cross__px{yCrossPx},
     _min_val{minVal},
     _max_val{maxVal},
+    _diff{_max_val - _min_val},
     _px_per_unit{pxPerUnit},
     _tick_thickness__px{tickThickness},
     _min_tick_spacing{calcMinTickSpacing(_px_per_unit)},
@@ -50,16 +51,8 @@ void AxisLeftToRightB::addHorizontalLine (std::vector<SDL_Rect>& rects)
 }
 
 int AxisLeftToRightB::calcRightMostPixelX ()
-{
-    // getPixel() returns the central pixel if _px_per_unit is even or
-    // the secon central pixel if _px_per_unit is odd.
-    // Add on 1/2 of the _px_per_unit from the start of the central pixel(s)
-    // to get to the end of the unit.
-    int startCentralPixel = (_px_per_unit%2==0)? -1 : 0;
-    return getPixel(_max_val) +
-           startCentralPixel +
-           (_px_per_unit * _end_offset_m) +
-           (_px_per_unit/2);
+{   
+    return _x_cross__px + (_px_per_unit * ( _diff + _start_offset_m + _end_offset_m));
 }
 
 void AxisLeftToRightB::addTicksAndLabels (
@@ -87,6 +80,7 @@ void AxisLeftToRightB::addTicksAndLabels (
     };
 
     int tickYPx = _y_cross__px - _axis_format.tickLengthInsideChartPx();
+
     SDL_Rect majTick{
         curVal__px,
         tickYPx,
@@ -146,7 +140,8 @@ void AxisLeftToRightB::setTickThickness (int tickThicknessPx)
 
 int AxisLeftToRightB::axisLengthPx ()
 {
-   return calcRightMostPixelX() - _x_cross__px + 1;
+    // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
+    return calcRightMostPixelX() - _x_cross__px + 1 + (_tick_thickness__px/2);
 }
 
 int AxisLeftToRightB::sizeXPx ()
@@ -188,4 +183,10 @@ int AxisLeftToRightB::getPixel (double xVal)
     int minXPx = _x_cross__px + _start_offset_m * _px_per_unit;
 
     return minXPx + _px_per_unit * (xVal - _min_val);
+}
+
+int AxisLeftToRightB::centerValXPx ()
+{
+    // the max value that is shown on the axis will be _max_val plus _end_offfset_m
+    return getPixel(_min_val + ((_max_val + _end_offset_m - _min_val)/2.0));
 }

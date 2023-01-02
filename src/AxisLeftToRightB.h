@@ -31,6 +31,7 @@ class AxisLeftToRightB
         // If pxPerUnit is even, then center is denoted by two pixels,
         // and the result is the second pixel. (The second pixel is from zero.)
         int getPixel (double xVal);
+        int centerValXPx ();
     
     private:
         AxisFormat _axis_format;
@@ -38,6 +39,7 @@ class AxisLeftToRightB
         int _y_cross__px;
         int _min_val;
         int _max_val;
+        int _diff;
         int _px_per_unit;
         int _tick_thickness__px;
         int _min_tick_spacing;

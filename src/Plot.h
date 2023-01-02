@@ -29,6 +29,8 @@ public:
     virtual int sizeXPx () = 0;
 
     virtual int sizeYPx () = 0;
+
+    virtual int centerValueOfXAxisPx () = 0;
     
 };
 

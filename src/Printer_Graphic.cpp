@@ -69,7 +69,7 @@ Printer_Graphic::Printer_Graphic (
         minsAndMaxCoords[2],
         minsAndMaxCoords[3],
         chartTopLeftYPx,
-        colSpaceYPx // city chart takes up the whole left column.
+        colSpaceYPx // city chart takes up the whole left column (vertically).
     ); 
 }
 
@@ -206,7 +206,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
 )
 {
     set<Mood> moods{Mood::neutral};
-
+    std::cout << "createDvstyChart maxNumOfRuns: " << maxNumOfRuns << std::endl;
     return make_unique<GrDvstyChart> (
         _colors,
         moods,
@@ -223,7 +223,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             _colors, 
             moods, 
             0, // min number of runs
-            maxNumOfRuns,
+            maxNumOfRuns - 1,
             0, // min number of neighbors
             maxNumOfNeighbors
         ),
@@ -257,7 +257,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
             _colors, 
             moods, 
             0, // minimum number of runs
-            numberOfRuns,
+            numberOfRuns -1,
             0, // minimum resident happiness
             100 // resident happiness range is from 0 to 100.
         ),

@@ -61,8 +61,10 @@ public:
     int getYSpacePx () override { return _y_space__px; }
 
     // returns the size of the Plot in x and y directions
-    int sizeYPx() override;
-    int sizeXPx() override;
+    int sizeYPx () override;
+    int sizeXPx () override;
+
+    int centerValueOfXAxisPx () override;
 
 private:
 
@@ -85,7 +87,6 @@ private:
     int _min_y;
     int _max_y;
     
-
     // given allowable space in the x and y directions
     int _x_space__px;
     int _y_space__px;

@@ -149,6 +149,11 @@ int PlotA::sizeXPx ()
         (_a_format_y.axisThicknessPx() == 1? 1 : _a_format_y.axisThicknessPx()/2);
 }
 
+int PlotA::centerValueOfXAxisPx ()
+{
+    return _x_axis.centerValXPx();
+}
+
 // TODO maybe combine calcUnitSizeYPX with CalcUnitSizeXPx. One shouldn't be done without the other, but
 // the code doesn't reflect that. What to do if there is no unit size that works. too much data?
 // min_px doesn't make sense. The allowableLength takes care of that.

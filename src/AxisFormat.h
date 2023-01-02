@@ -19,11 +19,11 @@ class AxisFormat
         int tickLengthInsideChartPx () {return _tick_length_inside_chart__px;}
         int majTickLengthOutsideChartPx () 
         {
-            return _maj_tick_length__px - _tick_length_inside_chart__px;
+            return _maj_tick_length__px - _tick_length_inside_chart__px - axisThicknessPx();
         }
         int minTickLengthOutsideChartPx () 
         {
-            return _min_tick_length__px - _tick_length_inside_chart__px;
+            return _min_tick_length__px - _tick_length_inside_chart__px - axisThicknessPx();
         }
 
         // labels are the numbers along the axis

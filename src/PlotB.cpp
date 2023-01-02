@@ -154,10 +154,8 @@ int PlotB::calcDotSizePx ()
 
 int PlotB::calcCrossXPx (int topLeftXPx)
 {
-    int xAxisLength = 
-        (_unit__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _y_axis.sizeXPx();
-    // center axis in column
-    return topLeftXPx + (int)(0.5 * ( _x_space__px - xAxisLength ));
+    int xAxisLength = _unit__px * ( _x_diff + _start_offset_m + _end_offset_m);
+    return topLeftXPx + (int)( (0.5 * _x_space__px) - (0.5 * (xAxisLength + _y_axis.sizeXPx())) );
 }
 
 int PlotB::calcCrossYPx (int topLeftYPx) // TODO, I think I should be calling this more often, instead of repeating this calculation
@@ -177,7 +175,7 @@ void PlotB::setTopLeft (int topLeftXPx, int topLeftYPx)
 
 }
 
-void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) { 
+void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _x_space__px = xSpacePx;
     _y_space__px = ySpacePx;
     
@@ -213,4 +211,9 @@ int PlotB::sizeXPx ()
         _y_axis.sizeXPx() +
         _x_axis.sizeXPx() - 
         (_a_format_y.axisThicknessPx() == 1? 1 : _a_format_y.axisThicknessPx()/2);
+}
+
+int PlotB::centerValueOfXAxisPx ()
+{
+    return _x_axis.centerValXPx();
 }

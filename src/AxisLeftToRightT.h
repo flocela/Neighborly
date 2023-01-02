@@ -38,6 +38,8 @@ class AxisLeftToRightT
         // If pxPerUnit is even, then center is denoted by two pixels,
         // and the result is the second pixel. (The second pixel is from zero.)
         int getPixel (double xVal);
+        int axisLengthPx();
+        int centerValXPx();
     
     private:
         std::string _title;
@@ -64,8 +66,6 @@ class AxisLeftToRightT
         int calcMajTickSpacing (int pixelsPerUnit);
         int calcLabelSpacing (int pixelsPerUnit);
 
-        int axisLengthPx();
-        
 };
 
 #endif

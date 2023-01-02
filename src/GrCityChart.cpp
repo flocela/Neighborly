@@ -24,10 +24,11 @@ GrCityChart::GrCityChart (
     _x_space__px{xSpace},
     _y_space__px{ySpace}
 {   
-    _title->setTopCenter(topLeftCornerXPx + xSpace/2, topLeftCornerYPx);
+    
     _key->setTopCenter(topLeftCornerXPx + xSpace/2, topLeftCornerYPx + _title->sizeYPx());
     _plot->setTopLeft(topLeftCornerXPx, topLeftCornerYPx + _title->sizeYPx() + _key->sizeYPx());
     _plot->setXYSpacePx(xSpace, _y_space__px - _title->sizeYPx() - _key->sizeYPx());
+    _title->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftCornerYPx);
 }
 
 void GrCityChart::print(

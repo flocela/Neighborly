@@ -139,8 +139,8 @@ void AxisLeftToRightT::setTickThickness (int tickThicknessPx)
 
 int AxisLeftToRightT::axisLengthPx ()
 {
-    // note tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
-    return calcRightMostPixelWithValueX() - _x_cross__px + 1 + (_tick_thickness__px)/2;
+    // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
+    return calcRightMostPixelWithValueX() - _x_cross__px + 1 + (_tick_thickness__px/2);
 }
 
 int AxisLeftToRightT::sizeXPx ()
@@ -182,4 +182,10 @@ int AxisLeftToRightT::getPixel (double xVal)
     int minXPx = _x_cross__px + _start_offset_m * _px_per_unit;
 
     return minXPx + _px_per_unit * (xVal - _min_val);
+}
+
+int AxisLeftToRightT::centerValXPx ()
+{
+    // the max value that is shown on the axis will be _max_val plus _end_offfset_m
+    return getPixel(_min_val + ((_max_val + _end_offset_m - _min_val)/2.0) );
 }

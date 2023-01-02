@@ -59,6 +59,8 @@ public:
     int sizeYPx () override;
     int sizeXPx () override;
 
+    int centerValueOfXAxisPx () override;
+
 
 private:
 
