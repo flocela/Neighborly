@@ -9,8 +9,8 @@ class City_Grid: public City
 {
 public:
     // Grid is a square grid.
-    // Example of address counting is as follows:
-    //  _width of 3 would result in
+    // How are addresses determined? Left to right, then down.
+    // Example of grid with a width of 3:
     // 0  1  2
     // 3  4  5
     // 6  7  8
