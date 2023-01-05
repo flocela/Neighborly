@@ -4,12 +4,16 @@
 
 #include "Question_Int.h"
 
+UI_CMDLine:: UI_CMDLine (int maxNumOfTries)
+{
+    _max_num_of_tries = maxNumOfTries;
+}
 
 std::string UI_CMDLine::getAnswer (Question& question)
 {
     int tries = 0;
     std::string answer = "xx";
-    while (tries < 4 && !question.hasValidAnswer())
+    while (tries < _max_num_of_tries && !question.hasValidAnswer())
     {   std::cout << question.getPrompt();
         std::cin >> answer;
         question.tryAnswer(answer);
@@ -58,4 +62,9 @@ int UI_CMDLine::menu (std::string prompt, std::vector<std::string> items)
     
     // items are numbered starting with one for the user, but items vector is zero-index based
     return stoi(answer) - 1;
+}
+
+void UI_CMDLine::print (std::string str)
+{
+    std::cout << str << std::endl;
 }

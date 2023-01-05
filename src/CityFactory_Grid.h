@@ -37,7 +37,7 @@ class CityFactory_Grid: public CityFactory
             "That number is either too small or too large. Minimum allowed width"
             " is 1, maximum allowed width is . _";
         std::string _width_of_grid_failure = 
-            "Can not get information from the user in order to make a city.";
+            "Can not get a proper grid width. Using grid width of .";
 };
 
 #endif

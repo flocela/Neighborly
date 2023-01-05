@@ -14,7 +14,7 @@ class City
     public:
         virtual ~City() = default;
 
-        // total number of addresses. Same as total number of houses.
+        // total number of addresses. same as total number of houses.
         virtual int getNumOfHouses() const = 0;
 
         // largest distance between any two houses (inclusively) in x direction.
