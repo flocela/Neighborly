@@ -26,7 +26,8 @@ SimulationComponents MainExamples::userChoosesExample ()
             "simple with a small city", 
             "simple with a large city",
             "finicky residents with a small city",
-            "finicky residents with a large city"}
+            "finicky residents with a large city"},
+            0
         );
     switch (chosenExample) // TODO only one type of example is listed in this switch statement
     {

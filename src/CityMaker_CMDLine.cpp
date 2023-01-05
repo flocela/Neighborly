@@ -3,7 +3,6 @@
 
 using namespace std;
 
-// TODO CityMaker_CMDLine.cpp not checked
 unique_ptr<City> CityMaker_CMDLine::makeCity (
     vector<CityFactory*> cityFactories,
     int maxDeltaX,
@@ -28,8 +27,8 @@ unique_ptr<City> CityMaker_CMDLine::makeCity (
         cityChoice = 
             _ui.menu("Choose a city type by typing the"
             " corresponding number. _",
-            namesOfCityFactories
-            );   
+            namesOfCityFactories,
+            0);   
     }
     return cityFactories[cityChoice]->createCity(_ui, maxDeltaX, maxDeltaY);
 

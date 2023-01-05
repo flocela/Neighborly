@@ -76,7 +76,7 @@ ColorInfo ResidentsMaker_CMDLine::askForGroupColor (int groupIdx)
 
     std::vector<std::string> number = {" first", " second", " third", " fourth"};
     std::string prompt = _which_group_color_prompt.insert(30, number[groupIdx]);
-    int colorIdx = _ui.menu(prompt, colorStrings);
+    int colorIdx = _ui.menu(prompt, colorStrings, 0);
     return _colorrs_map[_available_colors[colorIdx]][Mood::neutral];
 }
 
@@ -144,7 +144,7 @@ int ResidentsMaker_CMDLine::askForGroupResidentType (
 {
     std::vector<std::string> factoryNames = getFactoryNames(residentsFactories);
     std::string prompt = _which_type_prompt;
-    return _ui.menu(prompt.insert(25, color + " "), factoryNames);
+    return _ui.menu(prompt.insert(25, color + " "), factoryNames, 0);
 }
 
 Question_Int ResidentsMaker_CMDLine::createQuestionHowManyResidentGroups()
