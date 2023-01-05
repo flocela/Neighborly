@@ -14,8 +14,8 @@ class AxisBottomToTopL
             AxisFormat axisFormat,
             int x_coordinate__px, // where x and y axis meet
             int y_coordinate__px, // where x and y axis meet
-            int minVal, // min value delineated with tick. It is startOffset__px from the start of axis.
-            int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal.
+            int minVal,
+            int maxVal,
             int pxPerUnit,
             int tickThickness,
             int startOffsetMultiplier,
@@ -31,7 +31,7 @@ class AxisBottomToTopL
 
         // returns the y-pixel for yVal. If pxPerUnit is odd, then result is at center of unit.
         // If pxPerUnit is even, then center is denoted by two pixels,
-        // and the result is the first pixel. (The first pixel is from zero.)
+        // and the result is the second pixel. (The second pixel is from the cross hairs.)
         int getPixel (double yVal);
 
     private:
@@ -40,6 +40,7 @@ class AxisBottomToTopL
         int _y_cross__px;
         int _min_val;
         int _max_val;
+        int _diff;
         int _px_per_unit;
         int _tick_thickness__px;
         int _min_tick_spacing; // in units, not pixels
@@ -54,7 +55,8 @@ class AxisBottomToTopL
 
         void addVerticalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
-        int calcTopMostPixelY ();
+
+        int calcTopMostPixelWithValue_Y ();
         int calcMinTickSpacing (int pixelsPerUnit);
         int calcMajTickSpacing (int pixelsPerUnit);
 

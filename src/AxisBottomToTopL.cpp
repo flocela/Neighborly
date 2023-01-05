@@ -16,6 +16,7 @@ AxisBottomToTopL::AxisBottomToTopL (
     _y_cross__px{y_coordinate__px},
     _min_val{minVal},
     _max_val{maxVal},
+    _diff{_max_val - _min_val},
     _px_per_unit{pxPerUnit},
     _tick_thickness__px{tickThickness},
     _min_tick_spacing{calcMinTickSpacing(_px_per_unit)},
@@ -38,9 +39,11 @@ void AxisBottomToTopL::print (Renderer* renderer)
 
 void AxisBottomToTopL::addVerticalLine (std::vector<SDL_Rect>& rects)
 {
+    int unit_px_odd = (_px_per_unit%2==0)? 0 : 1;
+
     SDL_Rect rect{
         _x_cross__px,
-        calcTopMostPixelY(),
+        calcTopMostPixelWithValue_Y() + unit_px_odd - (_tick_thickness__px/2),
         _axis_format.axisThicknessPx(),
         axisLengthPx()
     };
@@ -52,11 +55,13 @@ void AxisBottomToTopL::addTicksAndLabels (
     std::vector<TextRect>& texts
 )
 {
+    int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
+
     int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChartPx();
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
 
     int curVal = _min_val;
-    int curVal__px = getPixel(_min_val) - ( _tick_thickness__px/2 );
+    int curVal__px = getPixel(_min_val) + unit_px_even - ( _tick_thickness__px/2 );
 
     TextRect curText{
         majTickXPx - _text_spacer,
@@ -83,7 +88,7 @@ void AxisBottomToTopL::addTicksAndLabels (
         _tick_thickness__px
     };
 
-    int topMostPixelY = calcTopMostPixelY();
+    int topMostPixelY = calcTopMostPixelWithValue_Y();
     while ( curVal__px >= topMostPixelY )
     {   
         if (curVal % _maj_tick_spacing == 0)
@@ -102,13 +107,14 @@ void AxisBottomToTopL::addTicksAndLabels (
             rects.push_back(minRect);
         }
         ++curVal;
-        curVal__px = getPixel(curVal) - (_tick_thickness__px/2);
+        curVal__px = getPixel(curVal) + unit_px_even - ( _tick_thickness__px/2 );
     }
+    std::cout << std::endl;
 }
 
-int AxisBottomToTopL::calcTopMostPixelY ()
+int AxisBottomToTopL::calcTopMostPixelWithValue_Y ()
 {
-    return getPixel(_max_val) - (_px_per_unit * _end_offset_m) - (_px_per_unit/2);
+    return  _y_cross__px - (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
 }
 
 void AxisBottomToTopL::moveCrossHairs (int xPx, int yPx)
@@ -147,7 +153,9 @@ int AxisBottomToTopL::sizeYPx ()
 
 int AxisBottomToTopL::axisLengthPx ()
 {
-    return _y_cross__px - calcTopMostPixelY() + 1;
+    int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
+    // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
+    return _y_cross__px - calcTopMostPixelWithValue_Y() - unit_px_even + (_tick_thickness__px/2);
 }
 
 int AxisBottomToTopL::calcMinTickSpacing (int pixelsPerUnit)
@@ -162,9 +170,7 @@ int AxisBottomToTopL::calcMajTickSpacing (int pixelsPerUnit)
 
 int AxisBottomToTopL::getPixel (double yVal)
 {
-    int minYPx = _y_cross__px -_start_offset_m * _px_per_unit;
-    int firstCenterPixel = (_px_per_unit%2 == 0)? 1 : 0; 
+    int minYPx = _y_cross__px - (_start_offset_m * _px_per_unit);
 
-    return minYPx - _px_per_unit * (yVal - _min_val) + firstCenterPixel;
-    
+    return minYPx - (_px_per_unit * (yVal - _min_val));
 }

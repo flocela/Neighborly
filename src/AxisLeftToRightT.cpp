@@ -59,7 +59,7 @@ void AxisLeftToRightT::addTicksAndLabels (
 )
 {   
     int curVal = _min_val;
-    int curVal__px = getPixel(curVal) - (_tick_thickness__px)/2;
+    int curVal__px = getPixel(curVal) -(_tick_thickness__px/2);
 
     int botOfLabelYPx = 
         _y_cross__px -
@@ -94,7 +94,7 @@ void AxisLeftToRightT::addTicksAndLabels (
         _axis_format.minTickLengthPx()
     };
     
-    int rightMostPixel = calcRightMostPixelWithValueX();
+    int rightMostPixel = calcRightMostPixelWithValue_X();
     
     while (curVal__px <= rightMostPixel)
     {  
@@ -139,8 +139,9 @@ void AxisLeftToRightT::setTickThickness (int tickThicknessPx)
 
 int AxisLeftToRightT::axisLengthPx ()
 {
+    int unit_px_odd = (_px_per_unit%2==0)? 0 : 1;
     // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
-    return calcRightMostPixelWithValueX() - _x_cross__px + 1 + (_tick_thickness__px/2);
+    return calcRightMostPixelWithValue_X() - _x_cross__px - unit_px_odd + (_tick_thickness__px/2);
 }
 
 int AxisLeftToRightT::sizeXPx ()
@@ -157,7 +158,7 @@ int AxisLeftToRightT::sizeYPx ()
         _axis_format.labelHeightPx();
 }
 
-int AxisLeftToRightT::calcRightMostPixelWithValueX ()
+int AxisLeftToRightT::calcRightMostPixelWithValue_X ()
 {
     return _x_cross__px + (_px_per_unit * ( _diff + _start_offset_m + _end_offset_m));
 }

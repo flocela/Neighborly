@@ -50,7 +50,7 @@ void AxisLeftToRightB::addHorizontalLine (std::vector<SDL_Rect>& rects)
     rects.push_back(rect);
 }
 
-int AxisLeftToRightB::calcRightMostPixelX ()
+int AxisLeftToRightB::calcRightMostPixel_X ()
 {   
     return _x_cross__px + (_px_per_unit * ( _diff + _start_offset_m + _end_offset_m));
 }
@@ -95,7 +95,7 @@ void AxisLeftToRightB::addTicksAndLabels (
         _axis_format.minTickLengthPx()
     };
 
-    int rightMostPixel = calcRightMostPixelX();
+    int rightMostPixel = calcRightMostPixel_X();
     
     while (curVal__px <= rightMostPixel)
     {  
@@ -140,8 +140,9 @@ void AxisLeftToRightB::setTickThickness (int tickThicknessPx)
 
 int AxisLeftToRightB::axisLengthPx ()
 {
+    int unit_px_odd = (_px_per_unit%2==0)? 0 : 1;
     // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
-    return calcRightMostPixelX() - _x_cross__px + 1 + (_tick_thickness__px/2);
+    return calcRightMostPixel_X() - _x_cross__px - unit_px_odd + (_tick_thickness__px/2);
 }
 
 int AxisLeftToRightB::sizeXPx ()
@@ -187,6 +188,7 @@ int AxisLeftToRightB::getPixel (double xVal)
 
 int AxisLeftToRightB::centerValXPx ()
 {
-    // the max value that is shown on the axis will be _max_val plus _end_offfset_m
+    // the most right tick that is shown on the axis will be _max_val plus _end_offfset_m
+    std::cout << _min_val << "< " << _max_val << ", " << _end_offset_m << ", " << std::endl;
     return getPixel(_min_val + ((_max_val + _end_offset_m - _min_val)/2.0));
 }

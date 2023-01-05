@@ -4,17 +4,17 @@
 using namespace std;
 
 GrCityChart::GrCityChart (
-    unordered_map<const House*, Coordinate> coordToHouseMap,
+    unordered_map<const House*, Coordinate> coordPerHouseMap,
     unordered_map<int, BaseColor> resColors,
     unique_ptr<Title> title,
-    unique_ptr<GrColorKeyPrinter> key,
+    unique_ptr<GrColorKey> key,
     unique_ptr<Plot> plot,
     int topLeftCornerXPx,
     int topLeftCornerYPx,
     int xSpace,
     int ySpace
 ): 
-    coordinate_per_house{coordToHouseMap},
+    _coordinate_per_house{coordPerHouseMap},
     _res_colors{resColors},
     _title{move(title)},
     _key{move(key)},
@@ -24,10 +24,10 @@ GrCityChart::GrCityChart (
     _x_space__px{xSpace},
     _y_space__px{ySpace}
 {   
-    _key->setTopCenter(topLeftCornerXPx + xSpace/2, topLeftCornerYPx + _title->sizeYPx());
     _plot->setTopLeft(topLeftCornerXPx, topLeftCornerYPx + _title->sizeYPx() + _key->sizeYPx());
     _plot->setXYSpacePx(xSpace, _y_space__px - _title->sizeYPx() - _key->sizeYPx());
     _title->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftCornerYPx);
+    _key->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftCornerYPx + _title->sizeYPx());
 }
 
 void GrCityChart::print(
@@ -55,7 +55,7 @@ unordered_map<Color, vector<Point>> GrCityChart::createVectorsForClearingPlot ()
     // every house needs to have a Color::absent point.
     unordered_map<Color, vector<Point>> pointsPerColor = {};
 
-    for (auto const& x : coordinate_per_house)
+    for (auto const& x : _coordinate_per_house)
     {
         Coordinate coord = x.second;
 
@@ -71,7 +71,7 @@ unordered_map<Color, vector<Point>> GrCityChart::createVectorsOfHousesForEachCol
 {   
     unordered_map<Color, vector<Point>> pointsPerColor = {};
 
-    for (auto const &x : coordinate_per_house)
+    for (auto const &x : _coordinate_per_house)
     {   
         const House* house = x.first;
         Coordinate coord = x.second;

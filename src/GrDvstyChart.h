@@ -7,7 +7,7 @@
 #include "renderer.h"
 #include "City.h"
 #include "Resident.h"
-#include "GrColorKeyPrinter.h"
+#include "GrColorKey.h"
 #include <memory>
 #include "Title.h"
 
@@ -33,10 +33,10 @@ public:
         _key{move(colorKey)},
         _plot{std::move(plot)}
     {   
-        _key->setTopCenter(topLeftXPx + xSpace/2, topLeftYPx + _title->sizeYPx());
         _plot->setTopLeft(topLeftXPx, topLeftYPx + _title->sizeYPx() + _key->sizeYPx());
         _plot->setXYSpacePx(xSpace, ySpace - _title->sizeYPx() - _key->sizeYPx());
         _title->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftYPx);
+        _key->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftYPx + _title->sizeYPx());
     }
 
     void print (

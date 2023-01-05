@@ -34,8 +34,10 @@ class AxisTopToBottomL
         int sizeYPx();
         int sizeXPx();
 
-        // returns the y-pixel for the top left corner for this yVal's unit.
-        int getYPixelForPrinting (double yVal);
+        // returns the y-pixel for yVal. If pxPerUnit is odd, then result is at center of unit.
+        // If pxPerUnit is even, then center is denoted by two pixels,
+        // and the result is the second pixel. (The second pixel is from the zero.)
+        int getPixel (double yVal);
 
     private:
         AxisFormat _axis_format;
@@ -53,7 +55,7 @@ class AxisTopToBottomL
 
         void addVerticalLine (std::vector<SDL_Rect>& rects);
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
-        int calcBotMostPixelYPx ();
+        int calcBotMostPixel_Y ();
         int calcMinTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit >= 10)? 1 : 5; }
         int calcMajTickSpacing (int pixelsPerUnit) { return (pixelsPerUnit > 10)? 5 : 10; }
         int axisLengthPx();

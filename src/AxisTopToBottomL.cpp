@@ -53,7 +53,7 @@ void AxisTopToBottomL::addVerticalLine (std::vector<SDL_Rect>& rects)
     rects.push_back(rect);
 }
 
-int AxisTopToBottomL::calcBotMostPixelYPx ()
+int AxisTopToBottomL::calcBotMostPixel_Y ()
 {
     return _y_cross__px + (_px_per_unit * ( _diff + _start_offset_m + _end_offset_m));
 }
@@ -67,7 +67,7 @@ void AxisTopToBottomL::addTicksAndLabels (
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
 
     int curVal = _min_val;
-    int curVal__px = getYPixelForPrinting(_min_val) - (_tick_thickness__px) / 2 ;
+    int curVal__px = getPixel(_min_val) - (_tick_thickness__px/2) ;
     TextRect curText = {
         majTickXPx,
         curVal__px,
@@ -93,7 +93,7 @@ void AxisTopToBottomL::addTicksAndLabels (
         _tick_thickness__px
     };
     
-    int botMostPixelY = calcBotMostPixelYPx();
+    int botMostPixelY = calcBotMostPixel_Y();
 
     while (curVal__px <= botMostPixelY)
     {   
@@ -113,7 +113,7 @@ void AxisTopToBottomL::addTicksAndLabels (
             rects.push_back(minRect);
         }
         ++curVal;
-        curVal__px = getYPixelForPrinting(curVal) - (_tick_thickness__px/ 2 ) ;
+        curVal__px = getPixel(curVal) - (_tick_thickness__px/ 2 ) ;
     }
 }
 
@@ -152,11 +152,12 @@ int AxisTopToBottomL::sizeYPx()
 
 int AxisTopToBottomL::axisLengthPx()
 {
-    // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.s
-    return calcBotMostPixelYPx() - _y_cross__px + (_tick_thickness__px/2);
+    int unit_px_odd = (_px_per_unit%2==0)? 0 : 1;
+    // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
+    return calcBotMostPixel_Y() - _y_cross__px - unit_px_odd + (_tick_thickness__px/2);
 }
 
-int AxisTopToBottomL::getYPixelForPrinting (double yVal)
+int AxisTopToBottomL::getPixel (double yVal)
 {
     int minYPx = _y_cross__px + ( _start_offset_m * _px_per_unit );
     return minYPx + _px_per_unit * (yVal - _min_val);

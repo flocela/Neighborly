@@ -11,7 +11,7 @@
 #include <vector>
 #include "Color.h"
 #include "GrRunsChart.h"
-#include "GrColorKeyPrinter.h"
+#include "GrColorKey.h"
 #include "Letter.h"
 #include "GrDvstyChart.h"
 #include "GrHapChart.h"

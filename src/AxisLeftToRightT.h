@@ -60,7 +60,7 @@ class AxisLeftToRightT
         void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
 
         // right most pixel on horizontal line.
-        int calcRightMostPixelWithValueX ();
+        int calcRightMostPixelWithValue_X ();
 
         int calcMinTickSpacing (int pixelsPerUnit);
         int calcMajTickSpacing (int pixelsPerUnit);

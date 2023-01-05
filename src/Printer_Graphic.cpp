@@ -178,7 +178,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
         make_unique<TitleA>(
             _chart_title_letter,
             "City Map"),
-        make_unique<GrColorKeyPrinter>(
+        make_unique<GrColorKey>(
             _chart_key_letter,
             _colors,
             moods),
@@ -206,7 +206,6 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
 )
 {
     set<Mood> moods{Mood::neutral};
-    std::cout << "createDvstyChart maxNumOfRuns: " << maxNumOfRuns << std::endl;
     return make_unique<GrDvstyChart> (
         _colors,
         moods,
@@ -214,7 +213,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
         make_unique<TitleA>(
             _chart_title_letter,
             "Diversity, Average Number of Disparate Neighbors per Resident per Run"),
-        make_unique<GrColorKeyPrinter>(
+        make_unique<GrColorKey>(
             _chart_key_letter,
             _colors,
             moods),
@@ -248,7 +247,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
         make_unique<TitleA>(
             _chart_title_letter,
             "Happiness, Average Resident Happiness per Group, per Run"),
-        make_unique<GrColorKeyPrinter>(
+        make_unique<GrColorKey>(
             _chart_key_letter,
             _colors,
             moods),
