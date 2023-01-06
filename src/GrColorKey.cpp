@@ -7,16 +7,16 @@ GrColorKey::GrColorKey (
     int topCenterXPx,
     int topCenterYPx,
     Letter labelLetter,
-    std::unordered_map<int, BaseColor> colors, // color per group number
-    std::set<Mood> moods, // keys for colors, e.g. happy, sad, neutral
+    std::unordered_map<int, BaseColor> colors,
+    std::set<Mood> moods,
     SDL_Color textColor,
     SDL_Color textBackgroundColor
 ): _top_center_x__px{topCenterXPx},
    _top_center_y__px{topCenterYPx},
    _label_letter{labelLetter},
-   _colors_per_groupId{colors},
+   _b_color_per_groupId{colors},
    _moods{moods},
-   _box_length__px{_label_letter.letterHeight()/2}, // box is the colored square
+   _box_length__px{_label_letter.letterHeight()/2},
    _text_color{textColor},
    _text_background_color{textBackgroundColor}
 {
@@ -24,11 +24,11 @@ GrColorKey::GrColorKey (
 }
 
 GrColorKey::GrColorKey (
-        Letter labelLetter,
-        std::unordered_map<int, BaseColor> colors,
-        std::set<Mood> moods
+    Letter labelLetter,
+    std::unordered_map<int, BaseColor> colors,
+    std::set<Mood> moods
 ): _label_letter{labelLetter},
-   _colors_per_groupId{colors},
+   _b_color_per_groupId{colors},
    _moods{moods},
    _box_length__px{_label_letter.letterHeight()/2}
 {
@@ -37,21 +37,22 @@ GrColorKey::GrColorKey (
 
 void GrColorKey::setAttributes ()
 {
-    // create ordered vector of group ids
+    // create vector of groupIds, then order vector
     std::vector<int> groupIds;
-    for (auto itr = _colors_per_groupId.begin(); itr != _colors_per_groupId.end(); ++itr)
+    for (auto itr = _b_color_per_groupId.begin(); itr != _b_color_per_groupId.end(); ++itr)
     {
         groupIds.push_back(itr->first);
     }
     std::sort(groupIds.begin(), groupIds.end());
 
-    // populate vector of pairs. each pair is the group id string per the group color.
-    // while created vector, keep track of longest string for later use in column size.
+    // populate vector _label_per_color with pairs.
+    // each pair is the group color and the groupId string.
+    // while creating vector, keep track of longest string for later use in column size.
     int longestString = 0;
 
     for (int& groupId : groupIds)
     {
-        BaseColor baseColor = _colors_per_groupId[groupId];
+        BaseColor baseColor = _b_color_per_groupId[groupId];
         for (auto mood : _moods)
         {
             string label = "Group: " + to_string(groupId);
@@ -60,7 +61,7 @@ void GrColorKey::setAttributes ()
                 label = label + " " + _colorrs_map[baseColor][mood]._mood_name;
             }
 
-            _labels_per_color.push_back({_colorrs_map[baseColor][mood]._color, label});
+            _label_per_color.push_back({_colorrs_map[baseColor][mood]._color, label});
 
             int textWidth = (int)(label.length() *
                 _label_letter.widthMultiplier() *
@@ -79,14 +80,20 @@ void GrColorKey::setAttributes ()
 
 void GrColorKey::print (Renderer* renderer)
 {   
-    int label_top_y__px = _top_center_y__px;
-    int box_top_y__px = _top_center_y__px + ( (_label_letter.letterHeight() - _box_length__px)/2 );
-    int first_col_left__px = _top_center_x__px - ((double)_column_width * _labels_per_color.size()/2);
+    // Printed as a series of columns.
+    // each column holds the groupId's colored box and the groupId's label.
+    // call this box and label the group's representation.
+    // each representation is centered in it's column.
+    int num_of_columns = _label_per_color.size();
+    int top_of_label_y__px = _top_center_y__px;
+    int top_of_box_y__px = _top_center_y__px + _label_letter.letterHeight()/2 - _box_length__px/2;
+    int first_col_left__px = _top_center_x__px - (double)_column_width * num_of_columns/2;
+
     int counter = 0;
 
-    for (auto& key : _labels_per_color)
+    for (auto& pair : _label_per_color)
     {
-        string label = key.second;
+        string label = pair.second;
         int labelWidth =  
             (int)(label.length() *
             renderer->widthMultiplier() *
@@ -102,8 +109,8 @@ void GrColorKey::print (Renderer* renderer)
         renderer->addBlock(
             _box_length__px,
             _box_length__px,
-            Coordinate(box_left_x__px, box_top_y__px),
-            _the_color_rgba[key.first]
+            Coordinate(box_left_x__px, top_of_box_y__px),
+            _the_color_rgba[pair.first]
         );
 
         // left edge of label
@@ -111,7 +118,7 @@ void GrColorKey::print (Renderer* renderer)
         
         renderer->renderText(
             label_left_x__px,
-            label_top_y__px,
+            top_of_label_y__px,
             label,
             _label_letter.letterHeight(),
             _label_letter.widthMultiplier(),
@@ -124,13 +131,13 @@ void GrColorKey::print (Renderer* renderer)
 }
 
 void GrColorKey::setTopCenter (int xPx, int yPx) {
-        _top_center_x__px = xPx;
-        _top_center_y__px = yPx;
+    _top_center_x__px = xPx;
+    _top_center_y__px = yPx;
 }
 
 int GrColorKey::sizeXPx ()
 {
-    return _colors_per_groupId.size() * _moods.size() * _column_width;
+    return _b_color_per_groupId.size() * _moods.size() * _column_width;
 }
 
 void GrColorKey::setTextColor (SDL_Color color)
