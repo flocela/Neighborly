@@ -4,25 +4,18 @@
 #include "CityMaker.h"
 #include "UI_CMDLine.h"
 
-// TODO CityMaker_CMDLine.h not checked
 class CityMaker_CMDLine: public CityMaker
 {
-    public:
-        std::unique_ptr<City> makeCity (
-            std::vector<CityFactory*> cityFactories,
-            int maxDeltaX,
-            int maxDeltaY
-        )
-        override;
+public:
+    std::unique_ptr<City> makeCity (
+        std::vector<CityFactory*> cityFactories,
+        int maxDeltaX,
+        int maxDeltaY
+    )
+    override;
 
-    private:
-        UI_CMDLine _ui = UI_CMDLine{};  
-        std::vector<std::string> getFactoryNames (
-            std::vector<CityFactory*> cityFactories,
-            int maxDeltaX,
-            int maxDeltaY
-        )
-        const;
+private:
+    UI_CMDLine _ui = UI_CMDLine{};
 };
 
 #endif

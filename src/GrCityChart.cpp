@@ -15,7 +15,7 @@ GrCityChart::GrCityChart (
     int ySpace
 ): 
     _coordinate_per_house{coordPerHouseMap},
-    _res_colors{resColors},
+    _resident_b_color_per_groupid{resColors},
     _title{move(title)},
     _key{move(key)},
     _plot{move(plot)},
@@ -38,34 +38,29 @@ void GrCityChart::print(
     _title->print(renderer);
     _key->print(renderer);
     _plot->print(
-        createVectorsForClearingPlot(),
+        createVectorPerColorForClearingPlot(),
         false,
         renderer
     );
     _plot->print(
-        createVectorsOfHousesForEachColor(houseToResMap),
+        createVectorsOfPointsPerColor(houseToResMap),
         false,
         renderer
     );
-    
 }
 
-unordered_map<Color, vector<Point>> GrCityChart::createVectorsForClearingPlot ()
+
+int GrCityChart::sizeXPx ()
 {
-    // every house needs to have a Color::absent point.
-    unordered_map<Color, vector<Point>> pointsPerColor = {};
-
-    for (auto const& x : _coordinate_per_house)
-    {
-        Coordinate coord = x.second;
-
-        Point point{(double)coord.getX(), (double)coord.getY(), Color::absent};
-        pointsPerColor[Color::absent].push_back(point);
-    }
-    return pointsPerColor;
+    return _plot->sizeXPx();
 }
 
-unordered_map<Color, vector<Point>> GrCityChart::createVectorsOfHousesForEachColor (
+int GrCityChart::sizeYPx ()
+{
+    return _title->sizeYPx() + _key->sizeYPx() + _plot->sizeYPx();
+}
+
+unordered_map<Color, vector<Point>> GrCityChart::createVectorsOfPointsPerColor (
     unordered_map<const House *, const Resident *> residentPerHouse
 )
 {   
@@ -76,9 +71,11 @@ unordered_map<Color, vector<Point>> GrCityChart::createVectorsOfHousesForEachCol
         const House* house = x.first;
         Coordinate coord = x.second;
 
-        Color color; // house color, which is absent if empty, or the resident color if not empty.
+        // house color, which is absent if empty, or the resident group color if not empty.
+        Color color; 
 
-        if (residentPerHouse.find(house) == residentPerHouse.end()) // if house is empty
+        // if house is empty then color is Color::absent.
+        if (residentPerHouse.find(house) == residentPerHouse.end()) 
         {
             color = Color::absent;
         }
@@ -89,32 +86,38 @@ unordered_map<Color, vector<Point>> GrCityChart::createVectorsOfHousesForEachCol
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
             if (happinessValue < happinessGoal)
-                color = _colorrs_map[_res_colors[res->getGroupNumber()]][Mood::unhappy]._color;
+                color = _colorrs_map[_resident_b_color_per_groupid[res->getGroupNumber()]]
+                        [Mood::unhappy]._color;
             else
-                color = _colorrs_map[_res_colors[res->getGroupNumber()]][Mood::happy]._color;
+                color = _colorrs_map[_resident_b_color_per_groupid[res->getGroupNumber()]]
+                        [Mood::happy]._color;
         }
 
         Point point{(double)coord.getX(), (double)coord.getY(), color};
         
         if (pointsPerColor.find(color) == pointsPerColor.end())
         {
-            vector<Point> newPointVector = {};
-            pointsPerColor[color] = newPointVector;
+            pointsPerColor[color] = {};
         }
 
         pointsPerColor[color].push_back(point);
-        
     }
 
     return pointsPerColor;
 }
 
-int GrCityChart::sizeXPx ()
+unordered_map<Color, vector<Point>> GrCityChart::createVectorPerColorForClearingPlot ()
 {
-    return _plot->sizeXPx();
-}
+    // every house needs to have a Color::absent Point.
+    unordered_map<Color, vector<Point>> pointsPerColor = {};
 
-int GrCityChart::sizeYPx ()
-{
-    return _title->sizeYPx() + _key->sizeYPx() + _plot->sizeYPx();
+    for (auto const& x : _coordinate_per_house)
+    {
+        Coordinate coord = x.second;
+
+        pointsPerColor[Color::absent].push_back({(double)coord.getX(),
+                                                 (double)coord.getY(),
+                                                 Color::absent});
+    }
+    return pointsPerColor;
 }

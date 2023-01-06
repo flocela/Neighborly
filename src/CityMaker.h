@@ -6,15 +6,14 @@
 #include "City.h"
 #include "CityFactory.h"
 
-// TODO CityMaker.h not checked
 class CityMaker
 {
-    public:
-        virtual std::unique_ptr<City> makeCity (
-            std::vector<CityFactory*> cityFactories,
-            int maxDeltaX,
-            int maxDeltaY
-        ) = 0;
+public:
+    virtual std::unique_ptr<City> makeCity (
+        std::vector<CityFactory*> cityFactories,
+        int maxDeltaX,
+        int maxDeltaY
+    ) = 0;
         
 };
 

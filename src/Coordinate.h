@@ -5,26 +5,26 @@
 
 class Coordinate
 {
-    public:
-        Coordinate(int x, int y);
-        Coordinate() = delete;
-        Coordinate (const Coordinate& obj) = default;
-        Coordinate (Coordinate&& obj) noexcept = default;
-        Coordinate& operator=(const Coordinate& obj) = default;
-        Coordinate& operator=(Coordinate&& obj) noexcept = default;
+public:
+    Coordinate(int x, int y);
+    Coordinate() = delete;
+    Coordinate (const Coordinate& obj) = default;
+    Coordinate (Coordinate&& obj) noexcept = default;
+    Coordinate& operator=(const Coordinate& obj) = default;
+    Coordinate& operator=(Coordinate&& obj) noexcept = default;
 
-        int getX() const { return _x; };
-        int getY() const { return _y; };
-        bool operator<(const Coordinate& a) const;
-        std::string toStr() const;
-        
-        friend std::ostream& operator<<(std::ostream& os, Coordinate const& c);
-        bool operator==(const Coordinate& c) const;
-        bool operator!=(const Coordinate& c) const;
+    int getX() const { return _x; };
+    int getY() const { return _y; };
+    bool operator<(const Coordinate& a) const;
+    std::string toStr() const;
+    
+    friend std::ostream& operator<<(std::ostream& os, Coordinate const& c);
+    bool operator==(const Coordinate& c) const;
+    bool operator!=(const Coordinate& c) const;
 
-    private:
-        int _x = -1;
-        int _y = -1;
+private:
+    int _x = -1;
+    int _y = -1;
 
 };
 #endif

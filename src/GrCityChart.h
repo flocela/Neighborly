@@ -27,8 +27,8 @@ GrCityChart (
     std::unique_ptr<Plot> plot,
     int topLeftCornerXPx,
     int topLeftCornerYPx,
-    int xSpace,
-    int ySpace
+    int xSpace, // space available for the chart in the x direction
+    int ySpace  // space available for the chart in they y dirction
 );
 
 void print (
@@ -41,7 +41,7 @@ int sizeYPx();
 
 private:
 std::unordered_map<const House*, Coordinate> _coordinate_per_house;
-std::unordered_map<int, BaseColor> _res_colors;
+std::unordered_map<int, BaseColor> _resident_b_color_per_groupid;
 
 std::unique_ptr<Title> _title;
 std::unique_ptr<GrColorKey> _key;
@@ -52,11 +52,16 @@ int _top_left_corner_y__px;
 int _x_space__px;
 int _y_space__px;
 
-std::unordered_map<Color, std::vector<Point>> createVectorsOfHousesForEachColor (
+// each point represents a house.
+// if a house is empty it gets a default color. if it is occupied, its color depends on the 
+//   resident's group id.
+std::unordered_map<Color, std::vector<Point>> createVectorsOfPointsPerColor (
     std::unordered_map<const House*, const Resident*> residentPerHouse
 );
 
-std::unordered_map<Color, std::vector<Point>> createVectorsForClearingPlot ();
+// there will be only one color, the default color for an empty house.
+// all addresses will be represented as being empty.
+std::unordered_map<Color, std::vector<Point>> createVectorPerColorForClearingPlot ();
     
 };
 
