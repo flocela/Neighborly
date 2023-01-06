@@ -9,64 +9,79 @@ void GrDvstyChart::print (
     Renderer* renderer
 )
 {
-    unordered_map<int, int> numOfResidentsPerGroupid;
-    unordered_map<int, int> numOfDiffNeighborsPerGroupid;
+    // for each groupId, will need the number of residents in group,
+    //   and the number of disparate neighbors.
+    unordered_map<int, int> numOfResidentsPerGroupId;
+    unordered_map<int, int> numOfDiffNeighborsPerGroupId;
 
-    for (auto& pair : _colors)
+    for (auto& pair : _b_color_per_groupId)
     {
-        numOfDiffNeighborsPerGroupid[pair.first] = 0;
-        numOfResidentsPerGroupid[pair.first] = 0;
+        numOfDiffNeighborsPerGroupId[pair.first] = 0;
+        numOfResidentsPerGroupId[pair.first] = 0;
     }
 
     for (pair<const Resident*, const House*> ii : housePerResident)
     {
-        const Resident* res = ii.first;
-        const House* resHouse = ii.second;
-        int resGroupid = res->getGroupNumber();
+        const Resident* resident = ii.first;
+        const House* residentHouse = ii.second;
+        int residentGroupId = resident->getGroupNumber();
 
-        set<const House*> housesAdjToRes = _adj_neighbors[resHouse];
+        set<const House*> housesAdjToRes = _adj_neighbors[residentHouse];
 
-        for (const House* adjHouse : housesAdjToRes)
+        for (const House* adjacentHouse : housesAdjToRes)
         {
-            // if adjHouse is not empty
-            if (residentPerHouse.find(adjHouse) != residentPerHouse.end())
+            // if adjacent house is not empty
+            if (residentPerHouse.find(adjacentHouse) != residentPerHouse.end())
             {
                 // adjacent resident's groupId
-                int adj_res_groupId = (residentPerHouse.at(adjHouse))->getGroupNumber();
-                if (adj_res_groupId != resGroupid)
+                int adj_res_groupId = (residentPerHouse.at(adjacentHouse))->getGroupNumber();
+                if (adj_res_groupId != residentGroupId)
                 {
-                    numOfDiffNeighborsPerGroupid[adj_res_groupId] +=1;
+                    numOfDiffNeighborsPerGroupId[adj_res_groupId] +=1;
                 }
             }
         }
 
-        numOfResidentsPerGroupid[resGroupid] += 1;
+        numOfResidentsPerGroupId[residentGroupId] += 1;
     }
 
+    // the diversity for a resident is the number of disperate neighbors the resident has.
+    // the Point's y value is the average diversity for the residents in the group.
+    // the Point's x value is the run number.
     unordered_map<Color, vector<Point>> pointsPerColor;
-    for (auto pair : numOfResidentsPerGroupid)
+
+    for (auto pair : numOfResidentsPerGroupId)
     {
         int groupId = pair.first;
-        int numOfResInGroup = pair.second;
+        int numOfResidentsInGroup = pair.second;
         
-        if (numOfResInGroup == 0)
+        if (numOfResidentsInGroup == 0)
         {
             continue;
         }
 
         double averageNumOfDiffNeighbors = 
-            (double)numOfDiffNeighborsPerGroupid[groupId]/numOfResInGroup;
+            (double)numOfDiffNeighborsPerGroupId[groupId]/numOfResidentsInGroup;
        
-        Color c = _colorrs_map[_colors[groupId]][Mood::neutral]._color;
+        Color groupColor = _colorrs_map[_b_color_per_groupId[groupId]][Mood::neutral]._color;
         pointsPerColor.insert({
-            c,
-            vector<Point>{Point((double)run, averageNumOfDiffNeighbors, c)}
+            groupColor,
+            vector<Point>{Point((double)run, averageNumOfDiffNeighbors, groupColor)}
         });
     }
     
-    _title->print(renderer);
+    if (!_key_has_printed)
+    {
+        _key->print(renderer);
+        _key_has_printed = true;
+    }
+    if (!_title_has_printed)
+    {
+        _title->print(renderer);
+        _title_has_printed = true;
+    }
+    
     _plot->print(pointsPerColor, false, renderer);
-    _key->print(renderer);
 }
 
 int GrDvstyChart::sizeXPx ()
