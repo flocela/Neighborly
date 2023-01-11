@@ -78,14 +78,14 @@ void Printer_Graphic::print (
     int run
 )
 {   
-    /*_renderer->setColorToRed();
+    _renderer->setColorToRed();
     SDL_Rect rect {
-        5,
         0,
-        5,
-        1195
+        10,
+        1240,
+        1
     };
-    _renderer->fillBlock(rect);*/
+    _renderer->fillBlock(rect);
 
     unordered_map<const Resident*, const House*> housePerResident;
     vector<const Resident*> residents;
@@ -243,7 +243,6 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
 
     return make_unique<GrHapChart> (
         _colors,
-        moods,
         make_unique<TitleA>(
             _chart_title_letter,
             "Happiness, Average Resident Happiness per Group, per Run"),
@@ -255,7 +254,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
             _right_col_sizer,
             _colors, 
             moods, 
-            0, // minimum number of runs
+            0, // starting run number
             numberOfRuns -1,
             0, // minimum resident happiness
             100 // resident happiness range is from 0 to 100.

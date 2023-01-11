@@ -38,7 +38,7 @@ SimulationComponents MainExamples::userChoosesExample ()
         //     Unhappy if 25% or more neighbors are different from themselves.
         case 0:
         {
-            components.city = std::make_unique<City_Grid>(100);
+            components.city = std::make_unique<City_Grid>(110);
 
             // Only two groups. Group #1 and Group #2
             auto iter = _colorrs_map.begin();

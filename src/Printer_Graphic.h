@@ -57,7 +57,7 @@ private:
     int _top_border__px = 20;
     int _bottom_border__px = 20;
     int _side_borders__px = 40; // both the left and right borders are this value
-    int _col_inside_border__px = 40;
+    int _col_inside_border__px = 60;
     int _x_center__px = _screen_width__px/2; // center of screen
 
     std::unordered_map<int, BaseColor> _colors;

@@ -7,7 +7,7 @@ void GrHapChart::print (
     Renderer* renderer
 )
 {
-    // sum the happiness per each group
+    // add the residents' happiness per each group
     // assume the happiness has been calculated.
     unordered_map<int, int> happinessSumPerGroup;
 
@@ -40,16 +40,16 @@ void GrHapChart::print (
     }
 
     unordered_map<Color, vector<Point>> pointsPerColor;
-    for (auto jj : numofResidentsPerGroup)
+    for (auto resCountPerGroup : numofResidentsPerGroup)
     {
-        int groupNum = jj.first;
-        int countInGroup = jj.second;
+        int groupId = resCountPerGroup.first;
+        int countInGroup = resCountPerGroup.second;
         if (countInGroup == 0)
         {
             continue;
         }
-        double aveHappiness = (double)happinessSumPerGroup[groupNum]/countInGroup;
-        Color c = _colorrs_map[_colors[groupNum]][Mood::neutral]._color;
+        double aveHappiness = (double)happinessSumPerGroup[groupId]/countInGroup;
+        Color c = _colorrs_map[_colors[groupId]][Mood::neutral]._color;
         pointsPerColor.insert({
             c,
             vector<Point>{ Point( (double)run, aveHappiness, c) }

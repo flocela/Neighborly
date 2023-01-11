@@ -15,45 +15,41 @@ class GrHapChart {
 
 public:
 
-    GrHapChart (
-        std::unordered_map<int, BaseColor> colors,
-        std::set<Mood> moods,
-        std::unique_ptr<Title> title,
-        std::unique_ptr<ColorKey> colorKey,
-        std::unique_ptr<Plot> plot,
-        int topLeftXPx,
-        int topLeftYPx,
-        int xSpace,
-        int ySpace
-    ):
-    _colors{colors},
-    _moods{moods},
-    _title{move(title)},
-    _key{move(colorKey)},
-    _plot{std::move(plot)}
-    {   
-        _plot->setTopLeft(topLeftXPx, topLeftYPx + _title->sizeYPx() + _key->sizeYPx());
-        _plot->setXYSpacePx(xSpace, ySpace - _title->sizeYPx() - _key->sizeYPx());
-        _title->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftYPx);
-        _key->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftYPx + _title->sizeYPx());
-    }
+GrHapChart (
+    std::unordered_map<int, BaseColor> colors,
+    std::unique_ptr<Title> title,
+    std::unique_ptr<ColorKey> colorKey,
+    std::unique_ptr<Plot> plot,
+    int topLeftXPx,
+    int topLeftYPx,
+    int xSpace,
+    int ySpace
+): _colors{colors},
+   _title{move(title)},
+   _key{move(colorKey)},
+   _plot{std::move(plot)}
+{   
+    _plot->setTopLeft(topLeftXPx, topLeftYPx + _title->sizeYPx() + _key->sizeYPx());
+    _plot->setXYSpacePx(xSpace, ySpace - _title->sizeYPx() - _key->sizeYPx());
+    _title->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftYPx);
+    _key->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftYPx + _title->sizeYPx());
+}
 
-    void print (
-        std::unordered_map<const Resident*, const House*> housePerResident,
-        int run,
-        Renderer* renderer
-    );
+void print (
+    std::unordered_map<const Resident*, const House*> housePerResident,
+    int run,
+    Renderer* renderer
+);
 
-    int sizeXPx();
-    int sizeYPx();
+int sizeXPx();
+int sizeYPx();
 
 private:
 
-    std::unordered_map<int, BaseColor> _colors;
-    std::set<Mood> _moods;
-    std::unique_ptr<Title> _title;
-    std::unique_ptr<ColorKey> _key;
-    std::unique_ptr<Plot> _plot;
+std::unordered_map<int, BaseColor> _colors;
+std::unique_ptr<Title> _title;
+std::unique_ptr<ColorKey> _key;
+std::unique_ptr<Plot> _plot;
 
 };
 

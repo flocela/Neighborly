@@ -1,11 +1,12 @@
 #include "GrRunsChart.h"
 
+using namespace std;
 void GrRunsChart::print (int numOfRuns, Renderer* renderer)
 {   
     renderer->renderText(
         _x_offset + (_x_space_length__px/2), 
         _y_offset,
-        "Runs: " + std::to_string(numOfRuns) + " ",
+        "Runs: " + to_string(numOfRuns) + " ",
         _title_letter.letterHeight(),
         _title_letter.widthMultiplier(),
         _text_color,
@@ -15,9 +16,8 @@ void GrRunsChart::print (int numOfRuns, Renderer* renderer)
 
 int GrRunsChart::sizeXPx ()
 {
-    // number of letters assumes number of runs is less than 10,000
-    // number of letters is eight corresponding to "Runs: 999".
-    return (int)(8 * _title_letter.widthMultiplier() * _title_letter.letterHeight());
+    // number of letters is eight corresponding to "Runs: 999. assuming there is less than 1,000 runs."
+    return (int)(9 * _title_letter.widthMultiplier() * _title_letter.letterHeight());
 }
 
 int GrRunsChart::sizeYPx ()
