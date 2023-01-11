@@ -82,7 +82,7 @@ void Printer_Graphic::print (
     SDL_Rect rect {
         0,
         10,
-        1240,
+        600,
         1
     };
     _renderer->fillBlock(rect);

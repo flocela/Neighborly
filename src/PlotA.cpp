@@ -216,7 +216,9 @@ int PlotA::calcCrossXPx (int topLeftXPx)
     int xAxisLength = 
         (_unit_x__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _y_axis.sizeXPx();
 
-    return topLeftXPx + (int)(0.5 * ( _x_space__px - xAxisLength ));
+    return topLeftXPx  +
+           (int)( (0.5 * _x_space__px) - (0.5 * (xAxisLength + _y_axis.sizeXPx())) )+
+           _y_axis.sizeXPx();
 }
 
 int PlotA::calcCrossYPx (int topLeftYPx) // TODO, I think I should be calling this more often, instead of repeating this calculation

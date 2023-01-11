@@ -54,10 +54,10 @@ private:
     /* FOR WINDOW */
     int _screen_width__px  = 2400;
     int _screen_height__px = 1200;
-    int _top_border__px = 20;
-    int _bottom_border__px = 20;
-    int _side_borders__px = 40; // both the left and right borders are this value
-    int _col_inside_border__px = 60;
+    int _top_border__px = 30;
+    int _bottom_border__px = 50;
+    int _side_borders__px = 50; // both the left and right borders are this value
+    int _col_inside_border__px = 50;
     int _x_center__px = _screen_width__px/2; // center of screen
 
     std::unordered_map<int, BaseColor> _colors;
@@ -69,7 +69,7 @@ private:
         _screen_height__px
     );
     
-    Letter _window_title_letter{40, 2, 0.3};
+    Letter _window_title_letter{50, 10, 0.3};
     std::unique_ptr<TitleA> _window_title;
     
     /* COLUMNS */
@@ -79,7 +79,7 @@ private:
 
     AxisFormat _axis_format_X{};
     AxisFormat _axis_format_Y{};
-    Letter _chart_title_letter = Letter(30, 6, 0.3); 
+    Letter _chart_title_letter = Letter(30, 10, 0.3); 
     Letter _chart_key_letter{24, 12, 0.3};
     int _min_unit_size__px = 6; // TODO write note of how this is used. Is it honored?
 
