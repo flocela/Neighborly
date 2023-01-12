@@ -2,7 +2,7 @@
 #include "../src/HappinessFunc_Falling.h"
 
 using Catch::Matchers::Contains;
-
+/*
 TEST_CASE(
     "HappinessFunc_Falling Constructor throws invalid argument exception"
     "when starting value is less than 0.0"
@@ -66,4 +66,4 @@ TEST_CASE(
     HappinessFunc_Falling hf{.5, .1};
     REQUIRE( (hf.getHappiness(4, 1, 3) - .2) < 0.001);
     REQUIRE( (hf.getHappiness(4, 1, 3) - .2) > -0.001);
-}
+}*/

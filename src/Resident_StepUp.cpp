@@ -16,6 +16,7 @@ Resident_StepUp::Resident_StepUp (
     _happiness_at_one_diversity{happinessValueAtOneDiversity},
     _diversity_where_rise_happens{diversityWhereRiseHappens},
     _happiness_func{
+        happinessValueWithZeroNeighbors,
         happinessValueAtZeroDiversity, 
         happinessValueAtOneDiversity, 
         diversityWhereRiseHappens
@@ -57,7 +58,7 @@ double Resident_StepUp::implCalculateHappiness (
     }
     if ( (like + diff) == 0 )
         return _happiness_at_zero_diversity; // unhappy to be alone
-    return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
+    return _happiness_func.calcHappiness(numOfAdjacentHouses, like, diff);
 }
 
 const House* Resident_StepUp::findHome(

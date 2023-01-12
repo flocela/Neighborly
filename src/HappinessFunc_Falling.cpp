@@ -1,20 +1,27 @@
 #include "HappinessFunc_Falling.h"
 
-HappinessFunc_Falling::HappinessFunc_Falling (double happinessAtZeroPercentDiversity,
-                                            double happinessAt100PercentDiversity): 
-    _happiness_at_zero_percent_diversity{happinessAtZeroPercentDiversity},
-    _happiness_at_hundred_percent_diversity{happinessAt100PercentDiversity}
+HappinessFunc_Falling::HappinessFunc_Falling (
+    double happinessWithNoNeighbors,
+    double happinessAtZeroPercentDiversity,
+    double happinessAt100PercentDiversity
+):  _happ_with_no_neighbors{happinessWithNoNeighbors},
+    _happ_at_zero_percent_diversity{happinessAtZeroPercentDiversity},
+    _happ_at_hundred_percent_diversity{happinessAt100PercentDiversity}
 {
-    if (_happiness_at_zero_percent_diversity < 0.0 || 
-        _happiness_at_zero_percent_diversity > 1.0 ||
-        _happiness_at_hundred_percent_diversity < 0.0 ||
-        _happiness_at_hundred_percent_diversity > 1.0)
+    if (_happ_at_zero_percent_diversity < 0.0 || 
+        _happ_at_zero_percent_diversity > 100.0 )
     {
-        throw "happiness At Zero Diversity and One Diversity must be "
-        "between 0.0 and 1.0 inclusive.";
+        throw "happiness At Zero Diversity must be "
+        "between 0.0 and 100.0 inclusive.";
     }
-    if (_happiness_at_hundred_percent_diversity >=
-        _happiness_at_zero_percent_diversity)
+    if (_happ_at_hundred_percent_diversity < 0.0 ||
+        _happ_at_hundred_percent_diversity > 100.0)
+    {
+        throw "happiness At One Diversity must be "
+        "between 0.0 and 100.0 inclusive.";
+    }
+    if (_happ_at_hundred_percent_diversity >=
+        _happ_at_zero_percent_diversity)
     {
         throw "happinessAtZeroDiversity must be"
         " larger than happinessAtOneDiversity.";
@@ -22,13 +29,21 @@ HappinessFunc_Falling::HappinessFunc_Falling (double happinessAtZeroPercentDiver
 
 }
 
-double HappinessFunc_Falling::getHappiness ( 
+double HappinessFunc_Falling::calcHappiness ( 
     int tot_num_of_possible_neighbors, 
     int num_of_like_neighbors, 
     int num_of_diff_neighbors) const
 {
     (void) tot_num_of_possible_neighbors;
-    double diversity = num_of_diff_neighbors / (double)(num_of_diff_neighbors + num_of_like_neighbors);
-    return _happiness_at_zero_percent_diversity + 
-            (_happiness_at_hundred_percent_diversity-_happiness_at_zero_percent_diversity) * diversity;
+
+    if (num_of_like_neighbors + num_of_diff_neighbors == 0)
+    {
+        return _happ_with_no_neighbors;
+    }
+
+    double diversity = num_of_diff_neighbors / 
+                       (double)(num_of_diff_neighbors + num_of_like_neighbors);
+
+    return _happ_at_zero_percent_diversity + 
+           (_happ_at_hundred_percent_diversity -_happ_at_zero_percent_diversity) * diversity;
 }

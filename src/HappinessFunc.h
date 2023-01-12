@@ -14,7 +14,7 @@ class HappinessFunc
         virtual HappinessFunc& operator= (HappinessFunc&& obj) noexcept = default;
         virtual ~HappinessFunc () = default;
 
-        virtual double getHappiness ( int tot_num_of_possible_neighbors, 
+        virtual double calcHappiness ( int tot_num_of_possible_neighbors, 
                                       int num_of_like_neighbors, 
                                       int num_of_diff_neighbors) const = 0;
 };

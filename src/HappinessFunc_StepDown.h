@@ -3,42 +3,46 @@
 
 #include "HappinessFunc.h"
 
+// this is a step function. the x-axis is diversity. the y-axis is happiness.
+// the y-value is flat from zero to stepDown (on the x-axis). it is flat
+// but lower after stepDown. stepDown is an x-value.
 class HappinessFunc_StepDown: public HappinessFunc
 {
-    public:
-        // HappinessFunc has an x-axis of Diversity and a y-axis of Happiness.
-        // Both axes range from 0.0 to 1.0.
-        // HappinessFunc_StepDown(.90, .50, .75) makes
-        // a function that stays constant at 0.90 happiness from
-        // diversity 0.0 to 0.7499.. 
-        // Then drops at 0.75 diversity.
-        // So it has a constant 0.50 happiness from diversity 0.75 
-        // to 1.0.
-        // An exception is thrown if @happinessAtZeroDiversity or 
-        // @happinessAtOneDiversity, or @stepDownHappensAt are not in range.
-        // An exception is thrown in if @happinessValueAtZeroDiversity is less than
-        // or equal to @happinessValueAtOneDiversity.
-        HappinessFunc_StepDown (
-            double happinessWithZeroNeighbors,
-            double highHappinessValue, 
-            double lowHappinessValue, 
-            double stepDownHappensAt
-        );
-        HappinessFunc_StepDown () = delete;
-        HappinessFunc_StepDown (const HappinessFunc_StepDown& obj) = default;
-        HappinessFunc_StepDown (HappinessFunc_StepDown&& obj) noexcept = default;
-        HappinessFunc_StepDown& operator=(const HappinessFunc_StepDown& obj) = default;
-        HappinessFunc_StepDown& operator=(HappinessFunc_StepDown&& obj) noexcept = default;
-        ~HappinessFunc_StepDown() override = default;                       
+public:
+    // x-axis is Diversity, range is 0.0 to 1.0 inclusive.
+    // y-axis is Happiness, range is 0.0 to 100.0 inclusive.
+    // an exception is thrown if @happinessAtStart is less than or equal
+    // to @happinessAtEnd, or if either value is not in the range
+    // 0.0 to 100.0 inclusive.
+    // when total number of neighbors is zero, diversity is undefined.
+    // happinessWithNoNeighbors is the y-value corresponding to total neighbors is zero.
+    // happinessWithZeroNeighbors, happinessAtStart, happinessAtEnd are y-values, or happiness values.
+    // stepDown is an x-value, or a diversity value.
+    HappinessFunc_StepDown (
+        double happinessWithZeroNeighbors, 
+        double happinessAtStart, 
+        double happinessAtEnd, 
+        double stepDown
+    );
+    HappinessFunc_StepDown () = delete;
+    HappinessFunc_StepDown (const HappinessFunc_StepDown& obj) = default;
+    HappinessFunc_StepDown (HappinessFunc_StepDown&& obj) noexcept = default;
+    HappinessFunc_StepDown& operator=(const HappinessFunc_StepDown& obj) = default;
+    HappinessFunc_StepDown& operator=(HappinessFunc_StepDown&& obj) noexcept = default;
+    ~HappinessFunc_StepDown() override = default;                       
 
-        double getHappiness( int tot_num_of_possible_neighbors, 
-                             int num_of_like_neighbors, 
-                             int num_of_diff_neighbors) const override;
-    private:
-        double _happiness_at_zero_diversity;
-        double _high_happiness_value;
-        double _low_happiness_value;
-        double _where_drop_happens;
+    double calcHappiness(
+        int tot_num_of_possible_neighbors, 
+        int num_of_like_neighbors, 
+        int num_of_diff_neighbors) const override;
+private:
+    // on the y-axis (happiness values)
+    double _happ_with_zero_neighbors;
+    double _happ_at_start;
+    double _happ_at_end;
+
+     // on the x-value (diversity value)   
+    double _step_down;
 };
 
 #endif

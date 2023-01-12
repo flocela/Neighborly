@@ -5,11 +5,11 @@ HappinessFunc_StepDown::HappinessFunc_StepDown (
     double happinessWithZeroNeighbors,
     double highHappinessValue, 
     double lowHappinessValue, 
-    double stepDownHappensAt): 
-    _happiness_at_zero_diversity{happinessWithZeroNeighbors},
-    _high_happiness_value{highHappinessValue},
-    _low_happiness_value{lowHappinessValue},
-    _where_drop_happens{stepDownHappensAt}
+    double stepDown
+): _happ_with_zero_neighbors{happinessWithZeroNeighbors},
+   _happ_at_start{highHappinessValue},
+   _happ_at_end{lowHappinessValue},
+   _step_down{stepDown}
 {   
     if (happinessWithZeroNeighbors < 0.0   || 
         happinessWithZeroNeighbors > 100.0 ||
@@ -18,39 +18,43 @@ HappinessFunc_StepDown::HappinessFunc_StepDown (
         lowHappinessValue        < 0.0   ||
         lowHappinessValue        > 100.0)
     {
-       throw std::invalid_argument("happinessAtZeroDiversity, highHappinessValue"
-            " and lowHappinessValue"
+       throw std::invalid_argument("happinessWithZeroNeighbors, happinessAtStart"
+            " and happinessAtEnd"
             " must be between 0.0 and 100.0 inclusive.");
     }
-    if (_high_happiness_value < _low_happiness_value)
-    {   std::cout << "HappinessFunc_Stepdown error: " << _high_happiness_value << ", " << _low_happiness_value << std::endl;
-        throw std::invalid_argument("highHappinessValue must be larger than "
-            "lowHappinessValue.");
+    if (_happ_at_start < _happ_at_end)
+    {   
+        throw std::invalid_argument("happinessAtStart must be larger than "
+            "happinessAtEnd.");
     }
-    if (stepDownHappensAt < 0 || stepDownHappensAt > 100.0)
+    if (stepDown < 0 || stepDown > 1.0)
     {
-        throw std::invalid_argument("stepDownHappensAt must be between 0.0 "
-            "and 100.0 inclusive.");
+        throw std::invalid_argument("stepDown must be between 0.0 "
+            "and 1.0 inclusive.");
     }
     
 }
 
-double HappinessFunc_StepDown::getHappiness ( int tot_num_of_possible_neighbors, 
-                                              int num_of_like_neighbors, 
-                                              int num_of_diff_neighbors) const
+double HappinessFunc_StepDown::calcHappiness (
+    int tot_num_of_possible_neighbors, 
+    int num_of_like_neighbors, 
+    int num_of_diff_neighbors) const
 {
     (void)tot_num_of_possible_neighbors;
-    int num_of_neighbors = (num_of_diff_neighbors + num_of_like_neighbors);
-    if (num_of_neighbors == 0)
+
+    if (num_of_diff_neighbors + num_of_like_neighbors == 0)
     {
-        return _happiness_at_zero_diversity;
+        return _happ_with_zero_neighbors;
     }
 
-    double diversity = num_of_diff_neighbors / (double)num_of_neighbors;
-    if (diversity < _where_drop_happens)
+    double diversity = num_of_diff_neighbors /
+                       (double)(num_of_diff_neighbors + num_of_like_neighbors);
+    if (diversity < _step_down)
     {
-        return _high_happiness_value;
+        return _happ_at_start;
     }
-    return _low_happiness_value;
-
+    else
+    {
+        return _happ_at_end;
+    }
 }

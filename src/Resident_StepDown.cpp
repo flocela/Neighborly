@@ -56,7 +56,7 @@ double Resident_StepDown::implCalculateHappiness (
             diff++;
         
     }
-    return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
+    return _happiness_func.calcHappiness(numOfAdjacentHouses, like, diff);
 }
 
 const House* Resident_StepDown::findHome(

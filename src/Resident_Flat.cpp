@@ -8,7 +8,7 @@ Resident_Flat::Resident_Flat (
     double happinessValue):
     Resident(id, groupNumber, allowedMovementDistance, happinessGoal),
     _happiness_val(happinessValue),
-    _happiness_func{happinessValue}
+    _happiness_func{0,happinessValue} // TODO put in happinessVal when Diversity undefined.
 {}
 
 std::string Resident_Flat::toStrBasic () const
@@ -32,7 +32,7 @@ double Resident_Flat::implCalculateHappiness(
     int diff  = 0;
     if ( (like + diff) == 0 )
         return _happiness_val; // regular value when alone
-    return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
+    return _happiness_func.calcHappiness(numOfAdjacentHouses, like, diff);
 }
 
 const House* Resident_Flat::findHome (

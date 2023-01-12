@@ -14,6 +14,7 @@ Resident_Falling::Resident_Falling (
     _happiness_at_zero_diversity(happinessValueAtZeroDiversity),
     _happiness_at_one_diversity(happinessValueAtOneDiversity),
     _happiness_func{
+        happinessWithZeroNeighbors,
         happinessValueAtZeroDiversity, 
         happinessValueAtOneDiversity
     }
@@ -53,7 +54,7 @@ double Resident_Falling::implCalculateHappiness (
     }
     if ( (like + diff) == 0 )
         return _happiness_at_zero_diversity; // happy to be alone
-    return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
+    return _happiness_func.calcHappiness(numOfAdjacentHouses, like, diff);
 }
 
 const House* Resident_Falling::findHome (

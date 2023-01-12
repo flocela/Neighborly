@@ -15,6 +15,7 @@ Resident_Rising::Resident_Rising (
     _happiness_at_zero_diversity(happinessValueAtZeroDiversity),
     _happiness_at_one_diversity(happinessValueAtOneDiversity),
     _happiness_func{
+        happinessWithZeroNeighbors,
         happinessValueAtZeroDiversity, 
         happinessValueAtOneDiversity
     }
@@ -54,7 +55,7 @@ double Resident_Rising::implCalculateHappiness (
     }
     if ( (like + diff) == 0 )
         return _happiness_at_zero_diversity; // unhappy to be alone
-    return _happiness_func.getHappiness(numOfAdjacentHouses, like, diff);
+    return _happiness_func.calcHappiness(numOfAdjacentHouses, like, diff);
 }
 
 const House* Resident_Rising::findHome (
