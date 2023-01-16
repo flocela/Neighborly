@@ -16,15 +16,15 @@ class CityFactory_Grid: public CityFactory
         ~CityFactory_Grid() = default;
 
         std::unique_ptr<City> createCity (
-            UI& ui, 
+            const UI& ui, 
             int max_width, 
             int max_height
-        ) override;
+        ) const override;
         
         std::string cityType () override;
 
     private:
-        int askForGridWidth(UI& ui, int maxWidth);
+        int askForGridWidth(const UI& ui, int maxWidth) const;
 
         // prompts to determine with of grid
         std::string _width_of_grid_orig_prompt =

@@ -19,10 +19,10 @@ class CityFactory
         virtual ~CityFactory() = default;
 
         virtual std::unique_ptr<City> createCity (
-            UI& ui, 
+            const UI& ui, 
             int max_width, 
             int max_height
-        ) = 0;
+        ) const = 0;
 
         // returns the name of the type of cities that are produced.
         virtual std::string cityType () = 0; 

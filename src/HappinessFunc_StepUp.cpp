@@ -1,6 +1,8 @@
 #include "HappinessFunc_StepUp.h"
 #include <iostream>
 
+using namespace std;
+
 HappinessFunc_StepUp::HappinessFunc_StepUp (
     double happinessWthZeroNeighbors,
     double happinessAtStart,
@@ -15,12 +17,12 @@ HappinessFunc_StepUp::HappinessFunc_StepUp (
         happinessAtStart  > 100.0 ||
         happinessAtEnd   < 0.0 ||
         happinessAtEnd   > 100.0)
-        throw "happinessWithZeroNeighbors, happinessAtStart and happinessAtEnd "
-             "must be between 0.0 and 100.0 inclusive.";
+        throw invalid_argument("happinessWithZeroNeighbors, happinessAtStart,"
+        " and happinessAtEnd must be between 0.0 and 100.0 inclusive.");
     if (happinessAtStart >= happinessAtEnd)
-        throw "happinessAtStart must be smaller than happinessAtEnd.";
+        throw invalid_argument("happinessAtStart must be smaller than happinessAtEnd.");
     if (stepUp < 0 || stepUp > 1.0)
-        throw "stepUp must be between 0.0 and 1.0 inclusive.";
+        throw invalid_argument("stepUp must be between 0.0 and 1.0 inclusive.");
 }
 
 double HappinessFunc_StepUp::calcHappiness ( 

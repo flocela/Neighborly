@@ -12,7 +12,7 @@ class ResidentsMaker
 {
     public:
         virtual ResidentsGroupInfo makeResidents (
-            std::vector<ResidentsFactory*> residentsFactories,
+            const std::vector<std::unique_ptr<ResidentsFactory>>& residentsFactories,
             int maxNumOfResidents,
             int maxNumOfGroupsOfResidents,
             std::vector<BaseColor> colors, // these are the colors that the resident groups can be.

@@ -1,5 +1,7 @@
 #include "HappinessFunc_Falling.h"
 
+using namespace std;
+
 HappinessFunc_Falling::HappinessFunc_Falling (
     double happinessWithNoNeighbors,
     double happinessAtZeroPercentDiversity,
@@ -11,20 +13,20 @@ HappinessFunc_Falling::HappinessFunc_Falling (
     if (_happ_at_zero_percent_diversity < 0.0 || 
         _happ_at_zero_percent_diversity > 100.0 )
     {
-        throw "happiness At Zero Diversity must be "
-        "between 0.0 and 100.0 inclusive.";
+        throw invalid_argument("happiness At Zero Diversity must be "
+        "between 0.0 and 100.0 inclusive.");
     }
     if (_happ_at_hundred_percent_diversity < 0.0 ||
         _happ_at_hundred_percent_diversity > 100.0)
     {
-        throw "happiness At One Diversity must be "
-        "between 0.0 and 100.0 inclusive.";
+        throw invalid_argument("happiness At One Diversity must be "
+        "between 0.0 and 100.0 inclusive.");
     }
     if (_happ_at_hundred_percent_diversity >=
         _happ_at_zero_percent_diversity)
     {
-        throw "happinessAtZeroDiversity must be"
-        " larger than happinessAtOneDiversity.";
+        throw invalid_argument("happinessAtZeroDiversity must be"
+        " larger than happinessAtOneDiversity.");
     }
 
 }

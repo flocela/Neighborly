@@ -3,8 +3,12 @@
 #include <iomanip>
 #include <sstream>
 
+ResidentsMaker_CMDLine:: ResidentsMaker_CMDLine(const UI_CMDLine& cmdline)
+: _ui{cmdline}
+{}
+
 ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
-    std::vector<ResidentsFactory*> residentsFactories,
+    const std::vector<std::unique_ptr<ResidentsFactory>>& residentsFactories,
     int maxResidentCount,
     int maxNumOfGroupsOfResidents, // currently only two groups allowed.
     std::vector<BaseColor> colors,
@@ -138,8 +142,7 @@ int ResidentsMaker_CMDLine::askForNumOfResidents(int count, std::string color)
 
 int ResidentsMaker_CMDLine::askForGroupResidentType (
     std::string color, 
-    std::vector<ResidentsFactory*> 
-    residentsFactories
+    const std::vector<std::unique_ptr<ResidentsFactory>>& residentsFactories
 )
 {
     std::vector<std::string> factoryNames = getFactoryNames(residentsFactories);
@@ -218,10 +221,11 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupAllowableMovement (
 }
 
 std::vector<std::string> ResidentsMaker_CMDLine::getFactoryNames (
-    std::vector<ResidentsFactory*> residentsFactories)
+    const std::vector<std::unique_ptr<ResidentsFactory>>& residentsFactories
+)
 {
     std::vector<std::string> residentsFactoryNames = {};
-    for (ResidentsFactory* residentFactory: residentsFactories)
+    for (auto& residentFactory: residentsFactories)
     {
         residentsFactoryNames.push_back(residentFactory->residentType());
     }

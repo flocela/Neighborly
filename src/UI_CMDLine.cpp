@@ -9,7 +9,7 @@ UI_CMDLine:: UI_CMDLine (int maxNumOfTries)
     _max_num_of_tries = maxNumOfTries;
 }
 
-std::string UI_CMDLine::getAnswer (Question& question)
+std::string UI_CMDLine::getAnswer (Question& question) const
 {
     int tries = 0;
     std::string answer = "xx";
@@ -22,7 +22,7 @@ std::string UI_CMDLine::getAnswer (Question& question)
     return answer;
 }
 
-int UI_CMDLine::menu (std::string prompt, std::vector<std::string> items, int fallBack) 
+int UI_CMDLine::menu (std::string prompt, std::vector<std::string> items, int fallBack) const
 {  
     int size = items.size();
     std::stringstream ssPrompt;
@@ -64,7 +64,7 @@ int UI_CMDLine::menu (std::string prompt, std::vector<std::string> items, int fa
     return stoi(answer) - 1;
 }
 
-void UI_CMDLine::print (std::string str)
+void UI_CMDLine::print (std::string str) const
 {
     std::cout << str << std::endl;
 }

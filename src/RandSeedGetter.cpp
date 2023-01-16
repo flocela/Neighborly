@@ -12,10 +12,10 @@ Question_Int RandSeedGetter::createQuestionForSeed ()
     };
 }
 
-int RandSeedGetter::makeSeedForRand ()
+int RandSeedGetter::makeSeedForRand (const UI& ui)
 {
     Question_Int question = createQuestionForSeed();
-    _ui.getAnswer(question);
+    ui.getAnswer(question);
     if (question.hasValidAnswer())
         return std::stoi(question.getAnswer());
     else

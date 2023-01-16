@@ -212,7 +212,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
         neighbors,
         make_unique<TitleA>(
             _chart_title_letter,
-            "Diversity, Average Number of Disparate Neighbors per Resident per Run"),
+            "Average Number of Disparate Neighbors per Group, per Run"),
         make_unique<GrColorKey>(
             _chart_key_letter,
             _colors,

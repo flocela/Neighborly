@@ -34,14 +34,13 @@
 #include <SDL_ttf.h>
 #include <iostream>
 #include <memory>
-
 #include "CityFactory.h"
 #include "CityFactory_Grid.h"
-#include "CityMaker_CMDLine.h"
+
 #include "ResidentsFactory_Flat.h"
 #include "ResidentsFactory_StepDown.h"
 #include "ResidentsFactory.h"
-#include "ResidentsMaker_CMDLine.h"
+
 #include "Printer_Graphic.h"
 #include "Printer_CMDLine.h"
 #include "Resident_Flat.h"
@@ -54,30 +53,15 @@
 #include "MainBaseQuestion.h"
 #include "SimulationComponents.h"
 #include "MainExamples.h"
-#include "RandSeedGetter.h"
-#include "UINumOfRunsGetter.h"
-
+#include "MainSimulationComponents.h"
 #include <chrono>
 #include <ctime>
 
-using std::vector;
-using std::unique_ptr;
-using std::string;
+using namespace std;
 
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
 /* Function Declarations */
-template<typename T>
-vector<T*> getPointers (vector<unique_ptr<T>>& ts)
-{
-    vector<T*> pointers = {};
-    for (auto& t : ts)
-    {
-        pointers.push_back(t.get());
-    }
-    return pointers;
-}
-
 template<typename T>
 std::set<T*> getSetOfPointers (vector<unique_ptr<T>>& ts)
 {
@@ -94,19 +78,6 @@ vector<unique_ptr<ResidentsFactory>> initResidentFactories ();
 void initForSimpleExample (int example);
 void initForUserDefinedRun ();
 
-/* Value Declarations */
-unique_ptr<City> city;
-vector<unique_ptr<Resident>> residents;
-unique_ptr<Simulator> simulator;
-int numOfRuns = 5;
-int randomSeed = 5;
-
-// SCREEN_WIDTH and SCREEN_HEIGHT is set to 1200 pixels. The city graph
-// will take up .5 the screen, 600 pixels. Remove 240pixels for borders,
-// titles, and axis title leaves 360 pixels. Each house must be no smaller
-// than 4 pixels, or it will be difficulat to see.
-// So the largest number of houses in the x and y directions are 150.
-// Calculated as 360/4 = 90.
 const int SCREEN_WIDTH   = 2400;
 const int SCREEN_HEIGHT  = 1200;
 const int MAX_HOUSES_X   = 120;
@@ -117,95 +88,55 @@ int main(int argc, char* argv[])
     (void) argc;
     (void) argv;
 
-    vector<unique_ptr<CityFactory>>      cityFactories       = initCityFactories();
-    vector<CityFactory*>                 cityFactoryPointers = getPointers(cityFactories);
-    vector<unique_ptr<ResidentsFactory>> residentFactories   = initResidentFactories();
-    vector<ResidentsFactory*>            resFactoryPointers  = getPointers(residentFactories);
+    vector<unique_ptr<CityFactory>> cityFactories = initCityFactories();
+    vector<unique_ptr<ResidentsFactory>> residentFactories = initResidentFactories();
 
     SimulationComponents components;
-    int randomSeed = 1;
-    std::unordered_map<int, BaseColor> colorPerGroupNumber;
+
+    UI_CMDLine cmdLine{};
 
     MainBaseQuestion mainQuestion;
-    bool usesExamples = mainQuestion.askUserToUsePremadeExamples();
+    bool usesExamples = mainQuestion.askUserToUsePremadeExamples(cmdLine);
 
     if (usesExamples)
     {   
-        srand(randomSeed);
-        MainExamples mainExamples;
+        MainExamples mainExamples; //TODO add randomSeed number to MainExamples
 
         components = mainExamples.userChoosesExample();
-
-        city = std::move(components.city);
-        residents = std::move(components.residents);
-
-        simulator = std::move(components.simulator);
-        numOfRuns = components.numOfRuns;
-        colorPerGroupNumber = components.resGroupColors;
     }
     else
     {
-        RandSeedGetter randSeedGetter; 
-        randomSeed = randSeedGetter.makeSeedForRand();
-        srand(randomSeed);
-        CityMaker_CMDLine cityMaker{};
-        city = cityMaker.makeCity(
-            cityFactoryPointers,
-            MAX_HOUSES_X,
-            MAX_HOUSES_Y);
-
-        // Only two groups of residents. Group 1 and Group 2.
-        std::vector<BaseColor> baseColors;
-        auto iter = _colorrs_map.begin();
-        for (int ii=1; ii<3; ++ii) 
-        {
-            baseColors.push_back((*iter).first);
-            ++iter;
-        }
-
-        ResidentsMaker_CMDLine residentsMaker{};
-        ResidentsGroupInfo resGroupInfo = 
-            residentsMaker.makeResidents
-            (
-                resFactoryPointers,
-                city->getNumOfHouses(),
-                2, // currenlty only allowing two group
-                baseColors,
-                std::min(city->getWidth()/2, city->getHeight()/2)
-            );
-
-        residents = std::move(resGroupInfo._residents);
-        colorPerGroupNumber = resGroupInfo._base_color_per_group_num;
-        std::set<Resident*> residentPtrs = {};
-        for (auto& resident: residents)
-        {
-            residentPtrs.insert(resident.get());
-        }
-
-        UINumOfRunsGetter runsGetter;
-        numOfRuns = runsGetter.getNumOfRunsFromUser();
-        
-        simulator = std::make_unique<Simulator_Basic_A>(city.get(), residentPtrs);
+       MainSimulationComponents mainSimulationComponents{};
+       components = mainSimulationComponents.askUserForComponents(
+           cmdLine,
+           cityFactories,
+           residentFactories,
+           MAX_HOUSES_X,
+           MAX_HOUSES_Y
+       );
     }
-
-    std::vector<const House*> houses = city->getHouses();
+    
+    srand(components.randomSeed);
+    std::vector<const House*> houses = components.city->getHouses();
 
     std::unordered_map<const House*, std::set<const House*>> neighbors;
     for (const House* house : houses)
     {   
-        neighbors[house] = city->getAdjacentHouses(house->getAddress());
+        neighbors[house] = components.city->getAdjacentHouses(house->getAddress());
     }
+
     Printer_Graphic graphicPrinter{
-        colorPerGroupNumber,
-        city->getCoordinatesPerHouse(),
+        components.baseColorsPerGroupid,
+        components.city->getCoordinatesPerHouse(),
         neighbors,
         "Neighbors",
-        numOfRuns
+        components.numOfRuns
     };
+    
     std::unordered_map<const House*, Resident*> houseToResidentMap;
-    for (int ii=0; ii< numOfRuns; ii++)
+    for (int ii=0; ii<components.numOfRuns; ii++)
     {   
-        houseToResidentMap = simulator->simulate();
+        houseToResidentMap = components.simulator->simulate();
         
         std::unordered_map<const House*, const Resident*> constMap;
         for (auto& pair : houseToResidentMap)
@@ -215,7 +146,7 @@ int main(int argc, char* argv[])
         graphicPrinter.print(constMap, ii);
 
     }
-    Printer_CMDLine cmdLinePrinter{numOfRuns, city.get()};
+    //Printer_CMDLine cmdLinePrinter{components.numOfRuns, components.city.get()};
     //cmdLinePrinter.print(houseToResidentMap, numOfRuns, "Title");
     graphicPrinter.keepScreen();
     return 0; 
@@ -223,7 +154,7 @@ int main(int argc, char* argv[])
 
 vector<unique_ptr<CityFactory>> initCityFactories ()
 {
-    vector<unique_ptr<CityFactory>> cityFactories = {};
+    vector<unique_ptr<CityFactory>> cityFactories{};
     cityFactories.emplace_back(std::make_unique<CityFactory_Grid>());
     return cityFactories;
 }

@@ -200,18 +200,18 @@ CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.s"
 	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChart.cpp -o CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.s
 
-CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
-CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o: GrColorKeyPrinter.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o"
-	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.cpp
+CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
+CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.o: GrColorKey.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.o"
+	/usr/bin/g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.o -c /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKey.cpp
 
-CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.i"
-	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.cpp > CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.i
+CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.i"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKey.cpp > CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.i
 
-CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.s"
-	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.cpp -o CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.s
+CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.s"
+	/usr/bin/g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKey.cpp -o CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.s
 
 CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o: CMakeFiles/sdl2-ttf-sample.dir/flags.make
 CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o: GrDvstyChart.cpp
@@ -707,7 +707,7 @@ sdl2__ttf__sample_OBJECTS = \
 "CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o" \
-"CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o" \
+"CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o" \
 "CMakeFiles/sdl2-ttf-sample.dir/GrRunsChart.cpp.o" \
@@ -760,7 +760,7 @@ sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/City_Grid.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o
-sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o
+sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o
 sdl2-ttf-sample: CMakeFiles/sdl2-ttf-sample.dir/GrRunsChart.cpp.o

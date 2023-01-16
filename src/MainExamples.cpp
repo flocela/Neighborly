@@ -44,7 +44,7 @@ SimulationComponents MainExamples::userChoosesExample ()
             auto iter = _colorrs_map.begin();
             for (int ii=1; ii<3; ++ii)
             {
-                components.resGroupColors.insert({ii, (*iter).first});
+                components.baseColorsPerGroupid.insert({ii, (*iter).first});
                 ++iter;
             }
 
@@ -78,7 +78,7 @@ SimulationComponents MainExamples::userChoosesExample ()
                 components.city.get(),
                 getSetOfPointers(components.residents)
             );
-            components.numOfRuns = 15;
+            components.numOfRuns = 30;
             
             break;
         }

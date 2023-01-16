@@ -24,7 +24,7 @@ class Letter
 
     private:
         int _letter_height = 30;
-        int _line_space = 2; // space below the letter.
+        int _line_space = 2; // clear space below letter (in pixels).
         double _width_multiplier = 0.3;
 };
 #endif

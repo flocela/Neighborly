@@ -10,7 +10,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.o"
   "CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.o"
   "CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o"
-  "CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o"
+  "CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.o"
   "CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o"
   "CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o"
   "CMakeFiles/sdl2-ttf-sample.dir/GrRunsChart.cpp.o"

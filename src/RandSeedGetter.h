@@ -3,15 +3,14 @@
 
 #include <string>
 #include "Question_Int.h"
-#include "UI_CMDLine.h"
+#include "UI.h"
 
 class RandSeedGetter
 {
     public:
-        int makeSeedForRand ();
+        int makeSeedForRand (const UI& ui);
 
     private:
-        UI_CMDLine _ui;
         Question_Int createQuestionForSeed ();
 
         std::string _seed_orig_prompt = 

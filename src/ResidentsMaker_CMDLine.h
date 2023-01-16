@@ -16,11 +16,12 @@
 class ResidentsMaker_CMDLine: public ResidentsMaker
 {
     public:
-        ResidentsMaker_CMDLine () = default;
+        ResidentsMaker_CMDLine () = delete;
+        ResidentsMaker_CMDLine (const UI_CMDLine& cmdline);
         ~ResidentsMaker_CMDLine () = default;
 
         ResidentsGroupInfo makeResidents (
-            std::vector<ResidentsFactory*> residentsFactories,
+            const std::vector<std::unique_ptr<ResidentsFactory>>& residentsFactories, //TODO should residentFactories be const also?
             int maxNumOfResidents,
             int maxNumberOfGroupsOfResidents, // Currently just using two groups!
             std::vector<BaseColor> colors,
@@ -36,7 +37,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         int askForNumOfResidents (int count, std::string color);
         int askForGroupResidentType (
             std::string color, 
-            std::vector<ResidentsFactory*> residentsFactories
+            const std::vector<std::unique_ptr<ResidentsFactory>>& residentsFactories
         );
         int _num_of_groups = 2;
         
@@ -50,7 +51,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
 
         void initColors (std::vector<BaseColor> colors);
         std::vector<std::string>  getFactoryNames (
-            std::vector<ResidentsFactory*> residentsFactories
+            const std::vector<std::unique_ptr<ResidentsFactory>>& residentsFactories
         );
 
         UI_CMDLine _ui = UI_CMDLine{};

@@ -4,10 +4,10 @@
 using namespace std;
 
 unique_ptr<City> CityFactory_Grid::createCity (
-    UI& ui,
+    const UI& ui,
     int deltaX, 
     int deltaY
-)
+) const
 {
     int width = askForGridWidth(ui, min(deltaX, deltaY));
     return make_unique<City_Grid>(width);
@@ -18,7 +18,7 @@ string CityFactory_Grid::cityType ()
     return "Grid City";
 }
 
-int CityFactory_Grid::askForGridWidth(UI& ui, int maxWidth)
+int CityFactory_Grid::askForGridWidth(const UI& ui, int maxWidth)const
 {   
     string _width_of_grid_orig_prompt_copy = _width_of_grid_orig_prompt;
     string _width_of_grid_range_prompt_copy = _width_of_grid_range_prompt;

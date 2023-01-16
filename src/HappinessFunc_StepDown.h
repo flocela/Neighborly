@@ -1,6 +1,7 @@
 #ifndef HAPPINESSFUNC_STEPDOWN_H
 #define HAPPINESSFUNC_STEPDOWN_H
 
+#include <stdexcept>
 #include "HappinessFunc.h"
 
 // this is a step function. the x-axis is diversity. the y-axis is happiness.

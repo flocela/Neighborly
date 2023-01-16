@@ -15,7 +15,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/Color.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/Color.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/Coordinate.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/Coordinate.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrCityChart.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.o"
-  "/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKeyPrinter.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o"
+  "/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrColorKey.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrDvstyChart.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/GrDvstyChart.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrHapChart.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/GrHapChart.cpp.o"
   "/home/workspace/aminoshbh/sdl2-ttf-sample/src/GrRunsChart.cpp" "/home/workspace/aminoshbh/sdl2-ttf-sample/src/CMakeFiles/sdl2-ttf-sample.dir/GrRunsChart.cpp.o"

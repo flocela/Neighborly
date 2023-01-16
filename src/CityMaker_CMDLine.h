@@ -7,15 +7,18 @@
 class CityMaker_CMDLine: public CityMaker
 {
 public:
+
+    CityMaker_CMDLine (const UI_CMDLine& ui);
+
     std::unique_ptr<City> makeCity (
-        std::vector<CityFactory*> cityFactories,
+        const std::vector<std::unique_ptr<CityFactory>>& cityFactories,
         int maxDeltaX,
         int maxDeltaY
     )
     override;
 
 private:
-    UI_CMDLine _ui = UI_CMDLine{};
+    const UI_CMDLine& _ui;
 };
 
 #endif

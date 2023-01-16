@@ -2,15 +2,12 @@
 #define MAIN_BASE_QUESTION_H
 
 #include <vector>
-#include "UI_CMDLine.h"
+#include "UI.h"
 
 class MainBaseQuestion
 {
     public:
-        bool askUserToUsePremadeExamples ();
-    
-    private:
-        UI_CMDLine ui;
+        bool askUserToUsePremadeExamples (const UI& ui);
 
 };
 

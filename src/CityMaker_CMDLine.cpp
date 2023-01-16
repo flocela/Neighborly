@@ -3,8 +3,12 @@
 
 using namespace std;
 
+CityMaker_CMDLine::CityMaker_CMDLine (const UI_CMDLine& ui)
+:_ui{ui}
+{}
+
 unique_ptr<City> CityMaker_CMDLine::makeCity (
-    vector<CityFactory*> cityFactories,
+    const std::vector<unique_ptr<CityFactory>>& cityFactories,
     int maxDeltaX,
     int maxDeltaY
 )
@@ -12,7 +16,7 @@ unique_ptr<City> CityMaker_CMDLine::makeCity (
     vector<string> namesOfCityFactories = {};
     for (auto& factory : cityFactories)
     {
-        namesOfCityFactories.push_back(factory->cityType());
+        namesOfCityFactories.push_back(factory->cityType()); // TODO should factory be a reference?
     }
 
     int cityChoice = 0;
@@ -28,7 +32,7 @@ unique_ptr<City> CityMaker_CMDLine::makeCity (
             _ui.menu("Choose a city type by typing the"
             " corresponding number. _",
             namesOfCityFactories,
-            0);   
+            0);  
     }
     return cityFactories[cityChoice]->createCity(_ui, maxDeltaX, maxDeltaY);
 

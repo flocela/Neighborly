@@ -1,5 +1,7 @@
 #include "HappinessFunc_Rising.h"
 
+using namespace std;
+
 HappinessFunc_Rising::HappinessFunc_Rising (
     double happinessWithNoNeighbors,
     double happinessAtZeroDiversity,
@@ -11,16 +13,19 @@ HappinessFunc_Rising::HappinessFunc_Rising (
     if ( _happ_at_one_diversity  < 0.0 ||
          _happ_at_one_diversity  > 100.0 )
     {
-        throw "values of happiness at zero diversity must be between 0.0 and 100.0 inclusive.";
+        throw invalid_argument("values of happiness at zero diversity must be"
+        " between 0.0 and 100.0 inclusive.");
     }
     if ( _happ_at_zero_diversity < 0.0 ||
          _happ_at_zero_diversity > 1.0 )
     {
-        throw "values of happiness at one diversity must be between 0.0 and 100.0 inclusive.";
+        throw invalid_argument("values of happiness at one diversity must be"
+        " between 0.0 and 100.0 inclusive.");
     }
         
     if (_happ_at_one_diversity <= _happ_at_zero_diversity)
-        throw "hapinessAtOneDiversity must be larger than at happinessAtZeroDiversity.";
+        throw invalid_argument("hapinessAtOneDiversity must be larger than"
+        " at happinessAtZeroDiversity.");
 }
 
 double HappinessFunc_Rising::calcHappiness ( 

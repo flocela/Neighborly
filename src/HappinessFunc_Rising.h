@@ -1,6 +1,7 @@
 #ifndef HAPPINESSFUNC_RISING_H
 #define HAPPINESSFUNC_RISING_H
 
+#include <stdexcept>
 #include "HappinessFunc.h"
 
 // Happiness increases as diversity increases.

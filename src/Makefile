@@ -445,32 +445,32 @@ GrCityChart.cpp.s:
 	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/GrCityChart.cpp.s
 .PHONY : GrCityChart.cpp.s
 
-GrColorKeyPrinter.o: GrColorKeyPrinter.cpp.o
+GrColorKey.o: GrColorKey.cpp.o
 
-.PHONY : GrColorKeyPrinter.o
+.PHONY : GrColorKey.o
 
 # target to build an object file
-GrColorKeyPrinter.cpp.o:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.o
-.PHONY : GrColorKeyPrinter.cpp.o
+GrColorKey.cpp.o:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.o
+.PHONY : GrColorKey.cpp.o
 
-GrColorKeyPrinter.i: GrColorKeyPrinter.cpp.i
+GrColorKey.i: GrColorKey.cpp.i
 
-.PHONY : GrColorKeyPrinter.i
+.PHONY : GrColorKey.i
 
 # target to preprocess a source file
-GrColorKeyPrinter.cpp.i:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.i
-.PHONY : GrColorKeyPrinter.cpp.i
+GrColorKey.cpp.i:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.i
+.PHONY : GrColorKey.cpp.i
 
-GrColorKeyPrinter.s: GrColorKeyPrinter.cpp.s
+GrColorKey.s: GrColorKey.cpp.s
 
-.PHONY : GrColorKeyPrinter.s
+.PHONY : GrColorKey.s
 
 # target to generate assembly for a file
-GrColorKeyPrinter.cpp.s:
-	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/GrColorKeyPrinter.cpp.s
-.PHONY : GrColorKeyPrinter.cpp.s
+GrColorKey.cpp.s:
+	$(MAKE) -f CMakeFiles/sdl2-ttf-sample.dir/build.make CMakeFiles/sdl2-ttf-sample.dir/GrColorKey.cpp.s
+.PHONY : GrColorKey.cpp.s
 
 GrDvstyChart.o: GrDvstyChart.cpp.o
 
@@ -2081,9 +2081,9 @@ help:
 	@echo "... GrCityChart.o"
 	@echo "... GrCityChart.i"
 	@echo "... GrCityChart.s"
-	@echo "... GrColorKeyPrinter.o"
-	@echo "... GrColorKeyPrinter.i"
-	@echo "... GrColorKeyPrinter.s"
+	@echo "... GrColorKey.o"
+	@echo "... GrColorKey.i"
+	@echo "... GrColorKey.s"
 	@echo "... GrDvstyChart.o"
 	@echo "... GrDvstyChart.i"
 	@echo "... GrDvstyChart.s"

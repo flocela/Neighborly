@@ -10,7 +10,7 @@ class CityMaker
 {
 public:
     virtual std::unique_ptr<City> makeCity (
-        std::vector<CityFactory*> cityFactories,
+        const std::vector<std::unique_ptr<CityFactory>>& cityFactories,
         int maxDeltaX,
         int maxDeltaY
     ) = 0;
