@@ -170,33 +170,25 @@ std::pair<int, int> PlotA::calcUnitSizeXAndYPx ()
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX; // TODO dividing by zero is dangerous
     xUnitSize = std::max(xUnitSize, _min_unit__px);
 
-    // first try at y-unit size
-    int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeXPx();
+    // first try to find y-unit size
+    int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeYPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     // TODO dividing by zero is dangerous
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
 
     // _unit_x__px and _unit_y__px must both be odd or both be even. But unit sizes must also
     // try to be larger than _min_unit__px
-    if ( ( (xUnitSize % 2 + yUnitSize % 2) == 1 ) &&
-         xUnitSize == _min_unit__px &&
-         yUnitSize == _min_unit__px
-       ) // both unit sizes are not odd or both even, and both unit sizes are _min_unit__px in size
-    {   
-        // one of the unit sizes must become smaller than _min_unit__px
-        --xUnitSize;
-    }
-    else if  ( ( (xUnitSize % 2 + yUnitSize % 2) == 1 ) && yUnitSize == _min_unit__px )
-    {   
-        --xUnitSize;
-    }
-    else if ( ( (xUnitSize % 2 + yUnitSize % 2) == 1 ) && xUnitSize == _min_unit__px )
-    {   
-        --yUnitSize;
-    }
-    else if ( (xUnitSize % 2 + yUnitSize % 2) == 1 )
-    {   
-        --xUnitSize;
+    if ( (xUnitSize%2 == 0 && yUnitSize%2 == 0) || (yUnitSize%2 != 0 && yUnitSize%2 != 0) )
+    {
+        if (xUnitSize < yUnitSize)
+        {
+            --yUnitSize;
+        }
+        else
+        {
+            --xUnitSize;
+        }
+        
     }
     
     return {xUnitSize, yUnitSize};
