@@ -70,7 +70,7 @@ private:
 
     AxisFormat _a_format_x;
     AxisFormat _a_format_y;
-    int _min_unit__px = 6; // This is not a must, but try to have _min_unit__px TODO should this be set here, it's set int the constructor
+    int _min_unit__px = 4; // This is not a must, but try to have _min_unit__px TODO should this be set here, it's set int the constructor
     // Start offset multiplier is used to determine space from cross haris to first value.
     // Space to first value is _start_offset_m * _unit_space__px.
     int _start_offset_m;

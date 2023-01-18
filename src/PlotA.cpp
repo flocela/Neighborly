@@ -175,22 +175,13 @@ std::pair<int, int> PlotA::calcUnitSizeXAndYPx ()
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     // TODO dividing by zero is dangerous
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
+    yUnitSize = std::max(yUnitSize, _min_unit__px);
 
-    // _unit_x__px and _unit_y__px must both be odd or both be even. But unit sizes must also
-    // try to be larger than _min_unit__px
-    if ( (xUnitSize%2 == 0 && yUnitSize%2 == 0) || (yUnitSize%2 != 0 && yUnitSize%2 != 0) )
+    // _unit_x__px and _unit_y__px must both be odd or both be even.
+    if ( (xUnitSize%2 == 0 && yUnitSize%2 != 0) || (yUnitSize%2 != 0 && yUnitSize%2 == 0) )
     {
-        if (xUnitSize < yUnitSize)
-        {
-            --yUnitSize;
-        }
-        else
-        {
-            --xUnitSize;
-        }
-        
+        --yUnitSize;
     }
-    
     return {xUnitSize, yUnitSize};
 }
 

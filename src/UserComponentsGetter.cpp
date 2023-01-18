@@ -1,4 +1,4 @@
-#include "MainSimulationComponents.h"
+#include "UserComponentsGetter.h"
 #include "SimulationComponents.h"
 #include "RandSeedGetter.h"
 #include "CityMaker_CMDLine.h"
@@ -6,7 +6,7 @@
 #include "UINumOfRunsGetter.h"
 #include "Simulator_Basic_A.h"
 
-SimulationComponents MainSimulationComponents::askUserForComponents (
+SimulationComponents UserComponentsGetter::askUserForComponents (
     const UI_CMDLine& ui,
     const std::vector<std::unique_ptr<CityFactory>>& cityFactories,
     const std::vector<std::unique_ptr<ResidentsFactory>>& residentFactories,

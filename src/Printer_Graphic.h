@@ -116,10 +116,10 @@ private:
     /* DIVERSITY CHART */
     /* Diversity chart is the right column. Diversity chart sits below number of runs chart*/
     
-    double _div_chart_y_axis_fraction = 0.3;
+    double _div_chart_y_axis_fraction = 0.26;
 
     // provides some vertical space between diversity and happiness charts.
-    double _space_below_div_chart_y_axis_fraction = 0.05; 
+    double _space_below_div_chart_y_axis_fraction = 0.01; 
 
     int _max_number_of_neighbors; //TODO we need to set this and honor it.
 

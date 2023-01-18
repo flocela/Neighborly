@@ -53,7 +53,7 @@
 #include "MainBaseQuestion.h"
 #include "SimulationComponents.h"
 #include "MainExamples.h"
-#include "MainSimulationComponents.h"
+#include "UserComponentsGetter.h"
 #include <chrono>
 #include <ctime>
 
@@ -106,8 +106,8 @@ int main(int argc, char* argv[])
     }
     else
     {
-       MainSimulationComponents mainSimulationComponents{};
-       components = mainSimulationComponents.askUserForComponents(
+       UserComponentsGetter userComponentsGetter{};
+       components = userComponentsGetter.askUserForComponents(
            cmdLine,
            cityFactories,
            residentFactories,

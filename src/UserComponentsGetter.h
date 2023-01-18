@@ -1,5 +1,5 @@
-#ifndef MAINSIMULATIONCOMPONENTS_H
-#define MAINSIMULATIONCOMPONENTS_H
+#ifndef USERCOMPONENTSGETTER_H
+#define USERCOMPONENTSGETTER_H
 
 #include "SimulationComponents.h"
 #include <vector>
@@ -8,7 +8,7 @@
 #include "ResidentsFactory.h"
 #include "UI_CMDLine.h"
 
-class MainSimulationComponents
+class UserComponentsGetter
 {
 public:
     SimulationComponents askUserForComponents (
