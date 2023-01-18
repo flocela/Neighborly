@@ -119,31 +119,33 @@ int main(int argc, char* argv[])
     srand(components.randomSeed);
     std::vector<const House*> houses = components.city->getHouses();
 
-    std::unordered_map<const House*, std::set<const House*>> neighbors;
+    std::unordered_map<const House*, std::set<const House*>> neighboringHousesPerHouse;
     for (const House* house : houses)
     {   
-        neighbors[house] = components.city->getAdjacentHouses(house->getAddress());
+        neighboringHousesPerHouse[house] = components.city->getAdjacentHouses(house->getAddress());
     }
 
     Printer_Graphic graphicPrinter{
         components.baseColorsPerGroupid,
         components.city->getCoordinatesPerHouse(),
-        neighbors,
+        neighboringHousesPerHouse,
         "Neighbors",
         components.numOfRuns
     };
     
-    std::unordered_map<const House*, Resident*> houseToResidentMap;
+    std::unordered_map<const House*, Resident*> residentPerHouse;
     for (int ii=0; ii<components.numOfRuns; ii++)
     {   
-        houseToResidentMap = components.simulator->simulate();
-        
-        std::unordered_map<const House*, const Resident*> constMap;
-        for (auto& pair : houseToResidentMap)
+        residentPerHouse = components.simulator->simulate();
+
+        // Printer_Graphic requires unordered_map of type CONST House* and CONST Resident*
+        std::unordered_map<const House*, const Resident*> constResPerConstHouse;
+        for (auto& pair : residentPerHouse)
         {
-            constMap[pair.first] = pair.second;
+            constResPerConstHouse[pair.first] = pair.second;
         }
-        graphicPrinter.print(constMap, ii);
+
+        graphicPrinter.print(constResPerConstHouse, ii);
 
     }
     //Printer_CMDLine cmdLinePrinter{components.numOfRuns, components.city.get()};
@@ -164,6 +166,6 @@ vector<unique_ptr<ResidentsFactory>> initResidentFactories()
     vector<unique_ptr<ResidentsFactory>> residentFactories = {};
     residentFactories.emplace_back(std::make_unique<ResidentsFactory_Flat>());
     residentFactories.emplace_back(std::make_unique<ResidentsFactory_StepDown>());
-
+    //TODO add the rest of the fatories here. Once they're made.
     return residentFactories;
 }
