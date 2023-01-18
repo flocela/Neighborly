@@ -8,7 +8,6 @@
 #include <vector>
 #include "House.h"
 #include <memory>
-#include "PixelConverter.h"
 #include "AxisFormat.h"
 #include "Letter.h"
 #include "GrColorKey.h"

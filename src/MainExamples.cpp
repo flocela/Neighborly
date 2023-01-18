@@ -17,7 +17,7 @@ std::set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
     return pointers;
 }
 
-SimulationComponents MainExamples::userChoosesExample ()
+SimulationComponents MainExamples::userChoosesExample (const UI& ui)
 {
     SimulationComponents components;
     int chosenExample = ui.menu(

@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
     {   
         MainExamples mainExamples; //TODO add randomSeed number to MainExamples
 
-        components = mainExamples.userChoosesExample();
+        components = mainExamples.userChoosesExample(cmdLine);
     }
     else
     {

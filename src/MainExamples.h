@@ -11,12 +11,8 @@
 
 class MainExamples
 {
-    public:
-    // TODO in .cpp file these methods should raise an exception if userChoosesExample hasn't run yet!!!
-        SimulationComponents userChoosesExample ();
-
-    private:
-        UI_CMDLine ui;
+public:
+    SimulationComponents userChoosesExample (const UI& ui);
 };
 
 #endif

@@ -5,7 +5,6 @@
 #include "SDL.h"
 #include "renderer.h"
 #include "Coordinate.h"
-#include "PixelConverter.h"
 #include "AxisFormat.h"
 #include <memory>
 #include "TextRect.h"
