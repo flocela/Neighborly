@@ -89,7 +89,7 @@ void PlotB::print (
     std::unordered_map<Color, std::vector<Point>> pointsPerColor,
     bool clear,
     Renderer* renderer
-)
+) const
 {   
     (void) clear;// TODO no need to pass in clear. will always clear.
     if (!_axis_is_printed) 
@@ -124,7 +124,7 @@ void PlotB::print (
 
 }
 
-int PlotB::calcUnitSizePx ()
+int PlotB::calcUnitSizePx () const
 {
     if (_x_space__px <= 0 || _y_space__px <= 0)
     {
@@ -144,7 +144,7 @@ int PlotB::calcUnitSizePx ()
     return std::max(unitSize, _min_unit__px);
 }
 
-int PlotB::calcDotSizePx ()
+int PlotB::calcDotSizePx () const
 {
     int unitSizePx = std::min(_unit__px, _unit__px);
     int dotSize = unitSizePx/2;
@@ -152,7 +152,7 @@ int PlotB::calcDotSizePx ()
     return dotSize;
 }
 
-int PlotB::calcCrossXPx (int topLeftXPx)
+int PlotB::calcCrossXPx (int topLeftXPx) const
 {
     int xAxisLength = _unit__px * ( _x_diff + _start_offset_m + _end_offset_m);
     return topLeftXPx +
@@ -160,7 +160,7 @@ int PlotB::calcCrossXPx (int topLeftXPx)
            _y_axis.sizeXPx();
 }
 
-int PlotB::calcCrossYPx (int topLeftYPx) // TODO, I think I should be calling this more often, instead of repeating this calculation
+int PlotB::calcCrossYPx (int topLeftYPx) const // TODO, I think I should be calling this more often, instead of repeating this calculation
 {
     return topLeftYPx + _x_axis.sizeYPx();
 }
@@ -195,7 +195,7 @@ void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) {
 
 }
 
-int PlotB::sizeYPx()
+int PlotB::sizeYPx() const
 {  
     // subraction takes care of double counting of horizontal axis' thickness.
     // axis is always at least 1 px, so subtract at least one pixel.
@@ -207,7 +207,7 @@ int PlotB::sizeYPx()
     
 }
 
-int PlotB::sizeXPx ()
+int PlotB::sizeXPx () const 
 {
     return
         _y_axis.sizeXPx() +
@@ -215,7 +215,7 @@ int PlotB::sizeXPx ()
         (_a_format_y.axisThicknessPx() == 1? 1 : _a_format_y.axisThicknessPx()/2);
 }
 
-int PlotB::centerValueOfXAxisPx ()
+int PlotB::getCenterValueOfXAxisPx () const 
 {
-    return _x_axis.centerValXPx();
+    return _x_axis.getCenterValXPx();
 }

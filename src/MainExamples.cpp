@@ -29,7 +29,7 @@ SimulationComponents MainExamples::userChoosesExample (const UI& ui)
             "finicky residents with a large city"},
             0
         );
-    switch (chosenExample) // TODO only one type of example is listed in this switch statement
+    switch (chosenExample) // TODO only one type of example is listed in this switch statement, make more examples.
     {
         // 120 x 120 city with 14,400 houses. 
         // 200 StepDown (Blue)

@@ -25,7 +25,7 @@ AxisTopToBottomL::AxisTopToBottomL (
     _end_offset_m{endOffsetMultiplier}
 {}
 
-void AxisTopToBottomL::print (Renderer* renderer)
+void AxisTopToBottomL::print (Renderer* renderer) const
 {
     std::vector<SDL_Rect> rects = {};
     std::vector<TextRect> texts = {};
@@ -33,15 +33,15 @@ void AxisTopToBottomL::print (Renderer* renderer)
     // TODO think about removing these setColor and setTextFormats
     renderer->setColorToMedGrey();
 
-    addVerticalLine(rects);
-    addTicksAndLabels (rects, texts);
+    printVerticalLine(rects);
+    printTicksAndLabels (rects, texts);
 
     renderer->fillBlocks(rects);
     renderer->renderTexts(texts);
 
 }
 
-void AxisTopToBottomL::addVerticalLine (std::vector<SDL_Rect>& rects)
+void AxisTopToBottomL::printVerticalLine (std::vector<SDL_Rect>& rects) const
 {
     SDL_Rect rect{
         _x_cross__px,
@@ -53,15 +53,15 @@ void AxisTopToBottomL::addVerticalLine (std::vector<SDL_Rect>& rects)
     rects.push_back(rect);
 }
 
-int AxisTopToBottomL::calcBotMostPixel_Y ()
+int AxisTopToBottomL::calcBotMostPixel_Y () const
 {
     return _y_cross__px + (_px_per_unit * ( _diff + _start_offset_m + _end_offset_m));
 }
         
-void AxisTopToBottomL::addTicksAndLabels (
+void AxisTopToBottomL::printTicksAndLabels (
     std::vector<SDL_Rect>& rects, 
     std::vector<TextRect>& texts
-)
+) const
 {
     int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChartPx();
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
@@ -136,7 +136,7 @@ void AxisTopToBottomL::setTickThickness (int tickThicknessPx)
     _tick_thickness__px = tickThicknessPx;
 }
 
-int AxisTopToBottomL::sizeXPx ()
+int AxisTopToBottomL::sizeXPx () const
 {
     // todo am I assuming 3 digits in label size? As in 999?
     return 
@@ -145,19 +145,19 @@ int AxisTopToBottomL::sizeXPx ()
         _axis_format.axisThicknessPx();
 }
 
-int AxisTopToBottomL::sizeYPx()
+int AxisTopToBottomL::sizeYPx() const
 {
     return axisLengthPx();
 }
 
-int AxisTopToBottomL::axisLengthPx()
+int AxisTopToBottomL::axisLengthPx() const
 {
     int unit_px_odd = (_px_per_unit%2==0)? 0 : 1;
     // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
     return calcBotMostPixel_Y() - _y_cross__px - unit_px_odd + (_tick_thickness__px/2);
 }
 
-int AxisTopToBottomL::getPixel (double yVal)
+int AxisTopToBottomL::getPixel (double yVal) const
 {
     int minYPx = _y_cross__px + ( _start_offset_m * _px_per_unit );
     return minYPx + _px_per_unit * (yVal - _min_val);

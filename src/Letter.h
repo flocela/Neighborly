@@ -17,10 +17,10 @@ class Letter
         void setLineSpace (int space);
         void setWidthMultiplier (double widthMultiplier);
 
-        int letterHeight () {return _letter_height;}
-        int lineSpace () {return _line_space;}
-        double widthMultiplier () { return _width_multiplier;}
-        int getHeightIncLSpace () { return letterHeight() + _line_space;}
+        int letterHeight () const {return _letter_height;}
+        int lineSpace () const {return _line_space;}
+        double widthMultiplier () const { return _width_multiplier;}
+        int getHeightIncLSpace () const { return letterHeight() + _line_space;}
 
     private:
         int _letter_height = 30;

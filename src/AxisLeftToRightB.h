@@ -20,18 +20,18 @@ class AxisLeftToRightB
             int startOffsetMultiplier,
             int endOffsetMultiplier
         );
-        void print (Renderer* renderer);
+        void print (Renderer* renderer) const;
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
         void setTickThickness (int tickThicknessPx);
-        int sizeYPx();
-        int sizeXPx();
+        int sizeYPx() const;
+        int sizeXPx() const;
 
         // returns the y-pixel for yVal. If pxPerUnit is odd, then result is at center of unit.
         // If pxPerUnit is even, then center is denoted by two pixels,
         // and the result is the second pixel. (The second pixel is from the zero value not the zero pixel.)
-        int getPixel (double xVal);
-        int centerValXPx ();
+        int getPixel (double xVal) const;
+        int getCenterValXPx () const;
     
     private:
         AxisFormat _axis_format;
@@ -47,14 +47,19 @@ class AxisLeftToRightB
         int _start_offset_m;
         int _end_offset_m;
 
-        void addHorizontalLine (std::vector<SDL_Rect>& rects);
-        void addTicksAndLabels (std::vector<SDL_Rect>& rects, std::vector<TextRect>& texts);
-        int calcRightMostPixel_X ();
+        void printHorizontalLine (std::vector<SDL_Rect>& rects) const;
 
-        int calcMinTickSpacing (int pixelsPerUnit);
-        int calcMajTickSpacing (int pixelsPerUnit);
+        void printTicksAndLabels (
+            std::vector<SDL_Rect>& rects,
+            std::vector<TextRect>& texts) const;
 
-        int axisLengthPx();
+        int calcRightMostPixel_X () const;
+
+        int calcMinTickSpacing (int pixelsPerUnit) const;
+        
+        int calcMajTickSpacing (int pixelsPerUnit) const;
+
+        int axisLengthPx() const;
         
 };
 

@@ -13,25 +13,25 @@ class AxisFormat
         AxisFormat& operator= (const AxisFormat& o) = default;
         ~AxisFormat () = default;
 
-        int axisThicknessPx () { return _axis_thickness__px;}
-        int majTickLengthPx () { return _maj_tick_length__px;}
-        int minTickLengthPx () {return _min_tick_length__px;}
-        int tickLengthInsideChartPx () {return _tick_length_inside_chart__px;}
-        int majTickLengthOutsideChartPx () 
+        int axisThicknessPx () const { return _axis_thickness__px;}
+        int majTickLengthPx () const { return _maj_tick_length__px;}
+        int minTickLengthPx () const {return _min_tick_length__px;}
+        int tickLengthInsideChartPx () const {return _tick_length_inside_chart__px;}
+        int majTickLengthOutsideChartPx () const 
         {
             return _maj_tick_length__px - _tick_length_inside_chart__px - axisThicknessPx();
         }
-        int minTickLengthOutsideChartPx () 
+        int minTickLengthOutsideChartPx () const 
         {
             return _min_tick_length__px - _tick_length_inside_chart__px - axisThicknessPx();
         }
 
         // labels are the numbers along the axis
-        int labelHeightPx () {return _label_letter.letterHeight();} 
-        int labelLineSpacePx () {return _label_letter.lineSpace();}
-        double labelWidthMultiplier () {return _label_letter.widthMultiplier();}
-        SDL_Color textColor () { return _text_color;}
-        SDL_Color textBackgroundColor () { return _text_background_color;}
+        int labelHeightPx () const {return _label_letter.letterHeight();} 
+        int labelLineSpacePx () const {return _label_letter.lineSpace();}
+        double labelWidthMultiplier () const {return _label_letter.widthMultiplier();}
+        SDL_Color textColor () const { return _text_color;}
+        SDL_Color textBackgroundColor () const { return _text_background_color;}
 
         void setMajTickLengthPx (int length);
         void setMinTickLengthPx (int length);

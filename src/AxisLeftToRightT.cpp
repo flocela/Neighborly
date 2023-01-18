@@ -25,15 +25,15 @@ AxisLeftToRightT::AxisLeftToRightT (
     _end_offset_m{endOffsetMultiplier}
 {}
 
-void AxisLeftToRightT::print (Renderer* renderer)
+void AxisLeftToRightT::print (Renderer* renderer) const
 {   
     // All lines and ticks are drawn as SDL_Rects, which are held in rects vector.
     std::vector<SDL_Rect> rects = {};
     // Tick labels are in texts vector.
     std::vector<TextRect> texts = {};
     
-    addHorizontalLine(rects);
-    addTicksAndLabels(rects, texts);
+    printHorizontalLine(rects);
+    printTicksAndLabels(rects, texts);
 
     renderer->setColorToMedGrey();
     renderer->fillBlocks(rects);
@@ -41,7 +41,7 @@ void AxisLeftToRightT::print (Renderer* renderer)
 }
 
 
-void AxisLeftToRightT::addHorizontalLine (std::vector<SDL_Rect>& rects)
+void AxisLeftToRightT::printHorizontalLine (std::vector<SDL_Rect>& rects) const
 {
     SDL_Rect rect{
         _x_cross__px,
@@ -53,10 +53,10 @@ void AxisLeftToRightT::addHorizontalLine (std::vector<SDL_Rect>& rects)
     rects.push_back(rect);
 }
 
-void AxisLeftToRightT::addTicksAndLabels (
+void AxisLeftToRightT::printTicksAndLabels (
     std::vector<SDL_Rect>& rects, 
     std::vector<TextRect>& texts
-)
+) const
 {   
     int curVal = _min_val;
     int curVal__px = getPixel(curVal) -(_tick_thickness__px/2);
@@ -137,19 +137,19 @@ void AxisLeftToRightT::setTickThickness (int tickThicknessPx)
     _tick_thickness__px = tickThicknessPx;
 }
 
-int AxisLeftToRightT::axisLengthPx ()
+int AxisLeftToRightT::axisLengthPx () const
 {
     int unit_px_odd = (_px_per_unit%2==0)? 0 : 1;
     // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
     return calcRightMostPixelWithValue_X() - _x_cross__px - unit_px_odd + (_tick_thickness__px/2);
 }
 
-int AxisLeftToRightT::sizeXPx ()
+int AxisLeftToRightT::sizeXPx () const
 {
     return axisLengthPx();
 }
 
-int AxisLeftToRightT::sizeYPx ()
+int AxisLeftToRightT::sizeYPx () const
 {
     return 
         _axis_format.axisThicknessPx() +
@@ -158,34 +158,34 @@ int AxisLeftToRightT::sizeYPx ()
         _axis_format.labelHeightPx();
 }
 
-int AxisLeftToRightT::calcRightMostPixelWithValue_X ()
+int AxisLeftToRightT::calcRightMostPixelWithValue_X () const
 {
     return _x_cross__px + (_px_per_unit * ( _diff + _start_offset_m + _end_offset_m));
 }
 
-int AxisLeftToRightT::calcMinTickSpacing (int pixelsPerUnit)
+int AxisLeftToRightT::calcMinTickSpacing (int pixelsPerUnit) const
 { 
     return (pixelsPerUnit >= 10)? 1 : 5; 
 }
         
-int AxisLeftToRightT::calcMajTickSpacing (int pixelsPerUnit)
+int AxisLeftToRightT::calcMajTickSpacing (int pixelsPerUnit) const
 { 
     return (pixelsPerUnit > 10)? 5 : 10; 
 }
 
-int AxisLeftToRightT::calcLabelSpacing (int pixelsPerUnit)
+int AxisLeftToRightT::calcLabelSpacing (int pixelsPerUnit) const
 { 
     return (pixelsPerUnit > 10)? 5 : 10; 
 }
 
-int AxisLeftToRightT::getPixel (double xVal)
+int AxisLeftToRightT::getPixel (double xVal) const
 {   
     int minXPx = _x_cross__px + _start_offset_m * _px_per_unit;
 
     return minXPx + _px_per_unit * (xVal - _min_val);
 }
 
-int AxisLeftToRightT::centerValXPx ()
+int AxisLeftToRightT::getCenterValXPx () const
 {
     // the max value that is shown on the axis will be _max_val plus _end_offfset_m
     return getPixel(_min_val + ((_max_val + _end_offset_m - _min_val)/2.0) );

@@ -220,8 +220,6 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             moods),
         make_unique<PlotA>(
             _right_col_sizer,
-            _colors, 
-            moods, 
             0, // min number of runs
             maxNumOfRuns - 1,
             0, // min number of neighbors
@@ -253,8 +251,6 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
             moods),
         make_unique<PlotA>(
             _right_col_sizer,
-            _colors, 
-            moods, 
             0, // starting run number
             numberOfRuns -1,
             0, // minimum resident happiness

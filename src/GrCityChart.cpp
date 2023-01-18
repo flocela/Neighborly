@@ -26,8 +26,8 @@ GrCityChart::GrCityChart (
 {   
     _plot->setTopLeft(topLeftCornerXPx, topLeftCornerYPx + _title->sizeYPx() + _key->sizeYPx());
     _plot->setXYSpacePx(xSpace, _y_space__px - _title->sizeYPx() - _key->sizeYPx());
-    _title->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftCornerYPx);
-    _key->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftCornerYPx + _title->sizeYPx());
+    _title->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftCornerYPx);
+    _key->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftCornerYPx + _title->sizeYPx());
 }
 
 void GrCityChart::print(

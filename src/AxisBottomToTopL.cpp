@@ -25,19 +25,19 @@ AxisBottomToTopL::AxisBottomToTopL (
     _end_offset_m{endOffsetMultiplier}
 {}
 
-void AxisBottomToTopL::print (Renderer* renderer)
+void AxisBottomToTopL::print (Renderer* renderer) const
 {
     std::vector<SDL_Rect> rects = {};
     std::vector<TextRect> texts = {};
 
-    addVerticalLine(rects);
-    addTicksAndLabels (rects, texts);
+    printVerticalLine(rects);
+    printTicksAndLabels (rects, texts);
 
     renderer->fillBlocks(rects);
     renderer->renderTexts(texts);
 }
 
-void AxisBottomToTopL::addVerticalLine (std::vector<SDL_Rect>& rects)
+void AxisBottomToTopL::printVerticalLine (std::vector<SDL_Rect>& rects) const
 {
     int unit_px_odd = (_px_per_unit%2==0)? 0 : 1;
 
@@ -50,10 +50,10 @@ void AxisBottomToTopL::addVerticalLine (std::vector<SDL_Rect>& rects)
     rects.push_back(rect);
 }
         
-void AxisBottomToTopL::addTicksAndLabels (
+void AxisBottomToTopL::printTicksAndLabels (
     std::vector<SDL_Rect>& rects, 
     std::vector<TextRect>& texts
-)
+) const
 {
     int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
 
@@ -112,7 +112,7 @@ void AxisBottomToTopL::addTicksAndLabels (
     std::cout << std::endl;
 }
 
-int AxisBottomToTopL::calcTopMostPixelWithValue_Y ()
+int AxisBottomToTopL::calcTopMostPixelWithValue_Y () const
 {
     return  _y_cross__px - (_px_per_unit * (_diff + _start_offset_m + _end_offset_m));
 }
@@ -136,7 +136,7 @@ void AxisBottomToTopL::setTickThickness (int tickThicknessPx)
     _tick_thickness__px = tickThicknessPx;
 }
 
-int AxisBottomToTopL::sizeXPx ()
+int AxisBottomToTopL::sizeXPx () const
 {  
     // Three is max number of digits in the y-axis label.
     return 
@@ -146,29 +146,29 @@ int AxisBottomToTopL::sizeXPx ()
         _axis_format.axisThicknessPx();
 }
 
-int AxisBottomToTopL::sizeYPx ()
+int AxisBottomToTopL::sizeYPx () const
 {
     return axisLengthPx();
 }
 
-int AxisBottomToTopL::axisLengthPx ()
+int AxisBottomToTopL::axisLengthPx () const
 {
     int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
     // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
     return _y_cross__px - calcTopMostPixelWithValue_Y() - unit_px_even + (_tick_thickness__px/2);
 }
 
-int AxisBottomToTopL::calcMinTickSpacing (int pixelsPerUnit)
+int AxisBottomToTopL::calcMinTickSpacing (int pixelsPerUnit) const
 { 
     return (pixelsPerUnit >= 10)? 1 : 5;
 }
 
-int AxisBottomToTopL::calcMajTickSpacing (int pixelsPerUnit)
+int AxisBottomToTopL::calcMajTickSpacing (int pixelsPerUnit) const
 { 
     return (pixelsPerUnit > 10)? 5 : 10;
 }
 
-int AxisBottomToTopL::getPixel (double yVal)
+int AxisBottomToTopL::getPixel (double yVal) const
 {
     int minYPx = _y_cross__px - (_start_offset_m * _px_per_unit);
 

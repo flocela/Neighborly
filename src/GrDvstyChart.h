@@ -39,8 +39,8 @@ GrDvstyChart (
 {   
     _plot->setTopLeft(topLeftXPx, topLeftYPx + _title->sizeYPx() + _key->sizeYPx());
     _plot->setXYSpacePx(xSpace, ySpace - _title->sizeYPx() - _key->sizeYPx());
-    _title->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftYPx);
-    _key->setTopCenter(_plot->centerValueOfXAxisPx(), topLeftYPx + _title->sizeYPx());
+    _title->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx);
+    _key->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx + _title->sizeYPx());
 }
 
 void print (

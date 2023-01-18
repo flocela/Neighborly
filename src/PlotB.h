@@ -41,25 +41,25 @@ public:
     void print (
         std::unordered_map<Color, std::vector<Point>> pointsPerColor,
         bool clear,
-        Renderer* renderer) override;
+        Renderer* renderer) const override;
 
     void setTopLeft (int xPx, int yPx) override; 
 
     void setXYSpacePx (int xSpacePx, int ySpacePx) override;
 
-    int getTopLeftXPx () override { return _top_left_x__px;}
+    int getTopLeftXPx () const override { return _top_left_x__px;}
 
-    int getTopLeftYPx () override { return _top_left_y__px;}
+    int getTopLeftYPx () const override { return _top_left_y__px;}
 
-    int getXSpacePx () override { return _x_space__px; }
+    int getXSpacePx () const override { return _x_space__px; }
 
-    int getYSpacePx () override { return _y_space__px; }
+    int getYSpacePx () const override { return _y_space__px; }
 
     // returns the size of the Plot in x and y directions
-    int sizeYPx () override;
-    int sizeXPx () override;
+    int sizeYPx () const override;
+    int sizeXPx () const override;
 
-    int centerValueOfXAxisPx () override;
+    int getCenterValueOfXAxisPx () const override;
 
 
 private:
@@ -100,15 +100,15 @@ private:
     AxisLeftToRightT _x_axis;
     AxisTopToBottomL _y_axis;
 
-    int calcUnitSizeXPx ();
+    int calcUnitSizeXPx () const;
 
     // Y unit size is dependent on X unit size. They both have to be odd or even.
-    int calcUnitSizePx ();
-    int calcDotSizePx ();
-    int calcCrossXPx (int topLeftX);
-    int calcCrossYPx (int topLeftY);
+    int calcUnitSizePx () const;
+    int calcDotSizePx () const;
+    int calcCrossXPx (int topLeftX) const;
+    int calcCrossYPx (int topLeftY) const;
 
-    bool _axis_is_printed = false;
+    mutable bool _axis_is_printed = false;
 };
 
 #endif
