@@ -8,14 +8,14 @@ class Point
 {
 public:
     Point(
-        double x, // TODO why do these have to doubles?
+        double x,
         double y,
-        Color color // TODO, color isn't used.
+        Color color
     ):
     _x{x},
     _y{y},
     _color{color},
-    _rgba{_the_color_rgba[color]} // TODO make rgba a reference
+    _rgba{_the_color_rgba[color]}
     {}
 
     double x () {return _x;}
@@ -26,7 +26,7 @@ public:
 private:
     double _x;
     double _y;
-    Color _color; // maybe just hold rgba, don't hold color since not asked for ever.
+    Color _color;
     std::vector<int> _rgba;
 
 };
