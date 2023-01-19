@@ -1,5 +1,6 @@
 #include "GrCityChart.h"
 #include <iostream>
+#include "Point.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ GrCityChart::GrCityChart (
     _x_space__px{xSpace},
     _y_space__px{ySpace}
 {   
+    _clearing_vector = createVectorForClearingGrid();
     _plot->setTopLeft(topLeftCornerXPx, topLeftCornerYPx + _title->sizeYPx() + _key->sizeYPx());
     _plot->setXYSpacePx(xSpace, _y_space__px - _title->sizeYPx() - _key->sizeYPx());
     _title->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftCornerYPx);
@@ -38,12 +40,12 @@ void GrCityChart::print(
     _title->print(renderer);
     _key->print(renderer);
     _plot->print(
-        createVectorPerColorForClearingPlot(),
+        _clearing_vector,
         false,
         renderer
     );
     _plot->print(
-        createVectorsOfPointsPerColor(houseToResMap),
+        createVectorOfPoints(houseToResMap),
         false,
         renderer
     );
@@ -60,11 +62,11 @@ int GrCityChart::sizeYPx ()
     return _title->sizeYPx() + _key->sizeYPx() + _plot->sizeYPx();
 }
 
-unordered_map<Color, vector<Point>> GrCityChart::createVectorsOfPointsPerColor (
+vector<Point> GrCityChart::createVectorOfPoints (
     unordered_map<const House *, const Resident *> residentPerHouse
 )
 {   
-    unordered_map<Color, vector<Point>> pointsPerColor = {};
+    vector<Point> points{};
 
     for (auto const &x : _coordinate_per_house)
     {   
@@ -93,31 +95,21 @@ unordered_map<Color, vector<Point>> GrCityChart::createVectorsOfPointsPerColor (
                         [Mood::happy]._color;
         }
 
-        Point point{(double)coord.getX(), (double)coord.getY(), color};
-        
-        if (pointsPerColor.find(color) == pointsPerColor.end())
-        {
-            pointsPerColor[color] = {};
-        }
-
-        pointsPerColor[color].push_back(point);
+        points.emplace_back(Point{(double)coord.getX(), (double)coord.getY(), color});
     }
 
-    return pointsPerColor;
+    return points;
 }
 
-unordered_map<Color, vector<Point>> GrCityChart::createVectorPerColorForClearingPlot ()
+vector<Point> GrCityChart::createVectorForClearingGrid ()
 {
     // every house needs to have a Color::absent Point.
-    unordered_map<Color, vector<Point>> pointsPerColor = {};
+    vector<Point> points{};
 
     for (auto const& x : _coordinate_per_house)
     {
         Coordinate coord = x.second;
-
-        pointsPerColor[Color::absent].push_back({(double)coord.getX(),
-                                                 (double)coord.getY(),
-                                                 Color::absent});
+        points.emplace_back(Point{(double)coord.getX(), (double)coord.getY(), Color::absent});
     }
-    return pointsPerColor;
+    return points;
 }

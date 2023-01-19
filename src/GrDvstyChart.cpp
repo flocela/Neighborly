@@ -9,8 +9,8 @@ void GrDvstyChart::print (
     Renderer* renderer
 )
 {
-    // for each groupId, will need the number of residents in group,
-    //   and the number of disparate neighbors.
+    // for each groupid, will need the number of residents in group
+    // and the number of disparate neighbors.
     unordered_map<int, int> numOfResidentsPerGroupId;
     unordered_map<int, int> numOfDiffNeighborsPerGroupId;
 
@@ -48,8 +48,8 @@ void GrDvstyChart::print (
     // the diversity for a resident is the number of disperate neighbors the resident has.
     // the Point's y value is the average diversity for the residents in the group.
     // the Point's x value is the run number.
-    unordered_map<Color, vector<Point>> pointsPerColor;
 
+    vector<Point> points{};
     for (auto pair : numOfResidentsPerGroupId)
     {
         int groupId = pair.first;
@@ -62,12 +62,9 @@ void GrDvstyChart::print (
 
         double averageNumOfDiffNeighbors = 
             (double)numOfDiffNeighborsPerGroupId[groupId]/numOfResidentsInGroup;
-       
+
         Color groupColor = _colorrs_map[_b_color_per_groupId[groupId]][Mood::neutral]._color;
-        pointsPerColor.insert({
-            groupColor,
-            vector<Point>{Point((double)run, averageNumOfDiffNeighbors, groupColor)}
-        });
+        points.push_back(Point((double)run, averageNumOfDiffNeighbors, groupColor));
     }
     
     if (!_key_has_printed)
@@ -81,7 +78,7 @@ void GrDvstyChart::print (
         _title_has_printed = true;
     }
     
-    _plot->print(pointsPerColor, false, renderer);
+    _plot->print(points, false, renderer);
 }
 
 int GrDvstyChart::sizeXPx ()

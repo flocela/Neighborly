@@ -109,8 +109,7 @@ private:
         _chart_key_letter,
         _min_unit_size__px,
         _x_offset_multiplier,
-        _x_overrun_multiplier,
-        true
+        _x_overrun_multiplier
     };
 
     /* DIVERSITY CHART */
@@ -140,8 +139,7 @@ private:
         _chart_key_letter,
         _min_unit_size__px,
         _x_offset_multiplier,
-        _x_overrun_multiplier,
-        true
+        _x_overrun_multiplier
     };
 
     std::vector<int> determineMinMaxHouseCoords (

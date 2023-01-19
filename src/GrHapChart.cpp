@@ -39,7 +39,7 @@ void GrHapChart::print (
         }
     }
 
-    unordered_map<Color, vector<Point>> pointsPerColor;
+    vector<Point> points{};
     for (auto resCountPerGroup : numofResidentsPerGroup)
     {
         int groupId = resCountPerGroup.first;
@@ -50,15 +50,12 @@ void GrHapChart::print (
         }
         double aveHappiness = (double)happinessSumPerGroup[groupId]/countInGroup;
         Color c = _colorrs_map[_colors[groupId]][Mood::neutral]._color;
-        pointsPerColor.insert({
-            c,
-            vector<Point>{ Point( (double)run, aveHappiness, c) }
-        });
+        points.push_back( Point( (double)run, aveHappiness, c));
     }
 
     _title->print(renderer);
     _key->print(renderer);
-    _plot->print(pointsPerColor, false, renderer);
+    _plot->print(points, false, renderer);
 }
 
 int GrHapChart::sizeXPx ()

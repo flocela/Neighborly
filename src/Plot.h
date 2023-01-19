@@ -11,8 +11,8 @@ class Plot
 
 public:
     virtual void print (
-        std::unordered_map<Color, std::vector<Point>> pointsPerColor,
-        bool printAxis,
+        std::vector<Point> points,
+        bool printAxes,
         Renderer* renderer
     ) const = 0;
 

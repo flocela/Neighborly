@@ -4,7 +4,6 @@
 #include "Color.h"
 #include <vector>
 
-// TODO point doesn't need mood
 class Point
 {
 public:

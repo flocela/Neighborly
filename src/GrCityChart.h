@@ -46,6 +46,10 @@ std::unique_ptr<Title> _title;
 std::unique_ptr<GrColorKey> _key;
 std::unique_ptr<Plot> _plot;
 
+// all house colors are set to absent.
+// used as a way to clear the grid before new residents are colored in.
+std::vector<Point> _clearing_vector;
+
 int _top_left_corner_x__px;
 int _top_left_corner_y__px;
 int _x_space__px;
@@ -54,13 +58,13 @@ int _y_space__px;
 // each point represents a house.
 // if a house is empty it gets a default color. if it is occupied, its color depends on the 
 //   resident's group id.
-std::unordered_map<Color, std::vector<Point>> createVectorsOfPointsPerColor (
+std::vector<Point> createVectorOfPoints (
     std::unordered_map<const House*, const Resident*> residentPerHouse
 );
 
 // there will be only one color, the default color for an empty house.
 // all addresses will be represented as being empty.
-std::unordered_map<Color, std::vector<Point>> createVectorPerColorForClearingPlot ();
+std::vector<Point> createVectorForClearingGrid ();
     
 };
 

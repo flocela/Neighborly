@@ -1,5 +1,7 @@
 #include "PlotA.h"
 
+using namespace std;
+
 PlotA::PlotA ( 
         PlotSizer sizer,
         int topLeftXPx,
@@ -75,43 +77,45 @@ PlotA(  sizer,
 {}
 
 void PlotA::print (
-    std::unordered_map<Color, std::vector<Point>> pointsPerColor,
-    bool printAxis,
+    vector<Point> points,
+    bool printAxes,
     Renderer* renderer
 ) const
 {
-    // onlyl print axes once.
-    if (!_printed_axes || printAxis)
+    // only print axes once.
+    if (!_printed_axes || printAxes)
     {
         _x_axis.print(renderer);
         _y_axis.print(renderer);
         _printed_axes = true;
     }
 
-    for (auto& pair : pointsPerColor)
+    unordered_map<Color, vector<Coordinate>> coordinatesPerColor;
+    for (auto& point : points)
     {
-        Color color = pair.first;
-        std::vector<Point> points = pair.second;
-
-        std::vector<Coordinate> pixelCoordinates;
-        for (Point point : points)
-        {   
-            // dot is a square.
-            // x is the x-pixel of the top left pixel of dot-square
-            // y is the y_pixel of the top left pixel of sot-square
-            int x = _x_axis.getPixel(point.x()) - (_dot__px/2);                 
-            int y = _y_axis.getPixel(point.y()) - (_dot__px/2);
-            pixelCoordinates.push_back(Coordinate(x, y));
+        if (coordinatesPerColor.find(point.color()) == coordinatesPerColor.end())
+        {
+            coordinatesPerColor.insert({point.color(), vector<Coordinate>{}});
         }
 
+        // dot is a square.
+        // x is the x-pixel of the top left pixel of dot-square
+        // y is the y_pixel of the top left pixel of sot-square
+        int x = _x_axis.getPixel(point.x()) - (_dot__px/2);                 
+        int y = _y_axis.getPixel(point.y()) - (_dot__px/2);
+
+        coordinatesPerColor[point.color()].push_back(Coordinate(x, y));
+    }
+
+    for (auto& pair: coordinatesPerColor)
+    {
         renderer->addBlocksByColor(
             _dot__px,
             _dot__px,
-            pixelCoordinates,
-            _the_color_rgba[color]
+            pair.second,
+            _the_color_rgba[pair.first]
         );
     }
-
 }
 
 void PlotA::setTopLeft (int topLeftXPx, int topLeftYPx)
@@ -121,6 +125,7 @@ void PlotA::setTopLeft (int topLeftXPx, int topLeftYPx)
 
     _cross_x__px = calcCrossXPx(topLeftXPx);
     _cross_y__px = calcCrossYPx(topLeftYPx);
+    
     _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
 }
@@ -129,7 +134,7 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _x_space__px = xSpacePx;
     _y_space__px = ySpacePx;
     
-    std::pair<int, int> unit_sizes = calcUnitSizeXAndYPx();
+    pair<int, int> unit_sizes = calcUnitSizeXAndYPx();
     _unit_x__px = unit_sizes.first;
     _unit_y__px = unit_sizes.second;
 
@@ -183,37 +188,38 @@ int PlotA::getCenterValueOfXAxisPx () const
     return _x_axis.getCenterValXPx();
 }
 
-std::pair<int, int> PlotA::calcUnitSizeXAndYPx () const
+pair<int, int> PlotA::calcUnitSizeXAndYPx () const
 {
-    // there is no space, or if the difference in values is 0, then just use min_unit__px.
+    // if there is no space, or if the difference in values is 0, then just use min_unit__px.
     if (_x_space__px <= 0 || _y_space__px <= 0 || _x_diff == 0 || _y_diff == 0)
     {
         return {_min_unit__px, _min_unit__px};
     }
 
-    // first try to find x-unit size
+    // x-unit size (doesn't change)
     int allowableXAxisLengthPx = _x_space__px - _y_axis.sizeXPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
-    xUnitSize = std::max(xUnitSize, _min_unit__px);
+    xUnitSize = max(xUnitSize, _min_unit__px);
 
-    // next try to find y-unit size
+    // preliminary y-unit size
     int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeYPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
-    yUnitSize = std::max(yUnitSize, _min_unit__px);
+    yUnitSize = max(yUnitSize, _min_unit__px);
 
     // _unit_x__px and _unit_y__px must both be odd or both be even.
     if ( (xUnitSize%2 == 0 && yUnitSize%2 != 0) || (yUnitSize%2 != 0 && yUnitSize%2 == 0) )
     {
         --yUnitSize;
     }
+
     return {xUnitSize, yUnitSize};
 }
 
 int PlotA::calcDotSizePx () const
 {
-    int minUnitSizePx = std::min(_unit_x__px, _unit_y__px);
+    int minUnitSizePx = min(_unit_x__px, _unit_y__px);
     int dotSize = minUnitSizePx/2;
     dotSize =  ((minUnitSizePx - dotSize) % 2 == 0) ? dotSize : (dotSize + 1);
     return dotSize;

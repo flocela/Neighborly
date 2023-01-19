@@ -42,7 +42,7 @@ public:
     );
     
     void print (
-        std::unordered_map<Color, std::vector<Point>> pointsPerColor,
+        std::vector<Point> points,
         bool printAxis,
         Renderer* renderer) const override;
 
@@ -58,9 +58,9 @@ public:
 
     int getYSpacePx () const override;
 
-    int sizeYPx () const override;
-
     int sizeXPx () const override;
+
+    int sizeYPx () const override;
 
     int getCenterValueOfXAxisPx () const override;
 
@@ -89,7 +89,7 @@ private:
     int _min_x;
     int _min_y;
     
-    // largest values on the axes with corresponding data.
+    // largest values on the axes with data.
     // Note: the axes stretch past the largest value with data.
     // the largest value on the axes will be _max_y + _end_offset_m.
     int _max_x;
@@ -105,6 +105,7 @@ private:
     int _unit_y__px; // unit size in pixels in y direction
 
     // dot represents a value. the dot is a colored square, same size in x and y directions.
+    // _dot__px is the length of the square
     int _dot__px;
 
     // where x and y axes cross.

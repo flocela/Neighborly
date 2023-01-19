@@ -185,8 +185,6 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             moods),
         make_unique<PlotB>(
             _city_plot_sizer,
-            _colors, 
-            moods, 
             minXCoord, 
             maxXCoord,
             minYCoord, 
