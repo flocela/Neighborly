@@ -1,15 +1,13 @@
 #ifndef PRINTER_H
 #define PRINTER_H
 
-#include "City.h"
-#include "Coordinate.h"
-#include "renderer.h"
+#include "House.h"
 #include "Resident.h"
 
 class Printer
 {   
 public:
-     virtual void print (
+    virtual void print (
          std::unordered_map<const House*, const Resident*> residentPerHouse,
          int run) const = 0;
 };
