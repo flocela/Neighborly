@@ -24,6 +24,7 @@ class Printer_Graphic : public Printer
 {   
 public:
     Printer_Graphic (
+        std::unique_ptr<Renderer> renderer,
         std::unordered_map<int, BaseColor> colors,
         std::unordered_map<const House*, Coordinate> coordinatesPerHouse,
         std::unordered_map<const House*, std::set<const House*>> neighborHousesPerHouse,
@@ -45,12 +46,16 @@ public:
     void print(
         std::unordered_map<const House*, const Resident*> residentPerHouse,
         int run
-    ) override;
+    ) const override;
 
     void keepScreen();
 
 private:
 
+    // renderer is mutable because calling print calls the renderer's draw functions.
+    // these functions are non-const, the renderer is changed.
+    // however, calling print (which is const) doesn't change any other PrinterGraphic attributes.
+    mutable std::unique_ptr<Renderer> _renderer;
     /* FOR WINDOW */
     int _screen_width__px  = 2400;
     int _screen_height__px = 1200;
@@ -63,11 +68,6 @@ private:
     std::unordered_map<int, BaseColor> _colors;
     
     std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
-
-    std::unique_ptr<Renderer> _renderer = std::make_unique<Renderer>(
-        _screen_width__px,
-        _screen_height__px
-    );
     
     Letter _window_title_letter{50, 10, 0.3};
     std::unique_ptr<TitleA> _window_title;

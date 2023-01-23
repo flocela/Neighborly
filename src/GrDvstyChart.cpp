@@ -7,7 +7,7 @@ void GrDvstyChart::print (
     unordered_map<const House*, const Resident*> residentPerHouse,
     int run,
     Renderer* renderer
-)
+) const
 {
     // for each groupid, will need the number of residents in group
     // and the number of disparate neighbors.
@@ -26,7 +26,7 @@ void GrDvstyChart::print (
         const House* residentHouse = ii.second;
         int residentGroupId = resident->getGroupNumber();
 
-        set<const House*> housesAdjToRes = _adj_neighbors[residentHouse];
+        set<const House*> housesAdjToRes = _adj_neighbors.at(residentHouse);
 
         for (const House* adjacentHouse : housesAdjToRes)
         {
@@ -63,7 +63,7 @@ void GrDvstyChart::print (
         double averageNumOfDiffNeighbors = 
             (double)numOfDiffNeighborsPerGroupId[groupId]/numOfResidentsInGroup;
 
-        Color groupColor = _colorrs_map[_b_color_per_groupId[groupId]][Mood::neutral]._color;
+        Color groupColor = _colorrs_map.at(_b_color_per_groupId.at(groupId)).at(Mood::neutral)._color;
         points.push_back(Point((double)run, averageNumOfDiffNeighbors, groupColor));
     }
     

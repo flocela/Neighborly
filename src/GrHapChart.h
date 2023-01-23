@@ -39,7 +39,7 @@ void print (
     std::unordered_map<const Resident*, const House*> housePerResident,
     int run,
     Renderer* renderer
-);
+) const;
 
 int sizeXPx();
 int sizeYPx();

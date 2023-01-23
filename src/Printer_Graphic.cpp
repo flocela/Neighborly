@@ -11,12 +11,14 @@
 using namespace std;
 
 Printer_Graphic::Printer_Graphic (
+    std::unique_ptr<Renderer> renderer,
     unordered_map<int, BaseColor> colors,
     unordered_map<const House*, Coordinate > coordinatesPerHouse,
     unordered_map<const House*, set<const House*>> neighborHousesPerHouse,
     string title,
     int numOfRuns
-): _colors{colors},
+): _renderer{move(renderer)},
+   _colors{colors},
    _coordinates_per_house{coordinatesPerHouse},
    _window_title{make_unique<TitleA>(_window_title_letter, _x_center__px, _top_border__px, title)},
    _num_of_runs{numOfRuns},
@@ -81,7 +83,7 @@ Printer_Graphic::Printer_Graphic (
 void Printer_Graphic::print (
     unordered_map<const House*, const Resident*> residentPerHouse,
     int run
-)
+) const
 {   
     // TODO take out this rect and renderer is just for testing.
     SDL_Rect rect {

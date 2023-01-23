@@ -1,7 +1,7 @@
 #include "GrRunsChart.h"
 
 using namespace std;
-void GrRunsChart::print (int numOfRuns, Renderer* renderer)
+void GrRunsChart::print (int numOfRuns, Renderer* renderer) const
 {   
     renderer->renderText(
         _x_offset + (_x_space_length__px/2), 

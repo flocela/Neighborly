@@ -15,7 +15,7 @@ class Printer_CMDLine : public Printer
         void print(
             std::unordered_map<const House*, const Resident*> residentPerHouse,
             int run
-        ) override;
+        ) const override;
 
     private:
         int _max_num_of_runs;

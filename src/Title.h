@@ -7,7 +7,7 @@ class Title
 {
 
 public:
-    virtual void print (Renderer* render) = 0;
+    virtual void print (Renderer* render) const = 0;
     virtual void setTopCenter (int xPx, int yPx) = 0;
     virtual int sizeXPx() = 0;
     virtual int sizeYPx() = 0;

@@ -11,7 +11,10 @@ Printer_CMDLine::Printer_CMDLine (
     textHelper{maxNumofRuns,cityPtr}
 {}
 
-void Printer_CMDLine::print(std::unordered_map<const House*, const Resident*> residentPerHouse, int run)
+void Printer_CMDLine::print(
+    std::unordered_map<const House*, const Resident*> residentPerHouse,
+    int run
+) const
 {   
     (void)residentPerHouse;
     (void)run;

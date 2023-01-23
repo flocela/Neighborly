@@ -73,7 +73,7 @@ public:
 
     int getLineSpace () { return _l.lineSpace(); }
 
-    void print (Renderer* renderer) override {
+    void print (Renderer* renderer) const override {
         renderer->renderText(
             _top_center_x__px,
             _top_center_y__px,

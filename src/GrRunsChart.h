@@ -34,7 +34,7 @@ GrRunsChart& operator= (const GrRunsChart& obj) = default;
 GrRunsChart& operator= (GrRunsChart&& obj) noexcept = default;
 ~GrRunsChart () = default;
 
-void print (int numOfRuns, Renderer* renderer);
+void print (int numOfRuns, Renderer* renderer) const;
 int sizeXPx ();
 int sizeYPx ();
 

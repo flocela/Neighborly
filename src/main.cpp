@@ -88,6 +88,8 @@ int main(int argc, char* argv[])
     (void) argc;
     (void) argv;
 
+    
+
     vector<unique_ptr<CityFactory>> cityFactories = initCityFactories();
     vector<unique_ptr<ResidentsFactory>> residentFactories = initResidentFactories();
 
@@ -97,7 +99,6 @@ int main(int argc, char* argv[])
 
     MainBaseQuestion mainQuestion;
     bool usesExamples = mainQuestion.askUserToUsePremadeExamples(cmdLine);
-
     if (usesExamples)
     {   
         MainExamples mainExamples; //TODO add randomSeed number to MainExamples
@@ -125,7 +126,10 @@ int main(int argc, char* argv[])
         neighboringHousesPerHouse[house] = components.city->getAdjacentHouses(house->getAddress());
     }
 
+    std::unique_ptr<Renderer> renderer = std::make_unique<Renderer>(SCREEN_WIDTH, SCREEN_HEIGHT);
+
     Printer_Graphic graphicPrinter{
+        move(renderer),
         components.baseColorsPerGroupid,
         components.city->getCoordinatesPerHouse(),
         neighboringHousesPerHouse,

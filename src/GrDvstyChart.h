@@ -48,7 +48,7 @@ void print (
     std::unordered_map<const House*, const Resident*> residentPerHouse,
     int run,
     Renderer* renderer
-);
+) const;
 
 int sizeXPx();
 int sizeYPx();
@@ -62,8 +62,11 @@ std::unique_ptr<Title> _title;
 std::unique_ptr<ColorKey> _key;
 std::unique_ptr<Plot> _plot;
 
-bool _key_has_printed = false;
-bool _title_has_printed = false;
+// used so that key is only prited once
+mutable bool _key_has_printed = false;
+
+// used so that title is only printed once.
+mutable bool _title_has_printed = false;
 
 };
 
