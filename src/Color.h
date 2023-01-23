@@ -17,7 +17,11 @@ enum class Color {
     green_neutral, 
     green_unhappy, 
     green_happy, 
-    absent
+    absent,
+    grid,
+    text,
+    text_background,
+    background
 };
 
 enum class BaseColor {red, blue, green};
@@ -122,7 +126,11 @@ inline std::map<Color, std::vector<int>> _the_color_rgba = {
     {Color::green_neutral, _colorrs_map[BaseColor::green][Mood::neutral].rgba},
     {Color::green_happy, _colorrs_map[BaseColor::green][Mood::happy].rgba},
     {Color::green_unhappy, _colorrs_map[BaseColor::green][Mood::unhappy].rgba},
-    {Color::absent,  {60, 60, 60, 255}}
+    {Color::absent,  {60, 60, 60, 255}},
+    {Color::grid,{210, 215, 211, 255}},
+    {Color::text,{236, 240, 241, 255}},
+    {Color::text_background,{108, 122, 137}},
+    {Color::background,{105, 105, 105, 255}}
 };
 
 #endif

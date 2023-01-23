@@ -1,21 +1,21 @@
 #ifndef PRINTER_Graphic_H
 #define PRINTER_Graphic_H
 
-#include "Title.h"
-#include "GrCityChart.h"
-#include "Printer.h"
-#include "renderer.h"
-#include <thread>
 #include <memory>
-#include "House.h"
+#include <thread>
 #include <vector>
 #include "Color.h"
-#include "GrRunsChart.h"
+#include "House.h"
+#include "GrCityChart.h"
 #include "GrColorKey.h"
-#include "Letter.h"
 #include "GrDvstyChart.h"
 #include "GrHapChart.h"
+#include "GrRunsChart.h"
+#include "Letter.h"
 #include "PlotSizer.h"
+#include "Printer.h"
+#include "renderer.h"
+#include "Title.h"
 #include "TitleA.h"
 
 //  Displays CityMap, Diversity Chart, and HappinessChart.
@@ -25,8 +25,8 @@ class Printer_Graphic : public Printer
 public:
     Printer_Graphic (
         std::unordered_map<int, BaseColor> colors,
-        std::unordered_map<const House*, Coordinate > coordPerHouse,
-        std::unordered_map<const House*, std::set<const House*>> neighborHouses,
+        std::unordered_map<const House*, Coordinate> coordinatesPerHouse,
+        std::unordered_map<const House*, std::set<const House*>> neighborHousesPerHouse,
         std::string title,
         int numOfRuns
     );
@@ -115,6 +115,8 @@ private:
     /* DIVERSITY CHART */
     /* Diversity chart is the right column. Diversity chart sits below number of runs chart*/
     
+    std::string _div_chart_title =  "Average Number of Disparate Neighbors per Group, per Run";
+
     double _div_chart_y_axis_fraction = 0.26;
 
     // provides some vertical space between diversity and happiness charts.
@@ -127,10 +129,14 @@ private:
     /* HAPPINESS CHART */
     /* Happiness chart is the right column. Happiness chart sits below diversity chart*/
     
+    std::string _hap_chart_title =  "Average Resident Happiness per Group, per Run";
+
     std::unique_ptr<GrHapChart> _happiness_chart;
 
     /* LEFT COLUMN */
     /* Left column holds the city chart */
+
+    std::string _city_chart_title = "City Map";
 
     PlotSizer _city_plot_sizer{
         _axis_format_X,
@@ -142,6 +148,8 @@ private:
         _x_overrun_multiplier
     };
 
+    // determines the smallest and largest x and y values on the grid, per the house coordinates.
+    // returns a vector {smallest x value, largest x value, smallest y value, largest y value}
     std::vector<int> determineMinMaxHouseCoords (
         std::unordered_map<const House*, Coordinate > coordPerHouse
     );

@@ -20,12 +20,8 @@ class Renderer {
 		void endFrame();
   		void UpdateWindowTitle(int score, int fps);
 
-		void setColorToMedGrey();
-		void setColorToBlack();
-		void setColorToRed();
-
-		void fillBlock (SDL_Rect block);
-		void fillBlocks (std::vector<SDL_Rect> blocks);
+		void fillBlock (SDL_Rect blocks, std::vector<int> rgba) ;
+		void fillBlocks (std::vector<SDL_Rect> blocks, std::vector<int> rgba);
 
 		void renderText (
 			int x, 
@@ -38,21 +34,7 @@ class Renderer {
 			int position
 		);
 
-		void renderText (
-			int x, 
-			int y,
-			std::string textString,
-			int position
-		);
-
 		void renderTexts (std::vector<TextRect> texts);
-
-		void setTextFormats (
-			SDL_Color textColor,
-			SDL_Color textBackgroundColor,
-			int fontSize,
-			double widthMultiplier
-		);
 
 		// @coordinates: the coordinates are in pixels, not in city coordinates.
 		// They refer to the top left point on the block.
@@ -69,9 +51,6 @@ class Renderer {
 			Coordinate coordinate,
 			std::vector<int> rgba
 		);
-
-		void setWidthMultiplier (double multiplier) {_width_multiplier = multiplier;};
-		double widthMultiplier() { return _width_multiplier; }
 		
  	private:
   		SDL_Window *sdl_window;

@@ -33,7 +33,7 @@ void AxisBottomToTopL::print (Renderer* renderer) const
     printVerticalLine(rects);
     printTicksAndLabels (rects, texts);
 
-    renderer->fillBlocks(rects);
+    renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
     renderer->renderTexts(texts);
 }
 

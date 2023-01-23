@@ -33,7 +33,7 @@ GrCityChart::GrCityChart (
 }
 
 void GrCityChart::print(
-    unordered_map<const House*, const Resident*> houseToResMap,
+    const unordered_map<const House*, const Resident*>& houseToResMap,
     Renderer* renderer
 )
 {   

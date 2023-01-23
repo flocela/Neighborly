@@ -96,7 +96,7 @@ void GrColorKey::print (Renderer* renderer)
         string label = pair.second;
         int labelWidth =  
             (int)(label.length() *
-            renderer->widthMultiplier() *
+            _label_letter.widthMultiplier() *
             _label_letter.letterHeight());
 
         // left edge of colored box

@@ -30,13 +30,10 @@ void AxisTopToBottomL::print (Renderer* renderer) const
     std::vector<SDL_Rect> rects = {};
     std::vector<TextRect> texts = {};
 
-    // TODO think about removing these setColor and setTextFormats
-    renderer->setColorToMedGrey();
-
     printVerticalLine(rects);
     printTicksAndLabels (rects, texts);
 
-    renderer->fillBlocks(rects);
+    renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
     renderer->renderTexts(texts);
 
 }

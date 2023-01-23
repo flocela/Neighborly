@@ -33,8 +33,7 @@ void AxisLeftToRightB::print (Renderer* renderer) const
     printHorizontalLine(rects);
     printTicksAndLabels(rects, texts);
 
-    renderer->setColorToMedGrey();
-    renderer->fillBlocks(rects);
+    renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
     renderer->renderTexts(texts);
 }
 

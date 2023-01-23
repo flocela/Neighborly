@@ -31,7 +31,7 @@ GrCityChart (
 );
 
 void print (
-    std::unordered_map<const House*, const Resident*> houseToResMap,
+    const std::unordered_map<const House*, const Resident*>& houseToResMap,
     Renderer* renderer
 );
 

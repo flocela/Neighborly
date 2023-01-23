@@ -103,24 +103,6 @@ void Renderer::renderText (
     SDL_RenderCopy(sdl_renderer, text, NULL, &sdlRect);
 }
 
-void Renderer::renderText (
-    int x, 
-    int y,
-    std::string textString,
-    int position
-)
-{
-    renderText(
-        x,
-        y,
-        textString,
-        _font_height,
-        _width_multiplier,
-        _text_color,
-        _text_background_color,
-        position);
-}
-
 void Renderer::renderTexts (std::vector<TextRect> texts)
 {
     for (TextRect tr : texts)
@@ -136,19 +118,6 @@ void Renderer::renderTexts (std::vector<TextRect> texts)
            tr._position
            );
     }
-}
-
-void Renderer::setTextFormats (
-    SDL_Color textColor,
-    SDL_Color textBackgroundColor,
-    int letterHeight,
-    double widthMultiplier
-)
-{
-    _text_color = textColor;
-    _text_background_color = textBackgroundColor;
-    _font_height = letterHeight;
-    _width_multiplier = widthMultiplier;
 }
 
 Renderer::Renderer(
@@ -179,23 +148,9 @@ Renderer::~Renderer() {
   	SDL_Quit();
 }
 
-void Renderer::setColorToMedGrey ()
+void Renderer::fillBlock(SDL_Rect block, std::vector<int> rgba)
 {
-    SDL_SetRenderDrawColor(sdl_renderer, 200, 200, 200, 200);
-}
-
-void Renderer::setColorToBlack ()
-{
-    SDL_SetRenderDrawColor(sdl_renderer, 0, 0, 0, 0xFF);
-}
-
-void Renderer::setColorToRed ()
-{
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0, 0, 0xFF);
-}
-
-void Renderer::fillBlock(SDL_Rect block)
-{
+    SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
     SDL_RenderFillRect(sdl_renderer, &block);
 }
 
@@ -300,7 +255,7 @@ void Renderer::addBlock (
 	int height,
 	Coordinate coordinate,
 	std::vector<int> rgba
-	)
+)
 {
     SDL_Rect block;
     block.w = width;
@@ -311,11 +266,11 @@ void Renderer::addBlock (
     SDL_RenderFillRect(sdl_renderer, &block);
 }
 
-void Renderer::fillBlocks (std::vector<SDL_Rect> blocks)
+void Renderer::fillBlocks (std::vector<SDL_Rect> blocks, std::vector<int> rgba)
 {
+    SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
     for (SDL_Rect block : blocks)
     {
-        fillBlock(block);
+        SDL_RenderFillRect(sdl_renderer, &block);
     }
 }
-

@@ -12,12 +12,12 @@ using namespace std;
 
 Printer_Graphic::Printer_Graphic (
     unordered_map<int, BaseColor> colors,
-    unordered_map<const House*, Coordinate > coordPerHouse,
-    unordered_map<const House*, set<const House*>> neighbors,
+    unordered_map<const House*, Coordinate > coordinatesPerHouse,
+    unordered_map<const House*, set<const House*>> neighborHousesPerHouse,
     string title,
     int numOfRuns
 ): _colors{colors},
-   _coordinates_per_house{coordPerHouse},
+   _coordinates_per_house{coordinatesPerHouse},
    _window_title{make_unique<TitleA>(_window_title_letter, _x_center__px, _top_border__px, title)},
    _num_of_runs{numOfRuns},
    _runs_chart_top_y__px{_top_border__px + _window_title->sizeYPx()},
@@ -30,6 +30,7 @@ Printer_Graphic::Printer_Graphic (
        _num_of_runs)}
 {   
     // column space for left and right columns. Columns sit below the runs chart.
+    // left column holds city chart, right column holds diversity chart and happiness chart
     int colSpaceYPx = 
         _screen_height__px -
         _top_border__px -
@@ -41,27 +42,6 @@ Printer_Graphic::Printer_Graphic (
     // they sit below the runs chart.
     int chartTopLeftYPx = _runs_chart_top_y__px + _runs_chart->sizeYPx();
 
-    int divChartAvailSpaceYPx = _div_chart_y_axis_fraction * colSpaceYPx;
-
-    int maxNumOfNeighbors = determineMaxNumberOfNeighbors(neighbors);
-
-    _div_chart = createDvstyChart(
-        neighbors,
-        maxNumOfNeighbors,
-        _num_of_runs,
-        chartTopLeftYPx,
-        divChartAvailSpaceYPx
-    );
-
-    int hapChartTopLeftYPx = 
-        chartTopLeftYPx +
-        colSpaceYPx * (_div_chart_y_axis_fraction + _space_below_div_chart_y_axis_fraction);
-
-    int hapChartAvailSpaceYPx = 
-        (1 - _div_chart_y_axis_fraction - _space_below_div_chart_y_axis_fraction) * colSpaceYPx;
-
-    _happiness_chart = createHapChart(_num_of_runs, hapChartTopLeftYPx, hapChartAvailSpaceYPx);
-
     vector<int> minsAndMaxCoords = determineMinMaxHouseCoords(_coordinates_per_house);
 
     _city_chart =  createCityChart(
@@ -71,7 +51,31 @@ Printer_Graphic::Printer_Graphic (
         minsAndMaxCoords[3],
         chartTopLeftYPx,
         colSpaceYPx // city chart takes up the whole left column (vertically).
-    ); 
+    );
+
+    // right column holds diversity chart and happiness chart below it
+    int divChartAvailSpaceYPx = _div_chart_y_axis_fraction * colSpaceYPx;
+
+    int maxNumOfNeighbors = determineMaxNumberOfNeighbors(neighborHousesPerHouse);
+
+    _div_chart = createDvstyChart(
+        neighborHousesPerHouse,
+        maxNumOfNeighbors,
+        _num_of_runs,
+        chartTopLeftYPx,
+        divChartAvailSpaceYPx
+    );
+
+    // happiness chart sits below diversity chart. There's a vertical space between the 
+    // diversity chart and the happiness chart, see _space_below_div_chart_y_axis_fraction.
+    int hapChartTopLeftYPx = 
+        chartTopLeftYPx +
+        colSpaceYPx * (_div_chart_y_axis_fraction + _space_below_div_chart_y_axis_fraction);
+
+    int hapChartAvailSpaceYPx = 
+        (1 - _div_chart_y_axis_fraction - _space_below_div_chart_y_axis_fraction) * colSpaceYPx;
+
+    _happiness_chart = createHapChart(_num_of_runs, hapChartTopLeftYPx, hapChartAvailSpaceYPx); 
 }
 
 void Printer_Graphic::print (
@@ -79,23 +83,24 @@ void Printer_Graphic::print (
     int run
 )
 {   
-    _renderer->setColorToRed();
+    // TODO take out this rect and renderer is just for testing.
     SDL_Rect rect {
         0,
         10,
         600,
         1
     };
-    _renderer->fillBlock(rect);
+    _renderer->fillBlock(rect, _the_color_rgba[Color::red_happy]);
 
+    // given residentPerHouse, need housePerResident and vector of residents
     unordered_map<const Resident*, const House*> housePerResident;
     vector<const Resident*> residents;
-    for (auto pair : residentPerHouse)
+    for (auto resAndHouse : residentPerHouse)
     {
-        if (pair.second != nullptr) // resident is not nullptr
+        if (resAndHouse.second != nullptr) // resident is not nullptr
         {
-        housePerResident[pair.second] = pair.first;
-        residents.push_back(pair.second);
+        housePerResident[resAndHouse.second] = resAndHouse.first;
+        residents.push_back(resAndHouse.second);
         }
     }
 
@@ -153,10 +158,10 @@ int Printer_Graphic::determineMaxNumberOfNeighbors (
 {
     int max = 0;
 
-    for (auto& pair : neighbors)
+    for (auto& houseAndNeighbors : neighbors)
     {
-        if ((int)(pair.second.size()) > max)
-            max = pair.second.size();
+        if ((int)(houseAndNeighbors.second.size()) > max)
+            max = houseAndNeighbors.second.size();
     }
 
     return max;
@@ -178,7 +183,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
         _colors,
         make_unique<TitleA>(
             _chart_title_letter,
-            "City Map"),
+            _city_chart_title),
         make_unique<GrColorKey>(
             _chart_key_letter,
             _colors,
@@ -211,7 +216,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
         neighbors,
         make_unique<TitleA>(
             _chart_title_letter,
-            "Average Number of Disparate Neighbors per Group, per Run"),
+            _div_chart_title),
         make_unique<GrColorKey>(
             _chart_key_letter,
             _colors,
@@ -242,7 +247,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
         _colors,
         make_unique<TitleA>(
             _chart_title_letter,
-            "Happiness, Average Resident Happiness per Group, per Run"),
+            _hap_chart_title),
         make_unique<GrColorKey>(
             _chart_key_letter,
             _colors,
