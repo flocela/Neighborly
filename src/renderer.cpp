@@ -1,22 +1,111 @@
 #include "renderer.h"
-#include <string>
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
 
-#include <SDL.h>
+#include <cstring>
 #include <SDL_ttf.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <string>
 
+using namespace std;
 
-// Define screen dimensions
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
+Renderer::Renderer (
+    const size_t screen_width,
+    const size_t screen_height,
+    string title
+): _screen_width(screen_width),
+   _screen_height(screen_height)
+{
+  	if (!initVideo())
+      return;
+    
+    TTF_Init();
+    
+    if (!linuxSettings())
+        return;
+        
+    if (!initWindow(title))
+        return;
+        
+    initRenderer();
+}
 
+Renderer::~Renderer() {
+    SDL_DestroyRenderer(_sdl_renderer);
+  	SDL_DestroyWindow(_sdl_window);
+    TTF_Quit();
+  	SDL_Quit();
+}
+
+void Renderer::startFrame()
+{
+    SDL_SetRenderDrawColor(_sdl_renderer, 255, 255, 255, 255);
+    SDL_RenderClear(_sdl_renderer);
+}
+
+void Renderer::endFrame()
+{
+    SDL_RenderPresent(_sdl_renderer);
+}
+
+void Renderer::fillBlock(SDL_Rect block, vector<int> rgba)
+{
+    SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
+    SDL_RenderFillRect(_sdl_renderer, &block);
+}
+
+void Renderer::fillBlocks (vector<SDL_Rect> blocks, vector<int> rgba)
+{
+    SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
+    for (SDL_Rect block : blocks)
+    {
+        SDL_RenderFillRect(_sdl_renderer, &block);
+    }
+}
+
+void Renderer::fillBlock (
+	int width, 
+	int height,
+	Coordinate coordinate,
+	vector<int> rgba
+)
+{
+    SDL_Rect block;
+    block.w = width;
+    block.h = height;
+    block.x = coordinate.getX();
+    block.y = coordinate.getY();
+
+    SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
+    SDL_RenderFillRect(_sdl_renderer, &block);
+}
+
+void Renderer::fillBlocks(
+	int width,
+	int height,
+	vector<Coordinate> coordinates,
+	vector<int> rgba
+)
+{
+    SDL_Rect block;
+    block.w = width;
+    block.h = height;
+
+    SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
+
+    for (Coordinate c : coordinates)
+    {
+        block.x = c.getX();
+        block.y = c.getY();
+        SDL_RenderFillRect(_sdl_renderer, &block);
+    }
+}
 
 void Renderer::renderText (
     int x, 
     int y,
-    std::string textString,
+    string textString,
     int letterHeight,
     double widthMultiplier,
 	SDL_Color textColor,
@@ -28,14 +117,12 @@ void Renderer::renderText (
     {
         return;
     }
-    // fontSize doesn't seem to have any difference. Choose 100.
-    TTF_Font *font = TTF_OpenFont(FONT_PATH, 100);
+    
+    TTF_Font *font = TTF_OpenFont(FONT_PATH, 300);
 
-    if(!font) {
-        printf(
-			"Unable to load font: '%s'!\n"
-            "SDL2_ttf Error: %s\n", FONT_PATH, TTF_GetError()
-			);
+    if(!font) 
+    {
+        printf("Unable to load font: '%s'!\n SDL2_ttf Error: %s\n", FONT_PATH, TTF_GetError());
         return;
     }
 
@@ -48,62 +135,59 @@ void Renderer::renderText (
         textColor,
         backgroundColor
     );
-    if(!textSurface) {
-        printf(
-			"Unable to render text surface!\n"
-            "SDL2_ttf Error: %s\n", TTF_GetError()
-		);
-    } 
-	else 
-	{
-        // Create texture from surface pixels
-        text = SDL_CreateTextureFromSurface(sdl_renderer, textSurface);
-        if(!text) {
-            printf(
-				"Unable to create texture from rendered text!\n"
-                "SDL2 Error: %s\n", SDL_GetError()
-			);
-            return;
-        }
 
-        // Account for spacing between letters and line height
-        sdlRect.w = widthMultiplier * letterHeight * textString.length();
-        sdlRect.h = letterHeight; 
-        
-        SDL_FreeSurface(textSurface);
+    if(!textSurface)
+    {
+        printf("Unable to render text surface!\n SDL2_ttf Error: %s\n", TTF_GetError());
+        return;
+    } 
+	
+    // create texture from surface pixels
+    text = SDL_CreateTextureFromSurface(_sdl_renderer, textSurface);
+    if(!text)
+    {
+        printf(
+            "Unable to create texture from rendered text!\n SDL2 Error: %s\n", SDL_GetError());
+        return;
     }
+
+    // account for spacing between letters and line height
+    sdlRect.w = widthMultiplier * letterHeight * textString.length();
+    sdlRect.h = letterHeight; 
     
-    if (position == 1) // centered horizontally
+    SDL_FreeSurface(textSurface);
+    
+    if (position == 1)
     {
         sdlRect.x = x - sdlRect.w/2;
         sdlRect.y = y;
     }
-    else if (position == 2) // centered vertically
+    else if (position == 2)
     {
         sdlRect.x = x;
         sdlRect.y = y - 0.5 * sdlRect.h;
     }
-    else if (position == 3) // align to right side
+    else if (position == 3)
     {
         sdlRect.x = x - sdlRect.w;
         sdlRect.y = y - 0.5 * sdlRect.h;
     }
-    else if (position == 4) // align to left side
+    else if (position == 4)
     {
         sdlRect.x = x;
         sdlRect.y = y;
     }
-    else if (position == 5) // move up height of rect and center horizontally
+    else if (position == 5)
     {
         sdlRect.x = x - sdlRect.w/2;
         sdlRect.y = y - sdlRect.h;
     }
     
-    // Draw text
-    SDL_RenderCopy(sdl_renderer, text, NULL, &sdlRect);
+    // draw text
+    SDL_RenderCopy(_sdl_renderer, text, NULL, &sdlRect);
 }
 
-void Renderer::renderTexts (std::vector<TextRect> texts)
+void Renderer::renderTexts (vector<TextRect> texts)
 {
     for (TextRect tr : texts)
     {
@@ -120,61 +204,11 @@ void Renderer::renderTexts (std::vector<TextRect> texts)
     }
 }
 
-Renderer::Renderer(
-	const std::size_t screen_width,
-    const std::size_t screen_height):
-	screen_width(screen_width),
-    screen_height(screen_height)
-{
-  	if (!initVideo())
-      return;
-    
-    TTF_Init();
-    
-    if (!linuxSettings())
-        return;
-        
-    if (!initWindow())
-        return;
-        
-    initRenderer();
-	
-}
-
-Renderer::~Renderer() {
-    SDL_DestroyRenderer(sdl_renderer);
-  	SDL_DestroyWindow(sdl_window);
-    TTF_Quit();
-  	SDL_Quit();
-}
-
-void Renderer::fillBlock(SDL_Rect block, std::vector<int> rgba)
-{
-    SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
-    SDL_RenderFillRect(sdl_renderer, &block);
-}
-
-void Renderer::startFrame()
-{
-    SDL_SetRenderDrawColor(sdl_renderer, 255, 255, 255, 255);
-    SDL_RenderClear(sdl_renderer);
-}
-
-void Renderer::endFrame()
-{
-    SDL_RenderPresent(sdl_renderer);
-}
-
-void Renderer::UpdateWindowTitle(int score, int fps) {
-  	std::string title{"Snake Score: " + std::to_string(score) + " FPS: " + std::to_string(fps)};
-  	SDL_SetWindowTitle(sdl_window, title.c_str());
-}
-
 bool Renderer::initVideo()
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-    	std::cerr << "SDL could not initialize.\n";
-    	std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
+    	cerr << "SDL could not initialize.\n";
+    	cerr << "SDL_Error: " << SDL_GetError() << "\n";
         return false;
   	}
     return true;
@@ -186,26 +220,26 @@ bool Renderer::linuxSettings()
     	// Disable compositor bypass
     	if(!SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0"))
     	{
-    	    std::cerr << "SDL can not disable compositor bypass!\n";
+    	    cerr << "SDL can not disable compositor bypass!\n";
     	    return false;
    	 	}
   	#endif
     return true;
 }
 
-bool Renderer::initWindow()
+bool Renderer::initWindow(string title)
 {
-    sdl_window = SDL_CreateWindow(
-        "Neighbors", 
+    _sdl_window = SDL_CreateWindow(
+        title.c_str(), 
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED, 
-		screen_width,
-        screen_height, 
+		_screen_width,
+        _screen_height, 
 		SDL_WINDOW_SHOWN
 	);
-    if (nullptr == sdl_window) {
-    	std::cerr << "Window could not be created.\n";
-    	std::cerr << " SDL_Error: " << SDL_GetError() << "\n";
+    if (nullptr == _sdl_window) {
+    	cerr << "Window could not be created.\n";
+    	cerr << " SDL_Error: " << SDL_GetError() << "\n";
         return false;
   	}
     return true;
@@ -213,64 +247,15 @@ bool Renderer::initWindow()
 
 bool Renderer::initRenderer()
 {
-    sdl_renderer = SDL_CreateRenderer(
-        sdl_window, 
+    _sdl_renderer = SDL_CreateRenderer(
+        _sdl_window, 
         -1, 
         SDL_RENDERER_ACCELERATED
         );
-  	if (nullptr == sdl_renderer) {
-    	std::cerr << "Renderer could not be created.\n";
-    	std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
+  	if (nullptr == _sdl_renderer) {
+    	cerr << "Renderer could not be created.\n";
+    	cerr << "SDL_Error: " << SDL_GetError() << "\n";
         return false;
     }
-    _text_color =  {100, 100, 100, 100};
-    _text_background_color = {0xFF, 0xFF, 0xFF, 0xFF};
-    _font_height = 15;
     return true;
-}
-
-void Renderer::addBlocksByColor(
-	int width,
-	int height,
-	std::vector<Coordinate> coordinates,
-	std::vector<int> rgba
-)
-{
-    SDL_Rect block;
-    block.w = width;
-    block.h = height;
-
-    SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
-    for (Coordinate c : coordinates)
-    {
-        block.x = c.getX();
-        block.y = c.getY();
-        SDL_RenderFillRect(sdl_renderer, &block);
-    }
-
-}
-
-void Renderer::addBlock (
-	int width, 
-	int height,
-	Coordinate coordinate,
-	std::vector<int> rgba
-)
-{
-    SDL_Rect block;
-    block.w = width;
-    block.h = height;
-    SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
-    block.x = coordinate.getX();
-    block.y = coordinate.getY();
-    SDL_RenderFillRect(sdl_renderer, &block);
-}
-
-void Renderer::fillBlocks (std::vector<SDL_Rect> blocks, std::vector<int> rgba)
-{
-    SDL_SetRenderDrawColor(sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
-    for (SDL_Rect block : blocks)
-    {
-        SDL_RenderFillRect(sdl_renderer, &block);
-    }
 }

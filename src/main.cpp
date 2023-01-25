@@ -63,9 +63,9 @@ using namespace std;
 
 /* Function Declarations */
 template<typename T>
-std::set<T*> getSetOfPointers (vector<unique_ptr<T>>& ts)
+set<T*> getSetOfPointers (vector<unique_ptr<T>>& ts)
 {
-    std::set<T*> pointers = {};
+    set<T*> pointers = {};
     for (auto& t : ts)
     {
         pointers.insert(t.get());
@@ -116,15 +116,18 @@ int main(int argc, char* argv[])
     }
     
     srand(components.randomSeed);
-    std::vector<const House*> houses = components.city->getHouses();
+    vector<const House*> houses = components.city->getHouses();
 
-    std::unordered_map<const House*, std::set<const House*>> neighboringHousesPerHouse;
+    unordered_map<const House*, set<const House*>> neighboringHousesPerHouse;
     for (const House* house : houses)
     {   
         neighboringHousesPerHouse[house] = components.city->getAdjacentHouses(house->getAddress());
     }
 
-    std::unique_ptr<Renderer> renderer = std::make_unique<Renderer>(SCREEN_WIDTH, SCREEN_HEIGHT);
+    unique_ptr<Renderer> renderer = make_unique<Renderer>(
+        SCREEN_WIDTH, 
+        SCREEN_HEIGHT, 
+        "Neighbors");
 
     Printer_Graphic graphicPrinter{
         move(renderer),
@@ -135,13 +138,13 @@ int main(int argc, char* argv[])
         components.numOfRuns
     };
     
-    std::unordered_map<const House*, Resident*> residentPerHouse;
+    unordered_map<const House*, Resident*> residentPerHouse;
     for (int ii=0; ii<components.numOfRuns; ii++)
     {   
         residentPerHouse = components.simulator->simulate();
 
         // Printer_Graphic requires unordered_map of type CONST House* and CONST Resident*
-        std::unordered_map<const House*, const Resident*> constResPerConstHouse;
+        unordered_map<const House*, const Resident*> constResPerConstHouse;
         for (auto& pair : residentPerHouse)
         {
             constResPerConstHouse[pair.first] = pair.second;
@@ -159,15 +162,15 @@ int main(int argc, char* argv[])
 vector<unique_ptr<CityFactory>> initCityFactories ()
 {
     vector<unique_ptr<CityFactory>> cityFactories{};
-    cityFactories.emplace_back(std::make_unique<CityFactory_Grid>());
+    cityFactories.emplace_back(make_unique<CityFactory_Grid>());
     return cityFactories;
 }
 
 vector<unique_ptr<ResidentsFactory>> initResidentFactories()
 {
     vector<unique_ptr<ResidentsFactory>> residentFactories = {};
-    residentFactories.emplace_back(std::make_unique<ResidentsFactory_Flat>());
-    residentFactories.emplace_back(std::make_unique<ResidentsFactory_StepDown>());
+    residentFactories.emplace_back(make_unique<ResidentsFactory_Flat>());
+    residentFactories.emplace_back(make_unique<ResidentsFactory_StepDown>());
     //TODO add the rest of the fatories here. Once they're made.
     return residentFactories;
 }

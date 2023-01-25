@@ -106,7 +106,7 @@ void GrColorKey::print (Renderer* renderer)
             (0.5 * _column_width) -
             ((labelWidth + _box_length__px + _box_spacer__px )/2);
 
-        renderer->addBlock(
+        renderer->fillBlock(
             _box_length__px,
             _box_length__px,
             Coordinate(box_left_x__px, top_of_box_y__px),

@@ -109,7 +109,7 @@ void PlotA::print (
 
     for (auto& pair: coordinatesPerColor)
     {
-        renderer->addBlocksByColor(
+        renderer->fillBlocks(
             _dot__px,
             _dot__px,
             pair.second,
