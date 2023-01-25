@@ -1,7 +1,7 @@
 #ifndef AXIS_BOTTOM_TO_TOP_L_H
 #define AXIS_BOTTOM_TO_TOP_L_H
 
-#include "renderer.h"
+#include "Renderer.h"
 #include "SDL.h"
 #include "AxisFormat.h"
 #include "TextRect.h"

@@ -1,7 +1,7 @@
 #ifndef TITLE_H
 #define TITLE_H
 
-#include "renderer.h"
+#include "Renderer.h"
 
 class Title
 {

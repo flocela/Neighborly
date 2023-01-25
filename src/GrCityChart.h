@@ -1,7 +1,7 @@
 #ifndef GR_CITY_CHART_H
 #define GR_CITY_CHART_H
 
-#include "renderer.h"
+#include "Renderer.h"
 #include "Coordinate.h"
 #include "TextRect.h"
 #include "Resident.h"

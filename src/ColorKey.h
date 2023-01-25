@@ -1,7 +1,7 @@
 #ifndef COLOR_KEY_H
 #define COLOR_KEY_H
 
-#include "renderer.h"
+#include "Renderer.h"
 
 class ColorKey
 {

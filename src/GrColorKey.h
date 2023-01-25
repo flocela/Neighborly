@@ -1,7 +1,7 @@
 #ifndef GR_COLOR_KEY_H
 #define GR_COLOR_KEY_H
 
-#include "renderer.h"
+#include "Renderer.h"
 #include "Letter.h"
 #include "ColorKey.h"
 #include "SDL.h"

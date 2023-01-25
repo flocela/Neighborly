@@ -4,7 +4,7 @@
 #include "unordered_map"
 #include "Color.h"
 #include "Plot.h"
-#include "renderer.h"
+#include "Renderer.h"
 #include "City.h"
 #include "Resident.h"
 #include "GrColorKey.h"

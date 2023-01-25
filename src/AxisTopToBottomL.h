@@ -4,7 +4,7 @@
 #include <string>
 #include <memory>
 #include "SDL.h"
-#include "renderer.h"
+#include "Renderer.h"
 #include "Coordinate.h"
 #include "AxisFormat.h"
 #include "TextRect.h"

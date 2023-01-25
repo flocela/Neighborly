@@ -14,7 +14,7 @@
 #include "Letter.h"
 #include "PlotSizer.h"
 #include "Printer.h"
-#include "renderer.h"
+#include "Renderer.h"
 #include "Title.h"
 #include "TitleA.h"
 

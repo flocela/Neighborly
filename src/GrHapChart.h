@@ -5,7 +5,7 @@
 #include "Color.h"
 #include "PlotSizer.h"
 #include "Plot.h"
-#include "renderer.h"
+#include "Renderer.h"
 #include "City.h"
 #include "Resident.h"
 #include "ColorKey.h"

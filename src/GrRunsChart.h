@@ -1,7 +1,7 @@
 #ifndef GR_RUNS_CHART_H
 #define GR_RUNS_CHART_H
 
-#include "renderer.h"
+#include "Renderer.h"
 #include <iostream>
 #include "Letter.h"
 #include "SDL.h"

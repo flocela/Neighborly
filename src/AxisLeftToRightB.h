@@ -1,7 +1,7 @@
 #ifndef AXIS_LEFT_TO_RIGHT_B__H
 #define AXIS_LEFT_TO_RIGHT_B__H
 
-#include "renderer.h"
+#include "Renderer.h"
 #include "AxisFormat.h"
 #include "TextRect.h"
 

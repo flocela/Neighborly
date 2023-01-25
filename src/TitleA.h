@@ -2,7 +2,7 @@
 #define TITLE_A_H
 
 #include "Letter.h"
-#include "renderer.h"
+#include "Renderer.h"
 #include "Title.h"
 #include <iostream>
 

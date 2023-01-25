@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "Point.h"
-#include "renderer.h"
+#include "Renderer.h"
 
 // A Plot has an x and y axis. It prints data points (dots) in its area.
 class Plot
