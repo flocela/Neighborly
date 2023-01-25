@@ -1,9 +1,6 @@
 #ifndef RESIDENT_H
 #define RESIDENT_H
 
-#include <vector>
-#include "Color.h"
-#include "City.h"
 #include <map>
 #include <set>
 
@@ -37,17 +34,6 @@ class Resident{
 
         // calculates happiness, sets resident's happiness and returns the calculated happiness
         double setHappiness (std::set<Resident*> neighbors, int numOfAdjacentHouses);
-
-        virtual const House* findHome (
-            const House* oldHouse,
-            std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
-            std::unordered_map<const House*, Resident*> houseToResMap // This should be const. Or only send a copy of needed neighbors
-        ) const = 0;
-        virtual const House* findBestHome (
-            const House* oldHouse,
-            std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
-            std::unordered_map<const House*, Resident*> houseToResMap// This should be const. Or only send a copy of needed neighbors
-        ) const = 0;
         bool operator< (const Resident& other) const;
     private:
         int    _ID;

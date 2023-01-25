@@ -119,8 +119,6 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
         qHappinessDropLocation
     );
 
-    std::cout << "drop location: " <<  locationOfDrop << endl;
-
     vector<unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)
     {

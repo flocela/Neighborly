@@ -26,18 +26,6 @@ public:
 
     std::string toStrBasic () const override;
 
-    const House* findHome (
-        const House* oldHouse,
-        std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
-        std::unordered_map<const House*, Resident*> houseToResMap
-    ) const override;
-
-    const House* findBestHome (
-        const House* oldHouse,
-        std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
-        std::unordered_map<const House*, Resident*> houseToResMap
-    ) const override;
-
 private:
     double _happiness_with_zero_neighbors;
     double _happiness_at_zero_diversity;

@@ -1,6 +1,7 @@
 #ifndef PRINTER_CMDLINE_H
 #define PRINTER_CMDLINE_H
 
+#include <unordered_map>
 #include "Printer.h"
 #include "TextHelper.h"
 

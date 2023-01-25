@@ -3,7 +3,9 @@
 
 #include <memory>
 #include <vector>
+
 #include "City.h"
+#include "Color.h"
 #include "Resident.h"
 #include "Simulator.h"
 

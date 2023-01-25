@@ -35,26 +35,3 @@ double Resident_Flat::implCalculateHappiness(
     return _happiness_func.calcHappiness(numOfAdjacentHouses, like, diff);
 }
 
-const House* Resident_Flat::findHome (
-    const House* oldHouse,
-    std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
-    std::unordered_map<const House*, Resident*> houseToResMap
-) const
-{
-    (void) houseToResMap;
-    for (auto h2SH : openHousesAndTheirAdjacentHouses)
-    {
-        return h2SH.first;
-    }
-    return oldHouse;
-}
-
-const House* Resident_Flat::findBestHome (
-    const House* oldHouse,
-    std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
-    std::unordered_map<const House*, Resident*> houseToResMap
-) const
-{
-    return findHome(oldHouse, openHousesAndTheirAdjacentHouses, houseToResMap);
-}
-

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <memory>
+#include "Color.h"
 #include "Resident.h"
 #include "UI.h"
 

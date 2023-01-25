@@ -1,7 +1,7 @@
 #ifndef SIMULATOR_H
 #define SIMULATOR_H
 
-#include <map>
+#include <unordered_map>
 #include "Resident.h"
 #include "House.h"
 

@@ -1,8 +1,8 @@
 #ifndef Resident_Flat_H
 #define Resident_Flat_H
 
-#include "Resident.h"
 #include "HappinessFunc_Flat.h"
+#include "Resident.h"
 
 class Resident_Flat: public Resident
 {
@@ -22,18 +22,6 @@ class Resident_Flat: public Resident
         ~Resident_Flat() = default;
 
         std::string toStrBasic () const override;
-        
-        const House* findHome (
-            const House* oldHouse,
-            std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
-            std::unordered_map<const House*, Resident*> houseToResMap
-        ) const override;
-
-        const House* findBestHome (
-            const House* oldHouse,
-            std::map<const House*, std::set<const House*>> openHousesAndTheirAdjacentHouses,
-            std::unordered_map<const House*, Resident*> houseToResMap
-        ) const override;
 
     private:
         double _happiness_val;

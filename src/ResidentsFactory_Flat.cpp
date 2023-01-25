@@ -46,7 +46,6 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     );
     std::vector<std::unique_ptr<Resident>> residents = {};
 
-    std::cout << "ResdientsFactory_Flat AA" << endl;
     for ( int ii=0; ii<count; ++ii)
     {
         residents.push_back(
@@ -58,7 +57,6 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
                 happinessValue
         ));
     }
-    std::cout << "ResdientsFactory_Flat BB" << endl;
     return residents;
 }
 
