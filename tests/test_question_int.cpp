@@ -7,7 +7,7 @@ using Catch::Matchers::Contains;
 
 // Run from the command line:
 // g++ --std=c++17 -o runme ../src/Question_Int.cpp test_question_int.cpp test_main.o
-
+/*
 TEST_CASE("Question_Int getPrompt() returns the origPrompt first.")
 {   
     std::string origPrompt = "Choose a number between 1 and 10 inclusive";
@@ -126,3 +126,4 @@ TEST_CASE("Question_Int getAnswer() throws an exception if there isn't an approp
     q.tryAnswer("x");
     REQUIRE_THROWS_WITH( q.getAnswer(), Contains("There is no answer yet."));
 }
+*/

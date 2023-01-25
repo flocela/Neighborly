@@ -27,8 +27,8 @@ SimulationComponents MainExamples::userChoosesExample (const UI& ui)
             "simple with a large city",
             "finicky residents with a small city",
             "finicky residents with a large city"},
-            0
-        );
+            0,
+            "Could not tell, which combo you wanted, will be using simple with a small city.");
     switch (chosenExample) // TODO only one type of example is listed in this switch statement, make more examples.
     {
         // 120 x 120 city with 14,400 houses. 

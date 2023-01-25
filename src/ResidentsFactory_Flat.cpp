@@ -2,6 +2,7 @@
 #include <limits>
 #include "Resident_Flat.h"
 
+using namespace std;
 std::string ResidentsFactory_Flat::toString ()
 {
     return "Flat Residents Factory";
@@ -23,24 +24,29 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
 )
 {   
     std::string curColBaseName = _colorrs_map[baseColor][Mood::neutral]._base_name;
-    std:: string _happiness_orig_prompt = _happinessValueOrigPrompt;
-    _happiness_orig_prompt.insert(134, curColBaseName + " ");
+    std:: string copyHappinessValueOrig = _happinessValueOrigPrompt;
+    copyHappinessValueOrig.insert(134, curColBaseName + " ");
+    string copyHappinessFailure = _happinessValueFailure;
+    copyHappinessFailure.insert(94, _fallback_happiness_value);
+
     Question_Double qHappinessValue{
         3,
         0.0,
         100.0,
-        _happiness_orig_prompt,
+        copyHappinessValueOrig,
         _happinessValueTypePrompt,
-        _happinessValueRangePrompt
+        _happinessValueRangePrompt,
+        _fallback_happiness_value,
+        copyHappinessFailure
     };
 
     double happinessValue = askUserForDouble(
         ui,
-        qHappinessValue,
-        _happinessValueFailure
+        qHappinessValue
     );
     std::vector<std::unique_ptr<Resident>> residents = {};
 
+    std::cout << "ResdientsFactory_Flat AA" << endl;
     for ( int ii=0; ii<count; ++ii)
     {
         residents.push_back(
@@ -52,39 +58,22 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
                 happinessValue
         ));
     }
+    std::cout << "ResdientsFactory_Flat BB" << endl;
     return residents;
 }
 
 int ResidentsFactory_Flat::askUserForInt (
     UI& ui, 
-    Question_Int question, 
-    std::string failureString
+    Question_Int question
 )
 {
-    ui.getAnswer(question);
-    if (question.hasValidAnswer())
-    {
-        return std::stoi(question.getAnswer());
-    }
-    else
-    {
-        throw failureString;
-    }
+    return stoi(ui.getAnswer(question));
 }
 
 double ResidentsFactory_Flat::askUserForDouble (
     UI& ui, 
-    Question_Double question, 
-    std::string failureString
+    Question_Double question
 )
 {
-    ui.getAnswer(question);
-    if (question.hasValidAnswer())
-    {   
-        return std::stod(question.getAnswer());
-    }
-    else
-    {
-        throw failureString;
-    }
+    return stod(ui.getAnswer(question));
 }

@@ -1,7 +1,9 @@
 #include "Simulator_Basic_A.h"
 #include <iostream>
 
-Simulator_Basic_A::Simulator_Basic_A (City* city, std::set<Resident*> residents):
+using namespace std;
+
+Simulator_Basic_A::Simulator_Basic_A (City* city, set<Resident*> residents):
     _city{city}, _residents{residents}
 {   
     for (const House* house : _city->getHouses())
@@ -10,7 +12,7 @@ Simulator_Basic_A::Simulator_Basic_A (City* city, std::set<Resident*> residents)
     }
 }
 
-std::unordered_map<const House*, Resident*> Simulator_Basic_A::simulate ()
+unordered_map<const House*, Resident*> Simulator_Basic_A::simulate ()
 {   
     if (!_first_simulation_done)
     {   
@@ -18,7 +20,8 @@ std::unordered_map<const House*, Resident*> Simulator_Basic_A::simulate ()
         _first_simulation_done = true;
     }
     else
-    {   int count  = 0;
+    {  
+        int count  = 0;
         for (Resident* res : _residents)
         {   
             if ( calculateHappinessValueFor(res, _house_per_resident_map[res]->getAddress()) <
@@ -28,7 +31,6 @@ std::unordered_map<const House*, Resident*> Simulator_Basic_A::simulate ()
                 ++count;
             }
         }
-        //std::cout << "SimBA moved/total: " << count << "/" << _residents.size() << std::endl;
     }
     
     setHappinessValuesForAllResidents();
@@ -42,9 +44,9 @@ void Simulator_Basic_A::firstSimulation ()
     {   
         const House* house = selectRandom(_open_houses);
         
-        _res_per_house_map.insert(std::pair<const House*, Resident*>(house, res));
+        _res_per_house_map.insert(pair<const House*, Resident*>(house, res));
         
-        _house_per_resident_map.insert(std::pair<Resident*, const House*>(res, house));
+        _house_per_resident_map.insert(pair<Resident*, const House*>(res, house));
         
         _open_houses.erase(house);
         
@@ -55,24 +57,29 @@ void Simulator_Basic_A::firstSimulation ()
 void Simulator_Basic_A::moveResident (Resident* res)
 {  
     const House* currHouse = _house_per_resident_map[res];
-    std::unordered_set<const House*> nearHouses = _city->findHousesWithinDistance
-    (
+    
+    unordered_set<const House*> nearHouses = _city->findHousesWithinDistance
+    (   
         currHouse,
         res->getAllowedMovementDistance()
     );
+    
     if (nearHouses.size() == 0)
+    {
+        
         // no houses to move to.
         return;
+    }
     else
     {  
         // remove houses in nearHouses set that are not open. 
         // res can't move into houses that are occupied even if they are near.
-        std::unordered_set<const House*>::iterator iter = nearHouses.begin();
+        unordered_set<const House*>::iterator iter = nearHouses.begin();
         while (iter != nearHouses.end())
-        {
+        {   
             if (_open_houses.find(*iter) == _open_houses.end())
-            {
-                std::unordered_set<const House*>::iterator copy = iter;
+            {   
+                unordered_set<const House*>::iterator copy = iter;
                 ++iter;
                 nearHouses.erase(*copy);
             }
@@ -83,7 +90,11 @@ void Simulator_Basic_A::moveResident (Resident* res)
         }
         int count = _count;
         while (count > 0)
-        {
+        {  
+            if (nearHouses.size() == 0)
+            {
+                break; // TODO maybe return;
+            }
             const House* randomHouse = selectRandom(nearHouses);
             
             if (calculateHappinessValueFor(res, randomHouse->getAddress()) > res->getHappinessGoal() )
@@ -105,16 +116,16 @@ void Simulator_Basic_A::moveResidentIntoHouse (Resident* res, const House* newHo
         _res_per_house_map.erase(oldHouse);
         _open_houses.insert(oldHouse);
     }
-    _res_per_house_map.insert(std::pair<const House*, Resident*>(newHouse, res));
-    _house_per_resident_map.insert(std::pair<Resident*, const House*>(res, newHouse));
+    _res_per_house_map.insert(pair<const House*, Resident*>(newHouse, res));
+    _house_per_resident_map.insert(pair<Resident*, const House*>(res, newHouse));
     _open_houses.erase(newHouse);
 }
 
-std::set<Resident*> Simulator_Basic_A::getResidentsInTheseHouses(
-    std::set<const House*> houses
+set<Resident*> Simulator_Basic_A::getResidentsInTheseHouses(
+    set<const House*> houses
 )
 {   
-    std::set<Resident*> residents;
+    set<Resident*> residents;
     for (const House* house : houses)
     {   
         if (hasResident(house))
@@ -127,13 +138,13 @@ std::set<Resident*> Simulator_Basic_A::getResidentsInTheseHouses(
 }
 
 const House* Simulator_Basic_A::Simulator_Basic_A::selectRandom(
-    std::unordered_set<const House*>& setOfHouses
+    unordered_set<const House*>& setOfHouses
 ) const
 {   
     int size = setOfHouses.size();
     int r = rand() % size;
-    std::unordered_set<const House*>::iterator it = setOfHouses.begin();
-    std::advance(it, r);
+    unordered_set<const House*>::iterator it = setOfHouses.begin();
+    advance(it, r);
     return *it;
 }
 
@@ -151,13 +162,13 @@ Resident* Simulator_Basic_A::getCurrResident (const House* house)
 
 bool Simulator_Basic_A::hasResident (const House* house)
 {
-    std::unordered_map<const House*, Resident*>::iterator it = _res_per_house_map.find(house);
+    unordered_map<const House*, Resident*>::iterator it = _res_per_house_map.find(house);
     return ( it != _res_per_house_map.end() );
 }
 
 bool Simulator_Basic_A::hasHouse (Resident* res)
 {
-    std::unordered_map<Resident*, const House*>::iterator it = _house_per_resident_map.find(res);
+    unordered_map<Resident*, const House*>::iterator it = _house_per_resident_map.find(res);
     return !(it == _house_per_resident_map.end());
     //return _curr_res_to_house_map.count(res) > 0;
 }
@@ -167,14 +178,14 @@ void Simulator_Basic_A::setHappinessValuesForAllResidents ()
     for (Resident* res : _residents)
     {
         const House* house = _get_res_cur_house(res);
-        std::set<const House*> adjHouses = _city->getAdjacentHouses(house->getAddress());
-        std::set<Resident*> adjResidents = getResidentsInTheseHouses(adjHouses);
+        set<const House*> adjHouses = _city->getAdjacentHouses(house->getAddress());
+        set<Resident*> adjResidents = getResidentsInTheseHouses(adjHouses);
         res->setHappiness(adjResidents, adjHouses.size());
     }
 }
 
 double Simulator_Basic_A::calculateHappinessValueFor(Resident* res, int address)
 {
-    std::set<const House*> adjHouses = _city->getAdjacentHouses(address);
+    set<const House*> adjHouses = _city->getAdjacentHouses(address);
     return res->calculateHappiness(getResidentsInTheseHouses(adjHouses), adjHouses.size());
 }

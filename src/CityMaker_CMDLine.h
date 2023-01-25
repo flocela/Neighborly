@@ -19,6 +19,8 @@ public:
 
 private:
     const UI_CMDLine& _ui;
+    int _fall_back = 0;
+    std::string _choosing_city_failure = "Couuld not determine the city type, will be using .";
 };
 
 #endif

@@ -59,6 +59,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         // map of color strings, is diminished as users use their colors.
         std::vector<BaseColor> _available_colors;
         
+        std::string _fallback_group_happiness_goal_failure = "50";
 
         // Prompt for what is this group's color question.
         std::string _which_group_color_prompt = "What will be the color of your"
@@ -77,7 +78,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         std::string _how_many_groups_range_prompt = 
             "That's either too small or too large. Should be 1, 2, or 3. _";
         std::string _how_many_groups_failure = 
-            "Could not determine how many resident types the user wanted.";
+            "Could not determine the number of resident types, using .";
         
         //Prompts for how_many_residents_in_this_group question.
         std::string _how_many_residents_orig_prompt = 
@@ -87,7 +88,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         std::string _how_many_residents_range_prompt =
             "That's too small or too large. Should be between 1 and  inclusive. _";
         std::string _how_many_residents_failure = 
-            "Could not determine how many residents in group .";
+            "Could not determine the number of residents in group, will be using .";
 
         //Prompts for group_happiness_goal question.
         std::string _group_happiness_orig_prompt = 
@@ -98,7 +99,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         std::string _group_happiness_range_prompt =
             "That's too small or too large. Should be between 0 and 100 inclusive. _";
         std::string _group_happiness_failure = 
-            "Could not determine the happiness goal for members of group.";
+            "Could not determine the happiness goal for members of group, will be using .";
 
         /*  Prompts for the allowed movement for this group of residents.   */
         std::string _group_movement_orig_prompt  = 
@@ -110,9 +111,11 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         std::string _group_movement_range_prompt = 
             "That number must be between 0 and . _";
         std::string _group_movement_failure =
-            "Can not get information needed to determine the allowed movement for these"
-            " residents from the user.";
+            "Could not get the allowed movement for the group, will be using .";
 
+        // If can not get a chosen Resident type from menu, then use _fallback_menu_response.
+        std::string _fallback_res_type_response = "Could not determine the"
+        " resident group type, will be using ";
 };
 
 #endif

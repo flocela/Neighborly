@@ -12,7 +12,12 @@ class UI
 public:
 
 // if user does not reply with an number corresponding to an item, then returns the fallBack.
-virtual int menu (std::string prompt, std::vector<std::string> items, int fallBack)const = 0;
+virtual int menu (
+    std::string prompt,
+    std::vector<std::string> items,
+    int fallBack,
+    std::string failureResponse
+) const = 0;
 
 virtual std::string getAnswer (Question& question)const  = 0;
 

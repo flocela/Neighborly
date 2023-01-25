@@ -1,26 +1,61 @@
 #include "Question_YN.h"
 
+using namespace std;
+
 Question_YN::Question_YN (
     int id,
-    std::string origPrompt,
-    std::string invalidPrompt):
-    _ID{id}, _orig_prompt{origPrompt},
-    _invalid_prompt{invalidPrompt}
+    string origPrompt,
+    string fallback,
+    string failedPrompt):
+    _ID{id},
+    _orig_prompt{origPrompt},
+    _fallback{fallback}
 {
+    _invalid_prompt.insert(33, _orig_prompt);
+    if (failedPrompt == "")
+    {
+        _failed_prompt.insert(62, _fallback);
+    }
+    else
+    {
+        _failed_prompt = failedPrompt;
+    }
     _next_prompt = &_orig_prompt;
 }
 
-int Question_YN::getID()
+int Question_YN::getID() const
 {
     return _ID;
 }
 
-std::string Question_YN::getPrompt ()
+string Question_YN::getPrompt () const
 {
     return *_next_prompt;
 }
 
-bool Question_YN::tryAnswer (std::string ans)
+bool Question_YN::hasValidAnswer () const
+{
+    return _valid_answer;
+}
+
+string Question_YN::getAnswer () const
+{
+    if (hasValidAnswer() == false)
+        return _fallback;
+    return _answer;
+}
+
+string Question_YN::getFallback () const
+{
+    return _fallback;
+}
+
+string Question_YN::getFailedResponse () const
+{
+    return _failed_prompt;
+}
+
+bool Question_YN::tryAnswer (string ans)
 {
     if (ans == "YES"  ||
         ans == "Yes"  ||
@@ -50,16 +85,4 @@ bool Question_YN::tryAnswer (std::string ans)
         _valid_answer = false;
     }
     return _valid_answer;
-}
-
-bool Question_YN::hasValidAnswer ()
-{
-    return _valid_answer;
-}
-
-std::string Question_YN::getAnswer ()
-{
-    if (hasValidAnswer() == false)
-        throw ("There is no answer yet.");
-    return _answer;
 }

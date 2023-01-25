@@ -1,14 +1,20 @@
 #include "RandSeedGetter.h"
 
+using namespace std;
 Question_Int RandSeedGetter::createQuestionForSeed ()
 {
+    string copySeedFailureStr = _seed_failure_str;
+    copySeedFailureStr.insert(68, _seed_fallback);
     return Question_Int{
         0,
         1,
         2147483647, // Ask the compiler how big an int is
         _seed_orig_prompt,
         _seed_type_prompt,
-        _seed_range_prompt
+        _seed_range_prompt,
+        _seed_fallback,
+        copySeedFailureStr
+
     };
 }
 
@@ -19,5 +25,5 @@ int RandSeedGetter::makeSeedForRand (const UI& ui)
     if (question.hasValidAnswer())
         return std::stoi(question.getAnswer());
     else
-        throw _seed_failure_str;
+        return stoi(_seed_fallback);
 }

@@ -20,16 +20,20 @@ string CityFactory_Grid::cityType ()
 
 int CityFactory_Grid::askForGridWidth(const UI& ui, int maxWidth)const
 {   
-    string _width_of_grid_orig_prompt_copy = _width_of_grid_orig_prompt;
-    string _width_of_grid_range_prompt_copy = _width_of_grid_range_prompt;
+    string copyWidthOfGridOrig = _width_of_grid_orig_prompt;
+    string copyWidthOfGridRange = _width_of_grid_range_prompt;
+    string copyWidthOfGridFailure = _width_of_grid_failure;
+    copyWidthOfGridFailure.insert(53, to_string(maxWidth/2));
 
     Question_Int question{
         0, //id
         1, // min number of houses
         maxWidth, // max number of houses
-        _width_of_grid_orig_prompt_copy.insert(109, to_string(maxWidth)),
+        copyWidthOfGridOrig.insert(109, to_string(maxWidth)),
         _width_of_grid_type_prompt,
-        _width_of_grid_range_prompt_copy.insert(99, to_string(maxWidth))
+        copyWidthOfGridRange.insert(99, to_string(maxWidth)),
+        to_string(maxWidth/2),
+        copyWidthOfGridFailure
     };
 
     ui.getAnswer(question);
@@ -38,8 +42,6 @@ int CityFactory_Grid::askForGridWidth(const UI& ui, int maxWidth)const
     }
     else
     {
-        string _width_of_grid_failure_copy = _width_of_grid_failure;
-        ui.print(_width_of_grid_failure_copy.insert(53, to_string(maxWidth/2)));
         return maxWidth/2;
     }
         

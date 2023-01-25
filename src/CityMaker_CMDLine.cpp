@@ -21,6 +21,9 @@ unique_ptr<City> CityMaker_CMDLine::makeCity (
 
     int cityChoice = 0;
 
+    string copyChoosingCityFailure = _choosing_city_failure;
+    copyChoosingCityFailure.insert(49, namesOfCityFactories[_fall_back]);
+
     if (cityFactories.size() == 1)
     {
         cout << "\nWell, there's only one type of city, so your city type will be " <<
@@ -29,10 +32,10 @@ unique_ptr<City> CityMaker_CMDLine::makeCity (
     else
     {
         cityChoice = 
-            _ui.menu("Choose a city type by typing the"
-            " corresponding number. _",
+            _ui.menu("Choose a city type by typing the corresponding number. _",
             namesOfCityFactories,
-            0);  
+            _fall_back,
+            _choosing_city_failure);  
     }
     return cityFactories[cityChoice]->createCity(_ui, maxDeltaX, maxDeltaY);
 

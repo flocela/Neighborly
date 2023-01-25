@@ -1,36 +1,77 @@
-#include "Question_Double.h"
 #include <stdexcept>
+#include "Question_Double.h"
 
-Question_Double::Question_Double (int id,
-                                  double min, 
-                                  double max,
-                                  std::string origPrompt,
-                                  std::string wrongTypePrompt, 
-                                  std::string inRangePrompt) :
-    _ID{id}, _min{min}, _max{max}, _orig_prompt{origPrompt},
-    _type_prompt{wrongTypePrompt}, _range_prompt{inRangePrompt}
+using namespace std;
+
+Question_Double::Question_Double (
+    int id,
+    double min, 
+    double max,
+    string origPrompt,
+    string wrongTypePrompt, 
+    string inRangePrompt,
+    string fallback,
+    string failedPrompt
+): _ID{id},
+   _min{min},
+   _max{max},
+   _orig_prompt{origPrompt},
+   _type_prompt{wrongTypePrompt},
+   _range_prompt{inRangePrompt},
+   _fallback{fallback}
 {
+    _invalid_prompt.insert(33, _orig_prompt);
+    if (failedPrompt == "")
+    {
+        _failed_prompt.insert(62, _fallback);
+    }
+    else
+    {
+        _failed_prompt = failedPrompt;
+    }
     _next_prompt = &_orig_prompt;
     _valid_answer = false;
 }
 
-int Question_Double::getID()
+int Question_Double::getID () const
 {
     return _ID;
 }
 
-std::string Question_Double::getPrompt ()
+string Question_Double::getPrompt () const
 {
     return *_next_prompt;
 }
 
-bool Question_Double::tryAnswer (std::string ans)
+bool Question_Double::hasValidAnswer () const
+{
+    return _valid_answer;
+}
+
+string Question_Double::getAnswer () const
+{
+    if (hasValidAnswer() == false)
+        return _fallback;
+    return to_string(_answer);
+}
+
+string Question_Double::getFallback () const
+{
+    return _fallback;
+}
+
+string Question_Double::getFailedResponse () const
+{
+    return _failed_prompt;
+}
+
+bool Question_Double::tryAnswer (string ans)
 {   
     double doubleAnswer;
     try {
-        doubleAnswer = std::stod(ans);
+        doubleAnswer = stod(ans);
     }
-    catch(std::invalid_argument& e) // TODO combine these two catches since bodies are the same.
+    catch(invalid_argument& e) // TODO combine these two catches since bodies are the same.
     {
         _next_prompt = &_type_prompt;
         return false;
@@ -48,16 +89,4 @@ bool Question_Double::tryAnswer (std::string ans)
     _valid_answer = true;
     _answer = doubleAnswer;
     return true;
-}
-
-bool Question_Double::hasValidAnswer ()
-{
-    return _valid_answer;
-}
-
-std::string Question_Double::getAnswer ()
-{
-    if (hasValidAnswer() == false)
-        throw ("There is no answer yet.");
-    return std::to_string(_answer);
 }

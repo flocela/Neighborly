@@ -28,7 +28,10 @@ class ResidentsFactory_Flat: public ResidentsFactory
         std::string toString () override;
         std::string residentType () override;
     
-    private:                                     
+    private:
+
+        // if can not get happiness value from user, then use _fallback_happiness_value
+        std::string _fallback_happiness_value = "50";                                     
         /*  Prompts for the Happiness Value when the Diversity is zero for 
             this group of residents.    */
         std::string _happinessValueOrigPrompt  = 
@@ -43,17 +46,15 @@ class ResidentsFactory_Flat: public ResidentsFactory
             " inclusive. _";
         std::string _happinessValueFailure = 
             "Can not get information needed to determine the happiness value for"
-            " these residents from the user.  ";
+            " these residents. Will use .";
 
         int askUserForInt (
             UI& ui,
-            Question_Int question, 
-            std::string failureString
+            Question_Int question
         );
         double askUserForDouble (
             UI& ui,
-            Question_Double question, 
-            std::string failureString
+            Question_Double question
         );
 };
 

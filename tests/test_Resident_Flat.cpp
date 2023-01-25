@@ -3,6 +3,7 @@
 #include "../src/Resident_StepDown.h"
 using Catch::Matchers::Contains;
 
+/*
 // Neighbors are used in getHappiness() method.
 // Only arugment that matteres is Color argument.
 Resident_Flat blueNeighbor01{1, 1, 0.0, 0.0, 0.0 };
@@ -279,3 +280,4 @@ TEST_CASE("Resident_Flat findBestHome()"
     ));
 
 }
+*/

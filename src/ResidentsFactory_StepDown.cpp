@@ -4,17 +4,19 @@
 #include <sstream>
 #include <iomanip>
 
-std::string ResidentsFactory_StepDown::toString ()
+using namespace std;
+
+string ResidentsFactory_StepDown::toString ()
 {
     return "Step Down Residents Factory";
 }
 
-std::string ResidentsFactory_StepDown::residentType ()
+string ResidentsFactory_StepDown::residentType ()
 {
     return "Step Down Residents";
 }
 
-std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
+vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     UI& ui,
     int firstID, 
     int count,
@@ -25,83 +27,104 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
 )
 {   (void) baseColor;
 
+    stringstream goalStream;
+    goalStream << fixed << setprecision(2) << happinessGoal;
+
+    // ask user for happiness value when there are zero neighbors.
+    // uses happiness goal if can not get happiness value for zero neighbors.
+    string copyHappinessWithZeroNeighborsFailure = _happiness_with_zero_neighbors_failure;
+    copyHappinessWithZeroNeighborsFailure.insert(70, goalStream.str());
+
     Question_Double qHappinessWithZeroNeighbors{
         3,
         0.0,
         100.0,
         _happinessWithZeroNeighborsPrompt,
         _happinessWithZeroNeighborsTypePrompt,
-        _happinessWithZeroNeighborsRangePrompt
+        _happinessWithZeroNeighborsRangePrompt,
+        goalStream.str(),
+        copyHappinessWithZeroNeighborsFailure
     };
 
-    double happinessWithZeroNeighbors = askUserForDouble(
-    ui,
-    qHappinessWithZeroNeighbors,
-    "Can not get information needed to determine the happiness value with"
-    " zero neighbors."
-    );
+    double happinessWithZeroNeighbors = askUserForDouble(ui, qHappinessWithZeroNeighbors);
 
+    // ask user for high happiness value.
+    // uses happiness goal if can not get high happiness value.
+    string copyHighHappinessFailure = _high_happiness_value_failure;
+    copyHighHappinessFailure.insert(42, goalStream.str());
     Question_Double qHighHappinessValue{
         3,
         0.0,
         100.0,
         _high_happiness_value_prompt,
         _high_happiness_value_type_prompt,
-        _high_happiness_value_range_prompt
+        _high_happiness_value_range_prompt,
+        goalStream.str(),
+        copyHighHappinessFailure
     };
 
     double highHappinessValue = askUserForDouble(
         ui,
-        qHighHappinessValue,
-        "Can not get information needed to determine the happiness value at"
-        " zero for these residents from the user."
+        qHighHappinessValue
     );
 
-    std::string copy_low_happiness_value_prompt = _low_happiness_value_prompt;
-    std::string copy_low_happiness_range_prompt = _low_happiness_value_range_prompt;
-    std::stringstream high_val_stream;
-    high_val_stream << std::fixed << std::setprecision(1) << highHappinessValue;
+    // ask user for low happiness value.
+    // uses _fallback_low_happiness_value if can not get low happiness value
+    string copyLowHappinessValuePrompt = _low_happiness_value_prompt;
+    string copyLowHappinessRangePrompt = _low_happiness_value_range_prompt;
+    string copyLowHappinessValueFailure = _low_happiness_value_failure;
     
+    // copyLowHappinessValuePrompt and copyLowHappinessRangePrompt both need to contain
+    // the highHappinessValue.
+    stringstream high_val_stream;
+    high_val_stream << fixed << setprecision(1) << highHappinessValue;
+
     Question_Double qLowHappinessValue{
         4,
         0,
         highHappinessValue,
-        copy_low_happiness_value_prompt.insert(
-            copy_low_happiness_value_prompt.size()-13,
+        copyLowHappinessValuePrompt.insert(
+            copyLowHappinessValuePrompt.size()-13,
             high_val_stream.str()),
         _low_happiness_value_type_prompt,
-        copy_low_happiness_range_prompt.insert(
-            copy_low_happiness_range_prompt.size() - 13,
-            high_val_stream.str())
+        copyLowHappinessRangePrompt.insert(
+            copyLowHappinessRangePrompt.size() - 13,
+            high_val_stream.str()),
+        _fallback_low_happiness_value,
+        copyLowHappinessValueFailure.insert(41, _fallback_low_happiness_value)
     };
 
     double lowHappinessValue = askUserForDouble(
         ui,
-        qLowHappinessValue,
-        "Can not get information needed to determine the happiness value at"
-        " one for these residents from the user."
+        qLowHappinessValue
     );
 
+    // ask user for drop location.
+    // uses _fallback_drop_location if can not get drop location.
+    string copyDropLocationFailure = _drop_location_failure;
+    copyDropLocationFailure.insert(35, _fallback_drop_location);
+
     Question_Double qHappinessDropLocation{
-    5,
-    0.0,
-    100.0,
-    _dropLocationOrigPrompt,
-    _dropLocationTypePrompt,
-    _dropLocationRangePrompt
-    };
+        5,
+        0.0,
+        1.0,
+        _dropLocationOrigPrompt,
+        _dropLocationTypePrompt,
+        _dropLocationRangePrompt,
+        _fallback_drop_location,
+        copyDropLocationFailure};
 
     double locationOfDrop = askUserForDouble(
         ui,
-        qHappinessDropLocation,
-        "Can not get information needed to determine the diversity value at the"
-        " drop for these residents from the user."
+        qHappinessDropLocation
     );
 
-    std::vector<std::unique_ptr<Resident>> residents = {};
+    std::cout << "drop location: " <<  locationOfDrop << endl;
+
+    vector<unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)
     {
-        residents.push_back(std::make_unique<Resident_StepDown>(
+        residents.push_back(make_unique<Resident_StepDown>(
             firstID+ii,
             groupNumber,
             allowedMovement,
@@ -117,17 +140,8 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_StepDown::createResident
 
 double ResidentsFactory_StepDown::askUserForDouble (
     UI& ui, 
-    Question_Double question, 
-    std::string failureString
+    Question_Double question
 )
 {
-    ui.getAnswer(question);
-    if (question.hasValidAnswer())
-    {
-        return std::stod(question.getAnswer());
-    }
-    else
-    {
-        throw failureString;
-    }
+    return stod(ui.getAnswer(question));
 }

@@ -33,11 +33,11 @@ SimulationComponents UserComponentsGetter::askUserForComponents (
     ResidentsMaker_CMDLine residentsMaker{ui};
     ResidentsGroupInfo resGroupInfo = 
         residentsMaker.makeResidents(
-        residentFactories,
-        components.city->getNumOfHouses(),
-        2, // currenlty only allowing two groups
-        baseColors,
-        std::min(components.city->getWidth()/2, components.city->getHeight()/2));
+            residentFactories,
+            components.city->getNumOfHouses(),
+            2, // currenlty only allowing two groupsn//TODO this hsould be hard coded somehow
+            baseColors,
+            std::min(components.city->getWidth()/2, components.city->getHeight()/2));
 
     components.residents = std::move(resGroupInfo._residents);
     components.baseColorsPerGroupid = resGroupInfo._base_color_per_group_num;
