@@ -46,7 +46,7 @@ private:
         " one of two happiness values. They have a high happiness value for diversities"
         " starting close to zero and up to and including a given diversity named diversity-drop."
         " Then they have a lower happiness value after the"
-        " diversity-drop. Enter the happiness value when the residents have no neighbors. _";
+        " diversity-drop.\nEnter the happiness value when the residents have no neighbors. _";
     std::string _happinessWithZeroNeighborsTypePrompt  = 
         "Nope, that's not a number, i.e. 0.2 or 13.0. _";
     std::string _happinessWithZeroNeighborsRangePrompt = 

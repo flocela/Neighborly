@@ -1,6 +1,9 @@
 #include "ResidentsFactory_Flat.h"
 #include <limits>
-#include "Resident_Flat.h"
+#include "Resident_UsingFunction.h"
+#include <sstream>
+#include <iomanip>
+#include "HappinessFunc_Flat.h"
 
 using namespace std;
 std::string ResidentsFactory_Flat::toString ()
@@ -23,6 +26,27 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     BaseColor baseColor
 )
 {   
+    stringstream goalStream;
+    goalStream << fixed << setprecision(2) << happinessGoal;
+
+    // ask user for happiness value when there are zero neighbors.
+    // uses happiness goal if can not get happiness value for zero neighbors.
+    string copyHappinessWithZeroNeighborsFailure = _happiness_with_zero_neighbors_failure;
+    copyHappinessWithZeroNeighborsFailure.insert(70, goalStream.str());
+
+    Question_Double qHappinessWithZeroNeighbors{
+        3,
+        0.0,
+        100.0,
+        _happinessWithZeroNeighborsPrompt,
+        _happinessWithZeroNeighborsTypePrompt,
+        _happinessWithZeroNeighborsRangePrompt,
+        goalStream.str(),
+        copyHappinessWithZeroNeighborsFailure
+    };
+
+    double happinessWithZeroNeighbors = askUserForDouble(ui, qHappinessWithZeroNeighbors);
+
     std::string curColBaseName = _colorrs_map[baseColor][Mood::neutral]._base_name;
     std:: string copyHappinessValueOrig = _happinessValueOrigPrompt;
     copyHappinessValueOrig.insert(134, curColBaseName + " ");
@@ -49,13 +73,18 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     for ( int ii=0; ii<count; ++ii)
     {
         residents.push_back(
-            std::make_unique<Resident_Flat>(
+            std::make_unique<Resident_UsingFunction>(
                 firstID+ii,
                 groupNumber,
                 allowedMovement,
                 happinessGoal,
-                happinessValue
-        ));
+                make_unique<HappinessFunc_Flat>(
+                    happinessWithZeroNeighbors,
+                    happinessValue
+                ),
+                "Flat Resident"
+            )
+        );
     }
     return residents;
 }

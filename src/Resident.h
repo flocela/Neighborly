@@ -1,53 +1,47 @@
 #ifndef RESIDENT_H
 #define RESIDENT_H
 
-#include <map>
 #include <set>
+#include <string>
 
 class Resident{
-    public:
-        Resident (int id,
-                  int groupNumber, // resident group
-                  double allowedMovementDistance,
-                  double happinessGoal);
-        Resident (const Resident& obj) = default;
-        Resident (Resident&& obj) noexcept = default;
-        Resident& operator= (const Resident& obj) = default;
-        Resident& operator= (Resident&& obj) noexcept = default;
-        virtual ~Resident () = default;
 
-        virtual std::string toStrBasic () const = 0;
+public:
+    Resident (
+        int id,
+        int groupId,
+        double allowedMovementDistance,
+        double happinessGoal);
+    Resident (const Resident& obj) = default;
+    Resident (Resident&& obj) noexcept = default;
+    Resident& operator= (const Resident& obj) = default;
+    Resident& operator= (Resident&& obj) noexcept = default;
+    virtual ~Resident () = default; //TODO should be virtual
 
-        int getID() const { return _ID; }
-        int getGroupNumber () const { return _group_number; };
-        double getAllowedMovementDistance () const { return _allowed_movement_distance; };
-        double getHappinessGoal () const {
-            return _happiness_goal; 
-            };
+    virtual std::string toStrBasic () const = 0;
 
-        // Returns the last happiness value that was calculated. See calculateHappiness()
-        double getHappiness () const  {
-            return _curr_happiness;
-        };
+    int getID() const;
+    int getGroupId () const;
+    double getAllowedMovementDistance () const;
+    double getHappinessGoal () const;
+    double getHappiness () const;
+    bool operator< (const Resident& other) const;
+    double calculateHappiness (std::set<Resident*> neighbors, int numOfAdjacentHouses) const; // TODO should be const Resident*
 
-        double calculateHappiness (std::set<Resident*> neighbors, int numOfAdjacentHouses) const;
+    double setHappiness (double happiness);
+    
+protected:
+    virtual double implimentHappiness (
+        std::set<Resident*> neighbors,
+        int numOfAdjacentHouses
+    ) const = 0;
 
-        // calculates happiness, sets resident's happiness and returns the calculated happiness
-        double setHappiness (std::set<Resident*> neighbors, int numOfAdjacentHouses);
-        bool operator< (const Resident& other) const;
-    private:
-        int    _ID;
-        int    _group_number;
-        double _allowed_movement_distance;
-        double _happiness_goal;
-        double _curr_happiness;
-
-    protected:
-        virtual double implCalculateHappiness (
-            std::set<Resident*> neighbors,
-            int numOfAdjacentHouses
-        ) const = 0;
-       
+private:
+    int    _id;
+    int    _group_id;
+    double _allowed_movement_distance;
+    double _happiness_goal;
+    double _curr_happiness;
 };
 
 #endif

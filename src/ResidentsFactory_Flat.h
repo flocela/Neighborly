@@ -30,6 +30,26 @@ class ResidentsFactory_Flat: public ResidentsFactory
     
     private:
 
+        std::string _happinessWithZeroNeighborsPrompt  = 
+        "\nStepDown residents measure diversity as the number of disparate"
+        " neighbors divided by total number of neighbors. When StepDown"
+        " residents have no neighbors their happiness has a special value named"
+        " zero-neighbors. When StepDown Residents have neighbors, StepDown Residents have"
+        " one of two happiness values. They have a high happiness value for diversities"
+        " starting close to zero and up to and including a given diversity named diversity-drop."
+        " Then they have a lower happiness value after the"
+        " diversity-drop. Enter the happiness value when the residents have no neighbors. _";
+
+        std::string _happinessWithZeroNeighborsTypePrompt  = 
+        "Nope, that's not a number, i.e. 0.2 or 13.0. _";
+        
+        std::string _happinessWithZeroNeighborsRangePrompt = 
+        "That number is too small or too large. Should be between 0.0 and 100.0"
+        " inclusive. _";
+
+        std::string _happiness_with_zero_neighbors_failure =
+        "Could not get happiness value when resident has zero neighbors, using .";
+
         // if can not get happiness value from user, then use _fallback_happiness_value
         std::string _fallback_happiness_value = "50";                                     
         /*  Prompts for the Happiness Value when the Diversity is zero for 

@@ -1,6 +1,4 @@
 #include "catch.hpp"
-#include "../src/Resident_StepUp.h"
-#include "../src/Resident_Flat.h"
 using Catch::Matchers::Contains;
 
 /*

@@ -91,11 +91,7 @@ src/Manager.cpp
 src/Question_Int.cpp
 src/Question_Double.cpp
 src/Question.cpp
-src/Resident_Falling.cpp
-src/Resident_Flat.cpp
-src/Resident_Rising.cpp
-src/Resident_StepDown.cpp
-src/Resident_StepUp.cpp
+src/Resident_UsingFunction.cpp
 src/Resident.cpp
 src/Simulator_Basic_A.cpp
 src/TextHelper.cpp

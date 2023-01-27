@@ -24,7 +24,7 @@ void GrDvstyChart::print (
     {
         const Resident* resident = ii.first;
         const House* residentHouse = ii.second;
-        int residentGroupId = resident->getGroupNumber();
+        int residentGroupId = resident->getGroupId();
 
         set<const House*> housesAdjToRes = _adj_neighbors.at(residentHouse);
 
@@ -34,7 +34,7 @@ void GrDvstyChart::print (
             if (residentPerHouse.find(adjacentHouse) != residentPerHouse.end())
             {
                 // adjacent resident's groupId
-                int adj_res_groupId = (residentPerHouse.at(adjacentHouse))->getGroupNumber();
+                int adj_res_groupId = (residentPerHouse.at(adjacentHouse))->getGroupId();
                 if (adj_res_groupId != residentGroupId)
                 {
                     numOfDiffNeighborsPerGroupId[adj_res_groupId] +=1;

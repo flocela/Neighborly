@@ -1,8 +1,10 @@
 #include "ResidentsFactory_StepDown.h"
 #include <limits>
-#include "Resident_StepDown.h"
 #include <sstream>
 #include <iomanip>
+#include <memory>
+#include "HappinessFunc_StepDown.h"
+#include "Resident_UsingFunction.h"
 
 using namespace std;
 
@@ -122,15 +124,19 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     vector<unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)
     {
-        residents.push_back(make_unique<Resident_StepDown>(
+        // Resident_UsingFunction requires a HappinessFunc unique pointer
+        residents.push_back(make_unique<Resident_UsingFunction>(
             firstID+ii,
             groupNumber,
             allowedMovement,
             happinessGoal,
-            happinessWithZeroNeighbors,
-            highHappinessValue,
-            lowHappinessValue,
-            locationOfDrop
+            make_unique<HappinessFunc_StepDown> (
+                happinessWithZeroNeighbors,
+                highHappinessValue,
+                lowHappinessValue,
+                locationOfDrop
+            ),
+            "Step Down Resident"
         ));
     }
     return residents;

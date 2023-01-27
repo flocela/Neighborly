@@ -17,7 +17,7 @@ void GrHapChart::print (
     for (auto& pair : housePerResident)
     {
         const Resident* res = pair.first;
-        int resGroupNumber = res->getGroupNumber();
+        int resGroupNumber = res->getGroupId();
 
         if (happinessSumPerGroup.find(resGroupNumber) != happinessSumPerGroup.end())
         {

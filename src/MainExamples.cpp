@@ -2,10 +2,10 @@
 #include <iostream>
 #include <string>
 #include "City_Grid.h"
-#include "Resident_StepDown.h"
 #include "Simulator_Basic_A.h"
 #include "SimulationComponents.h"
-
+#include "Resident_UsingFunction.h"
+#include "HappinessFunc_StepDown.h"
 template<typename T>
 std::set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
 {
@@ -50,28 +50,33 @@ SimulationComponents MainExamples::userChoosesExample (const UI& ui)
 
             for (int ii=0; ii<3000; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_StepDown>(
+                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
                     ii,  // id
                     1,   // group number
                     10,   // allowed movement
                     80,  // happiness goal
-                    70, // happiness value with zero neighbors
-                    95, // happiness value at zero diversity
-                    70,  // happiness value at one diverstiy
-                    0.25  // diversity where drop happens
+                    std::make_unique<HappinessFunc_StepDown> (
+                        70, // happiness value with zero neighbors
+                        95, // happiness value at zero diversity
+                        70,  // happiness value at one diverstiy
+                        0.25  // diversity where drop happens
+                    ),
+                    "Step Down Resident"
                 ));
             }
             for (int jj=3001; jj<4000; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_StepDown>(
+                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
                     jj,
                     2,
                     40,
                     80,
-                    70, // happiness value with zero neighbors
-                    100,
-                    50,
-                    0.4
+                    std::make_unique<HappinessFunc_StepDown>(
+                        70, // happiness value with zero neighbors
+                        100,
+                        50,
+                        0.4),
+                    "Step Down Resident"
                 ));
             }
             components.simulator = std::make_unique<Simulator_Basic_A>(

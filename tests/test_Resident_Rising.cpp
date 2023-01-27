@@ -1,6 +1,4 @@
 #include "catch.hpp"
-#include "../src/Resident_Rising.h"
-#include "../src/Resident_Flat.h"
 #include <set>
 using Catch::Matchers::Contains;
 

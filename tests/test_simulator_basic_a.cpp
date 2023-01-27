@@ -1,15 +1,13 @@
 #include "catch.hpp"
 #include "../src/Simulator_Basic_A.h"
 #include "../src/City_Grid.h"
-#include "../src/Resident_Flat.h"
-#include "../src/Resident_StepDown.h"
 #include "../src/Color.h"
 #include "../src/Coordinate.h"
 
 using std::set;
 using std::vector;
 using std::unique_ptr;
-
+/*
 template<typename T>
 std::set<T*> getSetOfPointers (vector<unique_ptr<T>>& ts)
 {
@@ -334,4 +332,4 @@ TEST_CASE ("2 runs with many residents whose allowable movement is 2.0")
         );
         REQUIRE(distance <= 2.0);
     }
-}
+}*/

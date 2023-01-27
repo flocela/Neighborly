@@ -43,13 +43,10 @@
 
 #include "Printer_Graphic.h"
 #include "Printer_CMDLine.h"
-#include "Resident_Flat.h"
 #include "Simulator.h"
 #include "Simulator_Basic_A.h"
 #include "Color.h"
 #include "City_Grid.h"
-#include "Resident_StepDown.h"
-#include "Resident_Flat.h"
 #include "MainBaseQuestion.h"
 #include "SimulationComponents.h"
 #include "MainExamples.h"

@@ -1,6 +1,7 @@
 #ifndef TEXTHELPER_H
 #define TEXTHELPER_H
 
+#include <map>
 #include "City.h"
 #include "Resident.h"
 #include "House.h"

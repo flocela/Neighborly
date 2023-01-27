@@ -29,10 +29,10 @@ std::string TextHelper::createText (
         const House* house = h2r.first;
         Resident* res = h2r.second;
         housesInOrder.push_back(house);
-        if (seenColors.count(res->getGroupNumber()) == 0)
+        if (seenColors.count(res->getGroupId()) == 0)
         {
             seenResidents.insert(res);
-            seenColors.insert(res->getGroupNumber());
+            seenColors.insert(res->getGroupId());
         }
     }
     std::sort(housesInOrder.begin(), housesInOrder.end(), pComp);
@@ -40,7 +40,7 @@ std::string TextHelper::createText (
     {
         Resident* res = residentPerHouse[house];
         s1 << std::setw(3) << res->getID() << ", ";
-        s1 << std::setw(5) << res->getGroupNumber() << ", ";
+        s1 << std::setw(5) << res->getGroupId() << ", ";
         s1 << std::setw(2) << house->getAddress() << ", ";
         s1 << std::setw(8) << _city_ptr->getCoordinate(house->getAddress()).toStr() << ", ";
         s1 << res->getHappiness() << "/";

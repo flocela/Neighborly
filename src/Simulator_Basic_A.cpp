@@ -180,7 +180,7 @@ void Simulator_Basic_A::setHappinessValuesForAllResidents ()
         const House* house = _get_res_cur_house(res);
         set<const House*> adjHouses = _city->getAdjacentHouses(house->getAddress());
         set<Resident*> adjResidents = getResidentsInTheseHouses(adjHouses);
-        res->setHappiness(adjResidents, adjHouses.size());
+        res->setHappiness(res->calculateHappiness(adjResidents, adjHouses.size()));
     }
 }
 

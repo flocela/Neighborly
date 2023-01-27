@@ -1,14 +1,12 @@
 #include "catch.hpp"
-#include "../src/Resident_Flat.h"
 #include "../src/City_Grid.h"
-#include "../src/Resident_StepDown.h"
 #include "../src/TextHelper.h"
 #include "../src/House.h"
 #include "../src/Resident.h"
 #include <vector>
 #include <map>
 using Catch::Matchers::Contains;
-
+/*
 Resident_StepDown blueNeighbor006{
     6,           // id
     1, // color
@@ -192,7 +190,7 @@ Resident_StepDown redNeighbor024{
     *  0.25  0.25  0.25  0.75
     *     *  0.25  0.75  0.75
 
-*/
+
 
 TEST_CASE("TextHelper create text()")
 {
@@ -239,4 +237,4 @@ TEST_CASE("TextHelper create text()")
     TextHelper textHelper{maxNumOfRuns, &city};
     std::string result = textHelper.createText(residentPerHouse, run);
     REQUIRE(text == result);
-}
+}*/

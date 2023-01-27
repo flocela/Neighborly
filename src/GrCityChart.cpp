@@ -88,10 +88,10 @@ vector<Point> GrCityChart::createVectorOfPoints (
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
             if (happinessValue < happinessGoal)
-                color = _colorrs_map[_resident_b_color_per_groupid[res->getGroupNumber()]]
+                color = _colorrs_map[_resident_b_color_per_groupid[res->getGroupId()]]
                         [Mood::unhappy]._color;
             else
-                color = _colorrs_map[_resident_b_color_per_groupid[res->getGroupNumber()]]
+                color = _colorrs_map[_resident_b_color_per_groupid[res->getGroupId()]]
                         [Mood::happy]._color;
         }
 
