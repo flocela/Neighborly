@@ -41,7 +41,7 @@ ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
             curColorBaseName, 
             residentsFactories
         );
-
+        cout << "ResidentsMaker_CMDLine maxMovableMovement" << maxAllowableMovement << endl;
         double allowedMovement = askForAllowedMovementForGroup(
             curColorBaseName,
             maxAllowableMovement
@@ -207,18 +207,13 @@ Question_Int ResidentsMaker_CMDLine::createQuestionHowManyResidents (
 Question_Double ResidentsMaker_CMDLine::createQuestionGroupHappinessGoal (string color)
 {
     string orig_prompt = _group_happiness_orig_prompt;
-
-    string copyGroupHappinessGoalFailure = _group_happiness_failure;
-    copyGroupHappinessGoalFailure.insert(75, _fallback_group_happiness_goal_failure);
     return Question_Double{
         2,
         0.0,
         100.0,
-        orig_prompt.insert(56, color + " "),
-        _group_happiness_type_prompt,
-        _group_happiness_range_prompt,
         _fallback_group_happiness_goal_failure,
-        copyGroupHappinessGoalFailure};
+        orig_prompt.insert(56, color + " "),
+        "happiness goal"};
 }
 
 Question_Double ResidentsMaker_CMDLine::createQuestionGroupAllowableMovement (
@@ -226,31 +221,22 @@ Question_Double ResidentsMaker_CMDLine::createQuestionGroupAllowableMovement (
     double maxAllowedMovement
 )
 {  
-    string orig_prompt = _group_movement_orig_prompt;
-    string range_prompt = _group_movement_range_prompt;
-    string copyGroupMovementFailure = _group_movement_failure;
+    // add group color to origPrompt;
+    string origPrompt = insertIntoString(_group_movement_orig_prompt, 81, color + " ");
 
-    stringstream stream1;
-    stream1 << fixed << setprecision(2) << (maxAllowedMovement/4);
-    string str_mov = stream1.str();
-
-    copyGroupMovementFailure.insert(64, str_mov);
-
-    orig_prompt.insert(81, color + " ");
-    stringstream stream2;
-    stream2 << fixed << setprecision(1) << maxAllowedMovement;
-    str_mov = stream2.str();
-    orig_prompt.insert(179 + color.size(), str_mov);
+    // add maximum allowed movement to orig prompt.
+    stringstream fallbackMovementStream;
+    double fallback = maxAllowedMovement;
+    fallbackMovementStream << fixed << setprecision(2) << fallback;
+    origPrompt = insertIntoString(origPrompt, 179+color.size(), fallbackMovementStream.str());
 
     return Question_Double{
         3,
         0.0,
         maxAllowedMovement,
-        orig_prompt,
-        _group_movement_type_prompt,
-        range_prompt.insert(34, str_mov),
-        to_string(maxAllowedMovement/4),
-        copyGroupMovementFailure};
+        maxAllowedMovement/4,
+        origPrompt,
+        "maximum allowed movement"};
 }
 
 vector<string> ResidentsMaker_CMDLine::getFactoryNames (
@@ -263,4 +249,14 @@ vector<string> ResidentsMaker_CMDLine::getFactoryNames (
         residentsFactoryNames.push_back(residentFactory->residentType());
     }
     return residentsFactoryNames;
+}
+
+std::string ResidentsMaker_CMDLine::insertIntoString  (
+    string str,
+    int location,
+    string insert
+) const
+{
+    string modifiedString = str;
+    return modifiedString.insert(location, insert);
 }

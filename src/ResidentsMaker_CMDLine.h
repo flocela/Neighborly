@@ -59,7 +59,7 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         // map of color strings, is diminished as users use their colors.
         std::vector<BaseColor> _available_colors;
         
-        std::string _fallback_group_happiness_goal_failure = "50";
+        double _fallback_group_happiness_goal_failure = 50.0;
 
         // Prompt for what is this group's color question.
         std::string _which_group_color_prompt = "What will be the color of your"
@@ -116,6 +116,12 @@ class ResidentsMaker_CMDLine: public ResidentsMaker
         // If can not get a chosen Resident type from menu, then use _fallback_menu_response.
         std::string _fallback_res_type_response = "Could not determine the"
         " resident group type, will be using ";
+
+        // inserts additional string at location
+        std::string insertIntoString (
+        std::string str, 
+        int location,
+        std::string insert) const;
 };
 
 #endif

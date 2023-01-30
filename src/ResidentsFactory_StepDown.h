@@ -31,10 +31,10 @@ public:
 private:
 
     // if user can not get a low happiness value from user, then use _fall_back_low_happiness_value
-    std::string _fallback_low_happiness_value = "0";
+    double _fallback_low_happiness_value = 0.0;
 
     // if user can not get a happiness drop location from user, then use _fall_back_drop_location
-    std::string _fallback_drop_location = "0.5";
+    double _fallback_drop_location = 0.5;
 
     /*  Prompts for the Happiness Value when the Diversity is zero for 
         this group of residents.    */
@@ -98,10 +98,14 @@ private:
     std::string _drop_location_failure = 
         "Could not get drop location, using ."; 
 
-    int askUserForInt (UI& ui,
-                        Question_Int question);
-    double askUserForDouble (UI& ui,
-                                Question_Double question);
+    int askUserForInt (UI& ui, Question_Int question);
+    double askUserForDouble (UI& ui, Question_Double question);
+    
+    // inserts additional string at location
+    std::string insertIntoString (
+        std::string str, 
+        int location,
+        std::string insert) const;
 };
 
 

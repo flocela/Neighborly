@@ -25,7 +25,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     double happinessGoal,
     double allowedMovement,
     int groupNumber,
-    BaseColor baseColor
+    BaseColor baseColor //TODO possibley delete, then delete the (void) below
 )
 {   (void) baseColor;
 
@@ -33,36 +33,27 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     goalStream << fixed << setprecision(2) << happinessGoal;
 
     // ask user for happiness value when there are zero neighbors.
-    // uses happiness goal if can not get happiness value for zero neighbors.
-    string copyHappinessWithZeroNeighborsFailure = _happiness_with_zero_neighbors_failure;
-    copyHappinessWithZeroNeighborsFailure.insert(70, goalStream.str());
-
+    // uses happiness goal (from goalStream) if can not get happiness value for zero neighbors.
     Question_Double qHappinessWithZeroNeighbors{
         3,
         0.0,
         100.0,
+        happinessGoal,
         _happinessWithZeroNeighborsPrompt,
-        _happinessWithZeroNeighborsTypePrompt,
-        _happinessWithZeroNeighborsRangePrompt,
-        goalStream.str(),
-        copyHappinessWithZeroNeighborsFailure
+        "happiness value with zero neighbors"
     };
 
     double happinessWithZeroNeighbors = askUserForDouble(ui, qHappinessWithZeroNeighbors);
 
     // ask user for high happiness value.
-    // uses happiness goal if can not get high happiness value.
-    string copyHighHappinessFailure = _high_happiness_value_failure;
-    copyHighHappinessFailure.insert(42, goalStream.str());
+    // uses happiness goal (from goalStream) if can not get high happiness value.
     Question_Double qHighHappinessValue{
         3,
         0.0,
         100.0,
+        happinessGoal,
         _high_happiness_value_prompt,
-        _high_happiness_value_type_prompt,
-        _high_happiness_value_range_prompt,
-        goalStream.str(),
-        copyHighHappinessFailure
+        "happiness goal"
     };
 
     double highHappinessValue = askUserForDouble(
@@ -72,12 +63,6 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for low happiness value.
     // uses _fallback_low_happiness_value if can not get low happiness value
-    string copyLowHappinessValuePrompt = _low_happiness_value_prompt;
-    string copyLowHappinessRangePrompt = _low_happiness_value_range_prompt;
-    string copyLowHappinessValueFailure = _low_happiness_value_failure;
-    
-    // copyLowHappinessValuePrompt and copyLowHappinessRangePrompt both need to contain
-    // the highHappinessValue.
     stringstream high_val_stream;
     high_val_stream << fixed << setprecision(1) << highHappinessValue;
 
@@ -85,15 +70,12 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
         4,
         0,
         highHappinessValue,
-        copyLowHappinessValuePrompt.insert(
-            copyLowHappinessValuePrompt.size()-13,
-            high_val_stream.str()),
-        _low_happiness_value_type_prompt,
-        copyLowHappinessRangePrompt.insert(
-            copyLowHappinessRangePrompt.size() - 13,
-            high_val_stream.str()),
         _fallback_low_happiness_value,
-        copyLowHappinessValueFailure.insert(41, _fallback_low_happiness_value)
+        insertIntoString(
+            _low_happiness_value_prompt,
+            _low_happiness_value_prompt.size()-13,
+            high_val_stream.str()),
+        "low happiness value"
     };
 
     double lowHappinessValue = askUserForDouble(
@@ -103,23 +85,15 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for drop location.
     // uses _fallback_drop_location if can not get drop location.
-    string copyDropLocationFailure = _drop_location_failure;
-    copyDropLocationFailure.insert(35, _fallback_drop_location);
-
     Question_Double qHappinessDropLocation{
         5,
         0.0,
         1.0,
-        _dropLocationOrigPrompt,
-        _dropLocationTypePrompt,
-        _dropLocationRangePrompt,
         _fallback_drop_location,
-        copyDropLocationFailure};
+        _dropLocationOrigPrompt,
+        "happiness value's drop location"};
 
-    double locationOfDrop = askUserForDouble(
-        ui,
-        qHappinessDropLocation
-    );
+    double locationOfDrop = askUserForDouble(ui, qHappinessDropLocation);
 
     vector<unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)
@@ -148,4 +122,14 @@ double ResidentsFactory_StepDown::askUserForDouble (
 )
 {
     return stod(ui.getAnswer(question));
+}
+
+std::string ResidentsFactory_StepDown::insertIntoString  (
+    string str,
+    int location,
+    string insert
+) const
+{
+    string modifiedString = str;
+    return modifiedString.insert(location, insert);
 }

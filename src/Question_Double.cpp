@@ -1,3 +1,5 @@
+#include <iomanip>
+#include <sstream>
 #include <stdexcept>
 #include "Question_Double.h"
 
@@ -7,28 +9,58 @@ Question_Double::Question_Double (
     int id,
     double min, 
     double max,
+    double fallback,
     string origPrompt,
     string wrongTypePrompt, 
     string inRangePrompt,
-    string fallback,
+    string invalidPrompt,
     string failedPrompt
 ): _ID{id},
    _min{min},
    _max{max},
+   _fallback{fallback},
    _orig_prompt{origPrompt},
    _type_prompt{wrongTypePrompt},
    _range_prompt{inRangePrompt},
-   _fallback{fallback}
+   _invalid_prompt{invalidPrompt},
+   _failed_prompt{failedPrompt}
 {
+    _next_prompt = &_orig_prompt;
+    _valid_answer = false;
+}
+
+Question_Double::Question_Double (
+   int id,
+    double min, 
+    double max,
+    double fallback,
+    string origPrompt,
+    string valueName
+): _ID{id},
+   _min{min},
+   _max{max},
+   _fallback{fallback},
+   _orig_prompt{origPrompt}
+{ 
+    // setting _range_prompt
+    stringstream minStream;
+    minStream << fixed << setprecision(2) << min;
+    _range_prompt.insert(47, minStream.str());
+
+    stringstream maxStream;
+    maxStream << fixed << setprecision(2) << max;
+    _range_prompt.insert(_range_prompt.size()-3, maxStream.str());
+
+    // setting _invalid_prompt
     _invalid_prompt.insert(33, _orig_prompt);
-    if (failedPrompt == "")
-    {
-        _failed_prompt.insert(62, _fallback);
-    }
-    else
-    {
-        _failed_prompt = failedPrompt;
-    }
+
+    // setting _failed_prompt
+    stringstream fallbackStream;
+    fallbackStream << fixed << setprecision(2) << _fallback;
+    _failed_prompt.insert(_failed_prompt.size()-2, fallbackStream.str());
+    _failed_prompt.insert(_failed_prompt.size()-1, "as the " + valueName);
+
+    // set current _valid_answer and _next_prompt
     _next_prompt = &_orig_prompt;
     _valid_answer = false;
 }
@@ -51,13 +83,19 @@ bool Question_Double::hasValidAnswer () const
 string Question_Double::getAnswer () const
 {
     if (hasValidAnswer() == false)
-        return _fallback;
+    {
+        stringstream fallbackstream;
+        fallbackstream << fixed << setprecision(2) << _fallback;
+        return fallbackstream.str();
+    }
     return to_string(_answer);
 }
 
 string Question_Double::getFallback () const
 {
-    return _fallback;
+    stringstream fallbackstream;
+    fallbackstream << fixed << setprecision(2) << _fallback;
+    return fallbackstream.str();
 }
 
 string Question_Double::getFailedResponse () const
