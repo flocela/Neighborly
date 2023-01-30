@@ -10,11 +10,21 @@ public:
         int id,
         int min, 
         int max,
+        int fallback,
         std::string origPrompt,
         std::string wrongTypePrompt, 
         std::string inRangePrompt,
-        std::string fallback,
+        std::string invalidPrompt,
         std::string failedPrompt);
+
+    Question_Int (
+        int id,
+        int min, 
+        int max,
+        int fallback,
+        std::string origPrompt,
+        std::string valueName);
+        
     Question_Int () = default;
     Question_Int (const Question_Int& obj) = default;
     Question_Int (Question_Int&& obj) noexcept = default;
@@ -35,14 +45,14 @@ private:
     int _ID;
     int _min;
     int _max;
+    int _fallback;
     int _answer;
     int _valid_answer = false;
     std::string _orig_prompt;
-    std::string _type_prompt;
-    std::string _range_prompt;
-    std::string _invalid_prompt = "I didn't understand your answer. ";
-    std::string _fallback;
-    std::string _failed_prompt = "I was unable to understand your answer. To continue, will use .";
+    std::string _type_prompt = "Nope, that's not an integer, i.e 2, 5, or 199. _";
+    std::string _range_prompt = "That integer is not in range. Should be between  and . _";
+    std::string _invalid_prompt = "I didn't understand your answer.";
+    std::string _failed_prompt = "Was unable to understand your answer. To continue, will use  as the .";
     std::string* _next_prompt;
 };
 

@@ -37,6 +37,7 @@ int UI_CMDLine::menu (
     string failureResponse
 ) const
 {  
+    // create the original prompt
     int size = items.size();
     stringstream ssPrompt;
     ssPrompt << prompt << endl;
@@ -46,27 +47,30 @@ int UI_CMDLine::menu (
     }
     ssPrompt << endl;
 
+    // create the wrong type prompt. (It has the original prompt appended to it.)
     stringstream ssWrongType;
     ssWrongType << "Please enter a whole number like 2.  ";
     ssWrongType << ssPrompt.str();
 
+    // create the in range prompt. (It has the original prompt appended to it.)
     stringstream ssInRange;
     ssInRange << "Please enter a number between 1 and ";
     ssInRange << items.size() << ".  ";
     ssInRange << ssPrompt.str();
 
-    string copyMenuItemFailure = _menu_item_failure;
-    copyMenuItemFailure.insert(57, _fallback_menu_item);
+    // create the invalid prompt. (It has the original prompt appended to it.)
+    // 
 
     Question_Int chooseMenuItem{
         1,
         1,
         size,
+        _fallback_menu_item,
         ssPrompt.str(),
         ssWrongType.str(),
         ssInRange.str(),
-        _fallback_menu_item,
-        copyMenuItemFailure};
+        _menu_invalid_prompt + ssPrompt.str(),
+        insertIntoString(_menu_item_failure, 57, to_string(_fallback_menu_item))};
     
     int tries = 0;
     string answer = "xx";
@@ -89,4 +93,14 @@ int UI_CMDLine::menu (
 void UI_CMDLine::print (string str) const
 {
     cout << str << endl;
+}
+
+std::string UI_CMDLine::insertIntoString  (
+    string str,
+    int location,
+    string insert
+) const
+{
+    string modifiedString = str;
+    return modifiedString.insert(location, insert);
 }

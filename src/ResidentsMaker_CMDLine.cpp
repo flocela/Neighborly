@@ -41,7 +41,7 @@ ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
             curColorBaseName, 
             residentsFactories
         );
-        cout << "ResidentsMaker_CMDLine maxMovableMovement" << maxAllowableMovement << endl;
+        
         double allowedMovement = askForAllowedMovementForGroup(
             curColorBaseName,
             maxAllowableMovement
@@ -162,12 +162,10 @@ Question_Int ResidentsMaker_CMDLine::createQuestionHowManyResidentGroups()
     return Question_Int{
         0,
         1,
-        3, 
+        3,
+        1,
         _how_many_groups_orig_prompt,
-        _how_many_groups_type_prompt,
-        _how_many_groups_range_prompt,
-        "2",
-        copyHowManyGroupsFailure
+        "number of groups"
     };
 }
 
@@ -196,11 +194,9 @@ Question_Int ResidentsMaker_CMDLine::createQuestionHowManyResidents (
         1,
         1,
         count,
+        count/2,
         copyOrigPrompt,
-        _how_many_residents_type_prompt,
-        copyRangePrompt,
-        to_string(count/2),
-        copyHowManyResidentsFailure
+        "number of residents for the " + color + " group"
     };
 }
 

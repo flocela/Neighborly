@@ -27,13 +27,11 @@ int CityFactory_Grid::askForGridWidth(const UI& ui, int maxWidth)const
 
     Question_Int question{
         0, //id
-        1, // min number of houses
-        maxWidth, // max number of houses
-        copyWidthOfGridOrig.insert(109, to_string(maxWidth)),
-        _width_of_grid_type_prompt,
-        copyWidthOfGridRange.insert(99, to_string(maxWidth)),
-        to_string(maxWidth/2),
-        copyWidthOfGridFailure
+        1, // min number of houses on a side
+        maxWidth, // max number of houses on a sice,
+        maxWidth/2, // fallback number of houses
+        insertIntoString(_width_of_grid_orig_prompt, 109, to_string(maxWidth)),
+        "city grid width"
     };
 
     ui.getAnswer(question);
@@ -45,4 +43,14 @@ int CityFactory_Grid::askForGridWidth(const UI& ui, int maxWidth)const
         return maxWidth/2;
     }
         
+}
+
+std::string CityFactory_Grid::insertIntoString  (
+    string str,
+    int location,
+    string insert
+) const
+{
+    string modifiedString = str;
+    return modifiedString.insert(location, insert);
 }

@@ -22,9 +22,17 @@ class UI_CMDLine: public UI
         int _max_num_of_tries = 3;
 
         // if can not get a menu item chosen from user, then use _fallback_menu_item
-        std::string _fallback_menu_item = "1";
+        int _fallback_menu_item = 1;
 
         std::string _menu_item_failure = "Could not determine which item was chosen, will be using .";
+        std::string _menu_invalid_prompt = "Could not determine which item was chosen. Please enter a"
+        " number between 1 and . _";
+
+        // inserts additional string at location
+        std::string insertIntoString (
+        std::string str, 
+        int location,
+        std::string insert) const;
 };
 
 #endif

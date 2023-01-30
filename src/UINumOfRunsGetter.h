@@ -22,7 +22,7 @@ private:
     int _max_num_of_runs = 200;
 
     // if can not get num of runs from user, then use _fall_back_num_of_runs
-    std::string _fallback_num_of_runs = "20";
+    int _fallback_num_of_runs = 20;
 
     Question_Int createQuestionForNumOfRuns ();
 

@@ -38,6 +38,12 @@ class CityFactory_Grid: public CityFactory
             " is 1, maximum allowed width is . _";
         std::string _width_of_grid_failure = 
             "Can not get a proper grid width. Using grid width of .";
+        
+        // inserts additional string at location
+        std::string insertIntoString (
+        std::string str, 
+        int location,
+        std::string insert) const;
 };
 
 #endif

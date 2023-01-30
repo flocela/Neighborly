@@ -1,34 +1,57 @@
 #include "Question_Int.h"
 #include <stdexcept>
-
+#include <iostream>
 using namespace std;
 
 Question_Int::Question_Int (
     int id,
     int min, 
     int max,
+    int fallback,
     string origPrompt,
     string wrongTypePrompt, 
     string inRangePrompt,
-    string fallback,
+    string invalidPrompt,
     string failedPrompt
 ): _ID{id},
    _min{min},
    _max{max},
+   _fallback{fallback},
    _orig_prompt{origPrompt},
    _type_prompt{wrongTypePrompt},
    _range_prompt{inRangePrompt},
-   _fallback{fallback}
+   _invalid_prompt{invalidPrompt},
+   _failed_prompt{failedPrompt}
 {
-    _invalid_prompt.insert(33, _orig_prompt);
-    if (failedPrompt == "")
-    {
-        _failed_prompt.insert(62, _fallback);
-    }
-    else
-    {
-        _failed_prompt = failedPrompt;
-    }
+    _next_prompt = &_orig_prompt;
+    _valid_answer = false;
+}
+
+Question_Int::Question_Int (
+    int id,
+    int min, 
+    int max,
+    int fallback,
+    string origPrompt,
+    string valueName
+): _ID{id},
+   _min{min},
+   _max{max},
+   _fallback{fallback},
+   _orig_prompt{origPrompt}
+{
+    // setting _range_prompt
+    _range_prompt.insert(_range_prompt.size()-8, to_string(min));
+    _range_prompt.insert(_range_prompt.size()-3, to_string(max));
+
+    // setting _invalid_prompt
+    _invalid_prompt.insert(_invalid_prompt.size(), _orig_prompt);
+
+    // setting _failed_prompt
+    _failed_prompt.insert(_failed_prompt.size()-9, to_string(fallback));
+    _failed_prompt.insert(_failed_prompt.size()-1, valueName);
+
+    //set current _valid_naswer and _next_prompt
     _next_prompt = &_orig_prompt;
     _valid_answer = false;
 }
@@ -51,38 +74,42 @@ bool Question_Int::hasValidAnswer () const
 string Question_Int::getAnswer () const
 {
     if (hasValidAnswer() == false)
-        return _fallback;
+        return to_string(_fallback);
     return to_string(_answer);
 }
 
 string Question_Int::getFallback () const
 {
-    return _fallback;
+    return to_string(_fallback);
 }
 
 string Question_Int::getFailedResponse () const
-{
+{   
     return _failed_prompt;
 }
 
 bool Question_Int::tryAnswer (string ans)
 {   
-    int intAnswer;
+    int intAnswer = -1;
     try {
         intAnswer = stoi(ans);
+        if (to_string(intAnswer).size() != ans.size())
+        {
+            throw invalid_argument("invalid argument");
+        }
     }
     catch(invalid_argument& e)
-    {
+    {   
         _next_prompt = &_type_prompt;
         return false;
     }
     catch(...)
-    { 
+    {   
         _next_prompt = &_invalid_prompt;
         return false;
     }
     if (intAnswer < _min || intAnswer > _max)
-    {
+    {   
         _next_prompt = &_range_prompt;
         return false;
     }
