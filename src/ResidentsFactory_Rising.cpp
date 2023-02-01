@@ -1,27 +1,24 @@
-#include "ResidentsFactory_StepDown.h"
-
-#include <limits>
+#include "ResidentsFactory_Rising.h"
 #include <sstream>
 #include <iomanip>
-#include <memory>
 
-#include "HappinessFunc_StepDown.h"
-#include "Resident_UsingFunction.h"
+#include "HappinessFunc_Rising.h"
 #include "Question_Double.h"
+#include "Resident_UsingFunction.h"
 
 using namespace std;
 
-string ResidentsFactory_StepDown::toString ()
+string ResidentsFactory_Rising::toString ()
 {
-    return "Step Down Residents Factory";
+    return "Rising Residents Factory";
 }
 
-string ResidentsFactory_StepDown::residentType ()
+string ResidentsFactory_Rising::residentType ()
 {
-    return "Step Down Residents";
+    return "Rising Down Residents";
 }
 
-vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
+vector<unique_ptr<Resident>> ResidentsFactory_Rising::createResidents (
     UI& ui,
     int firstID, 
     int count,
@@ -37,7 +34,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal if can not get happiness value for zero neighbors.
     Question_Double qHappinessWithZeroNeighbors{
-        3,
+        1,
         0.0,
         100.0,
         happinessGoal,
@@ -50,14 +47,29 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     double happinessWithZeroNeighbors = stod(ui.getAnswer(qHappinessWithZeroNeighbors));
 
+    // ask user for low happiness value.
+    // uses happiness goal if can not get low happiness value from user.
+    Question_Double qLowHappinessValue{
+        2,
+        0,
+        100,
+        happinessGoal,
+        insertIntoString(
+            _low_happiness_value_prompt,
+            charLocationForColor(_low_happiness_value_prompt),
+            colorStream.str()),
+        "low happiness value"
+    };
+
+    double lowHappinessValue = stod(ui.getAnswer(qLowHappinessValue));
 
     // ask user for high happiness value.
-    // uses happiness goal if can not get high happiness value.
+    // uses _fallback_high_happiness_value if can not get a high happiness value from user.
     Question_Double qHighHappinessValue{
         3,
-        0.0,
+        lowHappinessValue,
         100.0,
-        happinessGoal,
+        _fallback_high_happiness_value,
         insertIntoString(
             _high_happiness_value_prompt,
             charLocationForColor(_high_happiness_value_prompt),
@@ -68,37 +80,6 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     double highHappinessValue = stod(ui.getAnswer(qHighHappinessValue));
 
 
-    // ask user for low happiness value.
-    // uses _fallback_low_happiness_value if can not get low happiness value
-    Question_Double qLowHappinessValue{
-        4,
-        0,
-        highHappinessValue,
-        _fallback_low_happiness_value,
-        insertIntoString(
-            _low_happiness_value_prompt,
-            charLocationForColor(_low_happiness_value_prompt),
-            colorStream.str()),
-        "low happiness value"
-    };
-
-    double lowHappinessValue = stod(ui.getAnswer(qLowHappinessValue));
-
-    // ask user for drop location.
-    // uses _fallback_drop_location if can not get drop location.
-    Question_Double qHappinessDropLocation{
-        5,
-        0.0,
-        1.0,
-        _fallback_drop_location,
-        insertIntoString(
-            _dropLocationOrigPrompt,
-            charLocationForColor(_dropLocationOrigPrompt),
-            colorStream.str()),
-        "happiness value's drop location"};
-
-    double locationOfDrop = stod(ui.getAnswer(qHappinessDropLocation));
-
     vector<unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)
     {
@@ -108,19 +89,18 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
             groupNumber,
             allowedMovement,
             happinessGoal,
-            make_unique<HappinessFunc_StepDown> (
+            make_unique<HappinessFunc_Rising> (
                 happinessWithZeroNeighbors,
                 highHappinessValue,
-                lowHappinessValue,
-                locationOfDrop
+                lowHappinessValue
             ),
-            "Step Down Resident"
+            "Rising Resident"
         ));
     }
     return residents;
 }
 
-std::string ResidentsFactory_StepDown::insertIntoString  (
+std::string ResidentsFactory_Rising::insertIntoString (
     string str,
     int location,
     string insert
@@ -130,7 +110,7 @@ std::string ResidentsFactory_StepDown::insertIntoString  (
     return modifiedString.insert(location, insert);
 }
 
-int ResidentsFactory_StepDown::charLocationForColor (string str)
+int ResidentsFactory_Rising::charLocationForColor (string str)
 {
     string target = "For the  residents, enter the";
     auto pos = str.find(target);

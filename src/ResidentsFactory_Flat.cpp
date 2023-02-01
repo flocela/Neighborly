@@ -1,9 +1,13 @@
 #include "ResidentsFactory_Flat.h"
-#include <limits>
-#include "Resident_UsingFunction.h"
-#include <sstream>
+
 #include <iomanip>
+#include <limits>
+#include <sstream>
+
 #include "HappinessFunc_Flat.h"
+#include "Resident_UsingFunction.h"
+#include "Question_Double.h"
+#include "Question_Int.h"
 
 using namespace std;
 std::string ResidentsFactory_Flat::toString ()
@@ -26,8 +30,8 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     BaseColor baseColor
 )
 {   
-    stringstream goalStream;
-    goalStream << fixed << setprecision(2) << happinessGoal;
+    stringstream colorStream;
+    colorStream << baseColor;
 
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal as fallback, if can not get happiness value for zero neighbors.
@@ -36,25 +40,33 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
         0.0,
         100.0,
         happinessGoal,
-        _happinessWithZeroNeighborsPrompt,
+        insertIntoString(
+            _happinessWithZeroNeighborsPrompt,
+            charLocationForColor(_happinessWithZeroNeighborsPrompt),
+            colorStream.str()),
         "happiness value with zero neighbors"
     };
 
-    double happinessWithZeroNeighbors = askUserForDouble(ui, qHappinessWithZeroNeighbors);
+    double happinessWithZeroNeighbors = stoi(ui.getAnswer(qHappinessWithZeroNeighbors));
+
 
     // ask for happiness value. It's always the same.
-    std::string curColBaseName = _colorrs_map[baseColor][Mood::neutral]._base_name;
     Question_Double qHappinessValue{
         3,
         0.0,
         100.0,
         _fallback_happiness_value,
-        insertIntoString(_happinessValueOrigPrompt, 134, curColBaseName + " "),
+        insertIntoString(
+            _happinessValueOrigPrompt,
+            charLocationForColor(_happinessValueOrigPrompt),
+            colorStream.str()),
         "constant happiness value"
     };
 
-    double happinessValue = askUserForDouble(ui, qHappinessValue);
+    double happinessValue = stod(ui.getAnswer(qHappinessValue));
 
+
+    // create residents
     std::vector<std::unique_ptr<Resident>> residents = {};
 
     for ( int ii=0; ii<count; ++ii)
@@ -76,18 +88,15 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     return residents;
 }
 
-int ResidentsFactory_Flat::askUserForInt ( UI& ui, Question_Int question)
-{
-    return stoi(ui.getAnswer(question));
-}
-
-double ResidentsFactory_Flat::askUserForDouble (UI& ui, Question_Double question)
-{
-    return stod(ui.getAnswer(question));
-}
-
 std::string ResidentsFactory_Flat::insertIntoString (string str, int location, string insert) const
 {
     string modifiedString = str;
     return modifiedString.insert(location, insert);
+}
+
+int ResidentsFactory_Flat::charLocationForColor (string str)
+{
+    string target = "For the  residents, enter the";
+    auto pos = str.find(target);
+    return (int)pos + 8;
 }

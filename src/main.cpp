@@ -37,8 +37,11 @@
 #include "CityFactory.h"
 #include "CityFactory_Grid.h"
 
+#include "ResidentsFactory_Falling.h"
 #include "ResidentsFactory_Flat.h"
+#include "ResidentsFactory_Rising.h"
 #include "ResidentsFactory_StepDown.h"
+#include "ResidentsFactory_StepUp.h"
 #include "ResidentsFactory.h"
 
 #include "Printer_Graphic.h"
@@ -166,8 +169,10 @@ vector<unique_ptr<CityFactory>> initCityFactories ()
 vector<unique_ptr<ResidentsFactory>> initResidentFactories()
 {
     vector<unique_ptr<ResidentsFactory>> residentFactories = {};
+    residentFactories.emplace_back(make_unique<ResidentsFactory_Falling>());
     residentFactories.emplace_back(make_unique<ResidentsFactory_Flat>());
+    residentFactories.emplace_back(make_unique<ResidentsFactory_Rising>());
     residentFactories.emplace_back(make_unique<ResidentsFactory_StepDown>());
-    //TODO add the rest of the fatories here. Once they're made.
+    residentFactories.emplace_back(make_unique<ResidentsFactory_StepUp>());
     return residentFactories;
 }
