@@ -1,9 +1,10 @@
 #ifndef RESIDENTS_GROUP_INFO_H
 #define RESIDENTS_GROUP_INFO_H
 
-#include <vector>
-#include <unordered_map>
 #include <memory>
+#include <unordered_map>
+#include <vector>
+
 #include "Resident.h"
 
 class ResidentsGroupInfo

@@ -1,10 +1,11 @@
 #include "UserComponentsGetter.h"
-#include "SimulationComponents.h"
-#include "RandSeedGetter.h"
-#include "CityMaker_CMDLine.h"
-#include "ResidentsMaker_CMDLine.h"
+
 #include "UINumOfRunsGetter.h"
+#include "CityMaker_CMDLine.h"
+#include "RandSeedGetter.h"
+#include "ResidentsMaker_CMDLine.h"
 #include "Simulator_Basic_A.h"
+#include "SimulationComponents.h"
 
 SimulationComponents UserComponentsGetter::askUserForComponents (
     const UI_CMDLine& ui,

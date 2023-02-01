@@ -19,7 +19,7 @@ class ResidentsFactory
         virtual std::vector<std::unique_ptr<Resident>> createResidents(
             UI& ui,
             int firstID, 
-            int count, //TODO make this max allowable number of residents
+            int count,
             double happinessGoal,
             double allowedMovement,
             int groupNumber,
