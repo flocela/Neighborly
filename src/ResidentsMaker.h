@@ -8,6 +8,7 @@
 #include "Color.h"
 #include "ResidentsGroupInfo.h"
 
+// creates residents
 class ResidentsMaker
 {
     public:

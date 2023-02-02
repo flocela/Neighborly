@@ -8,6 +8,7 @@
 #include "Question_YN.h"
 #include "Color.h"
 #include "UI_CMDLine.h"
+#include <iostream>
 
 // Creates Residents by asking user how many resident groups they want (max is 3).
 // Then for each group, asks what type of Resident the group will be composed of.
@@ -16,8 +17,14 @@
 class ResidentsMaker_CMDLine: public ResidentsMaker
 {
 public:
+    
     ResidentsMaker_CMDLine () = delete;
     ResidentsMaker_CMDLine (const UI_CMDLine& cmdline);
+    ResidentsMaker_CMDLine (const ResidentsMaker_CMDLine& orig) = default;
+    ResidentsMaker_CMDLine& operator= (const ResidentsMaker_CMDLine& orig) = default;
+    ResidentsMaker_CMDLine (ResidentsMaker&& orig) noexcept{cout << orig._num_of_resident_groups;}
+    ResidentsMaker_CMDLine& operator= (ResidentsMaker&& orig);
+
     ~ResidentsMaker_CMDLine () = default;
 
     ResidentsGroupInfo makeResidents (
@@ -30,25 +37,13 @@ public:
     override;
 
 private:
-    double askForHappinessGoalForGroup (std::string color);
-    double askForAllowedMovementForGroup (std::string color, double maxAllowedMovement);
-    int askForNumOfGroupsOfResidents (int maxNumOfResidentGroups);
-    int askForNumOfResidents (int count, std::string color);
-    int askForGroupResidentType (
-        std::string color, 
-        const std::vector<std::unique_ptr<ResidentsFactory>>& residentsFactories
-    );
-    int _num_of_resident_groups = 2;
 
-    void initColors (std::vector<BaseColor> colors);
-    std::vector<std::string>  getFactoryNames (
-        const std::vector<std::unique_ptr<ResidentsFactory>>& residentsFactories
-    );
+    int _num_of_resident_groups = 2;
 
     UI_CMDLine _ui = UI_CMDLine{};
 
     // map of color strings, is diminished as users use their colors.
-    std::vector<BaseColor> _available_colors;
+    std::vector<BaseColor> _available_colors{};
     
     double _fallback_group_happiness_goal_failure = 50.0;
 
@@ -82,7 +77,22 @@ private:
 
     // If can not get a chosen Resident type from menu, then use _fallback_menu_response.
     std::string _fallback_res_type_response = "Could not determine the"
-    " resident group type, will be using ";
+        " resident group type, will be using ";
+    
+    double askForHappinessGoalForGroup (std::string color);
+    double askForAllowedMovementForGroup (std::string color, double maxAllowedMovement);
+    int askForNumOfGroupsOfResidents (int maxNumOfResidentGroups);
+    int askForNumOfResidents (int count, std::string color);
+    int askForGroupResidentType (
+        std::string color, 
+        const std::vector<std::unique_ptr<ResidentsFactory>>& residentsFactories
+    );
+
+    void initColors (std::vector<BaseColor> colors);
+
+    std::vector<std::string>  getFactoryNames (
+        const std::vector<std::unique_ptr<ResidentsFactory>>& residentsFactories
+    );
 
     // inserts additional string at location
     std::string insertIntoString (

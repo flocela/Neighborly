@@ -5,9 +5,16 @@
 
 using namespace std;
 
-ResidentsMaker_CMDLine:: ResidentsMaker_CMDLine(const UI_CMDLine& cmdline)
+ResidentsMaker_CMDLine::ResidentsMaker_CMDLine(const UI_CMDLine& cmdline)
 : _ui{cmdline}
 {}
+
+ResidentsMaker_CMDLine::ResidentsMaker_CMDLine(ResidentsMaker&& orig) noexcept:
+_num_of_resident_groups{move(orig._num_of_resident_groups)},
+_ui{}
+{
+    
+}
 
 ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
     const vector<unique_ptr<ResidentsFactory>>& residentsFactories,
