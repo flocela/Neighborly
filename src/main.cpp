@@ -74,7 +74,7 @@ set<T*> getSetOfPointers (vector<unique_ptr<T>>& ts)
 }
 
 vector<unique_ptr<CityFactory>> initCityFactories ();
-vector<unique_ptr<ResidentsFactory>> initResidentFactories ();
+vector<unique_ptr<const ResidentsFactory>> initResidentFactories ();
 void initForSimpleExample (int example);
 void initForUserDefinedRun ();
 
@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
     (void) argv;
 
     vector<unique_ptr<CityFactory>> cityFactories = initCityFactories();
-    vector<unique_ptr<ResidentsFactory>> residentFactories = initResidentFactories();
+    vector<unique_ptr<const ResidentsFactory>> residentFactories = initResidentFactories();
 
     SimulationComponents components;
 
@@ -168,13 +168,13 @@ vector<unique_ptr<CityFactory>> initCityFactories ()
     return cityFactories;
 }
 
-vector<unique_ptr<ResidentsFactory>> initResidentFactories()
+vector<unique_ptr<const ResidentsFactory>> initResidentFactories()
 {
-    vector<unique_ptr<ResidentsFactory>> residentFactories = {};
-    residentFactories.emplace_back(make_unique<ResidentsFactory_Falling>());
-    residentFactories.emplace_back(make_unique<ResidentsFactory_Flat>());
-    residentFactories.emplace_back(make_unique<ResidentsFactory_Rising>());
-    residentFactories.emplace_back(make_unique<ResidentsFactory_StepDown>());
-    residentFactories.emplace_back(make_unique<ResidentsFactory_StepUp>());
+    vector<unique_ptr<const ResidentsFactory>> residentFactories = {};
+    residentFactories.emplace_back(make_unique<const ResidentsFactory_Falling>());
+    residentFactories.emplace_back(make_unique<const ResidentsFactory_Flat>());
+    residentFactories.emplace_back(make_unique<const ResidentsFactory_Rising>());
+    residentFactories.emplace_back(make_unique<const ResidentsFactory_StepDown>());
+    residentFactories.emplace_back(make_unique<const ResidentsFactory_StepUp>());
     return residentFactories;
 }

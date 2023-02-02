@@ -14,7 +14,7 @@ string ResidentsFactory_StepUp::toString ()
     return "Step Up Residents Factory";
 }
 
-string ResidentsFactory_StepUp::residentType ()
+string ResidentsFactory_StepUp::residentType ()const 
 {
     return "Step Up Residents";
 }
@@ -27,7 +27,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
     double allowedMovement,
     int groupNumber,
     BaseColor baseColor //TODO possibley delete, then delete the (void) below
-)
+) const 
 {   
     stringstream colorStream;
     colorStream << baseColor;
@@ -131,7 +131,7 @@ std::string ResidentsFactory_StepUp::insertIntoString  (
     return modifiedString.insert(location, insert);
 }
 
-int ResidentsFactory_StepUp::charLocationForColor (string str)
+int ResidentsFactory_StepUp::charLocationForColor (string str) const 
 {
     string target = "For the  residents, enter the";
     auto pos = str.find(target);

@@ -15,7 +15,7 @@ std::string ResidentsFactory_Flat::toString ()
     return "Flat Residents Factory";
 }
 
-std::string ResidentsFactory_Flat::residentType ()
+std::string ResidentsFactory_Flat::residentType () const 
 {
     return "Flat Residents";
 }
@@ -28,7 +28,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     double allowedMovement,
     int groupNumber,
     BaseColor baseColor
-)
+) const 
 {   
     stringstream colorStream;
     colorStream << baseColor;
@@ -94,7 +94,7 @@ std::string ResidentsFactory_Flat::insertIntoString (string str, int location, s
     return modifiedString.insert(location, insert);
 }
 
-int ResidentsFactory_Flat::charLocationForColor (string str)
+int ResidentsFactory_Flat::charLocationForColor (string str) const 
 {
     string target = "For the  residents, enter the";
     auto pos = str.find(target);

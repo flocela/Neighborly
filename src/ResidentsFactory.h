@@ -24,9 +24,9 @@ class ResidentsFactory
             double allowedMovement,
             int groupNumber,
             BaseColor baseColor
-        ) = 0;
+        )const = 0;
         virtual std::string toString () = 0;
-        virtual std::string residentType () = 0;
+        virtual std::string residentType () const= 0;
 };
 
 #endif

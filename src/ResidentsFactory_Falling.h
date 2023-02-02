@@ -16,10 +16,10 @@ public:
         double allowedMovement,
         int groupNumber,
         BaseColor baseColor
-    ) override;
+    ) const override;
 
     std::string toString () override; //TODO is this ever used?
-    std::string residentType () override; //TODO is this ever used?
+    std::string residentType () const override; //TODO is this ever used?
 
 private:
     // if can not get a low happiness value from the user, then use _fallback_low_happiness_value.
@@ -56,7 +56,7 @@ private:
     // Often have to place the group color in "For the ____ residents, enter". This method returns the 
     // character index where the group color would go. It's a very specialized method, in that
     // it finds the specific words "For the residents, enter" and returns character after "the" and space.
-    int charLocationForColor (std::string str);
+    int charLocationForColor (std::string str) const;
 };
 
 #endif

@@ -10,7 +10,7 @@
 SimulationComponents UserComponentsGetter::askUserForComponents (
     const UI_CMDLine& ui,
     const std::vector<std::unique_ptr<CityFactory>>& cityFactories,
-    const std::vector<std::unique_ptr<ResidentsFactory>>& residentFactories,
+    const std::vector<std::unique_ptr<const ResidentsFactory>>& residentFactories,
     int maxNumOfHousesX,
     int maxNumOfHousesY,
     int maxNumOfResidentGroups

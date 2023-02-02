@@ -16,7 +16,7 @@ string ResidentsFactory_StepDown::toString ()
     return "Step Down Residents Factory";
 }
 
-string ResidentsFactory_StepDown::residentType ()
+string ResidentsFactory_StepDown::residentType () const 
 {
     return "Step Down Residents";
 }
@@ -29,7 +29,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     double allowedMovement,
     int groupNumber,
     BaseColor baseColor
-)
+) const 
 {   
     stringstream colorStream;
     colorStream << baseColor;
@@ -130,7 +130,7 @@ std::string ResidentsFactory_StepDown::insertIntoString  (
     return modifiedString.insert(location, insert);
 }
 
-int ResidentsFactory_StepDown::charLocationForColor (string str)
+int ResidentsFactory_StepDown::charLocationForColor (string str) const 
 {
     string target = "For the  residents, enter the";
     auto pos = str.find(target);

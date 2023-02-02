@@ -3,23 +3,19 @@
 #include <iomanip>
 #include <sstream>
 
+#include "Question_Double.h"
+#include "Question_Int.h"
+
 using namespace std;
 
 ResidentsMaker_CMDLine::ResidentsMaker_CMDLine(const UI_CMDLine& cmdline)
 : _ui{cmdline}
 {}
 
-ResidentsMaker_CMDLine::ResidentsMaker_CMDLine(ResidentsMaker&& orig) noexcept:
-_num_of_resident_groups{move(orig._num_of_resident_groups)},
-_ui{}
-{
-    
-}
-
 ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
-    const vector<unique_ptr<ResidentsFactory>>& residentsFactories,
+    const vector<unique_ptr<const ResidentsFactory>>& residentsFactories,
     int maxResidentCount,
-    int maxNumOfGroupsOfResidents, // currently only two groups allowed.
+    int maxNumOfGroupsOfResidents,
     vector<BaseColor> colors,
     double maxAllowableMovement
 )
@@ -35,10 +31,10 @@ ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
     
     initColors(colors);
 
-    // will return resGroupInfo after adding residents and colors to it.
+    // resGroupInfo is returned after adding residents and colors to it.
     ResidentsGroupInfo resGroupInfo;
     
-    int numOfResidentsCreated = 0;
+    int numOfResidentsCreated = 0; // first id is zero.
     for (int ii=0; ii<_num_of_resident_groups; ++ii)
     {
         // set max number of resident spaces left
@@ -95,50 +91,6 @@ void ResidentsMaker_CMDLine::initColors (vector<BaseColor> colors)
     _available_colors = colors;
 }
 
-double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (string color)
-{
-    // create question, add color to prompot
-    Question_Double question{
-        2,
-        0.0,
-        100.0,
-        _fallback_group_happiness_goal_failure,
-        insertIntoString(
-            _group_happiness_orig_prompt,
-            charLocationForColor(_group_happiness_orig_prompt),
-            color),
-        "happiness goal"};
-    
-    return stod(_ui.getAnswer(question));
-}
-
-double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
-    string color, 
-    double maxAllowedMovement
-)
-{   
-    // add max movement to movement prompt
-    string movementPrompt = insertIntoString (
-        _group_movement_orig_prompt,
-        _group_movement_orig_prompt.size() - 3,
-        to_string(maxAllowedMovement)
-    );
-
-    // create question, add color to prompt
-    Question_Double question{
-        3,
-        0.0,
-        maxAllowedMovement,
-        maxAllowedMovement/4,
-        insertIntoString(
-            movementPrompt,
-            charLocationForColor(movementPrompt),
-            color
-        ),
-        "maximum allowed movement"};
-    
-    return stod(_ui.getAnswer(question));
-}
 
 int ResidentsMaker_CMDLine::askForNumOfGroupsOfResidents(int maxNumOfResidentGroups)
 {
@@ -180,7 +132,7 @@ int ResidentsMaker_CMDLine::askForNumOfResidents(int count, string color)
 
 int ResidentsMaker_CMDLine::askForGroupResidentType (
     string color, 
-    const vector<unique_ptr<ResidentsFactory>>& residentsFactories
+    const vector<unique_ptr<const ResidentsFactory>>& residentsFactories
 )
 {
     vector<string> factoryNames = getFactoryNames(residentsFactories);
@@ -200,8 +152,56 @@ int ResidentsMaker_CMDLine::askForGroupResidentType (
             ));
 }
 
+double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
+    string color, 
+    double maxAllowedMovement
+)
+{   
+    stringstream maxMovementStream;
+    maxMovementStream << fixed << setprecision(2) << maxAllowedMovement;
+
+    // add maximum movement to movement prompt
+    string movementPrompt = insertIntoString (
+        _group_movement_orig_prompt,
+        _group_movement_orig_prompt.size() - 3,
+        maxMovementStream.str()
+    );
+
+    // create question, add color to prompt
+    Question_Double question{
+        3,
+        0.0,
+        maxAllowedMovement,
+        maxAllowedMovement/4,
+        insertIntoString(
+            movementPrompt,
+            charLocationForColor(movementPrompt),
+            color
+        ),
+        "maximum allowed movement"};
+    
+    return stod(_ui.getAnswer(question));
+}
+
+double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (string color)
+{
+    // create question, add color to prompot
+    Question_Double question{
+        4,
+        0.0,
+        100.0,
+        _fallback_group_happiness_goal_failure,
+        insertIntoString(
+            _happiness_goal_orig_prompt,
+            charLocationForColor(_happiness_goal_orig_prompt),
+            color),
+        "happiness goal"};
+    
+    return stod(_ui.getAnswer(question));
+}
+
 vector<string> ResidentsMaker_CMDLine::getFactoryNames (
-    const vector<unique_ptr<ResidentsFactory>>& residentsFactories
+    const vector<unique_ptr<const ResidentsFactory>>& residentsFactories
 )
 {
     vector<string> residentsFactoryNames = {};

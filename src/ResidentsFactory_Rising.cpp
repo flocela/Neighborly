@@ -13,7 +13,7 @@ string ResidentsFactory_Rising::toString ()
     return "Rising Residents Factory";
 }
 
-string ResidentsFactory_Rising::residentType ()
+string ResidentsFactory_Rising::residentType () const 
 {
     return "Rising Down Residents";
 }
@@ -26,7 +26,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Rising::createResidents (
     double allowedMovement,
     int groupNumber,
     BaseColor baseColor
-)
+) const 
 {   
     stringstream colorStream;
     colorStream << baseColor;
@@ -110,7 +110,7 @@ std::string ResidentsFactory_Rising::insertIntoString (
     return modifiedString.insert(location, insert);
 }
 
-int ResidentsFactory_Rising::charLocationForColor (string str)
+int ResidentsFactory_Rising::charLocationForColor (string str) const 
 {
     string target = "For the  residents, enter the";
     auto pos = str.find(target);
