@@ -11,8 +11,9 @@ SimulationComponents UserComponentsGetter::askUserForComponents (
     const UI_CMDLine& ui,
     const std::vector<std::unique_ptr<CityFactory>>& cityFactories,
     const std::vector<std::unique_ptr<ResidentsFactory>>& residentFactories,
-    int max_num_of_houses_x,
-    int max_num_of_houses_y
+    int maxNumOfHousesX,
+    int maxNumOfHousesY,
+    int maxNumOfResidentGroups
 )
 {
     SimulationComponents components{};
@@ -20,12 +21,11 @@ SimulationComponents UserComponentsGetter::askUserForComponents (
     components.randomSeed = randSeedGetter.makeSeedForRand(ui);
     
     CityMaker_CMDLine cityMaker{ui};
-    components.city = cityMaker.makeCity(cityFactories, max_num_of_houses_x, max_num_of_houses_y);
+    components.city = cityMaker.makeCity(cityFactories, maxNumOfHousesX, maxNumOfHousesY);
 
-    // Only two groups of residents. Group 1 and Group 2.
     std::vector<BaseColor> baseColors;
     auto iter = _colorrs_map.begin();
-    for (int ii=1; ii<3; ++ii) 
+    for (int ii=1; ii<=maxNumOfResidentGroups; ++ii) 
     {
         baseColors.push_back((*iter).first);
         ++iter;
@@ -36,7 +36,7 @@ SimulationComponents UserComponentsGetter::askUserForComponents (
         residentsMaker.makeResidents(
             residentFactories,
             components.city->getNumOfHouses(),
-            2, // currenlty only allowing two groupsn//TODO this hsould be hard coded somehow
+            maxNumOfResidentGroups,
             baseColors,
             std::min(components.city->getWidth()/2, components.city->getHeight()/2));
 

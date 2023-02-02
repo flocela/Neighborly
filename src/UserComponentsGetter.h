@@ -15,10 +15,10 @@ public:
         const UI_CMDLine& ui,
         const std::vector<std::unique_ptr<CityFactory>>& cityFactories, //TODO sh0uld these by const cityFactories?
         const std::vector<std::unique_ptr<ResidentsFactory>>& residentFactories, //TODO should these be const residentFactories?
-        int max_num_of_houses_x,
-        int max_num_of_houses_y
+        int maxNumOfHousesX,
+        int maxNumOfHousesY,
+        int maxNumOfResidentGroups
     );
-
 };
 
 #endif
