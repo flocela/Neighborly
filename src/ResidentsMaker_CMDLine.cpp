@@ -1,5 +1,4 @@
 #include "ResidentsMaker_CMDLine.h"
-#include <iostream>
 #include <iomanip>
 #include <sstream>
 
