@@ -1,8 +1,8 @@
 #ifndef SIMULATIONCOMPONENTS_H
 #define SIMULATIONCOMPONENTS_H
 
-#include <memory>
 #include <vector>
+#include <memory>
 
 #include "City.h"
 #include "Color.h"

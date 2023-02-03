@@ -19,8 +19,8 @@ HappinessFunc_StepUp::HappinessFunc_StepUp (
         happinessAtEnd   > 100.0)
         throw invalid_argument("happinessWithZeroNeighbors, happinessAtStart,"
         " and happinessAtEnd must be between 0.0 and 100.0 inclusive.");
-    if (happinessAtStart >= happinessAtEnd)
-        throw invalid_argument("happinessAtStart must be smaller than happinessAtEnd.");
+    if (happinessAtStart > happinessAtEnd)
+        throw invalid_argument("happinessAtStart must be less than or equal to happinessAtEnd.");
     if (stepUp < 0 || stepUp > 1.0)
         throw invalid_argument("stepUp must be between 0.0 and 1.0 inclusive.");
 }

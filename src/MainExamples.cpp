@@ -48,7 +48,7 @@ SimulationComponents MainExamples::userChoosesExample (const UI& ui)
                 ++iter;
             }
 
-            for (int ii=0; ii<3000; ++ii)
+            for (int ii=0; ii<4000; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_UsingFunction>(
                     ii,  // id
@@ -64,7 +64,7 @@ SimulationComponents MainExamples::userChoosesExample (const UI& ui)
                     "Step Down Resident"
                 ));
             }
-            for (int jj=3001; jj<4000; ++jj)
+            for (int jj=4001; jj<9000; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_UsingFunction>(
                     jj,
