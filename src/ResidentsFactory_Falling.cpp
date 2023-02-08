@@ -19,7 +19,7 @@ string ResidentsFactory_Falling::residentType () const
 }
 
 vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
-    UI& ui,
+    const UI& ui,
     int firstID, 
     int count,
     double happinessGoal,

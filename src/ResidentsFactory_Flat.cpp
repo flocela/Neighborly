@@ -21,7 +21,7 @@ std::string ResidentsFactory_Flat::residentType () const
 }
 
 std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
-    UI& ui,
+    const UI& ui,
     int firstID, 
     int count, 
     double happinessGoal,

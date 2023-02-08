@@ -8,7 +8,7 @@ class ResidentsFactory_Flat: public ResidentsFactory
 public:
     
     std::vector<std::unique_ptr<Resident>> createResidents(
-        UI& ui,
+        const UI& ui,
         int firstID, 
         int count, 
         double happinessGoal,

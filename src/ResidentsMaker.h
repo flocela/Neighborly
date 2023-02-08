@@ -13,6 +13,7 @@ class ResidentsMaker
 {
     public:
         virtual ResidentsGroupInfo makeResidents (
+            const UI& ui,
             const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories,
             int maxNumOfResidents,
             int maxNumOfGroupsOfResidents,

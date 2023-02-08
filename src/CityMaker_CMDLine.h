@@ -8,7 +8,7 @@ class CityMaker_CMDLine: public CityMaker
 {
 public:
 
-    CityMaker_CMDLine (const UI_CMDLine& ui);
+    CityMaker_CMDLine (const UI& ui);
 
     std::unique_ptr<City> makeCity (
         const std::vector<std::unique_ptr<CityFactory>>& cityFactories,
@@ -18,7 +18,7 @@ public:
     override;
 
 private:
-    const UI_CMDLine& _ui;
+    const UI& _ui;
     int _fall_back = 0;
     std::string _choosing_city_failure = "Couuld not determine the city type, will be using .";
 };

@@ -17,7 +17,7 @@ class ResidentsFactory
         ResidentsFactory& operator= (ResidentsFactory&& obj) noexcept = default;
         virtual ~ResidentsFactory() = default;
         virtual std::vector<std::unique_ptr<Resident>> createResidents(
-            UI& ui,
+            const UI& ui,
             int firstID, 
             int count,
             double happinessGoal,

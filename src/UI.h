@@ -21,7 +21,7 @@ virtual int menu (
 ) const = 0;
 
 // presents the user with the question and returns the user's response.
-// if can not not get a proper answer from the user, then the question's fallback answer
+// if can not get a proper answer from the user, then the question's fallback answer
 // is returned.
 virtual std::string getAnswer (Question& question)const  = 0;
 };

@@ -3,28 +3,23 @@
 
 #include <string>
 #include "Question_Int.h"
-#include "UI_CMDLine.h"
+#include "UI.h"
 
-/* UINumOfRunsGetter is used to ask the user how many runs should the simulation run.
-   Uses the command line interface */
+// UINumOfRunsGetter is used to ask the user how many runs should the simulation run.
+// Uses the command line interface
 class UINumOfRunsGetter
-{
+{ 
 
 public:
-    int getNumOfRunsFromUser ();
+
+    int getNumOfRunsFromUser (const UI& ui, int maxNumOfRuns);
 
 private:
-    UI_CMDLine _ui;
-
-    // TODO max number of runs is determined by space in printergraphic
-    // really, there is no max number of runs, but waiting for max_integer number of runs would be
-    // a very long time
-    int _max_num_of_runs = 200;
 
     // if can not get num of runs from user, then use _fall_back_num_of_runs
     int _fallback_num_of_runs = 20;
 
-    Question_Int createQuestionForNumOfRuns ();
+    Question_Int createQuestionForNumOfRuns (int maxNumOfRuns);
 
     std::string _num_of_runs_orig_prompt = 
         "\n How many runs should the simulation have? Must be a positive number. _";

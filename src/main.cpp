@@ -83,6 +83,7 @@ const int SCREEN_HEIGHT = 1200;
 const int MAX_HOUSES_X = 120;
 const int MAX_HOUSES_Y = 120;
 const int MAX_NUM_OF_RESIDENT_GROUPS = 2;
+const int MAX_NUM_OF_RUNS = 200;
 
 int main(int argc, char* argv[])
 {
@@ -113,7 +114,8 @@ int main(int argc, char* argv[])
            residentFactories,
            MAX_HOUSES_X,
            MAX_HOUSES_Y,
-           MAX_NUM_OF_RESIDENT_GROUPS
+           MAX_NUM_OF_RESIDENT_GROUPS,
+           MAX_NUM_OF_RUNS
        );
     }
     

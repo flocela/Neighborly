@@ -12,12 +12,13 @@ class UserComponentsGetter
 {
 public:
     SimulationComponents askUserForComponents (
-        const UI_CMDLine& ui,
+        const UI& ui,
         const std::vector<std::unique_ptr<CityFactory>>& cityFactories, //TODO sh0uld these by const cityFactories?
         const std::vector<std::unique_ptr<const ResidentsFactory>>& residentFactories, //TODO should these be const residentFactories?
         int maxNumOfHousesX,
         int maxNumOfHousesY,
-        int maxNumOfResidentGroups
+        int maxNumOfResidentGroups,
+        int maxNumOfRuns
     );
 };
 

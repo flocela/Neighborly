@@ -8,12 +8,13 @@
 #include "SimulationComponents.h"
 
 SimulationComponents UserComponentsGetter::askUserForComponents (
-    const UI_CMDLine& ui,
+    const UI& ui,
     const std::vector<std::unique_ptr<CityFactory>>& cityFactories,
     const std::vector<std::unique_ptr<const ResidentsFactory>>& residentFactories,
     int maxNumOfHousesX,
     int maxNumOfHousesY,
-    int maxNumOfResidentGroups
+    int maxNumOfResidentGroups,
+    int maxNumOfRuns
 )
 {
     SimulationComponents components{};
@@ -31,9 +32,10 @@ SimulationComponents UserComponentsGetter::askUserForComponents (
         ++iter;
     }
 
-    ResidentsMaker_CMDLine residentsMaker{ui};
+    ResidentsMaker_CMDLine residentsMaker{};
     ResidentsGroupInfo resGroupInfo = 
         residentsMaker.makeResidents(
+            ui,
             residentFactories,
             components.city->getNumOfHouses(),
             maxNumOfResidentGroups,
@@ -49,7 +51,7 @@ SimulationComponents UserComponentsGetter::askUserForComponents (
     }
 
     UINumOfRunsGetter runsGetter;
-    components.numOfRuns = runsGetter.getNumOfRunsFromUser();
+    components.numOfRuns = runsGetter.getNumOfRunsFromUser(ui, maxNumOfRuns);
     
     components.simulator = std::make_unique<Simulator_Basic_A>(components.city.get(), residentPtrs);
 

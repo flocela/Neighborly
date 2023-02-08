@@ -3,7 +3,7 @@
 
 using namespace std;
 
-CityMaker_CMDLine::CityMaker_CMDLine (const UI_CMDLine& ui)
+CityMaker_CMDLine::CityMaker_CMDLine (const UI& ui)
 :_ui{ui}
 {}
 

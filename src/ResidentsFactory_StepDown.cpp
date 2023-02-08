@@ -22,7 +22,7 @@ string ResidentsFactory_StepDown::residentType () const
 }
 
 vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
-    UI& ui,
+    const UI& ui,
     int firstID, 
     int count,
     double happinessGoal,

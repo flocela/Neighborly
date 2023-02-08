@@ -12,9 +12,7 @@
 class ResidentsMaker_CMDLine: public ResidentsMaker
 {
 public:
-    
-    ResidentsMaker_CMDLine () = delete;
-    ResidentsMaker_CMDLine (const UI_CMDLine& cmdline);
+    ResidentsMaker_CMDLine() = default;
     ResidentsMaker_CMDLine (const ResidentsMaker_CMDLine& orig) = default;
     ResidentsMaker_CMDLine& operator= (const ResidentsMaker_CMDLine& orig) = default;
     ResidentsMaker_CMDLine (ResidentsMaker_CMDLine&& orig) = default;
@@ -23,6 +21,7 @@ public:
     ~ResidentsMaker_CMDLine () = default;
 
     ResidentsGroupInfo makeResidents (
+        const UI& ui,
         const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories, 
         int maxNumOfResidents,
         int maxNumberOfGroupsOfResidents,
@@ -33,8 +32,6 @@ public:
 private:
 
     int _num_of_resident_groups = 2;
-
-    UI_CMDLine _ui = UI_CMDLine{};
 
     std::vector<BaseColor> _available_colors{};
     
@@ -70,14 +67,17 @@ private:
     
     void initColors (std::vector<BaseColor> colors);
 
-    int askForNumOfGroupsOfResidents (int maxNumOfResidentGroups);
-    int askForNumOfResidents (int count, std::string color);
+    int askForNumOfGroupsOfResidents (const UI& ui, int maxNumOfResidentGroups);
+    int askForNumOfResidents (const UI& ui, int count, std::string color);
     int askForGroupResidentType (
+        const UI& ui, 
         std::string color, 
-        const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories
-    );
-    double askForAllowedMovementForGroup (std::string color, double maxAllowedMovement);
-    double askForHappinessGoalForGroup (std::string color);
+        const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories);
+    double askForAllowedMovementForGroup (
+        const UI& ui,
+        std::string color,
+        double maxAllowedMovement);
+    double askForHappinessGoalForGroup (const UI& ui, std::string color);
     
     std::vector<std::string>  getFactoryNames (
         const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories

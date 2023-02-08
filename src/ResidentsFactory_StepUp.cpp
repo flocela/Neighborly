@@ -20,7 +20,7 @@ string ResidentsFactory_StepUp::residentType ()const
 }
 
 vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
-    UI& ui,
+    const UI& ui,
     int firstID, 
     int count,
     double happinessGoal,
