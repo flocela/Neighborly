@@ -6,7 +6,7 @@
 #include "Resident.h"
 #include "House.h"
 
-class TextHelper
+class TextHelper // TODO is this used?
 {
     public:
         TextHelper (

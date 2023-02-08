@@ -1,4 +1,5 @@
 #include "UI_CMDLine.h"
+
 #include <iostream>
 #include <sstream>
 
@@ -6,10 +7,8 @@
 
 using namespace std;
 
-UI_CMDLine:: UI_CMDLine (int maxNumOfTries)
-{
-    _max_num_of_tries = maxNumOfTries;
-}
+UI_CMDLine:: UI_CMDLine (int maxNumOfTries) : _max_num_of_tries{maxNumOfTries}
+{}
 
 string UI_CMDLine::getAnswer (Question& question) const
 {
@@ -21,12 +20,13 @@ string UI_CMDLine::getAnswer (Question& question) const
         question.tryAnswer(answer);
         tries++;
     }
-    cout << "UICMD line : " << answer << ", " << question.getFallback() << endl;
+
     if (!question.hasValidAnswer())
     {
         cout << question.getFailedResponse() << endl;
         return question.getFallback();
     }
+
     return answer;
 }
 
@@ -47,19 +47,11 @@ int UI_CMDLine::menu (
     }
     ssPrompt << endl;
 
-    // create the wrong type prompt. (It has the original prompt appended to it.)
-    stringstream ssWrongType;
-    ssWrongType << "Please enter a whole number like 2.  ";
-    ssWrongType << ssPrompt.str();
-
     // create the in range prompt. (It has the original prompt appended to it.)
     stringstream ssInRange;
-    ssInRange << "Please enter a number between 1 and ";
+    ssInRange << _menu_range_prompt;
     ssInRange << items.size() << ".  ";
     ssInRange << ssPrompt.str();
-
-    // create the invalid prompt. (It has the original prompt appended to it.)
-    // 
 
     Question_Int chooseMenuItem{
         1,
@@ -67,10 +59,14 @@ int UI_CMDLine::menu (
         size,
         _fallback_menu_item,
         ssPrompt.str(),
-        ssWrongType.str(),
+        _menu_type_prompt + ssPrompt.str(),
         ssInRange.str(),
         _menu_invalid_prompt + ssPrompt.str(),
-        insertIntoString(_menu_item_failure, 57, to_string(_fallback_menu_item))};
+        insertIntoString(
+            _menu_item_failure,
+            _menu_item_failure.size() - 3,
+            to_string(_fallback_menu_item))
+    };
     
     int tries = 0;
     string answer = "xx";
@@ -88,11 +84,6 @@ int UI_CMDLine::menu (
     }
     // items are numbered starting with one for the user, but items vector is zero-index based
     return stoi(answer) - 1;
-}
-
-void UI_CMDLine::print (string str) const
-{
-    cout << str << endl;
 }
 
 std::string UI_CMDLine::insertIntoString  (

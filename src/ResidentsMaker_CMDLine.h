@@ -42,7 +42,7 @@ private:
     
     // prompt for this group's type (as in Resident_Flat or StepDown...)
     std::string _which_type_prompt = "\nWhat will be the type for the residents in the  group?"
-        " Choose the resident type by typing the corresponding number. _";
+        " Choose the resident type by typing the corresponding number.";
 
     // prompt for the number of resident groups.
     std::string _how_many_groups_orig_prompt =
