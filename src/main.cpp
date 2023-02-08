@@ -73,8 +73,8 @@ set<T*> getSetOfPointers (vector<unique_ptr<T>>& ts)
     return pointers;
 }
 
-vector<unique_ptr<CityFactory>> initCityFactories ();
-vector<unique_ptr<const ResidentsFactory>> initResidentFactories ();
+const vector<unique_ptr<const CityFactory>> initCityFactories ();
+const vector<unique_ptr<const ResidentsFactory>> initResidentFactories ();
 void initForSimpleExample (int example);
 void initForUserDefinedRun ();
 
@@ -90,12 +90,12 @@ int main(int argc, char* argv[])
     (void) argc;
     (void) argv;
 
-    vector<unique_ptr<CityFactory>> cityFactories = initCityFactories();
-    vector<unique_ptr<const ResidentsFactory>> residentFactories = initResidentFactories();
+    const vector<unique_ptr<const CityFactory>> cityFactories = initCityFactories();
+    const vector<unique_ptr<const ResidentsFactory>> residentFactories = initResidentFactories();
 
     SimulationComponents components;
 
-    UI_CMDLine cmdLine{};
+    const UI_CMDLine cmdLine{};
 
     MainBaseQuestion mainQuestion;
     bool usesExamples = mainQuestion.askUserToUsePremadeExamples(cmdLine);
@@ -163,14 +163,14 @@ int main(int argc, char* argv[])
     return 0; 
 }
 
-vector<unique_ptr<CityFactory>> initCityFactories ()
+const vector<unique_ptr<const CityFactory>> initCityFactories ()
 {
-    vector<unique_ptr<CityFactory>> cityFactories{};
+    vector<unique_ptr<const CityFactory>> cityFactories{};
     cityFactories.emplace_back(make_unique<CityFactory_Grid>());
     return cityFactories;
 }
 
-vector<unique_ptr<const ResidentsFactory>> initResidentFactories()
+const vector<unique_ptr<const ResidentsFactory>> initResidentFactories()
 {
     vector<unique_ptr<const ResidentsFactory>> residentFactories = {};
     residentFactories.emplace_back(make_unique<const ResidentsFactory_Falling>());

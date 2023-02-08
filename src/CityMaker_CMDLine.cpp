@@ -8,7 +8,7 @@ CityMaker_CMDLine::CityMaker_CMDLine (const UI& ui)
 {}
 
 unique_ptr<City> CityMaker_CMDLine::makeCity (
-    const std::vector<unique_ptr<CityFactory>>& cityFactories,
+    const std::vector<unique_ptr<const CityFactory>>& cityFactories,
     int maxDeltaX,
     int maxDeltaY
 )

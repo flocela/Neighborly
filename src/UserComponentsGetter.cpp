@@ -1,15 +1,14 @@
 #include "UserComponentsGetter.h"
 
-#include "UINumOfRunsGetter.h"
 #include "CityMaker_CMDLine.h"
 #include "RandSeedGetter.h"
 #include "ResidentsMaker_CMDLine.h"
 #include "Simulator_Basic_A.h"
-#include "SimulationComponents.h"
+#include "UINumOfRunsGetter.h"
 
 SimulationComponents UserComponentsGetter::askUserForComponents (
     const UI& ui,
-    const std::vector<std::unique_ptr<CityFactory>>& cityFactories,
+    const std::vector<std::unique_ptr<const CityFactory>>& cityFactories,
     const std::vector<std::unique_ptr<const ResidentsFactory>>& residentFactories,
     int maxNumOfHousesX,
     int maxNumOfHousesY,

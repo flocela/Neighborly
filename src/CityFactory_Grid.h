@@ -21,7 +21,7 @@ class CityFactory_Grid: public CityFactory
             int max_height
         ) const override;
         
-        std::string cityType () override;
+        std::string cityType () const override;
 
     private:
         int askForGridWidth(const UI& ui, int maxWidth) const;

@@ -13,7 +13,7 @@ unique_ptr<City> CityFactory_Grid::createCity (
     return make_unique<City_Grid>(width);
 }
 
-string CityFactory_Grid::cityType () 
+string CityFactory_Grid::cityType () const
 {
     return "Grid City";
 }

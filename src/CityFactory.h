@@ -25,7 +25,7 @@ class CityFactory
         ) const = 0;
 
         // returns the name of the type of cities that are produced.
-        virtual std::string cityType () = 0; 
+        virtual std::string cityType () const = 0; 
 };
 
 #endif

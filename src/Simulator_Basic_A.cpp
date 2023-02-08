@@ -40,8 +40,6 @@ unordered_map<const House*, Resident*> Simulator_Basic_A::simulate ()
     
     setHappinessValuesForAllResidents();
 
-    std::cout << "_res_per_house.size(): " << _res_per_house.size() <<endl;
-
     return _res_per_house;
 }
 
@@ -53,11 +51,9 @@ void Simulator_Basic_A::firstSimulation ()
     {
         copySetOfResidents.insert(res);
     }
-    std::cout << "_residents.size(): " << _residents.size() << endl;
-    std::cout << "aacopySetOfResidents.size() : " << copySetOfResidents.size() << endl;
     // for each resident, choose a random house.
     while (copySetOfResidents.size() != 0)
-    {   std::cout << "bbcopySetOfResidents.size() : " << copySetOfResidents.size() << endl;
+    {   
         Resident* randRes = selectRandom(copySetOfResidents);
 
         const House* house = selectRandom(_open_houses);
