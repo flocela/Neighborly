@@ -11,7 +11,7 @@ class Simulator_Basic_A: public Simulator
 {
 public:
     // @residents are all the residents in the city.
-    Simulator_Basic_A (City* city, std::set<Resident*> residents);
+    Simulator_Basic_A (const City* city, std::set<Resident*> residents);
     Simulator_Basic_A () = delete;
     Simulator_Basic_A (const Simulator_Basic_A& o) = default;
     Simulator_Basic_A (Simulator_Basic_A&& o) noexcept = default;
@@ -30,14 +30,14 @@ public:
     std::unordered_map<const House*, Resident*> simulate() override;
 
 private:
-    City* _city;
+    const City* _city;
     bool _first_simulation_done = false;
 
     // all residents
     std::set<Resident*> _residents;
 
     // only houses that are occupied and their residents
-    std::unordered_map<const House*, Resident*> _res_per_house_map = {};
+    std::unordered_map<const House*, Resident*> _res_per_house = {};
 
     // only residents that have houses and their houses
     std::unordered_map<Resident*, const House*> _house_per_resident;
@@ -46,7 +46,7 @@ private:
     std::unordered_set<const House*> _open_houses;
 
     // Number of houses resident will try before, giving up and not moving on this simulation.
-    int _count = 40;
+    int _num_of_tries = 40;
 
     // in first simulation, no resident has a house. And all residents are assigned a house.
     void firstSimulation ();
@@ -55,7 +55,7 @@ private:
     void normalSimulation ();
 
     // Will try to move the resident into a random available house.
-    // An available house is an empty house, with the resident's allowable movement distance.
+    // An available house is an empty house, within the resident's allowable movement distance.
     // If there are no available houses which will make the resident happy (hapiness greater
     // or equal to happiness goal), then the resident will not be moved.
     // Will randomly try available houses. If a house that will make the resident
@@ -74,13 +74,6 @@ private:
     // Returns residents that live in @houses. If a house is empty, then 
     // returned set will be smaller than @houses.
     std::set<Resident*> getResidentsInTheseHouses(std::set<const House*> houses);
-
-    // randomly selects a house from the set of houses.
-    const House* selectRandom (std::unordered_set<const House*>& setOfHouses) const;
-
-    // randomly selects a resident from set of residents.
-    Resident* selectRandom (std::unordered_set<Resident*>& setOfResidents) const;
-
     void setHappinessValuesForAllResidents();
     double calculateHappinessValueFor(Resident* res, int address);
         

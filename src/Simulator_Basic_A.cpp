@@ -3,12 +3,23 @@
 
 using namespace std;
 
+template <typename T>
+T selectRandom(unordered_set<T>& setOfT)
+{
+    int size = setOfT.size();
+    int r = rand() % size;
+    auto it = setOfT.begin();
+    advance(it,r);
+    return *it;
+}
+
 Simulator_Basic_A::Simulator_Basic_A (
-    City* city, // TODO should be const
+    const City* city,
     set<Resident*> residents
 ): _city{city},
    _residents{residents}
 {   
+    // to begin with, all houses are empty
     for (const House* house : _city->getHouses())
     {   
         _open_houses.insert(house);
@@ -29,12 +40,12 @@ unordered_map<const House*, Resident*> Simulator_Basic_A::simulate ()
     
     setHappinessValuesForAllResidents();
 
-    return _res_per_house_map;
+    return _res_per_house;
 }
 
 void Simulator_Basic_A::firstSimulation ()
 {   
-    // make a copy of the set or residents (needed to randomly choose residents)
+    // make a copy of the set or residents (copy is needed to randomly choose residents)
     unordered_set<Resident*> copySetOfResidents{};
     for (Resident* res : _residents)
     {
@@ -48,9 +59,9 @@ void Simulator_Basic_A::firstSimulation ()
 
         const House* house = selectRandom(_open_houses);
         
-        _res_per_house_map.insert(pair<const House*, Resident*>(house, randRes));
+        _res_per_house.insert({house, randRes});
         
-        _house_per_resident.insert(pair<Resident*, const House*>(randRes, house));
+        _house_per_resident.insert({randRes, house});
         
         _open_houses.erase(house);
 
@@ -61,7 +72,7 @@ void Simulator_Basic_A::firstSimulation ()
 
 void Simulator_Basic_A::normalSimulation ()
 {
-    // make a copy of the set or residents (needed to randomly choose residents)
+    // make a copy of the set or residents (copy needed to randomly choose residents)
     unordered_set<Resident*> copySetOfResidents{};
     for (Resident* res : _residents)
     {
@@ -69,19 +80,20 @@ void Simulator_Basic_A::normalSimulation ()
     }
 
     // for each resident, if unhappy try to move resident
-    while (copySetOfResidents.size() != 0)
+    while (copySetOfResidents.size() > 0)
     {
         Resident* randRes = selectRandom(copySetOfResidents);
 
         if (calculateHappinessValueFor(randRes, _house_per_resident[randRes]->getAddress()) < 
             randRes->getHappinessGoal())
         {
-            moveResident(randRes, _count);
+            moveResident(randRes, _num_of_tries);
         }
 
         copySetOfResidents.erase(randRes);
     }
 }
+
 void Simulator_Basic_A::moveResident (Resident* res, int numOfTries)
 {  
     const House* currHouse = _house_per_resident[res];
@@ -96,6 +108,7 @@ void Simulator_Basic_A::moveResident (Resident* res, int numOfTries)
     {
         return;
     }
+
     // remove houses in nearHouses set that are not open. 
     // resident can't move into houses that are occupied even if they are near.
     unordered_set<const House*>::iterator iter = nearHouses.begin();
@@ -140,36 +153,12 @@ void Simulator_Basic_A::moveResidentIntoHouse (Resident* res, const House* newHo
     {
         const House* oldHouse = _house_per_resident[res];
         _house_per_resident.erase(res);
-        _res_per_house_map.erase(oldHouse);
+        _res_per_house.erase(oldHouse);
         _open_houses.insert(oldHouse);
     }
-    _res_per_house_map.insert(pair<const House*, Resident*>(newHouse, res));
+    _res_per_house.insert(pair<const House*, Resident*>(newHouse, res));
     _house_per_resident.insert(pair<Resident*, const House*>(res, newHouse));
     _open_houses.erase(newHouse);
-}
-
-
-// TODO make a template, for selecting houses and residents.
-const House* Simulator_Basic_A::Simulator_Basic_A::selectRandom(
-    unordered_set<const House*>& setOfHouses
-) const
-{   
-    int size = setOfHouses.size();
-    int r = rand() % size;
-    unordered_set<const House*>::iterator it = setOfHouses.begin();
-    advance(it, r);
-    return *it;
-}
-
-Resident* Simulator_Basic_A::Simulator_Basic_A::selectRandom(
-    unordered_set<Resident*>& setOfResidents
-) const
-{   
-    int size = setOfResidents.size();
-    int r = rand() % size;
-    unordered_set<Resident*>::iterator it = setOfResidents.begin();
-    advance(it, r);
-    return *it;
 }
 
 void Simulator_Basic_A::setHappinessValuesForAllResidents ()
@@ -192,9 +181,9 @@ set<Resident*> Simulator_Basic_A::getResidentsInTheseHouses (set<const House*> h
     set<Resident*> residents;
     for (const House* house : houses)
     {   
-        if (_res_per_house_map.find(house) != _res_per_house_map.end())
+        if (_res_per_house.find(house) != _res_per_house.end())
         {
-            residents.insert(_res_per_house_map[house]);
+            residents.insert(_res_per_house[house]);
         } 
     }
     return residents;

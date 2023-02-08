@@ -64,9 +64,13 @@ ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
         );
 
         double happinessGoal = askForHappinessGoalForGroup(curColorBaseName);
+        (void) numOfResidents;
+        (void)choice;
+        (void)allowedMovement;
+        (void)happinessGoal;
 
         // create residents
-        auto newResidents = residentsFactories[choice]->createResidents(
+        /*auto newResidents = residentsFactories[choice]->createResidents(
             _ui,
             numOfResidentsCreated,
             numOfResidents,
@@ -79,7 +83,7 @@ ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
         for (auto& r: newResidents)
             resGroupInfo._residents.emplace_back(move(r));
 
-        numOfResidentsCreated += newResidents.size();
+        numOfResidentsCreated += newResidents.size();*/
     }
     
     return resGroupInfo;
