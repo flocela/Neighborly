@@ -1,5 +1,7 @@
 #include "AxisLeftToRightT.h"
+#include <iostream>
 
+using namespace std;
 AxisLeftToRightT::AxisLeftToRightT (
     AxisFormat axisFormat,
     int xCrossPx,
@@ -138,9 +140,9 @@ void AxisLeftToRightT::setTickThickness (int tickThicknessPx)
 
 int AxisLeftToRightT::axisLengthPx () const
 {
-    int unit_px_odd = (_px_per_unit%2==0)? 0 : 1;
+    int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
     // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
-    return calcRightMostPixelWithValue_X() - _x_cross__px - unit_px_odd + (_tick_thickness__px/2);
+    return calcRightMostPixelWithValue_X() - _x_cross__px - unit_px_even + (_tick_thickness__px/2);
 }
 
 int AxisLeftToRightT::sizeXPx () const

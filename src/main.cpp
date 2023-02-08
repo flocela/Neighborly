@@ -119,7 +119,9 @@ int main(int argc, char* argv[])
        );
     }
     
+    // sets srand with randomSeed
     srand(components.randomSeed);
+    
     vector<const House*> houses = components.city->getHouses();
 
     unordered_map<const House*, set<const House*>> neighboringHousesPerHouse;

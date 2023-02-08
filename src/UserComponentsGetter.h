@@ -14,7 +14,7 @@ public:
     SimulationComponents askUserForComponents (
         const UI& ui,
         const std::vector<std::unique_ptr<const CityFactory>>& cityFactories, 
-        const std::vector<std::unique_ptr<const ResidentsFactory>>& residentFactories, //TODO should these be const residentFactories?
+        const std::vector<std::unique_ptr<const ResidentsFactory>>& residentFactories,
         int maxNumOfHousesX,
         int maxNumOfHousesY,
         int maxNumOfResidentGroups,

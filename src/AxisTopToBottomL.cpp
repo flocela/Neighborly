@@ -1,5 +1,7 @@
 #include "AxisTopToBottomL.h"
+#include <iostream>
 
+using namespace std;
 AxisTopToBottomL::AxisTopToBottomL (
     AxisFormat axisFormat,
     int x_coordinate__px, // where x and y axis meet
@@ -26,7 +28,7 @@ AxisTopToBottomL::AxisTopToBottomL (
 {}
 
 void AxisTopToBottomL::print (Renderer* renderer) const
-{
+{   
     std::vector<SDL_Rect> rects = {};
     std::vector<TextRect> texts = {};
 
@@ -149,9 +151,9 @@ int AxisTopToBottomL::sizeYPx() const
 
 int AxisTopToBottomL::axisLengthPx() const
 {
-    int unit_px_odd = (_px_per_unit%2==0)? 0 : 1;
+    int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
     // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
-    return calcBotMostPixel_Y() - _y_cross__px - unit_px_odd + (_tick_thickness__px/2);
+    return calcBotMostPixel_Y() - _y_cross__px - unit_px_even + (_tick_thickness__px/2);
 }
 
 int AxisTopToBottomL::getPixel (double yVal) const
