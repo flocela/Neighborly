@@ -1,5 +1,8 @@
 #include "HappinessFunc_Rising.h"
 
+#include <sstream>
+#include <iomanip>
+
 using namespace std;
 
 HappinessFunc_Rising::HappinessFunc_Rising (
@@ -44,4 +47,18 @@ double HappinessFunc_Rising::calcHappiness (
                             (double)(num_of_diff_neighbors + num_of_like_neighbors);
     return _happ_at_zero_diversity + 
            (_happ_at_one_diversity -_happ_at_zero_diversity) * diversity;
+}
+
+
+string HappinessFunc_Rising::toStrBasic () const
+{
+    stringstream returnStream;
+    returnStream << "HappinessFunc: Rising. happiness:: with no neighbors: ";
+    returnStream << fixed << setprecision(2) << _happ_with_no_neighbors;
+    returnStream << " zero diversity: ";
+    returnStream << fixed << setprecision(2) << _happ_at_zero_diversity;
+    returnStream << " one diversity: ";
+    returnStream << fixed << setprecision(2) << _happ_at_one_diversity;
+    
+    return returnStream.str();
 }

@@ -14,9 +14,10 @@ Resident_UsingFunction::Resident_UsingFunction (
    _name{name}
 {}
 
-std::string Resident_UsingFunction::toStrBasic () const
+std::string Resident_UsingFunction::implimentToStrBasic () const
 {
-    return _name;
+
+    return _hap_func->toStrBasic();
 }
 
 double Resident_UsingFunction::implimentHappiness(

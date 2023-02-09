@@ -1,5 +1,8 @@
 #include "HappinessFunc_Falling.h"
 
+#include <sstream>
+#include <iomanip>
+
 using namespace std;
 
 HappinessFunc_Falling::HappinessFunc_Falling (
@@ -7,23 +10,23 @@ HappinessFunc_Falling::HappinessFunc_Falling (
     double happinessAtZeroPercentDiversity,
     double happinessAt100PercentDiversity
 ):  _happ_with_no_neighbors{happinessWithNoNeighbors},
-    _happ_at_zero_percent_diversity{happinessAtZeroPercentDiversity},
-    _happ_at_hundred_percent_diversity{happinessAt100PercentDiversity}
+    _happ_at_zero_diversity{happinessAtZeroPercentDiversity},
+    _happ_at_one_diversity{happinessAt100PercentDiversity}
 {
-    if (_happ_at_zero_percent_diversity < 0.0 || 
-        _happ_at_zero_percent_diversity > 100.0 )
+    if (_happ_at_zero_diversity < 0.0 || 
+        _happ_at_zero_diversity > 100.0 )
     {
         throw invalid_argument("happiness At Zero Diversity must be "
         "between 0.0 and 100.0 inclusive.");
     }
-    if (_happ_at_hundred_percent_diversity < 0.0 ||
-        _happ_at_hundred_percent_diversity > 100.0)
+    if (_happ_at_one_diversity < 0.0 ||
+        _happ_at_one_diversity > 100.0)
     {
         throw invalid_argument("happiness At One Diversity must be "
         "between 0.0 and 100.0 inclusive.");
     }
-    if (_happ_at_hundred_percent_diversity >=
-        _happ_at_zero_percent_diversity)
+    if (_happ_at_one_diversity >=
+        _happ_at_zero_diversity)
     {
         throw invalid_argument("happinessAtZeroDiversity must be"
         " larger than happinessAtOneDiversity.");
@@ -46,6 +49,19 @@ double HappinessFunc_Falling::calcHappiness (
     double diversity = num_of_diff_neighbors / 
                        (double)(num_of_diff_neighbors + num_of_like_neighbors);
 
-    return _happ_at_zero_percent_diversity + 
-           (_happ_at_hundred_percent_diversity -_happ_at_zero_percent_diversity) * diversity;
+    return _happ_at_zero_diversity + 
+           (_happ_at_one_diversity -_happ_at_zero_diversity) * diversity;
+}
+
+string HappinessFunc_Falling::toStrBasic () const
+{
+    stringstream returnStream;
+    returnStream << "HappinessFunc: Falling. happiness:: with no neighbors: ";
+    returnStream << fixed << setprecision(2) << _happ_with_no_neighbors;
+    returnStream << " zero diversity: ";
+    returnStream << fixed << setprecision(2) << _happ_at_zero_diversity;
+    returnStream << " one diversity: ";
+    returnStream << fixed << setprecision(2) << _happ_at_one_diversity;
+    
+    return returnStream.str();
 }

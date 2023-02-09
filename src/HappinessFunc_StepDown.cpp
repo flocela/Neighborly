@@ -1,5 +1,9 @@
 #include "HappinessFunc_StepDown.h"
-#include <iostream>
+
+#include <sstream>
+#include <iomanip>
+
+using namespace std;
 
 HappinessFunc_StepDown::HappinessFunc_StepDown ( 
     double happinessWithZeroNeighbors,
@@ -57,4 +61,19 @@ double HappinessFunc_StepDown::calcHappiness (
     {
         return _happ_at_end;
     }
+}
+
+string HappinessFunc_StepDown::toStrBasic () const
+{
+    stringstream returnStream;
+    returnStream << "HappinessFunc: Step Down. happiness:: with no neighbors: ";
+    returnStream << fixed << setprecision(2) << _happ_with_zero_neighbors;
+    returnStream << " at start diversity: ";
+    returnStream << fixed << setprecision(2) << _happ_at_start;
+    returnStream << " at end diversity: ";
+    returnStream << fixed << setprecision(2) << _happ_at_end;
+    returnStream << " drop's diversity location: ";
+    returnStream << fixed << setprecision(2) << _step_down;
+    
+    return returnStream.str();
 }

@@ -1,6 +1,8 @@
 #ifndef PRINTER_H
 #define PRINTER_H
 
+#include <unordered_map>
+
 #include "House.h"
 #include "Resident.h"
 

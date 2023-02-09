@@ -1,6 +1,10 @@
 #include "Resident.h"
 
+#include <sstream>
 #include <stdexcept>
+#include <iomanip>
+
+using namespace std;
 
 Resident::Resident (
     int    id,
@@ -54,7 +58,25 @@ double Resident::setHappiness (double happiness)
     return _curr_happiness;
 }
 
-bool Resident:: operator< (const Resident& other) const
+bool Resident::operator< (const Resident& other) const // TODO upgrade this.
 {
     return _id < other._id;
+}
+
+string Resident::toStrBasic () const
+{
+    stringstream returnStream;
+    returnStream << "Resident:: id ";
+    returnStream << _id;
+    returnStream << " group id: ";
+    returnStream << _group_id;
+    returnStream << " allowed movement: ";
+    returnStream << fixed << setprecision(2) << _allowed_movement_distance;
+    returnStream << "current happiness / happiness goal: ";
+    returnStream << fixed << setprecision(2) << _curr_happiness;
+    returnStream << " /";
+    returnStream << fixed << setprecision(2) << _happiness_goal;
+    returnStream << implimentToStrBasic();
+
+    return returnStream.str();
 }

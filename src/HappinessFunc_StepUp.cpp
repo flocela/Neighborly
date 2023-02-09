@@ -1,6 +1,9 @@
 #include "HappinessFunc_StepUp.h"
 #include <iostream>
 
+#include <sstream>
+#include <iomanip>
+
 using namespace std;
 
 HappinessFunc_StepUp::HappinessFunc_StepUp (
@@ -48,4 +51,19 @@ double HappinessFunc_StepUp::calcHappiness (
         return _happ_at_end;
     }
 
+}
+
+string HappinessFunc_StepUp::toStrBasic () const
+{
+    stringstream returnStream;
+    returnStream << "HappinessFunc: Step Up. happiness:: with no neighbors: ";
+    returnStream << fixed << setprecision(2) << _happ_with_zero_neighbors;
+    returnStream << " at start diversity: ";
+    returnStream << fixed << setprecision(2) << _happ_at_start;
+    returnStream << " at end diversity: ";
+    returnStream << fixed << setprecision(2) << _happ_at_end;
+    returnStream << " step-up's diversity location: ";
+    returnStream << fixed << setprecision(2) << _step_up;
+    
+    return returnStream.str();
 }

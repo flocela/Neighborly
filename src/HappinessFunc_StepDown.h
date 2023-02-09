@@ -36,6 +36,9 @@ public:
         int tot_num_of_possible_neighbors, 
         int num_of_like_neighbors, 
         int num_of_diff_neighbors) const override;
+    
+    std::string toStrBasic () const override;
+
 private:
     // on the y-axis (happiness values)
     double _happ_with_zero_neighbors;

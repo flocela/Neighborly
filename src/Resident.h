@@ -18,7 +18,7 @@ public:
     Resident& operator= (Resident&& obj) noexcept = default;
     virtual ~Resident () = default; //TODO should be virtual
 
-    virtual std::string toStrBasic () const = 0;
+    std::string toStrBasic () const;
 
     int getID() const;
     int getGroupId () const;
@@ -35,6 +35,8 @@ protected:
         std::set<Resident*> neighbors,
         int numOfAdjacentHouses
     ) const = 0;
+
+    virtual std::string implimentToStrBasic () const = 0;
 
 private:
     int    _id;

@@ -22,14 +22,13 @@ public:
     Resident_UsingFunction& operator= (Resident_UsingFunction&& obj) noexcept = default;
     ~Resident_UsingFunction() = default; // TODO should be virtual
 
-    std::string toStrBasic () const;
-
 protected:
     double implimentHappiness ( std::set<Resident*> neighbors,  int numOfAdjacentHouses) const override;
+    std::string implimentToStrBasic () const override; 
 
 private:
     std::unique_ptr<HappinessFunc> _hap_func;
-    std::string _name;
+    std::string _name; // TODO maybe get rid of this
 
 };
 
