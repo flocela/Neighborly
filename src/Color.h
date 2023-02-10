@@ -31,6 +31,27 @@ enum class Mood {neutral, unhappy, happy};
 std::ostream& operator<<(std::ostream& os, Color const& obj);
 std::ostream& operator<<(std::ostream& os, BaseColor const& obj);
 
+inline std::unordered_map<std::string, BaseColor> _base_colors {
+    {"red", BaseColor::red},
+    {"blue", BaseColor::blue},
+    {"green", BaseColor::green}
+};
+
+inline BaseColor baseColor (std::string baseColor)
+{
+    if (baseColor == "red")
+    {
+        return BaseColor::red;
+    }
+    else if (baseColor == "blue")
+    {
+        return BaseColor::blue;
+    }
+    else {
+        return BaseColor::green;
+    }
+}
+
 struct ColorInfo
 {
     Color _color;

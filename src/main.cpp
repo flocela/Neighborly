@@ -46,6 +46,7 @@
 
 #include "Printer_Graphic.h"
 #include "Printer_CMDLine.h"
+#include "SimulationStarter.h"
 #include "Simulator.h"
 #include "Simulator_Basic_A.h"
 #include "Color.h"
@@ -90,6 +91,7 @@ int main(int argc, char* argv[])
     (void) argc;
     (void) argv;
 
+    bool useFile = true;
     const vector<unique_ptr<const CityFactory>> cityFactories = initCityFactories();
     const vector<unique_ptr<const ResidentsFactory>> residentFactories = initResidentFactories();
 
@@ -97,27 +99,39 @@ int main(int argc, char* argv[])
 
     const UI_CMDLine cmdLine{};
 
-    MainBaseQuestion mainQuestion;
-    bool usesExamples = mainQuestion.askUserToUsePremadeExamples(cmdLine);
-    if (usesExamples)
-    {   
-        MainExamples mainExamples; //TODO add randomSeed number to MainExamples
-
-        components = mainExamples.userChoosesExample(cmdLine);
+    
+    if (useFile)
+    {
+        SimulationStarter simulationStarter{};
+        cout << "Simulation Starter" << endl;
+        components = simulationStarter.createSimulationComponents("../test1.txt");
     }
     else
     {
-       UserComponentsGetter userComponentsGetter{};
-       components = userComponentsGetter.askUserForComponents(
-           cmdLine,
-           cityFactories,
-           residentFactories,
-           MAX_HOUSES_X,
-           MAX_HOUSES_Y,
-           MAX_NUM_OF_RESIDENT_GROUPS,
-           MAX_NUM_OF_RUNS
-       );
+        MainBaseQuestion mainQuestion;
+        bool usesExamples = mainQuestion.askUserToUsePremadeExamples(cmdLine);
+        if (usesExamples)
+        {   
+            MainExamples mainExamples; //TODO add randomSeed number to MainExamples
+
+            components = mainExamples.userChoosesExample(cmdLine);
+        }
+        else
+        {
+            UserComponentsGetter userComponentsGetter{};
+            components = userComponentsGetter.askUserForComponents(
+                cmdLine,
+                cityFactories,
+                residentFactories,
+                MAX_HOUSES_X,
+                MAX_HOUSES_Y,
+                MAX_NUM_OF_RESIDENT_GROUPS,
+                MAX_NUM_OF_RUNS
+            );
+        }
     }
+    
+    
     
     // sets srand with randomSeed
     srand(components.randomSeed);
