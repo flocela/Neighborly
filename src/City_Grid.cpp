@@ -56,6 +56,7 @@ double City_Grid::getDist (const int& fromAddress, const int& toAddress) const
   	return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
 }
 
+// TODO just keep a map of house to set of adjacent houses
 set<const House*> City_Grid::getAdjacentHouses (int address) const
 {
 	int largestAddress = getNumOfHouses() - 1;
@@ -326,4 +327,28 @@ int City_Grid::get_x (const int& address) const
 int City_Grid::get_y (const int& address) const
 {
 	return (address/_width);
+}
+
+std::string City_Grid::toString (const std::unordered_map<int, char>& characterPerAddress)
+{	(void)characterPerAddress;
+	string result = "";
+	for (int ii = 0; ii<_width; ++ii)
+	{
+		for (int jj=0; jj<_width; ++jj)
+		{
+			const int address = ii * _width + jj;
+			if (characterPerAddress.find(address) == characterPerAddress.end())
+			{
+				result.push_back('O');
+			}
+			else
+			{
+				result.push_back(characterPerAddress.at(address));
+			}
+			result.push_back(' ');
+		}
+		result.push_back('\n');
+	}
+
+	return result;
 }

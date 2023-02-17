@@ -52,6 +52,9 @@ class City
         virtual Coordinate getCoordinate(const int& address) const = 0;
 
         virtual std::unordered_map<const House*, Coordinate > getCoordinatesPerHouse() = 0;
+
+        // Returns a string representing the city. Characters will represent specific addresses.
+        virtual std::string toString (const std::unordered_map<int, char>& characterPerAddress) = 0;
 };
 
 #endif

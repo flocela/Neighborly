@@ -1,7 +1,9 @@
 #include "Printer_CMDLine.h"
 
-#include <vector>
 #include <algorithm>
+#include <vector>
+
+using namespace std;
 
 Printer_CMDLine::Printer_CMDLine (
     int maxNumofRuns,
@@ -9,14 +11,119 @@ Printer_CMDLine::Printer_CMDLine (
 ):  _max_num_of_runs{maxNumofRuns},
     _city_ptr{cityPtr},
     textHelper{maxNumofRuns,cityPtr}
-{}
+{
+    for (const House* house : cityPtr->getHouses())
+    {
+        _adj_neighbors[house] = _city_ptr->getAdjacentHouses(house->getAddress());
+    }
+}
 
 void Printer_CMDLine::print(
-    std::unordered_map<const House*, const Resident*> residentPerHouse,
+    unordered_map<const House*, const Resident*> residentPerHouse,
     int run
 ) const
 {   
-    (void)residentPerHouse;
-    (void)run;
+    // create house per resident map
+    unordered_map<const Resident*, const House*> housePerResident{};
+    for (auto houseAndResident : residentPerHouse)
+    {
+        housePerResident.insert({houseAndResident.second, houseAndResident.first});
+    }
+
+    // Print out run number
+    cout << "run: " << run << endl;
+
+    // Collect data for diversity per group and happiness per group.
+    // for each groupid, will need the number of residents in group,
+    // the number of disparate neighbors,
+    // and the happiness per group.
+    unordered_map<int, int> numOfResidentsPerGroupId;
+    unordered_map<int, int> numOfDiffNeighborsPerGroupId;
+    unordered_map<int, double> happinessSumPerGroup;
+
+    for (pair<const Resident*, const House*> ii : housePerResident)
+    {
+        const Resident* resident = ii.first;
+        const House* residentHouse = ii.second;
+        int residentGroupId = resident->getGroupId();
+        set<const House*> housesAdjToRes = _city_ptr->getAdjacentHouses(residentHouse->getAddress());
+
+        for (const House* adjacentHouse : housesAdjToRes)
+        {
+            // if adjacent house is not empty
+            if (residentPerHouse.find(adjacentHouse) != residentPerHouse.end())
+            {
+                // adjacent resident's groupId
+                int adj_res_groupId = (residentPerHouse.at(adjacentHouse))->getGroupId();
+                if (adj_res_groupId != residentGroupId)
+                {
+                    if (numOfDiffNeighborsPerGroupId.find(residentGroupId) ==
+                        numOfDiffNeighborsPerGroupId.end())
+                    {
+                        numOfDiffNeighborsPerGroupId[residentGroupId] = 0;
+                    }
+                    numOfDiffNeighborsPerGroupId[residentGroupId] +=1;
+                }
+            }
+        }
+
+        if (happinessSumPerGroup.find(residentGroupId) == happinessSumPerGroup.end())
+        {
+            happinessSumPerGroup[residentGroupId] = 0;
+        }
+
+        happinessSumPerGroup[residentGroupId] += resident->getHappiness();
+
+        numOfResidentsPerGroupId[residentGroupId] += 1;
+    }
+
+    // Print out Diversity
+    cout << "GroupID and Diversity" << endl;
+    vector<int> groupIDs{};
+    for (auto groupIDAndCount : numOfResidentsPerGroupId)
+    {
+        groupIDs.push_back(groupIDAndCount.first);
+    }
+    sort(groupIDs.begin(), groupIDs.end());
+    for (int groupID : groupIDs)
+    {
+        if ( numOfDiffNeighborsPerGroupId.find(groupID) != numOfDiffNeighborsPerGroupId.end() )
+        {
+            int numResidents = numOfResidentsPerGroupId[groupID];
+            int numDiffNeighbors = numOfDiffNeighborsPerGroupId[groupID];
+            cout << groupID << ": " << (double)numDiffNeighbors/numResidents << endl;
+        }
+    }
+    cout << endl;
+
+    // Print out Happiness
+    cout << "GroupID and Happiness" << endl;
+    for (int groupID: groupIDs)
+    {
+        cout << happinessSumPerGroup[groupID]/numOfResidentsPerGroupId[groupID] << endl;
+    }
+    cout << endl;
+    
+    // Print out city map
+    unordered_map<int, char> characterPerAddress{};
+
+    for (auto pair : residentPerHouse)
+    {
+        const House* house = pair.first;
+        const Resident* resident = pair.second;
+        int address = house->getAddress();
+        if (resident->getHappiness() >= resident->getHappinessGoal()){
+            characterPerAddress[address] = happyCharacters[resident->getGroupId()];
+            
+        }
+        else
+        {
+            characterPerAddress[address] = resident->getGroupId() + 48;
+        }
+    }
+    
+    //cout << _city_ptr->toString(characterPerAddress) << endl;
+    cout << endl;
+    
 
 } 

@@ -57,6 +57,8 @@ public:
     
     std::unordered_map<const House*, Coordinate> getCoordinatesPerHouse();
 
+    std::string toString (const std::unordered_map<int, char>& characterPerAddress) override;
+
 private:
     int _width;
     int _minX = 0; // smallest x value

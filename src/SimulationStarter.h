@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <memory>
+#include <vector>
 #include "City.h"
 #include "Color.h"
 #include "SimulationComponents.h"
@@ -18,6 +19,10 @@ private:
     std::unique_ptr<City> getCity(std::string cityString, std::vector<std::string> cityTypes);
     std::pair<int, BaseColor> returnBaseColor (std::ifstream& inputStream);
     std::string leftTrim (std::string str);
+    void returnResidents (
+        std::ifstream& inputStream, 
+        std::vector<std::unique_ptr<Resident>>& residents
+    );
 
 };
 

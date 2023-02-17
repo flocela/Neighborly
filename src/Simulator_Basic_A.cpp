@@ -20,6 +20,7 @@ Simulator_Basic_A::Simulator_Basic_A (
    _residents{residents}
 {   
     // to begin with, all houses are empty
+    cout << "Simulator_Basic_A constructor. " << endl;
     for (const House* house : _city->getHouses())
     {   
         _open_houses.insert(house);
@@ -186,4 +187,9 @@ set<Resident*> Simulator_Basic_A::getResidentsInTheseHouses (set<const House*> h
         } 
     }
     return residents;
+}
+
+string Simulator_Basic_A::toString()
+{
+    return "Simulator Basic A";
 }

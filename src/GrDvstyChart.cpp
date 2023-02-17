@@ -37,7 +37,7 @@ void GrDvstyChart::print (
                 int adj_res_groupId = (residentPerHouse.at(adjacentHouse))->getGroupId();
                 if (adj_res_groupId != residentGroupId)
                 {
-                    numOfDiffNeighborsPerGroupId[adj_res_groupId] +=1;
+                    numOfDiffNeighborsPerGroupId[residentGroupId] +=1;
                 }
             }
         }

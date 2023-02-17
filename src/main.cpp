@@ -157,25 +157,28 @@ int main(int argc, char* argv[])
         "Neighbors",
         components.numOfRuns
     };
+
+    Printer_CMDLine cmdLinePrinter{components.numOfRuns, components.city.get()};
     
     unordered_map<const House*, Resident*> residentPerHouse;
+    unordered_map<const House*, const Resident*> constResPerConstHouse;
     for (int ii=0; ii<components.numOfRuns; ii++)
     {   
         residentPerHouse = components.simulator->simulate();
 
         // Printer_Graphic requires unordered_map of type CONST House* and CONST Resident*
-        unordered_map<const House*, const Resident*> constResPerConstHouse;
+        constResPerConstHouse={};
         for (auto& pair : residentPerHouse)
         {
             constResPerConstHouse[pair.first] = pair.second;
         }
 
         graphicPrinter.print(constResPerConstHouse, ii);
-
+        cmdLinePrinter.print(constResPerConstHouse, ii);
     }
-    //Printer_CMDLine cmdLinePrinter{components.numOfRuns, components.city.get()};
-    //cmdLinePrinter.print(houseToResidentMap, numOfRuns, "Title");
     graphicPrinter.keepScreen();
+
+    //cmdLinePrinter.print(constResPerConstHouse, components.numOfRuns);
     return 0; 
 }
 

@@ -9,7 +9,7 @@ void GrHapChart::print (
 {
     // add the residents' happiness per each group
     // assume the happiness has been calculated.
-    unordered_map<int, int> happinessSumPerGroup;
+    unordered_map<int, double> happinessSumPerGroup;
 
     // number of residents per group
     unordered_map<int, int> numofResidentsPerGroup;

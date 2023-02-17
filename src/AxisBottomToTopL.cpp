@@ -80,14 +80,16 @@ void AxisBottomToTopL::printTicksAndLabels (
     SDL_Rect majRect{
         majTickXPx,
         curVal__px,
-        _axis_format.majTickLengthPx(),
+        //_axis_format.majTickLengthPx(),
+        1000,
         _tick_thickness__px
     };
 
     SDL_Rect minRect{
         minTickXPx,
         curVal__px,
-        _axis_format.minTickLengthPx(),
+        //_axis_format.minTickLengthPx(),
+        1900,
         _tick_thickness__px
     };
 

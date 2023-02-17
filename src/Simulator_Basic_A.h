@@ -29,6 +29,8 @@ public:
     // making them happier or unhappier. 
     std::unordered_map<const House*, Resident*> simulate() override;
 
+    std::string toString() override;
+
 private:
     const City* _city;
     bool _first_simulation_done = false;
