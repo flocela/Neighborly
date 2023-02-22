@@ -209,7 +209,8 @@ int PlotB::calcUnitSizePx () const
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
 
-    int unitSize = min(xUnitSize, yUnitSize);
+    int unitSize = min(xUnitSize, yUnitSize); //TODO why is there no change if x and y aren't the same even or oddness.
+    // TODO should _min_*nit__px even be a conscept?
 
     return max(unitSize, _min_unit__px);
 }

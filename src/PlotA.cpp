@@ -103,7 +103,6 @@ void PlotA::print (
         // y is the y_pixel of the top left pixel of sot-square
         int x = _x_axis.getPixel(point.x()) - (_dot__px/2);                 
         int y = _y_axis.getPixel(point.y()) - (_dot__px/2);
-
         coordinatesPerColor[point.color()].push_back(Coordinate(x, y));
     }
 
@@ -122,7 +121,7 @@ void PlotA::setTopLeft (int topLeftXPx, int topLeftYPx)
 {
     _top_left_x__px = topLeftXPx;
     _top_left_y__px = topLeftYPx;
-
+    std::cout << "set topleft: " << _top_left_y__px << endl;
     _cross_x__px = calcCrossXPx(topLeftXPx);
     _cross_y__px = calcCrossYPx(topLeftYPx);
     
@@ -146,7 +145,7 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _x_axis.setPxPerUnit(_unit_x__px);
     _x_axis.setTickThickness(tickThickness);
-
+    cout << "moveCrossHairs: " << _cross_y__px << endl;
     _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.setPxPerUnit(_unit_y__px);
     _y_axis.setTickThickness(tickThickness);
@@ -190,6 +189,7 @@ int PlotA::getCenterValueOfXAxisPx () const
 
 pair<int, int> PlotA::calcUnitSizeXAndYPx () const
 {
+    //TODO think about if there's no space, should this be here. should there be minunits?
     // if there is no space, or if the difference in values is 0, then just use min_unit__px.
     if (_x_space__px <= 0 || _y_space__px <= 0 || _x_diff == 0 || _y_diff == 0)
     {
@@ -204,16 +204,17 @@ pair<int, int> PlotA::calcUnitSizeXAndYPx () const
 
     // preliminary y-unit size
     int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeYPx();
+    std::cout <<"calcUnitSize:: y_space, allowable: " << _y_space__px << ", " << allowableYAxisLengthPx << endl;
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
-    yUnitSize = max(yUnitSize, _min_unit__px);
-
+    
     // _unit_x__px and _unit_y__px must both be odd or both be even.
     if ( (xUnitSize%2 == 0 && yUnitSize%2 != 0) || (yUnitSize%2 != 0 && yUnitSize%2 == 0) )
     {
         --yUnitSize;
     }
-
+    cout << "final yUnitSize: " << yUnitSize << endl;
+    cout << "mult: " << yUnitSize * numOfCellsY << endl;
     return {xUnitSize, yUnitSize};
 }
 
@@ -238,6 +239,8 @@ int PlotA::calcCrossXPx (int topLeftXPx) const
 
 int PlotA::calcCrossYPx (int topLeftYPx) const
 {
-    return 
-        topLeftYPx + _unit_y__px * (_y_diff + _start_offset_m + _end_offset_m);
+    int retVal =  topLeftYPx + _unit_y__px * (_y_diff + _start_offset_m + _end_offset_m);
+    std::cout <<"calcCrossYPx: " << topLeftYPx << ", " << retVal << endl;
+    return retVal;
+       
 }

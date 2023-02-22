@@ -1,5 +1,9 @@
 #include "AxisLeftToRightB.h"
 
+#include <iostream>
+
+using namespace std;
+
 AxisLeftToRightB::AxisLeftToRightB (
     AxisFormat axisFormat,
     int xCrossPx,
@@ -150,12 +154,12 @@ int AxisLeftToRightB::sizeXPx () const
 }
 
 int AxisLeftToRightB::sizeYPx () const
-{
-    return 
+{   int retVal =  
         _axis_format.axisThicknessPx() +
         _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.labelLineSpacePx() +
         _axis_format.labelHeightPx();
+    return retVal;
 }
 
 int AxisLeftToRightB::calcMinTickSpacing (int pixelsPerUnit) const
@@ -188,6 +192,5 @@ int AxisLeftToRightB::getPixel (double xVal) const
 int AxisLeftToRightB::getCenterValXPx () const
 {
     // the most right tick that is shown on the axis will be _max_val plus _end_offfset_m
-    std::cout << _min_val << "< " << _max_val << ", " << _end_offset_m << ", " << std::endl;
     return getPixel(_min_val + ((_max_val + _end_offset_m - _min_val)/2.0));
 }

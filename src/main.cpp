@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
     (void) argc;
     (void) argv;
 
-    bool useFile = true;
+    bool useFile = false;
     const vector<unique_ptr<const CityFactory>> cityFactories = initCityFactories();
     const vector<unique_ptr<const ResidentsFactory>> residentFactories = initResidentFactories();
 
@@ -103,7 +103,6 @@ int main(int argc, char* argv[])
     if (useFile)
     {
         SimulationStarter simulationStarter{};
-        cout << "Simulation Starter" << endl;
         components = simulationStarter.createSimulationComponents("../test1.txt");
     }
     else
@@ -174,7 +173,7 @@ int main(int argc, char* argv[])
         }
 
         graphicPrinter.print(constResPerConstHouse, ii);
-        cmdLinePrinter.print(constResPerConstHouse, ii);
+        //cmdLinePrinter.print(constResPerConstHouse, ii);
     }
     graphicPrinter.keepScreen();
 

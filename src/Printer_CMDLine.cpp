@@ -31,7 +31,7 @@ void Printer_CMDLine::print(
     }
 
     // Print out run number
-    cout << "run: " << run << endl;
+    std::cout << "run: " << run << endl;
 
     // Collect data for diversity per group and happiness per group.
     // for each groupid, will need the number of residents in group,
@@ -44,10 +44,11 @@ void Printer_CMDLine::print(
     for (pair<const Resident*, const House*> ii : housePerResident)
     {
         const Resident* resident = ii.first;
-        const House* residentHouse = ii.second;
+        const House* house = ii.second;
         int residentGroupId = resident->getGroupId();
-        set<const House*> housesAdjToRes = _city_ptr->getAdjacentHouses(residentHouse->getAddress());
+        set<const House*> housesAdjToRes = _city_ptr->getAdjacentHouses(house->getAddress());
 
+        int disparateNeighbors = 0;
         for (const House* adjacentHouse : housesAdjToRes)
         {
             // if adjacent house is not empty
@@ -57,15 +58,16 @@ void Printer_CMDLine::print(
                 int adj_res_groupId = (residentPerHouse.at(adjacentHouse))->getGroupId();
                 if (adj_res_groupId != residentGroupId)
                 {
-                    if (numOfDiffNeighborsPerGroupId.find(residentGroupId) ==
-                        numOfDiffNeighborsPerGroupId.end())
-                    {
-                        numOfDiffNeighborsPerGroupId[residentGroupId] = 0;
-                    }
-                    numOfDiffNeighborsPerGroupId[residentGroupId] +=1;
+                    disparateNeighbors += 1;
                 }
             }
         }
+        if (numOfDiffNeighborsPerGroupId.find(residentGroupId) == numOfDiffNeighborsPerGroupId.end())
+        {
+            numOfDiffNeighborsPerGroupId[residentGroupId] = 0;
+        }
+
+        numOfDiffNeighborsPerGroupId[residentGroupId] += disparateNeighbors;
 
         if (happinessSumPerGroup.find(residentGroupId) == happinessSumPerGroup.end())
         {
@@ -77,8 +79,8 @@ void Printer_CMDLine::print(
         numOfResidentsPerGroupId[residentGroupId] += 1;
     }
 
-    // Print out Diversity
-    cout << "GroupID and Diversity" << endl;
+    // Print out Diversity and Happiness
+    std::cout << "GroupID:: Diversity, Happiness: "<< endl;
     vector<int> groupIDs{};
     for (auto groupIDAndCount : numOfResidentsPerGroupId)
     {
@@ -87,22 +89,12 @@ void Printer_CMDLine::print(
     sort(groupIDs.begin(), groupIDs.end());
     for (int groupID : groupIDs)
     {
-        if ( numOfDiffNeighborsPerGroupId.find(groupID) != numOfDiffNeighborsPerGroupId.end() )
-        {
-            int numResidents = numOfResidentsPerGroupId[groupID];
-            int numDiffNeighbors = numOfDiffNeighborsPerGroupId[groupID];
-            cout << groupID << ": " << (double)numDiffNeighbors/numResidents << endl;
-        }
+        int numResidents = numOfResidentsPerGroupId[groupID];
+        int numDiffNeighbors = numOfDiffNeighborsPerGroupId[groupID];
+        std::cout << groupID << ":: " << (double)numDiffNeighbors/numResidents << 
+        ", " << happinessSumPerGroup[groupID]/numOfResidentsPerGroupId[groupID] << endl;
     }
-    cout << endl;
-
-    // Print out Happiness
-    cout << "GroupID and Happiness" << endl;
-    for (int groupID: groupIDs)
-    {
-        cout << happinessSumPerGroup[groupID]/numOfResidentsPerGroupId[groupID] << endl;
-    }
-    cout << endl;
+    std::cout << endl;
     
     // Print out city map
     unordered_map<int, char> characterPerAddress{};
@@ -114,7 +106,6 @@ void Printer_CMDLine::print(
         int address = house->getAddress();
         if (resident->getHappiness() >= resident->getHappinessGoal()){
             characterPerAddress[address] = happyCharacters[resident->getGroupId()];
-            
         }
         else
         {
@@ -123,7 +114,7 @@ void Printer_CMDLine::print(
     }
     
     //cout << _city_ptr->toString(characterPerAddress) << endl;
-    cout << endl;
+    std::cout << endl;
     
 
 } 

@@ -99,6 +99,7 @@ void AxisTopToBottomL::printTicksAndLabels (
         if (curVal % _maj_tick_spacing == 0)
         {
             majRect.y = curVal__px;
+
             
             curText._text = std::to_string(curVal);
             curText._y_pixel = curVal__px;
@@ -109,6 +110,7 @@ void AxisTopToBottomL::printTicksAndLabels (
         else if (curVal % _min_tick_spacing == 0)
         {
             minRect.y = curVal__px;
+            
             rects.push_back(minRect);
         }
         ++curVal;

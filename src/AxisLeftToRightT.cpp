@@ -60,7 +60,7 @@ void AxisLeftToRightT::printTicksAndLabels (
 ) const
 {   
     int curVal = _min_val;
-    int curVal__px = getPixel(curVal) -(_tick_thickness__px/2);
+    int curVal__px = getPixel(curVal) - (_tick_thickness__px/2);
 
     int botOfLabelYPx = 
         _y_cross__px -
