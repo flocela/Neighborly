@@ -30,15 +30,16 @@ class AxisLeftToRightT
         void setPxPerUnit (int pixels);
         void setTickThickness (int tickThicknessPx);
 
-        int sizeYPx() const;
+
         int sizeXPx() const;
+        int sizeYPx() const;
 
         // returns the y-pixel for yVal. If pxPerUnit is odd, then result is at center of unit.
         // If pxPerUnit is even, then center is denoted by two pixels,
         // and the result is the second pixel. (The second pixel is from x's zero.)
         int getPixel (double xVal) const;
-        int axisLengthPx() const;
         int getCenterValXPx() const;
+        int axisLengthPx() const;
     
     private:
         std::string _title;
@@ -56,6 +57,7 @@ class AxisLeftToRightT
         int _end_offset_m;
 
         void printHorizontalLine (std::vector<SDL_Rect>& rects) const;
+
         void printTicksAndLabels (
             std::vector<SDL_Rect>& rects,
             std::vector<TextRect>& texts) const;
@@ -64,8 +66,8 @@ class AxisLeftToRightT
         int calcRightMostPixelWithValue_X () const;
 
         int calcMinTickSpacing (int pixelsPerUnit) const;
+
         int calcMajTickSpacing (int pixelsPerUnit) const;
-        int calcLabelSpacing (int pixelsPerUnit) const;
 
 };
 

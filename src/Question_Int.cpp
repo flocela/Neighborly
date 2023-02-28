@@ -1,6 +1,9 @@
 #include "Question_Int.h"
+
+#include <regex>
 #include <stdexcept>
 #include <iostream>
+
 using namespace std;
 
 Question_Int::Question_Int (
@@ -19,9 +22,9 @@ Question_Int::Question_Int (
    _fallback{fallback},
    _orig_prompt{origPrompt},
    _type_prompt{wrongTypePrompt},
-   _range_prompt{inRangePrompt},
    _invalid_prompt{invalidPrompt},
-   _failed_prompt{failedPrompt}
+   _failed_prompt{failedPrompt},
+   _range_prompt{inRangePrompt}
 {
     _next_prompt = &_orig_prompt;
     _valid_answer = false;
@@ -40,10 +43,6 @@ Question_Int::Question_Int (
    _fallback{fallback},
    _orig_prompt{origPrompt}
 {
-    // setting _range_prompt
-    _range_prompt.insert(_range_prompt.size()-8, to_string(min));
-    _range_prompt.insert(_range_prompt.size()-3, to_string(max));
-
     // setting _invalid_prompt
     _invalid_prompt.insert(_invalid_prompt.size(), _orig_prompt);
 
@@ -89,14 +88,18 @@ string Question_Int::getFailedResponse () const
 }
 
 bool Question_Int::tryAnswer (string ans)
-{   
+{  
     int intAnswer = -1;
-    try {
-        intAnswer = stoi(ans);
-        if (to_string(intAnswer).size() != ans.size())
+
+    string rs = "^\\-?\\d+$";
+
+    try 
+    {
+        if (regex_search(ans, regex(rs)) == false)
         {
-            throw invalid_argument("invalid argument");
+            throw invalid_argument("string argument can not be converted to an integer.");
         }
+        intAnswer = stoi(ans);
     }
     catch(invalid_argument& e)
     {   

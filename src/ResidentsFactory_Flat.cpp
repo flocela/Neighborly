@@ -3,10 +3,12 @@
 #include <iomanip>
 #include <limits>
 #include <sstream>
+#include <iostream>
 
 #include "HappinessFunc_Flat.h"
 #include "Resident_UsingFunction.h"
 #include "Question_Double.h"
+#include "Question_Double_II.h"
 #include "Question_Int.h"
 
 using namespace std;
@@ -35,7 +37,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
 
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal as fallback, if can not get happiness value for zero neighbors.
-    Question_Double qHappinessWithZeroNeighbors{
+    Question_Double_II qHappinessWithZeroNeighbors{
         3,
         0.0,
         100.0,
@@ -47,11 +49,11 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
         "happiness value with zero neighbors"
     };
 
-    double happinessWithZeroNeighbors = stoi(ui.getAnswer(qHappinessWithZeroNeighbors));
+    double happinessWithZeroNeighbors = stod(ui.getAnswer(qHappinessWithZeroNeighbors));
 
 
     // ask for happiness value. It's always the same.
-    Question_Double qHappinessValue{
+    Question_Double_II qHappinessValue{
         3,
         0.0,
         100.0,
@@ -65,6 +67,8 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
 
     double happinessValue = stod(ui.getAnswer(qHappinessValue));
 
+    cout << endl << "flat residents: " << groupNumber << ", " << allowedMovement << ", " << happinessGoal << ", "
+    <<happinessWithZeroNeighbors << ", " << happinessValue << endl;
 
     // create residents
     std::vector<std::unique_ptr<Resident>> residents = {};
@@ -96,7 +100,7 @@ std::string ResidentsFactory_Flat::insertIntoString (string str, int location, s
 
 int ResidentsFactory_Flat::charLocationForColor (string str) const 
 {
-    string target = "For the  residents, enter the";
+    string target = "the  group";
     auto pos = str.find(target);
-    return (int)pos + 8;
+    return (int)pos + 4;
 }

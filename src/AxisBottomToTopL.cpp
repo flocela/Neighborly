@@ -40,13 +40,60 @@ void AxisBottomToTopL::print (Renderer* renderer) const
     renderer->renderTexts(texts);
 }
 
+void AxisBottomToTopL::moveCrossHairs (int xPx, int yPx)
+{
+    _x_cross__px = xPx;
+    _y_cross__px = yPx;
+}
+
+void AxisBottomToTopL::setPxPerUnit (int pixels)
+{
+    _px_per_unit = pixels;
+    _min_tick_spacing = calcMinTickSpacing(_px_per_unit);
+    _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
+
+}
+
+void AxisBottomToTopL::setTickThickness (int tickThicknessPx) 
+{
+    _tick_thickness__px = tickThicknessPx;
+}
+
+int AxisBottomToTopL::sizeXPx () const
+{  
+    // Three is max number of digits in the y-axis label.
+    return 
+        (3) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
+        _text_spacer +
+        _axis_format.majTickLengthOutsideChartPx() +
+        _axis_format.axisThicknessPx();
+}
+
+int AxisBottomToTopL::sizeYPx () const
+{
+    return getAxisLengthPx();
+}
+
+int AxisBottomToTopL::getPixel (double yVal) const
+{   
+    int isEven = (_px_per_unit%2==0)? 1 : 0;
+    int minYPx = _y_cross__px - (_start_offset_m * _px_per_unit);
+    int retVal = minYPx - (_px_per_unit * (yVal - _min_val)) + isEven;
+    return retVal;
+}
+
+int AxisBottomToTopL::getAxisLengthPx () const
+{
+    return _y_cross__px - calcTopMostPixelWithValue_Y() +  _tick_thickness__px/2 + 1;
+}
+
 void AxisBottomToTopL::printVerticalLine (std::vector<SDL_Rect>& rects) const
 {
     SDL_Rect rect{
         _x_cross__px,
         calcTopMostPixelWithValue_Y() - (_tick_thickness__px/2),
         _axis_format.axisThicknessPx(),
-        axisLengthPx()
+        getAxisLengthPx()
     };
     rects.push_back(rect);
 }
@@ -115,45 +162,6 @@ int AxisBottomToTopL::calcTopMostPixelWithValue_Y () const
     return  _y_cross__px - (_px_per_unit * (_diff + _start_offset_m + _end_offset_m)) + isEven;
 }
 
-void AxisBottomToTopL::moveCrossHairs (int xPx, int yPx)
-{
-    _x_cross__px = xPx;
-    _y_cross__px = yPx;
-}
-
-void AxisBottomToTopL::setPxPerUnit (int pixels)
-{
-    _px_per_unit = pixels;
-    _min_tick_spacing = calcMinTickSpacing(_px_per_unit);
-    _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
-
-}
-
-void AxisBottomToTopL::setTickThickness (int tickThicknessPx) 
-{
-    _tick_thickness__px = tickThicknessPx;
-}
-
-int AxisBottomToTopL::sizeXPx () const
-{  
-    // Three is max number of digits in the y-axis label.
-    return 
-        (3) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
-        _text_spacer +
-        _axis_format.majTickLengthOutsideChartPx() +
-        _axis_format.axisThicknessPx();
-}
-
-int AxisBottomToTopL::sizeYPx () const
-{
-    return axisLengthPx();
-}
-
-int AxisBottomToTopL::axisLengthPx () const
-{
-    return _y_cross__px - calcTopMostPixelWithValue_Y() +  _tick_thickness__px/2 + 1;
-}
-
 int AxisBottomToTopL::calcMinTickSpacing (int pixelsPerUnit) const
 { 
     return (pixelsPerUnit >= 10)? 1 : 5;
@@ -162,12 +170,4 @@ int AxisBottomToTopL::calcMinTickSpacing (int pixelsPerUnit) const
 int AxisBottomToTopL::calcMajTickSpacing (int pixelsPerUnit) const
 { 
     return (pixelsPerUnit > 10)? 5 : 10;
-}
-
-int AxisBottomToTopL::getPixel (double yVal) const
-{   
-    int isEven = (_px_per_unit%2==0)? 1 : 0;
-    int minYPx = _y_cross__px - (_start_offset_m * _px_per_unit);
-    int retVal = minYPx - (_px_per_unit * (yVal - _min_val)) + isEven;
-    return retVal;
 }

@@ -339,7 +339,7 @@ std::string City_Grid::toString (const std::unordered_map<int, char>& characterP
 			const int address = ii * _width + jj;
 			if (characterPerAddress.find(address) == characterPerAddress.end())
 			{
-				result.push_back('O');
+				result.push_back('.');
 			}
 			else
 			{

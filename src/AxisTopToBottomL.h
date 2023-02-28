@@ -29,14 +29,14 @@ class AxisTopToBottomL
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
         void setTickThickness (int tickThicknessPx);
-        Coordinate getXYPixelToPrint (int xVal, int yVal) const;
-        int sizeYPx() const;
         int sizeXPx() const;
+        int sizeYPx() const;
 
         // returns the y-pixel for yVal. If pxPerUnit is odd, then result is at center of unit.
         // If pxPerUnit is even, then center is denoted by two pixels,
         // and the result is the second pixel. (The second pixel is from the y-s zero.)
         int getPixel (double yVal) const;
+        int getAxisLengthPx () const;
 
     private:
         AxisFormat _axis_format;
@@ -53,15 +53,16 @@ class AxisTopToBottomL
         int _end_offset_m; // start offst multiplier; multiply by _px_per_unit
 
         void printVerticalLine (std::vector<SDL_Rect>& rects) const;
+
         void printTicksAndLabels (
             std::vector<SDL_Rect>& rects,
             std::vector<TextRect>& texts) const;
+
         int calcBotMostPixel_Y () const;
-        int calcMinTickSpacing (int pixelsPerUnit) const { return (pixelsPerUnit >= 10)? 1 : 5; }
-        int calcMajTickSpacing (int pixelsPerUnit)  const { return (pixelsPerUnit > 10)? 5 : 10; }
-        int axisLengthPx () const;
-        
-        
+
+        int calcMinTickSpacing (int pixelsPerUnit) const;
+
+        int calcMajTickSpacing (int pixelsPerUnit)  const;
 };
 
 #endif

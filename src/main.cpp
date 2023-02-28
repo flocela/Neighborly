@@ -177,7 +177,7 @@ int main(int argc, char* argv[])
     }
     graphicPrinter.keepScreen();
 
-    //cmdLinePrinter.print(constResPerConstHouse, components.numOfRuns);
+    cmdLinePrinter.print(constResPerConstHouse, components.numOfRuns);
     return 0; 
 }
 

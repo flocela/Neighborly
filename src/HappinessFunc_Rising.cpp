@@ -20,7 +20,7 @@ HappinessFunc_Rising::HappinessFunc_Rising (
         " between 0.0 and 100.0 inclusive.");
     }
     if ( _happ_at_zero_diversity < 0.0 ||
-         _happ_at_zero_diversity > 1.0 )
+         _happ_at_zero_diversity > 100.0 )
     {
         throw invalid_argument("values of happiness at one diversity must be"
         " between 0.0 and 100.0 inclusive.");

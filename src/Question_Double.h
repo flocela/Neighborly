@@ -40,7 +40,7 @@ public:
     std::string getFailedResponse () const override;
 
     bool tryAnswer (std::string answer) override;
-    
+
 private:
     int _ID;
     double _min;
@@ -49,11 +49,14 @@ private:
     double _answer;
     bool   _valid_answer = false;
     std::string _orig_prompt;
-    std::string _type_prompt = "Nope, that's not a number, i.e. 0.2, or 13.0. _";
-    std::string _range_prompt = "That number is not in range. Should be between  and . _";
+    std::string _type_prompt = "Nope, that's not a number, i.e. 0.2, or 13.0. _"; 
     std::string _invalid_prompt = "I didn't understand your answer. _";
     std::string _failed_prompt = "Was unable to understand your answer. To continue, will use  .";
     std::string* _next_prompt;
+
+protected:
+    virtual bool rangeFunction (double min, double max, double val) const = 0;
+    std::string  _range_prompt = "That number is not in range. Should be in the range. _";
        
 };
 

@@ -3,7 +3,8 @@
 #include <sstream>
 
 #include "Question_Double.h"
-#include "Question_Int.h"
+#include "Question_Double_II.h"
+#include "Question_Int_II.h"
 
 using namespace std;
 
@@ -90,7 +91,7 @@ void ResidentsMaker_CMDLine::initColors (vector<BaseColor> colors)
 
 int ResidentsMaker_CMDLine::askForNumOfGroupsOfResidents(const UI& ui, int maxNumOfResidentGroups)
 {
-    Question_Int question = Question_Int{
+    Question_Int_II question = Question_Int_II{
         0,
         1,
         maxNumOfResidentGroups,
@@ -111,7 +112,7 @@ int ResidentsMaker_CMDLine::askForNumOfResidents(const UI& ui, int count, string
     );
 
     // create question, add color to prompt
-    Question_Int question{
+    Question_Int_II question{
         1,
         1,
         count,
@@ -166,7 +167,7 @@ double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
     );
 
     // create question, add color to prompt
-    Question_Double question{
+    Question_Double_II question{
         3,
         0.0,
         maxAllowedMovement,
@@ -184,7 +185,7 @@ double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
 double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (const UI& ui, string color)
 {
     // create question, add color to prompot
-    Question_Double question{
+    Question_Double_II question{
         4,
         0.0,
         100.0,

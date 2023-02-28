@@ -36,13 +36,13 @@ private:
 
     // prompt for happiness value when resident has no neighbors
     std::string _happinessWithZeroNeighborsPrompt  = 
-        "\nStepDown type residents happiness values are two tiered. The higher happiness"
+        "\nStepDown type residents' happiness value is two tiered. The higher happiness"
         " value starts at zero and runs through the drop-down diversity. The lower"
         " happiness value starts after the drop-down diversity through to a diversity of 1.0."
         " Diversity is defined as the number of disparate neighbors divided"
         " by the total number of neighbors. When a resident has no neighbors,"
         " diversity is undefined and the resident has a special happiness value."
-        "\nFor the  residents, enter the happiness value corresponding to when a resident has"
+        "\nFor the  group, enter the happiness value corresponding to when a resident has"
         " no neighbors. _";
 
     // prompt for high happiness value, from diversity equal to 0.0 to the drop-down
@@ -50,17 +50,17 @@ private:
     std::string _high_happiness_value_prompt  = 
         "\nDiversity is measured as the number of disparate neighbors divided by the total"
         " number of neighbors."
-        "\nFor the  residents, enter the higher happiness value, corresponding to a diversity of"
+        "\nFor the  group, enter the higher happiness value, corresponding to a diversity of"
         " 0.0 through to the drop-down diversity. _";
     
     // prompt for the low happiness value, from after the drop-down diversity to 1.0.
     std::string _low_happiness_value_prompt  = 
-        "\nFor the  residents, enter the lower happiness value found after the drop-down"
+        "\nFor the  group, enter the lower happiness value found after the drop-down"
         " diversity. _";
 
     // prompts for the location where the happiness drop happens along the diverstiy axis.
     std::string _dropLocationOrigPrompt  = 
-        "\nFor the  residents, enter the point at which the happiness value drops, the drop-down"
+        "\nFor the  group, enter the point at which the happiness value drops, the drop-down"
         " diversity. This will be the diversity value where the happiness drops from the higher"
         " value to the lower value. The diversity value must be between 0.0 and 1.0"
         " inclusive. _";
@@ -71,9 +71,9 @@ private:
         int location,
         std::string insert) const;
     
-    // Often have to place the group color in "For the ____ residents, enter". This method returns the 
+    // Often have to place the group color in "For the ____ group". This method returns the 
     // character index where the group color would go. It's a very specialized method, in that
-    // it finds the specific words "For the  residents, enter" and returns character after "the" and space.
+    // it finds the specific words "the  group" and returns character after "the" and space.
     int charLocationForColor (std::string str) const ;
 };
 

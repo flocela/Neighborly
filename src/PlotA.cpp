@@ -121,7 +121,6 @@ void PlotA::setTopLeft (int topLeftXPx, int topLeftYPx)
 {
     _top_left_x__px = topLeftXPx;
     _top_left_y__px = topLeftYPx;
-    std::cout << "set topleft: " << _top_left_y__px << endl;
     _cross_x__px = calcCrossXPx(topLeftXPx);
     _cross_y__px = calcCrossYPx(topLeftYPx);
     
@@ -145,7 +144,6 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _x_axis.setPxPerUnit(_unit_x__px);
     _x_axis.setTickThickness(tickThickness);
-    cout << "moveCrossHairs: " << _cross_y__px << endl;
     _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.setPxPerUnit(_unit_y__px);
     _y_axis.setTickThickness(tickThickness);
@@ -204,7 +202,6 @@ pair<int, int> PlotA::calcUnitSizeXAndYPx () const
 
     // preliminary y-unit size
     int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeYPx();
-    std::cout <<"calcUnitSize:: y_space, allowable: " << _y_space__px << ", " << allowableYAxisLengthPx << endl;
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
     
@@ -213,8 +210,6 @@ pair<int, int> PlotA::calcUnitSizeXAndYPx () const
     {
         --yUnitSize;
     }
-    cout << "final yUnitSize: " << yUnitSize << endl;
-    cout << "mult: " << yUnitSize * numOfCellsY << endl;
     return {xUnitSize, yUnitSize};
 }
 
@@ -240,7 +235,6 @@ int PlotA::calcCrossXPx (int topLeftXPx) const
 int PlotA::calcCrossYPx (int topLeftYPx) const
 {
     int retVal =  topLeftYPx + _unit_y__px * (_y_diff + _start_offset_m + _end_offset_m);
-    std::cout <<"calcCrossYPx: " << topLeftYPx << ", " << retVal << endl;
     return retVal;
        
 }

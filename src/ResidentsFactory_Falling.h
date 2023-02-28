@@ -33,19 +33,19 @@ private:
         " increases. Diversity is defined as the number of disparate neighbors divided"
         " by the total number of neighbors. When a resident has no neighbors,"
         " diversity is undefined and the resident has a special happiness value."
-        "\nFor the  residents, enter the happiness value corresponding to when a resident has"
+        "\nFor the  group, enter the happiness value corresponding to when a resident has"
         " no neighbors. _";
 
     // prompt for higher happiness value, when diversity is 0.0
     std::string _high_happiness_value_prompt =
         "\nDiversity is measured as the number of disparate neighbors divided by the total"
         " number of neighbors."
-        "\nFor the  residents, enter the higher happiness value, corresponding to a diverstiy of"
+        "\nFor the  group, enter the higher happiness value, corresponding to a diverstiy of"
         " 0.0. _";
     
     // prompt for lower happiness value, when diversity is 1.0.
     std::string _low_happiness_value_prompt = 
-        "\nFor the  residents, enter the lower happiness value, corresponding to a diversity of 1.0. _";
+        "\nFor the  group, enter the lower happiness value, corresponding to a diversity of 1.0. _";
 
     // inserts additional string at location
     std::string insertIntoString (
@@ -53,9 +53,9 @@ private:
         int location,
         std::string insert) const;
     
-    // Often have to place the group color in "For the ____ residents, enter". This method returns the 
+    // Often have to place the group color in "For the ____ group". This method returns the 
     // character index where the group color would go. It's a very specialized method, in that
-    // it finds the specific words "For the residents, enter" and returns character after "the" and space.
+    // it finds the specific words "th  group" and returns character after "the" and space.
     int charLocationForColor (std::string str) const;
 };
 

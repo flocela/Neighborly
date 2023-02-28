@@ -20,7 +20,6 @@ Simulator_Basic_A::Simulator_Basic_A (
    _residents{residents}
 {   
     // to begin with, all houses are empty
-    cout << "Simulator_Basic_A constructor. " << endl;
     for (const House* house : _city->getHouses())
     {   
         _open_houses.insert(house);

@@ -4,10 +4,14 @@
 #include <sstream>
 #include <iomanip>
 #include <memory>
+#include <iostream>
 
 #include "HappinessFunc_StepDown.h"
 #include "Resident_UsingFunction.h"
 #include "Question_Double.h"
+#include "Question_Double_IE.h"
+#include "Question_Double_EI.h"
+#include "Question_Double_II.h"
 
 using namespace std;
 
@@ -36,7 +40,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal if can not get happiness value for zero neighbors.
-    Question_Double qHappinessWithZeroNeighbors{
+    Question_Double_II qHappinessWithZeroNeighbors{
         3,
         0.0,
         100.0,
@@ -53,7 +57,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for high happiness value.
     // uses happiness goal if can not get high happiness value.
-    Question_Double qHighHappinessValue{
+    Question_Double_EI qHighHappinessValue{
         3,
         0.0,
         100.0,
@@ -70,7 +74,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for low happiness value.
     // uses _fallback_low_happiness_value if can not get low happiness value
-    Question_Double qLowHappinessValue{
+    Question_Double_IE qLowHappinessValue{
         4,
         0,
         highHappinessValue,
@@ -86,7 +90,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for drop location.
     // uses _fallback_drop_location if can not get drop location.
-    Question_Double qHappinessDropLocation{
+    Question_Double_IE qHappinessDropLocation{
         5,
         0.0,
         1.0,
@@ -98,6 +102,10 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
         "happiness value's drop location"};
 
     double locationOfDrop = stod(ui.getAnswer(qHappinessDropLocation));
+
+    cout << endl << "StepDown: " << groupNumber << ", " << allowedMovement << ", " <<
+    happinessGoal << ", " << happinessWithZeroNeighbors << ", " << highHappinessValue << ", " <<
+    lowHappinessValue << ", " << locationOfDrop << endl;
 
     vector<unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)
@@ -132,7 +140,7 @@ std::string ResidentsFactory_StepDown::insertIntoString  (
 
 int ResidentsFactory_StepDown::charLocationForColor (string str) const 
 {
-    string target = "For the  residents, enter the";
+    string target = "the  group";
     auto pos = str.find(target);
-    return (int)pos + 8;
+    return (int)pos + 4;
 }

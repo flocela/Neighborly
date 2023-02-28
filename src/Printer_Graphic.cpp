@@ -39,8 +39,6 @@ Printer_Graphic::Printer_Graphic (
         _window_title->sizeYPx() -
         _runs_chart->sizeYPx() -
         _bottom_border__px;
-    cout << "space: " << _screen_height__px << ", " << _top_border__px << ", " << _window_title->sizeYPx() <<
-    ", " << _runs_chart->sizeYPx() << ", " << _bottom_border__px << endl;
     // diversity chart and city chart have the same y-value for their top left corners.
     // they sit below the runs chart.
     int chartsTopLeftYPx = _runs_chart_top_y__px + _runs_chart->sizeYPx();
@@ -79,8 +77,6 @@ Printer_Graphic::Printer_Graphic (
         (1 - _div_chart_y_axis_fraction - _space_below_div_chart_y_axis_fraction) * colSpaceYPx;
 
     _happiness_chart = createHapChart(_num_of_runs, hapChartTopLeftYPx, hapChartAvailSpaceYPx);
-
-    cout << "PrinterGraphicspace: " << hapChartTopLeftYPx << ", " << hapChartAvailSpaceYPx << endl; 
 }
 
 void Printer_Graphic::print (

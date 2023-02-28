@@ -22,7 +22,7 @@ void Printer_CMDLine::print(
     unordered_map<const House*, const Resident*> residentPerHouse,
     int run
 ) const
-{   
+{   cout << "Printer_CMDLine print method" << endl;
     // create house per resident map
     unordered_map<const Resident*, const House*> housePerResident{};
     for (auto houseAndResident : residentPerHouse)
@@ -113,7 +113,7 @@ void Printer_CMDLine::print(
         }
     }
     
-    //cout << _city_ptr->toString(characterPerAddress) << endl;
+    cout << _city_ptr->toString(characterPerAddress) << endl;
     std::cout << endl;
     
 

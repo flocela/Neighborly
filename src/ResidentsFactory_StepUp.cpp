@@ -3,8 +3,12 @@
 #include <sstream>
 #include <iomanip>
 #include <memory>
+#include <iostream>
 
 #include "HappinessFunc_StepUp.h"
+#include "Question_Double_II.h"
+#include "Question_Double_EI.h"
+#include "Question_Double_IE.h"
 #include "Resident_UsingFunction.h"
 
 using namespace std;
@@ -34,7 +38,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
 
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal if can not get happiness value for zero neighbors.
-    Question_Double qHappinessWithZeroNeighbors{
+    Question_Double_II qHappinessWithZeroNeighbors{
         1,
         0.0,
         100.0,
@@ -48,14 +52,14 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
 
     double happinessWithZeroNeighbors = stod(ui.getAnswer(qHappinessWithZeroNeighbors));
 
-
+    double lowHappinessFallback = (happinessGoal == 100)? happinessGoal- 1 : happinessGoal;
     // ask user for low happiness value.
     // uses happiness goal if can not get high happiness value.
-    Question_Double qLowHappinessValue{
+    Question_Double_IE qLowHappinessValue{
         2,
         0,
         100.0,
-        happinessGoal,
+        lowHappinessFallback,
         insertIntoString(
             _low_happiness_value_prompt,
             charLocationForColor(_low_happiness_value_prompt),
@@ -68,7 +72,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
 
     // ask user for high happiness value.
     // uses fallback high happiness value, if can not get high happiness value.
-    Question_Double qHighHappinessValue{
+    Question_Double_EI qHighHappinessValue{
         3,
         lowHappinessValue,
         100.0,
@@ -83,21 +87,24 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
     double highHappinessValue = stod(ui.getAnswer(qHighHappinessValue));
 
 
-    // ask user for drop location.
-    // uses _fallback_drop_location if can not get drop location.
-    Question_Double qHappinessDropLocation{
+    // ask user for step-up location.
+    // uses _fallback_step_location if can not get step-up location.
+    Question_Double_IE qHappinessDropLocation{
         5,
         0.0,
         1.0,
-        _fallback_drop_location,
+        _fallback_step_location,
         insertIntoString(
             _stepup_location_prompt,
             charLocationForColor(_stepup_location_prompt),
             colorStream.str()),
-        "happiness value's drop location"};
+        "happiness value's step-up location"};
 
-    double locationOfDrop = stod(ui.getAnswer(qHappinessDropLocation));
+    double locationOfStep = stod(ui.getAnswer(qHappinessDropLocation));
 
+    cout << endl << "StepUp: " << groupNumber << ", " << allowedMovement << ", " <<
+    happinessGoal << ", " << happinessWithZeroNeighbors << ", " << highHappinessValue <<
+    lowHappinessValue << ", " << locationOfStep << endl;
 
     // create residents
     vector<unique_ptr<Resident>> residents = {};
@@ -113,7 +120,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
                 happinessWithZeroNeighbors,
                 highHappinessValue,
                 lowHappinessValue,
-                locationOfDrop
+                locationOfStep
             ),
             "Step Up Resident"
         ));
@@ -133,7 +140,7 @@ std::string ResidentsFactory_StepUp::insertIntoString  (
 
 int ResidentsFactory_StepUp::charLocationForColor (string str) const 
 {
-    string target = "For the  residents, enter the";
+    string target = "the  group";
     auto pos = str.find(target);
-    return (int)pos + 8;
+    return (int)pos + 4;
 }

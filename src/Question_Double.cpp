@@ -1,6 +1,9 @@
 #include <iomanip>
+#include <regex>
 #include <sstream>
 #include <stdexcept>
+
+#include <iostream>
 #include "Question_Double.h"
 
 using namespace std;
@@ -15,22 +18,23 @@ Question_Double::Question_Double (
     string inRangePrompt,
     string invalidPrompt,
     string failedPrompt
-): _ID{id},
+): 
+    _ID{id},
    _min{min},
    _max{max},
    _fallback{fallback},
    _orig_prompt{origPrompt},
    _type_prompt{wrongTypePrompt},
-   _range_prompt{inRangePrompt},
    _invalid_prompt{invalidPrompt},
-   _failed_prompt{failedPrompt}
+   _failed_prompt{failedPrompt},
+   _range_prompt{inRangePrompt}
 {
     _next_prompt = &_orig_prompt;
     _valid_answer = false;
 }
 
 Question_Double::Question_Double (
-   int id,
+    int id,
     double min, 
     double max,
     double fallback,
@@ -42,15 +46,6 @@ Question_Double::Question_Double (
    _fallback{fallback},
    _orig_prompt{origPrompt}
 { 
-    // setting _range_prompt
-    stringstream minStream;
-    minStream << fixed << setprecision(2) << min;
-    _range_prompt.insert(47, minStream.str());
-
-    stringstream maxStream;
-    maxStream << fixed << setprecision(2) << max;
-    _range_prompt.insert(_range_prompt.size()-3, maxStream.str());
-
     // setting _invalid_prompt
     _invalid_prompt.insert(33, _orig_prompt);
 
@@ -99,14 +94,20 @@ string Question_Double::getFallback () const
 }
 
 string Question_Double::getFailedResponse () const
-{
+{  
     return _failed_prompt;
 }
 
 bool Question_Double::tryAnswer (string ans)
 {   
     double doubleAnswer;
+    string rs = "^\\-?\\d*\\.?\\d+$";
     try {
+        if (regex_search(ans, regex(rs)) == false)
+        {
+            throw invalid_argument("string argument can not be converted into a double.");
+        }
+        
         doubleAnswer = stod(ans);
     }
     catch(invalid_argument& e) // TODO combine these two catches since bodies are the same.
@@ -119,8 +120,8 @@ bool Question_Double::tryAnswer (string ans)
         _next_prompt = &_invalid_prompt;
         return false;
     }
-    if (doubleAnswer < _min || doubleAnswer > _max)
-    {
+    if (!rangeFunction(_min, _max, doubleAnswer))
+    {   
         _next_prompt = &_range_prompt;
         return false;
     }

@@ -40,23 +40,64 @@ void AxisTopToBottomL::print (Renderer* renderer) const
 
 }
 
+void AxisTopToBottomL::moveCrossHairs (int xPx, int yPx)
+{
+    _x_cross__px = xPx;
+    _y_cross__px = yPx;
+}
+
+void AxisTopToBottomL::setPxPerUnit (int pixels)
+{
+    _px_per_unit = pixels;
+    _min_tick_spacing = calcMinTickSpacing(_px_per_unit);
+    _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
+
+}
+
+void AxisTopToBottomL::setTickThickness (int tickThicknessPx)
+{
+    _tick_thickness__px = tickThicknessPx;
+}
+
+int AxisTopToBottomL::sizeXPx () const
+{
+    // todo am I assuming 3 digits in label size? As in 999?
+    return 
+        3 * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
+        _axis_format.majTickLengthOutsideChartPx() +
+        _axis_format.axisThicknessPx();
+}
+
+int AxisTopToBottomL::sizeYPx() const
+{
+    return getAxisLengthPx();
+}
+
+int AxisTopToBottomL::getPixel (double yVal) const
+{
+    int minYPx = _y_cross__px + ( _start_offset_m * _px_per_unit );
+    return minYPx + _px_per_unit * (yVal - _min_val);
+}
+
+int AxisTopToBottomL::getAxisLengthPx() const
+{
+    int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
+    // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
+    return calcBotMostPixel_Y() - _y_cross__px - unit_px_even + (_tick_thickness__px/2);
+}
+
 void AxisTopToBottomL::printVerticalLine (std::vector<SDL_Rect>& rects) const
 {
     SDL_Rect rect{
         _x_cross__px,
         _y_cross__px,
         _axis_format.axisThicknessPx(),
-        axisLengthPx()
+        getAxisLengthPx()
     };
 
     rects.push_back(rect);
 }
 
-int AxisTopToBottomL::calcBotMostPixel_Y () const
-{
-    return _y_cross__px + (_px_per_unit * ( _diff + _start_offset_m + _end_offset_m));
-}
-        
 void AxisTopToBottomL::printTicksAndLabels (
     std::vector<SDL_Rect>& rects, 
     std::vector<TextRect>& texts
@@ -118,49 +159,17 @@ void AxisTopToBottomL::printTicksAndLabels (
     }
 }
 
-void AxisTopToBottomL::moveCrossHairs (int xPx, int yPx)
+int AxisTopToBottomL::calcBotMostPixel_Y () const
 {
-    _x_cross__px = xPx;
-    _y_cross__px = yPx;
+    return _y_cross__px + (_px_per_unit * ( _diff + _start_offset_m + _end_offset_m));
 }
 
-void AxisTopToBottomL::setPxPerUnit (int pixels)
+int AxisTopToBottomL::calcMinTickSpacing (int pixelsPerUnit) const
 {
-    _px_per_unit = pixels;
-    _min_tick_spacing = calcMinTickSpacing(_px_per_unit);
-    _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
+    return (pixelsPerUnit >= 10)? 1 : 5;
+}     
 
-}
-
-void AxisTopToBottomL::setTickThickness (int tickThicknessPx)
+int AxisTopToBottomL::calcMajTickSpacing (int pixelsPerUnit) const
 {
-    _tick_thickness__px = tickThicknessPx;
-}
-
-int AxisTopToBottomL::sizeXPx () const
-{
-    // todo am I assuming 3 digits in label size? As in 999?
-    return 
-        3 * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
-        _axis_format.majTickLengthOutsideChartPx() +
-        _axis_format.axisThicknessPx();
-}
-
-int AxisTopToBottomL::sizeYPx() const
-{
-    return axisLengthPx();
-}
-
-int AxisTopToBottomL::axisLengthPx() const
-{
-    int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
-    // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
-    return calcBotMostPixel_Y() - _y_cross__px - unit_px_even + (_tick_thickness__px/2);
-}
-
-int AxisTopToBottomL::getPixel (double yVal) const
-{
-    int minYPx = _y_cross__px + ( _start_offset_m * _px_per_unit );
-    return minYPx + _px_per_unit * (yVal - _min_val);
-    
+    return (pixelsPerUnit > 10)? 5 : 10;
 }

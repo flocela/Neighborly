@@ -1,9 +1,11 @@
 #include "ResidentsFactory_Falling.h"
 #include <sstream>
 #include <iomanip>
-
+#include <iostream>
 #include "HappinessFunc_Falling.h"
-#include "Question_Double.h"
+#include "Question_Double_II.h"
+#include "Question_Double_EI.h"
+#include "Question_Double_IE.h"
 #include "Resident_UsingFunction.h"
 
 using namespace std;
@@ -33,7 +35,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
 
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal if can not get happiness value corresponding to zero neighbors.
-    Question_Double qHappinessWithZeroNeighbors{
+    Question_Double_II qHappinessWithZeroNeighbors{
         1,
         0.0,
         100.0,
@@ -50,7 +52,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
 
     // ask user for high happiness value, corresponding to diversity of 0.0.
     // uses happiness goal if can not get high happiness value.
-    Question_Double qHighHappinessValue{
+    Question_Double_EI qHighHappinessValue{
         2,
         0.0,
         100.0,
@@ -59,7 +61,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
             _high_happiness_value_prompt, 
             charLocationForColor(_high_happiness_value_prompt),
             colorStream.str()),
-        "happiness goal"
+        "higher happiness value"
     };
 
     double highHappinessValue = stod(ui.getAnswer(qHighHappinessValue));
@@ -67,7 +69,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
 
     // ask user for low happiness value, corresponding to diversity of 1.0.
     // uses _fallback_low_happiness_value if can not get low happiness value
-    Question_Double qLowHappinessValue{
+    Question_Double_IE qLowHappinessValue{
         3,
         0,
         highHappinessValue,
@@ -76,12 +78,13 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
             _low_happiness_value_prompt,
             charLocationForColor(_low_happiness_value_prompt),
             colorStream.str()),
-        "low happiness value"
+        "lower happiness value"
     };
 
     double lowHappinessValue = stod(ui.getAnswer(qLowHappinessValue));
 
-
+    cout << endl << "FallingFactory " << groupNumber << ", " << allowedMovement << ", " << happinessGoal << ", " <<
+    happinessWithZeroNeighbors << ", " << highHappinessValue << ", " << lowHappinessValue << endl;
     // create vector of residents.
     vector<unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)
@@ -115,7 +118,7 @@ std::string ResidentsFactory_Falling::insertIntoString (
 
 int ResidentsFactory_Falling::charLocationForColor (string str) const
 {
-    string target = "For the  residents, enter the";
+    string target = "the  group";
     auto pos = str.find(target);
-    return (int)pos + 8;
+    return (int)pos + 4;
 }

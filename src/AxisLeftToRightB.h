@@ -24,14 +24,15 @@ class AxisLeftToRightB
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
         void setTickThickness (int tickThicknessPx);
-        int sizeYPx() const;
         int sizeXPx() const;
+        int sizeYPx() const;
 
         // returns the y-pixel for yVal. If pxPerUnit is odd, then result is at center of unit.
         // If pxPerUnit is even, then center is denoted by two pixels,
         // and the result is the second pixel. (The second pixel is from the x's zero value.)
         int getPixel (double xVal) const;
         int getCenterValXPx () const;
+        int getAxisLengthPx() const;
     
     private:
         AxisFormat _axis_format;
@@ -59,8 +60,6 @@ class AxisLeftToRightB
         
         int calcMajTickSpacing (int pixelsPerUnit) const;
 
-        int axisLengthPx() const;
-        
 };
 
 #endif

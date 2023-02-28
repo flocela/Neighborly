@@ -1,9 +1,13 @@
 #include "ResidentsFactory_Rising.h"
 #include <sstream>
 #include <iomanip>
+#include <iostream>
 
 #include "HappinessFunc_Rising.h"
 #include "Question_Double.h"
+#include "Question_Double_EI.h"
+#include "Question_Double_IE.h"
+#include "Question_Double_II.h"
 #include "Resident_UsingFunction.h"
 
 using namespace std;
@@ -15,7 +19,7 @@ string ResidentsFactory_Rising::toString ()
 
 string ResidentsFactory_Rising::residentType () const 
 {
-    return "Rising Down Residents";
+    return "Rising Residents";
 }
 
 vector<unique_ptr<Resident>> ResidentsFactory_Rising::createResidents (
@@ -33,7 +37,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Rising::createResidents (
 
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal if can not get happiness value for zero neighbors.
-    Question_Double qHappinessWithZeroNeighbors{
+    Question_Double_II qHappinessWithZeroNeighbors{
         1,
         0.0,
         100.0,
@@ -49,7 +53,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Rising::createResidents (
 
     // ask user for low happiness value.
     // uses happiness goal if can not get low happiness value from user.
-    Question_Double qLowHappinessValue{
+    Question_Double_IE qLowHappinessValue{
         2,
         0,
         100,
@@ -65,7 +69,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Rising::createResidents (
 
     // ask user for high happiness value.
     // uses _fallback_high_happiness_value if can not get a high happiness value from user.
-    Question_Double qHighHappinessValue{
+    Question_Double_EI qHighHappinessValue{
         3,
         lowHappinessValue,
         100.0,
@@ -79,6 +83,9 @@ vector<unique_ptr<Resident>> ResidentsFactory_Rising::createResidents (
 
     double highHappinessValue = stod(ui.getAnswer(qHighHappinessValue));
 
+    cout << endl << "Rising Res: " << groupNumber << ", " << allowedMovement << ", " <<
+    happinessGoal << ", " << happinessWithZeroNeighbors << ", " << highHappinessValue << ", " <<
+    lowHappinessValue << endl;
 
     vector<unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)
@@ -112,7 +119,7 @@ std::string ResidentsFactory_Rising::insertIntoString (
 
 int ResidentsFactory_Rising::charLocationForColor (string str) const 
 {
-    string target = "For the  residents, enter the";
+    string target = "the  group";
     auto pos = str.find(target);
-    return (int)pos + 8;
+    return (int)pos + 4;
 }

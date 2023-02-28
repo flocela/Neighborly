@@ -38,8 +38,8 @@ private:
     double _fallback_group_happiness_goal_failure = 50.0;
     
     // prompt for this group's type (as in Resident_Flat or StepDown...)
-    std::string _which_type_prompt = "\nWhat will be the type for the residents in the  group?"
-        " Choose the resident type by typing the corresponding number.";
+    std::string _which_type_prompt = "\nFor the  group, what will be the residents' type?"
+        " Choose the residents' type by typing the corresponding number.";
 
     // prompt for the number of resident groups.
     std::string _how_many_groups_orig_prompt =
@@ -51,7 +51,7 @@ private:
 
     // prompt for the happiness for this group
     std::string _happiness_goal_orig_prompt = 
-        "\nWhat will be the happiness goal for all members of the  group? The"
+        "\nFor the  group, what will be the happiness goal for all members of the group? The"
         " number must be between 0 and 100 inclusive. _";
 
     // prompt for the allowed movement of each resident in the group.

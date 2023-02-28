@@ -29,16 +29,16 @@ private:
     // prompt for happiness value when resident has no neighbors 
     std::string _happinessWithZeroNeighborsPrompt  = 
         "\nFlat type residents have a constant happiness for all diversities. Diversity is defined"
-        " as the number of disparate neighbors divided by total number of neighbors. When a "
+        " as the number of disparate neighbors divided by total number of neighbors. When a"
         " resident has no neighbors, diversity is undefined and the resident has a special"
         " happiness value."
-        "\nFor the  residents, enter the happiness value corresponding to having no neighbors. _";
+        "\nFor the  group, enter the happiness value corresponding to having no neighbors. _";
 
                                         
     // prompt for happiness value, which is constant for all diversities.
     std::string _happinessValueOrigPrompt  = 
         "\nFlat type residents have a constant happiness value."
-        "\nFor the  residents, enter the happiness value. The value must be between"
+        "\nFor the  group, enter the happiness value. The value must be between"
         " 0.0 and 100.0 inclusive. _";
 
     // inserts additional string at location
@@ -47,9 +47,9 @@ private:
         int location,
         std::string insert) const;
     
-    // Often have to place the group color in "For the ____ residents, enter". This method returns the 
+    // Often have to place the group color in "For the ____ group". This method returns the 
     // character index where the group color would go. It's a very specialized method, in that
-    // it finds the specific words "For the residents, enter" and returns character after "the" and space.
+    // it finds the specific words "the  group" and returns character after "the" and space.
     int charLocationForColor (std::string str) const;
 };
 
