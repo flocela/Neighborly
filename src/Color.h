@@ -1,7 +1,6 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-#include <ostream>
 #include <vector>
 #include <map>
 #include <set>
