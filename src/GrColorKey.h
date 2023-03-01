@@ -13,23 +13,29 @@ class GrColorKey : public ColorKey
 {
 
 public:
-GrColorKey() = delete;
-GrColorKey (
-    // the point at the top and center of the GrColorKey. the top most, central most point.
-    int topCenterXPx, // x value of the top most center point.
-    int topCenterYPx, // y value of the top most center point.
-    Letter labelLetter, // each groupId will be labeled. this gives the size of the lettering
-    std::unordered_map<int, BaseColor> colors, // base color per groupId
-    std::set<Mood> moods, // keys for colors, e.g. happy, sad, neutral
-    SDL_Color textColor,
-    SDL_Color textBackgroundColor
-);
+    GrColorKey (
+        // the point at the top and center of the GrColorKey. the top most, central most point.
+        int topCenterXPx, // x value of the top most center point.
+        int topCenterYPx, // y value of the top most center point.
+        Letter labelLetter, // each groupId will be labeled. this gives the size of the lettering
+        std::unordered_map<int, BaseColor> colors, // base color per groupId
+        std::set<Mood> moods, // keys for colors, e.g. happy, sad, neutral
+        SDL_Color textColor,
+        SDL_Color textBackgroundColor
+    );
 
-GrColorKey (
-    Letter labelLetter,
-    std::unordered_map<int, BaseColor> colors,
-    std::set<Mood> moods
-);
+    GrColorKey (
+        Letter labelLetter,
+        std::unordered_map<int, BaseColor> colors,
+        std::set<Mood> moods
+    );
+
+    GrColorKey () = delete;
+    GrColorKey (const GrColorKey& o) = default;
+    GrColorKey (GrColorKey&& o) noexcept = default;
+    GrColorKey& operator= (const GrColorKey& o) = default;
+    GrColorKey& operator=(GrColorKey&& o) noexcept = default;
+    ~GrColorKey () = default;
 
 void print (Renderer* renderer);
 void setTopCenter (int xPx, int yPy);
