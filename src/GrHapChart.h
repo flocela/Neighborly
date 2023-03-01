@@ -32,9 +32,7 @@ GrHapChart (
    _plot{std::move(plot)}
 {   
     _plot->setTopLeft(topLeftXPx, topLeftYPx + _title->sizeYPx() + _key->sizeYPx());
-    std:: cout << "GrHapChart topOfPlot: " << (topLeftYPx + _title->sizeYPx() + _key->sizeYPx()) << std::endl;
     _plot->setXYSpacePx(xSpace, ySpace - _title->sizeYPx() - _key->sizeYPx());
-    std::cout << "GrHapChart setSpace: " << (ySpace - _title->sizeYPx() - _key->sizeYPx()) << std::endl;
     _title->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx);
     _key->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx + _title->sizeYPx());
 }

@@ -60,7 +60,7 @@
 
 using namespace std;
 
-#define FONT_PATH   "assets/pacifico/Pacifico.ttf"
+#define FONT_PATH "assets/pacifico/Pacifico.ttf"
 
 /* Function Declarations */
 template<typename T>
@@ -129,8 +129,6 @@ int main(int argc, char* argv[])
             );
         }
     }
-    
-    
     
     // sets srand with randomSeed
     srand(components.randomSeed);
