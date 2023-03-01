@@ -118,8 +118,8 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
             happinessGoal,
             make_unique<HappinessFunc_StepUp> (
                 happinessWithZeroNeighbors,
-                highHappinessValue,
                 lowHappinessValue,
+                highHappinessValue,
                 locationOfStep
             ),
             "Step Up Resident"

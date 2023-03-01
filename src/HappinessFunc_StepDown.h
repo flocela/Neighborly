@@ -5,8 +5,8 @@
 #include "HappinessFunc.h"
 
 // this is a step function. the x-axis is diversity. the y-axis is happiness.
-// the y-value is flat from zero to stepDown (on the x-axis). it is flat
-// but lower after stepDown. stepDown is an x-value.
+// a higher y-value is used from zero to stepDown (on the x-axis). a lower y-value is
+// used after stepDown. stepDown is an x-value.
 class HappinessFunc_StepDown: public HappinessFunc
 {
 public:

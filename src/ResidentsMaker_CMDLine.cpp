@@ -42,7 +42,7 @@ ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
 
         // set base color
         BaseColor curBaseColor = _available_colors[ii];
-        resGroupInfo._base_color_per_group_num.insert({ii, curBaseColor});
+        resGroupInfo._base_color_per_group_num.insert({ii+1, curBaseColor});
 
         stringstream colorStream;
         colorStream << curBaseColor;
@@ -70,7 +70,7 @@ ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
             numOfResidents,
             happinessGoal,
             allowedMovement,
-            ii,
+            ii+1,
             _available_colors[ii]
             );
 

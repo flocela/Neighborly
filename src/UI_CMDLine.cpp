@@ -72,12 +72,12 @@ int UI_CMDLine::menu (
     string answer = "xx";
     while (tries < _max_num_of_tries && !chooseMenuItem.hasValidAnswer())
     {   cout << chooseMenuItem.getPrompt();
-        cin >> answer;
+        getline(cin >> ws, answer);
         chooseMenuItem.tryAnswer(answer);
         tries++;
     }
 
-    if (tries >= _max_num_of_tries)
+    if (!chooseMenuItem.hasValidAnswer())
     {
         cout << failureResponse << endl;
         return fallBack;

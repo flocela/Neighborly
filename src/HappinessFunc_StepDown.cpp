@@ -26,7 +26,7 @@ HappinessFunc_StepDown::HappinessFunc_StepDown (
             " and happinessAtEnd"
             " must be between 0.0 and 100.0 inclusive.");
     }
-    if (_happ_at_start < _happ_at_end)
+    if (_happ_at_start <= _happ_at_end)
     {   
         throw std::invalid_argument("happinessAtStart must be larger than "
             "happinessAtEnd.");
@@ -53,7 +53,7 @@ double HappinessFunc_StepDown::calcHappiness (
 
     double diversity = num_of_diff_neighbors /
                        (double)(num_of_diff_neighbors + num_of_like_neighbors);
-    if (diversity < _step_down)
+    if (diversity <= _step_down)
     {
         return _happ_at_start;
     }

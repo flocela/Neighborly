@@ -9,7 +9,7 @@
 // Creates residents that use a step up happiness function.
 // Residents' happiness is two tiered. The lower happiness value is found
 // at zero diversity through the step-up diversity, and the higher happiness
-// value is found after the step-up diversity through 1.0 diversity.
+// value is found after the step-up diversity through to 1.0 diversity.
 class ResidentsFactory_StepUp: public ResidentsFactory
 {
 public:
@@ -39,11 +39,11 @@ private:
 
     // prompt for happiness value when resident has no neighbors
     std::string _happiness_with_zero_neighbors_prompt  = 
-        "\nStepUp type residents happiness value is two tiered. The lower happiness"
+        "\nStepUp type residents' happiness value is two tiered. The lower happiness"
         " value starts at zero and runs through the drop-down diversity. The higher"
-        " happiness value starts after the step-up diversity through a diversity of 1.0."
+        " happiness value starts after the step-up diversity through to 1.0."
         " Diversity is defined as the number of disparate neighbors divided"
-        " by the total number of neighbors. When a resident has no neighbors,"
+        " by the total number of neighbors.\nWhen a resident has no neighbors,"
         " diversity is undefined and the resident has a special happiness value."
         "\nFor the  group, enter the happiness value corresponding to when a resident has"
         " no neighbors. _";
