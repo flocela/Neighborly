@@ -11,6 +11,7 @@ class AxisFormat
         AxisFormat (const AxisFormat& o) = default;
         AxisFormat (AxisFormat&& o) noexcept = default;
         AxisFormat& operator= (const AxisFormat& o) = default;
+        AxisFormat& operator= (AxisFormat&& o) = default;
         ~AxisFormat () = default;
 
         int axisThicknessPx () const { return _axis_thickness__px;}

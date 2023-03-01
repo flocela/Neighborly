@@ -29,6 +29,12 @@ GrCityChart (
     int xSpace, // space available for the chart in the x direction
     int ySpace  // space available for the chart in they y dirction
 );
+    GrCityChart () = delete;
+    GrCityChart (const GrCityChart& o) = default;
+    GrCityChart (GrCityChart&& o) noexcept = default;
+    GrCityChart& operator= (const GrCityChart& o) = default;
+    GrCityChart& operator=(GrCityChart&& o) noexcept = default;
+    ~GrCityChart () = default;
 
 void print (
     const std::unordered_map<const House*, const Resident*>& houseToResMap,

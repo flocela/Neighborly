@@ -23,6 +23,12 @@ class AxisTopToBottomL
             int startOffsetMultiplier,
             int endOffsetMultiplier
         );
+        AxisTopToBottomL () = delete;
+        AxisTopToBottomL (const AxisTopToBottomL& o) = default;
+        AxisTopToBottomL (AxisTopToBottomL&& o) noexcept = default;
+        AxisTopToBottomL& operator= (const AxisTopToBottomL& o) = default;
+        AxisTopToBottomL& operator=(AxisTopToBottomL&& o) noexcept = default;
+        ~AxisTopToBottomL () = default;
 
         // Renders axis from bottom to top, title is on left side (used for vertical axes).
         void print (Renderer* renderer) const;

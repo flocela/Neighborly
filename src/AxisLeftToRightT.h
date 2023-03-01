@@ -24,12 +24,17 @@ class AxisLeftToRightT
             int startOffsetMultiplier,
             int endOffsetMultiplier
         );
-        
+        AxisLeftToRightT () = delete;
+        AxisLeftToRightT (const AxisLeftToRightT& o) = default;
+        AxisLeftToRightT (AxisLeftToRightT&& o) noexcept = default;
+        AxisLeftToRightT& operator= (const AxisLeftToRightT& o) = default;
+        AxisLeftToRightT& operator=(AxisLeftToRightT&& o) noexcept = default;
+        ~AxisLeftToRightT () = default;
+
         void print (Renderer* renderer) const;
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);
         void setTickThickness (int tickThicknessPx);
-
 
         int sizeXPx() const;
         int sizeYPx() const;

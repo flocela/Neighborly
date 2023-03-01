@@ -21,6 +21,12 @@ class AxisBottomToTopL
             int startOffsetMultiplier,
             int endOffsetMultiplier
         );
+        AxisBottomToTopL () = delete;
+        AxisBottomToTopL (const AxisBottomToTopL& o) = default;
+        AxisBottomToTopL (AxisBottomToTopL&& o) noexcept = default;
+        AxisBottomToTopL& operator= (const AxisBottomToTopL& o) = default;
+        AxisBottomToTopL& operator=(AxisBottomToTopL&& o) noexcept = default;
+        ~AxisBottomToTopL () = default;
 
         void print (Renderer* renderer) const;
         void moveCrossHairs (int xPx, int yPx);

@@ -20,6 +20,13 @@ class AxisLeftToRightB
             int startOffsetMultiplier,
             int endOffsetMultiplier
         );
+        AxisLeftToRightB () = delete;
+        AxisLeftToRightB (const AxisLeftToRightB& o) = default;
+        AxisLeftToRightB (AxisLeftToRightB&& o) noexcept = default;
+        AxisLeftToRightB& operator= (const AxisLeftToRightB& o) = default;
+        AxisLeftToRightB& operator=(AxisLeftToRightB&& o) noexcept = default;
+        ~AxisLeftToRightB () = default;
+
         void print (Renderer* renderer) const;
         void moveCrossHairs (int xPx, int yPx);
         void setPxPerUnit (int pixels);

@@ -11,13 +11,6 @@
 class CityFactory
 {
     public:
-        CityFactory () = default;
-        CityFactory (const CityFactory& obj) = default;
-        CityFactory (CityFactory&& obj) noexcept = default;
-        CityFactory& operator=(const CityFactory& obj) = default;
-        CityFactory& operator=(CityFactory&& obj) noexcept = default;
-        virtual ~CityFactory() = default;
-
         virtual std::unique_ptr<City> createCity (
             const UI& ui, 
             int max_width, 

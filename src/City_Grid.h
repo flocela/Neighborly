@@ -24,6 +24,7 @@ public:
     City_Grid (const City_Grid& o) = default;
     City_Grid (City_Grid&& o) noexcept = default;
     City_Grid& operator= (const City_Grid& o) = default;
+    City_Grid& operator=(City_Grid&& o) noexcept = default;
     ~City_Grid () = default;
 
     int getNumOfHouses() const override;
