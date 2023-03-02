@@ -15,6 +15,11 @@ public:
 		const std::size_t screen_height,
 		std::string title);
 	~Renderer();
+	Renderer () = delete;
+    Renderer (const Renderer& o) = default;
+    Renderer (Renderer&& o) noexcept = default;
+    Renderer& operator= (const Renderer& o) = default;
+    Renderer& operator=(Renderer&& o) noexcept = default;
 		
 	void startFrame();
 	void endFrame();

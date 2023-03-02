@@ -25,7 +25,7 @@ public:
         std::string origPrompt,
         std::string valueName);
 
-    Question_Double () = default;
+    Question_Double () = delete;
     Question_Double (const Question_Double& obj) = default;
     Question_Double (Question_Double&& obj) noexcept = default;
     Question_Double& operator=(const Question_Double& obj) = default;

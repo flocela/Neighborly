@@ -6,11 +6,18 @@
 class UI_CMDLine: public UI
 {
 public:
-    UI_CMDLine () = default;
+    
 
     // when getting an answer from user (for menu or question) will give the user
     // max number of tries to give a proper response, before using the fallback answer.
     UI_CMDLine (int maxNumOfTries);
+
+    UI_CMDLine () = default;
+    UI_CMDLine (const UI_CMDLine& o) = default;
+    UI_CMDLine (UI_CMDLine&& o) noexcept = default;
+    UI_CMDLine& operator= (const UI_CMDLine& o) = default;
+    UI_CMDLine& operator=(UI_CMDLine&& o) noexcept = default;
+    ~UI_CMDLine () = default;
 
     int menu (
         std::string prompt,

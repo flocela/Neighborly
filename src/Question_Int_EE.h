@@ -48,7 +48,7 @@ public:
         _range_prompt.insert(_range_prompt.size()-3, rangeStream.str()); 
     }
         
-    Question_Int_EE () = default;
+    Question_Int_EE () = delete;
     Question_Int_EE (const Question_Int_EE& obj) = default;
     Question_Int_EE (Question_Int_EE&& obj) noexcept = default;
     Question_Int_EE& operator=(const Question_Int_EE& obj) = default;

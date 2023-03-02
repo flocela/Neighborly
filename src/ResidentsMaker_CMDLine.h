@@ -12,13 +12,6 @@
 class ResidentsMaker_CMDLine: public ResidentsMaker
 {
 public:
-    ResidentsMaker_CMDLine() = default;
-    ResidentsMaker_CMDLine (const ResidentsMaker_CMDLine& orig) = default;
-    ResidentsMaker_CMDLine& operator= (const ResidentsMaker_CMDLine& orig) = default;
-    ResidentsMaker_CMDLine (ResidentsMaker_CMDLine&& orig) = default;
-    ResidentsMaker_CMDLine& operator= (ResidentsMaker_CMDLine&& orig) = default;
-
-    ~ResidentsMaker_CMDLine () = default;
 
     ResidentsGroupInfo makeResidents (
         const UI& ui,

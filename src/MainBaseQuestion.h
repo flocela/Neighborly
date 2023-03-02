@@ -6,8 +6,8 @@
 
 class MainBaseQuestion
 {
-    public:
-        bool askUserToUsePremadeExamples (const UI& ui);
+public:
+    bool askUserToUsePremadeExamples (const UI& ui);
 
 };
 

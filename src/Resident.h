@@ -12,6 +12,7 @@ public:
         int groupId,
         double allowedMovementDistance,
         double happinessGoal);
+    Resident () = delete;
     Resident (const Resident& obj) = default;
     Resident (Resident&& obj) noexcept = default;
     Resident& operator= (const Resident& obj) = default;

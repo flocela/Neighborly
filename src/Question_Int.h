@@ -25,7 +25,7 @@ public:
         std::string origPrompt,
         std::string valueName);
         
-    Question_Int () = default;
+    Question_Int () = delete;
     Question_Int (const Question_Int& obj) = default;
     Question_Int (Question_Int&& obj) noexcept = default;
     Question_Int& operator=(const Question_Int& obj) = default;

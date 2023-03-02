@@ -9,8 +9,7 @@ Printer_CMDLine::Printer_CMDLine (
     int maxNumofRuns,
     City* cityPtr
 ):  _max_num_of_runs{maxNumofRuns},
-    _city_ptr{cityPtr},
-    textHelper{maxNumofRuns,cityPtr}
+    _city_ptr{cityPtr}
 {
     for (const House* house : cityPtr->getHouses())
     {

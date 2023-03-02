@@ -48,6 +48,7 @@ public:
         _range_prompt.insert(_range_prompt.size()-3, rangeStream.str()); 
     }
 
+    Question_Double_II () = delete;
     Question_Double_II (const Question_Double_II& o) = default;
     Question_Double_II (Question_Double_II&& o) noexcept = default;
     Question_Double_II& operator= (const Question_Double_II& o) = default;

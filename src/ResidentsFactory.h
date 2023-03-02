@@ -10,12 +10,6 @@
 class ResidentsFactory
 {
     public:
-        ResidentsFactory () = default;
-        ResidentsFactory (const ResidentsFactory& obj) = default;
-        ResidentsFactory (ResidentsFactory&& obj) noexcept = default;
-        ResidentsFactory& operator= (const ResidentsFactory& obj) = default;
-        ResidentsFactory& operator= (ResidentsFactory&& obj) noexcept = default;
-        virtual ~ResidentsFactory() = default;
         virtual std::vector<std::unique_ptr<Resident>> createResidents(
             const UI& ui,
             int firstID, 

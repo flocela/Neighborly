@@ -20,8 +20,6 @@ class ResidentsMaker
             std::vector<BaseColor> colors, // these are the colors that the resident groups can be.
             double allowableMovement
         ) = 0;
-
-        virtual ~ResidentsMaker() = default;
 };
 
 #endif

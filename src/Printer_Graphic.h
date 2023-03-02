@@ -32,10 +32,10 @@ public:
         int numOfRuns
     );
     Printer_Graphic () = delete;
-    Printer_Graphic (const Printer_Graphic& obj) = default;
-    Printer_Graphic (Printer_Graphic&& obj) noexcept = default;
-    Printer_Graphic& operator= (const Printer_Graphic& obj) = default;
-    Printer_Graphic& operator= (Printer_Graphic&& obj) noexcept = default;
+    Printer_Graphic (const Printer_Graphic& o) = default;
+    Printer_Graphic (Printer_Graphic&& o) noexcept = default;
+    Printer_Graphic& operator= (const Printer_Graphic& o) = default;
+    Printer_Graphic& operator= (Printer_Graphic&& o) noexcept = default;
     ~Printer_Graphic () = default;
 
     int maxNumOfHousesX () {return 100;}

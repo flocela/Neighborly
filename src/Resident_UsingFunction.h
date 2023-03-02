@@ -8,7 +8,7 @@
 class Resident_UsingFunction : public Resident
 {
 public:
-    Resident_UsingFunction () = delete;
+    
     Resident_UsingFunction (
         int id,
         int groupNumber,
@@ -16,6 +16,7 @@ public:
         double happinessGoal,
         std::unique_ptr<HappinessFunc> happinessFunc,
         std::string name);
+    Resident_UsingFunction () = delete;
     Resident_UsingFunction (const Resident_UsingFunction& obj) = default;
     Resident_UsingFunction (Resident_UsingFunction&& obj) noexcept = default;
     Resident_UsingFunction& operator= (const Resident_UsingFunction& obj) = default;

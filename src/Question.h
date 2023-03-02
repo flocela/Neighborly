@@ -8,12 +8,6 @@
 class Question
 {
 public:
-    Question () = default;
-    Question ( const Question& obj ) = default;
-    Question ( Question&& obj) noexcept = default;
-    Question& operator= ( const Question& obj) = default;
-    Question& operator= ( Question&& obj) noexcept = default;
-    virtual ~Question() = default;
 
     // get question's id
     virtual int getID () const = 0;

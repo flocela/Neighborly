@@ -13,7 +13,7 @@ public:
         std::string failedPrompt
     );
     
-    Question_YN () = default;
+    Question_YN () = delete;
     Question_YN ( const Question_YN& obj ) = default;
     Question_YN ( Question_YN&& obj) noexcept = default;
     Question_YN& operator= ( const Question_YN& obj) = default;

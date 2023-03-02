@@ -43,6 +43,13 @@ public:
       _title{title}
     {}
 
+    TitleA () = delete;
+    TitleA (const TitleA& o) = default;
+    TitleA (TitleA&& o) noexcept = default;
+    TitleA& operator= (const TitleA& o) = default;
+    TitleA& operator=(TitleA&& o) noexcept = default;
+    ~TitleA () = default;
+
     int sizeXPx() { return _title.length() * _l.letterHeight() * _l.widthMultiplier(); }
 
     int sizeYPx() { return _l.getHeightIncLSpace(); }

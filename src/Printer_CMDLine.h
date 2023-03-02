@@ -4,7 +4,7 @@
 #include <vector>
 #include <unordered_map>
 #include "Printer.h"
-#include "TextHelper.h"
+#include "City.h"
 
 class Printer_CMDLine : public Printer
 {   
@@ -29,7 +29,6 @@ public:
 private:
     int _max_num_of_runs;
     City* _city_ptr;
-    TextHelper textHelper;
     std::unordered_map<const House*, std::set<const House*>> _adj_neighbors;
 
     // used for printing residents. happy characters per group Id.
