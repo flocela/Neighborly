@@ -19,16 +19,16 @@ public:
     Resident& operator= (Resident&& obj) noexcept = default;
     virtual ~Resident () = default; //TODO should be virtual
 
-    std::string toStrBasic () const;
-
-    int getID() const;
-    int getGroupId () const;
+    double calculateHappiness (std::set<Resident*> neighbors, int numOfAdjacentHouses) const; // TODO should be const Resident*
     double getAllowedMovementDistance () const;
+    int getGroupId () const;
     double getHappinessGoal () const;
     double getHappiness () const;
-    bool operator< (const Resident& other) const;
-    double calculateHappiness (std::set<Resident*> neighbors, int numOfAdjacentHouses) const; // TODO should be const Resident*
+    int getID() const;
+    std::string toStrBasic () const;
 
+    bool operator< (const Resident& other) const;
+    
     double setHappiness (double happiness);
     
 protected:

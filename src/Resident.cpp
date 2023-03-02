@@ -22,19 +22,19 @@ Resident::Resident (
     }
 }
 
-int Resident::getID() const
+double Resident::calculateHappiness ( std::set<Resident*> neighbors, int numOfAdjacentHouses) const
 {
-    return _id;
-}
-
-int Resident::getGroupId () const
-{
-    return _group_id;
+    return implimentHappiness (neighbors, numOfAdjacentHouses);
 }
 
 double Resident::getAllowedMovementDistance () const
 {
     return _allowed_movement_distance;
+}
+
+int Resident::getGroupId () const
+{
+    return _group_id;
 }
 
 double Resident::getHappinessGoal () const
@@ -47,20 +47,9 @@ double Resident::getHappiness () const
     return _curr_happiness;
 }
 
-double Resident::calculateHappiness ( std::set<Resident*> neighbors, int numOfAdjacentHouses) const
+int Resident::getID() const
 {
-    return implimentHappiness (neighbors, numOfAdjacentHouses);
-}
-
-double Resident::setHappiness (double happiness)
-{
-    _curr_happiness = happiness;
-    return _curr_happiness;
-}
-
-bool Resident::operator< (const Resident& other) const // TODO upgrade this.
-{
-    return _id < other._id;
+    return _id;
 }
 
 string Resident::toStrBasic () const
@@ -79,4 +68,15 @@ string Resident::toStrBasic () const
     returnStream << implimentToStrBasic();
 
     return returnStream.str();
+}
+
+bool Resident::operator< (const Resident& other) const // TODO upgrade this.
+{
+    return _id < other._id;
+}
+
+double Resident::setHappiness (double happiness)
+{
+    _curr_happiness = happiness;
+    return _curr_happiness;
 }
