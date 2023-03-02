@@ -23,6 +23,7 @@ public:
 
     double x () {return _x;}
     double y () {return _y;}
+    
     Color color () { return _color;}
     std::vector<int> rgba () { return _rgba;}
 

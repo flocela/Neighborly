@@ -28,7 +28,9 @@ public:
 
 private:
     int _max_num_of_runs;
+
     City* _city_ptr;
+    
     std::unordered_map<const House*, std::set<const House*>> _adj_neighbors;
 
     // used for printing residents. happy characters per group Id.

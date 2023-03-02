@@ -38,18 +38,12 @@ public:
     Printer_Graphic& operator= (Printer_Graphic&& o) noexcept = default;
     ~Printer_Graphic () = default;
 
-    int maxNumOfHousesX () {return 100;}
-    int maxNumOfHousesY () {return 100;}
-    int maxNumOfNeighbors () {return 12;}
-    int maxNumOfResidentTypes () {return 2;}
-    int maxNumOfRuns () { return 100;}
+    void keepScreen();
 
     void print(
         std::unordered_map<const House*, const Resident*> residentPerHouse,
         int run
     ) const override;
-
-    void keepScreen();
 
 private:
 
