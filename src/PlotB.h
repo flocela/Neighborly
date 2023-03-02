@@ -44,14 +44,7 @@ public:
     PlotB& operator=(PlotB&& o) noexcept = default;
     ~PlotB () = default;
 
-    void print (
-        std::vector<Point> points,
-        bool clear,
-        Renderer* renderer) const override;
-
-    void setTopLeft (int xPx, int yPx) override; 
-
-    void setXYSpacePx (int xSpacePx, int ySpacePx) override;
+    int getCenterValueOfXAxisPx () const override;
 
     int getTopLeftXPx () const override;
 
@@ -65,8 +58,14 @@ public:
 
     int sizeYPx () const override;
 
-    int getCenterValueOfXAxisPx () const override;
+    void print (
+        std::vector<Point> points,
+        bool clear,
+        Renderer* renderer) const override;
 
+    void setTopLeft (int xPx, int yPx) override; 
+
+    void setXYSpacePx (int xSpacePx, int ySpacePx) override;
 
 private:
 

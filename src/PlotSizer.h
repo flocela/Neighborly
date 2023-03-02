@@ -34,13 +34,17 @@ public:
 
     AxisFormat axisFormatX () { return _a_format_x; }
     AxisFormat axisFormatY () { return _a_format_y; }
+
+    Letter keyLetter () { return _key_letter; }
+    int keyLetterHeight () { return _key_letter.letterHeight();}
+    int keyLetterHeightInclSpace () { return _key_letter.getHeightIncLSpace();}
+
     Letter titleLetter () { return _title_letter; }
     int titleHeight () { return _title_letter.getHeightIncLSpace();}
-    int keyLetterHeightInclSpace () { return _key_letter.getHeightIncLSpace();}
-    int keyLetterHeight () { return _key_letter.letterHeight();}
-    Letter keyLetter () { return _key_letter; }
-    int startOffsetM () { return _start_offset_m; }
+
     int endOffsetM () { return _end_offset_m; }
+    int startOffsetM () { return _start_offset_m; }
+    
     int minUnitSize() { return _min_unit_size__px;}
 
 private:

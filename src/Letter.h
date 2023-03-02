@@ -14,14 +14,14 @@ class Letter
         Letter& operator= (Letter&& o) = default;
         ~Letter () = default;
 
+        int letterHeight () const {return _letter_height;}
+        int lineSpace () const {return _line_space;}
+        int getHeightIncLSpace () const { return letterHeight() + _line_space;}
+        double widthMultiplier () const { return _width_multiplier;}
+        
         void setLetterHeight (int size);
         void setLineSpace (int space);
         void setWidthMultiplier (double widthMultiplier);
-
-        int letterHeight () const {return _letter_height;}
-        int lineSpace () const {return _line_space;}
-        double widthMultiplier () const { return _width_multiplier;}
-        int getHeightIncLSpace () const { return letterHeight() + _line_space;}
 
     private:
         int _letter_height = 30;

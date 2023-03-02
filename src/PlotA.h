@@ -48,15 +48,8 @@ public:
     PlotA& operator=(PlotA&& o) noexcept = default;
     ~PlotA () = default;
     
-    void print (
-        std::vector<Point> points,
-        bool printAxis,
-        Renderer* renderer) const override;
-
-    void setTopLeft (int xPx, int yPx) override; 
-
-    void setXYSpacePx (int xSpacePx, int ySpacePx) override;
-
+    int getCenterValueOfXAxisPx () const override;
+    
     int getTopLeftXPx () const override;
 
     int getTopLeftYPx () const override;
@@ -69,7 +62,14 @@ public:
 
     int sizeYPx () const override;
 
-    int getCenterValueOfXAxisPx () const override;
+    void print (
+        std::vector<Point> points,
+        bool printAxis,
+        Renderer* renderer) const override;
+
+    void setTopLeft (int xPx, int yPx) override; 
+
+    void setXYSpacePx (int xSpacePx, int ySpacePx) override;
 
 private:
 

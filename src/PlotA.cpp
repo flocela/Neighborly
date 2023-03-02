@@ -76,6 +76,43 @@ PlotA(  sizer,
     )
 {}
 
+
+int PlotA::getCenterValueOfXAxisPx () const
+{
+    return _x_axis.getCenterValXPx();
+}
+
+int PlotA::getTopLeftXPx () const
+{
+    return _top_left_x__px;
+}
+
+int PlotA::getTopLeftYPx () const
+{
+    return _top_left_y__px;
+}
+
+int PlotA::getXSpacePx () const
+{
+    return _x_space__px;
+}
+
+int PlotA::getYSpacePx () const
+{
+    return _y_space__px;
+}
+
+int PlotA::sizeYPx() const
+{  
+    // subraction takes care of double counting of horizontal axis' thickness.
+    return _y_axis.sizeYPx() + _x_axis.sizeYPx() - (_a_format_x.axisThicknessPx()/2);
+}
+
+int PlotA::sizeXPx () const
+{
+    return _y_axis.sizeXPx() + _x_axis.sizeXPx() - (_a_format_y.axisThicknessPx()/2);
+}
+
 void PlotA::print (
     vector<Point> points,
     bool printAxes,
@@ -147,42 +184,6 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.setPxPerUnit(_unit_y__px);
     _y_axis.setTickThickness(tickThickness);
-}
-
-int PlotA::getTopLeftXPx () const
-{
-    return _top_left_x__px;
-}
-
-int PlotA::getTopLeftYPx () const
-{
-    return _top_left_y__px;
-}
-
-int PlotA::getXSpacePx () const
-{
-    return _x_space__px;
-}
-
-int PlotA::getYSpacePx () const
-{
-    return _y_space__px;
-}
-
-int PlotA::sizeYPx() const
-{  
-    // subraction takes care of double counting of horizontal axis' thickness.
-    return _y_axis.sizeYPx() + _x_axis.sizeYPx() - (_a_format_x.axisThicknessPx()/2);
-}
-
-int PlotA::sizeXPx () const
-{
-    return _y_axis.sizeXPx() + _x_axis.sizeXPx() - (_a_format_y.axisThicknessPx()/2);
-}
-
-int PlotA::getCenterValueOfXAxisPx () const
-{
-    return _x_axis.getCenterValXPx();
 }
 
 pair<int, int> PlotA::calcUnitSizeXAndYPx () const

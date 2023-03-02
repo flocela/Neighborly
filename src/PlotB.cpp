@@ -77,6 +77,47 @@ PlotB::PlotB (
     0
 ){}
 
+int PlotB::getCenterValueOfXAxisPx () const 
+{
+    return _x_axis.getCenterValXPx();
+}
+
+int PlotB::getTopLeftXPx () const 
+{
+    return _top_left_x__px;
+}
+
+int PlotB::getTopLeftYPx () const
+{
+    return _top_left_y__px;
+}
+
+int PlotB::getXSpacePx () const
+{
+    return _x_space__px;
+}
+
+int PlotB::getYSpacePx () const
+{
+    return _y_space__px;
+}
+
+int PlotB::sizeXPx () const 
+{
+    // subraction takes care of double counting of horizontal axis' thickness.
+    return
+        _y_axis.sizeXPx() + _x_axis.sizeXPx() - (_a_format_y.axisThicknessPx()/2);
+}
+
+int PlotB::sizeYPx() const
+{  
+    // subraction takes care of double counting of horizontal axis' thickness.
+    return 
+        _y_axis.sizeYPx() +
+        _x_axis.sizeYPx() -
+        (_a_format_x.axisThicknessPx()/2);
+}
+
 void PlotB::print (
     vector<Point> points,
     bool printAxes,
@@ -118,6 +159,7 @@ void PlotB::print (
     }
 }
 
+
 void PlotB::setTopLeft (int topLeftXPx, int topLeftYPx)
 {
     _top_left_x__px = topLeftXPx;
@@ -149,48 +191,6 @@ void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.setPxPerUnit(_unit__px);
     _y_axis.setTickThickness(tickThickness);
-}
-
-int PlotB::getTopLeftXPx () const 
-{
-    return _top_left_x__px;
-}
-
-int PlotB::getTopLeftYPx () const
-{
-    return _top_left_y__px;
-}
-
-int PlotB::getXSpacePx () const
-{
-    return _x_space__px;
-}
-
-int PlotB::getYSpacePx () const
-{
-    return _y_space__px;
-}
-
-int PlotB::sizeXPx () const 
-{
-    // subraction takes care of double counting of horizontal axis' thickness.
-    return
-        _y_axis.sizeXPx() + _x_axis.sizeXPx() - (_a_format_y.axisThicknessPx()/2);
-}
-
-int PlotB::sizeYPx() const
-{  
-    // subraction takes care of double counting of horizontal axis' thickness.
-    return 
-        _y_axis.sizeYPx() +
-        _x_axis.sizeYPx() -
-        (_a_format_x.axisThicknessPx()/2);
-    
-}
-
-int PlotB::getCenterValueOfXAxisPx () const 
-{
-    return _x_axis.getCenterValXPx();
 }
 
 int PlotB::calcUnitSizePx () const
