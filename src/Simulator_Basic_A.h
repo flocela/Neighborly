@@ -19,21 +19,27 @@ public:
     Simulator_Basic_A& operator= (Simulator_Basic_A&& o) = default;
     ~Simulator_Basic_A () = default;
 
-    // simulates one round, where all residents that are unhappy, try to move to a new house.
-    // a resident will be moved,
-    // 1. if they are unhappy (happiness is less than happiness goal).
-    // 2. there is a house that is within their moving distance that would make them happy.
-    // All unhappy residents are given a random turn to move.
-    // If at some point a residentA moves to a house that makes them happy, a subsequent 
-    // residentB may move next to the resident, resulting in changing residentA's happiness
-    // making them happier or unhappier. 
-    std::unordered_map<const House*, Resident*> simulate() override;
+    // simulates one run (or round). 
+    // A run is: Take all residents that are unhappy. Then for each resident,
+    // try to move them to a new house.
+    // Trying to move them to a new house means:
+    // 2. Randomly choose empty houses that are within the resident's allowable movement distance.
+    // 3. See if that house will make them happy. If so, then move them.
+    // 4. Will only try so many houses, (see _num_of_tries) before giving up.
+    //    Then the resident won't move.
+    // 5. It may be the case that there are no empty houses within the allowable movement distance.
+    //    It may be that none of the empty houses within the allowable movement distance will make
+    //    the resident happy. In which case, the resident will not move.
+    // ResidentA may move to a house that makes them happy, then subsequently residentB
+    // may move next to the residentA. This could result in changing residentA's happiness,
+    // making them happier or unhappy. 
+    std::unordered_map<const House*, Resident*> run() override;
 
     std::string toString() override;
 
 private:
     const City* _city;
-    bool _first_simulation_done = false;
+    bool _first_run_done = false;
 
     // all residents
     std::set<Resident*> _residents;
@@ -47,14 +53,14 @@ private:
     // all unoccupied houses
     std::unordered_set<const House*> _open_houses;
 
-    // Number of houses resident will try before, giving up and not moving on this simulation.
+    // Number of houses resident will try before, giving up and not moving on this run.
     int _num_of_tries = 40;
 
-    // in first simulation, no resident has a house. And all residents are assigned a house.
-    void firstSimulation ();
+    // in first run, no resident has a house. And all residents are assigned a house.
+    void firstRun ();
 
-    // all simulations which aren't the first simulation
-    void normalSimulation ();
+    // all runs which aren't the first run
+    void normalRun ();
 
     // Will try to move the resident into a random available house.
     // An available house is an empty house, within the resident's allowable movement distance.

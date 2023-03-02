@@ -18,7 +18,7 @@ class RandSeedGetter
         int _seed_fallback = 1;
 
         std::string _seed_orig_prompt = 
-            "\nEnter the seed number for the random number generator in the simulations. "
+            "\nEnter the seed number for the random number generator in the simulation. "
             " Must be a positive integer. _";
 
 };

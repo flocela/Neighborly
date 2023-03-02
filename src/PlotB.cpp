@@ -149,9 +149,8 @@ void PlotB::print (
         coordinatesPerColor[point.color()].push_back(Coordinate(x, y));
     }
 
-    cout << "Plot B print: " << endl;
     for (auto& pair: coordinatesPerColor)
-    {   cout << "color, number: " << pair.first << ", " << pair.second.size() << endl;
+    {   
         renderer->fillBlocks(
             _dot__px,
             _dot__px,

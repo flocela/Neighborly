@@ -26,16 +26,16 @@ Simulator_Basic_A::Simulator_Basic_A (
     }
 }
 
-unordered_map<const House*, Resident*> Simulator_Basic_A::simulate ()
+unordered_map<const House*, Resident*> Simulator_Basic_A::run ()
 {   
-    if (!_first_simulation_done)
+    if (!_first_run_done)
     {   
-        firstSimulation();
-        _first_simulation_done = true;
+        firstRun();
+        _first_run_done = true;
     }
     else
     {  
-        normalSimulation();
+        normalRun();
     }
     
     setHappinessValuesForAllResidents();
@@ -48,7 +48,7 @@ string Simulator_Basic_A::toString()
     return "Simulator Basic A";
 }
 
-void Simulator_Basic_A::firstSimulation ()
+void Simulator_Basic_A::firstRun ()
 {   
     // make a copy of the set or residents (copy is needed to randomly choose residents)
     unordered_set<Resident*> copySetOfResidents{};
@@ -74,7 +74,7 @@ void Simulator_Basic_A::firstSimulation ()
 
 }
 
-void Simulator_Basic_A::normalSimulation ()
+void Simulator_Basic_A::normalRun ()
 {
     // make a copy of the set or residents (copy needed to randomly choose residents)
     unordered_set<Resident*> copySetOfResidents{};

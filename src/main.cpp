@@ -53,7 +53,7 @@
 #include "City_Grid.h"
 #include "UsePremadeExampleQuestion.h"
 #include "SimulationComponents.h"
-#include "PremadeMainExamples.h"
+#include "PremadeExamplesMenu.h"
 #include "ComponentsFromUserGetter.h"
 #include <chrono>
 #include <ctime>
@@ -109,8 +109,8 @@ int main(int argc, char* argv[])
         bool usesExamples = usePremadeExamplesQuestion.askUser(cmdLine);
         if (usesExamples)
         {   
-            PremadeMainExamples premadeMainExamples;
-            components = premadeMainExamples.userChoosesExample(cmdLine);
+            PremadeExamplesMenu premadeExamplesMenu;
+            components = premadeExamplesMenu.userChoosesExample(cmdLine);
         }
         else
         {
@@ -165,7 +165,7 @@ int main(int argc, char* argv[])
     unordered_map<const House*, const Resident*> constResPerConstHouse;
     for (int ii=0; ii<components.numOfRuns; ii++)
     {   
-        residentPerHouse = components.simulator->simulate();
+        residentPerHouse = components.simulator->run();
 
         // Printer_Graphic requires unordered_map of type CONST House* and CONST Resident*
         constResPerConstHouse={};

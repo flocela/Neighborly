@@ -10,5 +10,5 @@ bool UsePremadeExampleQuestion::askUser (const UI& ui)
         0,
         "Could not tell if you wanted to use the examples, will be using the examples."
     );
-    return userResult; 
+    return (0 == userResult); 
 }

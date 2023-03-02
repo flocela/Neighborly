@@ -5,7 +5,7 @@
 #include "Question_Int_II.h"
 #include "UI.h"
 
-// UINumOfRunsGetter is used to ask the user how many runs should the simulation run.
+// UINumOfRunsGetter is used to ask the user how many runs should the simulation.
 // Uses the command line interface
 class UINumOfRunsGetter
 { 

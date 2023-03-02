@@ -1,4 +1,4 @@
-#include "PremadeMainExamples.h"
+#include "PremadeExamplesMenu.h"
 #include <iostream>
 #include <string>
 #include "City_Grid.h"
@@ -17,7 +17,7 @@ std::set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
     return pointers;
 }
 
-SimulationComponents PremadeMainExamples::userChoosesExample (const UI& ui)
+SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
 {
     SimulationComponents components;
     int chosenExample = ui.menu(
@@ -38,7 +38,7 @@ SimulationComponents PremadeMainExamples::userChoosesExample (const UI& ui)
         //     Unhappy if 25% or more neighbors are different from themselves.
         case 0:
         {
-            components.randomSeed = 6;
+            components.randomSeed = 0;
             
             components.city = std::make_unique<City_Grid>(120);
 
