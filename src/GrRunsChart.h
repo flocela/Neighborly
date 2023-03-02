@@ -19,14 +19,7 @@ public:
         int ySpaceLengthPx,
         Letter titleLetter,
         int numOfRuns
-    ):
-        _x_offset{topLeftCornerXPx},
-        _y_offset{topLeftCornerYPx},
-        _x_space_length__px{xSpaceLengthPx},
-        _y_space_length__px{ySpaceLengthPx},
-        _title_letter{titleLetter},
-        _num_of_runs{numOfRuns}
-    {}
+    );
     GrRunsChart () = delete;
     GrRunsChart (const GrRunsChart& obj) = default;
     GrRunsChart (GrRunsChart&& obj) noexcept = default;

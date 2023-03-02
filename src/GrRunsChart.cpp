@@ -1,6 +1,22 @@
 #include "GrRunsChart.h"
 
 using namespace std;
+
+GrRunsChart::GrRunsChart ( 
+    int topLeftCornerXPx,
+    int topLeftCornerYPx,
+    int xSpaceLengthPx,
+    int ySpaceLengthPx,
+    Letter titleLetter,
+    int numOfRuns
+): _x_offset{topLeftCornerXPx},
+   _y_offset{topLeftCornerYPx},
+   _x_space_length__px{xSpaceLengthPx},
+   _y_space_length__px{ySpaceLengthPx},
+   _title_letter{titleLetter},
+   _num_of_runs{numOfRuns}
+{}
+
 void GrRunsChart::print (int numOfRuns, Renderer* renderer) const
 {   
     renderer->renderText(
