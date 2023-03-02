@@ -51,7 +51,6 @@ void GrCityChart::print(
     );
 }
 
-
 int GrCityChart::sizeXPx ()
 {
     return _plot->sizeXPx();

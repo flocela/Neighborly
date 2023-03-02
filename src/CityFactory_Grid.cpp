@@ -4,6 +4,12 @@
 
 using namespace std;
 
+
+string CityFactory_Grid::cityType () const
+{
+    return "Grid City";
+}
+
 unique_ptr<City> CityFactory_Grid::createCity (
     const UI& ui,
     int deltaX, 
@@ -12,11 +18,6 @@ unique_ptr<City> CityFactory_Grid::createCity (
 {
     int width = askForGridWidth(ui, min(deltaX, deltaY));
     return make_unique<City_Grid>(width);
-}
-
-string CityFactory_Grid::cityType () const
-{
-    return "Grid City";
 }
 
 int CityFactory_Grid::askForGridWidth(const UI& ui, int maxWidth)const

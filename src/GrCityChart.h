@@ -36,11 +36,13 @@ public:
     GrCityChart& operator=(GrCityChart&& o) noexcept = default;
     ~GrCityChart () = default;
 
+    //TODO hsould be const
     void print (
         const std::unordered_map<const House*, const Resident*>& houseToResMap,
         Renderer* renderer
     );
 
+    // TODO should be const
     int sizeXPx();
     int sizeYPx();
 

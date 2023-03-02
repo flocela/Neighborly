@@ -15,18 +15,18 @@ public:
     CityFactory_Grid& operator=(CityFactory_Grid&& obj) noexcept = default;
     ~CityFactory_Grid() = default;
 
+    std::string cityType () const override;
+
     std::unique_ptr<City> createCity (
         const UI& ui, 
         int max_width, 
         int max_height
     ) const override;
     
-    std::string cityType () const override;
 
 private:
-    int askForGridWidth(const UI& ui, int maxWidth) const;
 
-    // prompts to determine with of grid
+    // ask user for grid width with these prompts
     std::string _width_of_grid_orig_prompt =
         "\nEnter the width of the grid, (how many houses per side)?"
         " The minimum width is 1 house. The maximum width is  houses. _";
@@ -38,6 +38,9 @@ private:
         " is 1, maximum allowed width is . _";
     std::string _width_of_grid_failure = 
         "Can not get a proper grid width. Using grid width of .";
+
+    
+    int askForGridWidth(const UI& ui, int maxWidth) const;
     
     // inserts additional string at location
     std::string insertIntoString (

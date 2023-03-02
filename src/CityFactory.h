@@ -11,14 +11,15 @@
 class CityFactory
 {
 public:
+    
+    // returns the name of the type of cities that are produced.
+    virtual std::string cityType () const = 0; 
+    
     virtual std::unique_ptr<City> createCity (
         const UI& ui, 
         int max_width, 
         int max_height
     ) const = 0;
-
-    // returns the name of the type of cities that are produced.
-    virtual std::string cityType () const = 0; 
 };
 
 #endif

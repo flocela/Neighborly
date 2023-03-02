@@ -35,49 +35,6 @@ GrColorKey::GrColorKey (
    setAttributes(); 
 }
 
-void GrColorKey::setAttributes ()
-{
-    // create vector of groupIds, then order vector
-    std::vector<int> groupIds;
-    for (auto itr = _b_color_per_groupId.begin(); itr != _b_color_per_groupId.end(); ++itr)
-    {
-        groupIds.push_back(itr->first);
-    }
-    std::sort(groupIds.begin(), groupIds.end());
-
-    // populate vector _label_per_color with pairs.
-    // each pair is the group color and the groupId string.
-    // while creating vector, keep track of longest string for later use in column size.
-    int longestString = 0;
-
-    for (int& groupId : groupIds)
-    {
-        BaseColor baseColor = _b_color_per_groupId[groupId];
-        for (auto mood : _moods)
-        {
-            string label = "Group: " + to_string(groupId);
-            if (mood != Mood::neutral)
-            {
-                label = label + " " + _colorrs_map[baseColor][mood]._mood_name;
-            }
-
-            _label_per_color.push_back({_colorrs_map[baseColor][mood]._color, label});
-
-            int textWidth = (int)(label.length() *
-                _label_letter.widthMultiplier() *
-                _label_letter.letterHeight());
-
-            if (textWidth > longestString)
-            {
-                longestString = textWidth;
-            }
-        }
-    }
-
-    _column_width = longestString + _box_length__px + _box_spacer__px + 2 * _column_border__px;
-}
-
-
 void GrColorKey::print (Renderer* renderer)
 {   
     // Printed as a series of columns.
@@ -130,14 +87,20 @@ void GrColorKey::print (Renderer* renderer)
     }
 }
 
-void GrColorKey::setTopCenter (int xPx, int yPx) {
-    _top_center_x__px = xPx;
-    _top_center_y__px = yPx;
-}
-
 int GrColorKey::sizeXPx ()
 {
     return _b_color_per_groupId.size() * _moods.size() * _column_width;
+}
+
+int GrColorKey::sizeYPx ()
+{
+    return _label_letter.getHeightIncLSpace();
+}
+
+
+void GrColorKey::setTextBackgroundColor (SDL_Color color)
+{
+    _text_background_color = color;
 }
 
 void GrColorKey::setTextColor (SDL_Color color)
@@ -145,12 +108,49 @@ void GrColorKey::setTextColor (SDL_Color color)
     _text_color = color;
 }
 
-void GrColorKey::setTextBackgroundColor (SDL_Color color)
-{
-    _text_background_color = color;
+void GrColorKey::setTopCenter (int xPx, int yPx) {
+    _top_center_x__px = xPx;
+    _top_center_y__px = yPx;
 }
 
-int GrColorKey::sizeYPx ()
+void GrColorKey::setAttributes ()
 {
-    return _label_letter.getHeightIncLSpace();
+    // create vector of groupIds, then order vector
+    std::vector<int> groupIds;
+    for (auto itr = _b_color_per_groupId.begin(); itr != _b_color_per_groupId.end(); ++itr)
+    {
+        groupIds.push_back(itr->first);
+    }
+    std::sort(groupIds.begin(), groupIds.end());
+
+    // populate vector _label_per_color with pairs.
+    // each pair is the group color and the groupId string.
+    // while creating vector, keep track of longest string for later use in column size.
+    int longestString = 0;
+
+    for (int& groupId : groupIds)
+    {
+        BaseColor baseColor = _b_color_per_groupId[groupId];
+        for (auto mood : _moods)
+        {
+            string label = "Group: " + to_string(groupId);
+            if (mood != Mood::neutral)
+            {
+                label = label + " " + _colorrs_map[baseColor][mood]._mood_name;
+            }
+
+            _label_per_color.push_back({_colorrs_map[baseColor][mood]._color, label});
+
+            int textWidth = (int)(label.length() *
+                _label_letter.widthMultiplier() *
+                _label_letter.letterHeight());
+
+            if (textWidth > longestString)
+            {
+                longestString = textWidth;
+            }
+        }
+    }
+
+    _column_width = longestString + _box_length__px + _box_spacer__px + 2 * _column_border__px;
 }
