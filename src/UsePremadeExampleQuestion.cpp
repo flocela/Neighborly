@@ -1,8 +1,8 @@
-#include "MainBaseQuestion.h"
+#include "UsePremadeExampleQuestion.h"
 #include <vector>
 #include <string>
 
-bool MainBaseQuestion::askUserToUsePremadeExamples (const UI& ui)
+bool UsePremadeExampleQuestion::askUser (const UI& ui)
 {
     int userResult = ui.menu(
         "\nFirst time here? Maybe just run one of the examples. Type 1 or 2.",
@@ -10,5 +10,5 @@ bool MainBaseQuestion::askUserToUsePremadeExamples (const UI& ui)
         0,
         "Could not tell if you wanted to use the examples, will be using the examples."
     );
-    return (0 == userResult); 
+    return userResult; 
 }

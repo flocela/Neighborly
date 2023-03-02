@@ -1,5 +1,5 @@
-#ifndef MAIN_EXAMPLES_H
-#define MAIN_EXAMPLES_H
+#ifndef PREMADE_MAIN_EXAMPLES_H
+#define PREMADE_MAIN_EXAMPLES_H
 
 #include <vector>
 #include <memory>
@@ -9,7 +9,7 @@
 #include "Simulator.h"
 #include "SimulationComponents.h"
 
-class MainExamples
+class PremadeMainExamples
 {
 public:
     SimulationComponents userChoosesExample (const UI& ui);

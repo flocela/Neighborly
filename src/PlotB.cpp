@@ -1,5 +1,6 @@
 #include "PlotB.h"
 
+#include <iostream>
 using namespace std;
 
 // PlotB has the same pixels per unit in the x and y directions
@@ -148,8 +149,9 @@ void PlotB::print (
         coordinatesPerColor[point.color()].push_back(Coordinate(x, y));
     }
 
+    cout << "Plot B print: " << endl;
     for (auto& pair: coordinatesPerColor)
-    {
+    {   cout << "color, number: " << pair.first << ", " << pair.second.size() << endl;
         renderer->fillBlocks(
             _dot__px,
             _dot__px,

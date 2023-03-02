@@ -51,10 +51,10 @@
 #include "Simulator_Basic_A.h"
 #include "Color.h"
 #include "City_Grid.h"
-#include "MainBaseQuestion.h"
+#include "UsePremadeExampleQuestion.h"
 #include "SimulationComponents.h"
-#include "MainExamples.h"
-#include "UserComponentsGetter.h"
+#include "PremadeMainExamples.h"
+#include "ComponentsFromUserGetter.h"
 #include <chrono>
 #include <ctime>
 
@@ -92,14 +92,12 @@ int main(int argc, char* argv[])
     (void) argv;
 
     bool useFile = false;
-    const vector<unique_ptr<const CityFactory>> cityFactories = initCityFactories();
-    const vector<unique_ptr<const ResidentsFactory>> residentFactories = initResidentFactories();
 
+    // components will be populated by file, by premade examples, or by user choices.
     SimulationComponents components;
 
     const UI_CMDLine cmdLine{};
 
-    
     if (useFile)
     {
         SimulationStarter simulationStarter{};
@@ -107,17 +105,19 @@ int main(int argc, char* argv[])
     }
     else
     {
-        MainBaseQuestion mainQuestion;
-        bool usesExamples = mainQuestion.askUserToUsePremadeExamples(cmdLine);
+        UsePremadeExampleQuestion usePremadeExamplesQuestion;
+        bool usesExamples = usePremadeExamplesQuestion.askUser(cmdLine);
         if (usesExamples)
         {   
-            MainExamples mainExamples; //TODO add randomSeed number to MainExamples
-
-            components = mainExamples.userChoosesExample(cmdLine);
+            PremadeMainExamples premadeMainExamples;
+            components = premadeMainExamples.userChoosesExample(cmdLine);
         }
         else
         {
-            UserComponentsGetter userComponentsGetter{};
+            const vector<unique_ptr<const CityFactory>> cityFactories = initCityFactories();
+            const vector<unique_ptr<const ResidentsFactory>> residentFactories =
+                initResidentFactories();
+            ComponentsFromUserGetter userComponentsGetter{};
             components = userComponentsGetter.askUserForComponents(
                 cmdLine,
                 cityFactories,
@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
         }
     }
     
-    // sets srand with randomSeed
+    // set srand with randomSeed
     srand(components.randomSeed);
     
     vector<const House*> houses = components.city->getHouses();
