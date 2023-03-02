@@ -6,9 +6,11 @@
 using namespace std;
 
 Printer_CMDLine::Printer_CMDLine (
+    unordered_map<int, BaseColor> baseColorsPerGroupid,
     int maxNumofRuns,
     City* cityPtr
-):  _max_num_of_runs{maxNumofRuns},
+):  _base_colors_per_groupid{baseColorsPerGroupid},
+    _max_num_of_runs{maxNumofRuns},
     _city_ptr{cityPtr}
 {
     for (const House* house : cityPtr->getHouses())
@@ -30,7 +32,7 @@ void Printer_CMDLine::print(
     }
 
     // Print out run number
-    std::cout << "run: " << run << endl;
+    cout << "run: " << run << endl;
 
     // Collect data for diversity per group and happiness per group.
     // for each groupid, will need the number of residents in group,
@@ -78,22 +80,36 @@ void Printer_CMDLine::print(
         numOfResidentsPerGroupId[residentGroupId] += 1;
     }
 
-    // Print out Diversity and Happiness
-    std::cout << "GroupID:: Diversity, Happiness: "<< endl;
+    // sort group ids
+    
     vector<int> groupIDs{};
     for (auto groupIDAndCount : numOfResidentsPerGroupId)
     {
         groupIDs.push_back(groupIDAndCount.first);
     }
     sort(groupIDs.begin(), groupIDs.end());
+
+    // Print out color groups
+    cout << "Base Colors Per Group IDs:" << endl;
+
+    for (int groupID: groupIDs)
+    {
+        cout << groupID << ":: " << _base_colors_per_groupid.at(groupID)<< endl;
+    }
+
+    cout << endl;
+
+    // Print out Diversity and Happiness
+    cout << "GroupID:: Diversity, Happiness: "<< endl;
+
     for (int groupID : groupIDs)
     {
         int numResidents = numOfResidentsPerGroupId[groupID];
         int numDiffNeighbors = numOfDiffNeighborsPerGroupId[groupID];
-        std::cout << groupID << ":: " << (double)numDiffNeighbors/numResidents << 
-        ", " << happinessSumPerGroup[groupID]/numOfResidentsPerGroupId[groupID] << endl;
+        cout << groupID << ":: " << (double)numDiffNeighbors/numResidents << 
+            ", " << happinessSumPerGroup[groupID]/numOfResidentsPerGroupId[groupID] << endl;
     }
-    std::cout << endl;
+    cout << endl;
     
     // Print out city map
     unordered_map<int, char> characterPerAddress{};
@@ -113,7 +129,7 @@ void Printer_CMDLine::print(
     }
     
     cout << _city_ptr->toString(characterPerAddress) << endl;
-    std::cout << endl;
+    cout << endl;
     
 
 } 

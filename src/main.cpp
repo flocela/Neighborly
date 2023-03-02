@@ -155,7 +155,11 @@ int main(int argc, char* argv[])
         components.numOfRuns
     };
 
-    Printer_CMDLine cmdLinePrinter{components.numOfRuns, components.city.get()};
+    Printer_CMDLine cmdLinePrinter{
+        components.baseColorsPerGroupid,
+        components.numOfRuns,
+        components.city.get()
+    };
     
     unordered_map<const House*, Resident*> residentPerHouse;
     unordered_map<const House*, const Resident*> constResPerConstHouse;

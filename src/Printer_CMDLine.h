@@ -3,13 +3,16 @@
 
 #include <vector>
 #include <unordered_map>
-#include "Printer.h"
+
 #include "City.h"
+#include "Color.h"
+#include "Printer.h"
 
 class Printer_CMDLine : public Printer
 {   
 public:
     Printer_CMDLine (
+        std::unordered_map<int, BaseColor> baseColorsPerGroupid,
         int maxNumOfRuns,
         City* cityPtr
     );
@@ -27,10 +30,12 @@ public:
     ) const override;
 
 private:
+    std::unordered_map<int, BaseColor> _base_colors_per_groupid{};
+
     int _max_num_of_runs;
 
     City* _city_ptr;
-    
+
     std::unordered_map<const House*, std::set<const House*>> _adj_neighbors;
 
     // used for printing residents. happy characters per group Id.
