@@ -30,18 +30,7 @@ public:
         int topLeftYPx,
         int xSpace,
         int ySpace
-    ):  _b_color_per_groupId{colors},
-        _moods{moods},
-        _adj_neighbors{adjacentNeighbors},
-        _title{move(title)},
-        _key{move(colorKey)},
-        _plot{std::move(plot)}
-    {   
-        _plot->setTopLeft(topLeftXPx, topLeftYPx + _title->sizeYPx() + _key->sizeYPx());
-        _plot->setXYSpacePx(xSpace, ySpace - _title->sizeYPx() - _key->sizeYPx());
-        _title->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx);
-        _key->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx + _title->sizeYPx());
-    }
+    );
 
     GrDvstyChart () = delete;
     GrDvstyChart (const GrDvstyChart& o) = default;

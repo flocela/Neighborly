@@ -26,16 +26,7 @@ public:
         int topLeftYPx,
         int xSpace,
         int ySpace
-    ): _colors{colors},
-    _title{move(title)},
-    _key{move(colorKey)},
-    _plot{std::move(plot)}
-    {   
-        _plot->setTopLeft(topLeftXPx, topLeftYPx + _title->sizeYPx() + _key->sizeYPx());
-        _plot->setXYSpacePx(xSpace, ySpace - _title->sizeYPx() - _key->sizeYPx());
-        _title->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx);
-        _key->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx + _title->sizeYPx());
-    }
+    );
 
     GrHapChart () = delete;
     GrHapChart (const GrHapChart& o) = default;
