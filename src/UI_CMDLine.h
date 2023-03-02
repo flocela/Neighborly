@@ -19,6 +19,8 @@ public:
     UI_CMDLine& operator=(UI_CMDLine&& o) noexcept = default;
     ~UI_CMDLine () = default;
 
+    std::string getAnswer (Question& question) const override;
+
     int menu (
         std::string prompt,
         std::vector<std::string> items,
@@ -26,8 +28,6 @@ public:
         std::string failureResponse
     ) const override;
     
-    std::string getAnswer (Question& question) const override;
-
 private:
     int _max_num_of_tries = 3;
 

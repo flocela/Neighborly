@@ -19,8 +19,6 @@ private:
     // if can not get num of runs from user, then use _fall_back_num_of_runs
     int _fallback_num_of_runs = 20;
 
-    Question_Int_II createQuestionForNumOfRuns (int maxNumOfRuns);
-
     std::string _num_of_runs_orig_prompt = 
         "\n How many runs should the simulation have? Must be a positive number. _";
     
@@ -33,6 +31,8 @@ private:
 
     std::string _num_of_runs_failure_str = 
         "Could not determine the number of runs, will be using .";
+
+    Question_Int_II createQuestionForNumOfRuns (int maxNumOfRuns);
 
 };
 
