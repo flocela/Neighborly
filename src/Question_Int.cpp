@@ -111,7 +111,7 @@ bool Question_Int::tryAnswer (string ans)
         _next_prompt = &_invalid_prompt;
         return false;
     }
-    if (intAnswer < _min || intAnswer > _max)
+    if (!rangeFunction(_min, _max, intAnswer))
     {   
         _next_prompt = &_range_prompt;
         return false;

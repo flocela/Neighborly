@@ -56,6 +56,7 @@ private:
 
 protected:
     virtual bool rangeFunction (int min, int max, int val) const = 0;
+    
     std::string  _range_prompt = "That integer is not in range. Should be in the range . _";
 
 };

@@ -52,6 +52,7 @@ public:
     Question_Double_EI& operator= (const Question_Double_EI& o) = default;
     Question_Double_EI& operator= (Question_Double_EI&& o) noexcept = default;
 
+protected:
     bool rangeFunction (double min, double max, double val) const override
     {
         return (val > min && val <= max);

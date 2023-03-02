@@ -1,6 +1,13 @@
 #include "RandSeedGetter.h"
 
 using namespace std;
+
+int RandSeedGetter::makeSeedForRand (const UI& ui)
+{
+    Question_Int_II question = createQuestionForSeed();
+    return stoi(ui.getAnswer(question));
+}
+
 Question_Int_II RandSeedGetter::createQuestionForSeed ()
 {
     return Question_Int_II{
@@ -11,10 +18,4 @@ Question_Int_II RandSeedGetter::createQuestionForSeed ()
         _seed_orig_prompt,
         "seed number for the random generator"
     };
-}
-
-int RandSeedGetter::makeSeedForRand (const UI& ui)
-{
-    Question_Int_II question = createQuestionForSeed();
-    return stoi(ui.getAnswer(question));
 }

@@ -55,6 +55,7 @@ public:
     Question_Double_II& operator= (Question_Double_II&& o) noexcept = default;
     ~Question_Double_II () = default;
 
+protected:
     bool rangeFunction (double min, double max, double val) const override
     {
         return (val >= min && val <= max);
