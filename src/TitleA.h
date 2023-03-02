@@ -50,35 +50,9 @@ public:
     TitleA& operator=(TitleA&& o) noexcept = default;
     ~TitleA () = default;
 
-    int sizeXPx() { return _title.length() * _l.letterHeight() * _l.widthMultiplier(); }
+    int getLetterHeight () override { return _l.letterHeight(); }
 
-    int sizeYPx() { return _l.getHeightIncLSpace(); }
-
-    void setLetterHeight (int height) { _l.setLetterHeight(height);}
-
-    // height of space below the title
-    void setLineSpace (int height)  { _l.setLineSpace(height);}
-
-    void setTitle (std::string title ) {_title = title;}
-
-    void setTopCenter (int xPx, int yPx) override{
-        _top_center_x__px = xPx; 
-        _top_center_y__px = yPx;
-    }
-
-    void setTextColor (SDL_Color color) 
-    {
-        _text_color = color;
-    }
-
-    void setTextBackgroundColor (SDL_Color color)
-    {
-        _text_background_color = color;
-    }
-
-    int getLetterHeight () { return _l.letterHeight(); }
-
-    int getLineSpace () { return _l.lineSpace(); }
+    int getLineSpace () override { return _l.lineSpace(); }
 
     void print (Renderer* renderer) const override {
         renderer->renderText(
@@ -90,6 +64,32 @@ public:
             _text_color,
             _text_background_color,
             1);
+    }
+
+    int sizeXPx() { return _title.length() * _l.letterHeight() * _l.widthMultiplier(); }
+
+    int sizeYPx() { return _l.getHeightIncLSpace(); }
+
+    void setLetterHeight (int height) override { _l.setLetterHeight(height);}
+
+    // height of space below the title
+    void setLineSpace (int height) override { _l.setLineSpace(height);}
+
+    void setTextColor (SDL_Color color) override
+    {
+        _text_color = color;
+    }
+
+    void setTitle (std::string title) override {_title = title;}
+
+    void setTextBackgroundColor (SDL_Color color) override
+    {
+        _text_background_color = color;
+    }
+
+    void setTopCenter (int xPx, int yPx) override{
+        _top_center_x__px = xPx; 
+        _top_center_y__px = yPx;
     }
 
 private:

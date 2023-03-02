@@ -73,12 +73,13 @@ private:
     // Removes @newHouse from _open_houses.
     void moveResidentIntoHouse (Resident* res, const House* newHouse);
 
+    void setHappinessValuesForAllResidents();
+
+    double calculateHappinessValueFor(Resident* res, int address);
+
     // Returns residents that live in @houses. If a house is empty, then 
     // returned set will be smaller than @houses.
     std::set<Resident*> getResidentsInTheseHouses(std::set<const House*> houses);
-    void setHappinessValuesForAllResidents();
-    double calculateHappinessValueFor(Resident* res, int address);
-        
 };
 
 #endif

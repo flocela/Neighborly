@@ -43,6 +43,11 @@ unordered_map<const House*, Resident*> Simulator_Basic_A::simulate ()
     return _res_per_house;
 }
 
+string Simulator_Basic_A::toString()
+{
+    return "Simulator Basic A";
+}
+
 void Simulator_Basic_A::firstSimulation ()
 {   
     // make a copy of the set or residents (copy is needed to randomly choose residents)
@@ -186,9 +191,4 @@ set<Resident*> Simulator_Basic_A::getResidentsInTheseHouses (set<const House*> h
         } 
     }
     return residents;
-}
-
-string Simulator_Basic_A::toString()
-{
-    return "Simulator Basic A";
 }

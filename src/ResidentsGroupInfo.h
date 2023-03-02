@@ -10,8 +10,10 @@
 class ResidentsGroupInfo
 {
 public:
-    std::vector<std::unique_ptr<Resident>> _residents;
+
     std::unordered_map<int, BaseColor> _base_color_per_group_num;
+    std::vector<std::unique_ptr<Resident>> _residents;
+
 };
 
 #endif
