@@ -28,6 +28,19 @@ AxisBottomToTopL::AxisBottomToTopL (
     _end_offset_m{endOffsetMultiplier}
 {}
 
+int AxisBottomToTopL::getAxisLengthPx () const
+{
+    return _y_cross__px - calcTopMostPixelWithValue_Y() +  _tick_thickness__px/2 + 1;
+}
+
+int AxisBottomToTopL::getPixel (double yVal) const
+{   
+    int isEven = (_px_per_unit%2==0)? 1 : 0;
+    int minYPx = _y_cross__px - (_start_offset_m * _px_per_unit);
+    int retVal = minYPx - (_px_per_unit * (yVal - _min_val)) + isEven;
+    return retVal;
+}
+
 void AxisBottomToTopL::print (Renderer* renderer) const
 {
     std::vector<SDL_Rect> rects = {};
@@ -38,6 +51,21 @@ void AxisBottomToTopL::print (Renderer* renderer) const
 
     renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
     renderer->renderTexts(texts);
+}
+
+int AxisBottomToTopL::sizeXPx () const
+{  
+    // Three is max number of digits in the y-axis label.
+    return 
+        (3) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
+        _text_spacer +
+        _axis_format.majTickLengthOutsideChartPx() +
+        _axis_format.axisThicknessPx();
+}
+
+int AxisBottomToTopL::sizeYPx () const
+{
+    return getAxisLengthPx();
 }
 
 void AxisBottomToTopL::moveCrossHairs (int xPx, int yPx)
@@ -57,34 +85,6 @@ void AxisBottomToTopL::setPxPerUnit (int pixels)
 void AxisBottomToTopL::setTickThickness (int tickThicknessPx) 
 {
     _tick_thickness__px = tickThicknessPx;
-}
-
-int AxisBottomToTopL::sizeXPx () const
-{  
-    // Three is max number of digits in the y-axis label.
-    return 
-        (3) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
-        _text_spacer +
-        _axis_format.majTickLengthOutsideChartPx() +
-        _axis_format.axisThicknessPx();
-}
-
-int AxisBottomToTopL::sizeYPx () const
-{
-    return getAxisLengthPx();
-}
-
-int AxisBottomToTopL::getPixel (double yVal) const
-{   
-    int isEven = (_px_per_unit%2==0)? 1 : 0;
-    int minYPx = _y_cross__px - (_start_offset_m * _px_per_unit);
-    int retVal = minYPx - (_px_per_unit * (yVal - _min_val)) + isEven;
-    return retVal;
-}
-
-int AxisBottomToTopL::getAxisLengthPx () const
-{
-    return _y_cross__px - calcTopMostPixelWithValue_Y() +  _tick_thickness__px/2 + 1;
 }
 
 void AxisBottomToTopL::printVerticalLine (std::vector<SDL_Rect>& rects) const

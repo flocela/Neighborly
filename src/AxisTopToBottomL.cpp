@@ -27,6 +27,19 @@ AxisTopToBottomL::AxisTopToBottomL (
     _end_offset_m{endOffsetMultiplier}
 {}
 
+int AxisTopToBottomL::getAxisLengthPx() const
+{
+    int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
+    // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
+    return calcBotMostPixel_Y() - _y_cross__px - unit_px_even + (_tick_thickness__px/2);
+}
+
+int AxisTopToBottomL::getPixel (double yVal) const
+{
+    int minYPx = _y_cross__px + ( _start_offset_m * _px_per_unit );
+    return minYPx + _px_per_unit * (yVal - _min_val);
+}
+
 void AxisTopToBottomL::print (Renderer* renderer) const
 {   
     std::vector<SDL_Rect> rects = {};
@@ -37,7 +50,20 @@ void AxisTopToBottomL::print (Renderer* renderer) const
 
     renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
     renderer->renderTexts(texts);
+}
 
+int AxisTopToBottomL::sizeXPx () const
+{
+    // todo am I assuming 3 digits in label size? As in 999?
+    return 
+        3 * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
+        _axis_format.majTickLengthOutsideChartPx() +
+        _axis_format.axisThicknessPx();
+}
+
+int AxisTopToBottomL::sizeYPx() const
+{
+    return getAxisLengthPx();
 }
 
 void AxisTopToBottomL::moveCrossHairs (int xPx, int yPx)
@@ -59,32 +85,6 @@ void AxisTopToBottomL::setTickThickness (int tickThicknessPx)
     _tick_thickness__px = tickThicknessPx;
 }
 
-int AxisTopToBottomL::sizeXPx () const
-{
-    // todo am I assuming 3 digits in label size? As in 999?
-    return 
-        3 * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
-        _axis_format.majTickLengthOutsideChartPx() +
-        _axis_format.axisThicknessPx();
-}
-
-int AxisTopToBottomL::sizeYPx() const
-{
-    return getAxisLengthPx();
-}
-
-int AxisTopToBottomL::getPixel (double yVal) const
-{
-    int minYPx = _y_cross__px + ( _start_offset_m * _px_per_unit );
-    return minYPx + _px_per_unit * (yVal - _min_val);
-}
-
-int AxisTopToBottomL::getAxisLengthPx() const
-{
-    int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
-    // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
-    return calcBotMostPixel_Y() - _y_cross__px - unit_px_even + (_tick_thickness__px/2);
-}
 
 void AxisTopToBottomL::printVerticalLine (std::vector<SDL_Rect>& rects) const
 {

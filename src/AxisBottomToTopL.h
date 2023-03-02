@@ -28,20 +28,24 @@ class AxisBottomToTopL
         AxisBottomToTopL& operator=(AxisBottomToTopL&& o) noexcept = default;
         ~AxisBottomToTopL () = default;
 
-        void print (Renderer* renderer) const;
-        void moveCrossHairs (int xPx, int yPx);
-        void setPxPerUnit (int pixels);
-        void setTickThickness (int tickThicknessPx);
-
-        int sizeXPx() const;
-        int sizeYPx() const;
+        int getAxisLengthPx () const;
 
         // returns the y-pixel for yVal. If pxPerUnit is odd, then result is at center of unit.
         // If pxPerUnit is even, then center is denoted by two pixels,
         // and the result is the first pixel. (The first pixel is from the cross hairs or _y_cross__px.)
         int getPixel (double yVal) const;
-
-        int getAxisLengthPx () const;
+        
+        void print (Renderer* renderer) const;
+        
+        int sizeXPx() const;
+        
+        int sizeYPx() const;
+        
+        void moveCrossHairs (int xPx, int yPx);
+        
+        void setPxPerUnit (int pixels);
+        
+        void setTickThickness (int tickThicknessPx);
 
     private:
         AxisFormat _axis_format;
