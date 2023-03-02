@@ -28,7 +28,7 @@ TEST_CASE("getAdjacentHouses() for corner house (3 neighbors) ")
     std::vector<const House*> houses = city.getHouses();
 
     const House* cornerHouse = houses[0]; // house[0] is at (0,0).
-    std::set<const House*> adjToCorner = city.getAdjacentHouses(cornerHouse->getAddress());
+    std::set<const House*> adjToCorner = city.getHousesAdjacent(cornerHouse->getAddress());
     std::set<const House*> actualAdjToCorner = {};
     actualAdjToCorner.insert(houses[1]);
     actualAdjToCorner.insert(houses[6]);
@@ -43,7 +43,7 @@ TEST_CASE("getAdjacentHouses() for edge house (5 neighbors)")
     std::vector<const House*> houses = city.getHouses();
 
     const House* edgeHouse = houses[12];
-    std::set<const House*> adjToEdgeHoues = city.getAdjacentHouses(edgeHouse->getAddress());
+    std::set<const House*> adjToEdgeHoues = city.getHousesAdjacent(edgeHouse->getAddress());
     std::set<const House*> actualAdj = {};
     actualAdj.insert(houses[6]);
     actualAdj.insert(houses[7]);
@@ -60,7 +60,7 @@ TEST_CASE("getAdjacentHouses() for house in middle of grid (8 neighbors)")
     std::vector<const House*> houses = city.getHouses();
 
     const House* house = houses[15];
-    std::set<const House*> adjToHouse = city.getAdjacentHouses(house->getAddress());
+    std::set<const House*> adjToHouse = city.getHousesAdjacent(house->getAddress());
     std::set<const House*> actualAdj = {};
     actualAdj.insert(houses[8]);
     actualAdj.insert(houses[9]);

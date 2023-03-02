@@ -138,7 +138,7 @@ int main(int argc, char* argv[])
     unordered_map<const House*, set<const House*>> neighboringHousesPerHouse;
     for (const House* house : houses)
     {   
-        neighboringHousesPerHouse[house] = components.city->getAdjacentHouses(house->getAddress());
+        neighboringHousesPerHouse[house] = components.city->getHousesAdjacent(house->getAddress());
     }
 
     unique_ptr<Renderer> renderer = make_unique<Renderer>(

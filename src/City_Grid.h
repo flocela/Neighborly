@@ -8,6 +8,7 @@
 class City_Grid: public City
 {
 public:
+
     // Grid is a square grid.
     // How are addresses determined? Left to right, then down.
     // Example of grid with a width of 3:
@@ -27,37 +28,23 @@ public:
     City_Grid& operator=(City_Grid&& o) noexcept = default;
     ~City_Grid () = default;
 
-    int getNumOfHouses() const override;
-
+    double getHeight() const override;
     double getWidth() const override;
 
-    double getHeight() const override;
-
-    std::vector<const House*> getHouses () const override;
+    Coordinate getCoordinate (const int& address) const override;
+    std::unordered_map<const House*, Coordinate> getCoordinatesPerHouse();
 
     double getDist ( const int& from_address,  const int& to_address) const override;
-    
-    std::set<const House*> getAdjacentHouses (int address) const override;
-
-    //TODO only used in SimulatorE, so if SimulatorE is deleted, then delete this method.
-    //If not then check this method.
-    std::unordered_set<const House*> getHousesWithinDistance (
-        const House* house, 
-        double allowableDist,
-        std::unordered_set<House*>& nearHouses,
-        std::set<const House*> notOccupied
-    ) const override;
-
     // TODO shouldn't be using a refernce to get houses. Should return them.
-    std::unordered_set<const House*> findHousesWithinDistance (
+    std::unordered_set<const House*> getHousesWithinDistance (
         const House* house,
         double allowableDist
     ) const override;
 
-    Coordinate getCoordinate (const int& address) const override;
+    int getNumOfHouses() const override;
+    std::vector<const House*> getHouses () const override;
+    std::set<const House*> getHousesAdjacent (int address) const override;
     
-    std::unordered_map<const House*, Coordinate> getCoordinatesPerHouse();
-
     std::string toString (const std::unordered_map<int, char>& characterPerAddress) override;
 
 private:
@@ -71,14 +58,16 @@ private:
 
     std::map<int, House*> _house_per_address;
 
-    // Returns a random house from @setOfHouses.
-    const House* selectRandom (std::unordered_set<const House*>& setOfHouses) const;
-    
     // Returns x value of @address
     int get_x (const int& address) const;
 
     // Returns y value of @address.
     int get_y (const int& address) const;
+
+    // Returns a random house from @setOfHouses.
+    const House* selectRandom (std::unordered_set<const House*>& setOfHouses) const;
+    
+
 
 };
 

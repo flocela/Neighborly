@@ -23,9 +23,9 @@ City_Grid::City_Grid (int width):
   	}
 }
 
-int City_Grid::getNumOfHouses() const
+double City_Grid::getHeight() const
 {
-	return _houses.size();
+	return _width;
 }
 
 double City_Grid::getWidth() const
@@ -33,19 +33,20 @@ double City_Grid::getWidth() const
 	return _width;
 }
 
-double City_Grid::getHeight() const
+Coordinate City_Grid::getCoordinate(const int& address) const
 {
-	return _width;
+	return Coordinate{get_x(address), get_y(address)};
 }
 
-vector<const House*> City_Grid::getHouses () const
-{	
-	vector<const House*> houses;
-	for (auto& house : _houses)
-	{	
-		houses.push_back(house.get());
+unordered_map<const House*, Coordinate> City_Grid::getCoordinatesPerHouse()
+{
+	unordered_map<const House*, Coordinate> coordinatesPerHouse{};
+	for (auto& pair : _house_per_address)
+	{
+		coordinatesPerHouse.emplace(pair.second, getCoordinate(pair.first));
 	}
-	return houses;
+
+	return coordinatesPerHouse;
 }
 
 
@@ -56,43 +57,8 @@ double City_Grid::getDist (const int& fromAddress, const int& toAddress) const
   	return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
 }
 
-// TODO just keep a map of house to set of adjacent houses
-set<const House*> City_Grid::getAdjacentHouses (int address) const
-{
-	int largestAddress = getNumOfHouses() - 1;
-	
-	set<const House*> adjacentHouses = {};
 
-	int topLeft = address - _width - 1;
-
-	for (int ii=0; ii<=2; ++ii)
-	{
-		// add neighbors from row above.
-		int neighborAddress = topLeft + ii;
-		if (neighborAddress >= 0 && neighborAddress <= largestAddress)
-		{
-			adjacentHouses.insert(_houses[neighborAddress].get());
-		}
-
-		// add neighbors from left and right
-		neighborAddress = topLeft + _width + ii;
-		if (neighborAddress >= 0 && neighborAddress <= largestAddress && neighborAddress != address)
-		{
-			adjacentHouses.insert(_houses[neighborAddress].get());
-		}
-
-		// add neighbors from row below.
-		neighborAddress = topLeft + 2 * _width + ii;
-		if (neighborAddress >= 0 && neighborAddress <= largestAddress)
-		{
-			adjacentHouses.insert(_houses[neighborAddress].get());
-		}
-	}
-
-	return adjacentHouses;
-}
-
-unordered_set<const House*> City_Grid::findHousesWithinDistance (
+unordered_set<const House*> City_Grid::getHousesWithinDistance (
         const House* house,
         double allowableDist
     ) const
@@ -172,161 +138,56 @@ unordered_set<const House*> City_Grid::findHousesWithinDistance (
 	return housesWithinDistance;
 }
 
-// TODO, this method needs to be properly tested.
-// Does not include @house in returned set.
-// TODO delete this if it's only being used in Simulation B.
-// TODO has not been checked at all.
-// TODO what if allowableDist == 0?
-unordered_set<const House*> City_Grid::getHousesWithinDistance (
-	const House* house, 
-	double allowableDist,
-	unordered_set<House*>& nearHouses,
-	set<const House*> notOccupied
-) const
-{ 	//set<House*> nearHouses;
-	int origAddress = house->getAddress();
-	int origX = get_x(origAddress);
-	int origY = get_y(origAddress);
-	int minX = max(origX - (int)ceil(allowableDist), _minX);
-	int maxX = min(origX + (int)ceil(allowableDist), _maxX);
-	int minY = max(origY - (int)ceil(allowableDist), _minY);
-	int maxY = min(origY + (int)ceil(allowableDist), _maxY);
 
-	// houses within allowableDistance trace out a circle. 
-	// find houses within allowableDistance above or equal original house.
-	int yy = minY;
-	for (; yy<=origY; ++yy)
+int City_Grid::getNumOfHouses() const
+{
+	return _houses.size();
+}
+
+vector<const House*> City_Grid::getHouses () const
+{	
+	vector<const House*> houses;
+	for (auto& house : _houses)
 	{	
-		// above origAddress
-		int curAddress = (yy*_width + origX);
-
-		if ( getDist(origAddress, curAddress) <= allowableDist )
-			break;
-	} 
-	int curLeftX = origX;
-	int curRightX = origX;
-	for (; yy<=origY; ++yy)
-	{
-
-		int curLeftAddress = (yy*_width + curLeftX);
-		while ( curLeftX-1 >= minX && getDist(origAddress, curLeftAddress -1) <= allowableDist )
-		{
-			--curLeftX;
-			curLeftAddress = (yy*_width) + curLeftX;
-		}
-
-		int curRightAddress = (yy*_width) + curRightX;
-		while ( curRightX + 1 <= maxX && getDist(origAddress, curRightAddress + 1) <= allowableDist )
-		{
-			++curRightX;
-			curRightAddress = (yy*_width + curRightX);
-		}
-		for (int xx=curLeftX; xx<=curRightX; ++xx)
-		{
-			//int address = (yy * _width) + xx;
-			House* house = _house_per_address.at((yy * _width) + xx);
-			if (notOccupied.find(house) != notOccupied.end())
-			{
-				nearHouses.insert(house);
-			}
-		}
+		houses.push_back(house.get());
 	}
-	// find houses within allowableDistance below original house
-	yy = maxY;
-	for (; yy>origY; --yy)
-	{
-		int curAddress = (yy*_width + origX);
-		if (getDist(origAddress, curAddress) <= allowableDist)
-		{
-			break;
-		}
-	}
+	return houses;
+}
 
-	curLeftX = origX;
-	curRightX = origX;
-	for (; yy>origY; --yy)
-	{
-		int curLeftAddress = (yy*_width + curLeftX);
-		while (curLeftX-1 >= minX && getDist(origAddress, curLeftAddress - 1) <= allowableDist)
-		{
-			--curLeftX;
-			curLeftAddress = (yy*_width) + curLeftX;
-		}
-		int curRightAddress = (yy*_width) + curRightX;
-		while ( curRightX+1 <= maxX && getDist(origAddress, curRightAddress+1) <= allowableDist )
-		{
-			++curRightX;
-			curRightAddress = (yy*_width) + curRightX;
-		}
-
-		for (int xx=curLeftX; xx<=curRightX; ++xx)
-		{	
-			House* house = _house_per_address.at((yy * _width) + xx);
-			if (notOccupied.find(house) != notOccupied.end())
-			{
-				nearHouses.insert(house);
-			}
-		}
-	}
-
-	unsigned int count = 1;
-	unordered_set<const House*> returnedHouses;
-	if (returnedHouses.size() >= count || nearHouses.empty())
-	{
-		return returnedHouses;
-	}
-
-	unordered_set<House*>::iterator itr;
+// TODO just keep a map of house to set of adjacent houses
+set<const House*> City_Grid::getHousesAdjacent (int address) const
+{
+	int largestAddress = getNumOfHouses() - 1;
 	
-	//House* currHouse = selectRandom(unoccupiedAndCloseHouses);
-	for ( itr = nearHouses.begin(); itr != nearHouses.end(); itr++)
+	set<const House*> adjacentHouses = {};
+
+	int topLeft = address - _width - 1;
+
+	for (int ii=0; ii<=2; ++ii)
 	{
-		if (returnedHouses.size() >= count)
+		// add neighbors from row above.
+		int neighborAddress = topLeft + ii;
+		if (neighborAddress >= 0 && neighborAddress <= largestAddress)
 		{
-			break;
+			adjacentHouses.insert(_houses[neighborAddress].get());
 		}
-		returnedHouses.insert(*itr);
-		//unoccupiedAndCloseHouses.erase(currHouse);
+
+		// add neighbors from left and right
+		neighborAddress = topLeft + _width + ii;
+		if (neighborAddress >= 0 && neighborAddress <= largestAddress && neighborAddress != address)
+		{
+			adjacentHouses.insert(_houses[neighborAddress].get());
+		}
+
+		// add neighbors from row below.
+		neighborAddress = topLeft + 2 * _width + ii;
+		if (neighborAddress >= 0 && neighborAddress <= largestAddress)
+		{
+			adjacentHouses.insert(_houses[neighborAddress].get());
+		}
 	}
 
-	return returnedHouses;
-	// TODO don't erase @house from set.
-	//return nearHouses;
-}
-
-Coordinate City_Grid::getCoordinate(const int& address) const
-{
-	return Coordinate{get_x(address), get_y(address)};
-}
-
-unordered_map<const House*, Coordinate> City_Grid::getCoordinatesPerHouse()
-{
-	unordered_map<const House*, Coordinate> coordinatesPerHouse{};
-	for (auto& pair : _house_per_address)
-	{
-		coordinatesPerHouse.emplace(pair.second, getCoordinate(pair.first));
-	}
-
-	return coordinatesPerHouse;
-}
-
-const House* City_Grid::selectRandom (unordered_set<const House*>& setOfHouses) const
-{
-	int size = setOfHouses.size();
-    int r = rand() % size;
-    unordered_set<const House*>::iterator it = begin(setOfHouses);
-    advance(it, r);
-    return *it;
-}
-
-int City_Grid::get_x (const int& address) const
-{
-	return (address%_width);
-}
-
-int City_Grid::get_y (const int& address) const
-{
-	return (address/_width);
+	return adjacentHouses;
 }
 
 std::string City_Grid::toString (const std::unordered_map<int, char>& characterPerAddress)
@@ -351,4 +212,23 @@ std::string City_Grid::toString (const std::unordered_map<int, char>& characterP
 	}
 
 	return result;
+}
+
+const House* City_Grid::selectRandom (unordered_set<const House*>& setOfHouses) const
+{
+	int size = setOfHouses.size();
+    int r = rand() % size;
+    unordered_set<const House*>::iterator it = begin(setOfHouses);
+    advance(it, r);
+    return *it;
+}
+
+int City_Grid::get_x (const int& address) const
+{
+	return (address%_width);
+}
+
+int City_Grid::get_y (const int& address) const
+{
+	return (address/_width);
 }

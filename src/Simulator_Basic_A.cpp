@@ -97,7 +97,7 @@ void Simulator_Basic_A::moveResident (Resident* res, int numOfTries)
 {  
     const House* currHouse = _house_per_resident[res];
     
-    unordered_set<const House*> nearHouses = _city->findHousesWithinDistance
+    unordered_set<const House*> nearHouses = _city->getHousesWithinDistance
     (   
         currHouse,
         res->getAllowedMovementDistance()
@@ -171,7 +171,7 @@ void Simulator_Basic_A::setHappinessValuesForAllResidents ()
 
 double Simulator_Basic_A::calculateHappinessValueFor(Resident* res, int address)
 {
-    set<const House*> adjHouses = _city->getAdjacentHouses(address);
+    set<const House*> adjHouses = _city->getHousesAdjacent(address);
     return res->calculateHappiness(getResidentsInTheseHouses(adjHouses), adjHouses.size());
 }
 

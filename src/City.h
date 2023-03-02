@@ -31,18 +31,9 @@ public:
     ) const = 0;
 
     // Returns all houses adjacent to address of house.
-    virtual std::set<const House*> getAdjacentHouses (int address) const = 0;
+    virtual std::set<const House*> getHousesAdjacent (int address) const = 0;
 
-    // TODO may delete this if not being used by SimulatorE.
-    // Returns all houses within distance except for @house.
     virtual std::unordered_set<const House*> getHousesWithinDistance (
-        const House* house, 
-        double distance,
-        std::unordered_set<House*>& nearHouses,
-        std::set<const House*> notOccupied
-    ) const = 0;
-
-    virtual std::unordered_set<const House*> findHousesWithinDistance (
         const House* house,
         double allowableDist
     ) const = 0;

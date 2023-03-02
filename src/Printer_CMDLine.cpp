@@ -13,7 +13,7 @@ Printer_CMDLine::Printer_CMDLine (
 {
     for (const House* house : cityPtr->getHouses())
     {
-        _adj_neighbors[house] = _city_ptr->getAdjacentHouses(house->getAddress());
+        _adj_neighbors[house] = _city_ptr->getHousesAdjacent(house->getAddress());
     }
 }
 
@@ -45,7 +45,7 @@ void Printer_CMDLine::print(
         const Resident* resident = ii.first;
         const House* house = ii.second;
         int residentGroupId = resident->getGroupId();
-        set<const House*> housesAdjToRes = _city_ptr->getAdjacentHouses(house->getAddress());
+        set<const House*> housesAdjToRes = _city_ptr->getHousesAdjacent(house->getAddress());
 
         int disparateNeighbors = 0;
         for (const House* adjacentHouse : housesAdjToRes)
