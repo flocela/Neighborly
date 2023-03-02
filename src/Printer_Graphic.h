@@ -31,6 +31,7 @@ public:
         std::string title,
         int numOfRuns
     );
+    Printer_Graphic () = delete;
     Printer_Graphic (const Printer_Graphic& obj) = default;
     Printer_Graphic (Printer_Graphic&& obj) noexcept = default;
     Printer_Graphic& operator= (const Printer_Graphic& obj) = default;

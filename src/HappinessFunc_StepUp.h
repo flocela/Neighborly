@@ -25,7 +25,7 @@ public:
     HappinessFunc_StepUp (HappinessFunc_StepUp&& obj) noexcept = default;
     HappinessFunc_StepUp& operator=(const HappinessFunc_StepUp& obj) = default;
     HappinessFunc_StepUp& operator=(HappinessFunc_StepUp&& obj) noexcept = default;
-    ~HappinessFunc_StepUp() override = default;
+    ~HappinessFunc_StepUp() = default;
 
     HappinessFunc_StepUp (
         double happinessWithZeroNeighbors,

@@ -12,6 +12,7 @@ class House
         House (const House& o) = default;
         House (House&& o) noexcept = default;
         House& operator= (const House& o) = default;
+        House& operator= (House&& o) noexcept = default;
         ~House () = default;
 
         int getAddress () const { return _address; }

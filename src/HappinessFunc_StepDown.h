@@ -30,7 +30,7 @@ public:
     HappinessFunc_StepDown (HappinessFunc_StepDown&& obj) noexcept = default;
     HappinessFunc_StepDown& operator=(const HappinessFunc_StepDown& obj) = default;
     HappinessFunc_StepDown& operator=(HappinessFunc_StepDown&& obj) noexcept = default;
-    ~HappinessFunc_StepDown() override = default;                       
+    ~HappinessFunc_StepDown() = default;                       
 
     double calcHappiness(
         int tot_num_of_possible_neighbors, 

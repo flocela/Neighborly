@@ -23,13 +23,9 @@ public:
     HappinessFunc_Rising () = delete;
     HappinessFunc_Rising (const HappinessFunc_Rising& obj) = default;
     HappinessFunc_Rising (HappinessFunc_Rising&& obj) noexcept = default;
-    HappinessFunc_Rising& operator=(
-        const HappinessFunc_Rising& obj
-    ) = default;
-    HappinessFunc_Rising& operator=(
-        HappinessFunc_Rising&& obj
-    ) noexcept = default;
-    ~HappinessFunc_Rising() override = default;  
+    HappinessFunc_Rising& operator=(const HappinessFunc_Rising& obj) = default;
+    HappinessFunc_Rising& operator=(HappinessFunc_Rising&& obj) noexcept = default;
+    ~HappinessFunc_Rising() = default;  
 
     double calcHappiness (
         int tot_num_of_possible_neighbors, 

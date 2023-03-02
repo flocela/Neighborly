@@ -7,12 +7,6 @@
 class AxisFormat
 {
     public:
-        AxisFormat() = default;
-        AxisFormat (const AxisFormat& o) = default;
-        AxisFormat (AxisFormat&& o) noexcept = default;
-        AxisFormat& operator= (const AxisFormat& o) = default;
-        AxisFormat& operator= (AxisFormat&& o) = default;
-        ~AxisFormat () = default;
 
         int axisThicknessPx () const { return _axis_thickness__px;}
         int majTickLengthPx () const { return _maj_tick_length__px;}

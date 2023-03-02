@@ -37,6 +37,13 @@ public:
         int maxY
     );
 
+    PlotB () = delete;
+    PlotB (const PlotB& o) = default;
+    PlotB (PlotB&& o) noexcept = default;
+    PlotB& operator= (const PlotB& o) = default;
+    PlotB& operator=(PlotB&& o) noexcept = default;
+    ~PlotB () = default;
+
     void print (
         std::vector<Point> points,
         bool clear,

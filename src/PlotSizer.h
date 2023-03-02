@@ -25,6 +25,13 @@ public:
        _end_offset_m{endOffsetMultiplier}
     {}
 
+    PlotSizer () = delete;
+    PlotSizer (const PlotSizer& o) = default;
+    PlotSizer (PlotSizer&& o) noexcept = default;
+    PlotSizer& operator= (const PlotSizer& o) = default;
+    PlotSizer& operator=(PlotSizer&& o) noexcept = default;
+    ~PlotSizer () = default;
+
     AxisFormat axisFormatX () { return _a_format_x; }
     AxisFormat axisFormatY () { return _a_format_y; }
     Letter titleLetter () { return _title_letter; }

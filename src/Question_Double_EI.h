@@ -46,7 +46,7 @@ public:
         rangeStream << ']';
         _range_prompt.insert(_range_prompt.size()-3, rangeStream.str()); 
     }
-
+    Question_Double_EI () = delete;
     Question_Double_EI (const Question_Double_EI& o) = default;
     Question_Double_EI (Question_Double_EI&& o) noexcept = default;
     Question_Double_EI& operator= (const Question_Double_EI& o) = default;

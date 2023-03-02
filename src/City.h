@@ -12,7 +12,6 @@
 class City
 {
 public:
-    virtual ~City() = default;
 
     // total number of addresses. same as total number of houses.
     virtual int getNumOfHouses() const = 0;

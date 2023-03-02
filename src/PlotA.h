@@ -40,6 +40,13 @@ public:
         int minY, 
         int maxY
     );
+
+    PlotA () = delete;
+    PlotA (const PlotA& o) = default;
+    PlotA (PlotA&& o) noexcept = default;
+    PlotA& operator= (const PlotA& o) = default;
+    PlotA& operator=(PlotA&& o) noexcept = default;
+    ~PlotA () = default;
     
     void print (
         std::vector<Point> points,

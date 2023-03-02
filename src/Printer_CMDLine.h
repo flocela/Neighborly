@@ -8,25 +8,32 @@
 
 class Printer_CMDLine : public Printer
 {   
-    public:
-        Printer_CMDLine (
-            int maxNumOfRuns,
-            City* cityPtr
-        );
-        
-        void print(
-            std::unordered_map<const House*, const Resident*> residentPerHouse,
-            int run
-        ) const override;
+public:
+    Printer_CMDLine (
+        int maxNumOfRuns,
+        City* cityPtr
+    );
 
-    private:
-        int _max_num_of_runs;
-        City* _city_ptr;
-        TextHelper textHelper;
-        std::unordered_map<const House*, std::set<const House*>> _adj_neighbors;
+    Printer_CMDLine () = delete;
+    Printer_CMDLine (const Printer_CMDLine& o) = default;
+    Printer_CMDLine (Printer_CMDLine&& o) noexcept = default;
+    Printer_CMDLine& operator= (const Printer_CMDLine& o) = default;
+    Printer_CMDLine& operator=(Printer_CMDLine&& o) noexcept = default;
+    ~Printer_CMDLine () = default;
+    
+    void print(
+        std::unordered_map<const House*, const Resident*> residentPerHouse,
+        int run
+    ) const override;
 
-        // used for printing residents. happy characters per group Id.
-        std::vector<char> happyCharacters = {'x', '!', '@', '#', '$', '%'};
+private:
+    int _max_num_of_runs;
+    City* _city_ptr;
+    TextHelper textHelper;
+    std::unordered_map<const House*, std::set<const House*>> _adj_neighbors;
+
+    // used for printing residents. happy characters per group Id.
+    std::vector<char> happyCharacters = {'x', '!', '@', '#', '$', '%'};
         
 };
 

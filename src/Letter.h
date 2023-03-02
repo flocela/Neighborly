@@ -11,6 +11,7 @@ class Letter
         Letter (const Letter& o) = default;
         Letter (Letter&& o) noexcept = default;
         Letter& operator= (const Letter& o) = default;
+        Letter& operator= (Letter&& o) = default;
         ~Letter () = default;
 
         void setLetterHeight (int size);
