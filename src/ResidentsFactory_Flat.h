@@ -16,8 +16,10 @@ public:
         int groupNumber,
         BaseColor basecolor
     ) const override;
-    std::string toString () override;
+
     std::string residentType () const override;
+    
+    std::string toString () override;
 
 private:
 

@@ -15,16 +15,6 @@
 
 using namespace std;
 
-string ResidentsFactory_StepDown::toString ()
-{
-    return "Step Down Residents Factory";
-}
-
-string ResidentsFactory_StepDown::residentType () const 
-{
-    return "Step Down Residents";
-}
-
 vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     const UI& ui,
     int firstID, 
@@ -126,6 +116,16 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
         ));
     }
     return residents;
+}
+
+string ResidentsFactory_StepDown::residentType () const 
+{
+    return "Step Down Residents";
+}
+
+string ResidentsFactory_StepDown::toString ()
+{
+    return "Step Down Residents Factory";
 }
 
 std::string ResidentsFactory_StepDown::insertIntoString  (

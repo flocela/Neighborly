@@ -12,15 +12,6 @@
 #include "Question_Int.h"
 
 using namespace std;
-std::string ResidentsFactory_Flat::toString ()
-{
-    return "Flat Residents Factory";
-}
-
-std::string ResidentsFactory_Flat::residentType () const 
-{
-    return "Flat Residents";
-}
 
 std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     const UI& ui,
@@ -90,6 +81,16 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
         );
     }
     return residents;
+}
+
+std::string ResidentsFactory_Flat::residentType () const 
+{
+    return "Flat Residents";
+}
+
+std::string ResidentsFactory_Flat::toString ()
+{
+    return "Flat Residents Factory";
 }
 
 std::string ResidentsFactory_Flat::insertIntoString (string str, int location, string insert) const

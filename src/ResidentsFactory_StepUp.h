@@ -24,8 +24,9 @@ public:
         BaseColor baseColor
     ) const override;
 
-    std::string toString () override;
     std::string residentType () const override;
+
+    std::string toString () override;
     
 private:
 

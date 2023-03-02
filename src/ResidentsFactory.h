@@ -19,8 +19,10 @@ class ResidentsFactory
             int groupNumber,
             BaseColor baseColor
         )const = 0;
-        virtual std::string toString () = 0;
+
         virtual std::string residentType () const= 0;
+        
+        virtual std::string toString () = 0;
 };
 
 #endif

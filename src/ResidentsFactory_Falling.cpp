@@ -10,16 +10,6 @@
 
 using namespace std;
 
-string ResidentsFactory_Falling::toString ()
-{
-    return "Falling Residents Factory";
-}
-
-string ResidentsFactory_Falling::residentType () const
-{
-    return "Falling Residents";
-}
-
 vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
     const UI& ui,
     int firstID, 
@@ -104,6 +94,16 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
         ));
     }
     return residents;
+}
+
+string ResidentsFactory_Falling::residentType () const
+{
+    return "Falling Residents";
+}
+
+string ResidentsFactory_Falling::toString ()
+{
+    return "Falling Residents Factory";
 }
 
 std::string ResidentsFactory_Falling::insertIntoString (

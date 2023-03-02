@@ -18,9 +18,11 @@ public:
         BaseColor baseColor
     ) const override;
 
-    std::string toString () override;
+
     std::string residentType () const override;
 
+    std::string toString () override;
+    
 private:
 
     // if can not get a high happiness value from the user, then use _fallback_high_happiness_value.
