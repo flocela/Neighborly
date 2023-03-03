@@ -44,7 +44,7 @@
         Resident_UsingFunction
     </resident_type>
     <happiness_function>
-        HappinessFunction_Falling
+        HappinessFunction_StepDown
     </happiness_function>
     <zero_neighbors>
         70
@@ -55,8 +55,11 @@
     <happiness_at_one_diversity>
         70
     </happiness_at_one_diversity>
+    <diversity_drop_location>
+        0.25
+    </diversity_drop_location>
     <name>
-        Falling Resident
+        Step Down Resident
     </name>
 </resident_group>
 <resident_group>
@@ -79,7 +82,7 @@
         Resident_UsingFunction
     </resident_type>
     <happiness_function>
-        HappinessFunction_Rising
+        HappinessFunction_StepUp
     </happiness_function>
     <zero_neighbors>
         70
@@ -90,8 +93,11 @@
     <happiness_at_one_diversity>
         100
     </happiness_at_one_diversity>
+    <diversity_drop_location>
+        0.6
+    </diversity_drop_location>
     <name>
-        Rising Resident
+        Step Up Resident
     </name>
 </resident_group>
 <simulator>
