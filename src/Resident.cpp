@@ -52,7 +52,7 @@ int Resident::getID() const
     return _id;
 }
 
-string Resident::toStrBasic () const
+string Resident::toStr () const
 {
     stringstream returnStream;
     returnStream << "Resident:: id ";
@@ -68,6 +68,11 @@ string Resident::toStrBasic () const
     returnStream << implimentToStrBasic();
 
     return returnStream.str();
+}
+
+string Resident::toStrType () const
+{
+    return implimentToStrBasic();
 }
 
 bool Resident::operator< (const Resident& other) const // TODO upgrade this.

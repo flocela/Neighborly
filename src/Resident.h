@@ -25,7 +25,8 @@ public:
     double getHappinessGoal () const;
     double getHappiness () const;
     int getID() const;
-    std::string toStrBasic () const;
+    std::string toStr () const;
+    std::string toStrType () const;
 
     bool operator< (const Resident& other) const;
     

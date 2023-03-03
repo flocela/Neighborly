@@ -56,11 +56,12 @@ double HappinessFunc_Falling::calcHappiness (
 string HappinessFunc_Falling::toStrBasic () const
 {
     stringstream returnStream;
-    returnStream << "HappinessFunc: Falling. happiness:: with no neighbors: ";
+    returnStream << "Falling Happiness Function, ";
+    returnStream << "happiness:: no neighbors: ";
     returnStream << fixed << setprecision(2) << _happ_with_no_neighbors;
-    returnStream << " zero diversity: ";
+    returnStream << ", zero diversity: ";
     returnStream << fixed << setprecision(2) << _happ_at_zero_diversity;
-    returnStream << " one diversity: ";
+    returnStream << ", one diversity: ";
     returnStream << fixed << setprecision(2) << _happ_at_one_diversity;
     
     return returnStream.str();

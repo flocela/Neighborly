@@ -39,10 +39,10 @@ void Printer_CMDLine::print(
     // for each groupid, will need the number of residents in group,
     // the number of disparate neighbors,
     // and the happiness per group.
-    unordered_map<int, int> numOfResidentsPerGroupId;
-    unordered_map<int, int> numOfDiffNeighborsPerGroupId;
-    unordered_map<int, double> happinessSumPerGroup;
-    unordered_map<int, Resident*> residentExamplePerGroupId; // just one resident is needed.
+    unordered_map<int, int> numOfResidentsPerGroupId{};
+    unordered_map<int, int> numOfDiffNeighborsPerGroupId{};
+    unordered_map<int, double> happinessSumPerGroup{};
+    unordered_map<int, const Resident*> residentExamplePerGroupId{}; // just one resident is needed.
 
     for (pair<const Resident*, const House*> ii : housePerResident)
     {
@@ -50,6 +50,11 @@ void Printer_CMDLine::print(
         const House* house = ii.second;
         int residentGroupId = resident->getGroupId();
         set<const House*> housesAdjToRes = _city_ptr->getHousesAdjacent(house->getAddress());
+
+        if (residentExamplePerGroupId.find(resident->getGroupId()) == residentExamplePerGroupId.end())
+        {
+            residentExamplePerGroupId[resident->getGroupId()] = resident;
+        }
 
         int disparateNeighbors = 0;
         for (const House* adjacentHouse : housesAdjToRes)
@@ -91,7 +96,17 @@ void Printer_CMDLine::print(
     }
     sort(groupIDs.begin(), groupIDs.end());
 
-    // 
+    // Print out resident information per group id
+    cout << "Resident group info per groupId:" << endl;
+    for (auto groupID : groupIDs)
+    {
+        const Resident* res = residentExamplePerGroupId[groupID];
+        cout << "Group id " << groupID << ":" << endl;
+        cout << "   count: "<< numOfResidentsPerGroupId[groupID] << ", " <<
+                "allowed movement: " << res->getAllowedMovementDistance() << ", " <<
+                "happiness goal: " << res->getHappinessGoal() << "," << endl <<
+                "   " << res->toStrType() << endl;
+    }
 
     // Print out color groups
     cout << "Base Colors Per Group IDs:" << endl;

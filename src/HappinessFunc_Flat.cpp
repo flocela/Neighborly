@@ -34,9 +34,9 @@ double HappinessFunc_Flat::calcHappiness (
 string HappinessFunc_Flat::toStrBasic () const
 {
     stringstream returnStream;
-    returnStream << "HappinessFunc: Flat. happiness:: with no neighbors: ";
+    returnStream << "Flat Happiness Function, happiness:: no neighbors: ";
     returnStream << fixed << setprecision(2) << _happ_with_no_neighbors;
-    returnStream << " constant happiness: ";
+    returnStream << ", constant happiness: ";
     returnStream << fixed << setprecision(2) << _flat_happiness_val;
     
     return returnStream.str();

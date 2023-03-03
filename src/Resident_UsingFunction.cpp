@@ -16,8 +16,8 @@ Resident_UsingFunction::Resident_UsingFunction (
 
 std::string Resident_UsingFunction::implimentToStrBasic () const
 {
-
-    return _hap_func->toStrBasic();
+    string funcType = "Resident Using Function: "; 
+    return funcType + _hap_func->toStrBasic();
 }
 
 double Resident_UsingFunction::implimentHappiness(
