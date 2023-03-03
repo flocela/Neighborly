@@ -1,0 +1,110 @@
+<city>
+    <type>
+        City_Grid
+    </type>
+    <width>
+        20
+    </width>
+</city>
+<base_color_per_group>
+    <group>
+        <group_id>
+            1
+        </group_id>
+        <base_color>
+            red
+        </base_color>
+    </group>
+    <group>
+        <group_id>
+            2
+        </group_id>
+        <base_color>
+            green
+        </base_color>
+    </group>
+</base_color_per_group>
+<resident_group>
+    <start_id>
+        1
+    </start_id>
+    <number_of>
+        100
+    </number_of>
+    <group_id>
+        1
+    </group_id>
+    <allowed_movement>
+        10
+    </allowed_movement>
+    <happiness_goal>
+        80
+    </happiness_goal>
+    <resident_type>
+        Resident_UsingFunction
+    </resident_type>
+    <happiness_function>
+        HappinessFunction_StepDown
+    </happiness_function>
+    <zero_neighbors>
+        70
+    </zero_neighbors>
+    <happiness_at_zero_diversity>
+        95
+    </happiness_at_zero_diversity>
+    <happiness_at_one_diversity>
+        70
+    </happiness_at_one_diversity>
+    <diversity_drop_location>
+        0.25
+    </diversity_drop_location>
+    <name>
+        Step Down Resident
+    </name>
+</resident_group>
+<resident_group>
+    <start_id>
+        101
+    </start_id>
+    <number_of>
+        200
+    </number_of>
+    <group_id>
+        2
+    </group_id>
+    <allowed_movement>
+        40
+    </allowed_movement>
+    <happiness_goal>
+        80
+    </happiness_goal>
+    <resident_type>
+        Resident_UsingFunction
+    </resident_type>
+    <happiness_function>
+        HappinessFunction_StepUp
+    </happiness_function>
+    <zero_neighbors>
+        70
+    </zero_neighbors>
+    <happiness_at_zero_diversity>
+        50
+    </happiness_at_zero_diversity>
+    <happiness_at_one_diversity>
+        100
+    </happiness_at_one_diversity>
+    <diversity_drop_location>
+        0.6
+    </diversity_drop_location>
+    <name>
+        Step Up Resident
+    </name>
+</resident_group>
+<simulator>
+    <name>
+        Simulator_Basic_A
+    </name>
+</simulator>
+<num_of_runs>
+    5
+</num_of_runs>

@@ -31,7 +31,45 @@ private:
         int groupId,
         double allowedMovement,
         double happinessGoal);
+    
+    void returnResidentsWithStepUpFunc (
+        std::ifstream& inputStream,
+        std::vector<std::unique_ptr<Resident>>& residents,
+        int startId,
+        int numberOfResidents,
+        int groupId,
+        double allowedMovement,
+        double happinessGoal);
 
+    void returnResidentsWithFallingFunc (
+        std::ifstream& inputStream,
+        std::vector<std::unique_ptr<Resident>>& residents,
+        int startId,
+        int numberOfResidents,
+        int groupId,
+        double allowedMovement,
+        double happinessGoal
+    );
+
+    void returnResidentsWithRisingFunc (
+        std::ifstream& inputStream,
+        std::vector<std::unique_ptr<Resident>>& residents,
+        int startId,
+        int numberOfResidents,
+        int groupId,
+        double allowedMovement,
+        double happinessGoal
+    );
+
+    void returnResidentsWithFlatFunc (
+        std::ifstream& inputStream,
+        std::vector<std::unique_ptr<Resident>>& residents,
+        int startId,
+        int numberOfResidents,
+        int groupId,
+        double allowedMovement,
+        double happinessGoal
+    );
     std::string leftTrim (std::string str);
 };
 

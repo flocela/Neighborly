@@ -1,6 +1,7 @@
 #include "Printer_CMDLine.h"
 
 #include <algorithm>
+#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -41,6 +42,7 @@ void Printer_CMDLine::print(
     unordered_map<int, int> numOfResidentsPerGroupId;
     unordered_map<int, int> numOfDiffNeighborsPerGroupId;
     unordered_map<int, double> happinessSumPerGroup;
+    unordered_map<int, Resident*> residentExamplePerGroupId; // just one resident is needed.
 
     for (pair<const Resident*, const House*> ii : housePerResident)
     {
@@ -88,6 +90,8 @@ void Printer_CMDLine::print(
         groupIDs.push_back(groupIDAndCount.first);
     }
     sort(groupIDs.begin(), groupIDs.end());
+
+    // 
 
     // Print out color groups
     cout << "Base Colors Per Group IDs:" << endl;
