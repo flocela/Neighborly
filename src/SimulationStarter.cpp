@@ -204,62 +204,83 @@ void SimulationStarter::returnResidents (
         }
         if (happinessFunction == "HappinessFunction_StepDown")
         {   
-            string zeroNeighbors = "";
-            string happinessAtZeroDiversity = "";
-            string happinessAtOneDiversity = "";
-            string diversityDropLocation = "";
-            string name = "";
-            getline(inputStream, line);
-            if (line.find("zero_neighbors") != string::npos)
-            {   
-                getline(inputStream, zeroNeighbors);
-                getline(inputStream, line);
-            }
-            getline(inputStream, line);
-            if (line.find("happiness_at_zero_diversity") != string::npos)
-            {  
-                getline(inputStream, happinessAtZeroDiversity);
-                getline(inputStream, line);
-            }
-            getline(inputStream, line);
-            if (line.find("happiness_at_one_diversity") != string::npos)
-            {   
-                getline(inputStream, happinessAtOneDiversity);
-                getline(inputStream, line);
-            }
-            getline(inputStream, line);
-            if (line.find("diversity_drop_location") != string::npos)
-            { 
-                getline(inputStream, diversityDropLocation);
-                getline(inputStream, line);
-            }
-            getline(inputStream, line);
-            if (line.find("name") != string::npos)
-            {   
-                getline(inputStream, name);
-                getline(inputStream, line);
-            }
-        
-            getline(inputStream, line); // </resident_group
-            
-            int firstID = stoi(startId);
-            for (int ii = 0; ii< stoi(numberOf); ++ii)
-            {   
-                residents.push_back(make_unique<Resident_UsingFunction> (
-                    firstID + ii,
-                    stoi(groupId),
-                    stoi(allowedMovement),
-                    stod(happinessGoal),
-                    make_unique<HappinessFunc_StepDown>(
-                        stod(zeroNeighbors),
-                        stod(happinessAtZeroDiversity),
-                        stod(happinessAtOneDiversity),
-                        stod(diversityDropLocation)
-                    ),
-                    name
-                ));
-            }
+            returnResidentsWithStepDownFunc(
+                inputStream,
+                residents,
+                stoi(startId),
+                stoi(numberOf),
+                stoi(groupId),
+                stod(allowedMovement),
+                stod(happinessGoal));
         }
+    }
+}
+
+void SimulationStarter::returnResidentsWithStepDownFunc (
+    std::ifstream& inputStream,
+        std::vector<std::unique_ptr<Resident>>& residents,
+        int startId,
+        int numberOfResidents,
+        int groupId,
+        double allowedMovement,
+        double happinessGoal
+)
+{   
+    string line = "";
+    string zeroNeighbors = "";
+    string happinessAtZeroDiversity = "";
+    string happinessAtOneDiversity = "";
+    string diversityDropLocation = "";
+    string name = "";
+    getline(inputStream, line);
+    if (line.find("zero_neighbors") != string::npos)
+    {   
+        getline(inputStream, zeroNeighbors);
+        getline(inputStream, line);
+    }
+    getline(inputStream, line);
+    if (line.find("happiness_at_zero_diversity") != string::npos)
+    {  
+        getline(inputStream, happinessAtZeroDiversity);
+        getline(inputStream, line);
+    }
+    getline(inputStream, line);
+    if (line.find("happiness_at_one_diversity") != string::npos)
+    {   
+        getline(inputStream, happinessAtOneDiversity);
+        getline(inputStream, line);
+    }
+    getline(inputStream, line);
+    if (line.find("diversity_drop_location") != string::npos)
+    { 
+        getline(inputStream, diversityDropLocation);
+        getline(inputStream, line);
+    }
+    getline(inputStream, line);
+    if (line.find("name") != string::npos)
+    {   
+        getline(inputStream, name);
+        getline(inputStream, line);
+    }
+
+    getline(inputStream, line); // </resident_group
+    
+    int firstID = startId;
+    for (int ii = 0; ii< numberOfResidents; ++ii)
+    {   
+        residents.push_back(make_unique<Resident_UsingFunction> (
+            firstID + ii,
+            groupId,
+            allowedMovement,
+            happinessGoal,
+            make_unique<HappinessFunc_StepDown>(
+                stod(zeroNeighbors),
+                stod(happinessAtZeroDiversity),
+                stod(happinessAtOneDiversity),
+                stod(diversityDropLocation)
+            ),
+            name
+        ));
     }
 }
 

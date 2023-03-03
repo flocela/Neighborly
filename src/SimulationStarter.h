@@ -23,6 +23,15 @@ private:
         std::vector<std::unique_ptr<Resident>>& residents
     );
 
+    void returnResidentsWithStepDownFunc (
+        std::ifstream& inputStream,
+        std::vector<std::unique_ptr<Resident>>& residents,
+        int startId,
+        int numberOfResidents,
+        int groupId,
+        double allowedMovement,
+        double happinessGoal);
+
     std::string leftTrim (std::string str);
 };
 

@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
     (void) argc;
     (void) argv;
 
-    bool useFile = false;
+    bool useFile = true;
 
     // components will be populated by file, by premade examples, or by user choices.
     SimulationComponents components;
