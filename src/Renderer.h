@@ -25,10 +25,10 @@ public:
 	void endFrame();
 
 	// draws a solid rectangles with the given color
-	void fillBlock (SDL_Rect blocks, std::vector<int> rgba) ;
+	void fillBlock (SDL_Rect blocks, std::vector<uint8_t> rgba) ;
 
 	// draws solid rectangles for the given blocks with the given color
-	void fillBlocks (std::vector<SDL_Rect> blocks, std::vector<int> rgba);
+	void fillBlocks (std::vector<SDL_Rect> blocks, std::vector<uint8_t> rgba);
 
 	// draws a solid rectangle with the given dimensions, coordinates and color.
 	// note @coordinates are in pixels.
@@ -36,7 +36,7 @@ public:
 		int width, 
 		int height,
 		Coordinate coordinate,
-		std::vector<int> rgba
+		std::vector<uint8_t> rgba
 	);
 
 	// draws solid rectangles with the given dimentions, and corresponding coordinates and colors
@@ -45,7 +45,7 @@ public:
 		int width,
 		int height,
 		std::vector<Coordinate> coordinates,
-		std::vector<int> rgba
+		std::vector<uint8_t> rgba
 	);
 
 	// Used to render text in window.
@@ -76,8 +76,8 @@ public:
 		std::string textString,
 		int letterHeight, 
 		double widthMultiplier, 
-		SDL_Color textColor,
-		SDL_Color textBackgroundColor,
+		std::vector<uint8_t> rgbaText,
+		std::vector<uint8_t> rgbaBackground,
 		int position
 	);
 

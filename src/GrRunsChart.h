@@ -1,6 +1,7 @@
 #ifndef GR_RUNS_CHART_H
 #define GR_RUNS_CHART_H
 
+#include "Color.h"
 #include "Renderer.h"
 #include <iostream>
 #include "Letter.h"
@@ -39,8 +40,8 @@ private:
     int _y_space_length__px = 0;
     Letter _title_letter;
     int _num_of_runs;
-    SDL_Color _text_color = {100, 100, 100, 100};
-    SDL_Color _text_background_color = {0xAA, 0xFF, 0xFF, 0xFF};
+    std::vector<uint8_t> _text_color = _the_color_rgba[Color::text];
+    std::vector<uint8_t> _text_background_color =  _the_color_rgba[Color::text_background];
 
 };
 

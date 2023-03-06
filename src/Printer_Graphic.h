@@ -64,8 +64,9 @@ private:
     
     std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
     
-    Letter _window_title_letter{44, 5, 0.3};
+    Letter _window_title_letter{44, 5, 0.35};
     std::unique_ptr<TitleA> _window_title;
+    std::vector<uint8_t> _title_text_color = {255, 255, 255, 255};
     
     /* COLUMNS */
     /* Two columns: City chart is on the left. Diversity and Happiness charts are on the right.*/
@@ -74,8 +75,8 @@ private:
 
     AxisFormat _axis_format_X{};
     AxisFormat _axis_format_Y{};
-    Letter _chart_title_letter = Letter(30, 5, 0.3); 
-    Letter _chart_key_letter{24, 10, 0.3};
+    Letter _chart_title_letter = Letter(30, 5, 0.35); 
+    Letter _chart_key_letter{24, 10, 0.35};
     int _min_unit_size__px = 6; // TODO write note of how this is used. Is it honored?
 
     // At the start of the axis, leave a space equal to cell size times offset.

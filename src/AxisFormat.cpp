@@ -1,5 +1,7 @@
 #include "AxisFormat.h"
 
+using namespace std;
+
 int AxisFormat::majTickLengthOutsideChartPx () const
 {
     return _maj_tick_length__px - _tick_length_inside_chart__px - axisThicknessPx();
@@ -72,12 +74,12 @@ void AxisFormat::setTickLengthInsideChartPx (int length)
     }
 }
         
-void AxisFormat::setTextBackgroundColor (SDL_Color color)
+void AxisFormat::setTextBackgroundColor (vector<uint8_t> color)
 {
     _text_background_color = color;
 }
 
-void AxisFormat::setTextColor (SDL_Color color)
+void AxisFormat::setTextColor (vector<uint8_t> color)
 {
     _text_color = color;
 }

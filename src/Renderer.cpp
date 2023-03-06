@@ -49,13 +49,13 @@ void Renderer::endFrame()
     SDL_RenderPresent(_sdl_renderer);
 }
 
-void Renderer::fillBlock(SDL_Rect block, vector<int> rgba)
+void Renderer::fillBlock(SDL_Rect block, vector<uint8_t> rgba)
 {
     SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
     SDL_RenderFillRect(_sdl_renderer, &block);
 }
 
-void Renderer::fillBlocks (vector<SDL_Rect> blocks, vector<int> rgba)
+void Renderer::fillBlocks (vector<SDL_Rect> blocks, vector<uint8_t> rgba)
 {
     SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
     for (SDL_Rect block : blocks)
@@ -68,7 +68,7 @@ void Renderer::fillBlock (
 	int width, 
 	int height,
 	Coordinate coordinate,
-	vector<int> rgba
+	vector<uint8_t> rgba
 )
 {
     SDL_Rect block;
@@ -85,7 +85,7 @@ void Renderer::fillBlocks(
 	int width,
 	int height,
 	vector<Coordinate> coordinates,
-	vector<int> rgba
+	vector<uint8_t> rgba
 )
 {
     SDL_Rect block;
@@ -108,8 +108,8 @@ void Renderer::renderText (
     string textString,
     int letterHeight,
     double widthMultiplier,
-	SDL_Color textColor,
-	SDL_Color backgroundColor,
+	std::vector<uint8_t> rgbaText,
+	std::vector<uint8_t> rgbaBackground,
     int position
 )
 {
@@ -118,7 +118,7 @@ void Renderer::renderText (
         return;
     }
     
-    TTF_Font *font = TTF_OpenFont(FONT_PATH, 300);
+    TTF_Font *font = TTF_OpenFont(FONT_PATH, 100);
 
     if(!font) 
     {
@@ -129,6 +129,13 @@ void Renderer::renderText (
     SDL_Texture *text = NULL;
     SDL_Rect sdlRect;
 
+    SDL_Color textColor = {rgbaText[0], rgbaText[1], rgbaText[2], rgbaText[3]};
+    SDL_Color backgroundColor = {
+        rgbaBackground[0], 
+        rgbaBackground[1],
+        rgbaBackground[2],
+        rgbaBackground[3]
+    };
     SDL_Surface *textSurface = TTF_RenderText_Shaded(
         font, 
         &textString[0],
@@ -165,12 +172,12 @@ void Renderer::renderText (
     else if (position == 2)
     {
         sdlRect.x = x;
-        sdlRect.y = y - 0.5 * sdlRect.h;
+        sdlRect.y = y - 0.5 * sdlRect.h - 2;
     }
     else if (position == 3)
     {
         sdlRect.x = x - sdlRect.w;
-        sdlRect.y = y - 0.5 * sdlRect.h;
+        sdlRect.y = y - 0.5 * sdlRect.h -2;
     }
     else if (position == 4)
     {

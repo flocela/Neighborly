@@ -1,6 +1,8 @@
 #ifndef AXIS_FORMAT_H
 #define AXIS_FORMAT_H
 #include <stdexcept>
+#include <vector>
+#include "Color.h"
 #include "SDL.h"
 #include "Letter.h"
 
@@ -19,8 +21,8 @@ class AxisFormat
         int labelHeightPx () const {return _label_letter.letterHeight();} 
         int labelLineSpacePx () const {return _label_letter.lineSpace();}
         double labelWidthMultiplier () const {return _label_letter.widthMultiplier();}
-        SDL_Color textColor () const { return _text_color;}
-        SDL_Color textBackgroundColor () const { return _text_background_color;}
+        std::vector<uint8_t> textColor () const { return _text_color;}
+        std::vector<uint8_t> textBackgroundColor () const { return _text_background_color;}
 
         void setLabelLetterHeight (int size);
         void setLabelSpacePx (int space);
@@ -30,8 +32,8 @@ class AxisFormat
         void setMinTickLengthPx (int length);
         void setTickLengthInsideChartPx (int length);
         
-        void setTextBackgroundColor (SDL_Color color);
-        void setTextColor (SDL_Color color);
+        void setTextBackgroundColor (std::vector<uint8_t> color);
+        void setTextColor (std::vector<uint8_t> color);
 
     private:
         int _axis_thickness__px{1};
@@ -40,9 +42,9 @@ class AxisFormat
 
         int _maj_tick_length__px{10};
         int _min_tick_length__px{4};
-        
-        SDL_Color _text_color = {100, 100, 100, 100};
-        SDL_Color _text_background_color = {0xAA, 0xFF, 0xFF, 0xFF};
+
+        std::vector<uint8_t> _text_color = _the_color_rgba[Color::text];
+        std::vector<uint8_t> _text_background_color = _the_color_rgba[Color::text_background];
 
         // _tick_length_inside_chart__px does not include thickness of axis
         int _tick_length_inside_chart__px = 2;

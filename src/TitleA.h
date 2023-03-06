@@ -1,6 +1,7 @@
 #ifndef TITLE_A_H
 #define TITLE_A_H
 
+#include "Color.h"
 #include "Letter.h"
 #include "Renderer.h"
 #include "Title.h"
@@ -15,8 +16,8 @@ public:
         int topCenterXPx,
         int topCenterYPx,
         std::string title,
-        SDL_Color textColor,
-        SDL_Color textBackgroundColor
+        std::vector<uint8_t> textColor,
+        std::vector<uint8_t> textBackgroundColor
     ): _l{letter}, 
        _top_center_x__px{topCenterXPx}, 
        _top_center_y__px {topCenterYPx},
@@ -75,14 +76,14 @@ public:
     // height of space below the title
     void setLineSpace (int height) override { _l.setLineSpace(height);}
 
-    void setTextColor (SDL_Color color) override
+    void setTextColor (std::vector<uint8_t> color) override
     {
         _text_color = color;
     }
 
     void setTitle (std::string title) override {_title = title;}
 
-    void setTextBackgroundColor (SDL_Color color) override
+    void setTextBackgroundColor (std::vector<uint8_t> color) override
     {
         _text_background_color = color;
     }
@@ -97,8 +98,8 @@ private:
     int _top_center_x__px = 0;
     int _top_center_y__px = 0;
     std::string _title = "";
-    SDL_Color _text_color = {100, 100, 100, 100};
-    SDL_Color _text_background_color = {0xAA, 0xFF, 0xFF, 0xFF};
+    std::vector<uint8_t> _text_color = _the_color_rgba[Color::text];
+    std::vector<uint8_t> _text_background_color = _the_color_rgba[Color::text_background];
 
 };
 

@@ -58,7 +58,7 @@ struct ColorInfo
     std::string _base_name;
     Mood _mood;
     std::string _mood_name;
-    std::vector<int> rgba;
+    std::vector<uint8_t> rgba;
 
     std::string toString() { return _base_name + "_" + _mood_name;}
 };
@@ -136,7 +136,7 @@ inline std::unordered_map<BaseColor, std::unordered_map<Mood,ColorInfo>> _colorr
     }}
 };
 
-inline std::map<Color, std::vector<int>> _the_color_rgba = {
+inline std::map<Color, std::vector<uint8_t>> _the_color_rgba = {
     {Color::red_neutral, _colorrs_map[BaseColor::red][Mood::neutral].rgba},
     {Color::red_happy, _colorrs_map[BaseColor::red][Mood::happy].rgba},
     {Color::red_unhappy, _colorrs_map[BaseColor::red][Mood::unhappy].rgba},
@@ -148,8 +148,10 @@ inline std::map<Color, std::vector<int>> _the_color_rgba = {
     {Color::green_unhappy, _colorrs_map[BaseColor::green][Mood::unhappy].rgba},
     {Color::absent,  {40, 40, 40, 255}},
     {Color::grid,{210, 215, 211, 255}},
-    {Color::text,{236, 240, 241, 255}},
-    {Color::text_background,{108, 122, 137}},
+    //{Color::text,{236, 240, 241, 255}},
+    //{Color::text_background,{108, 122, 137}},
+    {Color::text,{200, 200, 200, 220}},
+    {Color::text_background,{20, 20, 20, 255}},
     {Color::background,{105, 105, 105, 255}}
 };
 

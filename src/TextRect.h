@@ -2,7 +2,7 @@
 #define TEXT_RECT_H
 
 #include <string>
-#include "SDL.h"
+#include <vector>
 
 // holds information for rendering text block
 struct TextRect
@@ -12,8 +12,8 @@ struct TextRect
     std::string _text;
     int _letter_height;
     double _width_multiplier;
-    SDL_Color _text_color;
-    SDL_Color _text_background_color;
+    std::vector<uint8_t> _text_color;
+    std::vector<uint8_t> _text_background_color;
     int _position; // used by renderer for final positioning of text block
 };
 

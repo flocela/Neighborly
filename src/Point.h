@@ -25,13 +25,13 @@ public:
     double y () {return _y;}
     
     Color color () { return _color;}
-    std::vector<int> rgba () { return _rgba;}
+    std::vector<uint8_t> rgba () { return _rgba;}
 
 private:
     double _x;
     double _y;
     Color _color;
-    std::vector<int> _rgba;
+    std::vector<uint8_t> _rgba;
 
 };
 

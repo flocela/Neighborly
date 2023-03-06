@@ -9,8 +9,8 @@ GrColorKey::GrColorKey (
     Letter labelLetter,
     std::unordered_map<int, BaseColor> colors,
     std::set<Mood> moods,
-    SDL_Color textColor,
-    SDL_Color textBackgroundColor
+    std::vector<uint8_t> textColor,
+    std::vector<uint8_t> textBackgroundColor
 ): _top_center_x__px{topCenterXPx},
    _top_center_y__px{topCenterYPx},
    _label_letter{labelLetter},
@@ -98,12 +98,12 @@ int GrColorKey::sizeYPx ()
 }
 
 
-void GrColorKey::setTextBackgroundColor (SDL_Color color)
+void GrColorKey::setTextBackgroundColor (vector<uint8_t> color)
 {
     _text_background_color = color;
 }
 
-void GrColorKey::setTextColor (SDL_Color color)
+void GrColorKey::setTextColor (vector<uint8_t>  color)
 {
     _text_color = color;
 }

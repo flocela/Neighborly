@@ -20,8 +20,8 @@ public:
         Letter labelLetter, // each groupId will be labeled. this gives the size of the lettering
         std::unordered_map<int, BaseColor> colors, // base color per groupId
         std::set<Mood> moods, // keys for colors, e.g. happy, sad, neutral
-        SDL_Color textColor,
-        SDL_Color textBackgroundColor
+        std::vector<uint8_t> textColor,
+        std::vector<uint8_t> textBackgroundColor
     );
 
     GrColorKey (
@@ -41,8 +41,8 @@ public:
     int sizeXPx () override;
     int sizeYPx () override;
 
-    void setTextBackgroundColor (SDL_Color color);
-    void setTextColor (SDL_Color color);
+    void setTextBackgroundColor (std::vector<uint8_t> color);
+    void setTextColor (std::vector<uint8_t> color);
     void setTopCenter (int xPx, int yPy);
 
 private:
@@ -57,8 +57,8 @@ private:
     std::vector<std::pair<Color, std::string>> _label_per_color;
     int _column_width;
 
-    SDL_Color _text_color = {100, 100, 100, 100};
-    SDL_Color _text_background_color = {0xAA, 0xFF, 0xFF, 0xFF};
+    std::vector<uint8_t> _text_color = _the_color_rgba[Color::text];
+    std::vector<uint8_t> _text_background_color = _the_color_rgba[Color::text_background];
 
     void setAttributes ();
 };
