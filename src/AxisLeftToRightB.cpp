@@ -71,7 +71,7 @@ void AxisLeftToRightB::moveCrossHairs (int xPx, int yPx)
 
 void AxisLeftToRightB::print (Renderer* renderer) const
 {   
-    std::vector<SDL_Rect> rects = {};
+    std::vector<Rect> rects = {};
     std::vector<TextRect> texts = {};
     
     printHorizontalLine(rects);
@@ -93,9 +93,9 @@ void AxisLeftToRightB::setTickThickness (int tickThicknessPx)
     _tick_thickness__px = tickThicknessPx;
 }
 
-void AxisLeftToRightB::printHorizontalLine (std::vector<SDL_Rect>& rects) const
+void AxisLeftToRightB::printHorizontalLine (std::vector<Rect>& rects) const
 {
-    SDL_Rect rect{
+    Rect rect{
         _x_cross__px,
         _y_cross__px,
         getAxisLengthPx(),
@@ -105,7 +105,7 @@ void AxisLeftToRightB::printHorizontalLine (std::vector<SDL_Rect>& rects) const
 }
 
 void AxisLeftToRightB::printTicksAndLabels (
-    std::vector<SDL_Rect>& rects, 
+    std::vector<Rect>& rects, 
     std::vector<TextRect>& texts
 ) const
 {   
@@ -130,14 +130,14 @@ void AxisLeftToRightB::printTicksAndLabels (
 
     int tickYPx = _y_cross__px - _axis_format.tickLengthInsideChartPx();
 
-    SDL_Rect majTick{
+    Rect majTick{
         curVal__px,
         tickYPx,
         _tick_thickness__px,
         _axis_format.majTickLengthPx()
     };
 
-    SDL_Rect minTick{
+    Rect minTick{
         curVal__px,
         tickYPx,
         _tick_thickness__px,
@@ -150,17 +150,17 @@ void AxisLeftToRightB::printTicksAndLabels (
     {  
         if (curVal % _maj_tick_spacing == 0)
         {   
-            majTick.x = curVal__px;
+            majTick._x_px = curVal__px;
 
             curText._text = std::to_string(curVal);
-            curText._x_pixel = curVal__px;
+            curText._x_px = curVal__px;
 
             texts.push_back(curText);
             rects.push_back(majTick);
         }
         else if (curVal % _min_tick_spacing == 0)
         {   
-            minTick.x = curVal__px;
+            minTick._x_px = curVal__px;
             rects.push_back(minTick);
         }
         

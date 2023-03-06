@@ -67,10 +67,10 @@ class AxisLeftToRightT
         int _start_offset_m;
         int _end_offset_m;
 
-        void printHorizontalLine (std::vector<SDL_Rect>& rects) const;
+        void printHorizontalLine (std::vector<Rect>& rects) const;
 
         void printTicksAndLabels (
-            std::vector<SDL_Rect>& rects,
+            std::vector<Rect>& rects,
             std::vector<TextRect>& texts) const;
 
         // right most pixel on horizontal line.

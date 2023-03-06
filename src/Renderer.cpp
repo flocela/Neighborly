@@ -49,18 +49,20 @@ void Renderer::endFrame()
     SDL_RenderPresent(_sdl_renderer);
 }
 
-void Renderer::fillBlock(SDL_Rect block, vector<uint8_t> rgba)
+void Renderer::fillBlock(Rect block, vector<uint8_t> rgba)
 {
+    SDL_Rect rect = {block._x_px, block._y_px, block.width, block.height};
     SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
-    SDL_RenderFillRect(_sdl_renderer, &block);
+    SDL_RenderFillRect(_sdl_renderer, &rect);
 }
 
-void Renderer::fillBlocks (vector<SDL_Rect> blocks, vector<uint8_t> rgba)
+void Renderer::fillBlocks (vector<Rect> blocks, vector<uint8_t> rgba)
 {
+
     SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
-    for (SDL_Rect block : blocks)
-    {
-        SDL_RenderFillRect(_sdl_renderer, &block);
+    for (Rect block : blocks)
+    {   SDL_Rect rect = {block._x_px, block._y_px, block.width, block.height};
+        SDL_RenderFillRect(_sdl_renderer, &rect);
     }
 }
 
@@ -199,8 +201,8 @@ void Renderer::renderTexts (vector<TextRect> texts)
     for (TextRect tr : texts)
     {
        renderText(
-           tr._x_pixel, 
-           tr._y_pixel, 
+           tr._x_px, 
+           tr._y_px, 
            tr._text,
            tr._letter_height,
            tr._width_multiplier,

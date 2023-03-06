@@ -7,8 +7,8 @@
 // holds information for rendering text block
 struct TextRect
 {
-    int _x_pixel; // top left corner x-pixel
-    int _y_pixel; // top left corner y-pixel
+    int _x_px; // top left corner x-pixel
+    int _y_px; // top left corner y-pixel
     std::string _text;
     int _letter_height;
     double _width_multiplier;

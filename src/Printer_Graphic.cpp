@@ -86,7 +86,7 @@ void Printer_Graphic::print (
 ) const
 {   
     // TODO take out this rect and renderer is just for testing.
-    SDL_Rect rect {
+    Rect rect {
         0,
         10,
         600,

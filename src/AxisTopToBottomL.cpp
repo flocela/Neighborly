@@ -42,7 +42,7 @@ int AxisTopToBottomL::getPixel (double yVal) const
 
 void AxisTopToBottomL::print (Renderer* renderer) const
 {   
-    std::vector<SDL_Rect> rects = {};
+    std::vector<Rect> rects = {};
     std::vector<TextRect> texts = {};
 
     printVerticalLine(rects);
@@ -86,9 +86,9 @@ void AxisTopToBottomL::setTickThickness (int tickThicknessPx)
 }
 
 
-void AxisTopToBottomL::printVerticalLine (std::vector<SDL_Rect>& rects) const
+void AxisTopToBottomL::printVerticalLine (std::vector<Rect>& rects) const
 {
-    SDL_Rect rect{
+    Rect rect{
         _x_cross__px,
         _y_cross__px,
         _axis_format.axisThicknessPx(),
@@ -99,7 +99,7 @@ void AxisTopToBottomL::printVerticalLine (std::vector<SDL_Rect>& rects) const
 }
 
 void AxisTopToBottomL::printTicksAndLabels (
-    std::vector<SDL_Rect>& rects, 
+    std::vector<Rect>& rects, 
     std::vector<TextRect>& texts
 ) const
 {
@@ -119,14 +119,14 @@ void AxisTopToBottomL::printTicksAndLabels (
         3
     };
 
-    SDL_Rect majRect{
+    Rect majRect{
         majTickXPx,
         curVal__px - (_tick_thickness__px/2),
         _axis_format.majTickLengthPx(),
         _tick_thickness__px
     };
 
-    SDL_Rect minRect{
+    Rect minRect{
         minTickXPx,
         curVal__px,
         _axis_format.minTickLengthPx(),
@@ -139,18 +139,18 @@ void AxisTopToBottomL::printTicksAndLabels (
     {   
         if (curVal % _maj_tick_spacing == 0)
         {
-            majRect.y = curVal__px;
+            majRect._y_px = curVal__px;
 
             
             curText._text = std::to_string(curVal);
-            curText._y_pixel = curVal__px;
+            curText._y_px = curVal__px;
 
             rects.push_back(majRect);
             texts.push_back(curText);
         }
         else if (curVal % _min_tick_spacing == 0)
         {
-            minRect.y = curVal__px;
+            minRect._y_px = curVal__px;
             
             rects.push_back(minRect);
         }

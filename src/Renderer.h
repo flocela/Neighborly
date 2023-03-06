@@ -5,6 +5,7 @@
 
 #include "Color.h"
 #include "Coordinate.h"
+#include "Rect.h"
 #include "SDL.h"
 #include "TextRect.h"
 
@@ -25,10 +26,10 @@ public:
 	void endFrame();
 
 	// draws a solid rectangles with the given color
-	void fillBlock (SDL_Rect blocks, std::vector<uint8_t> rgba) ;
+	void fillBlock (Rect blocks, std::vector<uint8_t> rgba) ;
 
 	// draws solid rectangles for the given blocks with the given color
-	void fillBlocks (std::vector<SDL_Rect> blocks, std::vector<uint8_t> rgba);
+	void fillBlocks (std::vector<Rect> blocks, std::vector<uint8_t> rgba);
 
 	// draws a solid rectangle with the given dimensions, coordinates and color.
 	// note @coordinates are in pixels.

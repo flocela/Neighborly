@@ -66,10 +66,10 @@ class AxisBottomToTopL
         int _end_offset_m; // end offset multiplier; multiply by _px_per_unit
         int _text_spacer = 3; // space to the right of labels, and the the left of tick marks
 
-        void printVerticalLine (std::vector<SDL_Rect>& rects) const;
+        void printVerticalLine (std::vector<Rect>& rects) const;
 
         void printTicksAndLabels (
-            std::vector<SDL_Rect>& rects,
+            std::vector<Rect>& rects,
             std::vector<TextRect>& texts) const;
 
         int calcTopMostPixelWithValue_Y () const;

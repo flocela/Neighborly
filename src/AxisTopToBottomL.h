@@ -64,10 +64,10 @@ class AxisTopToBottomL
         int _start_offset_m; // start offst multiplier; multiply by _px_per_unit
         int _end_offset_m; // start offst multiplier; multiply by _px_per_unit
 
-        void printVerticalLine (std::vector<SDL_Rect>& rects) const;
+        void printVerticalLine (std::vector<Rect>& rects) const;
 
         void printTicksAndLabels (
-            std::vector<SDL_Rect>& rects,
+            std::vector<Rect>& rects,
             std::vector<TextRect>& texts) const;
 
         int calcBotMostPixel_Y () const;

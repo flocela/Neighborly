@@ -49,8 +49,8 @@ int AxisLeftToRightT::getPixel (double xVal) const
 
 void AxisLeftToRightT::print (Renderer* renderer) const
 {   
-    // All lines and ticks are drawn as SDL_Rects, which are held in rects vector.
-    std::vector<SDL_Rect> rects = {};
+    // All lines and ticks are drawn as Rects, which are held in rects vector.
+    std::vector<Rect> rects = {};
     // Tick labels are in texts vector.
     std::vector<TextRect> texts = {};
     
@@ -93,9 +93,9 @@ void AxisLeftToRightT::setTickThickness (int tickThicknessPx)
     _tick_thickness__px = tickThicknessPx;
 }
 
-void AxisLeftToRightT::printHorizontalLine (std::vector<SDL_Rect>& rects) const
+void AxisLeftToRightT::printHorizontalLine (std::vector<Rect>& rects) const
 {
-    SDL_Rect rect{
+    Rect rect{
         _x_cross__px,
         _y_cross__px,
         getAxisLengthPx(),
@@ -106,7 +106,7 @@ void AxisLeftToRightT::printHorizontalLine (std::vector<SDL_Rect>& rects) const
 }
 
 void AxisLeftToRightT::printTicksAndLabels (
-    std::vector<SDL_Rect>& rects, 
+    std::vector<Rect>& rects, 
     std::vector<TextRect>& texts
 ) const
 {   
@@ -132,14 +132,14 @@ void AxisLeftToRightT::printTicksAndLabels (
     int majTickYPx = _y_cross__px - _axis_format.majTickLengthOutsideChartPx();
     int minTickYPx = _y_cross__px - _axis_format.minTickLengthOutsideChartPx();
     
-    SDL_Rect majTick{
+    Rect majTick{
         curVal__px,
         majTickYPx,
         _tick_thickness__px,
         _axis_format.majTickLengthPx()
     };
 
-    SDL_Rect minTick{
+    Rect minTick{
         curVal__px,
         minTickYPx,
         _tick_thickness__px,
@@ -152,17 +152,17 @@ void AxisLeftToRightT::printTicksAndLabels (
     {  
         if (curVal % _maj_tick_spacing == 0) // major tick with label
         { 
-            majTick.x = curVal__px;
+            majTick._x_px = curVal__px;
                 
             curText._text = std::to_string(curVal);
-            curText._x_pixel = curVal__px;
+            curText._x_px = curVal__px;
 
             texts.push_back(curText);
             rects.push_back(majTick);
         }
         else if (curVal % _min_tick_spacing == 0) // minor tick
         {   
-            minTick.x = curVal__px;
+            minTick._x_px = curVal__px;
             rects.push_back(minTick);
         }
         
