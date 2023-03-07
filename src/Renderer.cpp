@@ -51,7 +51,7 @@ void Renderer::endFrame()
 
 void Renderer::fillBlock(Rect block, vector<uint8_t> rgba)
 {
-    SDL_Rect rect = {block._x_px, block._y_px, block.width, block.height};
+    SDL_Rect rect = {block._x__px, block._y__px, block.width, block.height};
     SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
     SDL_RenderFillRect(_sdl_renderer, &rect);
 }
@@ -61,7 +61,7 @@ void Renderer::fillBlocks (vector<Rect> blocks, vector<uint8_t> rgba)
 
     SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
     for (Rect block : blocks)
-    {   SDL_Rect rect = {block._x_px, block._y_px, block.width, block.height};
+    {   SDL_Rect rect = {block._x__px, block._y__px, block.width, block.height};
         SDL_RenderFillRect(_sdl_renderer, &rect);
     }
 }

@@ -139,7 +139,7 @@ void AxisTopToBottomL::printTicksAndLabels (
     {   
         if (curVal % _maj_tick_spacing == 0)
         {
-            majRect._y_px = curVal__px;
+            majRect._y__px = curVal__px;
 
             
             curText._text = std::to_string(curVal);
@@ -150,7 +150,7 @@ void AxisTopToBottomL::printTicksAndLabels (
         }
         else if (curVal % _min_tick_spacing == 0)
         {
-            minRect._y_px = curVal__px;
+            minRect._y__px = curVal__px;
             
             rects.push_back(minRect);
         }

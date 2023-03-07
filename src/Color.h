@@ -20,7 +20,9 @@ enum class Color {
     grid,
     text,
     text_background,
-    background
+    background,
+    tick_background_maj,
+    tick_background_min
 };
 
 enum class BaseColor {red, blue, green};
@@ -152,7 +154,9 @@ inline std::map<Color, std::vector<uint8_t>> _the_color_rgba = {
     //{Color::text_background,{108, 122, 137}},
     {Color::text,{200, 200, 200, 220}},
     {Color::text_background,{20, 20, 20, 255}},
-    {Color::background,{105, 105, 105, 255}}
+    {Color::background,{105, 105, 105, 255}},
+    {Color::tick_background_maj, {40, 40, 40, 255}},
+    {Color::tick_background_min, {20, 20, 20, 255}},
 };
 
 #endif

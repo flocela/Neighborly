@@ -12,6 +12,7 @@ class AxisBottomToTopL
     public:
         AxisBottomToTopL (
             AxisFormat axisFormat,
+            int horizLengthPx, // width of horizontal lines that are a continuation of tick marks
             int x_coordinate__px, // where x and y axis meet
             int y_coordinate__px, // where x and y axis meet
             int minVal,
@@ -37,11 +38,15 @@ class AxisBottomToTopL
         
         void print (Renderer* renderer) const;
         
+        // this includes labels, tick marks, and vertical axis. Does not include horizontal lines
+        // continuing from tick marks 
         int sizeXPx() const;
         
         int sizeYPx() const;
         
         void moveCrossHairs (int xPx, int yPx);
+
+        void setHorizLength (int horizLengthPx);
         
         void setPxPerUnit (int pixels);
         
@@ -49,6 +54,7 @@ class AxisBottomToTopL
 
     private:
         AxisFormat _axis_format;
+        int _horiz_line_length__px;
         int _x_cross__px;
         int _y_cross__px;
         int _min_val;
@@ -69,6 +75,8 @@ class AxisBottomToTopL
         void printVerticalLine (std::vector<Rect>& rects) const;
 
         void printTicksAndLabels (
+            std::vector<Rect>& horizLinesMaj,
+            std::vector<Rect>& horizLinesMin,
             std::vector<Rect>& rects,
             std::vector<TextRect>& texts) const;
 

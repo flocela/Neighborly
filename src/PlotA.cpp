@@ -46,6 +46,7 @@ PlotA::PlotA (
     },
     _y_axis{
         _a_format_y,
+        _x_axis.getAxisLengthPx(),
         _cross_x__px,
         _cross_y__px,
         _min_y,
@@ -184,6 +185,7 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.setPxPerUnit(_unit_y__px);
     _y_axis.setTickThickness(tickThickness);
+    _y_axis.setHorizLength(_x_axis.getAxisLengthPx());
 }
 
 pair<int, int> PlotA::calcUnitSizeXAndYPx () const

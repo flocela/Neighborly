@@ -152,7 +152,7 @@ void AxisLeftToRightT::printTicksAndLabels (
     {  
         if (curVal % _maj_tick_spacing == 0) // major tick with label
         { 
-            majTick._x_px = curVal__px;
+            majTick._x__px = curVal__px;
                 
             curText._text = std::to_string(curVal);
             curText._x_px = curVal__px;
@@ -162,7 +162,7 @@ void AxisLeftToRightT::printTicksAndLabels (
         }
         else if (curVal % _min_tick_spacing == 0) // minor tick
         {   
-            minTick._x_px = curVal__px;
+            minTick._x__px = curVal__px;
             rects.push_back(minTick);
         }
         

@@ -83,3 +83,18 @@ void AxisFormat::setTextColor (vector<uint8_t> color)
 {
     _text_color = color;
 }
+
+void AxisFormat::setTickColor (std::vector<uint8_t> color)
+{
+    _tick_color = color;
+}
+
+void AxisFormat::setTickBackgroundColorMaj (std::vector<uint8_t> color)
+{
+    _tick_background_color_maj = color;
+}
+
+void AxisFormat::setTickBackgroundColorMin (std::vector<uint8_t> color)
+{
+    _tick_background_color_min = color;
+}

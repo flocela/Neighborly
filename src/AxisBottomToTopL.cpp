@@ -5,6 +5,7 @@ using namespace std;
 
 AxisBottomToTopL::AxisBottomToTopL (
     AxisFormat axisFormat,
+    int horizLengthPx,
     int x_coordinate__px, // where x and y axis meet
     int y_coordinate__px, // where x and y axis meet
     int minVal,
@@ -15,6 +16,7 @@ AxisBottomToTopL::AxisBottomToTopL (
     int endOffsetMultiplier
 ) : 
     _axis_format{axisFormat},
+    _horiz_line_length__px{horizLengthPx},
     _x_cross__px{x_coordinate__px},
     _y_cross__px{y_coordinate__px},
     _min_val{minVal},
@@ -43,12 +45,15 @@ int AxisBottomToTopL::getPixel (double yVal) const
 
 void AxisBottomToTopL::print (Renderer* renderer) const
 {
+    std::vector<Rect> horizLinesMaj = {};
+    std::vector<Rect> horizLinesMin = {};
     std::vector<Rect> rects = {};
     std::vector<TextRect> texts = {};
 
     printVerticalLine(rects);
-    printTicksAndLabels (rects, texts);
-
+    printTicksAndLabels (horizLinesMaj, horizLinesMin, rects, texts);
+    renderer->fillBlocks(horizLinesMaj, _axis_format.tickBackgroundColorMaj());
+    renderer->fillBlocks(horizLinesMin, _axis_format.tickBackgroundColorMin());
     renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
     renderer->renderTexts(texts);
 }
@@ -72,6 +77,11 @@ void AxisBottomToTopL::moveCrossHairs (int xPx, int yPx)
 {
     _x_cross__px = xPx;
     _y_cross__px = yPx;
+}
+
+void AxisBottomToTopL::setHorizLength (int horizLengthPx)
+{
+    _horiz_line_length__px = horizLengthPx;
 }
 
 void AxisBottomToTopL::setPxPerUnit (int pixels)
@@ -99,6 +109,8 @@ void AxisBottomToTopL::printVerticalLine (std::vector<Rect>& rects) const
 }
         
 void AxisBottomToTopL::printTicksAndLabels (
+    std::vector<Rect>& horizLinesMaj,
+    std::vector<Rect>& horizLinesMin,
     std::vector<Rect>& rects, 
     std::vector<TextRect>& texts
 ) const
@@ -120,6 +132,20 @@ void AxisBottomToTopL::printTicksAndLabels (
         3
     };
 
+    Rect horizLineRectMaj{
+        minTickXPx,
+        curVal__px,
+        _horiz_line_length__px,
+        _tick_thickness__px
+    };
+
+    Rect horizLineRectMin{
+        minTickXPx,
+        curVal__px,
+        _horiz_line_length__px,
+        _tick_thickness__px
+    };
+
     Rect majRect{
         majTickXPx,
         curVal__px,
@@ -139,18 +165,25 @@ void AxisBottomToTopL::printTicksAndLabels (
     {   
         if (curVal % _maj_tick_spacing == 0)
         {
-            majRect._y_px = curVal__px;
+            majRect._y__px = curVal__px;
             curText._text = std::to_string(curVal);
             curText._y_px = curVal__px;
 
             rects.push_back(majRect);
             texts.push_back(curText);
+
+            horizLineRectMaj._y__px = curVal__px;
+            horizLinesMaj.push_back(horizLineRectMaj);
         }
         else if (curVal % _min_tick_spacing == 0)
         {
-            minRect._y_px = curVal__px;
+            minRect._y__px = curVal__px;
             rects.push_back(minRect);
+
+            horizLineRectMin._y__px = curVal__px;
+            horizLinesMin.push_back(horizLineRectMin);
         }
+
         ++curVal;
         curVal__px = getPixel(curVal) - ( _tick_thickness__px/2 );
     }

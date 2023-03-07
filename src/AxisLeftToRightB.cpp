@@ -150,7 +150,7 @@ void AxisLeftToRightB::printTicksAndLabels (
     {  
         if (curVal % _maj_tick_spacing == 0)
         {   
-            majTick._x_px = curVal__px;
+            majTick._x__px = curVal__px;
 
             curText._text = std::to_string(curVal);
             curText._x_px = curVal__px;
@@ -160,7 +160,7 @@ void AxisLeftToRightB::printTicksAndLabels (
         }
         else if (curVal % _min_tick_spacing == 0)
         {   
-            minTick._x_px = curVal__px;
+            minTick._x__px = curVal__px;
             rects.push_back(minTick);
         }
         
