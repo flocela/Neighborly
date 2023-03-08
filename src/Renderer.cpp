@@ -213,6 +213,21 @@ void Renderer::renderTexts (vector<TextRect> texts)
     }
 }
 
+bool Renderer::initRenderer()
+{
+    _sdl_renderer = SDL_CreateRenderer(
+        _sdl_window, 
+        -1, 
+        SDL_RENDERER_ACCELERATED
+        );
+  	if (nullptr == _sdl_renderer) {
+    	cerr << "Renderer could not be created.\n";
+    	cerr << "SDL_Error: " << SDL_GetError() << "\n";
+        return false;
+    }
+    return true;
+}
+
 bool Renderer::initVideo()
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -220,19 +235,6 @@ bool Renderer::initVideo()
     	cerr << "SDL_Error: " << SDL_GetError() << "\n";
         return false;
   	}
-    return true;
-}
-
-bool Renderer::linuxSettings()
-{
-	#if defined linux && SDL_VERSION_ATLEAST(2, 0, 8)
-    	// Disable compositor bypass
-    	if(!SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0"))
-    	{
-    	    cerr << "SDL can not disable compositor bypass!\n";
-    	    return false;
-   	 	}
-  	#endif
     return true;
 }
 
@@ -254,17 +256,16 @@ bool Renderer::initWindow(string title)
     return true;
 }
 
-bool Renderer::initRenderer()
+bool Renderer::linuxSettings()
 {
-    _sdl_renderer = SDL_CreateRenderer(
-        _sdl_window, 
-        -1, 
-        SDL_RENDERER_ACCELERATED
-        );
-  	if (nullptr == _sdl_renderer) {
-    	cerr << "Renderer could not be created.\n";
-    	cerr << "SDL_Error: " << SDL_GetError() << "\n";
-        return false;
-    }
+	#if defined linux && SDL_VERSION_ATLEAST(2, 0, 8)
+    	// Disable compositor bypass
+    	if(!SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0"))
+    	{
+    	    cerr << "SDL can not disable compositor bypass!\n";
+    	    return false;
+   	 	}
+  	#endif
     return true;
 }
+

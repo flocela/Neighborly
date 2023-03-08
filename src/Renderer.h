@@ -25,7 +25,7 @@ public:
 	void startFrame();
 	void endFrame();
 
-	// draws a solid rectangles with the given color
+	// draws a solid rectangle with the given color
 	void fillBlock (Rect blocks, std::vector<uint8_t> rgba) ;
 
 	// draws solid rectangles for the given blocks with the given color
@@ -92,10 +92,11 @@ private:
 	const std::size_t _screen_width;
 	const std::size_t _screen_height;
 
-	bool initVideo ();
-	bool linuxSettings ();
-	bool initWindow (std::string title);
 	bool initRenderer ();
+	bool initVideo ();
+	bool initWindow (std::string title);
+	bool linuxSettings ();
+	
 };
 
 #endif
