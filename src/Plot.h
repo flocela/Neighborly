@@ -8,9 +8,15 @@
 // A Plot has an x and y axis. It prints data points (dots) in its area.
 class Plot
 {
+protected:
+    Plot () = default;
+    Plot (const Plot& o) = default;
+    Plot (Plot&& o) noexcept = default;
+    Plot& operator= (const Plot& o) = default;
+    Plot& operator= (Plot&& o) noexcept = default;
 
 public:
-
+    virtual ~Plot() = default;
     // the x axis has values. returns the most centarl value's pixel.
     virtual int getCenterValueOfXAxisPx () const = 0;
 
