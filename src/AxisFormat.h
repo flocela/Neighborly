@@ -27,6 +27,8 @@ class AxisFormat
         std::vector<uint8_t> tickBackgroundColorMaj () const { return _tick_background_color_maj;}
         std::vector<uint8_t> tickBackgroundColorMin () const { return _tick_background_color_min;}
 
+        bool showBackgroundTickLines () const { return _include_background_tick_marks;}
+
         void setLabelLetterHeight (int size);
         void setLabelSpacePx (int space);
         void setLabelWidthMultiplier (double widhtMultiplier);
@@ -34,6 +36,8 @@ class AxisFormat
         void setMajTickLengthPx (int length);
         void setMinTickLengthPx (int length);
         void setTickLengthInsideChartPx (int length);
+
+        void setBackgroundTickLines (bool show);
         
         void setTextBackgroundColor (std::vector<uint8_t> color);
         void setTextColor (std::vector<uint8_t> color);
@@ -56,7 +60,10 @@ class AxisFormat
         std::vector<uint8_t> _tick_background_color_min = _the_color_rgba[Color::tick_background_min];
 
         // _tick_length_inside_chart__px does not include thickness of axis
-        int _tick_length_inside_chart__px = 2;      
+        int _tick_length_inside_chart__px = 2; 
+
+        // extend tick marks horizontally across chart
+        bool _include_background_tick_marks = false;   
 };
 
 #endif

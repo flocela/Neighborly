@@ -98,15 +98,6 @@ private:
     /* RIGHT COLUMN */
     /* Right column holds the diversity chart and happiness chart */
     
-    PlotSizer _right_col_sizer{
-        _axis_format_X,
-        _axis_format_Y,
-        _chart_title_letter,
-        _chart_key_letter,
-        _min_unit_size__px,
-        _x_offset_multiplier,
-        _x_overrun_multiplier
-    };
 
     /* DIVERSITY CHART */
     /* Diversity chart is the right column. Diversity chart sits below number of runs chart*/
@@ -133,16 +124,6 @@ private:
     /* Left column holds the city chart */
 
     std::string _city_chart_title = "City Map";
-
-    PlotSizer _city_plot_sizer{
-        _axis_format_X,
-        _axis_format_Y,
-        _chart_title_letter,
-        _chart_key_letter,
-        _min_unit_size__px,
-        _x_offset_multiplier,
-        _x_overrun_multiplier
-    };
 
     // determines the smallest and largest x and y values on the grid, per the house coordinates.
     // returns a vector {smallest x value, largest x value, smallest y value, largest y value}

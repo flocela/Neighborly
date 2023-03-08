@@ -50,10 +50,13 @@ void AxisBottomToTopL::print (Renderer* renderer) const
     std::vector<Rect> rects = {};
     std::vector<TextRect> texts = {};
 
-    printVerticalLine(rects);
-    printTicksAndLabels (horizLinesMaj, horizLinesMin, rects, texts);
-    renderer->fillBlocks(horizLinesMaj, _axis_format.tickBackgroundColorMaj());
-    renderer->fillBlocks(horizLinesMin, _axis_format.tickBackgroundColorMin());
+    setVerticalLine(rects);
+    setTicksLabels (horizLinesMaj, horizLinesMin, rects, texts);
+    if (_axis_format.showBackgroundTickLines())
+    {
+        renderer->fillBlocks(horizLinesMaj, _axis_format.tickBackgroundColorMaj());
+        renderer->fillBlocks(horizLinesMin, _axis_format.tickBackgroundColorMin());
+    }
     renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
     renderer->renderTexts(texts);
 }
@@ -97,7 +100,7 @@ void AxisBottomToTopL::setTickThickness (int tickThicknessPx)
     _tick_thickness__px = tickThicknessPx;
 }
 
-void AxisBottomToTopL::printVerticalLine (std::vector<Rect>& rects) const
+void AxisBottomToTopL::setVerticalLine (std::vector<Rect>& rects) const
 {
     Rect rect{
         _x_cross__px,
@@ -108,7 +111,7 @@ void AxisBottomToTopL::printVerticalLine (std::vector<Rect>& rects) const
     rects.push_back(rect);
 }
         
-void AxisBottomToTopL::printTicksAndLabels (
+void AxisBottomToTopL::setTicksLabels (
     std::vector<Rect>& horizLinesMaj,
     std::vector<Rect>& horizLinesMin,
     std::vector<Rect>& rects, 

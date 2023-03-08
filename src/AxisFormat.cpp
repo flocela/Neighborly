@@ -73,6 +73,11 @@ void AxisFormat::setTickLengthInsideChartPx (int length)
         _tick_length_inside_chart__px = length;
     }
 }
+
+void AxisFormat::setBackgroundTickLines (bool show)
+{
+    _include_background_tick_marks = show;
+}
         
 void AxisFormat::setTextBackgroundColor (vector<uint8_t> color)
 {

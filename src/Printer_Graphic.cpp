@@ -178,6 +178,18 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
     int availSpaceYPx
 )
 {   
+    _axis_format_Y.setBackgroundTickLines(false);
+
+    PlotSizer cityPlotSizer{
+        _axis_format_X,
+        _axis_format_Y,
+        _chart_title_letter,
+        _chart_key_letter,
+        _min_unit_size__px,
+        _x_offset_multiplier,
+        _x_overrun_multiplier
+    };
+
     set<Mood> moods{Mood::happy, Mood::unhappy};
 
     return make_unique<GrCityChart>(
@@ -191,7 +203,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             _colors,
             moods),
         make_unique<PlotB>(
-            _city_plot_sizer,
+            cityPlotSizer,
             minXCoord, 
             maxXCoord,
             minYCoord, 
@@ -211,6 +223,17 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
     int availSpaceYPx
 )
 {
+    _axis_format_Y.setBackgroundTickLines(true);
+    PlotSizer rightColSizer{
+        _axis_format_X,
+        _axis_format_Y,
+        _chart_title_letter,
+        _chart_key_letter,
+        _min_unit_size__px,
+        _x_offset_multiplier,
+        _x_overrun_multiplier
+    };
+
     set<Mood> moods{Mood::neutral};
     return make_unique<GrDvstyChart> (
         _colors,
@@ -224,7 +247,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             _colors,
             moods),
         make_unique<PlotA>(
-            _right_col_sizer,
+            rightColSizer,
             0, // min number of runs
             maxNumOfRuns - 1,
             0, // min number of neighbors
@@ -242,7 +265,18 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
     int topLeftYPx,
     int availSpaceYPx
 )
-{   
+{  
+    _axis_format_Y.setBackgroundTickLines(true);
+    PlotSizer rightColSizer{
+        _axis_format_X,
+        _axis_format_Y,
+        _chart_title_letter,
+        _chart_key_letter,
+        _min_unit_size__px,
+        _x_offset_multiplier,
+        _x_overrun_multiplier
+    };
+
     set<Mood> moods{Mood::neutral};
 
     return make_unique<GrHapChart> (
@@ -255,7 +289,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
             _colors,
             moods),
         make_unique<PlotA>(
-            _right_col_sizer,
+            rightColSizer,
             0, // starting run number
             numberOfRuns -1,
             0, // minimum resident happiness
