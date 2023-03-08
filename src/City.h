@@ -11,7 +11,17 @@
 
 class City
 {
+
+protected:
+    City () = default;
+    City (const City& o) = default;
+    City (City&& o)noexcept = default;
+    City& operator= (const City& o) = default;
+    City& operator= (City&& o) noexcept = default;
+
 public:
+    virtual ~City () = default;
+
     // largest distance between any two houses (inclusively) in y direction.
     virtual double getHeight() const = 0;
     

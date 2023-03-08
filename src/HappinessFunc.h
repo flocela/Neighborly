@@ -5,7 +5,15 @@
 // Both axes range from 0.0 to 1.0.
 class HappinessFunc
 {
+protected:
+    HappinessFunc () = default;
+    HappinessFunc (const HappinessFunc& o) = default;
+    HappinessFunc (HappinessFunc&& o) noexcept = default;
+    HappinessFunc& operator= (const HappinessFunc& o) = default;
+    HappinessFunc& operator= (HappinessFunc&& o) noexcept = default;
+
 public:
+    virtual ~HappinessFunc () = default;
 
     virtual double calcHappiness (
         int tot_num_of_possible_neighbors, 
