@@ -17,10 +17,10 @@ public:
 		std::string title);
 	~Renderer();
 	Renderer () = delete;
-    Renderer (const Renderer& o) = default;
-    Renderer (Renderer&& o) noexcept = default;
-    Renderer& operator= (const Renderer& o) = default;
-    Renderer& operator=(Renderer&& o) noexcept = default;
+    Renderer (const Renderer& o) = delete;
+    Renderer (Renderer&& o) noexcept = delete;
+    Renderer& operator= (const Renderer& o) = delete;
+    Renderer& operator=(Renderer&& o) noexcept = delete;
 		
 	void startFrame();
 	void endFrame();
