@@ -8,7 +8,16 @@
 
 class CityMaker
 {
+protected:
+    CityMaker () = default;
+    CityMaker (const CityMaker& o) = default;
+    CityMaker (CityMaker&& o) noexcept = default;
+    CityMaker& operator= (const CityMaker& o) = default;
+    CityMaker& operator= (CityMaker&& o) noexcept = default;
+
 public:
+    virtual ~CityMaker () = default;
+    
     virtual std::unique_ptr<City> makeCity (
         const std::vector<std::unique_ptr<const CityFactory>>& cityFactories,
         int maxDeltaX,
