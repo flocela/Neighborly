@@ -3,11 +3,19 @@
 
 #include "Renderer.h"
 
-// Abstract class for a title. 
+// A title prints the title string in the window.
 class Title
 {
-public:
+protected:
+    Title () = default;
+    Title (const Title& o) = default;
+    Title (Title&& o) noexcept = default;
+    Title& operator= (const Title& o) = default;
+    Title& operator= (Title&& o) noexcept = default;
 
+public:
+    virtual ~Title () = default;
+    
     virtual int getLetterHeight () = 0;
 
     virtual int getLineSpace () = 0;

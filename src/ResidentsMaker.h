@@ -11,15 +11,23 @@
 // creates residents
 class ResidentsMaker
 {
-    public:
-        virtual ResidentsGroupInfo makeResidents (
-            const UI& ui,
-            const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories,
-            int maxNumOfResidents,
-            int maxNumOfGroupsOfResidents,
-            std::vector<BaseColor> colors, // these are the colors that the resident groups can be.
-            double allowableMovement
-        ) = 0;
+protected:
+    ResidentsMaker () = default;
+    ResidentsMaker (ResidentsMaker& o) = default;
+    ResidentsMaker (ResidentsMaker&& o) noexcept = default;
+    ResidentsMaker& operator= (ResidentsMaker& o) = default;
+    ResidentsMaker& operator= (ResidentsMaker&& o) noexcept = default;
+
+public:
+    virtual ~ResidentsMaker () = default;
+    virtual ResidentsGroupInfo makeResidents (
+        const UI& ui,
+        const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories,
+        int maxNumOfResidents,
+        int maxNumOfGroupsOfResidents,
+        std::vector<BaseColor> colors, // these are the colors that the resident groups can be.
+        double allowableMovement
+    ) = 0;
 };
 
 #endif

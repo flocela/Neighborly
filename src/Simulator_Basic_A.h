@@ -16,7 +16,7 @@ public:
     Simulator_Basic_A (const Simulator_Basic_A& o) = default;
     Simulator_Basic_A (Simulator_Basic_A&& o) noexcept = default;
     Simulator_Basic_A& operator= (const Simulator_Basic_A& o) = default;
-    Simulator_Basic_A& operator= (Simulator_Basic_A&& o) = default;
+    Simulator_Basic_A& operator= (Simulator_Basic_A&& o) noexcept = default;
     ~Simulator_Basic_A () = default;
 
     // simulates one run (or round). 

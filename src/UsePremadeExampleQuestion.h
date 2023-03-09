@@ -6,6 +6,7 @@
 
 class UsePremadeExampleQuestion
 {
+    
 public:
     bool askUser (const UI& ui);
 
