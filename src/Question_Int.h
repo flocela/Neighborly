@@ -5,7 +5,16 @@
 
 class Question_Int: public Question
 {
+protected:
+    Question_Int (const Question_Int& obj) = default;
+    Question_Int (Question_Int&& obj) noexcept = default;
+    Question_Int& operator=(const Question_Int& obj) = default;
+    Question_Int& operator=(Question_Int&& obj) noexcept = default;
+
 public:
+    Question_Int () = delete;
+    virtual ~Question_Int() = default;
+
     Question_Int (
         int id,
         int min, 
@@ -25,13 +34,6 @@ public:
         std::string origPrompt,
         std::string valueName);
         
-    Question_Int () = delete;
-    Question_Int (const Question_Int& obj) = default;
-    Question_Int (Question_Int&& obj) noexcept = default;
-    Question_Int& operator=(const Question_Int& obj) = default;
-    Question_Int& operator=(Question_Int&& obj) noexcept = default;
-    ~Question_Int() = default;
-
     int getID() const override;
     std::string getPrompt () const override;
     bool hasValidAnswer () const  override;

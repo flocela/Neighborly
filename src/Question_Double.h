@@ -5,7 +5,16 @@
 
 class Question_Double: public Question
 {
+protected:
+    
+    Question_Double (const Question_Double& obj) = default;
+    Question_Double (Question_Double&& obj) noexcept = default;
+    Question_Double& operator=(const Question_Double& obj) = default;
+    Question_Double& operator=(Question_Double&& obj) noexcept = default;
 public:
+    Question_Double () = delete;
+    virtual ~Question_Double() = default;
+
     Question_Double (
         int id,
         double min, 
@@ -24,13 +33,6 @@ public:
         double fallback,
         std::string origPrompt,
         std::string valueName);
-
-    Question_Double () = delete;
-    Question_Double (const Question_Double& obj) = default;
-    Question_Double (Question_Double&& obj) noexcept = default;
-    Question_Double& operator=(const Question_Double& obj) = default;
-    Question_Double& operator=(Question_Double&& obj) noexcept = default;
-    ~Question_Double() = default;
 
     int getID() const override;
     std::string getPrompt () const override;

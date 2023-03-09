@@ -9,20 +9,29 @@
 
 class ResidentsFactory
 {
-    public:
-        virtual std::vector<std::unique_ptr<Resident>> createResidents(
-            const UI& ui,
-            int firstID, 
-            int count,
-            double happinessGoal,
-            double allowedMovement,
-            int groupNumber,
-            BaseColor baseColor
-        )const = 0;
+protected:
+    ResidentsFactory () = default;
+    ResidentsFactory (const ResidentsFactory& o) = default;
+    ResidentsFactory (ResidentsFactory&& o) noexcept = default;
+    ResidentsFactory& operator= (const ResidentsFactory& o) = default;
+    ResidentsFactory& operator= (ResidentsFactory&& o) noexcept = default;
 
-        virtual std::string residentType () const= 0;
-        
-        virtual std::string toString () = 0;
+public:
+    virtual ~ResidentsFactory () = default;
+    
+    virtual std::vector<std::unique_ptr<Resident>> createResidents(
+        const UI& ui,
+        int firstID, 
+        int count,
+        double happinessGoal,
+        double allowedMovement,
+        int groupNumber,
+        BaseColor baseColor
+    )const = 0;
+
+    virtual std::string residentType () const= 0;
+    
+    virtual std::string toString () = 0;
 };
 
 #endif

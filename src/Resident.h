@@ -6,6 +6,12 @@
 
 class Resident{
 
+protected:
+    Resident (const Resident& obj) = default;
+    Resident (Resident&& obj) noexcept = default;
+    Resident& operator= (const Resident& obj) = default;
+    Resident& operator= (Resident&& obj) noexcept = default;
+
 public:
     Resident (
         int id,
@@ -13,11 +19,7 @@ public:
         double allowedMovementDistance,
         double happinessGoal);
     Resident () = delete;
-    Resident (const Resident& obj) = default;
-    Resident (Resident&& obj) noexcept = default;
-    Resident& operator= (const Resident& obj) = default;
-    Resident& operator= (Resident&& obj) noexcept = default;
-    virtual ~Resident () = default; //TODO should be virtual
+    virtual ~Resident () = default;
 
     double calculateHappiness (std::set<Resident*> neighbors, int numOfAdjacentHouses) const; // TODO should be const Resident*
     double getAllowedMovementDistance () const;
