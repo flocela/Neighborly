@@ -7,8 +7,13 @@
 
 class Resident_UsingFunction : public Resident
 {
+protected:
+    Resident_UsingFunction (const Resident_UsingFunction& obj) = default;
+    Resident_UsingFunction (Resident_UsingFunction&& obj) noexcept = default;
+    Resident_UsingFunction& operator= (const Resident_UsingFunction& obj) = default;
+    Resident_UsingFunction& operator= (Resident_UsingFunction&& obj) noexcept = default;
+
 public:
-    
     Resident_UsingFunction (
         int id,
         int groupNumber,
@@ -17,11 +22,7 @@ public:
         std::unique_ptr<HappinessFunc> happinessFunc,
         std::string name);
     Resident_UsingFunction () = delete;
-    Resident_UsingFunction (const Resident_UsingFunction& obj) = default;
-    Resident_UsingFunction (Resident_UsingFunction&& obj) noexcept = default;
-    Resident_UsingFunction& operator= (const Resident_UsingFunction& obj) = default;
-    Resident_UsingFunction& operator= (Resident_UsingFunction&& obj) noexcept = default;
-    ~Resident_UsingFunction() = default; // TODO should be virtual
+    virtual ~Resident_UsingFunction() = default;
 
 protected:
     double implimentHappiness ( std::set<Resident*> neighbors,  int numOfAdjacentHouses) const override;
