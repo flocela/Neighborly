@@ -7,7 +7,7 @@
 
 #include "Resident.h"
 
-class ResidentsGroupInfo
+struct ResidentsGroupInfo
 {
 public:
 
