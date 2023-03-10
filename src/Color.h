@@ -15,7 +15,10 @@ enum class Color {
     blue_happy, 
     green_neutral, 
     green_unhappy, 
-    green_happy, 
+    green_happy,
+    yellow_neutral,
+    yellow_unhappy,
+    yellow_happy, 
     absent,
     grid,
     text,
@@ -25,33 +28,26 @@ enum class Color {
     tick_background_min
 };
 
-enum class BaseColor {red, blue, green};
+enum class BaseColor {red, blue, green, yellow};
 
 enum class Mood {neutral, unhappy, happy};
 
 std::ostream& operator<<(std::ostream& os, Color const& obj);
 std::ostream& operator<<(std::ostream& os, BaseColor const& obj);
 
-inline std::unordered_map<std::string, BaseColor> _base_colors {
-    {"red", BaseColor::red},
+inline std::map<std::string, BaseColor> _base_colors {
     {"blue", BaseColor::blue},
+    {"yellow", BaseColor::yellow},
+    {"red", BaseColor::red},
     {"green", BaseColor::green}
 };
 
-inline BaseColor baseColor (std::string baseColor)
-{
-    if (baseColor == "red")
-    {
-        return BaseColor::red;
-    }
-    else if (baseColor == "blue")
-    {
-        return BaseColor::blue;
-    }
-    else {
-        return BaseColor::green;
-    }
-}
+inline std::vector<BaseColor> _ordered_base_colors = {
+    BaseColor::blue,
+    BaseColor::yellow,
+    BaseColor::red,
+    BaseColor::green
+};
 
 struct ColorInfo
 {
@@ -65,7 +61,6 @@ struct ColorInfo
     std::string toString() { return _base_name + "_" + _mood_name;}
 };
 
-// TODO for red green color blindness, change green to yellow.
 inline std::unordered_map<BaseColor, std::unordered_map<Mood,ColorInfo>> _colorrs_map {
     { BaseColor::blue, { 
         { Mood::neutral, 
@@ -104,14 +99,14 @@ inline std::unordered_map<BaseColor, std::unordered_map<Mood,ColorInfo>> _colorr
               "red",
               Mood::happy, 
               "happy", 
-              {255, 64, 129, 255} }},
+              {244, 143, 177, 255} }},
         { Mood::unhappy,
             { Color::red_unhappy, 
               BaseColor::red,
               "red",
               Mood::unhappy,
               "unhappy", 
-              {198, 40, 40, 255} }}    
+              {183, 28, 28, 255} }}    
     }},
     { BaseColor::green, {
         { Mood::neutral, 
@@ -135,6 +130,30 @@ inline std::unordered_map<BaseColor, std::unordered_map<Mood,ColorInfo>> _colorr
               Mood::unhappy,
               "unhappy", 
               {27, 94, 32, 255} }}
+    }},
+    { BaseColor::yellow, {
+        { Mood::neutral, 
+            { Color::yellow_neutral,
+              BaseColor::yellow,
+              "yellow",
+              Mood::neutral,
+              "neutral",
+              {255, 255, 0, 255} }},
+              
+        { Mood::happy,
+            { Color::yellow_happy,
+              BaseColor::yellow,
+              "yellow",
+              Mood::happy,
+              "happy", 
+              {255, 255, 134, 255} }},
+        { Mood::unhappy, 
+            { Color::yellow_unhappy,
+              BaseColor::yellow,
+              "yellow",
+              Mood::unhappy,
+              "unhappy", 
+              {239, 108, 0, 255} }}
     }}
 };
 
@@ -148,6 +167,9 @@ inline std::map<Color, std::vector<uint8_t>> _the_color_rgba = {
     {Color::green_neutral, _colorrs_map[BaseColor::green][Mood::neutral].rgba},
     {Color::green_happy, _colorrs_map[BaseColor::green][Mood::happy].rgba},
     {Color::green_unhappy, _colorrs_map[BaseColor::green][Mood::unhappy].rgba},
+    {Color::yellow_neutral, _colorrs_map[BaseColor::yellow][Mood::neutral].rgba},
+    {Color::yellow_happy, _colorrs_map[BaseColor::yellow][Mood::happy].rgba},
+    {Color::yellow_unhappy, _colorrs_map[BaseColor::yellow][Mood::unhappy].rgba},
     {Color::absent,  {40, 40, 40, 255}},
     {Color::grid,{210, 215, 211, 255}},
     //{Color::text,{236, 240, 241, 255}},

@@ -24,11 +24,9 @@ SimulationComponents ComponentsFromUserGetter::askUserForComponents (
     components.city = cityMaker.makeCity(cityFactories, maxNumOfHousesX, maxNumOfHousesY);
 
     std::vector<BaseColor> baseColors;
-    auto iter = _colorrs_map.begin();
     for (int ii=1; ii<=maxNumOfResidentGroups; ++ii) 
     {
-        baseColors.push_back((*iter).first);
-        ++iter;
+        baseColors.push_back(_ordered_base_colors[ii-1]);
     }
 
     ResidentsMaker_CMDLine residentsMaker{};

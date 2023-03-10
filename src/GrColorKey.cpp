@@ -47,9 +47,8 @@ void GrColorKey::print (Renderer* renderer)
     int first_col_left__px = _top_center_x__px - (double)_column_width * num_of_columns/2;
 
     int counter = 0;
-
     for (auto& pair : _label_per_color)
-    {
+    {  
         string label = pair.second;
         int labelWidth =  
             (int)(label.length() *

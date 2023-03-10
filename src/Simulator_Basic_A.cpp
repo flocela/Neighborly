@@ -180,9 +180,9 @@ double Simulator_Basic_A::calculateHappinessValueFor(Resident* res, int address)
     return res->calculateHappiness(getResidentsInTheseHouses(adjHouses), adjHouses.size());
 }
 
-set<Resident*> Simulator_Basic_A::getResidentsInTheseHouses (set<const House*> houses)
+set<const Resident*> Simulator_Basic_A::getResidentsInTheseHouses (set<const House*> houses)
 {   
-    set<Resident*> residents;
+    set<const Resident*> residents;
     for (const House* house : houses)
     {   
         if (_res_per_house.find(house) != _res_per_house.end())

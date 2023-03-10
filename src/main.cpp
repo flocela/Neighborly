@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
     (void) argc;
     (void) argv;
 
-    bool useFile = true;
+    bool useFile = false;
 
     // components will be populated by file, by premade examples, or by user choices.
     SimulationComponents components;
@@ -128,8 +128,7 @@ int main(int argc, char* argv[])
                 MAX_NUM_OF_RUNS
             );
         }
-    }
-    
+    } 
     // set srand with randomSeed
     srand(components.randomSeed);
     
@@ -154,7 +153,7 @@ int main(int argc, char* argv[])
         "Neighbors",
         components.numOfRuns
     };
-
+    
     Printer_CMDLine cmdLinePrinter{
         components.baseColorsPerGroupid,
         components.numOfRuns,
@@ -173,7 +172,6 @@ int main(int argc, char* argv[])
         {
             constResPerConstHouse[pair.first] = pair.second;
         }
-
         graphicPrinter.print(constResPerConstHouse, ii);
         //cmdLinePrinter.print(constResPerConstHouse, ii);
     }

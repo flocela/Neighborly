@@ -6,6 +6,8 @@
 #include "SimulationComponents.h"
 #include "Resident_UsingFunction.h"
 #include "HappinessFunc_StepDown.h"
+
+using namespace std;
 template<typename T>
 std::set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
 {
@@ -43,11 +45,9 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             components.city = std::make_unique<City_Grid>(120);
 
             // Only two groups. Group #1 and Group #2
-            auto iter = _colorrs_map.begin();
             for (int ii=1; ii<3; ++ii)
             {
-                components.baseColorsPerGroupid.insert({ii, (*iter).first});
-                ++iter;
+                components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
             }
 
             for (int ii=0; ii<4000; ++ii)

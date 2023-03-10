@@ -20,7 +20,7 @@
             2
         </group_id>
         <base_color>
-            green
+            blue
         </base_color>
     </group>
 </base_color_per_group>

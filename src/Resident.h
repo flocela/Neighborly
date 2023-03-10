@@ -21,7 +21,7 @@ public:
     Resident () = delete;
     virtual ~Resident () = default;
 
-    double calculateHappiness (std::set<Resident*> neighbors, int numOfAdjacentHouses) const; // TODO should be const Resident*
+    double calculateHappiness (std::set<const Resident*> neighbors, int numOfAdjacentHouses) const;
     double getAllowedMovementDistance () const;
     int getGroupId () const;
     double getHappinessGoal () const;
@@ -36,7 +36,7 @@ public:
     
 protected:
     virtual double implimentHappiness (
-        std::set<Resident*> neighbors,
+        std::set<const Resident*> neighbors,
         int numOfAdjacentHouses
     ) const = 0;
 

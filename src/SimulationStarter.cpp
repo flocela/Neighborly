@@ -141,7 +141,8 @@ pair<int, BaseColor> SimulationStarter::returnBaseColor (ifstream& inputStream)
         }
         getline(inputStream, line); // "</group>"
     }
-    BaseColor c = _base_colors[leftTrim(baseColor)];
+    string trim = leftTrim(baseColor);
+    BaseColor c = _base_colors[trim];
     return {stoi(groupId), c};
 }
 
@@ -542,14 +543,12 @@ void SimulationStarter::returnResidentsWithFlatFunc (
     {  
         getline(inputStream, happinessValue);
         getline(inputStream, line);
-        cout << "HappinessValue" << endl;
     }
     getline(inputStream, line);
     if (line.find("name") != string::npos)
     {   
         getline(inputStream, name);
         getline(inputStream, line);
-        cout << "name" << endl;
     }
 
     getline(inputStream, line); // </resident_group

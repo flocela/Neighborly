@@ -25,7 +25,7 @@ public:
     virtual ~Resident_UsingFunction() = default;
 
 protected:
-    double implimentHappiness ( std::set<Resident*> neighbors,  int numOfAdjacentHouses) const override;
+    double implimentHappiness ( std::set<const Resident*> neighbors,  int numOfAdjacentHouses) const override;
     std::string implimentToStrBasic () const override; 
 
 private:

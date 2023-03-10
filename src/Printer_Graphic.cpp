@@ -105,7 +105,6 @@ void Printer_Graphic::print (
         residents.push_back(resAndHouse.second);
         }
     }
-
     _window_title->print(_renderer.get());
     _runs_chart->print(run, _renderer.get());
     _city_chart->print(residentPerHouse, _renderer.get());

@@ -5,7 +5,6 @@ using namespace std;
 ostream& operator<<(ostream& os, Color const& obj)
 { 
     string colorString;
-
     switch (obj)
     {
         case Color::red_neutral:
@@ -35,6 +34,15 @@ ostream& operator<<(ostream& os, Color const& obj)
         case Color::green_happy:
             colorString = _colorrs_map[BaseColor::green][Mood::happy].toString();
             break;
+        case Color::yellow_neutral:
+            colorString = _colorrs_map[BaseColor::yellow][Mood::neutral].toString();
+            break;
+        case Color::yellow_unhappy:
+            colorString = _colorrs_map[BaseColor::yellow][Mood::unhappy].toString();
+            break;
+        case Color::yellow_happy:
+            colorString = _colorrs_map[BaseColor::yellow][Mood::happy].toString();
+            break;
         default:
             colorString = "unknown";
             break;
@@ -58,6 +66,9 @@ ostream& operator<<(ostream& os, BaseColor const& obj)
         case BaseColor::red:
             colorString = "red";
             break;
+        case BaseColor::yellow:
+        colorString = "yellow";
+        break;
         default:
             colorString = "unknown";
             break;

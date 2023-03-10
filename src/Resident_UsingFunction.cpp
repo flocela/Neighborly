@@ -21,13 +21,13 @@ std::string Resident_UsingFunction::implimentToStrBasic () const
 }
 
 double Resident_UsingFunction::implimentHappiness(
-    std::set<Resident*> neighbors,
+    std::set<const Resident*> neighbors,
     int numOfAdjacentHouses
 ) const
 {
     int like  = 0;
     int diff  = 0;
-    for (Resident* res : neighbors)
+    for (const Resident* res : neighbors)
     {
         if (res->getGroupId() == getGroupId())
             like++;

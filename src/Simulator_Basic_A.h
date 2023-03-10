@@ -85,7 +85,7 @@ private:
 
     // Returns residents that live in @houses. If a house is empty, then 
     // returned set will be smaller than @houses.
-    std::set<Resident*> getResidentsInTheseHouses(std::set<const House*> houses);
+    std::set<const Resident*> getResidentsInTheseHouses(std::set<const House*> houses);
 };
 
 #endif
