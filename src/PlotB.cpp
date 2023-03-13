@@ -196,12 +196,6 @@ void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) {
 
 int PlotB::calcUnitSizePx () const
 {
-    // if there is no space, or if the difference in values is 0, then just use min_unit__px.
-    if (_x_space__px <= 0 || _y_space__px <= 0 || _x_diff == 0 || _y_diff == 0)
-    {
-        return _min_unit__px;
-    }
-
     int allowableXAxisLengthPx = _x_space__px - _y_axis.sizeXPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
@@ -210,8 +204,7 @@ int PlotB::calcUnitSizePx () const
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
 
-    int unitSize = min(xUnitSize, yUnitSize); //TODO why is there no change if x and y aren't the same even or oddness.
-    // TODO should _min_*nit__px even be a conscept?
+    int unitSize = min(xUnitSize, yUnitSize);
 
     return max(unitSize, _min_unit__px);
 }

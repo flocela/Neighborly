@@ -30,7 +30,7 @@ Printer_Graphic::Printer_Graphic (
        _chart_title_letter.getHeightIncLSpace(),
        _chart_title_letter,
        _num_of_runs)}
-{   
+{   (void)neighborHousesPerHouse;// TODO
     _window_title->setTextColor(_title_text_color);
     // column space for left and right columns. Columns sit below the runs chart.
     // left column holds city chart, right column holds diversity chart and happiness chart
@@ -108,17 +108,8 @@ void Printer_Graphic::print (
     _window_title->print(_renderer.get());
     _runs_chart->print(run, _renderer.get());
     _city_chart->print(residentPerHouse, _renderer.get());
-    _div_chart->print(
-        housePerResident,
-        residentPerHouse,
-        run,
-        _renderer.get()
-    );
-    _happiness_chart->print(
-        housePerResident,
-        run,
-        _renderer.get()
-    );
+    _div_chart->print(housePerResident, residentPerHouse, run, _renderer.get());
+    _happiness_chart->print(housePerResident, run, _renderer.get());
     _renderer->endFrame();
 } 
 

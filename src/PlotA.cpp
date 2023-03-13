@@ -1,4 +1,5 @@
 #include "PlotA.h"
+#include <iostream>
 
 using namespace std;
 
@@ -56,7 +57,9 @@ PlotA::PlotA (
         sizer.startOffsetM(),
         sizer.endOffsetM(),
     }
-{}
+{
+    cout << "PlotA: " << _a_format_x.axisThicknessPx() << endl;
+}
 
 PlotA::PlotA (
     PlotSizer sizer,
@@ -190,13 +193,6 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
 
 pair<int, int> PlotA::calcUnitSizeXAndYPx () const
 {
-    //TODO think about if there's no space, should this be here. should there be minunits?
-    // if there is no space, or if the difference in values is 0, then just use min_unit__px.
-    if (_x_space__px <= 0 || _y_space__px <= 0 || _x_diff == 0 || _y_diff == 0)
-    {
-        return {_min_unit__px, _min_unit__px};
-    }
-
     // x-unit size (doesn't change)
     int allowableXAxisLengthPx = _x_space__px - _y_axis.sizeXPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
@@ -207,11 +203,15 @@ pair<int, int> PlotA::calcUnitSizeXAndYPx () const
     int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeYPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
+    yUnitSize = max(yUnitSize, _min_unit__px);
     
     // _unit_x__px and _unit_y__px must both be odd or both be even.
     if ( (xUnitSize%2 == 0 && yUnitSize%2 != 0) || (yUnitSize%2 != 0 && yUnitSize%2 == 0) )
     {
-        --yUnitSize;
+        if (yUnitSize > _min_unit__px)
+            --yUnitSize;
+        else
+            ++yUnitSize;
     }
     return {xUnitSize, yUnitSize};
 }

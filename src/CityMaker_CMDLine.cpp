@@ -16,7 +16,7 @@ unique_ptr<City> CityMaker_CMDLine::makeCity (
     vector<string> namesOfCityFactories = {};
     for (auto& factory : cityFactories)
     {
-        namesOfCityFactories.push_back(factory->cityType()); // TODO should factory be a reference?
+        namesOfCityFactories.push_back(factory->cityType());
     }
 
     int cityChoice = 0;
