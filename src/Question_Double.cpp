@@ -110,7 +110,7 @@ bool Question_Double::tryAnswer (string ans)
         
         doubleAnswer = stod(ans);
     }
-    catch(invalid_argument& e) // TODO combine these two catches since bodies are the same.
+    catch(invalid_argument& e)
     {
         _next_prompt = &_type_prompt;
         return false;
