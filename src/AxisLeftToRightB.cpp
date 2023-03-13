@@ -55,10 +55,7 @@ int AxisLeftToRightB::sizeXPx () const
 }
 
 int AxisLeftToRightB::sizeYPx () const
-{   cout << "AxisLeftToRightB:: sizeYPx: " << _axis_format.axisThicknessPx() << ", " <<
-    _axis_format.majTickLengthOutsideChartPx() << ", " <<
-    _axis_format.labelLineSpacePx() << ", " << _axis_format.labelHeightPx() << endl;
-    
+{   
     int retVal =  
         _axis_format.axisThicknessPx() +
         _axis_format.majTickLengthOutsideChartPx() +
