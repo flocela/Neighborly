@@ -56,7 +56,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
             _high_happiness_value_prompt,
             charLocationForColor(_high_happiness_value_prompt),
             colorStream.str()),
-        "happiness goal"
+        "high happiness value"
     };
 
     double highHappinessValue = stod(ui.getAnswer(qHighHappinessValue));
