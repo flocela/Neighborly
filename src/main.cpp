@@ -173,11 +173,9 @@ int main(int argc, char* argv[])
             constResPerConstHouse[pair.first] = pair.second;
         }
         graphicPrinter.print(constResPerConstHouse, ii);
-        //cmdLinePrinter.print(constResPerConstHouse, ii);
+        cmdLinePrinter.print(constResPerConstHouse, ii);
     }
     graphicPrinter.keepScreen();
-
-    cmdLinePrinter.print(constResPerConstHouse, components.numOfRuns);
     return 0; 
 }
 

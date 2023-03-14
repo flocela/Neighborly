@@ -57,9 +57,7 @@ PlotA::PlotA (
         sizer.startOffsetM(),
         sizer.endOffsetM(),
     }
-{
-    cout << "PlotA: " << _a_format_x.axisThicknessPx() << endl;
-}
+{}
 
 PlotA::PlotA (
     PlotSizer sizer,

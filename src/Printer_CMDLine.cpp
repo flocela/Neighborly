@@ -24,16 +24,18 @@ void Printer_CMDLine::print(
     unordered_map<const House*, const Resident*> residentPerHouse,
     int run
 ) const
-{   cout << "Command Line Printer:" << endl;
+{   
+    if (run == 0)
+    {
+        cout << "Command Line Printer:" << endl;
+    }
+    
     // create house per resident map
     unordered_map<const Resident*, const House*> housePerResident{};
     for (auto houseAndResident : residentPerHouse)
     {
         housePerResident.insert({houseAndResident.second, houseAndResident.first});
     }
-
-    // Print out run number
-    cout << "run: " << run << endl;
 
     // Collect data for diversity per group and happiness per group.
     // for each groupid, will need the number of residents in group,
@@ -96,27 +98,31 @@ void Printer_CMDLine::print(
     }
     sort(groupIDs.begin(), groupIDs.end());
 
-    // Print out resident information per group id
-    cout << "Resident group info per groupId:" << endl;
-    for (auto groupID : groupIDs)
+    // Print out resident information per group id and base colors.
+    if (run == 0)
     {
-        const Resident* res = residentExamplePerGroupId[groupID];
-        cout << "Group id " << groupID << ":" << endl;
-        cout << "   count: "<< numOfResidentsPerGroupId[groupID] << ", " <<
-                "allowed movement: " << res->getAllowedMovementDistance() << ", " <<
-                "happiness goal: " << res->getHappinessGoal() << "," << endl <<
-                "   " << res->toStrType() << endl;
+        cout << "Resident group info per groupId:" << endl;
+        for (auto groupID : groupIDs)
+        {
+            const Resident* res = residentExamplePerGroupId[groupID];
+            cout << "Group id " << groupID << ":" << endl;
+            cout << "   count: "<< numOfResidentsPerGroupId[groupID] << ", " <<
+                    "allowed movement: " << res->getAllowedMovementDistance() << ", " <<
+                    "happiness goal: " << res->getHappinessGoal() << "," << endl <<
+                    "   " << res->toStrType() << endl;
+        }
+
+        cout << "Base Colors Per Group IDs:" << endl;
+        for (int groupID: groupIDs)
+        {
+            cout << groupID << ":: " << _base_colors_per_groupid.at(groupID)<< endl;
+        }
+
+        cout << endl;
     }
 
-    // Print out color groups
-    cout << "Base Colors Per Group IDs:" << endl;
-
-    for (int groupID: groupIDs)
-    {
-        cout << groupID << ":: " << _base_colors_per_groupid.at(groupID)<< endl;
-    }
-
-    cout << endl;
+    // Print out run number
+    cout << "Run: " << run << endl;
 
     // Print out Diversity and Happiness
     cout << "GroupID:: Diversity, Happiness: "<< endl;
@@ -131,24 +137,26 @@ void Printer_CMDLine::print(
     cout << endl;
     
     // Print out city map
-    unordered_map<int, char> characterPerAddress{};
-
-    for (auto pair : residentPerHouse)
+    if (run == 0 || run == _max_num_of_runs-1)
     {
-        const House* house = pair.first;
-        const Resident* resident = pair.second;
-        int address = house->getAddress();
-        if (resident->getHappiness() >= resident->getHappinessGoal()){
-            characterPerAddress[address] = happyCharacters[resident->getGroupId()];
-        }
-        else
+        unordered_map<int, char> characterPerAddress{};
+
+        for (auto pair : residentPerHouse)
         {
-            characterPerAddress[address] = resident->getGroupId() + 48;
+            const House* house = pair.first;
+            const Resident* resident = pair.second;
+            int address = house->getAddress();
+            if (resident->getHappiness() >= resident->getHappinessGoal()){
+                characterPerAddress[address] = happyCharacters[resident->getGroupId()];
+            }
+            else
+            {
+                characterPerAddress[address] = resident->getGroupId() + 48;
+            }
         }
+        cout << _city_ptr->toString(characterPerAddress) << endl;
+        cout << endl;
     }
-    
-    cout << _city_ptr->toString(characterPerAddress) << endl;
-    cout << endl;
     
 
 } 
