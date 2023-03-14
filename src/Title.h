@@ -16,17 +16,17 @@ protected:
 public:
     virtual ~Title () = default;
     
-    virtual int getLetterHeight () = 0;
+    virtual int getLetterHeight () const = 0;
 
-    virtual int getLineSpace () = 0;
+    virtual int getLineSpace () const = 0;
 
     virtual void print (Renderer* render) const = 0;
 
     // the size of the block of text in the x direction
-    virtual int sizeXPx() = 0;
+    virtual int sizeXPx() const = 0;
 
     // the size of the block of text in the y direction
-    virtual int sizeYPx() = 0;
+    virtual int sizeYPx() const = 0;
 
     virtual void setLetterHeight (int height) = 0;
 

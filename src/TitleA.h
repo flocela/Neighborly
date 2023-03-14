@@ -51,9 +51,9 @@ public:
     TitleA& operator=(TitleA&& o) noexcept = default;
     ~TitleA () = default;
 
-    int getLetterHeight () override { return _l.letterHeight(); }
+    int getLetterHeight () const override { return _l.letterHeight(); }
 
-    int getLineSpace () override { return _l.lineSpace(); }
+    int getLineSpace () const override { return _l.lineSpace(); }
 
     void print (Renderer* renderer) const override {
         renderer->renderText(
@@ -67,9 +67,9 @@ public:
             1);
     }
 
-    int sizeXPx() { return _title.length() * _l.letterHeight() * _l.widthMultiplier(); }
+    int sizeXPx() const override { return _title.length() * _l.letterHeight() * _l.widthMultiplier(); }
 
-    int sizeYPx() { return _l.getHeightIncLSpace(); }
+    int sizeYPx() const override { return _l.getHeightIncLSpace(); }
 
     void setLetterHeight (int height) override { _l.setLetterHeight(height);}
 
