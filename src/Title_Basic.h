@@ -1,5 +1,5 @@
-#ifndef TITLE_A_H
-#define TITLE_A_H
+#ifndef TITLE_BASIC_H
+#define TITLE_BASIC_H
 
 #include "Color.h"
 #include "Letter.h"
@@ -7,11 +7,11 @@
 #include "Title.h"
 #include <iostream>
 
-class TitleA: public Title
+class Title_Basic: public Title
 {
 
 public:
-    TitleA (
+    Title_Basic (
         Letter letter,
         int topCenterXPx,
         int topCenterYPx,
@@ -26,7 +26,7 @@ public:
        _text_background_color{textBackgroundColor}
     {}
 
-    TitleA (
+    Title_Basic (
         Letter letter,
         int topCenterXPx,
         int topCenterYPx,
@@ -37,19 +37,19 @@ public:
         _title{title}
     {}
 
-    TitleA (
+    Title_Basic (
         Letter letter,
         std::string title
     ): _l{letter},
       _title{title}
     {}
 
-    TitleA () = delete;
-    TitleA (const TitleA& o) = default;
-    TitleA (TitleA&& o) noexcept = default;
-    TitleA& operator= (const TitleA& o) = default;
-    TitleA& operator=(TitleA&& o) noexcept = default;
-    ~TitleA () = default;
+    Title_Basic () = delete;
+    Title_Basic (const Title_Basic& o) = default;
+    Title_Basic (Title_Basic&& o) noexcept = default;
+    Title_Basic& operator= (const Title_Basic& o) = default;
+    Title_Basic& operator=(Title_Basic&& o) noexcept = default;
+    ~Title_Basic () = default;
 
     int getLetterHeight () const override { return _l.letterHeight(); }
 

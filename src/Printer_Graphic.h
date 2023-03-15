@@ -16,7 +16,7 @@
 #include "Printer.h"
 #include "Renderer.h"
 #include "Title.h"
-#include "TitleA.h"
+#include "Title_Basic.h"
 
 //  Displays CityMap, Diversity Chart, and HappinessChart.
 //  Uses a screen width and height of 2400px.
@@ -65,7 +65,7 @@ private:
     std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
     
     Letter _window_title_letter{44, 5, 0.35};
-    std::unique_ptr<TitleA> _window_title;
+    std::unique_ptr<Title_Basic> _window_title;
     std::vector<uint8_t> _title_text_color = {255, 255, 255, 255};
     
     /* COLUMNS */

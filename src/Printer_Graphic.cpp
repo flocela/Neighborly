@@ -20,7 +20,7 @@ Printer_Graphic::Printer_Graphic (
 ): _renderer{move(renderer)},
    _colors{colors},
    _coordinates_per_house{coordinatesPerHouse},
-   _window_title{make_unique<TitleA>(_window_title_letter, _x_center__px, _top_border__px, title)},
+   _window_title{make_unique<Title_Basic>(_window_title_letter, _x_center__px, _top_border__px, title)},
    _num_of_runs{numOfRuns},
    _runs_chart_top_y__px{_top_border__px + _window_title->sizeYPx()},
    _runs_chart{make_unique<GrRunsChart>(
@@ -86,13 +86,13 @@ void Printer_Graphic::print (
 ) const
 {   
     // TODO take out this rect and renderer is just for testing.
-    Rect rect {
+    /*Rect rect {
         0,
         10,
         600,
         1
     };
-    _renderer->fillBlock(rect, _the_color_rgba[Color::red_happy]);
+    _renderer->fillBlock(rect, _the_color_rgba[Color::red_happy]);*/
 
     // given residentPerHouse, need housePerResident and vector of residents
     unordered_map<const Resident*, const House*> housePerResident;
@@ -183,7 +183,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
     return make_unique<GrCityChart>(
         _coordinates_per_house,
         _colors,
-        make_unique<TitleA>(
+        make_unique<Title_Basic>(
             _chart_title_letter,
             _city_chart_title),
         make_unique<GrColorKey>(
@@ -228,7 +228,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
         _colors,
         moods,
         neighbors,
-        make_unique<TitleA>(
+        make_unique<Title_Basic>(
             _chart_title_letter,
             _div_chart_title),
         make_unique<GrColorKey>(
@@ -271,7 +271,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
 
     return make_unique<GrHapChart> (
         _colors,
-        make_unique<TitleA>(
+        make_unique<Title_Basic>(
             _chart_title_letter,
             _hap_chart_title),
         make_unique<GrColorKey>(
