@@ -170,7 +170,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
 {   
     _axis_format_Y.setBackgroundTickLines(false);
 
-    PlotSizer cityPlotSizer{
+    PlotFormat cityPlotFormat{
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,
@@ -193,7 +193,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             _colors,
             moods),
         make_unique<PlotB>(
-            cityPlotSizer,
+            cityPlotFormat,
             minXCoord, 
             maxXCoord,
             minYCoord, 
@@ -214,7 +214,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
 )
 {
     _axis_format_Y.setBackgroundTickLines(true);
-    PlotSizer rightColSizer{
+    PlotFormat rightColFormat{
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,
@@ -237,7 +237,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             _colors,
             moods),
         make_unique<PlotA>(
-            rightColSizer,
+            rightColFormat,
             0, // min number of runs
             maxNumOfRuns - 1,
             0, // min number of neighbors
@@ -257,7 +257,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
 )
 {  
     _axis_format_Y.setBackgroundTickLines(true);
-    PlotSizer rightColSizer{
+    PlotFormat rightColFormat{
         _axis_format_X,
         _axis_format_Y,
         _chart_title_letter,
@@ -279,7 +279,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
             _colors,
             moods),
         make_unique<PlotA>(
-            rightColSizer,
+            rightColFormat,
             0, // starting run number
             numberOfRuns -1,
             0, // minimum resident happiness

@@ -1,13 +1,13 @@
-#ifndef PLOT_SIZER_H
-#define PLOT_SIZER_H
+#ifndef PLOT_FORMAT_H
+#define PLOT_FORMAT_H
 
 #include "AxisFormat.h"
 #include "Letter.h"
 
-class PlotSizer
+class PlotFormat
 {
 public:
-    PlotSizer (
+    PlotFormat (
         AxisFormat aFormatX,
         AxisFormat aFormatY,
         Letter titleLetter,
@@ -25,12 +25,12 @@ public:
        _end_offset_m{endOffsetMultiplier}
     {}
 
-    PlotSizer () = delete;
-    PlotSizer (const PlotSizer& o) = default;
-    PlotSizer (PlotSizer&& o) noexcept = default;
-    PlotSizer& operator= (const PlotSizer& o) = default;
-    PlotSizer& operator=(PlotSizer&& o) noexcept = default;
-    ~PlotSizer () = default;
+    PlotFormat () = delete;
+    PlotFormat (const PlotFormat& o) = default;
+    PlotFormat (PlotFormat&& o) noexcept = default;
+    PlotFormat& operator= (const PlotFormat& o) = default;
+    PlotFormat& operator=(PlotFormat&& o) noexcept = default;
+    ~PlotFormat () = default;
 
     AxisFormat axisFormatX () { return _a_format_x; }
     AxisFormat axisFormatY () { return _a_format_y; }

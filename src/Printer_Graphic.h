@@ -12,7 +12,7 @@
 #include "GrHapChart.h"
 #include "GrRunsChart.h"
 #include "Letter.h"
-#include "PlotSizer.h"
+#include "PlotFormat.h"
 #include "Printer.h"
 #include "Renderer.h"
 #include "Title.h"

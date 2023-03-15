@@ -4,7 +4,7 @@
 using namespace std;
 
 PlotA::PlotA ( 
-        PlotSizer sizer,
+        PlotFormat plotFormat,
         int topLeftXPx,
         int topLeftYPx,
         int minX,
@@ -14,11 +14,11 @@ PlotA::PlotA (
         int xSpacePx,
         int ySpacePx
 ):
-    _a_format_x{sizer.axisFormatX()},
-    _a_format_y{sizer.axisFormatY()},
-    _min_unit__px{sizer.minUnitSize()},
-    _start_offset_m{sizer.startOffsetM()},
-    _end_offset_m{sizer.endOffsetM()},
+    _a_format_x{plotFormat.axisFormatX()},
+    _a_format_y{plotFormat.axisFormatY()},
+    _min_unit__px{plotFormat.minUnitSize()},
+    _start_offset_m{plotFormat.startOffsetM()},
+    _end_offset_m{plotFormat.endOffsetM()},
     _top_left_x__px{topLeftXPx},
     _top_left_y__px{topLeftYPx},
     _min_x{minX},
@@ -42,8 +42,8 @@ PlotA::PlotA (
         _max_x,
         _unit_x__px,
         (_dot__px%2==0)? 2 : 1,
-        sizer.startOffsetM(),
-        sizer.endOffsetM()
+        plotFormat.startOffsetM(),
+        plotFormat.endOffsetM()
     },
     _y_axis{
         _a_format_y,
@@ -54,19 +54,19 @@ PlotA::PlotA (
         _max_y,
         _unit_y__px,
         (_dot__px%2==0)? 2 : 1,
-        sizer.startOffsetM(),
-        sizer.endOffsetM(),
+        plotFormat.startOffsetM(),
+        plotFormat.endOffsetM(),
     }
 {}
 
 PlotA::PlotA (
-    PlotSizer sizer,
+    PlotFormat plotFormat,
     int minX,
     int maxX,
     int minY, 
     int maxY 
 ):
-PlotA(  sizer,
+PlotA(  plotFormat,
         0,
         0,
         minX,

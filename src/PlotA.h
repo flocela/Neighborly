@@ -8,7 +8,7 @@
 #include "Color.h"
 #include "Coordinate.h"
 #include "Plot.h"
-#include "PlotSizer.h"
+#include "PlotFormat.h"
 #include "Point.h"
 #include "unordered_map"
 
@@ -19,7 +19,7 @@ class PlotA: public Plot
 public:
 
     PlotA ( 
-        PlotSizer sizer,
+        PlotFormat plotFormat,
         int topLeftXPx, // top left corner of plot
         int topLeftYPx, // top left corner of plot
         int minX,
@@ -34,7 +34,7 @@ public:
     // Size of plot is zero in x and y directions.
     // This is a temporary plot. Use setTopLeft() and setXYSpacePx() to finish it.
     PlotA (
-        PlotSizer sizer,
+        PlotFormat plotFormat,
         int minX,
         int maxX,
         int minY, 

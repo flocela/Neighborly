@@ -3,7 +3,6 @@
 
 #include "unordered_map"
 #include "Color.h"
-#include "PlotSizer.h"
 #include "Plot.h"
 #include "Renderer.h"
 #include "City.h"

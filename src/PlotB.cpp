@@ -6,7 +6,7 @@ using namespace std;
 // PlotB has the same pixels per unit in the x and y directions
 // It plots the y axis from top to bottom and the x axis from left to right
 PlotB::PlotB ( 
-        PlotSizer sizer,
+        PlotFormat plotFormat,
         int topLeftXPx, // top left corner of plot
         int topLeftYPx, // top left corner of plot
         int minX,
@@ -16,11 +16,11 @@ PlotB::PlotB (
         int xSpacePx,
         int ySpacePx
 ): 
-    _a_format_x{sizer.axisFormatX()},
-    _a_format_y{sizer.axisFormatY()},
-    _min_unit__px{sizer.minUnitSize()},
-    _start_offset_m{sizer.startOffsetM()},
-    _end_offset_m{sizer.endOffsetM()},
+    _a_format_x{plotFormat.axisFormatX()},
+    _a_format_y{plotFormat.axisFormatY()},
+    _min_unit__px{plotFormat.minUnitSize()},
+    _start_offset_m{plotFormat.startOffsetM()},
+    _end_offset_m{plotFormat.endOffsetM()},
     _top_left_x__px{topLeftXPx},
     _top_left_y__px{topLeftYPx},
     _min_x{minX},
@@ -43,8 +43,8 @@ PlotB::PlotB (
         _max_x,
         _unit__px,
         (_dot__px%2==0)? 2 : 1,
-        sizer.startOffsetM(),
-        sizer.endOffsetM(),
+        plotFormat.startOffsetM(),
+        plotFormat.endOffsetM(),
         
     },
     _y_axis{
@@ -55,19 +55,19 @@ PlotB::PlotB (
         _max_y,
         _unit__px,
         (_dot__px%2==0)? 2 : 1,
-        sizer.startOffsetM(),
-        sizer.endOffsetM(),
+        plotFormat.startOffsetM(),
+        plotFormat.endOffsetM(),
     }
 {}
 
 PlotB::PlotB (
-        PlotSizer sizer,
+        PlotFormat plotFormat,
         int minX,
         int maxX,
         int minY, 
         int maxY
 ): PlotB(
-    sizer,
+    plotFormat,
     0,
     0,
     minX,

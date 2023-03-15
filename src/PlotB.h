@@ -7,7 +7,7 @@
 #include "Coordinate.h"
 #include "Point.h"
 #include "Plot.h"
-#include "PlotSizer.h"
+#include "PlotFormat.h"
 
 // x-axis runs horizontally on top of plot (left to right)
 // y-axis runs vertically on the left (top to bottom)
@@ -15,7 +15,7 @@ class PlotB: public Plot
 {
 public:
     PlotB ( 
-        PlotSizer sizer,
+        PlotFormat plotFormat,
         int topLeftXPx, // top left corner of plot
         int topLeftYPx, // top left corner of plot
         int minX,
@@ -30,7 +30,7 @@ public:
     // Size of plot is zero in x and y directions.
     // This is a temporary plot. Use setTopLeft() and setXYSpacePx() to finish it.
     PlotB (
-        PlotSizer sizer,
+        PlotFormat plotFormat,
         int minX,
         int maxX,
         int minY, 
