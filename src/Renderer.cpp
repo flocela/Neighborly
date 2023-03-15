@@ -49,14 +49,14 @@ void Renderer::endFrame()
     SDL_RenderPresent(_sdl_renderer);
 }
 
-void Renderer::fillBlock(Rect block, vector<uint8_t> rgba)
+void Renderer::fillBlock(Rect block, const vector<uint8_t>& rgba)
 {
     SDL_Rect rect = {block._x__px, block._y__px, block.width, block.height};
     SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
     SDL_RenderFillRect(_sdl_renderer, &rect);
 }
 
-void Renderer::fillBlocks (vector<Rect> blocks, vector<uint8_t> rgba)
+void Renderer::fillBlocks (const vector<Rect>& blocks, const vector<uint8_t>& rgba)
 {
 
     SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
@@ -70,7 +70,7 @@ void Renderer::fillBlock (
 	int width, 
 	int height,
 	Coordinate coordinate,
-	vector<uint8_t> rgba
+	const vector<uint8_t>& rgba
 )
 {
     SDL_Rect block;
@@ -86,8 +86,8 @@ void Renderer::fillBlock (
 void Renderer::fillBlocks(
 	int width,
 	int height,
-	vector<Coordinate> coordinates,
-	vector<uint8_t> rgba
+	const vector<Coordinate>& coordinates,
+	const vector<uint8_t>& rgba
 )
 {
     SDL_Rect block;
@@ -110,8 +110,8 @@ void Renderer::renderText (
     string textString,
     int letterHeight,
     double widthMultiplier,
-	std::vector<uint8_t> rgbaText,
-	std::vector<uint8_t> rgbaBackground,
+	const std::vector<uint8_t>& rgbaText,
+	const std::vector<uint8_t>& rgbaBackground,
     int position
 )
 {
@@ -196,7 +196,7 @@ void Renderer::renderText (
     SDL_RenderCopy(_sdl_renderer, text, NULL, &sdlRect);
 }
 
-void Renderer::renderTexts (vector<TextRect> texts)
+void Renderer::renderTexts (const vector<TextRect>& texts)
 {
     for (TextRect tr : texts)
     {
