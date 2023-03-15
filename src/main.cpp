@@ -87,10 +87,8 @@ const int MAX_NUM_OF_RUNS = 200;
 
 int main(int argc, char* argv[])
 {
-    (void) argc;
-    (void) argv;
-
-    bool useFile = false;
+    bool useFile = (argc >= 2);
+    string inputFile = (argc >= 2)? argv[1] : "";
 
     // components will be populated by file, by premade examples, or by user choices.
     SimulationComponents components;
@@ -100,7 +98,7 @@ int main(int argc, char* argv[])
     if (useFile)
     {
         SimulationStarter simulationStarter{};
-        components = simulationStarter.createSimulationComponents("../test1.txt");
+        components = simulationStarter.createSimulationComponents("../" + inputFile);
     }
     else
     {
@@ -172,11 +170,11 @@ int main(int argc, char* argv[])
             constResPerConstHouse[pair.first] = pair.second;
         }
 
-        // every run should show for at least 2 second
+        // every run should show for at least 1 second
         auto timeStart = std::chrono::high_resolution_clock::now();
         graphicPrinter.print(constResPerConstHouse, ii);
         cmdLinePrinter.print(constResPerConstHouse, ii);
-        std::this_thread::sleep_until(timeStart + std::chrono::seconds(2));
+        std::this_thread::sleep_until(timeStart + std::chrono::seconds(1));
     }
     graphicPrinter.keepScreen();
     return 0; 
