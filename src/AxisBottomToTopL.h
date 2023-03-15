@@ -85,8 +85,7 @@ class AxisBottomToTopL
         int calcMinTickSpacing (int pixelsPerUnit) const;
 
         int calcMajTickSpacing (int pixelsPerUnit) const;
-
-     
+        
 };
 
 #endif

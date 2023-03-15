@@ -36,8 +36,7 @@ int AxisLeftToRightT::getAxisLengthPx () const
 
 int AxisLeftToRightT::getCenterValXPx () const
 {
-    // the max value that is shown on the axis will be _max_val plus _end_offfset_m
-    return getPixel(_min_val + ((_max_val + _end_offset_m - _min_val)/2.0) );
+    return getPixel(_min_val + (_max_val-_min_val)/2);
 }
 
 int AxisLeftToRightT::getPixel (double xVal) const
