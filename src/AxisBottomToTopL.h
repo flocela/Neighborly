@@ -70,7 +70,7 @@ class AxisBottomToTopL
         // end offset multiplier; multiply by _px_per_unit to get length of axis
         // after max_val's unit ends 
         int _end_offset_m; // end offset multiplier; multiply by _px_per_unit
-        int _text_spacer = 3; // space to the right of labels, and the the left of tick marks
+        int _text_spacer = 3; // space to the right of labels, and to the left of tick marks
 
         void setVerticalLine (std::vector<Rect>& rects) const;
 

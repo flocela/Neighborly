@@ -168,8 +168,6 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
     int availSpaceYPx
 )
 {   
-    _axis_format_Y.setBackgroundTickLines(false);
-
     PlotFormat cityPlotFormat{
         _axis_format_X,
         _axis_format_Y,
@@ -213,7 +211,8 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
     int availSpaceYPx
 )
 {
-    _axis_format_Y.setBackgroundTickLines(true);
+    AxisFormat axisYFormatForDivChart = _axis_format_Y;
+    axisYFormatForDivChart.setBackgroundTickLines(true);
     PlotFormat rightColFormat{
         _axis_format_X,
         _axis_format_Y,
@@ -256,10 +255,11 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
     int availSpaceYPx
 )
 {  
-    _axis_format_Y.setBackgroundTickLines(true);
+    AxisFormat axisYFormatForHapChart = _axis_format_Y;
+    axisYFormatForHapChart.setBackgroundTickLines(true);
     PlotFormat rightColFormat{
         _axis_format_X,
-        _axis_format_Y,
+        axisYFormatForHapChart,
         _chart_title_letter,
         _chart_key_letter,
         _min_unit_size__px,

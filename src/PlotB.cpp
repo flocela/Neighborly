@@ -16,8 +16,8 @@ PlotB::PlotB (
         int xSpacePx,
         int ySpacePx
 ): 
-    _a_format_x{plotFormat.axisFormatX()},
-    _a_format_y{plotFormat.axisFormatY()},
+    _axis_format_x{plotFormat.axisFormatX()},
+    _axis_format_y{plotFormat.axisFormatY()},
     _min_unit__px{plotFormat.minUnitSize()},
     _start_offset_m{plotFormat.startOffsetM()},
     _end_offset_m{plotFormat.endOffsetM()},
@@ -36,7 +36,7 @@ PlotB::PlotB (
     _cross_x__px{ calcCrossXPx(topLeftXPx) }, 
     _cross_y__px{ calcCrossYPx(topLeftYPx) },
     _x_axis{
-        _a_format_x,
+        _axis_format_x,
         _cross_x__px,
         _cross_y__px,
         _min_x,
@@ -48,7 +48,7 @@ PlotB::PlotB (
         
     },
     _y_axis{
-        _a_format_y,
+        _axis_format_y,
         _cross_x__px,
         _cross_y__px,
         _min_y,
@@ -107,7 +107,7 @@ int PlotB::sizeXPx () const
 {
     // subraction takes care of double counting of horizontal axis' thickness.
     return
-        _y_axis.sizeXPx() + _x_axis.sizeXPx() - (_a_format_y.axisThicknessPx()/2);
+        _y_axis.sizeXPx() + _x_axis.sizeXPx() - (_axis_format_y.axisThicknessPx()/2);
 }
 
 int PlotB::sizeYPx() const
@@ -116,7 +116,7 @@ int PlotB::sizeYPx() const
     return 
         _y_axis.sizeYPx() +
         _x_axis.sizeYPx() -
-        (_a_format_x.axisThicknessPx()/2);
+        (_axis_format_x.axisThicknessPx()/2);
 }
 
 void PlotB::print (

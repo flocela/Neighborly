@@ -54,9 +54,10 @@ void AxisTopToBottomL::print (Renderer* renderer) const
 
 int AxisTopToBottomL::sizeXPx () const
 {
-    // todo am I assuming 3 digits in label size? As in 999?
+    // Three is max number of digits in the y-axis label.
     return 
         3 * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
+        _text_spacer + 
         _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.axisThicknessPx();
 }
@@ -109,7 +110,7 @@ void AxisTopToBottomL::printTicksAndLabels (
     int curVal = _min_val;
     int curVal__px = getPixel(_min_val) - (_tick_thickness__px/2) ;
     TextRect curText = {
-        majTickXPx,
+        majTickXPx - _text_spacer,
         curVal__px,
         std::to_string(_min_val),
         _axis_format.labelHeightPx(),

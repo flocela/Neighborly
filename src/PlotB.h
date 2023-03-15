@@ -69,8 +69,8 @@ public:
 
 private:
 
-    AxisFormat _a_format_x;
-    AxisFormat _a_format_y;
+    AxisFormat _axis_format_x;
+    AxisFormat _axis_format_y;
 
     // requested minimum unit size.
     int _min_unit__px = 6;
