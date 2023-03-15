@@ -28,35 +28,34 @@
  *
  */
 
-#include <stdio.h>
-#include <stdbool.h>
-#include <SDL.h>
-#include <SDL_ttf.h>
+#include <chrono>
 #include <iostream>
 #include <memory>
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <thread>
+
 #include "CityFactory.h"
 #include "CityFactory_Grid.h"
-
+#include "City_Grid.h"
+#include "Color.h"
+#include "ComponentsFromUserGetter.h"
+#include "PremadeExamplesMenu.h"
+#include "Printer_Graphic.h"
+#include "Printer_CMDLine.h"
 #include "ResidentsFactory_Falling.h"
 #include "ResidentsFactory_Flat.h"
 #include "ResidentsFactory_Rising.h"
 #include "ResidentsFactory_StepDown.h"
 #include "ResidentsFactory_StepUp.h"
 #include "ResidentsFactory.h"
-
-#include "Printer_Graphic.h"
-#include "Printer_CMDLine.h"
-#include "SimulationStarter.h"
 #include "Simulator.h"
 #include "Simulator_Basic_A.h"
-#include "Color.h"
-#include "City_Grid.h"
-#include "UsePremadeExampleQuestion.h"
 #include "SimulationComponents.h"
-#include "PremadeExamplesMenu.h"
-#include "ComponentsFromUserGetter.h"
-#include <chrono>
-#include <ctime>
+#include "SimulationStarter.h"
+#include "UsePremadeExampleQuestion.h"
 
 using namespace std;
 
@@ -159,7 +158,7 @@ int main(int argc, char* argv[])
         components.numOfRuns,
         components.city.get()
     };
-    
+
     unordered_map<const House*, Resident*> residentPerHouse;
     unordered_map<const House*, const Resident*> constResPerConstHouse;
     for (int ii=0; ii<components.numOfRuns; ii++)
@@ -172,8 +171,12 @@ int main(int argc, char* argv[])
         {
             constResPerConstHouse[pair.first] = pair.second;
         }
+
+        // every run should show for at least 2 second
+        auto timeStart = std::chrono::high_resolution_clock::now();
         graphicPrinter.print(constResPerConstHouse, ii);
         cmdLinePrinter.print(constResPerConstHouse, ii);
+        std::this_thread::sleep_until(timeStart + std::chrono::seconds(2));
     }
     graphicPrinter.keepScreen();
     return 0; 
