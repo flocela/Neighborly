@@ -43,10 +43,10 @@ inline std::map<std::string, BaseColor> _base_colors {
 };
 
 inline std::vector<BaseColor> _ordered_base_colors = {
-    BaseColor::red,
-    BaseColor::green,
     BaseColor::blue,
     BaseColor::yellow,
+    BaseColor::red,
+    BaseColor::green
 };
 
 struct ColorInfo
