@@ -22,8 +22,10 @@ std::set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
 SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
 {
     SimulationComponents components;
-    int chosenExample = ui.menu(
-        "Which example do you want to choose? ",
+
+
+    int chosenCityAndResidentTypeCombo = ui.menu(
+        "Which combination of city size and resident type? ",
         std::vector<std::string>{ 
             "simple with a small city", 
             "simple with a large city",
@@ -31,7 +33,8 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             "finicky residents with a large city"},
             0,
             "Could not tell, which combo you wanted, will be using simple with a small city.");
-    switch (chosenExample) // TODO only one type of example is listed in this switch statement, make more examples.
+    
+    switch (chosenCityAndResidentTypeCombo)
     {
         case 0:
         {
@@ -85,7 +88,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                 20
             );
 
-            components.numOfRuns = 50;
+            components.numOfRuns = 30;
             
             break;
         }
@@ -141,7 +144,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                 20
             );
 
-            components.numOfRuns = 50;
+            components.numOfRuns = 30;
             
             break;
         }
@@ -197,7 +200,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                 20
             );
 
-            components.numOfRuns = 50;
+            components.numOfRuns = 30;
             
             break;
         }
@@ -253,11 +256,11 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                 20
             );
 
-            components.numOfRuns = 50;
+            components.numOfRuns = 30;
             
             break;
         }
     }
-    
+
     return components;
 }

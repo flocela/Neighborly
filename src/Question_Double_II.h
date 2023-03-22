@@ -2,6 +2,7 @@
 #define QUESTION_DOUBLE_II_H
 
 #include "Question_Double.h"
+#include <iomanip>
 
 // question checks if answer is in range, where minimum and maximum numbers are both inclusive.
 class Question_Double_II : public Question_Double

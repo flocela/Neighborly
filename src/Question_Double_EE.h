@@ -1,10 +1,10 @@
 #ifndef QUESTION_DOUBLE_EE_H
 #define QUESTION_DOUBLE_EE_H
 
+#include "Question_Double.h"
+
 #include <iomanip>
 #include <sstream>
-
-#include "Question_Double.h"
 
 // question checks if val is in range, where val is between min (exclusive) and max (exclusive).
 class Question_Double_EE : public Question_Double

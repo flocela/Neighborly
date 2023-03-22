@@ -4,12 +4,28 @@
 #include "RandSeedGetter.h"
 #include "ResidentsMaker_CMDLine.h"
 #include "Simulator_Basic_A.h"
+#include "Simulator_Basic_B.h"
+#include "Question_Double_II.h"
+#include "Question_Int_II.h"
 #include "UINumOfRunsGetter.h"
+
+using namespace std;
+
+template<typename T>
+std::set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
+{
+    std::set<T*> pointers = {};
+    for (auto& t : ts)
+    {
+        pointers.insert(t.get());
+    }
+    return pointers;
+}
 
 SimulationComponents ComponentsFromUserGetter::askUserForComponents (
     const UI& ui,
-    const std::vector<std::unique_ptr<const CityFactory>>& cityFactories,
-    const std::vector<std::unique_ptr<const ResidentsFactory>>& residentFactories,
+    const vector<unique_ptr<const CityFactory>>& cityFactories,
+    const vector<unique_ptr<const ResidentsFactory>>& residentFactories,
     int maxNumOfHousesX,
     int maxNumOfHousesY,
     int maxNumOfResidentGroups,
@@ -23,7 +39,7 @@ SimulationComponents ComponentsFromUserGetter::askUserForComponents (
     CityMaker_CMDLine cityMaker{ui};
     components.city = cityMaker.makeCity(cityFactories, maxNumOfHousesX, maxNumOfHousesY);
 
-    std::vector<BaseColor> baseColors;
+    vector<BaseColor> baseColors;
     for (int ii=1; ii<=maxNumOfResidentGroups; ++ii) 
     {
         baseColors.push_back(_ordered_base_colors[ii-1]);
@@ -37,11 +53,11 @@ SimulationComponents ComponentsFromUserGetter::askUserForComponents (
             components.city->getNumOfHouses(),
             maxNumOfResidentGroups,
             baseColors,
-            std::min(components.city->getWidth()/2, components.city->getHeight()/2));
+            min(components.city->getWidth()/2, components.city->getHeight()/2));
 
-    components.residents = std::move(resGroupInfo._residents);
+    components.residents = move(resGroupInfo._residents);
     components.baseColorsPerGroupid = resGroupInfo._base_color_per_group_num;
-    std::set<Resident*> residentPtrs = {};
+    set<Resident*> residentPtrs = {};
     for (auto& resident: components.residents)
     {
         residentPtrs.insert(resident.get());
@@ -50,7 +66,60 @@ SimulationComponents ComponentsFromUserGetter::askUserForComponents (
     UINumOfRunsGetter runsGetter;
     components.numOfRuns = runsGetter.getNumOfRunsFromUser(ui, maxNumOfRuns);
     
-    components.simulator = std::make_unique<Simulator_Basic_A>(components.city.get(), residentPtrs);
+        // Choose Simulator
+    int chosenSimulator = ui.menu(
+    "Which simulator would you like? In each run of Simulator A, all residents who are unhappy"
+    " are given the opportunity to move to a house that will make them happier.\n"
+    "In each run of Simulator B, a percentage of residents are randomly chosen and"
+    " forced to move. From a given number of houses, they choose which one makes them happiest.\n",
+    vector<string>{"Simulator A", "Simulator B"},
+    1,
+    "Could not tell which simulator you wanted, will choose Simulator B."
+    );
+
+    double percentageOfResidents = 20;
+    int numberOfHousesToLookAt = components.city->getNumOfHouses()/5;
+    if (chosenSimulator == 1) // Simulator B
+    {
+        Question_Double_II questionPercentOfResidentsThatMustMove  = Question_Double_II{
+            0,
+            0.0,
+            100.0,
+            20.0,
+            "Simulator B chooses a percentage of all residents and forces them to move"
+            " at each run. What should that percentage be? _",
+            "percentage of residents moved per run"
+        };
+        percentageOfResidents = stod(ui.getAnswer(questionPercentOfResidentsThatMustMove));
+
+        Question_Int_II questionNumberOfHouses = Question_Int_II{
+            1,
+            1,
+            components.city->getNumOfHouses(),
+            components.city->getNumOfHouses()/5,
+            "The chosen residents will choose from a number of houses, and will choose which"
+            " one makes them happiest. How many houses should they choose from? _",
+            "number of housese to choose from"
+        };
+        numberOfHousesToLookAt = stoi(ui.getAnswer(questionNumberOfHouses));
+    }
+
+    if (chosenSimulator == 0)
+    {
+        components.simulator = make_unique<Simulator_Basic_A>(
+            components.city.get(),
+            getSetOfPointers(components.residents)
+        );
+    }
+    else
+    {
+        components.simulator = make_unique<Simulator_Basic_B>(
+            components.city.get(),
+            getSetOfPointers(components.residents),
+            percentageOfResidents,
+            numberOfHousesToLookAt
+        );
+    }
 
     return components;
 }

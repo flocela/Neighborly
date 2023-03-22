@@ -2,6 +2,7 @@
 #define QUESTION_DOUBLE_EI_H
 
 #include "Question_Double.h"
+#include <iomanip>
 
 // question checks if val is in range, where val is between min (exclusive) and max (inclusive).
 class Question_Double_EI : public Question_Double

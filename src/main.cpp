@@ -170,11 +170,11 @@ int main(int argc, char* argv[])
             constResPerConstHouse[pair.first] = pair.second;
         }
 
-        // every run should show for at least 1 second
+        // every run should show for at least 1/4 second
         auto timeStart = std::chrono::high_resolution_clock::now();
         graphicPrinter.print(constResPerConstHouse, ii);
         cmdLinePrinter.print(constResPerConstHouse, ii);
-        std::this_thread::sleep_until(timeStart + std::chrono::seconds(1));
+        std::this_thread::sleep_until(timeStart + std::chrono::milliseconds(250));
     }
     graphicPrinter.keepScreen();
     return 0; 
