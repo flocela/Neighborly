@@ -27,7 +27,7 @@ void Printer_CMDLine::print(
 {   
     if (run == 0)
     {
-        cout << "Command Line Printer:" << endl;
+        cout << endl << "Command Line Printer:" << endl;
     }
     
     // create house per resident map
@@ -154,6 +154,14 @@ void Printer_CMDLine::print(
                 characterPerAddress[address] = resident->getGroupId() + 48;
             }
         }
+        cout << "City Map key" << endl;
+        for (int groupID : groupIDs)
+        {
+            cout << "GroupID " << groupID << ":: "
+            << "happy: " << happyCharacters[groupID]
+            << ", unhappy: " << groupID << endl;
+        }
+        cout << "empty house: blank" << endl;
         cout << _city_ptr->toString(characterPerAddress) << endl;
         cout << endl;
     }

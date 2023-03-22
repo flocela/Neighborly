@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "City_Grid.h"
-#include "Simulator_Basic_A.h"
+#include "Simulator_Basic_B.h"
 #include "SimulationComponents.h"
 #include "Resident_UsingFunction.h"
 #include "HappinessFunc_Falling.h"
@@ -78,12 +78,14 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
-            components.simulator = std::make_unique<Simulator_Basic_A>(
+            components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
-                getSetOfPointers(components.residents)
+                getSetOfPointers(components.residents),
+                30,
+                20
             );
 
-            components.numOfRuns = 5;
+            components.numOfRuns = 50;
             
             break;
         }
@@ -132,12 +134,14 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
-            components.simulator = std::make_unique<Simulator_Basic_A>(
+            components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
-                getSetOfPointers(components.residents)
+                getSetOfPointers(components.residents),
+                30,
+                20
             );
 
-            components.numOfRuns = 5;
+            components.numOfRuns = 50;
             
             break;
         }
@@ -186,12 +190,14 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
-            components.simulator = std::make_unique<Simulator_Basic_A>(
+            components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
-                getSetOfPointers(components.residents)
+                getSetOfPointers(components.residents),
+                30,
+                20
             );
 
-            components.numOfRuns = 5;
+            components.numOfRuns = 50;
             
             break;
         }
@@ -240,12 +246,14 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
-            components.simulator = std::make_unique<Simulator_Basic_A>(
+            components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
-                getSetOfPointers(components.residents)
+                getSetOfPointers(components.residents),
+                30,
+                20
             );
 
-            components.numOfRuns = 5;
+            components.numOfRuns = 50;
             
             break;
         }

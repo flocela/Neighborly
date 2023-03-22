@@ -49,7 +49,6 @@ unordered_map<const House*, Coordinate> City_Grid::getCoordinatesPerHouse()
 	return coordinatesPerHouse;
 }
 
-
 double City_Grid::getDist (const int& fromAddress, const int& toAddress) const
 {
 	double x_dist = fabs( get_x(fromAddress) - get_x(toAddress) );
@@ -191,7 +190,8 @@ set<const House*> City_Grid::getHousesAdjacent (int address) const
 }
 
 std::string City_Grid::toString (const std::unordered_map<int, char>& characterPerAddress)
-{	(void)characterPerAddress;
+{	
+	
 	string result = "";
 	for (int ii = 0; ii<_width; ++ii)
 	{
