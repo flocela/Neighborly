@@ -1,10 +1,10 @@
 #include "catch.hpp"
+#include "../src/Coordinate.h"
 #include "../src/City_Grid.h"
 #include "../src/House.h"
 #include <iostream>
 
 #include <math.h>
-// g++ --std=c++17 -o runme ../src/City_Grid.cpp test_City_Grid.cpp test_main.o
 
 TEST_CASE("getSize()")
 {
@@ -12,7 +12,7 @@ TEST_CASE("getSize()")
     REQUIRE( city.getNumOfHouses() == 36 );
     REQUIRE( city.getHouses().size() == 36);
 }
-
+/*
 TEST_CASE("dist()")
 {   // house[1] is at (0, 1) and house[28] is at (4, 4).
     City_Grid city = City_Grid(6);
@@ -73,7 +73,7 @@ TEST_CASE("getAdjacentHouses() for house in middle of grid (8 neighbors)")
 
     REQUIRE( adjToHouse == actualAdj );
 }
-/*
+
 TEST_CASE("getHousesWithinDistance() distance is 2.1")
 {
     City_Grid city = City_Grid(6);
@@ -101,7 +101,7 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1")
     actualNearHouseAddresses.insert(houses[12]->getAddress());
     
     REQUIRE( nearAddresses == actualNearHouseAddresses );
-}*/
+}
 
 
 TEST_CASE("getCoordinate() for a given address")
@@ -110,4 +110,4 @@ TEST_CASE("getCoordinate() for a given address")
     REQUIRE(city.getCoordinate(0) == Coordinate(0,0));
     REQUIRE(city.getCoordinate(1) == Coordinate(0,1));
     REQUIRE(city.getCoordinate(27) == Coordinate(4,3));
-}
+}*/

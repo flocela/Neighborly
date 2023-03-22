@@ -75,6 +75,7 @@ target_link_libraries(${PROJECT_NAME} SDL2::TTF)
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
 file(GLOB test_SRCS tests/*.cpp
+src/AxisFormat.cpp
 src/City_Grid.cpp
 src/CityFactory_Grid.cpp
 src/Color.cpp

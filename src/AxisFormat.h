@@ -1,69 +1,75 @@
 #ifndef AXIS_FORMAT_H
 #define AXIS_FORMAT_H
-#include <stdexcept>
 #include <vector>
 #include "Color.h"
-#include "SDL.h"
 #include "Letter.h"
 
 class AxisFormat
 {
-    public:
+public:
 
-        int axisThicknessPx () const { return _axis_thickness__px;}
-        int majTickLengthPx () const { return _maj_tick_length__px;}
-        int minTickLengthPx () const {return _min_tick_length__px;}
-        int majTickLengthOutsideChartPx () const;
-        int minTickLengthOutsideChartPx () const;
-        int tickLengthInsideChartPx () const {return _tick_length_inside_chart__px;}
+    int axisThicknessPx () const;
+    int majTickLengthPx () const;
+    int minTickLengthPx () const;
+    int majTickLengthOutsideChartPx () const;
+    int minTickLengthOutsideChartPx () const;
+    int tickLengthInsideChartPx () const;
 
-        // labels are the numbers along the axis
-        int labelHeightPx () const {return _label_letter.letterHeight();} 
-        int labelLineSpacePx () const {return _label_letter.lineSpace();}
-        double labelWidthMultiplier () const {return _label_letter.widthMultiplier();}
-        std::vector<uint8_t> textColor () const { return _text_color;}
-        std::vector<uint8_t> textBackgroundColor () const { return _text_background_color;}
-        std::vector<uint8_t> tickColor () const { return _tick_color;}
-        std::vector<uint8_t> tickBackgroundColorMaj () const { return _tick_background_color_maj;}
-        std::vector<uint8_t> tickBackgroundColorMin () const { return _tick_background_color_min;}
+    // labels are the numbers along the axis
+    int labelHeightPx () const;
+    int labelLineSpacePx () const;
+    double labelWidthMultiplier () const;
+    std::vector<uint8_t> textColor () const;
+    std::vector<uint8_t> textBackgroundColor () const;
+    std::vector<uint8_t> tickColor () const;
+    std::vector<uint8_t> tickBackgroundColorMaj () const;
+    std::vector<uint8_t> tickBackgroundColorMin () const;
 
-        bool showBackgroundTickLines () const { return _include_background_tick_marks;}
+    bool showBackgroundTickLines () const { return _include_background_tick_marks;}
 
-        void setLabelLetterHeight (int size);
-        void setLabelSpacePx (int space);
-        void setLabelWidthMultiplier (double widhtMultiplier);
+    // label letter height will be set to 1, if size is less than 1.
+    void setLabelLetterHeight (int size);
 
-        void setMajTickLengthPx (int length);
-        void setMinTickLengthPx (int length);
-        void setTickLengthInsideChartPx (int length);
+    // label space, space below letter, is set to zero if space is less than 1.
+    void setLabelSpacePx (int space);
+    void setLabelWidthMultiplier (double widthMultiplier);
 
-        void setBackgroundTickLines (bool show);
-        
-        void setTextBackgroundColor (std::vector<uint8_t> color);
-        void setTextColor (std::vector<uint8_t> color);
-        void setTickColor (std::vector<uint8_t> color);
-        void setTickBackgroundColorMaj (std::vector<uint8_t> color);
-        void setTickBackgroundColorMin (std::vector<uint8_t> color);
+    // maj tick length is set to zero if length is less than zero.
+    void setMajTickLengthPx (int length);
 
-    private:
-        int _axis_thickness__px{1};
+    // min tick length is set to zero if length is less than zero.
+    void setMinTickLengthPx (int length);
 
-        Letter _label_letter{22, 2, 0.3};
+    // tick length inside chart is set to zero if less than zero.
+    void setTickLengthInsideChartPx (int length);
 
-        int _maj_tick_length__px{10};
-        int _min_tick_length__px{4};
+    void setBackgroundTickLines (bool show);
+    
+    void setTextBackgroundColor (std::vector<uint8_t> color);
+    void setTextColor (std::vector<uint8_t> color);
+    void setTickColor (std::vector<uint8_t> color);
+    void setTickBackgroundColorMaj (std::vector<uint8_t> color);
+    void setTickBackgroundColorMin (std::vector<uint8_t> color);
 
-        std::vector<uint8_t> _text_color = _the_color_rgba[Color::text];
-        std::vector<uint8_t> _text_background_color = _the_color_rgba[Color::text_background];
-        std::vector<uint8_t> _tick_color = _the_color_rgba[Color::grid];
-        std::vector<uint8_t> _tick_background_color_maj = _the_color_rgba[Color::tick_background_maj];
-        std::vector<uint8_t> _tick_background_color_min = _the_color_rgba[Color::tick_background_min];
+private:
+    int _axis_thickness__px{1};
 
-        // _tick_length_inside_chart__px does not include thickness of axis
-        int _tick_length_inside_chart__px = 2; 
+    Letter _label_letter{22, 2, 0.3};
 
-        // extend tick marks horizontally across chart
-        bool _include_background_tick_marks = false;   
+    int _maj_tick_length__px{10};
+    int _min_tick_length__px{4};
+
+    std::vector<uint8_t> _text_color = _the_color_rgba[Color::text];
+    std::vector<uint8_t> _text_background_color = _the_color_rgba[Color::text_background];
+    std::vector<uint8_t> _tick_color = _the_color_rgba[Color::grid];
+    std::vector<uint8_t> _tick_background_color_maj = _the_color_rgba[Color::tick_background_maj];
+    std::vector<uint8_t> _tick_background_color_min = _the_color_rgba[Color::tick_background_min];
+
+    // _tick_length_inside_chart__px does not include thickness of axis
+    int _tick_length_inside_chart__px = 2; 
+
+    // extend tick marks horizontally across chart
+    bool _include_background_tick_marks = false;   
 };
 
 #endif
