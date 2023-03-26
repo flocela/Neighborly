@@ -2,7 +2,6 @@
 #define AXIS_BOTTOM_TO_TOP_L_H
 
 #include "Renderer.h"
-#include "SDL.h"
 #include "AxisFormat.h"
 #include "TextRect.h"
 
@@ -74,7 +73,7 @@ class AxisBottomToTopL
 
         void setVerticalLine (std::vector<Rect>& rects) const;
 
-        void setTicksLabels (
+        void setTicksAndLabels (
             std::vector<Rect>& horizLinesMaj,
             std::vector<Rect>& horizLinesMin,
             std::vector<Rect>& rects,

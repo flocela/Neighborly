@@ -179,7 +179,6 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
 
     _cross_x__px = calcCrossXPx(_top_left_x__px);
     _cross_y__px = calcCrossYPx (_top_left_y__px);
-
     _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _x_axis.setPxPerUnit(_unit_x__px);
     _x_axis.setTickThickness(tickThickness);

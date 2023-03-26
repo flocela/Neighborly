@@ -1,42 +1,54 @@
-#ifndef Renderer_H
-#define Renderer_H
+#ifndef RENDERER_SDL_H
+#define RENDERER_SDL_H
 
 #include <vector>
 
 #include "Color.h"
 #include "Coordinate.h"
 #include "Rect.h"
+#include "Renderer.h"
+#include "SDL.h"
 #include "TextRect.h"
 
-class Renderer {
+class Renderer_SDL : public Renderer {
 public:
+	Renderer_SDL (
+		const std::size_t screen_width,
+		const std::size_t screen_height,
+		std::string title);
+	~Renderer_SDL();
+	Renderer_SDL () = delete;
+    Renderer_SDL (const Renderer_SDL& o) = delete;
+    Renderer_SDL (Renderer_SDL&& o) noexcept = delete;
+    Renderer_SDL& operator= (const Renderer_SDL& o) = delete;
+    Renderer_SDL& operator=(Renderer_SDL&& o) noexcept = delete;
 		
-	virtual void startFrame() = 0;
-	virtual void endFrame() = 0;
+	void startFrame() override;
+	void endFrame() override;
 
 	// draws a solid rectangle with the given color
-	virtual void fillBlock (Rect blocks, const std::vector<uint8_t>& rgba) = 0;
+	void fillBlock (Rect blocks, const std::vector<uint8_t>& rgba) override;
 
 	// draws solid rectangles for the given blocks with the given color
-	virtual void fillBlocks (const std::vector<Rect>& blocks, const std::vector<uint8_t>& rgba) = 0;
+	void fillBlocks (const std::vector<Rect>& blocks, const std::vector<uint8_t>& rgba) override;
 
 	// draws a solid rectangle with the given dimensions, coordinates and color.
 	// note @coordinates are in pixels.
-	virtual void fillBlock (
+	void fillBlock (
 		int width, 
 		int height,
 		Coordinate coordinate,
 		const std::vector<uint8_t>& rgba
-	) = 0;
+	) override;
 
 	// draws solid rectangles with the given dimentions, and corresponding coordinates and colors
 	// in the vectors. note @coordinates are in pixels.
-	virtual void fillBlocks(
+	void fillBlocks(
 		int width,
 		int height,
 		const std::vector<Coordinate>& coordinates,
 		const std::vector<uint8_t>& rgba
-	) = 0;
+	) override;
 
 	// Used to render text in window.
 	// @x is the original top left corner of text block. The top left corner of text block will be
@@ -60,7 +72,7 @@ public:
 	// if @position is 5, then the top left corner is moved left by half the width of the
 	//    block and is moved up by the height of the block. Essentially, the block is
 	//    centered horizontally, and sits above the given @y coordinate.
-	virtual void renderText (
+	void renderText (
 		int x, 
 		int y,
 		std::string textString,
@@ -69,12 +81,22 @@ public:
 		const std::vector<uint8_t>& rgbaText,
 		const std::vector<uint8_t>& rgbaBackground,
 		int position
-	) = 0;
+	) override;
 
 	// prints the strings in the TextRects according to the TextRect attributes.
-	virtual void renderTexts (const std::vector<TextRect>& texts) = 0;
+	void renderTexts (const std::vector<TextRect>& texts);
 	
 private:
+	SDL_Window *_sdl_window;
+	SDL_Renderer *_sdl_renderer;
+
+	const std::size_t _screen_width;
+	const std::size_t _screen_height;
+
+	bool initRenderer ();
+	bool initVideo ();
+	bool initWindow (std::string title);
+	bool linuxSettings ();
 	
 };
 

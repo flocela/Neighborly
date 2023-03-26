@@ -75,6 +75,8 @@ target_link_libraries(${PROJECT_NAME} SDL2::TTF)
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
 file(GLOB test_SRCS tests/*.cpp
+src/AxisBottomToTopL.cpp
+src/AxisLeftToRightB.cpp
 src/AxisFormat.cpp
 src/City_Grid.cpp
 src/CityFactory_Grid.cpp
@@ -93,6 +95,7 @@ src/Question_Int.cpp
 src/Question_Double.cpp
 src/Question.cpp
 src/Resident_UsingFunction.cpp
+src/Renderer.cpp
 src/Resident.cpp
 src/Simulator_Basic_A.cpp
 src/TextHelper.cpp

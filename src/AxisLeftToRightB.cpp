@@ -31,9 +31,10 @@ AxisLeftToRightB::AxisLeftToRightB (
 
 int AxisLeftToRightB::getAxisLengthPx () const
 {
-    int unit_px_odd = (_px_per_unit%2==0)? 0 : 1;
+    int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
     // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
-    return calcRightMostPixel_X() - _x_cross__px - unit_px_odd + (_tick_thickness__px/2);
+    cout << "right most pixel: " << calcRightMostPixel_X() << endl;
+    return calcRightMostPixel_X() - _x_cross__px - unit_px_even + (_tick_thickness__px/2) + 1;
 }
 
 int AxisLeftToRightB::getCenterValXPx () const

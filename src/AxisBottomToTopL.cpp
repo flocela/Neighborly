@@ -1,6 +1,6 @@
 #include "AxisBottomToTopL.h"
 #include <iostream>
-
+#include <cmath>
 using namespace std;
 
 AxisBottomToTopL::AxisBottomToTopL (
@@ -32,14 +32,22 @@ AxisBottomToTopL::AxisBottomToTopL (
 
 int AxisBottomToTopL::getAxisLengthPx () const
 {
-    return _y_cross__px - calcTopMostPixelWithValue_Y() +  _tick_thickness__px/2 + 1;
+    return _y_cross__px - calcTopMostPixelWithValue_Y() +  _tick_thickness__px + 1;
 }
 
 int AxisBottomToTopL::getPixel (double yVal) const
 {   
+    // line equation: y2 = y1 - m * (x2 - x1), m is in px per unit
+    // line equation: z2 = z1 - m * (w2 - w1), m is in px per unit.
+    // z2 is the pixel value we're looking for, given the real value yVal, w2.
+    // z1 is the pixel value corresponding to the smallest yvalue, w1.
+
     int isEven = (_px_per_unit%2==0)? 1 : 0;
-    int minYPx = _y_cross__px - (_start_offset_m * _px_per_unit);
-    int retVal = minYPx - (_px_per_unit * (yVal - _min_val)) + isEven;
+    double w2 = yVal;
+    double w1 = -(((double)1)/_px_per_unit)/2;
+    double z1 = _y_cross__px - _start_offset_m * _px_per_unit;
+    double diff = w2 - w1;
+    int retVal = ceil(z1 - (_px_per_unit * diff)) + isEven;
     return retVal;
 }
 
@@ -51,7 +59,7 @@ void AxisBottomToTopL::print (Renderer* renderer) const
     std::vector<TextRect> texts = {};
 
     setVerticalLine(rects);
-    setTicksLabels (horizLinesMaj, horizLinesMin, rects, texts);
+    setTicksAndLabels (horizLinesMaj, horizLinesMin, rects, texts);
     if (_axis_format.showBackgroundTickLines())
     {
         renderer->fillBlocks(horizLinesMaj, _axis_format.tickBackgroundColorMaj());
@@ -111,7 +119,7 @@ void AxisBottomToTopL::setVerticalLine (std::vector<Rect>& rects) const
     rects.push_back(rect);
 }
         
-void AxisBottomToTopL::setTicksLabels (
+void AxisBottomToTopL::setTicksAndLabels (
     std::vector<Rect>& horizLinesMaj,
     std::vector<Rect>& horizLinesMin,
     std::vector<Rect>& rects, 
@@ -194,8 +202,7 @@ void AxisBottomToTopL::setTicksLabels (
 
 int AxisBottomToTopL::calcTopMostPixelWithValue_Y () const
 {
-    int isEven = (_px_per_unit%2==0)? 1 : 0;
-    return  _y_cross__px - (_px_per_unit * (_diff + _start_offset_m + _end_offset_m)) + isEven;
+    return  getPixel(_max_val) - _px_per_unit * _end_offset_m;
 }
 
 int AxisBottomToTopL::calcMinTickSpacing (int pixelsPerUnit) const

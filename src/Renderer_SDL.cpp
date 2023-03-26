@@ -1,4 +1,4 @@
-#include "Renderer.h"
+#include "Renderer_SDL.h"
 
 #include <cstring>
 #include <SDL_ttf.h>
@@ -10,7 +10,7 @@ using namespace std;
 
 #define FONT_PATH   "assets/pacifico/Pacifico.ttf"
 
-Renderer::Renderer (
+Renderer_SDL::Renderer_SDL (
     const size_t screen_width,
     const size_t screen_height,
     string title
@@ -31,32 +31,32 @@ Renderer::Renderer (
     initRenderer();
 }
 
-Renderer::~Renderer() {
+Renderer_SDL::~Renderer_SDL() {
     SDL_DestroyRenderer(_sdl_renderer);
   	SDL_DestroyWindow(_sdl_window);
     TTF_Quit();
   	SDL_Quit();
 }
 
-void Renderer::startFrame()
+void Renderer_SDL::startFrame()
 {
     SDL_SetRenderDrawColor(_sdl_renderer, 255, 255, 255, 255);
     SDL_RenderClear(_sdl_renderer);
 }
 
-void Renderer::endFrame()
+void Renderer_SDL::endFrame()
 {
     SDL_RenderPresent(_sdl_renderer);
 }
 
-void Renderer::fillBlock(Rect block, const vector<uint8_t>& rgba)
+void Renderer_SDL::fillBlock(Rect block, const vector<uint8_t>& rgba)
 {
     SDL_Rect rect = {block._x__px, block._y__px, block.width, block.height};
     SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
     SDL_RenderFillRect(_sdl_renderer, &rect);
 }
 
-void Renderer::fillBlocks (const vector<Rect>& blocks, const vector<uint8_t>& rgba)
+void Renderer_SDL::fillBlocks (const vector<Rect>& blocks, const vector<uint8_t>& rgba)
 {
 
     SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
@@ -66,7 +66,7 @@ void Renderer::fillBlocks (const vector<Rect>& blocks, const vector<uint8_t>& rg
     }
 }
 
-void Renderer::fillBlock (
+void Renderer_SDL::fillBlock (
 	int width, 
 	int height,
 	Coordinate coordinate,
@@ -83,7 +83,7 @@ void Renderer::fillBlock (
     SDL_RenderFillRect(_sdl_renderer, &block);
 }
 
-void Renderer::fillBlocks(
+void Renderer_SDL::fillBlocks(
 	int width,
 	int height,
 	const vector<Coordinate>& coordinates,
@@ -104,7 +104,7 @@ void Renderer::fillBlocks(
     }
 }
 
-void Renderer::renderText (
+void Renderer_SDL::renderText (
     int x, 
     int y,
     string textString,
@@ -196,7 +196,7 @@ void Renderer::renderText (
     SDL_RenderCopy(_sdl_renderer, text, NULL, &sdlRect);
 }
 
-void Renderer::renderTexts (const vector<TextRect>& texts)
+void Renderer_SDL::renderTexts (const vector<TextRect>& texts)
 {
     for (TextRect tr : texts)
     {
@@ -213,7 +213,7 @@ void Renderer::renderTexts (const vector<TextRect>& texts)
     }
 }
 
-bool Renderer::initRenderer()
+bool Renderer_SDL::initRenderer()
 {
     _sdl_renderer = SDL_CreateRenderer(
         _sdl_window, 
@@ -228,7 +228,7 @@ bool Renderer::initRenderer()
     return true;
 }
 
-bool Renderer::initVideo()
+bool Renderer_SDL::initVideo()
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     	cerr << "SDL could not initialize.\n";
@@ -238,7 +238,7 @@ bool Renderer::initVideo()
     return true;
 }
 
-bool Renderer::initWindow(string title)
+bool Renderer_SDL::initWindow(string title)
 {
     _sdl_window = SDL_CreateWindow(
         title.c_str(), 
@@ -256,7 +256,7 @@ bool Renderer::initWindow(string title)
     return true;
 }
 
-bool Renderer::linuxSettings()
+bool Renderer_SDL::linuxSettings()
 {
 	#if defined linux && SDL_VERSION_ATLEAST(2, 0, 8)
     	// Disable compositor bypass

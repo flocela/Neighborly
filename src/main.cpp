@@ -45,6 +45,7 @@
 #include "PremadeExamplesMenu.h"
 #include "Printer_Graphic.h"
 #include "Printer_CMDLine.h"
+#include "Renderer_SDL.h"
 #include "ResidentsFactory_Falling.h"
 #include "ResidentsFactory_Flat.h"
 #include "ResidentsFactory_Rising.h"
@@ -137,7 +138,7 @@ int main(int argc, char* argv[])
         neighboringHousesPerHouse[house] = components.city->getHousesAdjacent(house->getAddress());
     }
 
-    unique_ptr<Renderer> renderer = make_unique<Renderer>(
+    unique_ptr<Renderer_SDL> renderer = make_unique<Renderer_SDL>(
         SCREEN_WIDTH, 
         SCREEN_HEIGHT, 
         "Neighbors");

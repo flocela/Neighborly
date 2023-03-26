@@ -215,7 +215,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
     axisYFormatForDivChart.setBackgroundTickLines(true);
     PlotFormat rightColFormat{
         _axis_format_X,
-        _axis_format_Y,
+        axisYFormatForDivChart,
         _chart_title_letter,
         _chart_key_letter,
         _min_unit_size__px,
