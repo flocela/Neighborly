@@ -31,8 +31,15 @@ AxisBottomToTopL::AxisBottomToTopL (
 {}
 
 int AxisBottomToTopL::getAxisLengthPx () const
-{
-    return _y_cross__px - calcTopMostPixelWithValue_Y() +  _tick_thickness__px + 1;
+{   // Note when tick thickness is 1, the ticks at the ends of the line, are within
+    // the line - so don't add to the axis length.
+    // When the tick thickness is 2, the ticks at the ends of the line, are 1/2
+    // on the line, 1/2 off the line. They add 1/2 tick thickness to both ends of the axis.
+    return _y_cross__px -
+           calcTopMostPixelWithValue_Y() +
+           _tick_thickness__px/2 +
+           _tick_thickness__px/2 +
+           1;
 }
 
 int AxisBottomToTopL::getPixel (double yVal) const
