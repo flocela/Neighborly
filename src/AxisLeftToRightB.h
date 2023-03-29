@@ -68,7 +68,7 @@ class AxisLeftToRightB
             std::vector<Rect>& rects,
             std::vector<TextRect>& texts) const;
 
-        int calcRightMostPixel_X () const;
+        int calcRightMostPixelWithValue_X () const;
 
         int calcMinTickSpacing (int pixelsPerUnit) const;
         

@@ -1,7 +1,7 @@
 #include "AxisLeftToRightB.h"
 
 #include <iostream>
-
+#include <cmath>
 using namespace std;
 
 AxisLeftToRightB::AxisLeftToRightB (
@@ -31,10 +31,13 @@ AxisLeftToRightB::AxisLeftToRightB (
 
 int AxisLeftToRightB::getAxisLengthPx () const
 {
-    int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
-    // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
-    cout << "right most pixel: " << calcRightMostPixel_X() << endl;
-    return calcRightMostPixel_X() - _x_cross__px - unit_px_even + (_tick_thickness__px/2) + 1;
+    int isOdd = (_tick_thickness__px%2 == 0? 0 : 1);
+    cout << "axisLength: " << calcRightMostPixelWithValue_X() << ", " << isOdd
+         << ", " << (_tick_thickness__px/2) << ", " << isOdd << endl;
+    return calcRightMostPixelWithValue_X() - _x_cross__px +
+        (_tick_thickness__px/2) +
+        (_tick_thickness__px/2) +
+        isOdd;
 }
 
 int AxisLeftToRightB::getCenterValXPx () const
@@ -44,9 +47,17 @@ int AxisLeftToRightB::getCenterValXPx () const
 
 int AxisLeftToRightB::getPixel (double xVal) const
 {   
-    int minXPx = _x_cross__px + _start_offset_m * _px_per_unit;
+    // line equation: y2 = y1 + m * (x2 - x1), m is in px per unit
+    // line equation: px2 = px1 + m * (v2 - v1), m is in px per unit.
+    // px2 is the pixel value we're looking for, given the real value xVal, v2.
+    // px1 is the pixel value corresponding to _min_val, v1.
+    double v2 = xVal;
+    double v1 = _min_val-(((double)1)/_px_per_unit)/2;
+    double px1 = _x_cross__px + _start_offset_m * _px_per_unit;
+    double diff = v2 - v1;
+    int retVal = floor(px1 + (_px_per_unit * diff));
 
-    return minXPx + _px_per_unit * (xVal - _min_val);
+    return retVal;
 }
 
 int AxisLeftToRightB::sizeXPx () const
@@ -97,7 +108,7 @@ void AxisLeftToRightB::setTickThickness (int tickThicknessPx)
 void AxisLeftToRightB::printHorizontalLine (std::vector<Rect>& rects) const
 {
     Rect rect{
-        _x_cross__px,
+        _x_cross__px - (_tick_thickness__px/2),
         _y_cross__px,
         getAxisLengthPx(),
         _axis_format.axisThicknessPx(),
@@ -145,7 +156,7 @@ void AxisLeftToRightB::printTicksAndLabels (
         _axis_format.minTickLengthPx()
     };
 
-    int rightMostPixel = calcRightMostPixel_X();
+    int rightMostPixel = calcRightMostPixelWithValue_X();
     
     while (curVal__px <= rightMostPixel)
     {  
@@ -170,9 +181,9 @@ void AxisLeftToRightB::printTicksAndLabels (
     }
 }
 
-int AxisLeftToRightB::calcRightMostPixel_X () const
+int AxisLeftToRightB::calcRightMostPixelWithValue_X () const
 {   
-    return _x_cross__px + (_px_per_unit * ( _diff + _start_offset_m + _end_offset_m));
+    return getPixel(_max_val) + _px_per_unit * _end_offset_m;
 }
 
 int AxisLeftToRightB::calcMinTickSpacing (int pixelsPerUnit) const
