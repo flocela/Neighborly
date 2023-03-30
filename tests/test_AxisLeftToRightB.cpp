@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "../src/AxisLeftToRightB.h"
 
-TEST_CASE("AxisLeftToRightB.getPixel()WithOddTickThicknessAndOddPixelsPerUnit")
+TEST_CASE("AxisLeftToRightB.getPixel()_OddTickThickness_OddPixelsPerUnit")
 {
     AxisFormat format{};
     AxisLeftToRightB axis {
@@ -31,7 +31,7 @@ TEST_CASE("AxisLeftToRightB.getPixel()WithOddTickThicknessAndOddPixelsPerUnit")
     REQUIRE( 16 == axis.getPixel(2.2) );// 16
 }
 
-TEST_CASE("AxisLeftToRightB.getPixel()WithOddTickThicknessAndEvenPixelsPerUnit")
+TEST_CASE("AxisLeftToRightB.getPixel()_OddTickThickness_EvenPixelsPerUnit")
 {
     AxisFormat format{};
     AxisLeftToRightB axis {
@@ -60,7 +60,7 @@ TEST_CASE("AxisLeftToRightB.getPixel()WithOddTickThicknessAndEvenPixelsPerUnit")
     REQUIRE( 37 == axis.getPixel(3.6) );
 }
 
-TEST_CASE("AxisLeftToRightB.getPixel()WithEvenTickThicknessAndOddPixelsPerUnit")
+TEST_CASE("AxisLeftToRightB.getPixel()_EvenTickThickness_OddPixelsPerUnit")
 {
     AxisFormat format{};
     AxisLeftToRightB axis {
@@ -89,7 +89,7 @@ TEST_CASE("AxisLeftToRightB.getPixel()WithEvenTickThicknessAndOddPixelsPerUnit")
     REQUIRE( 16 == axis.getPixel(2.2) );// 16
 }
 
-TEST_CASE("AxisLeftToRightB.getPixel()WithEvenTickThicknessAndEvenPixelsPerUnit")
+TEST_CASE("AxisLeftToRightB.getPixel()_EvenTickThickness_EvenPixelsPerUnit")
 {
     AxisFormat format{};
     AxisLeftToRightB axis {

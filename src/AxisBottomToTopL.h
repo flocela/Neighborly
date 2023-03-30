@@ -30,8 +30,8 @@ class AxisBottomToTopL
 
         int getAxisLengthPx () const;
 
-        // returns the y-pixel for yVal. If pxPerUnit is odd, then result is at center of unit.
-        // If pxPerUnit is even, then center is denoted by two pixels,
+        // returns the y-pixel for yVal. If tick thickness is odd, then center is denoted by one pixel.
+        // If tick thickness is even, then center is denoted by two pixels,
         // and the result is the first pixel. (The first pixel is from the cross hairs or _y_cross__px.)
         int getPixel (double yVal) const;
         
