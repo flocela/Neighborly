@@ -1,10 +1,10 @@
 #include "catch.hpp"
-#include "../src/AxisLeftToRightB.h"
+#include "../src/AxisLeftToRightT.h"
 
-TEST_CASE("AxisLeftToRightB.getPixel()_OddTickThickness_OddPixelsPerUnit")
+TEST_CASE("AxisLeftToRightT.getPixel()_OddTickThickness_OddPixelsPerUnit")
 {
     AxisFormat format{};
-    AxisLeftToRightB axis {
+    AxisLeftToRightT axis {
         format,
         0, // x coord where x and y axes meet
         0, // y coord where x and y axes meet
@@ -31,10 +31,10 @@ TEST_CASE("AxisLeftToRightB.getPixel()_OddTickThickness_OddPixelsPerUnit")
     REQUIRE( 16 == axis.getPixel(2.2) );// 16
 }
 
-TEST_CASE("AxisLeftToRightB.getPixel()_OddTickThickness_EvenPixelsPerUnit")
+TEST_CASE("AxisLeftToRightT.getPixel()_OddTickThickness_EvenPixelsPerUnit")
 {
     AxisFormat format{};
-    AxisLeftToRightB axis {
+    AxisLeftToRightT axis {
         format,
         0, // x coord where x and y axes meet
         0, // y coord where x and y axes meet
@@ -53,17 +53,17 @@ TEST_CASE("AxisLeftToRightB.getPixel()_OddTickThickness_EvenPixelsPerUnit")
     // tick pixel is at 32 representing value  3; tick is at pixels: 31, 32, 33
     // tick pixel is at 40 representing value  4; tick is at pixels: 39, 40, 41
     // tick pixel is at 48 representing value  5; tick is at pixels: 47, 48, 49
-    REQUIRE( 51 == axis.getAxisLengthPx() );
-    REQUIRE( 16 == axis.getPixel(1) );
-    REQUIRE( 40 == axis.getPixel(4) );
-    REQUIRE( 36 == axis.getPixel(3.5) );
-    REQUIRE( 37 == axis.getPixel(3.6) );
+    REQUIRE( 51 == axis.getAxisLengthPx() );//51
+    REQUIRE( 16 == axis.getPixel(1) ); //16
+    REQUIRE( 40 == axis.getPixel(4) ); //40
+    REQUIRE( 36 == axis.getPixel(3.5) ); //36
+    REQUIRE( 37 == axis.getPixel(3.6) ); //37
 }
 
-TEST_CASE("AxisLeftToRightB.getPixel()_EvenTickThickness_OddPixelsPerUnit")
+TEST_CASE("AxisLeftToRightT.getPixel()_EvenTickThickness_OddPixelsPerUnit")
 {
     AxisFormat format{};
-    AxisLeftToRightB axis {
+    AxisLeftToRightT axis {
         format,
         0, // x coord where x and y axes meet
         0, // y coord where x and y axes meet
@@ -89,10 +89,10 @@ TEST_CASE("AxisLeftToRightB.getPixel()_EvenTickThickness_OddPixelsPerUnit")
     REQUIRE( 16 == axis.getPixel(2.2) );// 16
 }
 
-TEST_CASE("AxisLeftToRightB.getPixel()_EvenTickThickness_EvenPixelsPerUnit")
+TEST_CASE("AxisLeftToRightT.getPixel()_EvenTickThickness_EvenPixelsPerUnit")
 {
     AxisFormat format{};
-    AxisLeftToRightB axis {
+    AxisLeftToRightT axis {
         format,
         0, // x coord where x and y axes meet
         0, // y coord where x and y axes meet
@@ -111,9 +111,9 @@ TEST_CASE("AxisLeftToRightB.getPixel()_EvenTickThickness_EvenPixelsPerUnit")
     // tick pixel is at 32 representing value  3
     // tick pixel is at 40 representing value  4
     // tick pixel is at 48 representing value  5; tick pixels at 46, 47, 48, 49
-    REQUIRE( 52 == axis.getAxisLengthPx() );
-    REQUIRE( 16 == axis.getPixel(1) );
-    REQUIRE( 40 == axis.getPixel(4) );
-    REQUIRE( 36 == axis.getPixel(3.5) );
-    REQUIRE( 37 == axis.getPixel(3.6) );
+    REQUIRE( 52 == axis.getAxisLengthPx() ); //52
+    REQUIRE( 16 == axis.getPixel(1) ); //16
+    REQUIRE( 40 == axis.getPixel(4) ); //40
+    REQUIRE( 36 == axis.getPixel(3.5) ); //36
+    REQUIRE( 37 == axis.getPixel(3.6) ); //37
 }

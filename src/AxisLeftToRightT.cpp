@@ -1,5 +1,7 @@
 #include "AxisLeftToRightT.h"
+
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 AxisLeftToRightT::AxisLeftToRightT (
@@ -29,9 +31,11 @@ AxisLeftToRightT::AxisLeftToRightT (
 
 int AxisLeftToRightT::getAxisLengthPx () const
 {
-    int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
-    // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
-    return calcRightMostPixelWithValue_X() - _x_cross__px - unit_px_even + (_tick_thickness__px/2);
+    int isOdd = (_tick_thickness__px%2 == 0? 0 : 1);
+    return calcRightMostPixelWithValue_X() - _x_cross__px +
+        (_tick_thickness__px/2) +
+        (_tick_thickness__px/2) +
+        isOdd;
 }
 
 int AxisLeftToRightT::getCenterValXPx () const
@@ -41,9 +45,17 @@ int AxisLeftToRightT::getCenterValXPx () const
 
 int AxisLeftToRightT::getPixel (double xVal) const
 {   
-    int minXPx = _x_cross__px + _start_offset_m * _px_per_unit;
+    // line equation: y2 = y1 + m * (x2 - x1), m is in px per unit
+    // line equation: px2 = px1 + m * (v2 - v1), m is in px per unit.
+    // px2 is the pixel value we're looking for, given the real value xVal, v2.
+    // px1 is the pixel value corresponding to _min_val, v1.
+    double v2 = xVal;
+    double v1 = _min_val-(((double)1)/_px_per_unit)/2;
+    double px1 = _x_cross__px + _start_offset_m * _px_per_unit;
+    double diff = v2 - v1;
+    int retVal = floor(px1 + (_px_per_unit * diff));
 
-    return minXPx + _px_per_unit * (xVal - _min_val);
+    return retVal;
 }
 
 void AxisLeftToRightT::print (Renderer* renderer) const
@@ -172,7 +184,7 @@ void AxisLeftToRightT::printTicksAndLabels (
 
 int AxisLeftToRightT::calcRightMostPixelWithValue_X () const
 {
-    return _x_cross__px + (_px_per_unit * ( _diff + _start_offset_m + _end_offset_m));
+    return getPixel(_max_val) + _px_per_unit * _end_offset_m;
 }
 
 int AxisLeftToRightT::calcMinTickSpacing (int pixelsPerUnit) const

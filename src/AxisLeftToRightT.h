@@ -1,12 +1,8 @@
 #ifndef AXIS_LEFT_TO_RIGHT_T__H
 #define AXIS_LEFT_TO_RIGHT_T__H
 
-#include <string>
-#include "SDL.h"
 #include "Renderer.h"
-#include "Coordinate.h"
 #include "AxisFormat.h"
-#include <memory>
 #include "TextRect.h"
 
 // Renders axis from left to right with title at top (used for horizontal axes).
@@ -35,9 +31,9 @@ class AxisLeftToRightT
 
         int getCenterValXPx() const;
 
-        // returns the y-pixel for yVal. If pxPerUnit is odd, then result is at center of unit.
-        // If pxPerUnit is even, then center is denoted by two pixels,
-        // and the result is the second pixel. (The second pixel is from x's zero.)
+        // returns the y-pixel for yVal. If tick thickness is odd, then result is one pixel.
+        // If the tick thickness is even, then center is denoted by two pixels,
+        // and the result is the second pixel. (The second pixel is from the x's zero value.)
         int getPixel (double xVal) const;
         
         void print (Renderer* renderer) const;
