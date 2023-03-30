@@ -45,16 +45,25 @@ int AxisBottomToTopL::getAxisLengthPx () const
 int AxisBottomToTopL::getPixel (double yVal) const
 {   
     // line equation: y2 = y1 - m * (x2 - x1), m is in px per unit
-    // line equation: z2 = z1 - m * (w2 - w1), m is in px per unit.
-    // z2 is the pixel value we're looking for, given the real value yVal, w2.
-    // z1 is the pixel value corresponding to the smallest yvalue, w1.
+    // line equation: px2 = px1 - m * (v2 - v1), m is in px per unit.
+    // px2 is the pixel value we're looking for, given the real value yVal, v2.
+    // px1 is the pixel value corresponding to the smallest yvalue, v1.
 
-    int isEven = (_px_per_unit%2==0)? 1 : 0;
-    double w2 = yVal;
-    double w1 = -(((double)1)/_px_per_unit)/2;
-    double z1 = _y_cross__px - _start_offset_m * _px_per_unit;
-    double diff = w2 - w1;
-    int retVal = ceil(z1 - (_px_per_unit * diff)) + isEven;
+    double v2 = yVal;
+    double v1 = _min_val-(((double)1)/_px_per_unit)/2;
+    double px1 = _y_cross__px - _start_offset_m * _px_per_unit;
+    double diff = v2 - v1;
+    int retVal = ceil(px1 - (_px_per_unit * diff));
+
+    // because pixels are counted from the window's y = 0 (which is at the
+    // top), but the axis runs from bottom to top. It's necessary
+    // to add 1 when the tick thickness is even.
+    // If the tick thickness is even, then the center is denoted by two pixels,
+    // and the returned value is the first pixel. (The first pixel is from the
+    // cross hairs or _y_cross__px.)
+
+    retVal = (_tick_thickness__px%2 == 0? retVal+1 : retVal);
+
     return retVal;
 }
 

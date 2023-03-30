@@ -32,8 +32,6 @@ AxisLeftToRightB::AxisLeftToRightB (
 int AxisLeftToRightB::getAxisLengthPx () const
 {
     int isOdd = (_tick_thickness__px%2 == 0? 0 : 1);
-    cout << "axisLength: " << calcRightMostPixelWithValue_X() << ", " << isOdd
-         << ", " << (_tick_thickness__px/2) << ", " << isOdd << endl;
     return calcRightMostPixelWithValue_X() - _x_cross__px +
         (_tick_thickness__px/2) +
         (_tick_thickness__px/2) +
