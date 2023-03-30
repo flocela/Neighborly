@@ -1,5 +1,7 @@
-#include "AxisTopToBottomL.h"
 #include <iostream>
+#include <cmath>
+
+#include "AxisTopToBottomL.h"
 
 using namespace std;
 AxisTopToBottomL::AxisTopToBottomL (
@@ -29,15 +31,26 @@ AxisTopToBottomL::AxisTopToBottomL (
 
 int AxisTopToBottomL::getAxisLengthPx() const
 {
-    int unit_px_even = (_px_per_unit%2==0)? 1 : 0;
-    // tick may be at edge of horizontal axis, so 1/2 of tick will hang off the end.
-    return calcBotMostPixel_Y() - _y_cross__px - unit_px_even + (_tick_thickness__px/2);
+    int isOdd = (_tick_thickness__px%2 == 0? 0 : 1);
+    return calcBotMostPixel_Y () - _x_cross__px +
+        (_tick_thickness__px/2) +
+        (_tick_thickness__px/2) +
+        isOdd;
 }
 
 int AxisTopToBottomL::getPixel (double yVal) const
 {
-    int minYPx = _y_cross__px + ( _start_offset_m * _px_per_unit );
-    return minYPx + _px_per_unit * (yVal - _min_val);
+    // line equation: y2 = y1 + m * (x2 - x1), m is in px per unit
+    // line equation: px2 = px1 + m * (v2 - v1), m is in px per unit.
+    // px2 is the pixel value we're looking for, given the real value yVal, v2.
+    // px1 is the pixel value corresponding to _min_val, v1.
+    double v2 = yVal;
+    double v1 = _min_val-(((double)1)/_px_per_unit)/2;
+    double px1 = _y_cross__px + _start_offset_m * _px_per_unit;
+    double diff = v2 - v1;
+    int retVal = floor(px1 + (_px_per_unit * diff));
+
+    return retVal;
 }
 
 void AxisTopToBottomL::print (Renderer* renderer) const
@@ -162,7 +175,7 @@ void AxisTopToBottomL::printTicksAndLabels (
 
 int AxisTopToBottomL::calcBotMostPixel_Y () const
 {
-    return _y_cross__px + (_px_per_unit * ( _diff + _start_offset_m + _end_offset_m));
+    return getPixel(_max_val) + _px_per_unit * _end_offset_m;
 }
 
 int AxisTopToBottomL::calcMinTickSpacing (int pixelsPerUnit) const
