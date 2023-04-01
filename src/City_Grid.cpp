@@ -8,8 +8,8 @@ using namespace std;
 City_Grid::City_Grid (int width):
 	City(),
 	_width{width},
-	_maxX{_width - 1 },
-	_maxY{_width  - 1}
+	_maxX{_width - 1},
+	_maxY{_width - 1}
 {	
 	_houses.reserve(_width * _width);
   	for (int ii=0; ii<width; ++ii)
@@ -41,6 +41,7 @@ Coordinate City_Grid::getCoordinate(const int& address) const
 unordered_map<const House*, Coordinate> City_Grid::getCoordinatesPerHouse()
 {
 	unordered_map<const House*, Coordinate> coordinatesPerHouse{};
+	
 	for (auto& pair : _house_per_address)
 	{
 		coordinatesPerHouse.emplace(pair.second, getCoordinate(pair.first));
@@ -72,19 +73,20 @@ unordered_set<const House*> City_Grid::getHousesWithinDistance (
 	int minY = max(central_address_y - (int)floor(allowableDist), _minY);
 	int maxY = min(central_address_y + (int)floor(allowableDist), _maxY);
 
-	// houses within allowableDistance trace out a circle. 
+	// Houses within allowableDistance trace out a circle. 
 
-	// First trace out the top half of the circle.
-	// yy is from the top of the circle to the the central house's y (inclusive).
-	// for each yy less than or equal to the central house's yy, find houses within allowableDistance.
-	// for each yy row, find the minimum LeftX and the maximum RightX
-	// houses need to be within the allowableDistance and still on the grid.
-	// grid could cut-off circle.
+	//   First trace out the top half of the circle.
+	//     yy starts at the top of the circle (over the central house), and increases
+	//     to the center of the circle, in other words, for each yy less than or equal to the
+	//     central house's yy, find the houses within allowableDistance.
+	//     note: houses need to be within the allowableDistance and still on the grid.
 	int yy = minY;
 	int curLeftX = central_address_x;
 	int curRightX = central_address_x;
 	for (; yy<=central_address_y; ++yy)
 	{
+		curLeftX = central_address_x;
+		curRightX = central_address_x;
 		int curLeftAddress = (yy*_width + curLeftX);
 		while ( curLeftX >= minX && getDist(central_address, curLeftAddress) <= allowableDist )
 		{
@@ -92,26 +94,24 @@ unordered_set<const House*> City_Grid::getHousesWithinDistance (
 			--curLeftX;
 			curLeftAddress = (yy*_width) + curLeftX;
 		}
-
+		
 		int curRightAddress = (yy*_width) + curRightX;
 		while ( curRightX <= maxX && getDist(central_address, curRightAddress) <= allowableDist )
 		{
 			housesWithinDistance.insert(_house_per_address.at(curRightAddress));
 			++curRightX;
-			curRightAddress = (yy*_width + curRightX);
+			curRightAddress = (yy*_width + curRightX);	
 		}
 	}
 
-	// Next trace out the bottom half of the circle.
-	// yy is from the bottom of the circle to one row less than the central house's y.
-	// for each yy greater than the central house's yy, find houses within allowableDistance.
-	// for each yy, find the minimum LeftX and the maximum RightX
-	// houses need to be within the allowableDistance and still on the grid.
+	//   Next trace out the bottom half of the circle.
+	//     yy is from the bottom of the circle to one row less than the central house's y.
+	//     for each yy greater than the central house's yy, find houses within allowableDistance.
 	yy = maxY;
-	curLeftX = central_address_x;
-	curRightX = central_address_x;
 	for (; yy>central_address_y; --yy)
 	{
+		curLeftX = central_address_x;
+		curRightX = central_address_x;
 		int curLeftAddress = (yy*_width + curLeftX);
 		while (curLeftX >= minX && getDist(central_address, curLeftAddress) <= allowableDist)
 		{
@@ -126,13 +126,13 @@ unordered_set<const House*> City_Grid::getHousesWithinDistance (
 			housesWithinDistance.insert(_house_per_address.at(curRightAddress));
 			++curRightX;
 			curRightAddress = (yy*_width) + curRightX;
-		}
-
-		// don't include central house as a neighbor. We only want the neighbors of central house.
-		if (housesWithinDistance.find(house) != housesWithinDistance.end())
-		{
-			housesWithinDistance.erase(house);
-		}
+		}	
+	}
+	
+	// don't include central house as a neighbor. We only want the neighbors of central house.
+	if (housesWithinDistance.find(house) != housesWithinDistance.end())
+	{
+		housesWithinDistance.erase(house);
 	}
 	return housesWithinDistance;
 }
