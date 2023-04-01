@@ -67,8 +67,6 @@ private:
     // Returns a random house from @setOfHouses.
     const House* selectRandom (std::unordered_set<const House*>& setOfHouses) const;
     
-
-
 };
 
 #endif

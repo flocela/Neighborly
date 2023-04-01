@@ -128,7 +128,7 @@ unordered_set<const House*> City_Grid::getHousesWithinDistance (
 			curRightAddress = (yy*_width) + curRightX;
 		}	
 	}
-	
+
 	// don't include central house as a neighbor. We only want the neighbors of central house.
 	if (housesWithinDistance.find(house) != housesWithinDistance.end())
 	{
@@ -153,36 +153,51 @@ vector<const House*> City_Grid::getHouses () const
 	return houses;
 }
 
-// TODO just keep a map of house to set of adjacent houses
 set<const House*> City_Grid::getHousesAdjacent (int address) const
 {
-	int largestAddress = getNumOfHouses() - 1;
-	
 	set<const House*> adjacentHouses = {};
 
-	int topLeft = address - _width - 1;
+	Coordinate coord = getCoordinate(address);
+	int addr_x = coord.getX();
+	int addr_y = coord.getY();
 
-	for (int ii=0; ii<=2; ++ii)
+	if (addr_y > 0)
 	{
-		// add neighbors from row above.
-		int neighborAddress = topLeft + ii;
-		if (neighborAddress >= 0 && neighborAddress <= largestAddress)
+		if (addr_x > 0)
 		{
-			adjacentHouses.insert(_houses[neighborAddress].get());
+			adjacentHouses.insert(_houses[address - _width - 1].get());
 		}
 
-		// add neighbors from left and right
-		neighborAddress = topLeft + _width + ii;
-		if (neighborAddress >= 0 && neighborAddress <= largestAddress && neighborAddress != address)
+		adjacentHouses.insert(_houses[address-_width].get());
+
+		if (addr_x <= _width-1)
 		{
-			adjacentHouses.insert(_houses[neighborAddress].get());
+			adjacentHouses.insert(_houses[address - _width + 1].get());
+		}
+	}
+
+	if (addr_x > 0)
+	{
+		adjacentHouses.insert(_houses[address - 1].get());
+	}
+
+	if (addr_x <= _width-1)
+	{
+		adjacentHouses.insert(_houses[address + 1].get());
+	}
+
+	if (addr_y <= _width-1)
+	{
+		if (addr_x > 0)
+		{
+			adjacentHouses.insert(_houses[address + _width - 1].get());
 		}
 
-		// add neighbors from row below.
-		neighborAddress = topLeft + 2 * _width + ii;
-		if (neighborAddress >= 0 && neighborAddress <= largestAddress)
+		adjacentHouses.insert(_houses[address +_width].get());
+
+		if (addr_x <= _width-1)
 		{
-			adjacentHouses.insert(_houses[neighborAddress].get());
+			adjacentHouses.insert(_houses[address + _width + 1].get());
 		}
 	}
 
