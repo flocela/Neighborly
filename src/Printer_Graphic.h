@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <thread>
+#include <unordered_set>
 #include <vector>
 #include "Color.h"
 #include "House.h"
@@ -27,7 +28,7 @@ public:
         std::unique_ptr<Renderer> renderer,
         std::unordered_map<int, BaseColor> colors,
         std::unordered_map<const House*, Coordinate> coordinatesPerHouse,
-        std::unordered_map<const House*, std::set<const House*>> neighborHousesPerHouse,
+        std::unordered_map<const House*, std::unordered_set<const House*>> neighborHousesPerHouse,
         std::string title,
         int numOfRuns
     );
@@ -134,8 +135,7 @@ private:
     std::unique_ptr<GrCityChart>  _city_chart;
 
     int determineMaxNumberOfNeighbors (
-        std::unordered_map<const House*,
-        std::set<const House*>> neighbors
+        std::unordered_map<const House*,std::unordered_set<const House*>> neighbors
     );
 
     std::unique_ptr<GrCityChart> createCityChart (
@@ -147,7 +147,7 @@ private:
         int availSpaceYPx);
 
     std::unique_ptr<GrDvstyChart> createDvstyChart(
-        std::unordered_map<const House*, std::set<const House*>> neighbors,
+        std::unordered_map<const House*, std::unordered_set<const House*>> neighbors,
         int maxNumOfNeighbors,
         int maxNumOfRuns,
         int topLeftYPx,

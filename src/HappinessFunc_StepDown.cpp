@@ -1,5 +1,6 @@
 #include "HappinessFunc_StepDown.h"
 
+#include <algorithm>
 #include <sstream>
 #include <iomanip>
 
@@ -37,6 +38,16 @@ HappinessFunc_StepDown::HappinessFunc_StepDown (
             "and 1.0 inclusive.");
     }
     
+}
+
+double HappinessFunc_StepDown::getMaximumPossibleValue () const
+{
+    return max(_happ_at_start, _happ_with_zero_neighbors);
+}
+
+double HappinessFunc_StepDown::getLeastPossibleValue () const
+{
+    return min(_happ_at_end, _happ_with_zero_neighbors);
 }
 
 double HappinessFunc_StepDown::calcHappiness (

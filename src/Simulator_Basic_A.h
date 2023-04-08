@@ -11,7 +11,7 @@ class Simulator_Basic_A: public Simulator
 {
 public:
     // @residents are all the residents in the city.
-    Simulator_Basic_A (const City* city, std::set<Resident*> residents);
+    Simulator_Basic_A (const City* city, std::unordered_set<Resident*> residents);
     Simulator_Basic_A () = delete;
     Simulator_Basic_A (const Simulator_Basic_A& o) = default;
     Simulator_Basic_A (Simulator_Basic_A&& o) noexcept = default;
@@ -42,7 +42,7 @@ private:
     bool _first_run_done = false;
 
     // all residents
-    std::set<Resident*> _residents;
+    std::unordered_set<Resident*> _residents;
 
     // only houses that are occupied and their residents
     std::unordered_map<const House*, Resident*> _res_per_house = {};
@@ -85,7 +85,7 @@ private:
 
     // Returns residents that live in @houses. If a house is empty, then 
     // returned set will be smaller than @houses.
-    std::set<const Resident*> getResidentsInTheseHouses(std::set<const House*> houses);
+    std::unordered_set<const Resident*> getResidentsInTheseHouses(std::unordered_set<const House*> houses);
 };
 
 #endif

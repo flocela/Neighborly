@@ -22,7 +22,10 @@ Resident::Resident (
     }
 }
 
-double Resident::calculateHappiness ( std::set<const Resident*> neighbors, int numOfAdjacentHouses) const
+double Resident::calculateHappiness (
+    const std::unordered_set<const Resident*>& neighbors,
+    int numOfAdjacentHouses
+) const
 {
     return implimentHappiness (neighbors, numOfAdjacentHouses);
 }

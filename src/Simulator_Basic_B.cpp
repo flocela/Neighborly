@@ -1,6 +1,8 @@
 #include "Simulator_Basic_B.h"
 
+#include <algorithm>
 #include <limits>
+#include <chrono> // TODO delete include chrono
 using namespace std;
 
 template <typename T>
@@ -13,15 +15,23 @@ T selectRandom(unordered_set<T>& setOfT)
     return *it;
 }
 
+template <typename T>
+T selectRandom(vector<T>& vectorOfT)
+{
+    int size = vectorOfT.size();
+    int r = rand() % size;
+    return vectorOfT[r];
+}
+
 Simulator_Basic_B::Simulator_Basic_B (
     const City* city,
-    set<Resident*> residents,
+    unordered_set<Resident*> residents,
     double percentOfResidents,
     int numOfHousesChosen
 ): _city{city},
    _residents{residents},
    _percent_of_residents{percentOfResidents},
-   _num_of_houses_chosen{numOfHousesChosen}
+   _max_num_of_tries_to_find_house{numOfHousesChosen}
 {
     // to begin with, all houses are empty
     for (const House* house : _city->getHouses())
@@ -38,11 +48,21 @@ std::unordered_map<const House*, Resident*> Simulator_Basic_B::run ()
         _first_run_done = true;
     }
     else
-    {  
+    {   chrono::high_resolution_clock::time_point WW = chrono::high_resolution_clock::now();
         normalRun();
+        ++runNum;
+        chrono::high_resolution_clock::time_point XX = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::microseconds>(XX-WW).count(); (void)duration;
+        if (runNum == 6 || runNum == 7)
+            {cout << "run XX-WW: " << duration << "; ";}
     }
     
+    chrono::high_resolution_clock::time_point UU = chrono::high_resolution_clock::now();
     setHappinessValuesForAllResidents();
+    chrono::high_resolution_clock::time_point VV = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::microseconds>(VV-UU).count(); (void)duration;
+        if (runNum == 6)
+            {cout << "set happiness VV-UU: " << duration << "; ";}
 
     return _res_per_house;
 }
@@ -80,65 +100,152 @@ void Simulator_Basic_B::firstRun ()
 
 void Simulator_Basic_B::normalRun ()
 {
+    chrono::high_resolution_clock::time_point QQ = chrono::high_resolution_clock::now();
+    unordered_set<int> chosenResidents{};
     // make a copy of the set or residents (copy needed to randomly choose residents)
-    unordered_set<Resident*> copySetOfResidents{};
+    vector<Resident*> copySetOfResidents{};
     for (Resident* res : _residents)
     {
-        copySetOfResidents.insert(res);
+        copySetOfResidents.push_back(res);
     }
 
+    chrono::high_resolution_clock::time_point RR = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::microseconds>(RR-QQ).count();
+    if (runNum == 6)
+        {cout << "create vector Of residents: " << duration << "; ";}
+
     int subsetToMove = _residents.size() * _percent_of_residents /100;
-    
+    if (runNum == 6)
+    {cout <<"subsetToMove: " << _residents.size() << ", " << subsetToMove << ", ";}
+
+    // find a house for each randomly chosen resident.
     for (int ii=0; ii<subsetToMove; ++ii)
     {   
-        Resident* curRes = selectRandom(copySetOfResidents);
+        chrono::high_resolution_clock::time_point YY = chrono::high_resolution_clock::now();
+        Resident* curRes = selectRandom(copySetOfResidents); // make new setOfResidents if finding is 1/4
+        //TODO makes curRes isn't being deleted.
+        while ( chosenResidents.find(curRes->getID()) != chosenResidents.end() )
+        {
+            curRes = selectRandom(copySetOfResidents);
+        }
+        chosenResidents.insert(curRes->getID());
+        if (runNum == 6 && curRes->getID() < 10800 && curRes->getID() > 10780)
+         {cout << "res:" << curRes->getID() << ", ";}
+
+        chrono::high_resolution_clock::time_point ZZ = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::microseconds>(ZZ-YY).count(); (void)duration;
+        if (runNum == 6 && curRes->getID() < 10800 && curRes->getID() > 10780)
+            {cout << "randomly select resident ZZ-YY: " << duration << "; ";}
+
         const House* currHouse = _house_per_resident[curRes];
 
-        unordered_set<const House*> nearHouses = _city->getHousesWithinDistance
+        int print = (runNum ==6 && curRes->getID() < 10800 && curRes->getID() > 10780)? 6 : 0;
+
+        chrono::high_resolution_clock::time_point AA = chrono::high_resolution_clock::now();
+       
+        const unordered_set<const House*>& allHousesWithinDistance = _city->getHousesWithinDistance
         (   
             currHouse,
-            curRes->getAllowedMovementDistance()
+            curRes->getAllowedMovementDistance(),
+            print
         );
+        
+        chrono::high_resolution_clock::time_point BB = chrono::high_resolution_clock::now();
+        duration = chrono::duration_cast<chrono::microseconds>(BB-AA).count();
+        if (runNum == 6 && curRes->getID() < 10800 && curRes->getID() > 10780)
+        {cout << "getAllHousesWithinDist BB-AA: " << duration << "; ";}
+            
+        chrono::high_resolution_clock::time_point CC = chrono::high_resolution_clock::now();
 
-        // erase houses that are occupied from nearHouses. Can't move into an occupied house.
-        unordered_set<const House*>::iterator iter = nearHouses.begin();
-        while (iter != nearHouses.end())
-        {   
-            if (_open_houses.find(*iter) == _open_houses.end())
+        // emptyHouses vector should only have houses that are empty.
+        vector<const House*> emptyHouses{};
+        
+        if (runNum == 6 && curRes->getID() < 10800 && curRes->getID() > 10780)
+        {
+            cout << "openHouses, allHousesWithinDist: " << _open_houses.size()
+            << ", " << allHousesWithinDistance.size() << endl;
+        }
+        if (_open_houses.size() < allHousesWithinDistance.size())
+        {
+            unordered_set<const House*>::const_iterator iter = _open_houses.cbegin();
+            while (iter != _open_houses.end())
             {   
-                unordered_set<const House*>::iterator copy = iter;
-                ++iter;
-                nearHouses.erase(*copy);
-            }
-            else
-            {
+                // if house within distance
+                if (allHousesWithinDistance.find(*iter) != allHousesWithinDistance.end())
+                {   
+                    emptyHouses.push_back(*iter);
+                }
                 ++iter;
             }
         }
+        else
+        {   
+            unordered_set<const House*>::const_iterator iter = allHousesWithinDistance.cbegin();
+            while (iter != allHousesWithinDistance.end())
+            {   
+                // if house is empty
+                if (_open_houses.find(*iter) != _open_houses.end())
+                {   
+                    emptyHouses.push_back(*iter);
+                }
+                ++iter;
+            }
+        }
+        
+        
 
+        chrono::high_resolution_clock::time_point DD = chrono::high_resolution_clock::now();
+        duration = chrono::duration_cast<chrono::microseconds>(DD-CC).count();
+        if (runNum == 6 && curRes->getID() < 10800 && curRes->getID() > 10780)
+        {cout << "Remove occupied houses DD - CC: " << duration << "; ";}
+
+        chrono::high_resolution_clock::time_point EE = chrono::high_resolution_clock::now();
+        // try to find house for current resident. Only get _max_num_of_tries_to_find_house.
         double selectedHappiness = 0.0;
         House const * selectedHouse = nullptr;
-        for (int ii=0; ii<_num_of_houses_chosen; ++ii)
+        unordered_set<const House*> selectedHouses{};
+        int maxTries = min(_max_num_of_tries_to_find_house, (int)emptyHouses.size());
+        // TODO if max num of tries is 1/2 or greater than emptyHouses.size(), then use a set 
+        // instead of a vector.
+        //cout << "{maxtries, emptyHouses.size}: " << _max_num_of_tries_to_find_house << ", "
+        //<< emptyHouses.size() << ";   "; 
+        for (int ii=0; ii<maxTries; ++ii)
         {
-            if (nearHouses.empty())
+            // choose a random house that has not been chosen before.
+            const House* randHouse = selectRandom(emptyHouses); 
+            // TODO check for nullptr, check for vector being size zero
+            while (selectedHouses.find(randHouse) != selectedHouses.end())
+            {
+                randHouse = selectRandom(emptyHouses);
+            }
+
+            double happinessFromRandomHouse = calculateHappinessValueFor(curRes, randHouse->getAddress());
+            if (happinessFromRandomHouse >= selectedHappiness)
+            {
+                selectedHappiness = happinessFromRandomHouse;
+                selectedHouse = randHouse;
+            }
+            if (selectedHappiness == curRes->getMaximumPossibleHappiness())
             {
                 break;
             }
-
-            const House* randHouse = selectRandom(nearHouses);
-            double randHouseHappiness = calculateHappinessValueFor(curRes, randHouse->getAddress());
-            if (randHouseHappiness >= selectedHappiness)
-            {
-                selectedHappiness = randHouseHappiness;
-                selectedHouse = randHouse;
-            }
-            nearHouses.erase(randHouse);
         }
 
+        chrono::high_resolution_clock::time_point FF = chrono::high_resolution_clock::now();
+        duration = chrono::duration_cast<chrono::microseconds>(FF-EE).count();
+        if (runNum == 6 && curRes->getID() < 10800 && curRes->getID() > 10780)
+        {cout << "Found a house: FF - EE: " << duration << ", ";}
+
+        chrono::high_resolution_clock::time_point GG = chrono::high_resolution_clock::now();
         if (selectedHouse != nullptr)
         {
             moveResidentIntoHouse(curRes, selectedHouse);
         }
+
+        chrono::high_resolution_clock::time_point HH = chrono::high_resolution_clock::now();
+        duration = chrono::duration_cast<chrono::microseconds>(HH-GG).count();
+        if (runNum == 6 && curRes->getID() < 10800 && curRes->getID() > 10780)
+        {cout << "mvoed: GG - HH: " << duration << endl;}
 
     }
 }
@@ -166,15 +273,26 @@ void Simulator_Basic_B::setHappinessValuesForAllResidents ()
     }
 }
 
+// todo res should be const.
 double Simulator_Basic_B::calculateHappinessValueFor(Resident* res, int address)
 {
-    set<const House*> adjHouses = _city->getHousesAdjacent(address);
-    return res->calculateHappiness(getResidentsInTheseHouses(adjHouses), adjHouses.size());
+    unordered_set<const House*> adjHouses = _city->getHousesAdjacent(address);
+    unordered_set<const Resident*> residents;
+    for (const House* house : adjHouses)
+    {   
+        if (_res_per_house.find(house) != _res_per_house.end())
+        {
+            residents.insert(_res_per_house[house]);
+        } 
+    }
+    return res->calculateHappiness(residents, adjHouses.size());
 }
 
-set<const Resident*> Simulator_Basic_B::getResidentsInTheseHouses (set<const House*> houses)
+//TODO no one is using this method, delete
+unordered_set<const Resident*> Simulator_Basic_B::getResidentsInTheseHouses (
+    unordered_set<const House*> houses)
 {   
-    set<const Resident*> residents;
+    unordered_set<const Resident*> residents;
     for (const House* house : houses)
     {   
         if (_res_per_house.find(house) != _res_per_house.end())

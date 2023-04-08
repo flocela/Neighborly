@@ -1,7 +1,7 @@
 #ifndef RESIDENT_H
 #define RESIDENT_H
 
-#include <set>
+#include <unordered_set>
 #include <string>
 
 class Resident{
@@ -21,11 +21,13 @@ public:
     Resident () = delete;
     virtual ~Resident () = default;
 
-    double calculateHappiness (std::set<const Resident*> neighbors, int numOfAdjacentHouses) const;
+    double calculateHappiness (const std::unordered_set<const Resident*>& neighbors, int numOfAdjacentHouses) const;
     double getAllowedMovementDistance () const;
     int getGroupId () const;
     double getHappinessGoal () const;
     double getHappiness () const;
+    virtual double getMaximumPossibleHappiness () const = 0;
+    virtual double getLeastPossibleHappiness () const = 0;
     int getID() const;
     std::string toStr () const;
     std::string toStrType () const;
@@ -36,7 +38,7 @@ public:
     
 protected:
     virtual double implimentHappiness (
-        std::set<const Resident*> neighbors,
+        const std::unordered_set<const Resident*>& neighbors,
         int numOfAdjacentHouses
     ) const = 0;
 

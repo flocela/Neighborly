@@ -132,7 +132,7 @@ int main(int argc, char* argv[])
     
     vector<const House*> houses = components.city->getHouses();
 
-    unordered_map<const House*, set<const House*>> neighboringHousesPerHouse;
+    unordered_map<const House*, unordered_set<const House*>> neighboringHousesPerHouse;
     for (const House* house : houses)
     {   
         neighboringHousesPerHouse[house] = components.city->getHousesAdjacent(house->getAddress());
@@ -161,7 +161,7 @@ int main(int argc, char* argv[])
     unordered_map<const House*, Resident*> residentPerHouse;
     unordered_map<const House*, const Resident*> constResPerConstHouse;
     for (int ii=0; ii<components.numOfRuns; ii++)
-    {   
+    {   cout << "Run Number: " << ii << endl;
         residentPerHouse = components.simulator->run();
 
         // Printer_Graphic requires unordered_map of type CONST House* and CONST Resident*
@@ -174,7 +174,7 @@ int main(int argc, char* argv[])
         // every run should show for at least 1/4 second
         auto timeStart = std::chrono::high_resolution_clock::now();
         graphicPrinter.print(constResPerConstHouse, ii);
-        cmdLinePrinter.print(constResPerConstHouse, ii);
+        //cmdLinePrinter.print(constResPerConstHouse, ii);
         std::this_thread::sleep_until(timeStart + std::chrono::milliseconds(250));
     }
     graphicPrinter.keepScreen();

@@ -1,6 +1,7 @@
 #include "HappinessFunc_StepUp.h"
 #include <iostream>
 
+#include <algorithm>
 #include <sstream>
 #include <iomanip>
 
@@ -28,6 +29,16 @@ HappinessFunc_StepUp::HappinessFunc_StepUp (
         throw invalid_argument("happinessAtStart must be less than or equal to happinessAtEnd.");
     if (stepUp < 0 || stepUp > 1.0)
         throw invalid_argument("stepUp must be between 0.0 and 1.0 inclusive.");
+}
+
+double HappinessFunc_StepUp::getMaximumPossibleValue () const
+{
+    return max(_happ_at_end, _happ_with_zero_neighbors);
+}
+
+double HappinessFunc_StepUp::getLeastPossibleValue () const
+{
+    return min(_happ_at_start, _happ_with_zero_neighbors);
 }
 
 double HappinessFunc_StepUp::calcHappiness ( 

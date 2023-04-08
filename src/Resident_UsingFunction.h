@@ -23,9 +23,14 @@ public:
         std::string name);
     Resident_UsingFunction () = delete;
     virtual ~Resident_UsingFunction() = default;
+    double getMaximumPossibleHappiness () const;
+    double getLeastPossibleHappiness () const;
 
 protected:
-    double implimentHappiness ( std::set<const Resident*> neighbors,  int numOfAdjacentHouses) const override;
+    double implimentHappiness (
+        const std::unordered_set<const Resident*>& neighbors,
+        int numOfAdjacentHouses) const override;
+    
     std::string implimentToStrBasic () const override; 
 
 private:

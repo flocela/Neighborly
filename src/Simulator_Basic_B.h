@@ -1,8 +1,6 @@
 #ifndef SIMULATOR_Basic_B_H
 #define SIMULATOR_BASIC_B_H
 
-#include <set>
-
 #include "City.h"
 #include "Simulator.h"
 
@@ -12,7 +10,7 @@ class Simulator_Basic_B: public Simulator
 public:
     Simulator_Basic_B (
         const City* city,
-        std::set<Resident*> residents,
+        std::unordered_set<Resident*> residents,
         double percentOfResidents, // percent of residents that are chosen to move each run.
         int numOfHousesChosen // number of houses the residents can choose from
     );
@@ -42,7 +40,7 @@ private:
     bool _first_run_done = false;
 
     // all residents
-    std::set<Resident*> _residents;
+    std::unordered_set<Resident*> _residents;
 
     // only houses that are occupied and their residents
     std::unordered_map<const House*, Resident*> _res_per_house = {};
@@ -58,7 +56,7 @@ private:
     double _percent_of_residents = 10;
 
     // Number of randomly houses resident chosen. Resident will choose from these houses
-    int _num_of_houses_chosen = 10;
+    int _max_num_of_tries_to_find_house = 10;
 
 
     // in first run, no resident has a house. And all residents are assigned a house.
@@ -66,6 +64,9 @@ private:
 
     // all runs which aren't the first run
     void normalRun ();
+
+    //TODO delte just here for timeing
+    int runNum = 0;
 
     // Will try to move the resident into a random available house.
     // An available house is an empty house, within the resident's allowable movement distance.
@@ -90,7 +91,10 @@ private:
 
     // Returns residents that live in @houses. If a house is empty, then 
     // returned set will be smaller than @houses.
-    std::set<const Resident*> getResidentsInTheseHouses(std::set<const House*> houses);
+    std::unordered_set<const Resident*> getResidentsInTheseHouses(
+        std::unordered_set<const House*> houses
+    );
+
 };
 
 #endif

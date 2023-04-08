@@ -2,8 +2,9 @@
 #define CITY_GRID_H
 
 #include "City.h"
-#include <map>
 #include "House.h"
+#include <map>
+#include <utility>
 
 class City_Grid: public City
 {
@@ -36,14 +37,25 @@ public:
 
     double getDist ( const int& from_address,  const int& to_address) const override;
     // TODO shouldn't be using a refernce to get houses. Should return them.
-    std::unordered_set<const House*> getHousesWithinDistance (
+    const std::unordered_set<const House*>& getHousesWithinDistance (
+        const House* house,
+        double allowableDist,
+        int run
+    ) const override;
+
+    std::pair<int, int> getXRangeForAllowableDistanceToHouse (
         const House* house,
         double allowableDist
-    ) const override;
+    ) const;
+    
+    std::pair<int, int> getYRangeForAllowableDistanceToHouse (
+        const House* house,
+        double allowableDist
+    ) const;
 
     int getNumOfHouses() const override;
     std::vector<const House*> getHouses () const override;
-    std::set<const House*> getHousesAdjacent (int address) const override;
+    std::unordered_set<const House*> getHousesAdjacent (int address) const override;
     
     std::string toString (const std::unordered_map<int, char>& characterPerAddress) override;
 
@@ -58,6 +70,15 @@ private:
 
     std::map<int, House*> _house_per_address;
 
+    // holds the return values for teh getHousesWithinDistance method. That way
+    // the results do not need to be calculated for every call.
+    // holds an unordered list of houses that are within the allowable distance
+    // per the house and the allowable distance.
+    mutable std::map< std::pair<double, int>, std::unordered_set<const House*> >
+        _houses_within_distance;
+
+    mutable std::map<int, std::unordered_set<const House*>> _adjacent_houses_per_house_address;
+
     // Returns x value of @address
     int get_x (const int& address) const;
 
@@ -66,7 +87,6 @@ private:
 
     // Returns a random house from @setOfHouses.
     const House* selectRandom (std::unordered_set<const House*>& setOfHouses) const;
-    
 };
 
 #endif

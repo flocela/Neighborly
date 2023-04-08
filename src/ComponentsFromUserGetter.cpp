@@ -12,9 +12,9 @@
 using namespace std;
 
 template<typename T>
-std::set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
+std::unordered_set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
 {
-    std::set<T*> pointers = {};
+    std::unordered_set<T*> pointers = {};
     for (auto& t : ts)
     {
         pointers.insert(t.get());

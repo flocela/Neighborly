@@ -31,6 +31,16 @@ HappinessFunc_Rising::HappinessFunc_Rising (
         " at happinessAtZeroDiversity.");
 }
 
+double HappinessFunc_Rising::getMaximumPossibleValue () const
+{
+    return max(_happ_at_one_diversity, _happ_with_no_neighbors);
+}
+
+double HappinessFunc_Rising::getLeastPossibleValue () const
+{
+    return min(_happ_at_zero_diversity, _happ_with_no_neighbors);
+}
+
 double HappinessFunc_Rising::calcHappiness ( 
     int tot_num_of_possible_neighbors, 
     int num_of_like_neighbors, 

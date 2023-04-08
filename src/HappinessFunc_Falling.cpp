@@ -34,6 +34,16 @@ HappinessFunc_Falling::HappinessFunc_Falling (
 
 }
 
+double HappinessFunc_Falling::getMaximumPossibleValue () const
+{
+    return max(_happ_at_zero_diversity, _happ_with_no_neighbors);
+}
+
+double HappinessFunc_Falling::getLeastPossibleValue () const
+{
+    return min(_happ_at_one_diversity, _happ_with_no_neighbors);
+}
+
 double HappinessFunc_Falling::calcHappiness ( 
     int tot_num_of_possible_neighbors, 
     int num_of_like_neighbors, 

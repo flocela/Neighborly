@@ -33,6 +33,11 @@ public:
         double happinessAtEnd, 
         double stepUp
     );
+
+    double getMaximumPossibleValue () const;
+
+    double getLeastPossibleValue () const;
+
     double calcHappiness(
         int tot_num_of_possible_neighbors, 
         int num_of_like_neighbors, 

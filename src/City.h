@@ -2,7 +2,6 @@
 #define CITY_H
 
 #include <vector>
-#include <set>
 #include <memory>
 #include "Coordinate.h"
 #include "House.h"
@@ -28,7 +27,7 @@ public:
     // largest distance between any two houses (inclusively) in x direction.
     virtual double getWidth() const = 0;
 
-    // Returns coordinate of house (x, y).
+    // returns coordinate of house (x, y).
     virtual Coordinate getCoordinate(const int& address) const = 0;
 
     virtual std::unordered_map<const House*, Coordinate > getCoordinatesPerHouse() = 0;
@@ -38,8 +37,23 @@ public:
         const int& to_address
     ) const = 0;
 
-    // Returns houses within distance from house. Does not include the given house.
-    virtual std::unordered_set<const House*> getHousesWithinDistance (
+    // returns houses within distance from house. Does not include the given house.
+    virtual const std::unordered_set<const House*>& getHousesWithinDistance (
+        const House* house,
+        double allowableDist,
+        int run
+    ) const = 0;
+
+    // given a house's coordinates, returns the range of x coordinates that would still be
+    // within an allowable distance from the house.
+    virtual std::pair<int, int> getXRangeForAllowableDistanceToHouse (
+        const House* house,
+        double allowableDist
+    ) const = 0;
+
+    // given a house's coordinates, returns the range of y coordinates that would still be
+    // within an allowable distance from the house.
+    virtual std::pair<int, int> getYRangeForAllowableDistanceToHouse (
         const House* house,
         double allowableDist
     ) const = 0;
@@ -51,7 +65,7 @@ public:
     virtual std::vector<const House*> getHouses () const = 0;
 
     // Returns all houses adjacent to address of house.
-    virtual std::set<const House*> getHousesAdjacent (int address) const = 0;
+    virtual std::unordered_set<const House*> getHousesAdjacent (int address) const = 0;
 
     // Returns a string representing the city. Characters will represent specific addresses.
     virtual std::string toString (const std::unordered_map<int, char>& characterPerAddress) = 0;

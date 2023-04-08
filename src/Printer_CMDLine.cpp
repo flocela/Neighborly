@@ -51,7 +51,7 @@ void Printer_CMDLine::print(
         const Resident* resident = ii.first;
         const House* house = ii.second;
         int residentGroupId = resident->getGroupId();
-        set<const House*> housesAdjToRes = _city_ptr->getHousesAdjacent(house->getAddress());
+        unordered_set<const House*> housesAdjToRes = _city_ptr->getHousesAdjacent(house->getAddress());
 
         if (residentExamplePerGroupId.find(resident->getGroupId()) == residentExamplePerGroupId.end())
         {

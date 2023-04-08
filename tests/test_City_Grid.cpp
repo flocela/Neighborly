@@ -30,21 +30,21 @@ TEST_CASE("dist()")
     REQUIRE( city.getDist(a1, a28) == sqrt( (3 * 3) + (4 * 4) ) ); // 
 }
 
-TEST_CASE("getHousesWithinDistance() distance is 2.1")
+TEST_CASE("getHousesWithinDistance() distance is 2.1, central house")
 {
     City_Grid city = City_Grid(6);
     std::vector<const House*> houses = city.getHouses();
 
     const House* house = houses[19];
-    std::unordered_set<const House*> actualHouses = city.getHousesWithinDistance(house, 2.1);
+    std::unordered_set<const House*> actualHouses = city.getHousesWithinDistance(house, 2.1,2);
 
-    std::set<int> actualAddresses;
+    std::unordered_set<int> actualAddresses;
     for (const House* house :actualHouses)
     {
         actualAddresses.insert(house->getAddress());
     }
 
-    std::set<int> expectedAddresses = {};
+    std::unordered_set<int> expectedAddresses = {};
     expectedAddresses.insert(houses[18]->getAddress());
     expectedAddresses.insert(houses[24]->getAddress());
     expectedAddresses.insert(houses[25]->getAddress());
@@ -60,6 +60,33 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1")
     REQUIRE( actualAddresses == expectedAddresses );
 }
 
+TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side")
+{
+    City_Grid city = City_Grid(6);
+    std::vector<const House*> houses = city.getHouses();
+
+    const House* house = houses[18];
+    std::unordered_set<const House*> actualHouses = city.getHousesWithinDistance(house, 2.1,2);
+
+    std::unordered_set<int> actualAddresses;
+    for (const House* house :actualHouses)
+    {
+        actualAddresses.insert(house->getAddress());
+    }
+
+    std::unordered_set<int> expectedAddresses = {};
+    expectedAddresses.insert(houses[6]->getAddress());
+    expectedAddresses.insert(houses[12]->getAddress());
+    expectedAddresses.insert(houses[13]->getAddress());
+    expectedAddresses.insert(houses[19]->getAddress());
+    expectedAddresses.insert(houses[20]->getAddress());
+    expectedAddresses.insert(houses[24]->getAddress());
+    expectedAddresses.insert(houses[25]->getAddress());
+    expectedAddresses.insert(houses[30]->getAddress());
+    
+    REQUIRE( actualAddresses == expectedAddresses );
+}
+
 TEST_CASE("getHousesAdjacent() for corner house (3 neighbors) ")
 {
     City_Grid city = City_Grid(6);
@@ -67,8 +94,8 @@ TEST_CASE("getHousesAdjacent() for corner house (3 neighbors) ")
 
     const House* cornerHouse = houses[0]; // house[0] is at (0,0).
 
-    std::set<const House*> actualNeighbors = city.getHousesAdjacent(cornerHouse->getAddress());
-    std::set<const House*> expectedNeighbors = {};
+    std::unordered_set<const House*> actualNeighbors = city.getHousesAdjacent(cornerHouse->getAddress());
+    std::unordered_set<const House*> expectedNeighbors = {};
     expectedNeighbors.insert(houses[1]);
     expectedNeighbors.insert(houses[6]);
     expectedNeighbors.insert(houses[7]);
@@ -82,8 +109,8 @@ TEST_CASE("getAdjacentHouses() for edge house (5 neighbors)")
     std::vector<const House*> houses = city.getHouses();
 
     const House* edgeHouse = houses[12];
-    std::set<const House*> actualNeighbors = city.getHousesAdjacent(edgeHouse->getAddress());
-    std::set<const House*> expectedNeighbors = {};
+    std::unordered_set<const House*> actualNeighbors = city.getHousesAdjacent(edgeHouse->getAddress());
+    std::unordered_set<const House*> expectedNeighbors = {};
     expectedNeighbors.insert(houses[6]);
     expectedNeighbors.insert(houses[7]);
     expectedNeighbors.insert(houses[13]);
@@ -99,8 +126,8 @@ TEST_CASE("getAdjacentHouses() for house in middle of grid (8 neighbors)")
     std::vector<const House*> houses = city.getHouses();
 
     const House* house = houses[15];
-    std::set<const House*> actualNeighbors = city.getHousesAdjacent(house->getAddress());
-    std::set<const House*> expectedNeighbors = {};
+    std::unordered_set<const House*> actualNeighbors = city.getHousesAdjacent(house->getAddress());
+    std::unordered_set<const House*> expectedNeighbors = {};
     expectedNeighbors.insert(houses[8]);
     expectedNeighbors.insert(houses[9]);
     expectedNeighbors.insert(houses[10]);

@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <iomanip>
+#include <algorithm>
 
 using namespace std;
 
@@ -30,6 +31,15 @@ double HappinessFunc_Flat::calcHappiness (
     return _flat_happiness_val;
 }
 
+double HappinessFunc_Flat::getMaximumPossibleValue () const
+{
+    return max(_flat_happiness_val, _happ_with_no_neighbors);
+}
+
+double HappinessFunc_Flat::getLeastPossibleValue () const
+{
+    return min(_flat_happiness_val, _happ_with_no_neighbors);
+}
 
 string HappinessFunc_Flat::toStrBasic () const
 {

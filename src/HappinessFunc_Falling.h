@@ -26,6 +26,10 @@ public:
     HappinessFunc_Falling& operator=(HappinessFunc_Falling&& obj) noexcept = default;
     ~HappinessFunc_Falling() = default;
 
+    double getMaximumPossibleValue () const;
+
+    double getLeastPossibleValue () const;
+
     double calcHappiness( 
         int tot_num_of_possible_neighbors, 
         int num_of_like_neighbors, 

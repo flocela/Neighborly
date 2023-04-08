@@ -15,7 +15,7 @@ T selectRandom(unordered_set<T>& setOfT)
 
 Simulator_Basic_A::Simulator_Basic_A (
     const City* city,
-    set<Resident*> residents
+    unordered_set<Resident*> residents
 ): _city{city},
    _residents{residents}
 {   
@@ -105,7 +105,7 @@ void Simulator_Basic_A::moveResident (Resident* res, int numOfTries)
     unordered_set<const House*> nearHouses = _city->getHousesWithinDistance
     (   
         currHouse,
-        res->getAllowedMovementDistance()
+        res->getAllowedMovementDistance(), 2
     );
     
     if (nearHouses.size() == 0)
@@ -176,13 +176,15 @@ void Simulator_Basic_A::setHappinessValuesForAllResidents ()
 
 double Simulator_Basic_A::calculateHappinessValueFor(Resident* res, int address)
 {
-    set<const House*> adjHouses = _city->getHousesAdjacent(address);
+    unordered_set<const House*> adjHouses = _city->getHousesAdjacent(address);
     return res->calculateHappiness(getResidentsInTheseHouses(adjHouses), adjHouses.size());
 }
 
-set<const Resident*> Simulator_Basic_A::getResidentsInTheseHouses (set<const House*> houses)
+unordered_set<const Resident*> Simulator_Basic_A::getResidentsInTheseHouses (
+    unordered_set<const House*> houses
+)
 {   
-    set<const Resident*> residents;
+    unordered_set<const Resident*> residents;
     for (const House* house : houses)
     {   
         if (_res_per_house.find(house) != _res_per_house.end())

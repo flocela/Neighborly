@@ -14,6 +14,15 @@ Resident_UsingFunction::Resident_UsingFunction (
    _name{name}
 {}
 
+double Resident_UsingFunction::getMaximumPossibleHappiness () const
+{
+    return _hap_func->getMaximumPossibleValue();
+}
+double Resident_UsingFunction::getLeastPossibleHappiness () const
+{
+    return _hap_func->getLeastPossibleValue();
+}
+
 std::string Resident_UsingFunction::implimentToStrBasic () const
 {
     string funcType = "Resident Using Function: "; 
@@ -21,7 +30,7 @@ std::string Resident_UsingFunction::implimentToStrBasic () const
 }
 
 double Resident_UsingFunction::implimentHappiness(
-    std::set<const Resident*> neighbors,
+    const std::unordered_set<const Resident*>& neighbors,
     int numOfAdjacentHouses
 ) const
 {

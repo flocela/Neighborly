@@ -1,6 +1,11 @@
 #include "City_Grid.h"
+
+//TODO delete chrono, only here for testing
+
+#include <chrono>
 #include <iostream>
 #include <math.h>
+#include <cmath>
 
 using namespace std;
 
@@ -57,86 +62,130 @@ double City_Grid::getDist (const int& fromAddress, const int& toAddress) const
   	return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
 }
 
-
-unordered_set<const House*> City_Grid::getHousesWithinDistance (
+// TODO does this work with allowable distance == 0?
+const unordered_set<const House*>& City_Grid::getHousesWithinDistance (
         const House* house,
-        double allowableDist
+        double allowableDist,
+		int run
     ) const
 {	
-	unordered_set<const House*> housesWithinDistance{};
-
 	int central_address = house->getAddress();
-	int central_address_x = get_x(central_address);
-	int central_address_y = get_y(central_address);
-	int minX = max(central_address_x - (int)floor(allowableDist), _minX);
-	int maxX = min(central_address_x + (int)floor(allowableDist), _maxX);
-	int minY = max(central_address_y - (int)floor(allowableDist), _minY);
-	int maxY = min(central_address_y + (int)floor(allowableDist), _maxY);
+	
+	chrono::high_resolution_clock::time_point SS = chrono::high_resolution_clock::now();
 
-	// Houses within allowableDistance trace out a circle. 
-
-	//   First trace out the top half of the circle.
-	//     yy starts at the top of the circle (over the central house), and increases
-	//     to the center of the circle, in other words, for each yy less than or equal to the
-	//     central house's yy, find the houses within allowableDistance.
-	//     note: houses need to be within the allowableDistance and still on the grid.
-	int yy = minY;
-	int curLeftX = central_address_x;
-	int curRightX = central_address_x;
-	for (; yy<=central_address_y; ++yy)
+	if (_houses_within_distance.find({allowableDist, central_address}) != 
+		_houses_within_distance.end())
 	{
-		curLeftX = central_address_x;
-		curRightX = central_address_x;
-		int curLeftAddress = (yy*_width + curLeftX);
-		while ( curLeftX >= minX && getDist(central_address, curLeftAddress) <= allowableDist )
-		{
-			housesWithinDistance.insert(_house_per_address.at(curLeftAddress));
-			--curLeftX;
-			curLeftAddress = (yy*_width) + curLeftX;
-		}
-		
-		int curRightAddress = (yy*_width) + curRightX;
-		while ( curRightX <= maxX && getDist(central_address, curRightAddress) <= allowableDist )
-		{
-			housesWithinDistance.insert(_house_per_address.at(curRightAddress));
-			++curRightX;
-			curRightAddress = (yy*_width + curRightX);	
-		}
+		chrono::high_resolution_clock::time_point TT = chrono::high_resolution_clock::now();
+		auto duration = chrono::duration_cast<chrono::microseconds>(TT-SS).count();
+		if (run == 6){cout << "cached houses, " << duration << ", ";}
+		return _houses_within_distance[{allowableDist, central_address}];
 	}
 
-	//   Next trace out the bottom half of the circle.
-	//     yy is from the bottom of the circle to one row less than the central house's y.
-	//     for each yy greater than the central house's yy, find houses within allowableDistance.
-	yy = maxY;
-	for (; yy>central_address_y; --yy)
+	int central_address_x = get_x(central_address);
+	int central_address_y = get_y(central_address);
+
+	double rAllowableSquared = allowableDist * allowableDist;
+	// start at center row and increase the abs distance in the y direction.
+	int diffFromCenterRowY = 0;
+
+	// from central column of circle, x absolute distance to edge of circle.
+	int diffToEdgeX = (int)floor(allowableDist);
+
+	_houses_within_distance[{allowableDist, central_address}] = unordered_set<const House*>{};
+
+	while (diffFromCenterRowY <= allowableDist)
 	{
-		curLeftX = central_address_x;
-		curRightX = central_address_x;
-		int curLeftAddress = (yy*_width + curLeftX);
-		while (curLeftX >= minX && getDist(central_address, curLeftAddress) <= allowableDist)
+		double rSquared = (diffToEdgeX * diffToEdgeX) + (diffFromCenterRowY * diffFromCenterRowY);
+		while ( rSquared > rAllowableSquared )
 		{
-			housesWithinDistance.insert(_house_per_address.at(curLeftAddress));
-			--curLeftX;
-			curLeftAddress = (yy*_width) + curLeftX;
+			--diffToEdgeX;
+			rSquared = (diffToEdgeX * diffToEdgeX) + (diffFromCenterRowY * diffFromCenterRowY);
 		}
 
-		int curRightAddress = (yy*_width) + curRightX;
-		while ( curRightX <= maxX && getDist(central_address, curRightAddress) <= allowableDist )
+		if (diffFromCenterRowY == 0)// only one row
 		{
-			housesWithinDistance.insert(_house_per_address.at(curRightAddress));
-			++curRightX;
-			curRightAddress = (yy*_width) + curRightX;
-		}	
+			int left = (central_address_x - diffToEdgeX < _minX)?
+				_minX : central_address_x - diffToEdgeX;
+
+			int right = (central_address_x + diffToEdgeX > _maxX)?
+				_maxX : central_address_x + diffToEdgeX;
+
+			for (int x = left; x <= right; ++x)
+			{
+				_houses_within_distance[{allowableDist,house->getAddress()}].
+					insert(_house_per_address.at(central_address_y * _width + x));
+			}
+		}
+		else
+		{
+			int left = (central_address_x - diffToEdgeX < _minX)?
+				_minX : central_address_x - diffToEdgeX;
+
+			int right = (central_address_x + diffToEdgeX > _maxX)?
+				_maxX : central_address_x + diffToEdgeX;
+
+			// row above
+			if (central_address_y - diffFromCenterRowY >= _minY)
+			{
+				for (int x = left; x <= right; ++x)
+				{
+					_houses_within_distance[{allowableDist,house->getAddress()}].
+						insert(_house_per_address.at(
+							((central_address_y - diffFromCenterRowY) * _width ) + x )
+						);
+				}
+			}
+			
+			// row below
+			if (central_address_y + diffFromCenterRowY <= _maxY)
+			{
+				for (int x = left; x <= right; ++x)
+				{
+					_houses_within_distance[{allowableDist, house->getAddress()}].
+						insert(_house_per_address.at(
+							((central_address_y + diffFromCenterRowY) * _width ) + x )
+						);
+				}
+			}
+		}
+
+		++ diffFromCenterRowY;
 	}
 
 	// don't include central house as a neighbor. We only want the neighbors of central house.
-	if (housesWithinDistance.find(house) != housesWithinDistance.end())
+	if (_houses_within_distance.find({allowableDist, house->getAddress()}) != 
+		_houses_within_distance.end())
 	{
-		housesWithinDistance.erase(house);
+		_houses_within_distance[{allowableDist, house->getAddress()}].erase(house);
 	}
-	return housesWithinDistance;
+
+	return _houses_within_distance[{allowableDist, central_address}];
 }
 
+pair<int, int> City_Grid::getXRangeForAllowableDistanceToHouse (
+    const House* house,
+    double allowableDist
+) const
+{
+	int central_address = house->getAddress();
+	int central_address_x = get_x(central_address);
+	int minX = max(central_address_x - (int)floor(allowableDist), _minX);
+	int maxX = min(central_address_x + (int)floor(allowableDist), _maxX);
+	return pair<int, int> {minX, maxX};
+}
+
+pair<int, int> City_Grid::getYRangeForAllowableDistanceToHouse (
+    const House* house,
+    double allowableDist
+) const
+{
+	int central_address = house->getAddress();
+	int central_address_y = get_y(central_address);
+	int minY = max(central_address_y - (int)floor(allowableDist), _minY);
+	int maxY = min(central_address_y + (int)floor(allowableDist), _maxY);
+	return pair<int, int> {minY, maxY};
+}
 
 int City_Grid::getNumOfHouses() const
 {
@@ -153,9 +202,14 @@ vector<const House*> City_Grid::getHouses () const
 	return houses;
 }
 
-set<const House*> City_Grid::getHousesAdjacent (int address) const
+unordered_set<const House*> City_Grid::getHousesAdjacent (int address) const
 {
-	set<const House*> adjacentHouses = {};
+	if ( _adjacent_houses_per_house_address.find(address) != _adjacent_houses_per_house_address.end())
+	{
+		return _adjacent_houses_per_house_address[address];
+	}
+
+	unordered_set<const House*> adjacentHouses = {};
 
 	Coordinate coord = getCoordinate(address);
 	int addr_x = coord.getX();
@@ -200,6 +254,8 @@ set<const House*> City_Grid::getHousesAdjacent (int address) const
 			adjacentHouses.insert(_houses[address + _width + 1].get());
 		}
 	}
+
+	_adjacent_houses_per_house_address[address] = adjacentHouses;
 
 	return adjacentHouses;
 }

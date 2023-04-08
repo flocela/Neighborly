@@ -5,7 +5,7 @@ using namespace std;
 GrDvstyChart::GrDvstyChart (
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
-        std::unordered_map<const House*, std::set<const House*>> adjacentNeighbors,
+        std::unordered_map<const House*, std::unordered_set<const House*>> adjacentNeighbors,
         std::unique_ptr<Title> title,
         std::unique_ptr<ColorKey> colorKey,
         std::unique_ptr<Plot> plot,
@@ -50,7 +50,7 @@ void GrDvstyChart::print (
         const House* residentHouse = ii.second;
         int residentGroupId = resident->getGroupId();
 
-        set<const House*> housesAdjToRes = _adj_neighbors.at(residentHouse);
+        unordered_set<const House*> housesAdjToRes = _adj_neighbors.at(residentHouse);
 
         for (const House* adjacentHouse : housesAdjToRes)
         {
