@@ -105,7 +105,8 @@ void Simulator_Basic_A::moveResident (Resident* res, int numOfTries)
     unordered_set<const House*> nearHouses = _city->getHousesWithinDistance
     (   
         currHouse,
-        res->getAllowedMovementDistance(), 2
+        res->getAllowedMovementDistance(),
+        2
     );
     
     if (nearHouses.size() == 0)

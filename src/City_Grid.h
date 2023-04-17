@@ -37,7 +37,7 @@ public:
 
     double getDist ( const int& from_address,  const int& to_address) const override;
     // TODO shouldn't be using a refernce to get houses. Should return them.
-    const std::unordered_set<const House*>& getHousesWithinDistance (
+    std::unordered_set<const House*> getHousesWithinDistance (
         const House* house,
         double allowableDist,
         int run

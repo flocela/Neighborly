@@ -2,6 +2,8 @@
 #define SIMULATOR_BASIC_B_H
 
 #include "City.h"
+
+#include <map>
 #include "Simulator.h"
 
 
@@ -94,6 +96,9 @@ private:
     std::unordered_set<const Resident*> getResidentsInTheseHouses(
         std::unordered_set<const House*> houses
     );
+
+    std::map< std::pair<double, int>, std::unordered_set<const House*> >
+        _houses_within_distance;
 
 };
 

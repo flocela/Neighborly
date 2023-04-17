@@ -63,24 +63,13 @@ double City_Grid::getDist (const int& fromAddress, const int& toAddress) const
 }
 
 // TODO does this work with allowable distance == 0?
-const unordered_set<const House*>& City_Grid::getHousesWithinDistance (
+unordered_set<const House*> City_Grid::getHousesWithinDistance (
         const House* house,
         double allowableDist,
 		int run
     ) const
-{	
+{	(void)run;
 	int central_address = house->getAddress();
-	
-	chrono::high_resolution_clock::time_point SS = chrono::high_resolution_clock::now();
-
-	if (_houses_within_distance.find({allowableDist, central_address}) != 
-		_houses_within_distance.end())
-	{
-		chrono::high_resolution_clock::time_point TT = chrono::high_resolution_clock::now();
-		auto duration = chrono::duration_cast<chrono::microseconds>(TT-SS).count();
-		if (run == 6){cout << "cached houses, " << duration << ", ";}
-		return _houses_within_distance[{allowableDist, central_address}];
-	}
 
 	int central_address_x = get_x(central_address);
 	int central_address_y = get_y(central_address);
@@ -103,37 +92,30 @@ const unordered_set<const House*>& City_Grid::getHousesWithinDistance (
 			rSquared = (diffToEdgeX * diffToEdgeX) + (diffFromCenterRowY * diffFromCenterRowY);
 		}
 
-		if (diffFromCenterRowY == 0)// only one row
-		{
-			int left = (central_address_x - diffToEdgeX < _minX)?
+		int left = (central_address_x - diffToEdgeX < _minX)?
 				_minX : central_address_x - diffToEdgeX;
 
-			int right = (central_address_x + diffToEdgeX > _maxX)?
+		int right = (central_address_x + diffToEdgeX > _maxX)?
 				_maxX : central_address_x + diffToEdgeX;
 
+		if (diffFromCenterRowY == 0)// add only one row of houses
+		{
 			for (int x = left; x <= right; ++x)
 			{
-				_houses_within_distance[{allowableDist,house->getAddress()}].
-					insert(_house_per_address.at(central_address_y * _width + x));
+				const House* h = _house_per_address.at(central_address_y * _width + x);
+				_houses_within_distance[{allowableDist,house->getAddress()}].insert(h);
 			}
 		}
 		else
 		{
-			int left = (central_address_x - diffToEdgeX < _minX)?
-				_minX : central_address_x - diffToEdgeX;
-
-			int right = (central_address_x + diffToEdgeX > _maxX)?
-				_maxX : central_address_x + diffToEdgeX;
-
 			// row above
 			if (central_address_y - diffFromCenterRowY >= _minY)
 			{
 				for (int x = left; x <= right; ++x)
 				{
-					_houses_within_distance[{allowableDist,house->getAddress()}].
-						insert(_house_per_address.at(
-							((central_address_y - diffFromCenterRowY) * _width ) + x )
-						);
+					const House* h = _house_per_address.
+						at(((central_address_y - diffFromCenterRowY) * _width ) + x);
+					_houses_within_distance[{allowableDist,house->getAddress()}].insert(h);
 				}
 			}
 			
@@ -142,10 +124,9 @@ const unordered_set<const House*>& City_Grid::getHousesWithinDistance (
 			{
 				for (int x = left; x <= right; ++x)
 				{
-					_houses_within_distance[{allowableDist, house->getAddress()}].
-						insert(_house_per_address.at(
-							((central_address_y + diffFromCenterRowY) * _width ) + x )
-						);
+					const House* h = _house_per_address.
+						at(((central_address_y + diffFromCenterRowY) * _width ) + x);
+					_houses_within_distance[{allowableDist,house->getAddress()}].insert(h);
 				}
 			}
 		}
@@ -160,7 +141,7 @@ const unordered_set<const House*>& City_Grid::getHousesWithinDistance (
 		_houses_within_distance[{allowableDist, house->getAddress()}].erase(house);
 	}
 
-	return _houses_within_distance[{allowableDist, central_address}];
+	return _houses_within_distance[{allowableDist,house->getAddress()}];
 }
 
 pair<int, int> City_Grid::getXRangeForAllowableDistanceToHouse (

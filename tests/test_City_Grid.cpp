@@ -30,13 +30,21 @@ TEST_CASE("dist()")
     REQUIRE( city.getDist(a1, a28) == sqrt( (3 * 3) + (4 * 4) ) ); // 
 }
 
-TEST_CASE("getHousesWithinDistance() distance is 2.1, central house")
+TEST_CASE("getHousesWithinDistance() distance is 2.1, central house, all houses open")
 {
     City_Grid city = City_Grid(6);
+
     std::vector<const House*> houses = city.getHouses();
 
+    std::unordered_set<const House*> cityHouses{};
+    for (const House* h : houses)
+    {
+        cityHouses.insert(h);
+    }
+
     const House* house = houses[19];
-    std::unordered_set<const House*> actualHouses = city.getHousesWithinDistance(house, 2.1,2);
+    std::unordered_set<const House*> actualHouses = 
+        city.getHousesWithinDistance(house, 2.1, 2);
 
     std::unordered_set<int> actualAddresses;
     for (const House* house :actualHouses)
@@ -60,13 +68,20 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, central house")
     REQUIRE( actualAddresses == expectedAddresses );
 }
 
-TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side")
+TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side, all houses open")
 {
     City_Grid city = City_Grid(6);
     std::vector<const House*> houses = city.getHouses();
 
+    std::unordered_set<const House*> cityHouses{};
+    for (const House* h : houses)
+    {
+        cityHouses.insert(h);
+    }
+
     const House* house = houses[18];
-    std::unordered_set<const House*> actualHouses = city.getHousesWithinDistance(house, 2.1,2);
+    std::unordered_set<const House*> actualHouses = 
+        city.getHousesWithinDistance(house, 2.1, 2);
 
     std::unordered_set<int> actualAddresses;
     for (const House* house :actualHouses)
@@ -83,6 +98,47 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side")
     expectedAddresses.insert(houses[24]->getAddress());
     expectedAddresses.insert(houses[25]->getAddress());
     expectedAddresses.insert(houses[30]->getAddress());
+    
+    REQUIRE( actualAddresses == expectedAddresses );
+}
+
+TEST_CASE("getHousesWithinDistance() distance is 2.1, central house, some houses open")
+{
+    City_Grid city = City_Grid(6);
+
+    std::vector<const House*> houses = city.getHouses();
+
+    std::unordered_set<const House*> cityHouses{};
+    for (const House* h : houses)
+    {
+        if (h->getAddress() > 17)
+        {
+            cityHouses.insert(h);
+        }
+    }
+
+    const House* house = houses[19];
+    std::unordered_set<const House*> actualHouses = 
+        city.getHousesWithinDistance(house, 2.1, 2);
+
+    std::unordered_set<int> actualAddresses;
+    for (const House* house :actualHouses)
+    {
+        actualAddresses.insert(house->getAddress());
+    }
+
+    std::unordered_set<int> expectedAddresses = {};
+    expectedAddresses.insert(houses[18]->getAddress());
+    expectedAddresses.insert(houses[24]->getAddress());
+    expectedAddresses.insert(houses[25]->getAddress());
+    expectedAddresses.insert(houses[31]->getAddress());
+    expectedAddresses.insert(houses[26]->getAddress());
+    expectedAddresses.insert(houses[20]->getAddress());
+    expectedAddresses.insert(houses[21]->getAddress());
+    //expectedAddresses.insert(houses[14]->getAddress());
+    //expectedAddresses.insert(houses[7]->getAddress());
+    //expectedAddresses.insert(houses[13]->getAddress());
+    //expectedAddresses.insert(houses[12]->getAddress());
     
     REQUIRE( actualAddresses == expectedAddresses );
 }

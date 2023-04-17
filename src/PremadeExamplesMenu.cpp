@@ -88,7 +88,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                 20
             );
 
-            components.numOfRuns = 30;
+            components.numOfRuns = 20;
             
             break;
         }

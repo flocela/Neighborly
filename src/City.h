@@ -38,7 +38,7 @@ public:
     ) const = 0;
 
     // returns houses within distance from house. Does not include the given house.
-    virtual const std::unordered_set<const House*>& getHousesWithinDistance (
+    virtual std::unordered_set<const House*> getHousesWithinDistance (
         const House* house,
         double allowableDist,
         int run
