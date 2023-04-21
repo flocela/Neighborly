@@ -30,12 +30,19 @@ Simulator_Basic_B::Simulator_Basic_B (
     int numOfHousesChosen
 ): _city{city},
    _residents{residents},
-   _percent_of_residents{percentOfResidents},
+   _open_houses_per_y_x(_city->getHeight()+1,
+                        vector<unordered_set<const House*>>(_city->getWidth()+1)),
+    _percent_of_residents{percentOfResidents},
    _max_num_of_tries_to_find_house{numOfHousesChosen}
 {
+    // TODO reserve space for _open_houses_per_x_y
     // to begin with, all houses are empty
     for (const House* house : _city->getHouses())
     {   
+        Coordinate xy = _city->getCoordinate(house->getAddress());
+        int x = xy.getX();
+        int y = xy.getY();
+        _open_houses_per_y_x[y][x].insert(house);
         _open_houses.insert(house);
     }
 }
@@ -92,10 +99,13 @@ void Simulator_Basic_B::firstRun ()
         const House* house = selectRandom(_open_houses);
         
         _res_per_house.insert({house, randRes});
-        
+        Coordinate coord = _city->getCoordinate(house->getAddress());
+
         _house_per_resident.insert({randRes, house});
         
         _open_houses.erase(house);
+        _open_houses_per_y_x[_city->getCoordinate(house->getAddress()).getY()]
+            [_city->getCoordinate(house->getAddress()).getX()].erase(house);
 
         copySetOfResidents.erase(randRes);
     }
@@ -121,10 +131,10 @@ void Simulator_Basic_B::normalRun ()
     //if (runNum == 6)
     //{cout <<"subsetToMove: " << _residents.size() << ", " << subsetToMove << ", ";}
 
-    // find a house for each randomly chosen resident.
+    // Find a house for each randomly chosen resident
     for (int ii=0; ii<numOfResToMove; ++ii)
     {   
-        //chrono::high_resolution_clock::time_point YY = chrono::high_resolution_clock::now();
+        chrono::high_resolution_clock::time_point YY = chrono::high_resolution_clock::now();
         Resident* curRes = selectRandom(vectorOfResidents); // make new setOfResidents if finding is 1/4
         //TODO makes curRes isn't being deleted.
         // resident can't be chosen twice in one run.
@@ -133,58 +143,37 @@ void Simulator_Basic_B::normalRun ()
             curRes = selectRandom(vectorOfResidents);
         }
         chosenResidents.insert(curRes->getID());
-        //if (runNum == 6 && curRes->getID() < 10800 && curRes->getID() > 10780)
-        // {cout << "res:" << curRes->getID() << ", ";}
 
-        //chrono::high_resolution_clock::time_point ZZ = chrono::high_resolution_clock::now();
-        //auto duration = chrono::duration_cast<chrono::microseconds>(ZZ-YY).count(); (void)duration;
-        //if (runNum == 6 && curRes->getID() < 10800 && curRes->getID() > 10780)
-        //    {cout << "randomly select resident ZZ-YY: " << duration << "; ";}
+        chrono::high_resolution_clock::time_point ZZ = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::microseconds>(ZZ-YY).count(); (void)duration;
+        if ( (runNum == 1 || runNum == 6) && curRes->getID() < 10800 && curRes->getID() > 10780)
+            {cout << "randomly select resident ZZ-YY: " << duration << "; ";}
 
         const House* currHouse = _house_per_resident[curRes];
 
-        int print = ((runNum == 6|| runNum == 1) && curRes->getID() < 10800 && curRes->getID() > 10780)? 6 : 0;
-
-        chrono::high_resolution_clock::time_point AA = chrono::high_resolution_clock::now();
-       
-        
-        if ( _houses_within_distance.find(
-             {curRes->getAllowedMovementDistance(), currHouse->getAddress()}) == 
-             _houses_within_distance.end() )
-        {
-            _houses_within_distance[{curRes->getAllowedMovementDistance(),
-                                     currHouse->getAddress()}] = 
-            _city->getHousesWithinDistance(   
-                currHouse,
-                curRes->getAllowedMovementDistance(),
-                print
-                );
-        }
-        
-        unordered_set<const House*>& allHousesWithinDistance =
-            _houses_within_distance[{curRes->getAllowedMovementDistance(),
-                                     currHouse->getAddress()}];
-        chrono::high_resolution_clock::time_point BB = chrono::high_resolution_clock::now();
-        auto duration = chrono::duration_cast<chrono::microseconds>(BB-AA).count();
-        if ((runNum == 6 || runNum == 1) && curRes->getID() < 10800 && curRes->getID() > 10780)
-        {cout << "getAllHousesWithinDist BB-AA: " << duration << "; ";}
+        //int print = ((runNum == 6|| runNum == 1) && curRes->getID() < 10800 && curRes->getID() > 10780)? 6 : 0;
 
         chrono::high_resolution_clock::time_point LL = chrono::high_resolution_clock::now();
-        vector<const House*> vectorOpenHousesWithinDistance{};
-        if (allHousesWithinDistance.size() < _open_houses.size())
+        vector<const House*> vectorOpenHousesReduced{};
+        pair<int, int> xRange = _city->getXRangeForAllowableDistanceToHouse(
+            currHouse,
+            curRes->getAllowedMovementDistance());
+        pair<int, int> yRange = _city->getYRangeForAllowableDistanceToHouse(
+            currHouse,
+            curRes->getAllowedMovementDistance());
+        //cout << "AAA_open_houses contains 849: " << (_open_houses.find(fiveNinetyNine) != 
+        //        _open_houses.end()) << ".  ";
+        for (int y=yRange.first; y<=yRange.second; ++y)
         {
-            for (auto h : allHousesWithinDistance)
+            for (int x=xRange.first; x<=xRange.second; ++x)
             {
-                if (_open_houses.find(h) != _open_houses.end())
-                    vectorOpenHousesWithinDistance.push_back(h);
-            }
-        }
-        else
-        {
-            for (auto h : _open_houses)
-            {
-                if (allHousesWithinDistance.find(h) != allHousesWithinDistance.end())
-                    vectorOpenHousesWithinDistance.push_back(h);
+                for (const House* house : _open_houses_per_y_x[y][x])
+                {  
+                    if (house != currHouse)
+                    {
+                        vectorOpenHousesReduced.push_back(house);
+                    }
+                }
             }
         }
         chrono::high_resolution_clock::time_point MM = chrono::high_resolution_clock::now();
@@ -196,8 +185,9 @@ void Simulator_Basic_B::normalRun ()
         // try to find house for current resident. Only get _max_num_of_tries_to_find_house.
         double selectedHappiness = 0.0;
         House const * selectedHouse = nullptr;
-        unordered_set<const House*> selectedHouses{};
-        int maxTries = min(_max_num_of_tries_to_find_house, (int)vectorOpenHousesWithinDistance.size());
+        unordered_set<const House*> previouslySelectedHousese{};
+        previouslySelectedHousese.insert(currHouse);
+        int maxTries = min(_max_num_of_tries_to_find_house, (int)vectorOpenHousesReduced.size());
         // TODO if max num of tries is 1/2 or greater than emptyHouses.size(), then use a set 
         // instead of a vector.
         //cout << "{maxtries, emptyHouses.size}: " << _max_num_of_tries_to_find_house << ", "
@@ -205,11 +195,15 @@ void Simulator_Basic_B::normalRun ()
         for (int ii=0; ii<maxTries; ++ii)
         {
             // choose a random house that has not been chosen before.
-            const House* randHouse = selectRandom(vectorOpenHousesWithinDistance); 
+            const House* randHouse = selectRandom(vectorOpenHousesReduced); 
             // TODO check for nullptr, check for vector being size zero
-            while (selectedHouses.find(randHouse) != selectedHouses.end())
+            while ( (previouslySelectedHousese.find(randHouse) != previouslySelectedHousese.end()) ||
+                    (_city->getDist(randHouse->getAddress(), currHouse->getAddress()) >
+                        curRes->getAllowedMovementDistance())
+                  )
             {
-                randHouse = selectRandom(vectorOpenHousesWithinDistance);
+                previouslySelectedHousese.insert(randHouse);
+                randHouse = selectRandom(vectorOpenHousesReduced);
             }
 
             double happinessFromRandomHouse = calculateHappinessValueFor(curRes, randHouse->getAddress());
@@ -231,8 +225,9 @@ void Simulator_Basic_B::normalRun ()
 
         //chrono::high_resolution_clock::time_point GG = chrono::high_resolution_clock::now();
         if (selectedHouse != nullptr)
-        {
+        {   
             moveResidentIntoHouse(curRes, selectedHouse);
+            
         }
 
         //chrono::high_resolution_clock::time_point HH = chrono::high_resolution_clock::now();
@@ -241,56 +236,38 @@ void Simulator_Basic_B::normalRun ()
         //{cout << "mvoed: GG - HH: " << duration << endl;}
 
     }
+
 }
 
+// TODO if new house is not available, then don't move.
 void Simulator_Basic_B::moveResidentIntoHouse (Resident* res, const House* newHouse)
 {   
     //int res_per_house_sizeA = _res_per_house.size();
     //int house_per_resident_sizeA = _house_per_resident.size();
     //int open_houses_sizeA = _open_houses.size();
-
     if (_house_per_resident.find(res) != _house_per_resident.end())
-    {
+    {   
         const House* oldHouse = _house_per_resident[res];
+
         _house_per_resident.erase(res);
-        //int resPerHousesizeA = _res_per_house.size();
-        //if ( _res_per_house.find(oldHouse) == _res_per_house.end() ) {cout << "resperhouse can't find house";}
         _res_per_house.erase(oldHouse);
-        //int resPerHousesizeB = _res_per_house.size();
-        //if (resPerHousesizeA - resPerHousesizeB != 1){cout <<"resPerHouseSizeDiff: " << (resPerHousesizeB - resPerHousesizeA) << " ";}
         _open_houses.insert(oldHouse);
+        Coordinate co = _city->getCoordinate(oldHouse->getAddress());
+        _open_houses_per_y_x[co.getY()][co.getX()].insert(oldHouse);
     }
 
-    //if (_res_per_house.find(newHouse) != _res_per_house.end()) { cout << "_res_per_house insertion is not going to work;";}
-    auto p = _res_per_house.insert(pair<const House*, Resident*>(newHouse, res));
-    if (p.second == false)
-    {
-        cout << "_res_per_house insertion did not work.";
-    }
+    _res_per_house.insert(pair<const House*, Resident*>(newHouse, res));
 
-    auto q = _house_per_resident.insert(pair<Resident*, const House*>(res, newHouse));
-    if (q.second == false)
-    {
-        cout << "_house_per_resident insertion did not work.";
-    }
+    _house_per_resident.insert(pair<Resident*, const House*>(res, newHouse));
     _open_houses.erase(newHouse);
 
-/*
-    int res_per_house_sizeB = _res_per_house.size();
-    int house_per_resident_sizeB = _house_per_resident.size();
-    int open_houses_sizeB = _open_houses.size();
-    
-    if (res_per_house_sizeA != res_per_house_sizeB) {
-        cout << res_per_house_sizeA << "vs" << res_per_house_sizeB << " ";
-    }
+    Coordinate co = _city->getCoordinate(newHouse->getAddress());
 
-    if (house_per_resident_sizeA != house_per_resident_sizeB) {
-        cout << house_per_resident_sizeA << "vs" << house_per_resident_sizeB << " ";
+    if (_open_houses_per_y_x[co.getY()][co.getX()].find(newHouse) !=
+         _open_houses_per_y_x[co.getY()][co.getX()].end())
+    {
+        _open_houses_per_y_x[co.getY()][co.getX()].erase(newHouse);
     }
-
-    if (open_houses_sizeA != open_houses_sizeB) {
-        cout << open_houses_sizeA << "vs" << open_houses_sizeB << " ";
-    }*/
 }
 
 void Simulator_Basic_B::setHappinessValuesForAllResidents ()

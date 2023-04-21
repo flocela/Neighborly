@@ -4,6 +4,7 @@
 #include "City.h"
 
 #include <map>
+#include <unordered_set>
 #include "Simulator.h"
 
 
@@ -52,6 +53,7 @@ private:
 
     // all unoccupied houses
     std::unordered_set<const House*> _open_houses;
+    std::vector<std::vector<std::unordered_set<const House*>>> _open_houses_per_y_x;
 
     // Percent of residents that will be forced to move at each run. They don't have
     // to move if there's no empty houses within their allowed movement distance.
