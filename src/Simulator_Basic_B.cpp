@@ -31,7 +31,7 @@ Simulator_Basic_B::Simulator_Basic_B (
 ): _city{city},
    _residents{residents},
    _open_houses_per_y_x(_city->getHeight()+1,
-                        vector<unordered_set<const House*>>(_city->getWidth()+1)),
+                        vector<unordered_set<const House*>>( ((_city->getWidth()-1)/10)+1 )),
     _percent_of_residents{percentOfResidents},
    _max_num_of_tries_to_find_house{numOfHousesChosen}
 {
@@ -42,7 +42,7 @@ Simulator_Basic_B::Simulator_Basic_B (
         Coordinate xy = _city->getCoordinate(house->getAddress());
         int x = xy.getX();
         int y = xy.getY();
-        _open_houses_per_y_x[y][x].insert(house);
+        _open_houses_per_y_x[y][x/10].insert(house);
         _open_houses.insert(house);
     }
 }
@@ -105,7 +105,7 @@ void Simulator_Basic_B::firstRun ()
         
         _open_houses.erase(house);
         _open_houses_per_y_x[_city->getCoordinate(house->getAddress()).getY()]
-            [_city->getCoordinate(house->getAddress()).getX()].erase(house);
+            [(_city->getCoordinate(house->getAddress()).getX())/10].erase(house);
 
         copySetOfResidents.erase(randRes);
     }
@@ -165,7 +165,7 @@ void Simulator_Basic_B::normalRun ()
         //        _open_houses.end()) << ".  ";
         for (int y=yRange.first; y<=yRange.second; ++y)
         {
-            for (int x=xRange.first; x<=xRange.second; ++x)
+            for (int x=xRange.first/10; x<=xRange.second/10; ++x)
             {
                 for (const House* house : _open_houses_per_y_x[y][x])
                 {  
@@ -253,7 +253,7 @@ void Simulator_Basic_B::moveResidentIntoHouse (Resident* res, const House* newHo
         _res_per_house.erase(oldHouse);
         _open_houses.insert(oldHouse);
         Coordinate co = _city->getCoordinate(oldHouse->getAddress());
-        _open_houses_per_y_x[co.getY()][co.getX()].insert(oldHouse);
+        _open_houses_per_y_x[co.getY()][co.getX()/10].insert(oldHouse);
     }
 
     _res_per_house.insert(pair<const House*, Resident*>(newHouse, res));
@@ -263,10 +263,10 @@ void Simulator_Basic_B::moveResidentIntoHouse (Resident* res, const House* newHo
 
     Coordinate co = _city->getCoordinate(newHouse->getAddress());
 
-    if (_open_houses_per_y_x[co.getY()][co.getX()].find(newHouse) !=
-         _open_houses_per_y_x[co.getY()][co.getX()].end())
+    if (_open_houses_per_y_x[co.getY()][co.getX()/10].find(newHouse) !=
+         _open_houses_per_y_x[co.getY()][co.getX()/10].end())
     {
-        _open_houses_per_y_x[co.getY()][co.getX()].erase(newHouse);
+        _open_houses_per_y_x[co.getY()][co.getX()/10].erase(newHouse);
     }
 }
 

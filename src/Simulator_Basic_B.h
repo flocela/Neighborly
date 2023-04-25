@@ -53,14 +53,16 @@ private:
 
     // all unoccupied houses
     std::unordered_set<const House*> _open_houses;
+    // each cell in the vector represents a y coordinate. Each cell is actually
+    // a vector representing 1/10th of the coordinates in the x direction.
     std::vector<std::vector<std::unordered_set<const House*>>> _open_houses_per_y_x;
 
     // Percent of residents that will be forced to move at each run. They don't have
     // to move if there's no empty houses within their allowed movement distance.
-    double _percent_of_residents = 10;
+    double _percent_of_residents = 30;
 
     // Number of randomly houses resident chosen. Resident will choose from these houses
-    int _max_num_of_tries_to_find_house = 10;
+    int _max_num_of_tries_to_find_house = 30;
 
 
     // in first run, no resident has a house. And all residents are assigned a house.
