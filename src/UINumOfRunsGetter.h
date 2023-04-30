@@ -12,27 +12,22 @@ class UINumOfRunsGetter
 
 public:
 
-    int getNumOfRunsFromUser (const UI& ui, int maxNumOfRuns);
+    static int getNumOfRunsFromUser (const UI& ui, int maxNumOfRuns);
 
 private:
 
     // if can not get num of runs from user, then use _fall_back_num_of_runs
-    int _fallback_num_of_runs = 20;
+    static const int _fallback_num_of_runs;
 
-    std::string _num_of_runs_orig_prompt = 
-        "\n How many runs should the simulation have? Must be a positive number. _";
+    static const std::string _num_of_runs_orig_prompt;
     
-    std::string _num_of_runs_type_prompt = 
-        "Nope, that's not a positive whole number. _";
+    static const std::string _num_of_runs_type_prompt;
 
-    std::string _num_of_runs_range_prompt = 
-        "That's either too small or too large. Can not be less than"
-            " 2,147,483,646. But really should be no more than 200. _";
+    static const std::string _num_of_runs_range_prompt;
 
-    std::string _num_of_runs_failure_str = 
-        "Could not determine the number of runs, will be using .";
+    static const std::string _num_of_runs_failure_str;
 
-    Question_Int_II createQuestionForNumOfRuns (int maxNumOfRuns);
+    static Question_Int_II createQuestionForNumOfRuns (int maxNumOfRuns);
 
 };
 

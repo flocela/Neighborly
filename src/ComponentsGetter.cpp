@@ -56,15 +56,14 @@ SimulationComponents ComponentsGetter::askUserForComponents (
 
     resultantComponents.residents = move(resGroupInfo._residents);
     resultantComponents.baseColorsPerGroupid = resGroupInfo._base_color_per_group_num;
-    
+
     set<Resident*> residentPtrs = {};
     for (auto& resident: resultantComponents.residents)
     {
         residentPtrs.insert(resident.get());
     }
 
-    UINumOfRunsGetter runsGetter;
-    resultantComponents.numOfRuns = runsGetter.getNumOfRunsFromUser(ui, maxNumOfRuns);
+    resultantComponents.numOfRuns = UINumOfRunsGetter::getNumOfRunsFromUser(ui, maxNumOfRuns);
     
         // Choose Simulator
     int chosenSimulator = ui.menu(
