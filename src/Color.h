@@ -173,8 +173,6 @@ inline std::map<Color, std::vector<uint8_t>> _the_color_rgba = {
     {Color::yellow_unhappy, _colorrs_map[BaseColor::yellow][Mood::unhappy].rgba},
     {Color::absent,  {40, 40, 40, 255}},
     {Color::grid,{210, 215, 211, 255}},
-    //{Color::text,{236, 240, 241, 255}},
-    //{Color::text_background,{108, 122, 137}},
     {Color::text,{200, 200, 200, 220}},
     {Color::text_background,{20, 20, 20, 255}},
     {Color::background,{105, 105, 105, 255}},
