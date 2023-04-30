@@ -1,8 +1,8 @@
-#include "ComponentsFromUserGetter.h"
+#include "ComponentsGetter.h"
 
 #include "CityMaker_CMDLine.h"
 #include "CityState_Simple.h"
-#include "RandSeedGetter.h"
+#include "RandomSeedGetter.h"
 #include "ResidentsMaker_CMDLine.h"
 #include "Simulator_Basic_A.h"
 #include "Simulator_Basic_B.h"
@@ -23,7 +23,7 @@ std::unordered_set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
     return pointers;
 }
 
-SimulationComponents ComponentsFromUserGetter::askUserForComponents (
+SimulationComponents ComponentsGetter::askUserForComponents (
     const UI& ui,
     const vector<unique_ptr<const CityFactory>>& cityFactories,
     const vector<unique_ptr<const ResidentsFactory>>& residentFactories,
@@ -33,39 +33,38 @@ SimulationComponents ComponentsFromUserGetter::askUserForComponents (
     int maxNumOfRuns
 )
 {
-    SimulationComponents components{};
-    RandSeedGetter randSeedGetter; 
-    components.randomSeed = randSeedGetter.makeSeedForRand(ui);
+    SimulationComponents resultantComponents{};
+
+    resultantComponents.randomSeed = RandomSeedGetter::getSeedFromUser(ui);
     
     CityMaker_CMDLine cityMaker{ui};
-    components.city = cityMaker.makeCity(cityFactories, maxNumOfHousesX, maxNumOfHousesY);
+    resultantComponents.city = cityMaker.makeCity(cityFactories, maxNumOfHousesX, maxNumOfHousesY);
 
     vector<BaseColor> baseColors;
-    for (int ii=1; ii<=maxNumOfResidentGroups; ++ii) 
-    {
-        baseColors.push_back(_ordered_base_colors[ii-1]);
-    }
+    baseColors.push_back(_ordered_base_colors[0]);
+    baseColors.push_back(_ordered_base_colors[1]);
 
     ResidentsMaker_CMDLine residentsMaker{};
     ResidentsGroupInfo resGroupInfo = 
         residentsMaker.makeResidents(
             ui,
             residentFactories,
-            components.city->getNumOfHouses(),
+            resultantComponents.city->getNumOfHouses(),
             maxNumOfResidentGroups,
             baseColors,
-            min(components.city->getWidth()/2, components.city->getHeight()/2));
+            min(resultantComponents.city->getWidth()/2, resultantComponents.city->getHeight()/2));
 
-    components.residents = move(resGroupInfo._residents);
-    components.baseColorsPerGroupid = resGroupInfo._base_color_per_group_num;
+    resultantComponents.residents = move(resGroupInfo._residents);
+    resultantComponents.baseColorsPerGroupid = resGroupInfo._base_color_per_group_num;
+    
     set<Resident*> residentPtrs = {};
-    for (auto& resident: components.residents)
+    for (auto& resident: resultantComponents.residents)
     {
         residentPtrs.insert(resident.get());
     }
 
     UINumOfRunsGetter runsGetter;
-    components.numOfRuns = runsGetter.getNumOfRunsFromUser(ui, maxNumOfRuns);
+    resultantComponents.numOfRuns = runsGetter.getNumOfRunsFromUser(ui, maxNumOfRuns);
     
         // Choose Simulator
     int chosenSimulator = ui.menu(
@@ -79,7 +78,7 @@ SimulationComponents ComponentsFromUserGetter::askUserForComponents (
     );
 
     double percentageOfResidents = 20;
-    int numberOfHousesToLookAt = components.city->getNumOfHouses()/5;
+    int numberOfHousesToLookAt = resultantComponents.city->getNumOfHouses()/5;
     if (chosenSimulator == 1) // Simulator B
     {
         Question_Double_II questionPercentOfResidentsThatMustMove  = Question_Double_II{
@@ -96,8 +95,8 @@ SimulationComponents ComponentsFromUserGetter::askUserForComponents (
         Question_Int_II questionNumberOfHouses = Question_Int_II{
             1,
             1,
-            components.city->getNumOfHouses(),
-            components.city->getNumOfHouses()/5,
+            resultantComponents.city->getNumOfHouses(),
+            resultantComponents.city->getNumOfHouses()/5,
             "The chosen residents will choose from a number of houses, and will choose which"
             " one makes them happiest. How many houses should they choose from? _",
             "number of housese to choose from"
@@ -107,21 +106,21 @@ SimulationComponents ComponentsFromUserGetter::askUserForComponents (
 
     if (chosenSimulator == 0)
     {
-        components.simulator = make_unique<Simulator_Basic_A>(
-            components.city.get(),
-            getSetOfPointers(components.residents)
+        resultantComponents.simulator = make_unique<Simulator_Basic_A>(
+            resultantComponents.city.get(),
+            getSetOfPointers(resultantComponents.residents)
         );
     }
     else
     {
-        components.simulator = make_unique<Simulator_Basic_B>(
-            components.city.get(),
-            getSetOfPointers(components.residents),
+        resultantComponents.simulator = make_unique<Simulator_Basic_B>(
+            resultantComponents.city.get(),
+            getSetOfPointers(resultantComponents.residents),
             percentageOfResidents,
             numberOfHousesToLookAt,
-            make_unique<CityState_Simple>(components.city.get())
+            make_unique<CityState_Simple>(resultantComponents.city.get())
         );
     }
 
-    return components;
+    return resultantComponents;
 }

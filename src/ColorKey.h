@@ -9,7 +9,7 @@ class ColorKey
 protected:
     ColorKey () = default;
     ColorKey (const ColorKey& o) = default;
-    ColorKey (ColorKey&& o) noexcept= default;
+    ColorKey (ColorKey&& o) noexcept = default;
     ColorKey& operator= (const ColorKey& o) = default;
     ColorKey& operator= (ColorKey&& o) noexcept = default;
 

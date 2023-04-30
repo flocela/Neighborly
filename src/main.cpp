@@ -41,7 +41,7 @@
 #include "CityFactory_Grid.h"
 #include "City_Grid.h"
 #include "Color.h"
-#include "ComponentsFromUserGetter.h"
+#include "ComponentsGetter.h"
 #include "PremadeExamplesMenu.h"
 #include "Printer_Graphic.h"
 #include "Printer_CMDLine.h"
@@ -102,25 +102,21 @@ int main(int argc, char* argv[])
         components = simulationStarter.createSimulationComponents("../" + inputFile);
     }
     else
-    {   cout <<"Main 105" << endl;
+    {   
         UsePremadeExampleQuestion usePremadeExamplesQuestion;
         bool usesExamples = usePremadeExamplesQuestion.askUser(cmdLine);
-        cout <<"Main 108" << endl;
         if (usesExamples)
         {   
-            cout <<"Main 111" << endl;
             PremadeExamplesMenu premadeExamplesMenu;
             components = premadeExamplesMenu.userChoosesExample(cmdLine);
-            cout <<"Main 113" << endl;
         }
         else
         {
             const vector<unique_ptr<const CityFactory>> cityFactories = initCityFactories();
             const vector<unique_ptr<const ResidentsFactory>> residentFactories =
                 initResidentFactories();
-            ComponentsFromUserGetter userComponentsGetter{};
-            cout <<"Main 121" << endl;
-            components = userComponentsGetter.askUserForComponents(
+            ComponentsGetter componentsGetter{};
+            components = componentsGetter.askUserForComponents(
                 cmdLine,
                 cityFactories,
                 residentFactories,
@@ -129,7 +125,6 @@ int main(int argc, char* argv[])
                 MAX_NUM_OF_RESIDENT_GROUPS,
                 MAX_NUM_OF_RUNS
             );
-            cout <<"Main 131" << endl;
         }
     } 
     // set srand with randomSeed
