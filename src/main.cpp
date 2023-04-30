@@ -102,13 +102,16 @@ int main(int argc, char* argv[])
         components = simulationStarter.createSimulationComponents("../" + inputFile);
     }
     else
-    {
+    {   cout <<"Main 105" << endl;
         UsePremadeExampleQuestion usePremadeExamplesQuestion;
         bool usesExamples = usePremadeExamplesQuestion.askUser(cmdLine);
+        cout <<"Main 108" << endl;
         if (usesExamples)
         {   
+            cout <<"Main 111" << endl;
             PremadeExamplesMenu premadeExamplesMenu;
             components = premadeExamplesMenu.userChoosesExample(cmdLine);
+            cout <<"Main 113" << endl;
         }
         else
         {
@@ -116,6 +119,7 @@ int main(int argc, char* argv[])
             const vector<unique_ptr<const ResidentsFactory>> residentFactories =
                 initResidentFactories();
             ComponentsFromUserGetter userComponentsGetter{};
+            cout <<"Main 121" << endl;
             components = userComponentsGetter.askUserForComponents(
                 cmdLine,
                 cityFactories,
@@ -125,6 +129,7 @@ int main(int argc, char* argv[])
                 MAX_NUM_OF_RESIDENT_GROUPS,
                 MAX_NUM_OF_RUNS
             );
+            cout <<"Main 131" << endl;
         }
     } 
     // set srand with randomSeed
@@ -157,13 +162,13 @@ int main(int argc, char* argv[])
         components.numOfRuns,
         components.city.get()
     };
-
-    unordered_map<const House*, Resident*> residentPerHouse;
+    cout <<"Main 160" << endl;
+    unordered_map<const House*, const Resident*> residentPerHouse;
     unordered_map<const House*, const Resident*> constResPerConstHouse;
     for (int ii=0; ii<components.numOfRuns; ii++)
     {   cout << "Run Number: " << ii << endl;
         residentPerHouse = components.simulator->run();
-
+        cout << "main run done: " << ii << endl;
         // Printer_Graphic requires unordered_map of type CONST House* and CONST Resident*
         constResPerConstHouse={};
         for (auto& pair : residentPerHouse)
@@ -173,7 +178,9 @@ int main(int argc, char* argv[])
 
         // every run should show for at least 1/4 second
         auto timeStart = std::chrono::high_resolution_clock::now();
+        cout << "main about to print" << endl;
         graphicPrinter.print(constResPerConstHouse, ii);
+        cout << "main finished printing" << endl;
         //cmdLinePrinter.print(constResPerConstHouse, ii);
         std::this_thread::sleep_until(timeStart + std::chrono::milliseconds(250));
     }

@@ -26,7 +26,7 @@ Simulator_Basic_A::Simulator_Basic_A (
     }
 }
 
-unordered_map<const House*, Resident*> Simulator_Basic_A::run ()
+unordered_map<const House*, const Resident*> Simulator_Basic_A::run ()
 {   
     if (!_first_run_done)
     {   
@@ -40,7 +40,14 @@ unordered_map<const House*, Resident*> Simulator_Basic_A::run ()
     
     setHappinessValuesForAllResidents();
 
-    return _res_per_house;
+    std::unordered_map<const House*, const Resident*> results{};
+    results.reserve(_res_per_house.size());
+    for (auto pair : _res_per_house)
+    {
+        results.insert(pair);
+    }
+
+    return results;
 }
 
 string Simulator_Basic_A::toString()

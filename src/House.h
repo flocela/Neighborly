@@ -18,6 +18,7 @@ class House
         int getAddress () const { return _address; }
         bool operator< (const House& other) const;
         std::string toStr () const;
+        
 
     private:
         int _address;

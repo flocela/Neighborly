@@ -16,7 +16,7 @@ protected:
 
 public:
     virtual ~Simulator () = default;
-    virtual std::unordered_map<const House*, Resident*> run() = 0;
+    virtual std::unordered_map<const House*, const Resident*> run() = 0;
     virtual std::string toString() = 0;
 };
 

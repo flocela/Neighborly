@@ -1,7 +1,9 @@
 #include "PremadeExamplesMenu.h"
 #include <iostream>
+#include <memory>
 #include <string>
 #include "City_Grid.h"
+#include "CityState_Simple.h"
 #include "Simulator_Basic_B.h"
 #include "SimulationComponents.h"
 #include "Resident_UsingFunction.h"
@@ -81,11 +83,13 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
+
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30,
-                20
+                20,
+                make_unique<CityState_Simple>(components.city.get())
             );
 
             components.numOfRuns = 20;
@@ -137,11 +141,13 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
+
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30,
-                20
+                20,
+                make_unique<CityState_Simple>(components.city.get())
             );
 
             components.numOfRuns = 30;
@@ -193,11 +199,13 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
+
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30,
-                20
+                20,
+                move(make_unique<CityState_Simple>(components.city.get()))
             );
 
             components.numOfRuns = 30;
@@ -249,11 +257,13 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
+
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30,
-                20
+                20,
+                make_unique<CityState_Simple>(components.city.get())
             );
 
             components.numOfRuns = 30;

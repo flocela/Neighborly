@@ -82,6 +82,7 @@ src/AxisTopToBottomL.cpp
 src/AxisFormat.cpp
 src/City_Grid.cpp
 src/CityFactory_Grid.cpp
+src/CityState_Simple.cpp
 src/Color.cpp
 src/Converter.cpp
 src/Coordinate.cpp

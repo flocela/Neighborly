@@ -1,6 +1,7 @@
 #include "ComponentsFromUserGetter.h"
 
 #include "CityMaker_CMDLine.h"
+#include "CityState_Simple.h"
 #include "RandSeedGetter.h"
 #include "ResidentsMaker_CMDLine.h"
 #include "Simulator_Basic_A.h"
@@ -117,7 +118,8 @@ SimulationComponents ComponentsFromUserGetter::askUserForComponents (
             components.city.get(),
             getSetOfPointers(components.residents),
             percentageOfResidents,
-            numberOfHousesToLookAt
+            numberOfHousesToLookAt,
+            make_unique<CityState_Simple>(components.city.get())
         );
     }
 

@@ -1,6 +1,8 @@
 #include "House.h"
 #include <iostream>
 
+using namespace std;
+
 House::House (int address):_address{address}{}
 
 bool House::operator< (const House& other) const
@@ -12,3 +14,4 @@ std::string House::toStr () const
 {
     return "House (addr): (" + std::to_string(_address) + ")";
 }
+
