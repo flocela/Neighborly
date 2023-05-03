@@ -5,6 +5,7 @@
 #include "../src/Resident_UsingFunction.h" // TODO delete
 #include "../src/City_Grid.h"
 
+//TODO these have to be bigger grids!
 TEST_CASE("empty city - getOpenHousesWithinRange() limited range")
 {
     City_Grid city = City_Grid(10);
