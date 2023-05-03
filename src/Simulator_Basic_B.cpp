@@ -80,8 +80,7 @@ void Simulator_Basic_B::firstRun ()
         residentsCopy.insert(res);
     }
 
-    unordered_set<const House*> openHousesWithinRange =
-        _city_state->getOpenHousesWithinRange(0, _city->getWidth()-1, 0, _city->getHeight()-1);
+    unordered_set<const House*> openHousesWithinRange = _city_state->getOpenHouses();
 
     // for each resident, choose a random house.
     while (residentsCopy.size() > 0 && openHousesWithinRange.size() > 0)
@@ -97,7 +96,7 @@ void Simulator_Basic_B::firstRun ()
 }
 
 void Simulator_Basic_B::normalRun ()
-{   
+{   cout << "Simulator B AA" << endl;
     int numOfResToMove = _residents.size() * _percent_of_residents /100;
 
     // residents will be erased from container, so make a copy.
@@ -126,7 +125,7 @@ void Simulator_Basic_B::normalRun ()
                 }
             }
         }*/
-
+        cout << "SimulatorBasic B CC " << endl;
         // select a resident, remember a resident can not move twice in one run.
         Resident* curRes = selectRandom(residentsCopy);
 
@@ -136,50 +135,41 @@ void Simulator_Basic_B::normalRun ()
         }
 
         residentsMovedInThisRun.insert(curRes);
-
+        cout << "SimulatorBasic B DD " << endl;
         // create a set of open houses that are within the range of the current resident's house.
         const House* currHouse = _city_state->getHousePerResident(curRes);
+        Coordinate currHouseCoord = _city->getCoordinate(currHouse->getAddress());
         double maxDist = curRes->getAllowedMovementDistance();
-        pair<int, int> xRange = _city->getXRangeForAllowableDistanceToHouse(currHouse,maxDist);
-        pair<int, int> yRange = _city->getYRangeForAllowableDistanceToHouse(currHouse,maxDist);
-
-        unordered_set<const House*> openHousesWithinRange = _city_state->getOpenHousesWithinRange(
-            xRange.first,
-            xRange.second,
-            yRange.first,
-            yRange.second
+        cout << "SimulatorBasic B EE " << endl;
+        vector<const House*> openHousesWithinRange = _city_state->getOpenHousesWithinRange(
+            currHouseCoord.getX(),
+            currHouseCoord.getY(),
+            maxDist
         );
-
-        openHousesWithinRange.erase(currHouse);
-
-        vector<const House*> openHousesVector{};
-        for (const House* openHouse: openHousesWithinRange)
-        {
-            if ( _city->getDist(openHouse->getAddress(), currHouse->getAddress()) <=
-                 curRes->getAllowedMovementDistance() )
-            {
-                openHousesVector.push_back(openHouse);
-            }
-        }
+        cout << "SimulatorBasic B MM " << endl;
 
         // Find a new house for current resident. Only get _max_num_of_tries_to_find_house.
         // If an open house does not found in _max_
         double selectedHappiness = 0.0;
         House const * selectedHouse = nullptr;
-        int maxTries = min(_max_num_of_tries_to_find_house, (int)openHousesVector.size());
+
+        // openHousesWithinRange contains the original house, so subtract size by one
+        int maxTries = min(_max_num_of_tries_to_find_house, (int)openHousesWithinRange.size()-1);
         // TODO if max num of tries is 1/2 or greater than emptyHouses.size(), then use a set 
         // instead of a vector.
         // 
         unordered_set<const House*> housesTried{};
         for (int ii=0; ii<maxTries; ++ii)
         {
+            cout << "SimulatorBasic B NN " << endl;
             // choose a random house that has not been chosen before.
-            const House* randHouse = selectRandom(openHousesVector);
-            while ( housesTried.find(randHouse) != housesTried.end() )
+            const House* randHouse = selectRandom(openHousesWithinRange);
+            while ( housesTried.find(randHouse) != housesTried.end() || randHouse == currHouse)
             {
-                randHouse = selectRandom(openHousesVector);
+                randHouse = selectRandom(openHousesWithinRange);
             }
             housesTried.insert(randHouse);
+            cout << "SimulatorBasic B OO " << endl;
             // TODO check for nullptr, check for vector being size zero
             // TODO what happens if openHousesWithinRange is empty?
 
@@ -195,9 +185,11 @@ void Simulator_Basic_B::normalRun ()
                 break;
             }
         }
+        cout << "SimulatorBasic B QQ " << endl;
         if (selectedHouse != nullptr)
-        {   
+        {   cout << "SimulatorBasic B RR " << endl;
             _city_state->moveInAndOutOfHouse(curRes, selectedHouse);
+            cout << "SimulatorBasic B SS " << endl;
         }
     }
     cout << "SimulatorBasicB: ZZ" << endl;

@@ -36,6 +36,14 @@ public:
     std::unordered_map<const House*, Coordinate> getCoordinatesPerHouse();
 
     double getDist ( const int& from_address,  const int& to_address) const override;
+
+    double getDist (
+        const double firstX,
+        const double firstY,
+        const double secondX,
+        const double secondY
+    ) const override ;
+
     // TODO shouldn't be using a refernce to get houses. Should return them.
     std::unordered_set<const House*> getHousesWithinDistance (
         const House* house,

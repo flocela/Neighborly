@@ -26,11 +26,12 @@ public:
     void moveIn (Resident* resident, const House* house) override;
     void moveInAndOutOfHouse (Resident* resident, const House* house) override;
 
-    std::unordered_set<const House*> getOpenHousesWithinRange (
-        double minX,
-        double maxX,
-        double minY,
-        double maxY)const override;
+    std::vector<const House*> getOpenHousesWithinRange (
+        double centerX,
+        double centerY,
+        double allowableDistance) const override;
+
+    std::unordered_set<const House*> getOpenHouses() const;
 
     std::unordered_map<const House*, Resident*> getResidentsPerHouse () const override;
     const House* getHousePerResident(Resident* resident) const override;

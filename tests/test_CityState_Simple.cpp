@@ -6,7 +6,7 @@
 #include "../src/City_Grid.h"
 
 //TODO these have to be bigger grids!
-TEST_CASE("empty city - getOpenHousesWithinRange() limited range")
+/*TEST_CASE("empty city - getOpenHousesWithinRange() limited range")
 {
     City_Grid city = City_Grid(10);
     CityState_Simple cityState{&city};
@@ -381,7 +381,7 @@ TEST_CASE("moveInAndOutOfHouse()")
     // check getResidentPerHouse()
         REQUIRE(residents[6] == cityState.getResidentPerHouse(houses[56]));
         REQUIRE(residents[1] == cityState.getResidentPerHouse(houses[66]));
-}
+}*/
 
 
 

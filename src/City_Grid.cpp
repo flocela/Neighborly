@@ -62,6 +62,17 @@ double City_Grid::getDist (const int& fromAddress, const int& toAddress) const
   	return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
 }
 
+double City_Grid::getDist (
+        const double firstX,
+        const double firstY,
+        const double secondX,
+        const double secondY) const 
+	{
+		double x_dist = fabs(firstX - secondX);
+		double y_dist = fabs(firstY - secondY);
+		return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
+	}
+
 // TODO does this work with allowable distance == 0?
 unordered_set<const House*> City_Grid::getHousesWithinDistance (
         const House* house,

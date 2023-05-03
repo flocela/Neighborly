@@ -1,5 +1,6 @@
 #include "CityState_Simple.h"
 
+#include <algorithm>
 #include "Coordinate.h"
 
 using namespace std;
@@ -64,29 +65,51 @@ void CityState_Simple::moveInAndOutOfHouse (Resident* resident, const House* new
     }
 }
 
-unordered_set<const House*> CityState_Simple::getOpenHousesWithinRange (
-        double minX,
-        double maxX,
-        double minY,
-        double maxY)const
+vector<const House*> CityState_Simple::getOpenHousesWithinRange (
+    double centerX,
+    double centerY,
+    double allowableDistance)const
 {   
-    unordered_set<const House*> openHousesInRange{};
+    // todo ask city for minimum x and minimum y
+    double minX = std::max(centerX - allowableDistance, 0.0);
+    double maxX = std::min(centerX + allowableDistance, (double)_city->getWidth() - 1);
+    double minY = std::max(centerY - allowableDistance, 0.0);
+    double maxY = std::min(centerY + allowableDistance, (double)_city->getHeight() - 1);
+
+    vector<const House*> openHousesInRange{};
+    
     for (int y=minY/10; y<=maxY/10; ++y)
     {
         for (int x=minX/10; x<=maxX/10; ++x)
         {
             for (const House* house : _open_houses_per_y_x[y][x])
             {  
-                Coordinate coord = _city->getCoordinate(house->getAddress());
-                if (coord.getX() >= minX && coord.getX() <= maxX &&
-                    coord.getY() >= minY && coord.getY() <= maxY)
+                Coordinate houseCoord = _city->getCoordinate(house->getAddress());
+                //if (_city->getDist(houseCoord.getX(), houseCoord.getY(), centerX, centerY) <=
+                //    allowableDistance)
                 {
-                    openHousesInRange.insert(house);
+                    openHousesInRange.push_back(house);
                 }
             }
         }
     }
     return openHousesInRange;
+}
+
+unordered_set<const House*> CityState_Simple::getOpenHouses() const
+{
+    unordered_set<const House*> allOpenHouses{};
+    for (auto v : _open_houses_per_y_x)
+    {
+        for (unordered_set<const House*> sh : v)
+        {
+            for (const House* h : sh)
+            {
+                allOpenHouses.insert(h);
+            }
+        }
+    }
+    return allOpenHouses;
 }
 
 unordered_map<const House*, Resident*> CityState_Simple::getResidentsPerHouse () const
