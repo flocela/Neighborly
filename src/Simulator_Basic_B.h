@@ -66,6 +66,13 @@ private:
 
     std::unique_ptr<CityState> _city_state;
 
+    std::vector<Resident*> _moving_residents_vector;
+
+    std::unordered_set<Resident*> _residents_chosen_from_cur_vector;
+
+    std::vector<const House*> _open_houses_vector;
+    
+
     // Will try to move the resident into a random available house.
     // An available house is an empty house, within the resident's allowable movement distance.
     // If there are no available houses which will make the resident happy (hapiness greater
@@ -77,6 +84,12 @@ private:
     void setHappinessValuesForAllResidents();
 
     double calculateHappinessValueFor(Resident* res, int address);
+
+    Resident* chooseResident ();
+
+    void resetMovingResidentsVector ();
+
+    void updateMovingResidentsVector ();
 
 };
 

@@ -96,72 +96,59 @@ void Simulator_Basic_B::firstRun ()
 }
 
 void Simulator_Basic_B::normalRun ()
-{   cout << "Simulator B AA" << endl;
+{   
     int numOfResToMove = _residents.size() * _percent_of_residents /100;
 
-    // residents will be erased from container, so make a copy.
-    vector<Resident*> residentsCopy{};
-    for (Resident* res : _residents)
-    {
-        residentsCopy.push_back(res);
-    }
+    // make a copy of the residents as a vector
+    resetMovingResidentsVector();
 
     // don't move a resident twice in the same run.
-    unordered_set<Resident*> residentsMovedInThisRun{};
+    unordered_set<Resident*> residentsMovedFromVector{};
 
     // randomly choose a resident and find a house for resident
     for (int ii=0; ii<numOfResToMove; ++ii)
     {   
-        // keep ratio of in residents in vector that have already moved vs 
-        // residents that have not moved low
-        /*if (ii == numOfResToMove/2)
+        if (_residents_chosen_from_cur_vector.size() == _moving_residents_vector.size()/3)
         {
-            residentsCopy.clear();
-            for (Resident* res : _residents)
-            {
-                if (residentsMovedInThisRun.find(res) != residentsMovedInThisRun.end())
-                {
-                    residentsCopy.push_back(res);
-                }
-            }
-        }*/
-        cout << "SimulatorBasic B CC " << endl;
-        // select a resident, remember a resident can not move twice in one run.
-        Resident* curRes = selectRandom(residentsCopy);
+            updateMovingResidentsVector();
+        }
+        
+        // select a resident
+        Resident* curRes = selectRandom(_moving_residents_vector);
 
-        while ( residentsMovedInThisRun.find(curRes) != residentsMovedInThisRun.end() )
+        // remember a resident can not be chosen twice in one run
+        while ( _residents_chosen_from_cur_vector.find(curRes) !=
+                _residents_chosen_from_cur_vector.end() )
         {
-            curRes = selectRandom(residentsCopy);
+            curRes = selectRandom(_moving_residents_vector);
         }
 
-        residentsMovedInThisRun.insert(curRes);
-        cout << "SimulatorBasic B DD " << endl;
+        _residents_chosen_from_cur_vector.insert(curRes);
+        
         // create a set of open houses that are within the range of the current resident's house.
         const House* currHouse = _city_state->getHousePerResident(curRes);
         Coordinate currHouseCoord = _city->getCoordinate(currHouse->getAddress());
-        double maxDist = curRes->getAllowedMovementDistance();
-        cout << "SimulatorBasic B EE " << endl;
+        
         vector<const House*> openHousesWithinRange = _city_state->getOpenHousesWithinRange(
             currHouseCoord.getX(),
             currHouseCoord.getY(),
-            maxDist
+            curRes->getAllowedMovementDistance()
         );
-        cout << "SimulatorBasic B MM " << endl;
-
+        
         // Find a new house for current resident. Only get _max_num_of_tries_to_find_house.
-        // If an open house does not found in _max_
+        // If an open house does not found in _max_tries, then resident does not move.
         double selectedHappiness = 0.0;
         House const * selectedHouse = nullptr;
 
         // openHousesWithinRange contains the original house, so subtract size by one
-        int maxTries = min(_max_num_of_tries_to_find_house, (int)openHousesWithinRange.size()-1);
+        int maxTries = min(_max_num_of_tries_to_find_house, (int)openHousesWithinRange.size());
         // TODO if max num of tries is 1/2 or greater than emptyHouses.size(), then use a set 
         // instead of a vector.
         // 
         unordered_set<const House*> housesTried{};
         for (int ii=0; ii<maxTries; ++ii)
         {
-            cout << "SimulatorBasic B NN " << endl;
+            
             // choose a random house that has not been chosen before.
             const House* randHouse = selectRandom(openHousesWithinRange);
             while ( housesTried.find(randHouse) != housesTried.end() || randHouse == currHouse)
@@ -169,7 +156,7 @@ void Simulator_Basic_B::normalRun ()
                 randHouse = selectRandom(openHousesWithinRange);
             }
             housesTried.insert(randHouse);
-            cout << "SimulatorBasic B OO " << endl;
+            
             // TODO check for nullptr, check for vector being size zero
             // TODO what happens if openHousesWithinRange is empty?
 
@@ -185,14 +172,13 @@ void Simulator_Basic_B::normalRun ()
                 break;
             }
         }
-        cout << "SimulatorBasic B QQ " << endl;
+        
         if (selectedHouse != nullptr)
-        {   cout << "SimulatorBasic B RR " << endl;
+        {   
             _city_state->moveInAndOutOfHouse(curRes, selectedHouse);
-            cout << "SimulatorBasic B SS " << endl;
+            
         }
     }
-    cout << "SimulatorBasicB: ZZ" << endl;
 }
 
 void Simulator_Basic_B::setHappinessValuesForAllResidents ()
@@ -224,4 +210,35 @@ double Simulator_Basic_B::calculateHappinessValueFor(Resident* res, int address)
     }
     
     return res->calculateHappiness(adjacentNeighbors, adjacentHouses.size());
+}
+
+void Simulator_Basic_B::resetMovingResidentsVector ()
+{
+    _moving_residents_vector = vector<Resident*>(_residents.size());
+
+    int ii = 0;
+    for (Resident* resident : _residents)
+    {
+        _moving_residents_vector[ii] = resident;
+        ++ii;
+    }
+
+    _residents_chosen_from_cur_vector = {};
+}
+
+void Simulator_Basic_B::updateMovingResidentsVector ()
+{
+    std::vector<Resident*> tempVector{};
+    tempVector.reserve(_moving_residents_vector.size() - _residents_chosen_from_cur_vector.size());
+    for (Resident* resident : _moving_residents_vector)
+    {
+        if (_residents_chosen_from_cur_vector.find(resident) ==
+            _residents_chosen_from_cur_vector.end())
+        {
+            tempVector.push_back(resident);
+        }
+        _moving_residents_vector = move(tempVector);
+    }
+
+    _residents_chosen_from_cur_vector = {};
 }

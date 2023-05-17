@@ -8,7 +8,7 @@ using namespace std;
 CityState_Simple::CityState_Simple (
     const City* city
 ): _city{city},
-    _open_houses_per_y_x( ((_city->getHeight()-1)/10)+1,
+    _open_houses_per_y_x(_city->getHeight(),
                         vector<unordered_set<const House*>>( ((_city->getWidth()-1)/10)+1 ))
 {
     //TODO reserve space for _open_houses
@@ -19,7 +19,7 @@ CityState_Simple::CityState_Simple (
         int x = xy.getX();
         int y = xy.getY();
         //cout <<"CityState_Simple DD" << endl;
-        _open_houses_per_y_x[y/10][x/10].insert(house);
+        _open_houses_per_y_x[y][x/10].insert(house);
     }
     //cout <<"CityState_Simple EE" << endl;
 }
@@ -33,7 +33,7 @@ void CityState_Simple::moveOut (Resident* resident)
         _house_per_resident.erase(resident);
         _resident_per_house.erase(oldHouse);
         Coordinate co = _city->getCoordinate(oldHouse->getAddress());
-        _open_houses_per_y_x[co.getY()/10][co.getX()/10].insert(oldHouse);
+        _open_houses_per_y_x[co.getY()][co.getX()/10].insert(oldHouse);
     }
 }
 
@@ -47,10 +47,10 @@ void CityState_Simple::moveIn (Resident* resident, const House* newHouse)
 
         Coordinate co = _city->getCoordinate(newHouse->getAddress());
 
-        if (_open_houses_per_y_x[co.getY()/10][co.getX()/10].find(newHouse) !=
-            _open_houses_per_y_x[co.getY()/10][co.getX()/10].end())
+        if (_open_houses_per_y_x[co.getY()][co.getX()/10].find(newHouse) !=
+            _open_houses_per_y_x[co.getY()][co.getX()/10].end())
         {
-            _open_houses_per_y_x[co.getY()/10][co.getX()/10].erase(newHouse);
+            _open_houses_per_y_x[co.getY()][co.getX()/10].erase(newHouse);
         }
     }
 }
@@ -70,7 +70,7 @@ vector<const House*> CityState_Simple::getOpenHousesWithinRange (
     double centerY,
     double allowableDistance)const
 {   
-    // todo ask city for minimum x and minimum y
+    // todo ask city for minimum x and minimum y instead of getWidth and getHeight
     double minX = std::max(centerX - allowableDistance, 0.0);
     double maxX = std::min(centerX + allowableDistance, (double)_city->getWidth() - 1);
     double minY = std::max(centerY - allowableDistance, 0.0);
@@ -78,15 +78,21 @@ vector<const House*> CityState_Simple::getOpenHousesWithinRange (
 
     vector<const House*> openHousesInRange{};
     
-    for (int y=minY/10; y<=maxY/10; ++y)
+    for (int y=minY; y<=maxY; ++y)
     {
         for (int x=minX/10; x<=maxX/10; ++x)
         {
             for (const House* house : _open_houses_per_y_x[y][x])
             {  
                 Coordinate houseCoord = _city->getCoordinate(house->getAddress());
-                //if (_city->getDist(houseCoord.getX(), houseCoord.getY(), centerX, centerY) <=
-                //    allowableDistance)
+                if (house->getAddress() == 1118)
+                {
+                    cout << "HOUSE IS 1118  ";
+                    cout << _city->getCoordinate(house->getAddress()) << "  ";
+                    cout << _city->getDist(houseCoord.getX(), houseCoord.getY(), centerX, centerY) << "  ";
+                }
+                if (_city->getDist(houseCoord.getX(), houseCoord.getY(), centerX, centerY) <=
+                    allowableDistance)
                 {
                     openHousesInRange.push_back(house);
                 }

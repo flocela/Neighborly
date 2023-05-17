@@ -87,7 +87,7 @@ const int MAX_NUM_OF_RESIDENT_GROUPS = 2;
 const int MAX_NUM_OF_RUNS = 200;
 
 int main(int argc, char* argv[])
-{
+{   cout << "hardware concurrency: " <<std::thread::hardware_concurrency() << endl;
     bool useFile = (argc >= 2);
     string inputFile = (argc >= 2)? argv[1] : "";
 

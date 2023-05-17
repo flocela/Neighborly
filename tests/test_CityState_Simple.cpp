@@ -6,28 +6,55 @@
 #include "../src/City_Grid.h"
 
 //TODO these have to be bigger grids!
-/*TEST_CASE("empty city - getOpenHousesWithinRange() limited range")
+TEST_CASE("empty city - getOpenHousesWithinRange() limited range")
 {
-    City_Grid city = City_Grid(10);
+    int width = 100;
+    City_Grid city = City_Grid(width);
     CityState_Simple cityState{&city};
 
-    // houses within rangeX 1:5 and rangeY 3:5
+    double allowableDist = 15;
     std::vector<int> expected{};
-    std::vector<const House*> houses = city.getHouses();
-    for (const House* h : houses)
+
+    // center is at (4, 5). AllowableDist = 15.
+    int centerX = 4;
+    int centerY = 5;
+    int centerHouseAddress = centerY * width + centerX;
+
+    for (int y = 0; y<=allowableDist; ++y)
     {
-        Coordinate coord = city.getCoordinate(h->getAddress());
-        if (coord.getX() >= 1 && coord.getX() <=5 &&
-            coord.getY() >= 3 && coord.getY() <= 5)
+        int x = 0;
+        int diffX = allowableDist - x;
+        int diffY = allowableDist - y;
+        int realDist = (diffX*diffX) + (diffY*diffY);
+        while ((x <= allowableDist) && (realDist > (allowableDist *allowableDist)))
+        {   
+            ++x;
+            diffX = allowableDist - x;
+            diffY = allowableDist - y;
+            realDist = (diffX*diffX) + (diffY*diffY);
+        }
+        int ltX = max(centerX - allowableDist + x, 0.0);
+        int rtX = min(centerX + allowableDist - x, (double)width -1);
+
+        int topY = centerY - allowableDist + y;
+        int botY = centerY + allowableDist - y;
+        
+        for ( int ii=ltX; ii<=rtX; ++ii)
         {
-            expected.push_back(h->getAddress());
+            if (topY >= 0)
+            {
+                expected.push_back(topY*width + ii);
+            }
+            if (botY != topY && topY <= width-1)
+            {
+                expected.push_back(botY*width + ii);
+            }
         }
     }
-
     // actual
     std::vector<int> actual{};
-    std::unordered_set<const House*> actualHousesInRange = 
-        cityState.getOpenHousesWithinRange(1,5,3,5);
+    std::vector<const House*> actualHousesInRange = 
+        cityState.getOpenHousesWithinRange(4, 5, 15);
     for (const House* h : actualHousesInRange)
     {
         actual.push_back(h->getAddress());
@@ -38,7 +65,7 @@
 
     REQUIRE(expected == actual);
 }
-
+/*
 TEST_CASE("empty city - getResidentsPerHouse() all houses are open")
 {
     City_Grid city = City_Grid(10);
