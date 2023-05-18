@@ -85,12 +85,6 @@ vector<const House*> CityState_Simple::getOpenHousesWithinRange (
             for (const House* house : _open_houses_per_y_x[y][x])
             {  
                 Coordinate houseCoord = _city->getCoordinate(house->getAddress());
-                if (house->getAddress() == 1118)
-                {
-                    cout << "HOUSE IS 1118  ";
-                    cout << _city->getCoordinate(house->getAddress()) << "  ";
-                    cout << _city->getDist(houseCoord.getX(), houseCoord.getY(), centerX, centerY) << "  ";
-                }
                 if (_city->getDist(houseCoord.getX(), houseCoord.getY(), centerX, centerY) <=
                     allowableDistance)
                 {

@@ -5,19 +5,50 @@
 #include "../src/Resident_UsingFunction.h" // TODO delete
 #include "../src/City_Grid.h"
 
-//TODO these have to be bigger grids!
-TEST_CASE("empty city - getOpenHousesWithinRange() limited range")
+std::vector<int> getOpenAddressesWithinRange(
+    const CityState_Simple cityState,
+    int centerX,
+    int centerY,
+    double allowableDist
+)
 {
-    int width = 100;
-    City_Grid city = City_Grid(width);
-    CityState_Simple cityState{&city};
+    std::vector<const House*> houses =
+        cityState.getOpenHousesWithinRange(centerX, centerY, allowableDist);
+    
+    std::vector<int> addresses(houses.size());
+    for (int ii=0; ii< houses.size(); ++ii)
+    {
+        addresses[ii] = houses[ii]->getAddress();
+    }
+    sort(addresses.begin(), addresses.end());
+    return addresses;
+}
 
-    double allowableDist = 15;
-    std::vector<int> expected{};
+// returns pointers to Residents, which need to be deleted.
+std::vector<Resident*> createResidents (int numOfResidents)
+{
+    std::vector<Resident*> residents{};
+    for (int ii=0; ii<numOfResidents; ++ii)
+    {
+        residents.push_back(new Resident_UsingFunction(
+        ii,
+        1,
+        2.2,
+        1.0,
+        make_unique<HappinessFunc_Flat>(22.3, 44),
+        "Flat"));
+    }
+    return residents;
+}
 
-    // center is at (4, 5). AllowableDist = 15.
-    int centerX = 4;
-    int centerY = 5;
+std::vector<int> createAddresses(
+    int width,
+    int centerX,
+    int centerY,
+    double allowableDist,
+    std::unordered_set<int> excludeAddresses)
+{
+    std::vector<int> addresses{};
     int centerHouseAddress = centerY * width + centerX;
 
     for (int y = 0; y<=allowableDist; ++y)
@@ -35,7 +66,6 @@ TEST_CASE("empty city - getOpenHousesWithinRange() limited range")
         }
         int ltX = max(centerX - allowableDist + x, 0.0);
         int rtX = min(centerX + allowableDist - x, (double)width -1);
-
         int topY = centerY - allowableDist + y;
         int botY = centerY + allowableDist - y;
         
@@ -43,56 +73,66 @@ TEST_CASE("empty city - getOpenHousesWithinRange() limited range")
         {
             if (topY >= 0)
             {
-                expected.push_back(topY*width + ii);
+                if (excludeAddresses.find(topY * width + ii) == excludeAddresses.end())
+                {
+                    addresses.push_back(topY*width + ii);
+                }    
             }
-            if (botY != topY && topY <= width-1)
+            if (botY != topY && botY <= width-1)
             {
-                expected.push_back(botY*width + ii);
+                if (excludeAddresses.find(botY * width + ii) == excludeAddresses.end())
+                {
+                    addresses.push_back(botY*width + ii);
+                }
             }
         }
     }
-    // actual
-    std::vector<int> actual{};
-    std::vector<const House*> actualHousesInRange = 
-        cityState.getOpenHousesWithinRange(4, 5, 15);
-    for (const House* h : actualHousesInRange)
-    {
-        actual.push_back(h->getAddress());
-    }
 
-    std::sort(expected.begin(), expected.end());
-    std::sort(actual.begin(), actual.end());
+    sort(addresses.begin(), addresses.end());
+    return addresses;
+}
+
+TEST_CASE("empty city - getOpenHousesWithinRange() allowableDist=15")
+{
+    int width = 100;
+    int centerX = 4;
+    int centerY = 5;
+    double allowableDist = 15; 
+
+    City_Grid city = City_Grid(width);
+    CityState_Simple cityState{&city};
+
+    // expected
+    std::vector<int> expected = 
+        createAddresses(100, centerX, centerY, allowableDist,std::unordered_set<int>{});
+    
+    // actual
+    std::vector<int> actual =
+        getOpenAddressesWithinRange(cityState, centerX, centerY, allowableDist);
 
     REQUIRE(expected == actual);
 }
-/*
-TEST_CASE("empty city - getResidentsPerHouse() all houses are open")
+
+// allowable distance is larger than the width of the city.
+TEST_CASE("empty city - getOpenHouses() allowableDist encompasses every house")
 {
-    City_Grid city = City_Grid(10);
+    City_Grid city = City_Grid(50);
     CityState_Simple cityState{&city};
 
     // expected
     std::vector<int> expected{};
-    for (int ii=0; ii<100; ++ii)
+    for (int ii=0; ii<2500; ++ii)
     {
         expected.push_back(ii);
     }
 
     // actual
-    std::vector<int> actual{};
-    std::unordered_set<const House*> actualHousesInRange = 
-        cityState.getOpenHousesWithinRange(0, 9, 0, 9);
-    for (const House* h : actualHousesInRange)
-    {
-        actual.push_back(h->getAddress());
-    }
-
-    std::sort(expected.begin(), expected.end());
-    std::sort(actual.begin(), actual.end());
+    std::vector<int> actual = getOpenAddressesWithinRange(cityState, 25, 25, 200);
 
     REQUIRE(expected == actual);
 }
 
+// empty city, there are no residents.
 TEST_CASE("empty city - getResidentsPerHouse()")
 {
     City_Grid city = City_Grid(10);
@@ -100,16 +140,12 @@ TEST_CASE("empty city - getResidentsPerHouse()")
 
     //expected is empty set.
     std::unordered_map<const House*, Resident*> expected{};
-    //const House* h = new House(12);
-    //Resident* r = new Resident_UsingFunction(12, 1, 2.2, 1.0, make_unique<HappinessFunc_Flat>(22.3, 44), "Flat");
-    //expected.insert({h,  r});
-
-
     std::unordered_map<const House*, Resident*> actual = cityState.getResidentsPerHouse();
 
     REQUIRE(expected == actual);
 }
 
+// resident doesn't have a house in the city. So nullptr is returned for getHousePerResident()
 TEST_CASE("empty city - getHousePerResident()")
 {
     City_Grid city = City_Grid(10);
@@ -129,6 +165,7 @@ TEST_CASE("empty city - getHousePerResident()")
     REQUIRE(expectedHouse == cityState.getHousePerResident(r));
 }
 
+// there are no residents. So nullptr is returned for getResidentPerHouse()
 TEST_CASE("empty city - getResidentPerHouse()")
 {
     City_Grid city = City_Grid(10);
@@ -141,128 +178,93 @@ TEST_CASE("empty city - getResidentPerHouse()")
     REQUIRE(expectedResident == cityState.getResidentPerHouse(houses[0]));
 }
 
-TEST_CASE("city with 10 residents at y = 5 - getOpenHousesWithinRange() limited range")
+// At y=5 and y=15, there are 10 residents, from x = 0 through 9.
+TEST_CASE("city with 10 residents at y = 5 and y = 15 - getOpenHousesWithinRange() limited range")
 {
-    City_Grid city = City_Grid(10);
+    int width = 100;
+    City_Grid city = City_Grid(width);
     std::vector<const House*> houses = city.getHouses();
 
+    int centerX = 4;
+    int centerY = 5;
+    int centerHouseAddress = centerY * width + centerX;
+    double allowableDist = 15;
+
+    // Expected
+    // all the houses within 15 units from centerX and centerY except those houses
+    // that have residents in rows y=5 and y=15.
+    std::unordered_set<int> occupiedHouses = {
+        500, 501, 502, 503, 504, 505, 506, 507, 508, 509,
+        1500, 1501, 1502, 1503, 1504, 1505, 1506, 1507, 1508, 1509
+    };
+
+    std::vector<int> expected = createAddresses(
+        100,
+        centerX,
+        centerY,
+        allowableDist,
+        occupiedHouses
+    );
+
+    // Actual
     CityState_Simple cityState{&city};
 
-    std::vector<Resident*> residents{};
+    std::vector<Resident*> residents = createResidents(20);
+
+    int curResId = 0;
+    int y = 5;
     for (int ii=0; ii<10; ++ii)
     {
-        residents.push_back(new Resident_UsingFunction(
-        ii,
-        1,
-        2.2,
-        1.0,
-        make_unique<HappinessFunc_Flat>(22.3, 44),
-        "Flat"));
+        cityState.moveIn(residents[curResId], houses[width*y + ii]);
+        ++curResId;
     }
 
+    y = 15;
     for (int ii=0; ii<10; ++ii)
     {
-        cityState.moveIn(residents[ii], houses[10*5 + ii]);
+        cityState.moveIn(residents[curResId], houses[width*y + ii]);
+        ++curResId;
     }
 
-    // expected
-    std::vector<int> expectedHouses{};
-    for (int ii=0; ii<100; ++ii)
+    std::vector<int> actual = getOpenAddressesWithinRange(
+        cityState,
+        centerX,
+        centerY,
+        allowableDist);
+
+    REQUIRE(expected == actual);
+    
+    for (auto p : residents) 
     {
-        if ( (ii >= 35 && ii <= 39) || 
-             (ii >= 45 && ii <= 49) ||
-             (ii >= 65 && ii <= 69)
-           ) 
-        {
-            expectedHouses.push_back(ii);
-        }
+        delete p;
     }
-
-    // actualHouses
-    std::vector<int> actualHouses{};
-    std::unordered_set<const House*> actualHousesInRange = 
-        cityState.getOpenHousesWithinRange(5, 9, 3, 6);
-    for (const House* h : actualHousesInRange)
-    {
-        actualHouses.push_back(h->getAddress());
-    }
-
-    std::sort(actualHouses.begin(), actualHouses.end());
-
-    REQUIRE(expectedHouses == actualHouses);
-}
-
-TEST_CASE("city with 10 residents at y = 5 - getOpenHousesWithinRange() entire city as range")
-{
-    City_Grid city = City_Grid(10);
-    std::vector<const House*> houses = city.getHouses();
-
-    CityState_Simple cityState{&city};
-
-    std::vector<Resident*> residents{};
-    for (int ii=0; ii<10; ++ii)
-    {
-        residents.push_back(new Resident_UsingFunction(
-        ii,
-        1,
-        2.2,
-        1.0,
-        make_unique<HappinessFunc_Flat>(22.3, 44),
-        "Flat"));
-    }
-
-    for (int ii=0; ii<10; ++ii)
-    {
-        cityState.moveIn(residents[ii], houses[10*5 + ii]);
-    }
-
-    // expected
-    std::vector<int> expectedHouses{};
-    for (int ii=0; ii<100; ++ii)
-    {
-        if (ii < 50 || ii > 59)
-        {
-            expectedHouses.push_back(ii);
-        }
-    }
-
-    // actualHouses
-    std::vector<int> actualHouses{};
-    std::unordered_set<const House*> actualHousesInRange = 
-        cityState.getOpenHousesWithinRange(0, 9, 0, 9);
-    for (const House* h : actualHousesInRange)
-    {
-        actualHouses.push_back(h->getAddress());
-    }
-
-    std::sort(actualHouses.begin(), actualHouses.end());
-
-    REQUIRE(expectedHouses == actualHouses);
 }
 
 TEST_CASE("move In and move Out")
 {
-    City_Grid city = City_Grid(10);
-    std::vector<const House*> houses = city.getHouses();
+    int width = 100;
+    // center house and allowable distance used later in getOpenHousesWithRange() method.
+    int centerX = 4;
+    int centerY = 5;
+    int centerHouseAddress = centerY * width + centerX;
+    double allowableDist = 15;
 
+    City_Grid city = City_Grid(width);
     CityState_Simple cityState{&city};
 
-    std::vector<Resident*> residents{};
-    for (int ii=0; ii<10; ++ii)
-    {
-        residents.push_back(new Resident_UsingFunction(
-        ii,
-        1,
-        2.2,
-        1.0,
-        make_unique<HappinessFunc_Flat>(22.3, 44),
-        "Flat"));
-    }
+    // houses vector used later when moving residents into houses, and testing
+    // getResidentPerHouse() and getHousePerResident() methods.
+    std::vector<const House*> houses = city.getHouses();
 
-    // Move in row of residents at y == 10 and then move residents at x=0 through x=4 out.
+    std::vector<Resident*> residents = createResidents(10);
+
+    // moving residents in and out of row ten.
+    int y = 10;
+
+    // Move in ten residents at row y == 10 and then move residents at x=0 through x=4 out.
         for (int ii=0; ii<10; ++ii)
         {
-            cityState.moveIn(residents[ii], houses[10*5 + ii]);
+            cityState.moveIn(residents[ii], houses[y * width + ii]);
         }
 
         for (int ii=0; ii<5; ++ii)
@@ -271,144 +273,84 @@ TEST_CASE("move In and move Out")
         }
 
         // expected
-        std::vector<int> expectedHouses{};
-        for (int ii=0; ii<100; ++ii)
-        {
-            if ( (ii >= 30 && ii <= 39) || 
-                (ii >= 40 && ii <= 49) ||
-                (ii >= 50 && ii <= 54) ||
-                (ii >= 60 && ii <= 69)
-            ) 
-            {
-                expectedHouses.push_back(ii);
-            }
-        }
+        // exclude width * y + ii addresses, where ii is from 5 through 9.
+        std::unordered_set<int> occupiedHouses = {1005, 1006, 1007, 1008, 1009};
+        std::vector<int> expected = 
+            createAddresses(width, centerX, centerY, allowableDist, occupiedHouses);
 
-        // actualHouses
-        std::vector<int> actualHouses{};
-        std::unordered_set<const House*> actualHousesInRange = 
-            cityState.getOpenHousesWithinRange(0, 9, 3, 6);
-        for (const House* h : actualHousesInRange)
-        {
-            actualHouses.push_back(h->getAddress());
-        }
+        // actual is 
+        std::vector<int> actual = getOpenAddressesWithinRange(
+            cityState,
+            centerX,
+            centerY,
+            allowableDist);
 
-        std::sort(actualHouses.begin(), actualHouses.end());
-
-        REQUIRE(expectedHouses == actualHouses);
+        REQUIRE(expected == actual);
 
     // Move one resident back in
 
-        cityState.moveIn(residents[0], houses[40]);
+        cityState.moveIn(residents[0], houses[y*width]);
 
         //expected
-        expectedHouses.erase(expectedHouses.begin() + 10);
+        std::unordered_set<int> exclude =  {1000, 1005, 1006, 1007, 1008, 1009};
+        expected = createAddresses(width, centerX, centerY, allowableDist, exclude);
 
         // actual
-        std::vector<int> actualHousesB{};
-        std::unordered_set<const House*>actualHousesInRangeB = cityState.getOpenHousesWithinRange(0, 9, 3, 6);
-        for (const House* h : actualHousesInRangeB)
-        {
-            actualHousesB.push_back(h->getAddress());
-        }
+        actual = getOpenAddressesWithinRange(cityState, centerX, centerY, allowableDist);
 
-        std::sort(actualHousesB.begin(), actualHousesB.end());
-
-        REQUIRE(expectedHouses == actualHousesB);
+        REQUIRE(expected == actual);
 
     // check getResidentsPerHouse()
 
         // expected
-        std::unordered_map<const House*, Resident*> expectedResPerHouse{};
+        std::unordered_map<int, Resident*> expectedResPerAddress{};
+        expectedResPerAddress.insert({y*width, residents[0]});
         for (int ii=5; ii<10; ++ii)
         {
-            expectedResPerHouse.insert({houses[10*5 + ii], residents[ii]});
+            expectedResPerAddress.insert({y*width + ii, residents[ii]});
         }
-        expectedResPerHouse.insert({houses[40], residents[0]});
 
-        REQUIRE(expectedResPerHouse == cityState.getResidentsPerHouse());
+        // actual
+        std::unordered_map<int, Resident*> actualResPerAddress{};
+        std::unordered_map<const House*, Resident*> actualResPerHouse =
+            cityState.getResidentsPerHouse();
+        for (auto p : actualResPerHouse)
+        {
+            actualResPerAddress.insert({p.first->getAddress(), p.second});
+        }
+        REQUIRE(expectedResPerAddress == actualResPerAddress);
 
     // check getHousePerResident()
 
         REQUIRE(nullptr == cityState.getHousePerResident(residents[2]));
-        REQUIRE(houses[40] == cityState.getHousePerResident(residents[0]));
-        REQUIRE(houses[59] == cityState.getHousePerResident(residents[9]));
+        REQUIRE(width*y == cityState.getHousePerResident(residents[0])->getAddress());
+        REQUIRE(width*y + 9 == cityState.getHousePerResident(residents[9])->getAddress());
 
     // check getResidentPerHouse()
-        REQUIRE(nullptr == cityState.getResidentPerHouse(houses[51]));
-        REQUIRE(residents[0] == cityState.getResidentPerHouse(houses[40]));
-        REQUIRE(residents[9] == cityState.getResidentPerHouse(houses[59]));
+        const House* fifty = nullptr;
+        const House* fiveHundred = nullptr;
+        const House* fiveHundredAndNine = nullptr;
+        for ( int ii=0; ii< houses.size(); ++ii)
+        {
+            if (houses[ii]->getAddress() == 50)
+            {
+                fifty = houses[ii];
+            }
+            else if (houses[ii]->getAddress() == 1000)
+            {
+                fiveHundred = houses[ii];
+            }
+            else if (houses[ii]->getAddress() == 1009)
+            {
+                fiveHundredAndNine = houses[ii];
+            }
+        }
+        REQUIRE(nullptr == cityState.getResidentPerHouse(fifty));
+        REQUIRE(residents[0] == cityState.getResidentPerHouse(fiveHundred));
+        REQUIRE(residents[9] == cityState.getResidentPerHouse(fiveHundredAndNine));
+
+        for (auto p : residents) 
+        {
+        delete p;
+        }
 }
-
-TEST_CASE("moveInAndOutOfHouse()")
-{
-    City_Grid city = City_Grid(10);
-    std::vector<const House*> houses = city.getHouses();
-
-    CityState_Simple cityState{&city};
-
-    std::vector<Resident*> residents{};
-    for (int ii=0; ii<10; ++ii)
-    {
-        residents.push_back(new Resident_UsingFunction(
-        ii,
-        1,
-        2.2,
-        1.0,
-        make_unique<HappinessFunc_Flat>(22.3, 44),
-        "Flat"));
-    }
-
-    // Move in row of residents at y == 10 and then move residents at x=0 through x=4 out.
-        for (int ii=0; ii<10; ++ii)
-        {
-            cityState.moveIn(residents[ii], houses[10*5 + ii]);
-        }
-
-    // Move residents 0 through 4 to next row (row y=6), at x equals 5 through 9
-        for (int ii=0; ii<5; ++ii)
-        {
-            cityState.moveInAndOutOfHouse(residents[ii], houses[65 + ii]);
-        }
-
-        std::unordered_set<const House*> expectedOpenHouses{};
-        for (int ii=0; ii<5; ++ii)
-        {
-            expectedOpenHouses.insert(houses[35 + ii]);
-            expectedOpenHouses.insert(houses[45 + ii]);
-            expectedOpenHouses.insert(houses[75 + ii]);
-        }
-
-        std::unordered_set<const House*> actual = 
-            cityState.getOpenHousesWithinRange(5, 9, 3, 7);
-        
-        REQUIRE(expectedOpenHouses == actual);
-
-      
-    // check getResidentsPerHouse()
-
-        // expected
-        std::unordered_map<const House*, Resident*> expectedResPerHouse{};
-        for (int ii=0; ii<5; ++ii)
-        {
-            expectedResPerHouse.insert({houses[55 + ii], residents[5 + ii]});
-            expectedResPerHouse.insert({houses[65 + ii], residents[ii]});
-        }
-
-        std::unordered_map<const House*, Resident*> actualResPerHouse =
-            cityState.getResidentsPerHouse();
-
-        REQUIRE(expectedResPerHouse == cityState.getResidentsPerHouse());
-
-    // check getHousePerResident()
-
-        REQUIRE(houses[65] == cityState.getHousePerResident(residents[0]));
-        REQUIRE(houses[59] == cityState.getHousePerResident(residents[9]));
-
-    // check getResidentPerHouse()
-        REQUIRE(residents[6] == cityState.getResidentPerHouse(houses[56]));
-        REQUIRE(residents[1] == cityState.getResidentPerHouse(houses[66]));
-}*/
-
-
-
