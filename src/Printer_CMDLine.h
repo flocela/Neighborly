@@ -21,7 +21,7 @@ public:
     Printer_CMDLine (const Printer_CMDLine& o) = default;
     Printer_CMDLine (Printer_CMDLine&& o) noexcept = default;
     Printer_CMDLine& operator= (const Printer_CMDLine& o) = default;
-    Printer_CMDLine& operator=(Printer_CMDLine&& o) noexcept = default;
+    Printer_CMDLine& operator= (Printer_CMDLine&& o) noexcept = default;
     ~Printer_CMDLine () = default;
     
     void print(

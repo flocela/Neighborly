@@ -67,8 +67,8 @@ ostream& operator<<(ostream& os, BaseColor const& obj)
             colorString = "red";
             break;
         case BaseColor::yellow:
-        colorString = "yellow";
-        break;
+            colorString = "yellow";
+            break;
         default:
             colorString = "unknown";
             break;
