@@ -4,8 +4,8 @@
 using Catch::Matchers::Contains;
 
 TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception"
-    "when value at zero percent diversity is less than 0.0"
+    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+    " value at zero percent diversity is less than 0.0"
 )
 {   
     REQUIRE_THROWS_WITH(
@@ -15,8 +15,8 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception"
-    "when value at zero percent diversity is greater than 100"
+    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+    " value at zero percent diversity is greater than 100"
 )
 {   
     REQUIRE_THROWS_WITH(
@@ -26,8 +26,8 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception"
-    "when value at 100 percent diversity is less than 0.0"
+    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+    " value at 100 percent diversity is less than 0.0"
 )
 {   
     REQUIRE_THROWS_WITH(
@@ -37,8 +37,8 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception"
-    "when value at 100 percent diversity is greater than 100.0"
+    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+    " value at 100 percent diversity is greater than 100.0"
 )
 {   
     REQUIRE_THROWS_WITH(
@@ -48,8 +48,8 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception"
-    "when value at zero diversity is greater than value at 100 percent diversity."
+    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+    " value at zero diversity is greater than value at 100 percent diversity."
 )
 {   
     REQUIRE_THROWS_WITH(
@@ -60,8 +60,8 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception"
-    "when value for no neighbors is less than zero."
+    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+    " value for no neighbors is less than zero."
 )
 {   
     REQUIRE_THROWS_WITH(
@@ -72,8 +72,8 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception"
-    "when value for no neighbors is greater than 100."
+    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+    " value for no neighbors is greater than 100."
 )
 {   
     REQUIRE_THROWS_WITH(
@@ -84,7 +84,8 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "HappinessFunc_Rising getLargestValue, case should return value for no neighbors."
+    "HappinessFunc_Rising getLargestValue(), case"
+    " should return value for no neighbors."
 )
 {
     HappinessFunc_Rising func(95, 70, 90);
@@ -92,7 +93,8 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "HappinessFunc_Rising getLargestValue, case should return value for 100 percent diversity."
+    "HappinessFunc_Rising getLargestValue(), case"
+    " should return value for 100 percent diversity."
 )
 {
     HappinessFunc_Rising func(90, 70, 95);
@@ -100,7 +102,8 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "HappinessFunc_Rising getSmallestValue, case should return value for no neighbors."
+    "HappinessFunc_Rising getSmallestValue(), case"
+    " should return value for no neighbors."
 )
 {
     HappinessFunc_Rising func(0, 20, 90);
@@ -108,7 +111,8 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "HappinessFunc_Rising getSmallestValue, case should return value for 0 percent diversity."
+    "HappinessFunc_Rising getSmallestValue(), case"
+    " should return value for 0 percent diversity."
 )
 {
     HappinessFunc_Rising func(10, 5, 90);
