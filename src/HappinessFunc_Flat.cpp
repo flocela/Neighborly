@@ -12,7 +12,13 @@ HappinessFunc_Flat::HappinessFunc_Flat(double happinessWithNoNeighbors, double h
 {   
     if (_flat_happiness_val  < 0.0 || _flat_happiness_val  > 100.0)
     { 
-        throw invalid_argument("HappinessValue must be between 0.0 and 100.0 inclusive.");
+        throw invalid_argument("Constant happiness value must be between 0.0"
+        " and 100.0 inclusive.");
+    }
+    if (_happ_with_no_neighbors < 0.0 || _happ_with_no_neighbors > 100)
+    {
+        throw invalid_argument("Happiness value for no neighbors must be between 0.0"
+        " and 100.0 inclusive.");
     }
 }
 
