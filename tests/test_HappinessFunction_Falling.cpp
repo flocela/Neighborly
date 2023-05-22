@@ -60,7 +60,7 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "getLargestValue, case should return value for no neighbors."
+    "HappinessFunc_Falling getLargestValue, case should return value for no neighbors."
 )
 {
     HappinessFunc_Falling func(95, 70, 90);
@@ -68,7 +68,7 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "getLargestValue, case should return value for 100 percent diversity."
+    "HappinessFunc_Falling getLargestValue, case should return value for 100 percent diversity."
 )
 {
     HappinessFunc_Falling func(90, 70, 95);
@@ -76,7 +76,7 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "getSmallestValue, case should return value for no neighbors."
+    "HappinessFunc_Falling getSmallestValue, case should return value for no neighbors."
 )
 {
     HappinessFunc_Falling func(0, 20, 90);
@@ -84,7 +84,7 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "getSmallestValue, case should return value for 0 percent diversity."
+    "HappinessFunc_Falling getSmallestValue, case should return value for 0 percent diversity."
 )
 {
     HappinessFunc_Falling func(10, 5, 90);
@@ -92,7 +92,7 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "calcHappiness(), fifty percent diversity"
+    "HappinessFunc_Falling calcHappiness(), fifty percent diversity"
 )
 {
     HappinessFunc_Falling func(10, 0, 100);
@@ -100,7 +100,7 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "calcHappiness with no neighbors"
+    "HappinessFunc_Falling calcHappiness with no neighbors"
 )
 {
     HappinessFunc_Falling func(10, 0, 100);

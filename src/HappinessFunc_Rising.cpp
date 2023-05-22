@@ -8,13 +8,13 @@ using namespace std;
 HappinessFunc_Rising::HappinessFunc_Rising (
     double happinessWithNoNeighbors,
     double happinessAtZeroDiversity,
-    double happinessAtOneDiversity
+    double happinessAt100Diversity
 ): _happ_with_no_neighbors(happinessWithNoNeighbors),
    _happ_at_zero_diversity{happinessAtZeroDiversity},
-   _happ_at_one_diversity{happinessAtOneDiversity}
+   _happ_at_100_diversity{happinessAt100Diversity}
 {
-    if ( _happ_at_one_diversity  < 0.0 ||
-         _happ_at_one_diversity  > 100.0 )
+    if ( _happ_at_100_diversity  < 0.0 ||
+         _happ_at_100_diversity  > 100.0 )
     {
         throw invalid_argument("values of happiness at zero diversity must be"
         " between 0.0 and 100.0 inclusive.");
@@ -22,18 +22,22 @@ HappinessFunc_Rising::HappinessFunc_Rising (
     if ( _happ_at_zero_diversity < 0.0 ||
          _happ_at_zero_diversity > 100.0 )
     {
-        throw invalid_argument("values of happiness at one diversity must be"
+        throw invalid_argument("values of happiness at one hundred percent diversity must be"
         " between 0.0 and 100.0 inclusive.");
     }
-        
-    if (_happ_at_one_diversity <= _happ_at_zero_diversity)
-        throw invalid_argument("hapinessAtOneDiversity must be larger than"
+    if (_happ_with_no_neighbors < 0 || _happ_with_no_neighbors > 100)
+    {
+        throw invalid_argument("happiness value for no neighbors must be between"
+        " 0.0 and 100.0 inclusive.");
+    }
+    if (_happ_at_100_diversity <= _happ_at_zero_diversity)
+        throw invalid_argument("happinessAt100Diversity must be larger than"
         " at happinessAtZeroDiversity.");
 }
 
 double HappinessFunc_Rising::getLargestValue () const
 {
-    return max(_happ_at_one_diversity, _happ_with_no_neighbors);
+    return max(_happ_at_100_diversity, _happ_with_no_neighbors);
 }
 
 double HappinessFunc_Rising::getSmallestValue () const
@@ -56,7 +60,7 @@ double HappinessFunc_Rising::calcHappiness (
     double diversity = num_of_diff_neighbors / 
                             (double)(num_of_diff_neighbors + num_of_like_neighbors);
     return _happ_at_zero_diversity + 
-           (_happ_at_one_diversity -_happ_at_zero_diversity) * diversity;
+           (_happ_at_100_diversity -_happ_at_zero_diversity) * diversity;
 }
 
 
@@ -68,7 +72,7 @@ string HappinessFunc_Rising::toStrBasic () const
     returnStream << ", zero diversity: ";
     returnStream << fixed << setprecision(2) << _happ_at_zero_diversity;
     returnStream << ", one diversity: ";
-    returnStream << fixed << setprecision(2) << _happ_at_one_diversity;
+    returnStream << fixed << setprecision(2) << _happ_at_100_diversity;
     
     return returnStream.str();
 }

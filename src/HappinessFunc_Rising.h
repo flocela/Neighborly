@@ -18,7 +18,7 @@ public:
     HappinessFunc_Rising (
         double happinessWithNoNeighbors,
         double happinessAtZeroDiversity,
-        double happinessAtOneDiversity
+        double happinessAt100Diversity
     );
     HappinessFunc_Rising () = delete;
     HappinessFunc_Rising (const HappinessFunc_Rising& obj) = default;
@@ -41,7 +41,7 @@ public:
 private:
     double _happ_with_no_neighbors;
     double _happ_at_zero_diversity;
-    double _happ_at_one_diversity;
+    double _happ_at_100_diversity;
 };
 
 #endif
