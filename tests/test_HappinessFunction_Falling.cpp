@@ -98,3 +98,11 @@ TEST_CASE(
     HappinessFunc_Falling func(10, 0, 100);
     REQUIRE(50 == func.calcHappiness(10, 4, 4));
 }
+
+TEST_CASE(
+    "calcHappiness with no neighbors"
+)
+{
+    HappinessFunc_Falling func(10, 0, 100);
+    REQUIRE(10 == func.calcHappiness(10, 0, 0));
+}
