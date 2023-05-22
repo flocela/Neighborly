@@ -6,12 +6,12 @@
 using namespace std;
 
 HappinessFunc_Falling::HappinessFunc_Falling (
-    double happinessWithNoNeighbors,
-    double happinessAtZeroPercentDiversity,
-    double happinessAt100PercentDiversity
+    double happinessWithNoNeighbors, 
+    double happinessAtZeroDiversity,
+    double happinessAt100Diversity
 ):  _happ_with_no_neighbors{happinessWithNoNeighbors},
-    _happ_at_zero_diversity{happinessAtZeroPercentDiversity},
-    _happ_at_one_diversity{happinessAt100PercentDiversity}
+    _happ_at_zero_diversity{happinessAtZeroDiversity},
+    _happ_at_100_diversity{happinessAt100Diversity}
 {
     if (_happ_at_zero_diversity < 0.0 || 
         _happ_at_zero_diversity > 100.0 )
@@ -19,29 +19,29 @@ HappinessFunc_Falling::HappinessFunc_Falling (
         throw invalid_argument("happiness At Zero Diversity must be "
         "between 0.0 and 100.0 inclusive.");
     }
-    if (_happ_at_one_diversity < 0.0 ||
-        _happ_at_one_diversity > 100.0)
+    if (_happ_at_100_diversity < 0.0 ||
+        _happ_at_100_diversity > 100.0)
     {
         throw invalid_argument("happiness At One Diversity must be "
         "between 0.0 and 100.0 inclusive.");
     }
-    if (_happ_at_one_diversity >=
+    if (_happ_at_100_diversity <=
         _happ_at_zero_diversity)
     {
         throw invalid_argument("happinessAtZeroDiversity must be"
-        " larger than happinessAtOneDiversity.");
+        " larger than happinessAt100Diversity.");
     }
 
 }
 
-double HappinessFunc_Falling::getMaximumPossibleValue () const
+double HappinessFunc_Falling::getLargestValue () const
 {
-    return max(_happ_at_zero_diversity, _happ_with_no_neighbors);
+    return max(_happ_with_no_neighbors, _happ_at_100_diversity);
 }
 
-double HappinessFunc_Falling::getLeastPossibleValue () const
+double HappinessFunc_Falling::getSmallestValue () const
 {
-    return min(_happ_at_one_diversity, _happ_with_no_neighbors);
+    return min(_happ_with_no_neighbors, _happ_at_zero_diversity);
 }
 
 double HappinessFunc_Falling::calcHappiness ( 
@@ -60,7 +60,7 @@ double HappinessFunc_Falling::calcHappiness (
                        (double)(num_of_diff_neighbors + num_of_like_neighbors);
 
     return _happ_at_zero_diversity + 
-           (_happ_at_one_diversity -_happ_at_zero_diversity) * diversity;
+           (_happ_at_100_diversity -_happ_at_zero_diversity) * diversity;
 }
 
 string HappinessFunc_Falling::toStrBasic () const
@@ -71,8 +71,8 @@ string HappinessFunc_Falling::toStrBasic () const
     returnStream << fixed << setprecision(2) << _happ_with_no_neighbors;
     returnStream << ", zero diversity: ";
     returnStream << fixed << setprecision(2) << _happ_at_zero_diversity;
-    returnStream << ", one diversity: ";
-    returnStream << fixed << setprecision(2) << _happ_at_one_diversity;
+    returnStream << ", one hundred diversity: ";
+    returnStream << fixed << setprecision(2) << _happ_at_100_diversity;
     
     return returnStream.str();
 }

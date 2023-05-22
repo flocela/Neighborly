@@ -16,11 +16,11 @@ Resident_UsingFunction::Resident_UsingFunction (
 
 double Resident_UsingFunction::getMaximumPossibleHappiness () const
 {
-    return _hap_func->getMaximumPossibleValue();
+    return _hap_func->getLargestValue();
 }
 double Resident_UsingFunction::getLeastPossibleHappiness () const
 {
-    return _hap_func->getLeastPossibleValue();
+    return _hap_func->getSmallestValue();
 }
 
 std::string Resident_UsingFunction::implimentToStrBasic () const

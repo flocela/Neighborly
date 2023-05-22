@@ -22,9 +22,9 @@ public:
     HappinessFunc_Flat& operator=(HappinessFunc_Flat&& obj) noexcept = default;
     ~HappinessFunc_Flat() = default;
     
-    double getMaximumPossibleValue () const;
+    double getLargestValue () const;
 
-    double getLeastPossibleValue () const;
+    double getSmallestValue () const;
 
     double calcHappiness(
         int tot_num_of_possible_neighbors, 

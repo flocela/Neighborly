@@ -31,12 +31,12 @@ double HappinessFunc_Flat::calcHappiness (
     return _flat_happiness_val;
 }
 
-double HappinessFunc_Flat::getMaximumPossibleValue () const
+double HappinessFunc_Flat::getLargestValue () const
 {
     return max(_flat_happiness_val, _happ_with_no_neighbors);
 }
 
-double HappinessFunc_Flat::getLeastPossibleValue () const
+double HappinessFunc_Flat::getSmallestValue () const
 {
     return min(_flat_happiness_val, _happ_with_no_neighbors);
 }

@@ -31,12 +31,12 @@ HappinessFunc_StepUp::HappinessFunc_StepUp (
         throw invalid_argument("stepUp must be between 0.0 and 1.0 inclusive.");
 }
 
-double HappinessFunc_StepUp::getMaximumPossibleValue () const
+double HappinessFunc_StepUp::getLargestValue () const
 {
     return max(_happ_at_end, _happ_with_zero_neighbors);
 }
 
-double HappinessFunc_StepUp::getLeastPossibleValue () const
+double HappinessFunc_StepUp::getSmallestValue () const
 {
     return min(_happ_at_start, _happ_with_zero_neighbors);
 }

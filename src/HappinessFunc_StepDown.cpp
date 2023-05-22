@@ -40,12 +40,12 @@ HappinessFunc_StepDown::HappinessFunc_StepDown (
     
 }
 
-double HappinessFunc_StepDown::getMaximumPossibleValue () const
+double HappinessFunc_StepDown::getLargestValue () const
 {
     return max(_happ_at_start, _happ_with_zero_neighbors);
 }
 
-double HappinessFunc_StepDown::getLeastPossibleValue () const
+double HappinessFunc_StepDown::getSmallestValue () const
 {
     return min(_happ_at_end, _happ_with_zero_neighbors);
 }

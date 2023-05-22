@@ -22,8 +22,8 @@ public:
     
     virtual std::string toStrBasic () const = 0;
 
-    virtual double getMaximumPossibleValue () const = 0;
-    virtual double getLeastPossibleValue () const = 0;
+    virtual double getLargestValue () const = 0;
+    virtual double getSmallestValue () const = 0;
 
 };
 

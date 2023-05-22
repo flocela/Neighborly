@@ -32,9 +32,9 @@ public:
     HappinessFunc_StepDown& operator=(HappinessFunc_StepDown&& obj) noexcept = default;
     ~HappinessFunc_StepDown() = default;                       
 
-    double getMaximumPossibleValue () const;
+    double getLargestValue () const;
 
-    double getLeastPossibleValue () const;
+    double getSmallestValue () const;
 
     double calcHappiness(
         int tot_num_of_possible_neighbors, 

@@ -34,9 +34,9 @@ public:
         double stepUp
     );
 
-    double getMaximumPossibleValue () const;
+    double getLargestValue () const;
 
-    double getLeastPossibleValue () const;
+    double getSmallestValue () const;
 
     double calcHappiness(
         int tot_num_of_possible_neighbors, 
