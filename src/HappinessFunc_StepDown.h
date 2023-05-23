@@ -5,8 +5,8 @@
 #include "HappinessFunc.h"
 
 // this is a step function. the x-axis is diversity. the y-axis is happiness.
-// a higher y-value is used from zero to stepDown (on the x-axis). a lower y-value is
-// used after stepDown. stepDown is an x-value.
+// a higher y-value is used from zero upto-and-including stepDown (on the x-axis).
+// a lower y-value is used after stepDown. stepDown is an x-value.
 class HappinessFunc_StepDown: public HappinessFunc
 {
 public:
@@ -16,9 +16,9 @@ public:
     // to @happinessAtEnd, or if either value is not in the range
     // 0.0 to 100.0 inclusive.
     // when total number of neighbors is zero, diversity is undefined.
-    // happinessWithNoNeighbors is the y-value corresponding to total neighbors is zero.
-    // happinessWithZeroNeighbors, happinessAtStart, happinessAtEnd are y-values, or happiness values.
-    // stepDown is an x-value, or a diversity value.
+    // happinessWithZeroNeighbors is the y-value corresponding to having no neighbors.
+    // happinessWithZeroNeighbors, happinessAtStart, happinessAtEnd are y-values.
+    // stepDown is an x-value (a diversity value).
     HappinessFunc_StepDown (
         double happinessWithZeroNeighbors, 
         double happinessAtStart, 

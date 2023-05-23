@@ -29,12 +29,12 @@ HappinessFunc_StepDown::HappinessFunc_StepDown (
     }
     if (_happ_at_start <= _happ_at_end)
     {   
-        throw std::invalid_argument("happinessAtStart must be larger than "
-            "happinessAtEnd.");
+        throw std::invalid_argument("starting happiness value must be larger"
+        " than ending happiness value.");
     }
     if (stepDown < 0 || stepDown > 1.0)
     {
-        throw std::invalid_argument("stepDown must be between 0.0 "
+        throw std::invalid_argument("step down location must be between 0.0 "
             "and 1.0 inclusive.");
     }
     
