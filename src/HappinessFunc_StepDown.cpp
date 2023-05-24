@@ -8,20 +8,20 @@ using namespace std;
 
 HappinessFunc_StepDown::HappinessFunc_StepDown ( 
     double happinessWithZeroNeighbors,
-    double highHappinessValue, 
-    double lowHappinessValue, 
+    double happinessAtStart, 
+    double happinessAtEnd, 
     double stepDown
 ): _happ_with_zero_neighbors{happinessWithZeroNeighbors},
-   _happ_at_start{highHappinessValue},
-   _happ_at_end{lowHappinessValue},
+   _happ_at_start{happinessAtStart},
+   _happ_at_end{happinessAtEnd},
    _step_down{stepDown}
 {   
-    if (happinessWithZeroNeighbors < 0.0   || 
-        happinessWithZeroNeighbors > 100.0 ||
-        highHappinessValue       < 0.0   || 
-        highHappinessValue       > 100.0 ||
-        lowHappinessValue        < 0.0   ||
-        lowHappinessValue        > 100.0)
+    if (_happ_with_zero_neighbors < 0.0   || 
+        _happ_with_zero_neighbors > 100.0 ||
+        _happ_at_start < 0.0   || 
+        _happ_at_start > 100.0 ||
+        _happ_at_end   < 0.0   ||
+        _happ_at_end   > 100.0)
     {
        throw std::invalid_argument("happinessWithZeroNeighbors, happinessAtStart"
             " and happinessAtEnd"
@@ -32,7 +32,7 @@ HappinessFunc_StepDown::HappinessFunc_StepDown (
         throw std::invalid_argument("starting happiness value must be larger"
         " than ending happiness value.");
     }
-    if (stepDown < 0 || stepDown > 1.0)
+    if (_step_down < 0 || _step_down > 1.0)
     {
         throw std::invalid_argument("step down location must be between 0.0 "
             "and 1.0 inclusive.");

@@ -21,8 +21,8 @@ public:
     // stepDown is an x-value (a diversity value).
     HappinessFunc_StepDown (
         double happinessWithZeroNeighbors, 
-        double happinessAtStart, 
-        double happinessAtEnd, 
+        double happinessAtStart, // higher happiness value
+        double happinessAtEnd,   // lower happiness value 
         double stepDown
     );
     HappinessFunc_StepDown () = delete;
