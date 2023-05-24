@@ -5,21 +5,20 @@
 #include "HappinessFunc.h"
 
 // this is a step function. the x-axis is diversity. the y-axis is happiness.
-// a higher y-value is used from zero to stepDown (on the x-axis). a higher y-value
+// a lower y-value is used from zero to stepDown (on the x-axis). a higher y-value
 // is used after stepDown. stepDown is an x-value.
 class HappinessFunc_StepUp: public HappinessFunc
 {
 public:
     // x-axis is Diversity, range is 0.0 to 1.0 inclusive.
     // y-axis is Happiness, range is 0.0 to 100.0 inclusive.
-    // an exception is thrown if @happinessAtStart is less than or equal
+    // an exception is thrown if @happinessAtStart is greater than or equal
     // to @happinessAtEnd, or if either value is not in the range
     // 0.0 to 100.0 inclusive.
     // when total number of neighbors is zero, diversity is undefined.
     // happinessWithNoNeighbors is the y-value corresponding to total neighbors is zero.
-    // happinessWithZeroNeighbors, happinessAtStart, happinessAtEnd are y-values, or happiness values.
-    // stepUp is an x-value, or a diversity value.
-    HappinessFunc_StepUp (double happinessValue);
+    // happinessWithZeroNeighbors, happinessAtStart, happinessAtEnd are y-values (happiness values).
+    // stepUp is an x-value (diversity value).
     HappinessFunc_StepUp () = delete;
     HappinessFunc_StepUp (const HappinessFunc_StepUp& obj) = default;
     HappinessFunc_StepUp (HappinessFunc_StepUp&& obj) noexcept = default;

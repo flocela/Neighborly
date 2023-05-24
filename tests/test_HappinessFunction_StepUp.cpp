@@ -2,7 +2,7 @@
 #include "../src/HappinessFunc_StepUp.h"
 
 using Catch::Matchers::Contains;
-/*
+
 TEST_CASE(
     "HappinessFunc_StepUp Constructor throws invalid argument exception when"
     " happinessAtStart is less than zero"
@@ -49,15 +49,14 @@ TEST_CASE(
 
 TEST_CASE(
     "HappinessFunc_StepUp Constructor throws invalid argument exception when"
-    " happinessAtEnd is larger than happinessAtStart."
+    " happinessAtStart is larger than happinessAtEnd."
 )
 {   
     REQUIRE_THROWS_WITH(
-        HappinessFunc_StepUp(0.0, 50, 100, .5), 
-        Contains("starting happiness value must be larger than ending happiness value.") 
+        HappinessFunc_StepUp(0.0, 100, 50, .5), 
+        Contains("happinessAtStart must be less than happinessAtEnd.") 
     );
 }
-
 
 TEST_CASE(
     "HappinessFunc_StepUp Constructor throws invalid argument exception when"
@@ -82,73 +81,73 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "HappinessFunc_StepUp getLargestValue(), case"
+    "HappinessFunc_StepUp getLargestValue(),"
+    " since happinessWithZeroNeighbors is larger than happinessAtEnd, getLargestValue() "
     " should return value for no neighbors."
 )
 {
-    HappinessFunc_StepUp func(95, 90, 0, .5);
+    HappinessFunc_StepUp func(95, 0, 90, .5);
     REQUIRE(95 == func.getLargestValue());
 }
 
 TEST_CASE(
-    "HappinessFunc_StepUp getLargestValue(), case"
-    " should return value for zero percent diversity."
+    "HappinessFunc_StepUp getLargestValue()"
+    " since happinessAtEnd is larger than happinessWithZeroNeighbors, getLargestValue() "
+    " should return happinessAtEnd."
 )
 {
-    HappinessFunc_StepUp func(90, 95, 0, .5);
+    HappinessFunc_StepUp func(90, 0, 95, .5);
     REQUIRE(95 == func.getLargestValue());
 }
 
 TEST_CASE(
-    "HappinessFunc_StepUp getSmallestValue(), case"
-    " should return value for no neighbors."
+    "HappinessFunc_StepUp getSmallestValue(),"
+    " since happinessAtStart is smaller than happinessWithZeroNeighbors, getSmallestValue() "
+    " should return happinessAtStart."
 )
 {
-    HappinessFunc_StepUp func(0, 90, 20, .5);
+    HappinessFunc_StepUp func(10, 0, 100, .5);
     REQUIRE(0.0 == func.getSmallestValue());
 }
 
 TEST_CASE(
-    "HappinessFunc_StepUp getSmallestValue(), case"
-    " should return value for 100 percent diversity."
+    "HappinessFunc_StepUp getSmallestValue(),"
+    " since happinessWithZeroNeighbors is smaller than happinessAtStart, getSmallestValue() "
+    " should return happinessWithZeroNeighbor."
 )
 {
-    HappinessFunc_StepUp func(50, 90, 20, .5);
-    REQUIRE(20.0 == func.getSmallestValue());
+    HappinessFunc_StepUp func(0.0, 10, 100, .5);
+    REQUIRE(0.0 == func.getSmallestValue());
 }
 
 TEST_CASE(
     "HappinessFunc_StepUp calcHappiness() at stepdown is same as happinessAtStart"
 )
 {
-    HappinessFunc_StepUp func(0, 100, 0, .5);
-    REQUIRE(100 == func.calcHappiness(10, 4, 4));
+    HappinessFunc_StepUp func(10, 0, 100.0, .5);
+    REQUIRE(0.0 == func.calcHappiness(10, 4, 4));
 }
-
 
 TEST_CASE(
     "HappinessFunc_StepUp calcHappiness() before stepdown is same as happinessAtStart"
 )
 {
-    HappinessFunc_StepUp func(0, 100, 0, .5);
-    REQUIRE(100 == func.calcHappiness(10, 4, 2));
+    HappinessFunc_StepUp func(10, 0, 100, .5);
+    REQUIRE(0 == func.calcHappiness(10, 4, 2));
 }
-
 
 TEST_CASE(
     "HappinessFunc_StepUp calcHappiness() after stepdown is same as happinessAtEnd"
 )
 {
-    HappinessFunc_StepUp func(0, 100, 0, .5);
-    REQUIRE(0.0 == func.calcHappiness(10, 4, 6));
+    HappinessFunc_StepUp func(0, 0, 100, .5);
+    REQUIRE(100.0 == func.calcHappiness(10, 4, 6));
 }
-
 
 TEST_CASE(
     "HappinessFunc_StepUp calcHappiness with no neighbors"
 )
 {
-    HappinessFunc_StepUp func(10, 100, 0, .5);
+    HappinessFunc_StepUp func(10, 0, 100, .5);
     REQUIRE(10 == func.calcHappiness(10, 0, 0));
 }
-*/

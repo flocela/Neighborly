@@ -17,16 +17,18 @@ HappinessFunc_StepUp::HappinessFunc_StepUp (
     _happ_at_end{happinessAtEnd},
     _step_up{stepUp}
 {
-    if (happinessWthZeroNeighbors < 0.0 ||
-        happinessWthZeroNeighbors > 100.0 ||
-        happinessAtStart  < 0.0 || 
-        happinessAtStart  > 100.0 ||
-        happinessAtEnd   < 0.0 ||
-        happinessAtEnd   > 100.0)
+    if (_happ_with_zero_neighbors < 0.0 ||
+        _happ_with_zero_neighbors > 100.0 ||
+        _happ_at_start  < 0.0 || 
+        _happ_at_start  > 100.0 ||
+        _happ_at_end   < 0.0 ||
+        _happ_at_end   > 100.0)
         throw invalid_argument("happinessWithZeroNeighbors, happinessAtStart,"
         " and happinessAtEnd must be between 0.0 and 100.0 inclusive.");
+
     if (happinessAtStart >= happinessAtEnd)
-        throw invalid_argument("happinessAtStart must be less than or equal to happinessAtEnd.");
+        throw invalid_argument("happinessAtStart must be less than happinessAtEnd.");
+        
     if (stepUp < 0 || stepUp > 1.0)
         throw invalid_argument("stepUp must be between 0.0 and 1.0 inclusive.");
 }
