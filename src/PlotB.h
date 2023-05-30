@@ -46,6 +46,8 @@ public:
 
     int getCenterValueOfXAxisPx () const override;
 
+    int getDotSizePx () const override;
+
     int getTopLeftXPx () const override;
 
     int getTopLeftYPx () const override;
@@ -53,6 +55,10 @@ public:
     int getXSpacePx () const override;
 
     int getYSpacePx () const override;
+
+    int getXUnitSizePx () const override;
+
+    int getYUnitSizePx () const override;
 
     int sizeXPx () const override;
 

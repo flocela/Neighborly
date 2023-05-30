@@ -38,6 +38,16 @@ int AxisLeftToRightB::getAxisLengthPx () const
         isOdd;
 }
 
+int AxisLeftToRightB::getLabelLengthPx () const
+{
+    int retVal =  
+        _axis_format.axisThicknessPx() +
+        _axis_format.majTickLengthOutsideChartPx() +
+        _axis_format.labelLineSpacePx() +
+        _axis_format.labelHeightPx();
+    return retVal;
+}
+
 int AxisLeftToRightB::getCenterValXPx () const
 {
     return getPixel(_min_val + (_max_val-_min_val)/2);
@@ -63,8 +73,12 @@ int AxisLeftToRightB::sizeXPx () const
     return getAxisLengthPx();
 }
 
+// TODO just use getLabelLength
 int AxisLeftToRightB::sizeYPx () const
-{   
+{   //std::cout << "AxisLeftToRightB axisThickness, majTickLengthOutsideChartPx, labelLineSpacePx, lableHeight:" <<
+    //_axis_format.axisThicknessPx() << ", " << _axis_format.majTickLengthOutsideChartPx() << ", " <<
+    //_axis_format.labelLineSpacePx() << ", " <<
+    //_axis_format.labelHeightPx() << std::endl;
     int retVal =  
         _axis_format.axisThicknessPx() +
         _axis_format.majTickLengthOutsideChartPx() +

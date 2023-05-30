@@ -1,5 +1,7 @@
 #include "AxisFormat.h"
 
+#include <iostream>
+
 using namespace std;
 
 int AxisFormat::axisThicknessPx () const { return _axis_thickness__px;}

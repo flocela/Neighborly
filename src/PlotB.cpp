@@ -83,6 +83,11 @@ int PlotB::getCenterValueOfXAxisPx () const
     return _x_axis.getCenterValXPx();
 }
 
+int PlotB::getDotSizePx () const
+{
+    return _dot__px;
+}
+
 int PlotB::getTopLeftXPx () const 
 {
     return _top_left_x__px;
@@ -101,6 +106,16 @@ int PlotB::getXSpacePx () const
 int PlotB::getYSpacePx () const
 {
     return _y_space__px;
+}
+
+int PlotB::getXUnitSizePx () const
+{
+    return _unit__px;
+}
+
+int PlotB::getYUnitSizePx () const
+{
+    return _unit__px;
 }
 
 int PlotB::sizeXPx () const 

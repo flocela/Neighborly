@@ -11,7 +11,8 @@ class AxisBottomToTopL
     public:
         AxisBottomToTopL (
             AxisFormat axisFormat,
-            int horizLengthPx, // width of horizontal lines that are a continuation of tick marks
+            int horizLengthPx, // width of horizontal lines that are a continuation of tick marks,
+            // they extend into the chart and are usually a greyed out color.
             int x_coordinate__px, // where x and y axis meet
             int y_coordinate__px, // where x and y axis meet
             int minVal,
@@ -29,6 +30,13 @@ class AxisBottomToTopL
         ~AxisBottomToTopL () = default;
 
         int getAxisLengthPx () const;
+
+        // the label are the numbers to the right of the axis plus
+        // the length of the tick outside the chart plus
+        // the space between the label and the tick plus
+        // the axis thickness.
+        // the length is in the x direction.
+        int getLabelLengthPx () const;
 
         // returns the y-pixel for yVal. If tick thickness is odd, then center is denoted by one pixel.
         // If tick thickness is even, then center is denoted by two pixels,

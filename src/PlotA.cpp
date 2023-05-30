@@ -29,35 +29,51 @@ PlotA::PlotA (
     _y_space__px{ySpacePx},
     _x_diff{maxX - minX},
     _y_diff{maxY - minY},
-    _unit_x__px{calcUnitSizeXAndYPx().first},
-    _unit_y__px{calcUnitSizeXAndYPx().second},
-    _dot__px{calcDotSizePx()},
-    _cross_x__px{calcCrossXPx(topLeftXPx)}, 
-    _cross_y__px{calcCrossYPx(topLeftYPx)},
     _x_axis{
         _a_format_x,
-        _cross_x__px,
-        _cross_y__px,
+        0, // use zero for default x_coordinate__px
+        0, // use zero for default y_coordinate__px
         _min_x,
         _max_x,
-        _unit_x__px,
-        (_dot__px%2==0)? 2 : 1,
+        0, // use zero for pxPerUnit
+        1, // use 1 for tickThickness
         plotFormat.startOffsetM(),
         plotFormat.endOffsetM()
     },
     _y_axis{
         _a_format_y,
         _x_axis.getAxisLengthPx(),
-        _cross_x__px,
-        _cross_y__px,
+        0, // use zero for default x_coordinate__px
+        0, // use zero for default y_coordinate__px
         _min_y,
         _max_y,
-        _unit_y__px,
-        (_dot__px%2==0)? 2 : 1,
+        0, // use zero for pxPerUnit
+        1, // use 1 for tickThickness
         plotFormat.startOffsetM(),
         plotFormat.endOffsetM(),
+        
     }
-{}
+{
+    pair<int, int> unitSize = calcUnitSizeXAndYPx();
+    _unit_x__px = unitSize.first;
+    _unit_y__px = unitSize.second;
+    _dot__px = calcDotSizePx();
+    int tickThickness = (_dot__px%2==0)? 2 : 1; // TODO needs to be determined every time unit_px and dot__px are determined
+    _cross_x__px = calcCrossXPx(topLeftXPx);
+    _cross_y__px = calcCrossYPx(topLeftYPx);
+
+    _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
+    _x_axis.setPxPerUnit(_unit_x__px);
+    _x_axis.setTickThickness(tickThickness);
+    _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
+    _y_axis.setPxPerUnit(_unit_y__px);
+    _y_axis.setTickThickness(tickThickness);
+    
+    // horizontal length of extended tick marks.
+    // they are inside the chart and area usually a greyed out color
+    _y_axis.setHorizLength(_x_axis.getAxisLengthPx());
+
+ }
 
 PlotA::PlotA (
     PlotFormat plotFormat,
@@ -78,10 +94,14 @@ PlotA(  plotFormat,
     )
 {}
 
-
 int PlotA::getCenterValueOfXAxisPx () const
 {
     return _x_axis.getCenterValXPx();
+}
+
+int PlotA::getDotSizePx () const
+{
+    return _dot__px;
 }
 
 int PlotA::getTopLeftXPx () const
@@ -102,6 +122,16 @@ int PlotA::getXSpacePx () const
 int PlotA::getYSpacePx () const
 {
     return _y_space__px;
+}
+
+int PlotA::getXUnitSizePx () const
+{
+    return _unit_x__px;
+}
+
+int PlotA::getYUnitSizePx () const
+{
+    return _unit_y__px;
 }
 
 int PlotA::sizeYPx() const
@@ -175,6 +205,7 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _unit_x__px = unit_sizes.first;
     _unit_y__px = unit_sizes.second;
 
+    _dot__px = calcDotSizePx();
     int tickThickness = (_dot__px%2==0)? 2 : 1;
 
     _cross_x__px = calcCrossXPx(_top_left_x__px);
@@ -191,32 +222,36 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
 pair<int, int> PlotA::calcUnitSizeXAndYPx () const
 {
     // x-unit size (doesn't change)
-    int allowableXAxisLengthPx = _x_space__px - _y_axis.sizeXPx();
+    int allowableXAxisLengthPx = _x_space__px - _y_axis.getLabelLengthPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
     xUnitSize = max(xUnitSize, _min_unit__px);
 
     // preliminary y-unit size
-    int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeYPx();
+    int allowableYAxisLengthPx = _y_space__px - _x_axis.getLabelLengthPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
     yUnitSize = max(yUnitSize, _min_unit__px);
-    
-    // _unit_x__px and _unit_y__px must both be odd or both be even.
-    if ( (xUnitSize%2 == 0 && yUnitSize%2 != 0) || (yUnitSize%2 != 0 && yUnitSize%2 == 0) )
+
+    // _unit_x__px and _unit_y__px must both be odd or both be even, so that dot is square.
+    if ( (xUnitSize%2) != (yUnitSize%2) )
     {
-        if (yUnitSize > _min_unit__px)
+        if (yUnitSize > xUnitSize)
+        {
             --yUnitSize;
+        }
         else
-            ++yUnitSize;
+        {
+            --xUnitSize;
+        }
     }
     return {xUnitSize, yUnitSize};
 }
 
 int PlotA::calcDotSizePx () const
-{
+{   
     int minUnitSizePx = min(_unit_x__px, _unit_y__px);
-    int dotSize = minUnitSizePx/2;
+    int dotSize = minUnitSizePx/4;
     dotSize =  ((minUnitSizePx - dotSize) % 2 == 0) ? dotSize : (dotSize + 1);
     return dotSize;
 }
@@ -224,12 +259,15 @@ int PlotA::calcDotSizePx () const
 // x-axis is centered in the space available.
 int PlotA::calcCrossXPx (int topLeftXPx) const
 {
-    int xAxisLength = 
-        (_unit_x__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _y_axis.sizeXPx();
+    int requiredXLength = 
+        (_unit_x__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _y_axis.getLabelLengthPx();
 
-    return topLeftXPx  +
-           (int)( (0.5 * _x_space__px) - (0.5 * (xAxisLength + _y_axis.sizeXPx())) )+
-           _y_axis.sizeXPx();
+    // start at given most left point (topLeftXPx),
+    // move to the center of given space, move to the left by 1/2 of the required length,
+    // move crosshairs to the right making room for y-axis.
+    return topLeftXPx +
+           (int)( 0.5 * (_x_space__px - requiredXLength) ) +
+           _y_axis.getLabelLengthPx();
 }
 
 int PlotA::calcCrossYPx (int topLeftYPx) const

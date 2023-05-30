@@ -12,6 +12,7 @@
 #include "Point.h"
 #include "unordered_map"
 
+// Plot contains the x and y axis, their labels, and the data points inside the graph.
 // x-axis runs horizontally on the bottom of the plot (left to right)
 // y-axis runs vertically on the left (bottom to top) 
 class PlotA: public Plot
@@ -22,12 +23,12 @@ public:
         PlotFormat plotFormat,
         int topLeftXPx, // top left corner of plot
         int topLeftYPx, // top left corner of plot
-        int minX,
-        int maxX,
-        int minY,
-        int maxY,
-        int xSpacePx,
-        int ySpacePx
+        int minX, // minimum value on x-axis
+        int maxX, // maximum value on x-axis
+        int minY, // minimum value on y-axis
+        int maxY, // maximum value on y-axis
+        int xSpacePx, // allowable space to put the axes (including labels)
+        int ySpacePx  // allowable space to put the axes (including labels)
     );
 
     // Creates a plot with top left corner at (0,0) pixels.
@@ -49,6 +50,8 @@ public:
     ~PlotA () = default;
     
     int getCenterValueOfXAxisPx () const override;
+
+    int getDotSizePx () const override;
     
     int getTopLeftXPx () const override;
 
@@ -57,6 +60,10 @@ public:
     int getXSpacePx () const override;
 
     int getYSpacePx () const override;
+
+    int getXUnitSizePx () const override;
+
+    int getYUnitSizePx () const override;
 
     int sizeXPx () const override;
 
@@ -108,8 +115,8 @@ private:
 
     int _x_diff; // max minus min axis values
     int _y_diff; // max minus min axis values
-    int _unit_x__px; // unit size in pixels in x direction
-    int _unit_y__px; // unit size in pixels in y direction
+    int _unit_x__px = 0; // unit size in pixels in x direction
+    int _unit_y__px = 0; // unit size in pixels in y direction
 
     // dot represents a value. the dot is a colored square, same size in x and y directions.
     // _dot__px is the length of the square

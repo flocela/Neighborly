@@ -1,5 +1,5 @@
 #include "HappinessFunc_Falling.h"
-
+#include <iostream>
 #include <sstream>
 #include <iomanip>
 
@@ -25,8 +25,7 @@ HappinessFunc_Falling::HappinessFunc_Falling (
         throw invalid_argument("happiness At One Diversity must be "
         "between 0.0 and 100.0 inclusive.");
     }
-    if (_happ_at_100_diversity <=
-        _happ_at_zero_diversity)
+    if (_happ_at_zero_diversity <= _happ_at_100_diversity)
     {
         throw invalid_argument("happinessAtZeroDiversity must be"
         " larger than happinessAt100Diversity.");
@@ -36,12 +35,12 @@ HappinessFunc_Falling::HappinessFunc_Falling (
 
 double HappinessFunc_Falling::getLargestValue () const
 {
-    return max(_happ_with_no_neighbors, _happ_at_100_diversity);
+    return max(_happ_with_no_neighbors, _happ_at_zero_diversity);
 }
 
 double HappinessFunc_Falling::getSmallestValue () const
-{
-    return min(_happ_with_no_neighbors, _happ_at_zero_diversity);
+{   
+    return min(_happ_with_no_neighbors, _happ_at_100_diversity);
 }
 
 double HappinessFunc_Falling::calcHappiness ( 

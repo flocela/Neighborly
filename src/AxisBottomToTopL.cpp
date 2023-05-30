@@ -42,6 +42,15 @@ int AxisBottomToTopL::getAxisLengthPx () const
            1;
 }
 
+int AxisBottomToTopL::getLabelLengthPx () const
+{
+    return 
+        (3) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
+        _text_spacer +
+        _axis_format.majTickLengthOutsideChartPx() +
+        _axis_format.axisThicknessPx();
+}
+
 int AxisBottomToTopL::getPixel (double yVal) const
 {   
     // line equation: y2 = y1 - m * (x2 - x1), m is in px per unit
@@ -85,8 +94,12 @@ void AxisBottomToTopL::print (Renderer* renderer) const
     renderer->renderTexts(texts);
 }
 
+//TODO, just use getLabelLength here
 int AxisBottomToTopL::sizeXPx () const
 {  
+    //cout << "(AxisBottomToTopL af.labelWidthMultiplier(), af.labelHeight, _text_spacer, _af.axisThicknessPx: " <<
+    //_axis_format.labelWidthMultiplier() << ", " << _axis_format.labelHeightPx() << ", " <<
+    //_text_spacer << ", " << _axis_format.axisThicknessPx() << endl;
     // Three is max number of digits in the y-axis label.
     return 
         (3) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
