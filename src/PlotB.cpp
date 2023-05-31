@@ -31,34 +31,43 @@ PlotB::PlotB (
     _y_space__px{ySpacePx},
     _x_diff{maxX - minX},
     _y_diff{maxY - minY},
-    _unit__px{calcUnitSizePx()},
-    _dot__px{calcDotSizePx()},
-    _cross_x__px{ calcCrossXPx(topLeftXPx) }, 
-    _cross_y__px{ calcCrossYPx(topLeftYPx) },
     _x_axis{
         _axis_format_x,
-        _cross_x__px,
-        _cross_y__px,
+        0, // use zero for default x_coordinate__px
+        0, // use zero for default y_coordinate__px
         _min_x,
         _max_x,
-        _unit__px,
-        (_dot__px%2==0)? 2 : 1,
+        0, // use zero for pxPerUnit
+        1, // use 1 for tickThickness
         plotFormat.startOffsetM(),
         plotFormat.endOffsetM(),
         
     },
     _y_axis{
         _axis_format_y,
-        _cross_x__px,
-        _cross_y__px,
+        0, // use zero for default x_coordinate__px
+        0, // use zero for default y_coordinate__px
         _min_y,
         _max_y,
-        _unit__px,
-        (_dot__px%2==0)? 2 : 1,
+        0, // use zero for pxPerUnit
+        1, // use 1 for tickThickness
         plotFormat.startOffsetM(),
         plotFormat.endOffsetM(),
     }
-{}
+{
+    _unit__px = calcUnitSizePx();
+    _dot__px = calcDotSizePx();
+    int tickThickness = (_dot__px%2==0)? 2 : 1; // TODO needs to be determined every time unit_px and dot__px are determined
+    _cross_x__px = calcCrossXPx(topLeftXPx);
+    _cross_y__px = calcCrossYPx(topLeftYPx);
+
+    _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
+    _x_axis.setPxPerUnit(_unit__px);
+    _x_axis.setTickThickness(tickThickness);
+    _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
+    _y_axis.setPxPerUnit(_unit__px);
+    _y_axis.setTickThickness(tickThickness);
+}
 
 PlotB::PlotB (
         PlotFormat plotFormat,
@@ -175,7 +184,6 @@ void PlotB::print (
     }
 }
 
-
 void PlotB::setTopLeft (int topLeftXPx, int topLeftYPx)
 {
     _top_left_x__px = topLeftXPx;
@@ -211,17 +219,14 @@ void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) {
 
 int PlotB::calcUnitSizePx () const
 {
-    int allowableXAxisLengthPx = _x_space__px - _y_axis.sizeXPx();
+    // x-unit size (doesn't change)
+    int allowableXAxisLengthPx = _x_space__px - _y_axis.getLabelLengthPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
-
-    int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeYPx();
+    int allowableYAxisLengthPx = _y_space__px - _x_axis.getLabelLengthPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
-
-    int unitSize = min(xUnitSize, yUnitSize);
-
-    return max(unitSize, _min_unit__px);
+    return min(xUnitSize, yUnitSize);
 }
 
 int PlotB::calcDotSizePx () const

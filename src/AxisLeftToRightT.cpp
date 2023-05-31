@@ -38,6 +38,16 @@ int AxisLeftToRightT::getAxisLengthPx () const
         isOdd;
 }
 
+int AxisLeftToRightT::getLabelLengthPx () const
+{
+    int retVal =  
+        _axis_format.axisThicknessPx() +
+        _axis_format.majTickLengthOutsideChartPx() +
+        _axis_format.labelLineSpacePx() +
+        _axis_format.labelHeightPx();
+    return retVal;
+}
+
 int AxisLeftToRightT::getCenterValXPx () const
 {
     return getPixel(_min_val + (_max_val-_min_val)/2);

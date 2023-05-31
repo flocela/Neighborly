@@ -28,6 +28,13 @@ class AxisTopToBottomL
 
         int getAxisLengthPx () const;
 
+        // the label are the numbers to the right of the axis plus
+        // the length of the tick outside the chart plus
+        // the space between the label and the tick plus
+        // the axis thickness.
+        // the length is in the x direction.
+        int getLabelLengthPx () const;
+
         // returns the y-pixel for yVal. If tick thickness is odd, then result is one pixel.
         // If tick thickness is even, then center is denoted by two pixels,
         // and the result is the second pixel. (The second pixel is from the y's zero.)

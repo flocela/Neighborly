@@ -29,6 +29,13 @@ class AxisLeftToRightT
 
         int getAxisLengthPx() const;
 
+        // the label length is the height of the numbers below the axis plus
+        // the length of the tick outside the chart plus
+        // the space between the label and the tick plus
+        // the axis thickness.
+        // the length is in the y direction.
+        int getLabelLengthPx () const;
+        
         int getCenterValXPx() const;
 
         // returns the y-pixel for yVal. If tick thickness is odd, then result is one pixel.

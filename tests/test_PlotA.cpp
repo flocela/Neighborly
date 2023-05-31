@@ -172,7 +172,7 @@ TEST_CASE("PlotA:: setXYSpacePx")
         ySpacePx
     );
 
-    // before setTopLeft
+    // before setXYSpacePx
     xSpacePx = plotA.getXSpacePx();
     ySpacePx = plotA.getYSpacePx();
 

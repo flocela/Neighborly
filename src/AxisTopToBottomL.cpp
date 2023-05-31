@@ -32,10 +32,19 @@ AxisTopToBottomL::AxisTopToBottomL (
 int AxisTopToBottomL::getAxisLengthPx() const
 {
     int isOdd = (_tick_thickness__px%2 == 0? 0 : 1);
-    return calcBotMostPixel_Y () - _x_cross__px +
+    return calcBotMostPixel_Y () - _y_cross__px +
         (_tick_thickness__px/2) +
         (_tick_thickness__px/2) +
         isOdd;
+}
+
+int AxisTopToBottomL::getLabelLengthPx () const
+{
+    return 
+        (3) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
+        _text_spacer +
+        _axis_format.majTickLengthOutsideChartPx() +
+        _axis_format.axisThicknessPx();
 }
 
 int AxisTopToBottomL::getPixel (double yVal) const
@@ -175,7 +184,8 @@ void AxisTopToBottomL::printTicksAndLabels (
 
 int AxisTopToBottomL::calcBotMostPixel_Y () const
 {
-    return getPixel(_max_val) + _px_per_unit * _end_offset_m;
+    int val = getPixel(_max_val) + _px_per_unit * _end_offset_m;
+    return val;
 }
 
 int AxisTopToBottomL::calcMinTickSpacing (int pixelsPerUnit) const

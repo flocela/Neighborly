@@ -75,10 +75,7 @@ int AxisLeftToRightB::sizeXPx () const
 
 // TODO just use getLabelLength
 int AxisLeftToRightB::sizeYPx () const
-{   //std::cout << "AxisLeftToRightB axisThickness, majTickLengthOutsideChartPx, labelLineSpacePx, lableHeight:" <<
-    //_axis_format.axisThicknessPx() << ", " << _axis_format.majTickLengthOutsideChartPx() << ", " <<
-    //_axis_format.labelLineSpacePx() << ", " <<
-    //_axis_format.labelHeightPx() << std::endl;
+{   
     int retVal =  
         _axis_format.axisThicknessPx() +
         _axis_format.majTickLengthOutsideChartPx() +

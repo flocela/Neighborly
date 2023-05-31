@@ -118,7 +118,7 @@ TEST_CASE("AxisLeftToRightB.getPixel()_EvenTickThickness_EvenPixelsPerUnit")
     REQUIRE( 37 == axis.getPixel(3.6) );
 }
 
-TEST_CASE("AxisLeftToRight.getLabelLengthPx()")
+TEST_CASE("AxisLeftToRightB.getLabelLengthPx()")
 {
    AxisFormat format{};
     AxisLeftToRightB axis {
