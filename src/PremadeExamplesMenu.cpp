@@ -25,7 +25,6 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
 {
     SimulationComponents components;
 
-
     int chosenCityAndResidentTypeCombo = ui.menu(
         "Which combination of city size and resident type? ",
         std::vector<std::string>{ 
@@ -48,7 +47,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             
             components.city = std::make_unique<City_Grid>(30);
 
-            // Only two groups. Group #1 and Group #2
+            // Only two groups means only two colors. Group #1 and Group #2
             for (int ii=1; ii<3; ++ii)
             {
                 components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
