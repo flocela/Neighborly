@@ -9,15 +9,15 @@
 #include "Plot.h"
 #include "PlotFormat.h"
 
-// x-axis runs horizontally on top of plot (left to right)
-// y-axis runs vertically on the left (top to bottom)
+// x-axis runs horizontally from left to right, labels are on top of axis
+// y-axis runs vertically from bottom to top, labels are on the left of the axis
 class PlotB: public Plot
 {
 public:
     PlotB ( 
         PlotFormat plotFormat,
-        int topLeftXPx, // top left corner of plot
-        int topLeftYPx, // top left corner of plot
+        int topLeftXPx, // top left corner of plot, not the same as where x and y axes cross
+        int topLeftYPx, // top left corner of plot, not the same as where x and y axes cross
         int minX,
         int maxX,
         int minY, 
@@ -78,7 +78,7 @@ private:
     AxisFormat _axis_format_x;
     AxisFormat _axis_format_y;
 
-    // requested minimum unit size.
+    // requested minimum unit size. //TODO maybe not have this min_unit_size
     int _min_unit__px = 6;
 
     // _start_offset_m is used to determine space before the first values (_min_x or _min_y).
@@ -89,7 +89,7 @@ private:
     // length of space is _end_offset_m * _unit_space__px.
     int _end_offset_m;
 
-    // top left corner of plot. This is not at the x-y axes cross hairs. it takes into
+    // top left corner of plot. This is not at the x-y axes' cross hairs. it takes into
     // account the width of the y-axis labels.
     int _top_left_x__px = 0;
     int _top_left_y__px = 0;
@@ -100,7 +100,7 @@ private:
 
     // largest values on the axes with data.
     // Note: the axes stretch past the largest value with data.
-    // the largest value on the axes will be _max_y + _end_offset_m.
+    // the largest value on the axes will be _max_y + (_end_offset_m * unit size ).
     int _max_x;
     int _max_y;
     

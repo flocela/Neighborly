@@ -55,18 +55,7 @@ PlotB::PlotB (
         plotFormat.endOffsetM(),
     }
 {
-    _unit__px = calcUnitSizePx();
-    _dot__px = calcDotSizePx();
-    int tickThickness = (_dot__px%2==0)? 2 : 1; // TODO needs to be determined every time unit_px and dot__px are determined
-    _cross_x__px = calcCrossXPx(topLeftXPx);
-    _cross_y__px = calcCrossYPx(topLeftYPx);
-
-    _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
-    _x_axis.setPxPerUnit(_unit__px);
-    _x_axis.setTickThickness(tickThickness);
-    _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
-    _y_axis.setPxPerUnit(_unit__px);
-    _y_axis.setTickThickness(tickThickness);
+    setXYSpacePx(xSpacePx, ySpacePx);
 }
 
 PlotB::PlotB (
@@ -219,13 +208,14 @@ void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) {
 
 int PlotB::calcUnitSizePx () const
 {
-    // x-unit size (doesn't change)
     int allowableXAxisLengthPx = _x_space__px - _y_axis.getLabelLengthPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
+
     int allowableYAxisLengthPx = _y_space__px - _x_axis.getLabelLengthPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
+
     return min(xUnitSize, yUnitSize);
 }
 
@@ -239,10 +229,15 @@ int PlotB::calcDotSizePx () const
 // x-axis is centered in the space available.
 int PlotB::calcCrossXPx (int topLeftXPx) const
 {
-    int xAxisLength = _unit__px * ( _x_diff + _start_offset_m + _end_offset_m);
+    int requiredXLength = 
+        _unit__px * ( _x_diff + _start_offset_m + _end_offset_m) + _y_axis.getLabelLengthPx();
+
+    // start at given most left point (topLeftXPx),
+    // move to the center of given space, move to the left by 1/2 of the required length,
+    // move crosshairs to the right making room for y-axis.
     return topLeftXPx +
-           (int)( (0.5 * _x_space__px) - (0.5 * (xAxisLength + _y_axis.sizeXPx())) )+
-           _y_axis.sizeXPx();
+           (int)( 0.5 * (_x_space__px - requiredXLength) ) +
+           _y_axis.getLabelLengthPx();
 }
 
 int PlotB::calcCrossYPx (int topLeftYPx) const

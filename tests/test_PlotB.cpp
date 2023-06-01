@@ -1,7 +1,6 @@
 #include "catch.hpp"
 #include "../src/PlotB.h"
 
-/*
 TEST_CASE("PlotB:: create basic PlotB")
 {
     int topLeftXPx = 0;
@@ -133,7 +132,7 @@ TEST_CASE("plotB:: setTopLeft")
     REQUIRE(unitSizeYPx == plotB.getYUnitSizePx());
     REQUIRE(dotSizePx == plotB.getDotSizePx());
 }
-*/
+
 TEST_CASE("PlotB:: setXYSpacePx")
 {
     int topLeftXPx = 0;
