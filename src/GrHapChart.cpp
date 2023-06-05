@@ -22,8 +22,8 @@ GrHapChart::GrHapChart (
 }
 
 void GrHapChart::print (
-    unordered_map<int, int> happinessSumPerGroup,
     unordered_map<int, int> numofResidentsPerGroup,
+    unordered_map<int, double> happinessSumPerGroup,
     int run,
     Renderer* renderer
 ) const
@@ -37,7 +37,7 @@ void GrHapChart::print (
         {
             continue;
         }
-        double aveHappiness = (double)happinessSumPerGroup[groupId]/countInGroup;
+        double aveHappiness = happinessSumPerGroup[groupId]/countInGroup;
         Color c = _colorrs_map.at(_colors.at(groupId)).at(Mood::neutral)._color;
         points.push_back( Point( (double)run, aveHappiness, c));
     }

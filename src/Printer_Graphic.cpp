@@ -119,7 +119,7 @@ void Printer_Graphic::print (
     );
     _happiness_chart->print(
         runMetrics->getNumOfResidentsPerGroupId(),
-        runMetrics->getNumOfDiffNeighborsPerGroupId(),
+        runMetrics->getHappinessSumPerGroupId(),
         run,
         _renderer.get());
     _renderer->endFrame();

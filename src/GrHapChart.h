@@ -36,7 +36,7 @@ public:
 
     void print (
         std::unordered_map<int, int> numofResidentsPerGroup,
-        std::unordered_map<int, int> happinessSumPerGroup,
+        std::unordered_map<int, double> happinessSumPerGroup,
         int run,
         Renderer* renderer
     ) const;
