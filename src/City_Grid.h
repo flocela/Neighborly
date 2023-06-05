@@ -65,7 +65,7 @@ public:
     std::vector<const House*> getHouses () const override;
     std::unordered_set<const House*> getHousesAdjacent (int address) const override;
     
-    std::string toString (const std::unordered_map<int, char>& characterPerAddress) override;
+    std::string toString (const std::unordered_map<int, char>& characterPerAddress) const override;
 
 private:
     int _width;

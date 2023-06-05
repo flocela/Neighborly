@@ -252,7 +252,7 @@ unordered_set<const House*> City_Grid::getHousesAdjacent (int address) const
 	return adjacentHouses;
 }
 
-std::string City_Grid::toString (const std::unordered_map<int, char>& characterPerAddress)
+std::string City_Grid::toString (const std::unordered_map<int, char>& characterPerAddress) const
 {	
 	
 	string result = "";

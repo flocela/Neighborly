@@ -10,7 +10,7 @@ using namespace std;
 Printer_CMDLine::Printer_CMDLine (
     unordered_map<int, BaseColor> baseColorsPerGroupid,
     int maxNumofRuns,
-    City* cityPtr
+    const City* cityPtr
 ):  _base_colors_per_groupid{baseColorsPerGroupid},
     _max_num_of_runs{maxNumofRuns},
     _city_ptr{cityPtr}

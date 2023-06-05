@@ -9,12 +9,13 @@
 #include "Printer.h"
 
 class Printer_CMDLine : public Printer
-{   
+{
+
 public:
     Printer_CMDLine (
         std::unordered_map<int, BaseColor> baseColorsPerGroupid,
         int maxNumOfRuns,
-        City* cityPtr
+        const City* cityPtr
     );
 
     Printer_CMDLine () = delete;
@@ -30,11 +31,11 @@ public:
     ) const override;
 
 private:
-    std::unordered_map<int, BaseColor> _base_colors_per_groupid{};
+    std::unordered_map<int, BaseColor> _base_colors_per_groupid;
 
     int _max_num_of_runs;
 
-    City* _city_ptr;
+    const City* _city_ptr;
 
     // used for printing residents. happy characters per group Id.
     std::vector<char> happyCharacters = {'x', '!', '@', '#', '$', '%'};
