@@ -20,29 +20,24 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
     _num_of_diff_neighbors_per_group_id = unordered_map<int, int>{};
     _happiness_sum_per_group_id = unordered_map<int, double>{};
     _resident_example_per_group_id = unordered_map<int, const Resident*>{};
+
     
-    // create house per resident map
-    unordered_map<const Resident*, const House*> housePerResident{};
-    for (auto houseAndResident : residentsPerHouse)
-    {
-        housePerResident.insert({houseAndResident.second, houseAndResident.first});
-    }
     
-    // TODO just use given residentsPerHouse to iterate through
-    for (pair<const Resident*, const House*> ii : housePerResident)
+    for (pair<const House*, const Resident*> houseThenResident : residentsPerHouse)
     {
-        const Resident* resident = ii.first;
-        const House* house = ii.second;
+        const House* house = houseThenResident.first;
+        const Resident* resident = houseThenResident.second;
         int residentGroupId = resident->getGroupId();
+        unordered_set<const House*> housesAdjToRes = _adj_houses[house];
        
+        // populate _resident_example_per_group_id
         if ( _resident_example_per_group_id.find(resident->getGroupId()) ==
             _resident_example_per_group_id.end() )
         {
             _resident_example_per_group_id[resident->getGroupId()] = resident;
         }
 
-        unordered_set<const House*> housesAdjToRes = _adj_houses[house];
-
+        // number of neighbors that have a different groupId than resident
         int disparateNeighbors = 0;
         for (const House* adjacentHouse : housesAdjToRes)
         {
@@ -58,6 +53,7 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
             }
         }
         
+        // add number of disparate neighbors to sum of different neighbors for this group's id
         if ( _num_of_diff_neighbors_per_group_id.find(residentGroupId) ==
              _num_of_diff_neighbors_per_group_id.end() )
         {
@@ -66,6 +62,7 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
 
         _num_of_diff_neighbors_per_group_id[residentGroupId] += disparateNeighbors;
 
+        // add resident's happiness to the group's happiness sum.
         if (_happiness_sum_per_group_id.find(residentGroupId) == _happiness_sum_per_group_id.end())
         {
             _happiness_sum_per_group_id[residentGroupId] = 0;
@@ -73,6 +70,7 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
 
         _happiness_sum_per_group_id[residentGroupId] += resident->getHappiness();
 
+        // increase the number of residents per this group id
         _num_of_residents_per_group_id[residentGroupId] += 1;
     }
 
