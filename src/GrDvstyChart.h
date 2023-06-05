@@ -1,14 +1,15 @@
 #ifndef GR_DVSTY_CHART_H
 #define GR_DVSTY_CHART_H
 
-#include "unordered_map"
+
+#include <memory> //TODO do we need memory here?
+#include <unordered_map>
 #include "Color.h"
 #include "Plot.h"
 #include "Renderer.h"
 #include "City.h"
 #include "Resident.h"
 #include "GrColorKey.h"
-#include <memory>
 #include "Title.h"
 
 class GrDvstyChart {
@@ -40,8 +41,8 @@ public:
     ~GrDvstyChart () = default;
 
     void print (
-        std::unordered_map<const Resident*, const House*> housePerResident,
-        std::unordered_map<const House*, const Resident*> residentPerHouse,
+        std::unordered_map<int, int> numOfResidentsPerGroupId,
+        std::unordered_map<int, int> numOfDiffNeighborsPerGroupId,
         int run,
         Renderer* renderer
     ) const;

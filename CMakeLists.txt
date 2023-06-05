@@ -103,6 +103,7 @@ src/Question.cpp
 src/Resident_UsingFunction.cpp
 src/Renderer.cpp
 src/Resident.cpp
+src/RunMetrics.cpp
 src/Simulator_Basic_A.cpp
 src/TextHelper.cpp
 src/UI_CMDLine.cpp 

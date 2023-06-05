@@ -178,10 +178,12 @@ void Simulator_Basic_A::setHappinessValuesForAllResidents ()
     for (Resident* res : _residents)
     {
         const House* house = _house_per_resident[res];
-        res->setHappiness(calculateHappinessValueFor(res, house->getAddress()));
+        unordered_set<const House*> adjHouses = _city->getHousesAdjacent(house->getAddress());
+        res->setHappiness( getResidentsInTheseHouses(adjHouses), adjHouses.size() );
     }
 }
 
+// TODO is this method still used?
 double Simulator_Basic_A::calculateHappinessValueFor(Resident* res, int address)
 {
     unordered_set<const House*> adjHouses = _city->getHousesAdjacent(address);

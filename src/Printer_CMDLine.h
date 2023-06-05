@@ -25,7 +25,7 @@ public:
     ~Printer_CMDLine () = default;
     
     void print(
-        std::unordered_map<const House*, const Resident*> residentPerHouse,
+        const RunMetrics* runMetrics,
         int run
     ) const override;
 

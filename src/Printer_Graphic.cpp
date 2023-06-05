@@ -81,7 +81,7 @@ Printer_Graphic::Printer_Graphic (
 }
 
 void Printer_Graphic::print (
-    unordered_map<const House*, const Resident*> residentPerHouse,
+    const RunMetrics* runMetrics,
     int run
 ) const
 {   
@@ -94,6 +94,9 @@ void Printer_Graphic::print (
     };
     _renderer->fillBlock(rect, _the_color_rgba[Color::red_happy]);*/
 
+    unordered_map<const House*, const Resident*> residentPerHouse =
+        runMetrics->getResidentsPerHouse();
+        
     // given residentPerHouse, need housePerResident and vector of residents
     unordered_map<const Resident*, const House*> housePerResident;
     vector<const Resident*> residents;
@@ -108,8 +111,17 @@ void Printer_Graphic::print (
     _window_title->print(_renderer.get());
     _runs_chart->print(run, _renderer.get());
     _city_chart->print(residentPerHouse, _renderer.get());
-    _div_chart->print(housePerResident, residentPerHouse, run, _renderer.get());
-    _happiness_chart->print(housePerResident, run, _renderer.get());
+    _div_chart->print(
+        runMetrics->getNumOfResidentsPerGroupId(),
+        runMetrics->getNumOfDiffNeighborsPerGroupId(),
+        run,
+        _renderer.get()
+    );
+    _happiness_chart->print(
+        runMetrics->getNumOfResidentsPerGroupId(),
+        runMetrics->getNumOfDiffNeighborsPerGroupId(),
+        run,
+        _renderer.get());
     _renderer->endFrame();
 } 
 

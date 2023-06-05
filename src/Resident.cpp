@@ -83,8 +83,10 @@ bool Resident::operator< (const Resident& other) const // TODO upgrade this.
     return _id < other._id;
 }
 
-double Resident::setHappiness (double happiness)
+double Resident::setHappiness (
+    const std::unordered_set<const Resident*>& neighbors,
+    int numOfAdjacentHouses)
 {
-    _curr_happiness = happiness;
+    _curr_happiness = calculateHappiness(neighbors, numOfAdjacentHouses);
     return _curr_happiness;
 }

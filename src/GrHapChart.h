@@ -35,7 +35,8 @@ public:
     ~GrHapChart () = default;
 
     void print (
-        std::unordered_map<const Resident*, const House*> housePerResident,
+        std::unordered_map<int, int> numofResidentsPerGroup,
+        std::unordered_map<int, int> happinessSumPerGroup,
         int run,
         Renderer* renderer
     ) const;

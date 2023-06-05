@@ -16,6 +16,7 @@
 #include "PlotFormat.h"
 #include "Printer.h"
 #include "Renderer.h"
+#include "RunMetrics.h"
 #include "Title.h"
 #include "Title_Basic.h"
 
@@ -42,7 +43,7 @@ public:
     void keepScreen();
 
     void print(
-        std::unordered_map<const House*, const Resident*> residentPerHouse,
+        const RunMetrics* runMetrics,
         int run
     ) const override;
 

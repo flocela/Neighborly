@@ -5,6 +5,7 @@
 
 #include "House.h"
 #include "Resident.h"
+#include "RunMetrics.h"
 
 class Printer
 {
@@ -19,7 +20,7 @@ public:
     virtual ~Printer () = default;
 
     virtual void print (
-         std::unordered_map<const House*, const Resident*> residentPerHouse,
+         const RunMetrics* runMetrics,
          int run) const = 0;
 };
 

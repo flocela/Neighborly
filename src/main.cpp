@@ -158,18 +158,20 @@ int main(int argc, char* argv[])
         components.city.get()
     };
     cout <<"Main 160" << endl;
+    RunMetrics runMetrics{components.city.get()};
     unordered_map<const House*, const Resident*> residentPerHouse;
     for (int ii=0; ii<components.numOfRuns; ii++)
     {   cout << "Run Number: " << ii << endl;
         residentPerHouse = components.simulator->run();
+        runMetrics.updateMetrics(ii, residentPerHouse);
         cout << "main run done: " << ii << endl;
 
         // every run should show for at least 1/4 second
         auto timeStart = std::chrono::high_resolution_clock::now();
         cout << "main about to print" << endl;
-        graphicPrinter.print(residentPerHouse, ii);
+        graphicPrinter.print(&runMetrics, ii);
         cout << "main finished printing" << endl;
-        //cmdLinePrinter.print(residentPerHouse, ii);
+        cmdLinePrinter.print(&runMetrics, ii);
         std::this_thread::sleep_until(timeStart + std::chrono::milliseconds(250));
     }
     graphicPrinter.keepScreen();

@@ -185,12 +185,23 @@ void Simulator_Basic_B::setHappinessValuesForAllResidents ()
 {
     for (Resident* res : _residents)
     {
-        const House* house = _city_state->getHousePerResident(res);
-        if (house != nullptr) //TODO really shouldn't be nullptr
-        {
-            res->setHappiness(calculateHappinessValueFor(res, house->getAddress()));
+        const House* resHouse = _city_state->getHousePerResident(res);
+
+        unordered_set<const House*> adjHouses = _city->getHousesAdjacent(resHouse->getAddress());
+
+        // populate adjacentNeighbors which contains all the resident's neighbors
+        unordered_set<const Resident*> adjacentNeighbors;
+        for (const House* adjacentHouse : adjHouses)
+        {   
+            Resident* adjacentNeighbor = _city_state->getResidentPerHouse(adjacentHouse);
+            if (adjacentNeighbor != nullptr)
+            {
+                adjacentNeighbors.insert(adjacentNeighbor);
+            }
         }
-        
+
+        res->setHappiness(adjacentNeighbors, adjHouses.size());
+
     }
 }
 

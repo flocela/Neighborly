@@ -21,76 +21,24 @@ Printer_CMDLine::Printer_CMDLine (
 }
 
 void Printer_CMDLine::print(
-    unordered_map<const House*, const Resident*> residentPerHouse,
+    const RunMetrics* runMetrics,
     int run
 ) const
 {   
+    unordered_map<const House*, const Resident*> residentsPerHouse =
+        runMetrics->getResidentsPerHouse();
+    unordered_map<int, int> numOfResidentsPerGroupId = runMetrics->getNumOfResidentsPerGroupId();
+    unordered_map<int, int> numOfDiffNeighborsPerGroupId = runMetrics->getNumOfDiffNeighborsPerGroupId();
+    unordered_map<int, double> happinessSumPerGroupId = runMetrics->getHappinessSumPerGroupId();
+    unordered_map<int, const Resident*> residentExamplePerGroupId =
+        runMetrics->getResidentExamplePerGroupId();
+
     if (run == 0)
     {
         cout << endl << "Command Line Printer:" << endl;
     }
     
-    // create house per resident map
-    unordered_map<const Resident*, const House*> housePerResident{};
-    for (auto houseAndResident : residentPerHouse)
-    {
-        housePerResident.insert({houseAndResident.second, houseAndResident.first});
-    }
-
-    // Collect data for diversity per group and happiness per group.
-    // for each groupid, will need the number of residents in group,
-    // the number of disparate neighbors,
-    // and the happiness per group.
-    unordered_map<int, int> numOfResidentsPerGroupId{};
-    unordered_map<int, int> numOfDiffNeighborsPerGroupId{};
-    unordered_map<int, double> happinessSumPerGroup{};
-    unordered_map<int, const Resident*> residentExamplePerGroupId{}; // just one resident is needed.
-
-    for (pair<const Resident*, const House*> ii : housePerResident)
-    {
-        const Resident* resident = ii.first;
-        const House* house = ii.second;
-        int residentGroupId = resident->getGroupId();
-        unordered_set<const House*> housesAdjToRes = _city_ptr->getHousesAdjacent(house->getAddress());
-
-        if (residentExamplePerGroupId.find(resident->getGroupId()) == residentExamplePerGroupId.end())
-        {
-            residentExamplePerGroupId[resident->getGroupId()] = resident;
-        }
-
-        int disparateNeighbors = 0;
-        for (const House* adjacentHouse : housesAdjToRes)
-        {
-            // if adjacent house is not empty
-            if (residentPerHouse.find(adjacentHouse) != residentPerHouse.end())
-            {
-                // adjacent resident's groupId
-                int adj_res_groupId = (residentPerHouse.at(adjacentHouse))->getGroupId();
-                if (adj_res_groupId != residentGroupId)
-                {
-                    disparateNeighbors += 1;
-                }
-            }
-        }
-        if (numOfDiffNeighborsPerGroupId.find(residentGroupId) == numOfDiffNeighborsPerGroupId.end())
-        {
-            numOfDiffNeighborsPerGroupId[residentGroupId] = 0;
-        }
-
-        numOfDiffNeighborsPerGroupId[residentGroupId] += disparateNeighbors;
-
-        if (happinessSumPerGroup.find(residentGroupId) == happinessSumPerGroup.end())
-        {
-            happinessSumPerGroup[residentGroupId] = 0;
-        }
-
-        happinessSumPerGroup[residentGroupId] += resident->getHappiness();
-
-        numOfResidentsPerGroupId[residentGroupId] += 1;
-    }
-
     // sort group ids
-    
     vector<int> groupIDs{};
     for (auto groupIDAndCount : numOfResidentsPerGroupId)
     {
@@ -131,8 +79,8 @@ void Printer_CMDLine::print(
     {
         int numResidents = numOfResidentsPerGroupId[groupID];
         int numDiffNeighbors = numOfDiffNeighborsPerGroupId[groupID];
-        cout << groupID << ":: " << (double)numDiffNeighbors/numResidents << 
-            ", " << happinessSumPerGroup[groupID]/numOfResidentsPerGroupId[groupID] << endl;
+        cout << groupID << ":: " << (double)numDiffNeighbors/numResidents << ", " <<
+            happinessSumPerGroupId[groupID]/numOfResidentsPerGroupId[groupID] << endl;
     }
     cout << endl;
     
@@ -141,7 +89,7 @@ void Printer_CMDLine::print(
     {
         unordered_map<int, char> characterPerAddress{};
 
-        for (auto pair : residentPerHouse)
+        for (auto pair : residentsPerHouse)
         {
             const House* house = pair.first;
             const Resident* resident = pair.second;

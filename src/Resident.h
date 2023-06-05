@@ -21,7 +21,10 @@ public:
     Resident () = delete;
     virtual ~Resident () = default;
 
-    double calculateHappiness (const std::unordered_set<const Resident*>& neighbors, int numOfAdjacentHouses) const;
+    double calculateHappiness (
+        const std::unordered_set<const Resident*>& neighbors,
+        int numOfAdjacentHouses
+    ) const;
     double getAllowedMovementDistance () const;
     int getGroupId () const;
     double getHappinessGoal () const;
@@ -34,7 +37,10 @@ public:
 
     bool operator< (const Resident& other) const;
     
-    double setHappiness (double happiness);
+    double setHappiness (
+        const std::unordered_set<const Resident*>& neighbors,
+        int numOfAdjacentHouses
+    );
     
 protected:
     virtual double implimentHappiness (

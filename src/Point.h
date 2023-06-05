@@ -18,7 +18,7 @@ public:
     Point (const Point& o) = default;
     Point (Point&& o) noexcept = default;
     Point& operator= (const Point& o) = default;
-    Point& operator=(Point&& o) noexcept = default;
+    Point& operator= (Point&& o) noexcept = default;
     ~Point () = default;
 
     double x () {return _x;}
