@@ -14,7 +14,8 @@ Resident::Resident (
 ): _id{id}, 
    _group_id{groupNumber}, 
    _allowed_movement_distance{allowedMovementDistance}, 
-   _happiness_goal{happinessGoal}            
+   _happiness_goal{happinessGoal},
+   _curr_happiness{0}         
 {
     if (happinessGoal < 0.0 || happinessGoal > 100.0)
     {   

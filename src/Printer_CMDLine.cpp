@@ -75,7 +75,7 @@ void Printer_CMDLine::print(
     cout << endl;
     
     // Print out city map
-    if (run == 0 || run == _max_num_of_runs-1)
+    //if (run == 0 || run == _max_num_of_runs-1)
     {
         unordered_map<int, char> characterPerAddress{};
 

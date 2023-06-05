@@ -13,6 +13,8 @@ protected:
     Resident& operator= (Resident&& obj) noexcept = default;
 
 public:
+    // happinessGoal must be in the rage [0, 100].
+    // happiness defaults to zero until it is set.
     Resident (
         int id,
         int groupId,

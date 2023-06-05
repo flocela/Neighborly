@@ -17,7 +17,7 @@ public:
         const City* city,
         std::unordered_set<Resident*> residents,
         double percentOfResidents, // percent of residents that are chosen to move each run.
-        int numOfHousesChosen, // number of houses the residents can choose from
+        int numOfHousesToChooseFrom, // number of houses the residents can choose from
         std::unique_ptr<CityState> cityState
     );
     Simulator_Basic_B () = delete;
