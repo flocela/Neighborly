@@ -26,23 +26,23 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
     SimulationComponents components;
 
     int chosenCityAndResidentTypeCombo = ui.menu(
-        "Which combination of city size and resident type? ",
+        "Which combination of city size and resident types do you choose? ",
         std::vector<std::string>{ 
-            "simple with a small city", 
-            "simple with a large city",
-            "finicky residents with a small city",
-            "finicky residents with a large city"},
+            "small city with simple residents", 
+            "large city with simple residents",
+            "small city with finicky residents", 
+            "large city with finicky residents"},
             0,
-            "Could not tell, which combo you wanted, will be using simple with a small city.");
+            "Could not tell, which combo you wanted, will be using a small city"
+            " with simple residents.");
     
     switch (chosenCityAndResidentTypeCombo)
     {
         case 0:
         {
-            // 30 x 30 city with 900 houses. 
+            // 30 x 30 city has 900 houses. 
             // 360 Falling Resdients (Group 1)
             // 360 Falling Residents (Group 2)
-            // happiness at one diversity = 50
             components.randomSeed = 0;
             
             components.city = std::make_unique<City_Grid>(30);
@@ -58,7 +58,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                 components.residents.push_back(std::make_unique<Resident_UsingFunction>(
                     ii,  // id
                     1,   // group number
-                    15,   // allowed movement
+                    15,  // allowed movement
                     60,  // happiness goal
                     std::make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
@@ -86,8 +86,8 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
-                30,
-                20,
+                30, // percent of residents that simulation tries to move at every run
+                20, // number of houses moving residents get to choose from
                 make_unique<CityState_Simple>(components.city.get())
             );
 
@@ -100,7 +100,6 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             // 120 x 120 city with 14,400 houses. 
             // 5760 Falling Resdients (Group 1)
             // 5760 Falling Residents (Group 2)
-            // happiness at one diversity = 50
             components.randomSeed = 0;
             
             components.city = std::make_unique<City_Grid>(120);
@@ -144,8 +143,8 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
-                30,
-                20,
+                30, // percent of residents that simulation tries to move at every run
+                20, // number of houses moving residents get to choose from
                 make_unique<CityState_Simple>(components.city.get())
             );
 
@@ -158,7 +157,6 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             // 30 x 30 city with 900 houses. 
             // 360 Falling Resdients (Group 1)
             // 360 Falling Residents (Group 2)
-            // happiness at one diversity = 10
             components.randomSeed = 0;
             
             components.city = std::make_unique<City_Grid>(30);
@@ -192,7 +190,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     15,
                     60,
                     std::make_unique<HappinessFunc_Falling>(
-                        70, // happiness value with zero neighbors
+                        70, 
                         95,
                         10),
                     "Falling Resident"
@@ -202,8 +200,8 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
-                30,
-                20,
+                30, // percent of residents that simulation tries to move at every run
+                20, // number of houses moving residents get to choose from
                 move(make_unique<CityState_Simple>(components.city.get()))
             );
 
@@ -216,7 +214,6 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             // 120 x 120 city with 14,400 houses. 
             // 5760 Falling Resdients (Group 1)
             // 5760 Falling Residents (Group 2)
-            // happiness at one diversity = 10
             components.randomSeed = 0;
             
             components.city = std::make_unique<City_Grid>(120);
@@ -260,8 +257,8 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
-                30,
-                20,
+                30, // percent of residents that simulation tries to move at every run
+                20, // number of houses moving residents get to choose from
                 make_unique<CityState_Simple>(components.city.get())
             );
 
