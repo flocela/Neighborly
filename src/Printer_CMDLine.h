@@ -36,8 +36,6 @@ private:
 
     City* _city_ptr;
 
-    std::unordered_map<const House*, std::unordered_set<const House*>> _adj_neighbors;
-
     // used for printing residents. happy characters per group Id.
     std::vector<char> happyCharacters = {'x', '!', '@', '#', '$', '%'};
         
