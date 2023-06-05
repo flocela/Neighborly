@@ -17,13 +17,18 @@ Printer_Graphic::Printer_Graphic (
     unordered_map<const House*, unordered_set<const House*>> neighborHousesPerHouse,
     string title,
     int numOfRuns
-): _renderer{move(renderer)},
-   _colors{colors},
-   _coordinates_per_house{coordinatesPerHouse},
-   _window_title{make_unique<Title_Basic>(_window_title_letter, _x_center__px, _top_border__px, title)},
-   _num_of_runs{numOfRuns},
-   _runs_chart_top_y__px{_top_border__px + _window_title->sizeYPx()},
-   _runs_chart{make_unique<GrRunsChart>(
+)
+: _renderer{move(renderer)}
+, _colors{colors}
+, _coordinates_per_house{coordinatesPerHouse}
+, _window_title{make_unique<Title_Basic>(
+    _window_title_letter,
+    _x_center__px,
+    _top_border__px,
+    title)}
+, _num_of_runs{numOfRuns}
+, _runs_chart_top_y__px{_top_border__px + _window_title->sizeYPx()}
+, _runs_chart{make_unique<GrRunsChart>(
        _side_borders__px,
        _runs_chart_top_y__px,
        _screen_width__px - (2 * _side_borders__px),
@@ -32,18 +37,22 @@ Printer_Graphic::Printer_Graphic (
        _num_of_runs)}
 {   
     _window_title->setTextColor(_title_text_color);
-    // column space for left and right columns. Columns sit below the runs chart.
-    // left column holds city chart, right column holds diversity chart and happiness chart
+
+    // Set vertical column space for left and right columns. Columns sit below the runs chart
+    // Left column holds city chart, right column holds diversity chart and happiness chart.
     int colSpaceYPx = 
         _screen_height__px -
         _top_border__px -
         _window_title->sizeYPx() -
         _runs_chart->sizeYPx() -
         _bottom_border__px;
-    // diversity chart and city chart have the same y-value for their top left corners.
-    // they sit below the runs chart.
+
+    // Set the y value for the top left corner of the city and diversity charts.
+    // They sit below the runs chart.
     int chartsTopLeftYPx = _runs_chart_top_y__px + _runs_chart->sizeYPx();
 
+    // For the city chart, determine the minimum and maximum required coordinates. These are
+    // found from the given house coordinates.
     vector<int> minsAndMaxCoords = determineMinMaxHouseCoords(_coordinates_per_house);
 
     _city_chart =  createCityChart(
@@ -55,21 +64,22 @@ Printer_Graphic::Printer_Graphic (
         colSpaceYPx // city chart takes up the whole left column (vertically).
     );
 
-    // right column holds diversity chart and happiness chart below it
+    // Determine the available space for the diversity chart.
     int divChartAvailSpaceYPx = _div_chart_y_axis_fraction * colSpaceYPx;
 
-    int maxNumOfNeighbors = determineMaxNumberOfNeighbors(neighborHousesPerHouse);
+    int maxNumOfAdjHouses = determineMaxNumberOfAdjHouses(neighborHousesPerHouse);
 
     _div_chart = createDvstyChart(
         neighborHousesPerHouse,
-        maxNumOfNeighbors,
+        maxNumOfAdjHouses,
         _num_of_runs,
         chartsTopLeftYPx,
         divChartAvailSpaceYPx
     );
 
-    // happiness chart sits below diversity chart. There's a vertical space between the 
-    // diversity chart and the happiness chart, see _space_below_div_chart_y_axis_fraction.
+    // Happiness chart sits below diversity chart. There's a vertical space between the 
+    // diversity chart and the happiness chart. See _space_below_div_chart_y_axis_fraction.
+    // Determine the y value of the top left corner of the happiness chart.
     int hapChartTopLeftYPx = 
         chartsTopLeftYPx +
         colSpaceYPx * (_div_chart_y_axis_fraction + _space_below_div_chart_y_axis_fraction);
@@ -156,7 +166,7 @@ vector<int> Printer_Graphic::determineMinMaxHouseCoords(
     return minsAndMaxes;
 }
 
-int Printer_Graphic::determineMaxNumberOfNeighbors (
+int Printer_Graphic::determineMaxNumberOfAdjHouses (
     unordered_map<const House*, unordered_set<const House*>> neighbors
 )
 {

@@ -22,6 +22,8 @@
 
 //  Displays CityMap, Diversity Chart, and HappinessChart.
 //  Uses a screen width and height of 2400px.
+//  The left half of the screen holds the CityMap.
+//  The right half of the screen holds the Diversity Chart above the HappinessChart.
 class Printer_Graphic : public Printer
 {   
 public:
@@ -49,10 +51,11 @@ public:
 
 private:
 
-    // renderer is mutable because calling print calls the renderer's draw functions.
-    // these functions are non-const, the renderer is changed.
-    // however, calling print (which is const) doesn't change any other PrinterGraphic attributes.
+    // Renderer is mutable because the print() function calls the renderer's draw functions.
+    // These functions are non-const, the renderer is changed.
+    // However, calling print (which is const) doesn't change any other PrinterGraphic attributes.
     mutable std::unique_ptr<Renderer> _renderer;
+
     /* FOR WINDOW */
     int _screen_width__px  = 2400;
     int _screen_height__px = 1200;
@@ -77,12 +80,12 @@ private:
 
     AxisFormat _axis_format_X{};
     AxisFormat _axis_format_Y{};
-    Letter _chart_title_letter = Letter(30, 5, 0.35); 
+    Letter _chart_title_letter{30, 5, 0.35}; 
     Letter _chart_key_letter{24, 10, 0.35};
     int _min_unit_size__px = 6; // TODO write note of how this is used. Is it honored?
 
-    // At the start of the axis, leave a space equal to cell size times offset.
-    // At the end of the axis, leave a space equal to cell size times overrun.
+    // At the start of the axis, leave a space equal to cell size times offset multiplier.
+    // At the end of the axis, leave a space equal to cell size times overrun multiplier.
     const int _x_offset_multiplier  = 1;
     const int _x_overrun_multiplier = 1;
     const int _y_offset_multiplier  = 1;
@@ -91,14 +94,14 @@ private:
     int _chart_space_x__px = _x_center__px - _side_borders__px - _col_inside_border__px;
 
     /* RUNS COUNTER */
-    /* Sits horizontally at center of window, below window title */
+    /* Sits below the window title, horizontally at center of window */
 
     int _num_of_runs;
     int _runs_chart_top_y__px;
     std::unique_ptr<GrRunsChart> _runs_chart;
     
     /* RIGHT COLUMN */
-    /* Right column holds the diversity chart and happiness chart */
+    /* Right column holds the diversity chart above the happiness chart */
     
 
     /* DIVERSITY CHART */
@@ -127,15 +130,17 @@ private:
 
     std::string _city_chart_title = "City Map";
 
-    // determines the smallest and largest x and y values on the grid, per the house coordinates.
-    // returns a vector {smallest x value, largest x value, smallest y value, largest y value}
+    // Determines the smallest and largest x and y values on the grid, per the house coordinates.
+    // Returns a vector {smallest x value, largest x value, smallest y value, largest y value}
     std::vector<int> determineMinMaxHouseCoords (
         std::unordered_map<const House*, Coordinate > coordPerHouse
     );
 
     std::unique_ptr<GrCityChart>  _city_chart;
 
-    int determineMaxNumberOfNeighbors (
+    // Finds the house with the largest number of adjacent houses from the unordered_map given.
+    // Returns the number of adjacent houses.
+    int determineMaxNumberOfAdjHouses (
         std::unordered_map<const House*,std::unordered_set<const House*>> neighbors
     );
 

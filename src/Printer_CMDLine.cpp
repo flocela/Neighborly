@@ -11,9 +11,10 @@ Printer_CMDLine::Printer_CMDLine (
     unordered_map<int, BaseColor> baseColorsPerGroupid,
     int maxNumofRuns,
     const City* cityPtr
-):  _base_colors_per_groupid{baseColorsPerGroupid},
-    _max_num_of_runs{maxNumofRuns},
-    _city_ptr{cityPtr}
+)
+: _base_colors_per_groupid{baseColorsPerGroupid}
+, _max_num_of_runs{maxNumofRuns}
+, _city_ptr{cityPtr}
 {}
 
 void Printer_CMDLine::print (const RunMetrics* runMetrics, int run) const
