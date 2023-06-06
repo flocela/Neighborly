@@ -104,20 +104,20 @@ void Printer_Graphic::print (
     };
     _renderer->fillBlock(rect, _the_color_rgba[Color::red_happy]);*/
 
+    // Create vector of residents from runMetrics information.
     unordered_map<const House*, const Resident*> residentPerHouse =
         runMetrics->getResidentsPerHouse();
         
-    // given residentPerHouse, need housePerResident and vector of residents
-    unordered_map<const Resident*, const House*> housePerResident;
     vector<const Resident*> residents;
-    for (auto resAndHouse : residentPerHouse)
+    for (auto houseAndResident : residentPerHouse)
     {
-        if (resAndHouse.second != nullptr) // resident is not nullptr
+        if (houseAndResident.second != nullptr)
         {
-        housePerResident[resAndHouse.second] = resAndHouse.first;
-        residents.push_back(resAndHouse.second);
+            residents.push_back(houseAndResident.second);
         }
     }
+
+    // Printing is from top to bottom, left to right.
     _window_title->print(_renderer.get());
     _runs_chart->print(run, _renderer.get());
     _city_chart->print(residentPerHouse, _renderer.get());
@@ -139,7 +139,6 @@ vector<int> Printer_Graphic::determineMinMaxHouseCoords(
     unordered_map<const House*, Coordinate > coordPerHouse
 )
 {
-    // Determine the min and max house coordinates for x and y.
     int minX = std::numeric_limits<int>::max();
     int maxX = std::numeric_limits<int>::min();
     int minY = std::numeric_limits<int>::max();
@@ -205,23 +204,13 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
     return make_unique<GrCityChart>(
         _coordinates_per_house,
         _colors,
-        make_unique<Title_Basic>(
-            _chart_title_letter,
-            _city_chart_title),
-        make_unique<GrColorKey>(
-            _chart_key_letter,
-            _colors,
-            moods),
-        make_unique<PlotB>(
-            cityPlotFormat,
-            minXCoord, 
-            maxXCoord,
-            minYCoord, 
-            maxYCoord),
-        _side_borders__px,
-        topLeftYPx,
-        _chart_space_x__px,
-        availSpaceYPx
+        make_unique<Title_Basic>(_chart_title_letter,_city_chart_title),
+        make_unique<GrColorKey>(_chart_key_letter, _colors, moods),
+        make_unique<PlotB>(cityPlotFormat, minXCoord, maxXCoord, minYCoord, maxYCoord),
+        _side_borders__px,  // top left corner of chart, x-value
+        topLeftYPx,         // top left corner of chart, y-value
+        _chart_space_x__px, // space available, x-direction
+        availSpaceYPx       // space available, y-direction
     );
 }
 
@@ -250,24 +239,19 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
         _colors,
         moods,
         neighbors,
-        make_unique<Title_Basic>(
-            _chart_title_letter,
-            _div_chart_title),
-        make_unique<GrColorKey>(
-            _chart_key_letter,
-            _colors,
-            moods),
+        make_unique<Title_Basic>(_chart_title_letter, _div_chart_title),
+        make_unique<GrColorKey>(_chart_key_letter, _colors, moods),
         make_unique<PlotA>(
             rightColFormat,
-            0, // min number of runs
-            maxNumOfRuns - 1,
-            0, // min number of neighbors
-            maxNumOfNeighbors
+            0,                // starting run number
+            maxNumOfRuns - 1, // last run number
+            0,                // min number of neighbors
+            maxNumOfNeighbors // max number of neighbors
         ),
-        _x_center__px + _col_inside_border__px,
-        topLeftYPx,
-        _chart_space_x__px,
-        availSpaceYPx
+        _x_center__px + _col_inside_border__px, // top left corner of chart, x-value
+        topLeftYPx,                             // top left corner of chart, y-value
+        _chart_space_x__px,                     // space available, x-direction
+        availSpaceYPx                           // space available, y-direction
     );
 }
 
@@ -293,24 +277,19 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
 
     return make_unique<GrHapChart> (
         _colors,
-        make_unique<Title_Basic>(
-            _chart_title_letter,
-            _hap_chart_title),
-        make_unique<GrColorKey>(
-            _chart_key_letter,
-            _colors,
-            moods),
+        make_unique<Title_Basic>( _chart_title_letter, _hap_chart_title),
+        make_unique<GrColorKey>( _chart_key_letter, _colors, moods),
         make_unique<PlotA>(
             rightColFormat,
-            0, // starting run number
-            numberOfRuns -1,
-            0, // minimum resident happiness
-            100 // resident happiness range is from 0 to 100.
+            0,               // starting run number
+            numberOfRuns -1, // last run number
+            0,               // minimum resident happiness
+            100              // resident happiness range is from 0 to 100.
         ),
-        _x_center__px + _col_inside_border__px,
-        topLeftYPx,
-        _chart_space_x__px,
-        availSpaceYPx
+        _x_center__px + _col_inside_border__px, // top left corner of chart, x-value
+        topLeftYPx,                             // top left corner of chart, y-value
+        _chart_space_x__px,                     // space available, x-direction
+        availSpaceYPx                           // space available, y-direction
     );
 }
 
