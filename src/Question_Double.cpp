@@ -101,7 +101,8 @@ string Question_Double::getFailedResponse () const
 bool Question_Double::tryAnswer (string ans)
 {   
     double doubleAnswer;
-    string rs = "^\\-?\\d*\\.?\\d+$";
+    //string rs = "^\\-?\\d*\\.?\\d+$";
+    string rs = R"!(^[+-]?\d*\.?\d+$)!"; //TODO 72.
     try {
         if (regex_search(ans, regex(rs)) == false)
         {

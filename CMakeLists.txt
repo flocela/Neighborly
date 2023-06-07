@@ -98,6 +98,7 @@ src/PlotFormat.cpp
 src/PlotA.cpp
 src/PlotB.cpp
 src/Question_Int.cpp
+src/Question_Int2.cpp
 src/Question_Double.cpp
 src/Question.cpp
 src/Resident_UsingFunction.cpp

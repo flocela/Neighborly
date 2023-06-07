@@ -3,7 +3,7 @@
 
 #include <string>
 
-// Used to get successive prompts for the user until the user's answer is valid.
+// Used to create successive prompts for the user until the user's answer is valid.
 // If the user doesn't have a successful answer, then the caller can use the fallback answer.
 class Question
 {
