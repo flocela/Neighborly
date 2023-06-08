@@ -1,30 +1,33 @@
-#include "Question_Int.h"
-
+#include <iomanip>
 #include <regex>
+#include <sstream>
 #include <stdexcept>
+
 #include <iostream>
+#include "Question_Double2.h"
 
 using namespace std;
 
-Question_Int::Question_Int (
+Question_Double2::Question_Double2 (
     int id,
-    int min, 
-    int max,
+    double min, 
+    double max,
     bool minInclusive,
     bool maxInclusive,
-    int fallback,
+    double fallback,
     string origPrompt,
     string wrongTypePrompt, 
     string inRangePrompt,
     string invalidPrompt,
     string failedPrompt
-): _ID{id},
+): 
+   _ID{id},
    _min{min},
    _max{max},
    _min_inclusive{minInclusive},
    _max_inclusive{maxInclusive},
    _fallback{fallback},
-   _answer{-1},
+   _answer{0.0},
    _valid_answer{false},
    _orig_prompt{origPrompt},
    _invalid_prompt{invalidPrompt},
@@ -33,15 +36,17 @@ Question_Int::Question_Int (
    _failed_prompt{failedPrompt},
    _next_prompt{&_orig_prompt}
 {
+    _next_prompt = &_orig_prompt;
+    _valid_answer = false;
 }
 
-Question_Int::Question_Int (
+Question_Double2::Question_Double2 (
     int id,
-    int min, 
-    int max,
+    double min, 
+    double max,
     bool minInclusive,
     bool maxInclusive,
-    int fallback,
+    double fallback,
     string origPrompt,
     string valueName
 ): _ID{id},
@@ -50,104 +55,104 @@ Question_Int::Question_Int (
    _min_inclusive{minInclusive},
    _max_inclusive{maxInclusive},
    _fallback{fallback},
-   _answer{-1},
+   _answer{0.0},
    _valid_answer{false},
    _orig_prompt{origPrompt}
-{
+{ 
     // setting _invalid_prompt
-    _invalid_prompt.insert(_invalid_prompt.size(), " ");
-    _invalid_prompt.insert(_invalid_prompt.size(), _orig_prompt);
+    _invalid_prompt.insert(_invalid_prompt.size()-1, " ");
+    _invalid_prompt.insert(_invalid_prompt.size() - 2, _orig_prompt);
+    
 
     char minEdge = minInclusive? '[' : '(';
     char maxEdge = maxInclusive? ']' : ')';
     // setting range_prompt
-        std::stringstream rangeStream;
-        rangeStream << minEdge;
-        rangeStream << min;
-        rangeStream << ',' << ' ';
-        rangeStream << max;
-        rangeStream << maxEdge;
-        _range_prompt.insert(_range_prompt.size()-3, rangeStream.str()); 
+    std::stringstream rangeStream;
+    rangeStream << fixed << setprecision(2);
+    rangeStream << minEdge << min << ", " << max << maxEdge;
+    _range_prompt.insert(_range_prompt.size()-3, rangeStream.str()); 
 
-    // setting _failed_prompt // TODO test this prompt
-    _failed_prompt.insert(_failed_prompt.size()-9, to_string(fallback));
-    _failed_prompt.insert(_failed_prompt.size()-1, valueName);
+    // setting _failed_prompt
+    stringstream fallbackStream;
+    fallbackStream << fixed << setprecision(2) << _fallback;
+    _failed_prompt.insert(_failed_prompt.size()-2, fallbackStream.str());
+    _failed_prompt.insert(_failed_prompt.size()-1, "as the " + valueName);
 
     // set _next_prompt to _orig_prompt
     _next_prompt = &_orig_prompt;
 }
 
-int Question_Int::getID() const
+int Question_Double2::getID () const
 {
     return _ID;
 }
 
-string Question_Int::getPrompt () const
+string Question_Double2::getPrompt () const
 {
     return *_next_prompt;
 }
 
-bool Question_Int::hasValidAnswer () const
-{   
+bool Question_Double2::hasValidAnswer () const
+{
     return _valid_answer;
 }
 
-string Question_Int::getAnswer () const
+string Question_Double2::getAnswer () const
 {
     if (hasValidAnswer() == false)
-        return to_string(_fallback);
+    {
+        stringstream fallbackstream;
+        fallbackstream << fixed << setprecision(2) << _fallback;
+        return fallbackstream.str();
+    }
     return to_string(_answer);
 }
 
-string Question_Int::getFallback () const
+string Question_Double2::getFallback () const
 {
-    return to_string(_fallback);
+    stringstream fallbackstream;
+    fallbackstream << fixed << setprecision(2) << _fallback;
+    return fallbackstream.str();
 }
 
-string Question_Int::getFailedResponse () const
-{   
+string Question_Double2::getFailedResponse () const
+{  
     return _failed_prompt;
 }
 
-bool Question_Int::tryAnswer (string ans)
-{  
-    int intAnswer = -1;
+bool Question_Double2::tryAnswer (string ans)
+{   
+    double doubleAnswer = -1.0;
     _valid_answer = false;
+    // TODO delete these two lines about regex
+    //string rs = "^\\-?\\d*\\.?\\d+$";
+    //string rs = R"!(^[+-]?\d*\.?\d+$)!"; //TODO 72.
 
     // Determine if ans can be converted to a number.
-    try 
-    {
-        intAnswer = stoi(ans);
+    try {
+        doubleAnswer = stod(ans);
     }
     catch(...)
-    {   
+    {
         _next_prompt = &_invalid_prompt;
         return false;
     }
 
-    // ans string should represent an integer not a double.
-    string rs = "^[+-]?\\d+$";
-    if (regex_search(ans, regex(rs)) == false)
-    {
-        _next_prompt = &_type_prompt;
-        return false;  
-    }
-    
     // Determine if ans is in range.
-    if (!rangeFunction(intAnswer))
+    if (!rangeFunction(doubleAnswer))
     {   
         _next_prompt = &_range_prompt;
         return false;
     }
-    
+
     // ans is a valid answer.
     _valid_answer = true;
-    _answer = intAnswer;
+    _answer = doubleAnswer;
     _next_prompt = &_orig_prompt;
     return _valid_answer;
 }
 
-bool Question_Int::rangeFunction (int val) const
+bool Question_Double2::rangeFunction (double val) const
 {  
     if (_min_inclusive == true)
     {   

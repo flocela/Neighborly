@@ -47,7 +47,7 @@ Question_Double::Question_Double (
    _orig_prompt{origPrompt}
 { 
     // setting _invalid_prompt
-    _invalid_prompt.insert(33, _orig_prompt);
+    //_invalid_prompt.insert(_invalid_prompt.size()-10, _orig_prompt);
 
     // setting _failed_prompt
     stringstream fallbackStream;

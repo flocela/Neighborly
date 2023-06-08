@@ -24,7 +24,8 @@ TEST_CASE("Question_Int getPrompt() returns the origPrompt first.")
 }
 
 
-TEST_CASE("Question_Int If answer is not a number, getPrompt returns invalid_prompt.")
+TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
+          " getPrompt returns invalid_prompt.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -35,12 +36,14 @@ TEST_CASE("Question_Int If answer is not a number, getPrompt returns invalid_pro
                    0,
                    origPrompt,
                    "age"};
-    q.tryAnswer("x");
+    bool ok = q.tryAnswer("x");
+    REQUIRE (ok == false);
+    REQUIRE (q.hasValidAnswer() == false);
     REQUIRE( q.getPrompt() ==
         "I didn't understand your answer. Choose a number in the range [1, 10].");
 }
 
-TEST_CASE("Question_Int handles negative integers, returns out of range.")
+TEST_CASE("Question_Int. Answers starting with '-' are negative numbers.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -51,12 +54,14 @@ TEST_CASE("Question_Int handles negative integers, returns out of range.")
                    0,
                    origPrompt,
                    "age"};
-    q.tryAnswer("-1");
+    bool ok = q.tryAnswer("-1");
+    REQUIRE (ok == false);
+    REQUIRE (q.hasValidAnswer() == false);
     REQUIRE( q.getPrompt() !=
         "That integer is not in range. Should be in the range . _");
 }
 
-TEST_CASE("Question_Int handles plus signs before integer.")
+TEST_CASE("Question_Int. Answers starting with '+' are positive numbers.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -67,12 +72,13 @@ TEST_CASE("Question_Int handles plus signs before integer.")
                    0,
                    origPrompt,
                    "age"};
-    q.tryAnswer("+2");
+    bool ok = q.tryAnswer("+2");
+    REQUIRE (ok == true);
     REQUIRE( q.hasValidAnswer() == true);
     REQUIRE( q.getPrompt() == origPrompt);
 }
 
-TEST_CASE("Question_Int hasValidAnswer() returns false when answer is a double.")
+TEST_CASE("Question_Int. Answers that are doubles are invalid.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -83,12 +89,13 @@ TEST_CASE("Question_Int hasValidAnswer() returns false when answer is a double."
                    0,
                    origPrompt,
                    "age"};
-    q.tryAnswer("2.3");
+    bool ok = q.tryAnswer("2.3");
+    REQUIRE (ok == false);
     REQUIRE( q.hasValidAnswer() == false);
     REQUIRE( q.getPrompt() == "Nope, that's not an integer, i.e 2, 5, or 199. _");
 }
 
-TEST_CASE("Question_Int hasValidAnswer() is false, when answer is not in inclusive range.")
+TEST_CASE("Question_Int. Left edge of range determined correctly for an inclusive range.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -99,45 +106,64 @@ TEST_CASE("Question_Int hasValidAnswer() is false, when answer is not in inclusi
                    0,
                    origPrompt,
                    "age"};
-    q.tryAnswer("11");
-    REQUIRE( q.hasValidAnswer() == false);
-    REQUIRE( q.getPrompt() == "That integer is not in range. Should be in the range [1, 10]. _");
 
-    q.tryAnswer("10");
-    REQUIRE( q.hasValidAnswer() == true);
-
-    q.tryAnswer("0");
-    REQUIRE( q.hasValidAnswer() == false);
-    REQUIRE( q.getPrompt() == "That integer is not in range. Should be in the range [1, 10]. _");
-
-    q.tryAnswer("1");
+    bool ok = q.tryAnswer("1");
+    REQUIRE (ok == true);
     REQUIRE( q.hasValidAnswer() == true);
 }
 
-TEST_CASE("Question_Int hasValidAnswer() is false, when answer is not in exclusive range.")
+TEST_CASE("Question_Int. Right edge of range determined correctly for an inclusive range.")
+{   
+    std::string origPrompt = "Choose a number in the range [1, 10].";
+    Question_Int q{1,    // id
+                   1,    // min
+                   10,   //max
+                   true, // min inclusive
+                   true, // max inclusive,
+                   0,
+                   origPrompt,
+                   "age"};
+
+    bool ok = q.tryAnswer("10");
+    REQUIRE (ok == true);
+    REQUIRE( q.hasValidAnswer() == true);
+}
+
+TEST_CASE("Question_Int. Left edge of range determined correctly for an exclusive range.")
 {   
     std::string origPrompt = "Choose a number in the range (1, 10).";
     Question_Int q{1,    // id
                    1,    // min
                    10,   //max
-                   false, // min is exclusive
-                   false, // max is exclusive
+                   false, // min inclusive
+                   false, // max inclusive,
                    0,
                    origPrompt,
                    "age"};
-    q.tryAnswer("9");
-    REQUIRE( q.hasValidAnswer() == true);
 
-    q.tryAnswer("10");
+    bool ok = q.tryAnswer("1");
+    REQUIRE (ok == false);
     REQUIRE( q.hasValidAnswer() == false);
     REQUIRE( q.getPrompt() == "That integer is not in range. Should be in the range (1, 10). _");
+}
 
-    q.tryAnswer("1");
+
+TEST_CASE("Question_Int. Right edge of range determined correctly for an exclusive range.")
+{   
+    std::string origPrompt = "Choose a number in the range (1, 10).";
+    Question_Int q{1,    // id
+                   1,    // min
+                   10,   //max
+                   false, // min inclusive
+                   false, // max inclusive,
+                   0,
+                   origPrompt,
+                   "age"};
+
+    bool ok = q.tryAnswer("10");
+    REQUIRE (ok == false);
     REQUIRE( q.hasValidAnswer() == false);
     REQUIRE( q.getPrompt() == "That integer is not in range. Should be in the range (1, 10). _");
-
-    q.tryAnswer("2");
-    REQUIRE( q.hasValidAnswer() == true);
 }
 
 TEST_CASE("Question_Int runs through a sequence of answers.")
