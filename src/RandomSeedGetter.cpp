@@ -12,16 +12,18 @@ const string RandomSeedGetter::_seed_orig_prompt =
 
 int RandomSeedGetter::getSeedFromUser (const UI& ui)
 {
-    Question_Int_II question = createQuestionForSeed();
+    Question_Int2 question = createQuestionForSeed();
     return stoi(ui.getAnswer(question));
 }
 
-Question_Int_II RandomSeedGetter::createQuestionForSeed ()
+Question_Int2 RandomSeedGetter::createQuestionForSeed ()
 {
-    return Question_Int_II{
+    return Question_Int2{
         0,
         1,
         numeric_limits<int>::max(),
+        true, 
+        true,
         _seed_fallback,
         _seed_orig_prompt,
         "seed number for the random generator"

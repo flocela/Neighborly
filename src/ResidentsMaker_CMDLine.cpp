@@ -4,7 +4,7 @@
 
 #include "Question_Double.h"
 #include "Question_Double_II.h"
-#include "Question_Int_II.h"
+#include "Question_Int2.h"
 
 using namespace std;
 
@@ -91,10 +91,12 @@ void ResidentsMaker_CMDLine::initColors (vector<BaseColor> colors)
 
 int ResidentsMaker_CMDLine::askForNumOfGroupsOfResidents(const UI& ui, int maxNumOfResidentGroups)
 {
-    Question_Int_II question = Question_Int_II{
+    Question_Int2 question = Question_Int2{
         0,
         1,
         maxNumOfResidentGroups,
+        true,
+        true,
         2,
         _how_many_groups_orig_prompt,
         "number of groups"
@@ -112,10 +114,12 @@ int ResidentsMaker_CMDLine::askForNumOfResidents(const UI& ui, int count, string
     );
 
     // create question, add color to prompt
-    Question_Int_II question{
+    Question_Int2 question{
         1,
         1,
         count,
+        true,
+        true,
         count/2,
         insertIntoString(
             howManyResidentsPrompt,

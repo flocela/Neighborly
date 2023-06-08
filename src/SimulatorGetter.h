@@ -6,7 +6,7 @@
 #include <unordered_set>
 #include "City.h"
 #include "Question_Double_II.h"
-#include "Question_Int_II.h"
+#include "Question_Int2.h"
 #include "Resident.h"
 #include "Simulator.h"
 #include "UI.h"
@@ -30,7 +30,7 @@ private:
     int _number_of_houses_to_look_at = 5;
 
     Question_Double_II createQuestionForPercentOfResidentsThatMustMove ();
-    Question_Int_II createQuestionForNumberOfHousesToChooseFrom ();
+    Question_Int2 createQuestionForNumberOfHousesToChooseFrom ();
 
     const std::string _simulator_menu_prompt =
         "\nWhich simulator would you like? In each run of Simulator A, all residents who are unhappy"

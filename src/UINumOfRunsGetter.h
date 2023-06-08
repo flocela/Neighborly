@@ -2,7 +2,7 @@
 #define UINUMOFRUNSGETTER_H
 
 #include <string>
-#include "Question_Int_II.h"
+#include "Question_Int2.h"
 #include "UI.h"
 
 // UINumOfRunsGetter is used to ask the user how many runs should the simulation.
@@ -27,7 +27,7 @@ private:
 
     static const std::string _num_of_runs_failure_str;
 
-    static Question_Int_II createQuestionForNumOfRuns (int maxNumOfRuns);
+    static Question_Int2 createQuestionForNumOfRuns (int maxNumOfRuns);
 
 };
 
