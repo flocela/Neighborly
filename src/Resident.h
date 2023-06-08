@@ -15,6 +15,7 @@ protected:
 public:
     // happinessGoal must be in the rage [0, 100].
     // happiness defaults to zero until it is set.
+    // @allowedMovementDistance is how far the resident can move to inhabit a new house
     Resident (
         int id,
         int groupId,
@@ -23,10 +24,12 @@ public:
     Resident () = delete;
     virtual ~Resident () = default;
 
+    // Only calculates happiness. Does not set the resident's happiness.
     double calculateHappiness (
         const std::unordered_set<const Resident*>& neighbors,
         int numOfAdjacentHouses
     ) const;
+    
     double getAllowedMovementDistance () const;
     int getGroupId () const;
     double getHappinessGoal () const;

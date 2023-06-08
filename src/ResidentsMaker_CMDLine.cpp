@@ -15,7 +15,7 @@ ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
     vector<BaseColor> colors,
     double maxAllowableMovement
 )
-{   
+{   // TODO only 2 groups allowed, so use an adapter class around this class.
     if (maxNumOfGroupsOfResidents > 2)
     {
         _num_of_resident_groups = askForNumOfGroupsOfResidents(ui, maxNumOfGroupsOfResidents);

@@ -5,7 +5,7 @@
 #include "ResidentsMaker.h"
 #include "UI_CMDLine.h"
 
-// Creates Residents by asking user how many resident groups they want.
+// Creates Residents by asking user how many resident groups will be necessary.
 // Then for each group, asks what type of resident the group will be composed of.
 // For each type of Resident type, asks specific questions that are necessary
 // to create Residents of that type.

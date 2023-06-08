@@ -5,6 +5,7 @@
 #include "Resident.h"
 #include "HappinessFunc.h"
 
+// Uses the HappinessFunc given in the constructor to determine the resident happiness.
 class Resident_UsingFunction : public Resident
 {
 protected:
