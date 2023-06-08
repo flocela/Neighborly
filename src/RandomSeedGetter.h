@@ -1,7 +1,6 @@
 #ifndef RANDOMSEEDGETTER_H
 #define RANDOMSEEDGETTER_H
 
-#include <string>
 #include "Question_Int.h"
 #include "UI.h"
 
