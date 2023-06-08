@@ -25,9 +25,9 @@ Question_Double_II SimulatorGetter::createQuestionForPercentOfResidentsThatMustM
     };
 }
 
-Question_Int2 SimulatorGetter::createQuestionForNumberOfHousesToChooseFrom ()
+Question_Int SimulatorGetter::createQuestionForNumberOfHousesToChooseFrom ()
 {
-    return Question_Int2{
+    return Question_Int{
         1,
         1,
         _city->getNumOfHouses(),
@@ -60,7 +60,7 @@ unique_ptr<Simulator> SimulatorGetter::getSimulatorFromUser (const UI& ui)
             createQuestionForPercentOfResidentsThatMustMove();
         _percent_residents_to_move = stod(ui.getAnswer(qPercentOfResidentsThatMustMove));
 
-        Question_Int2 qNumberOfHousesToChouseFrom = 
+        Question_Int qNumberOfHousesToChouseFrom = 
             createQuestionForNumberOfHousesToChooseFrom();
         _number_of_houses_to_look_at = 
             stoi(ui.getAnswer(qNumberOfHousesToChouseFrom));

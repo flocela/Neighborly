@@ -19,13 +19,13 @@ const std::string UINumOfRunsGetter::_num_of_runs_failure_str =
 
 int UINumOfRunsGetter::getNumOfRunsFromUser (const UI& ui, int maxNumOfRuns)
 {
-    Question_Int2 question = createQuestionForNumOfRuns (maxNumOfRuns);
+    Question_Int question = createQuestionForNumOfRuns (maxNumOfRuns);
     return stoi(ui.getAnswer(question));
 }
 
-Question_Int2 UINumOfRunsGetter::createQuestionForNumOfRuns (int maxNumOfRuns)
+Question_Int UINumOfRunsGetter::createQuestionForNumOfRuns (int maxNumOfRuns)
 {
-    return Question_Int2{
+    return Question_Int{
         0,
         1,
         maxNumOfRuns,

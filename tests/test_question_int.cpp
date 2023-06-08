@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../src/Question_Int2.h"
+#include "../src/Question_Int.h"
 
 using Catch::Matchers::Contains;
 
@@ -12,7 +12,7 @@ using Catch::Matchers::Contains;
 TEST_CASE("Question_Int getPrompt() returns the origPrompt first.")
 {   
     std::string origPrompt = "Choose a number between 1 and 10 inclusive.";
-    Question_Int2 q{1,    // id
+    Question_Int q{1,    // id
                    1,    // min
                    10,   //max
                    true, // min inclusive
@@ -27,7 +27,7 @@ TEST_CASE("Question_Int getPrompt() returns the origPrompt first.")
 TEST_CASE("Question_Int If answer is not a number, getPrompt returns invalid_prompt.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
-    Question_Int2 q{1,    // id
+    Question_Int q{1,    // id
                    1,    // min
                    10,   //max
                    true, // min inclusive
@@ -43,7 +43,7 @@ TEST_CASE("Question_Int If answer is not a number, getPrompt returns invalid_pro
 TEST_CASE("Question_Int handles negative integers, returns out of range.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
-    Question_Int2 q{1,    // id
+    Question_Int q{1,    // id
                    1,    // min
                    10,   //max
                    true, // min inclusive
@@ -59,7 +59,7 @@ TEST_CASE("Question_Int handles negative integers, returns out of range.")
 TEST_CASE("Question_Int handles plus signs before integer.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
-    Question_Int2 q{1,    // id
+    Question_Int q{1,    // id
                    1,    // min
                    10,   //max
                    true, // min inclusive
@@ -75,7 +75,7 @@ TEST_CASE("Question_Int handles plus signs before integer.")
 TEST_CASE("Question_Int hasValidAnswer() returns false when answer is a double.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
-    Question_Int2 q{1,    // id
+    Question_Int q{1,    // id
                    1,    // min
                    10,   //max
                    true, // min inclusive
@@ -91,7 +91,7 @@ TEST_CASE("Question_Int hasValidAnswer() returns false when answer is a double."
 TEST_CASE("Question_Int hasValidAnswer() is false, when answer is not in inclusive range.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
-    Question_Int2 q{1,    // id
+    Question_Int q{1,    // id
                    1,    // min
                    10,   //max
                    true, // min inclusive
@@ -117,7 +117,7 @@ TEST_CASE("Question_Int hasValidAnswer() is false, when answer is not in inclusi
 TEST_CASE("Question_Int hasValidAnswer() is false, when answer is not in exclusive range.")
 {   
     std::string origPrompt = "Choose a number in the range (1, 10).";
-    Question_Int2 q{1,    // id
+    Question_Int q{1,    // id
                    1,    // min
                    10,   //max
                    false, // min is exclusive
@@ -143,7 +143,7 @@ TEST_CASE("Question_Int hasValidAnswer() is false, when answer is not in exclusi
 TEST_CASE("Question_Int runs through a sequence of answers.")
 {   
     std::string origPrompt = "Choose a number in the range (1, 10).";
-    Question_Int2 q{1,    // id
+    Question_Int q{1,    // id
                    1,    // min
                    10,   //max
                    false, // min is exclusive

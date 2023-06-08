@@ -10,6 +10,8 @@ Question_Int::Question_Int (
     int id,
     int min, 
     int max,
+    bool minInclusive,
+    bool maxInclusive,
     int fallback,
     string origPrompt,
     string wrongTypePrompt, 
@@ -19,40 +21,59 @@ Question_Int::Question_Int (
 ): _ID{id},
    _min{min},
    _max{max},
+   _min_inclusive{minInclusive},
+   _max_inclusive{maxInclusive},
    _fallback{fallback},
+   _answer{-1},
+   _valid_answer{false},
    _orig_prompt{origPrompt},
-   _type_prompt{wrongTypePrompt},
    _invalid_prompt{invalidPrompt},
+   _type_prompt{wrongTypePrompt},
+   _range_prompt{inRangePrompt},
    _failed_prompt{failedPrompt},
-   _range_prompt{inRangePrompt}
+   _next_prompt{&_orig_prompt}
 {
-    _next_prompt = &_orig_prompt;
-    _valid_answer = false;
 }
 
 Question_Int::Question_Int (
     int id,
     int min, 
     int max,
+    bool minInclusive,
+    bool maxInclusive,
     int fallback,
     string origPrompt,
     string valueName
 ): _ID{id},
    _min{min},
    _max{max},
+   _min_inclusive{minInclusive},
+   _max_inclusive{maxInclusive},
    _fallback{fallback},
+   _answer{-1},
+   _valid_answer{false},
    _orig_prompt{origPrompt}
 {
     // setting _invalid_prompt
+    _invalid_prompt.insert(_invalid_prompt.size(), " ");
     _invalid_prompt.insert(_invalid_prompt.size(), _orig_prompt);
+
+    char minEdge = minInclusive? '[' : '(';
+    char maxEdge = maxInclusive? ']' : ')';
+    // setting range_prompt
+        std::stringstream rangeStream;
+        rangeStream << minEdge;
+        rangeStream << min;
+        rangeStream << ',' << ' ';
+        rangeStream << max;
+        rangeStream << maxEdge;
+        _range_prompt.insert(_range_prompt.size()-3, rangeStream.str()); 
 
     // setting _failed_prompt
     _failed_prompt.insert(_failed_prompt.size()-9, to_string(fallback));
     _failed_prompt.insert(_failed_prompt.size()-1, valueName);
 
-    //set current _valid_naswer and _next_prompt
     _next_prompt = &_orig_prompt;
-    _valid_answer = false;
 }
 
 int Question_Int::getID() const
@@ -90,33 +111,72 @@ string Question_Int::getFailedResponse () const
 bool Question_Int::tryAnswer (string ans)
 {  
     int intAnswer = -1;
+    _valid_answer = false;
 
-    string rs = "^\\-?\\d+$";
-
+    // Determine if ans can be converted to a number.
     try 
     {
-        if (regex_search(ans, regex(rs)) == false)
-        {
-            throw invalid_argument("string argument can not be converted to an integer.");
-        }
         intAnswer = stoi(ans);
-    }
-    catch(invalid_argument& e)
-    {   
-        _next_prompt = &_type_prompt;
-        return false;
     }
     catch(...)
     {   
         _next_prompt = &_invalid_prompt;
         return false;
     }
-    if (!rangeFunction(_min, _max, intAnswer))
+
+    // ans string should represent an integer not a double.
+    string rs = "^[+-]?\\d+$";
+    if (regex_search(ans, regex(rs)) == false)
+    {
+        _next_prompt = &_type_prompt;
+        return false;  
+    }
+    
+    // Determine if ans is in range.
+    if (!rangeFunction(intAnswer))
     {   
         _next_prompt = &_range_prompt;
         return false;
     }
+    
+    // ans is a valid answer.
     _valid_answer = true;
     _answer = intAnswer;
+    _next_prompt = &_orig_prompt;
     return _valid_answer;
+}
+
+bool Question_Int::rangeFunction (int val) const
+{  
+    if (_min_inclusive == true)
+    {   
+        if (val < _min)
+        {
+            return false;
+        }
+    }
+    else
+    {    
+        if (val <= _min)
+        {
+            return false;
+        }
+    }
+    
+    if (_max_inclusive == true)
+    {
+        if (val > _max)
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if (val >= _max)
+        {
+            return false;
+        }
+    }
+    
+    return true;
 }

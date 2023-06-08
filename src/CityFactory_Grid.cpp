@@ -1,6 +1,6 @@
 #include "CityFactory_Grid.h"
 #include "City_Grid.h"
-#include "Question_Int2.h"
+#include "Question_Int.h"
 
 using namespace std;
 
@@ -27,7 +27,7 @@ int CityFactory_Grid::askForGridWidth(const UI& ui, int maxWidth)const
     string copyWidthOfGridFailure = _width_of_grid_failure;
     copyWidthOfGridFailure.insert(53, to_string(maxWidth/2));
 
-    Question_Int2 question{
+    Question_Int question{
         0, //id
         1, // min number of houses on a side
         maxWidth, // max number of houses on a side

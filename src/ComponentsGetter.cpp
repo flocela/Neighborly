@@ -7,8 +7,6 @@
 #include "Simulator_Basic_A.h"
 #include "Simulator_Basic_B.h"
 #include "SimulatorGetter.h"
-#include "Question_Double_II.h"
-#include "Question_Int_II.h"
 #include "UINumOfRunsGetter.h"
 
 using namespace std;

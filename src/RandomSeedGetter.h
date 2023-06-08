@@ -2,7 +2,7 @@
 #define RANDOMSEEDGETTER_H
 
 #include <string>
-#include "Question_Int2.h"
+#include "Question_Int.h"
 #include "UI.h"
 
 class RandomSeedGetter
@@ -11,7 +11,7 @@ class RandomSeedGetter
         static int getSeedFromUser (const UI& ui);
 
     private:
-        static Question_Int2 createQuestionForSeed ();
+        static Question_Int createQuestionForSeed ();
 
         // if can not get a seed for random generator, then use _seed_fallback
         static const int _seed_fallback;

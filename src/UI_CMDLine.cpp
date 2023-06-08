@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "Question_Int2.h"
+#include "Question_Int.h"
 
 using namespace std;
 
@@ -53,7 +53,7 @@ int UI_CMDLine::menu (
     ssInRange << items.size() << ".  ";
     ssInRange << ssPrompt.str();
 
-    Question_Int2 chooseMenuItem{
+    Question_Int chooseMenuItem{
         1,
         1,
         size,
