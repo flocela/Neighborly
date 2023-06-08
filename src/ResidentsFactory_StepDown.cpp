@@ -8,10 +8,7 @@
 
 #include "HappinessFunc_StepDown.h"
 #include "Resident_UsingFunction.h"
-#include "Question_Double.h"
-#include "Question_Double_IE.h"
-#include "Question_Double_EI.h"
-#include "Question_Double_II.h"
+#include "Question_Double2.h"
 
 using namespace std;
 
@@ -30,10 +27,12 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal if can not get happiness value for zero neighbors.
-    Question_Double_II qHappinessWithZeroNeighbors{
+    Question_Double2 qHappinessWithZeroNeighbors{
         3,
         0.0,
         100.0,
+        true,
+        true,
         happinessGoal,
         insertIntoString(
             _happinessWithZeroNeighborsPrompt,
@@ -47,10 +46,12 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for high happiness value.
     // uses happiness goal if can not get high happiness value.
-    Question_Double_EI qHighHappinessValue{
+    Question_Double2 qHighHappinessValue{
         3,
         0.0,
         100.0,
+        false,
+        true,
         happinessGoal,
         insertIntoString(
             _high_happiness_value_prompt,
@@ -64,9 +65,11 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for low happiness value.
     // uses _fallback_low_happiness_value if can not get low happiness value
-    Question_Double_IE qLowHappinessValue{
+    Question_Double2 qLowHappinessValue{
         4,
         0,
+        true,
+        false,
         highHappinessValue,
         _fallback_low_happiness_value,
         insertIntoString(
@@ -80,10 +83,12 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for drop location.
     // uses _fallback_drop_location if can not get drop location.
-    Question_Double_IE qHappinessDropLocation{
+    Question_Double2 qHappinessDropLocation{
         5,
         0.0,
         1.0,
+        true,
+        false,
         _fallback_drop_location,
         insertIntoString(
             _dropLocationOrigPrompt,

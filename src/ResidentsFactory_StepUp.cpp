@@ -6,9 +6,7 @@
 #include <iostream>
 
 #include "HappinessFunc_StepUp.h"
-#include "Question_Double_II.h"
-#include "Question_Double_EI.h"
-#include "Question_Double_IE.h"
+#include "Question_Double2.h"
 #include "Resident_UsingFunction.h"
 
 using namespace std;
@@ -28,10 +26,12 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
 
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal if can not get happiness value for zero neighbors.
-    Question_Double_II qHappinessWithZeroNeighbors{
+    Question_Double2 qHappinessWithZeroNeighbors{
         1,
         0.0,
         100.0,
+        true,
+        true,
         happinessGoal,
         insertIntoString(
             _happiness_with_zero_neighbors_prompt,
@@ -45,10 +45,12 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
     double lowHappinessFallback = (happinessGoal == 100)? happinessGoal- 1 : happinessGoal;
     // ask user for low happiness value.
     // uses happiness goal if can not get high happiness value.
-    Question_Double_IE qLowHappinessValue{
+    Question_Double2 qLowHappinessValue{
         2,
         0,
         100.0,
+        true,
+        false,
         lowHappinessFallback,
         insertIntoString(
             _low_happiness_value_prompt,
@@ -62,10 +64,12 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
 
     // ask user for high happiness value.
     // uses fallback high happiness value, if can not get high happiness value.
-    Question_Double_EI qHighHappinessValue{
+    Question_Double2 qHighHappinessValue{
         3,
         lowHappinessValue,
         100.0,
+        false,
+        true,
         _fallback_high_happiness_value,
         insertIntoString(
             _high_happiness_value_prompt,
@@ -79,10 +83,12 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
 
     // ask user for step-up location.
     // uses _fallback_step_location if can not get step-up location.
-    Question_Double_IE qHappinessDropLocation{
+    Question_Double2 qHappinessDropLocation{
         5,
         0.0,
         1.0,
+        true,
+        false,
         _fallback_step_location,
         insertIntoString(
             _stepup_location_prompt,
