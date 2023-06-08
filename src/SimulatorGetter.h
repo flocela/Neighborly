@@ -5,7 +5,7 @@
 #include <vector>
 #include <unordered_set>
 #include "City.h"
-#include "Question_Double_II.h"
+#include "Question_Double.h"
 #include "Question_Int.h"
 #include "Resident.h"
 #include "Simulator.h"
@@ -29,7 +29,7 @@ private:
     double _percent_residents_to_move = 20.;
     int _number_of_houses_to_look_at = 5;
 
-    Question_Double_II createQuestionForPercentOfResidentsThatMustMove ();
+    Question_Double createQuestionForPercentOfResidentsThatMustMove ();
     Question_Int createQuestionForNumberOfHousesToChooseFrom ();
 
     const std::string _simulator_menu_prompt =

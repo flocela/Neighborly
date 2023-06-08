@@ -8,7 +8,7 @@
 
 #include "HappinessFunc_StepDown.h"
 #include "Resident_UsingFunction.h"
-#include "Question_Double2.h"
+#include "Question_Double.h"
 
 using namespace std;
 
@@ -27,7 +27,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal if can not get happiness value for zero neighbors.
-    Question_Double2 qHappinessWithZeroNeighbors{
+    Question_Double qHappinessWithZeroNeighbors{
         3,
         0.0,
         100.0,
@@ -46,7 +46,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for high happiness value.
     // uses happiness goal if can not get high happiness value.
-    Question_Double2 qHighHappinessValue{
+    Question_Double qHighHappinessValue{
         3,
         0.0,
         100.0,
@@ -65,7 +65,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for low happiness value.
     // uses _fallback_low_happiness_value if can not get low happiness value
-    Question_Double2 qLowHappinessValue{
+    Question_Double qLowHappinessValue{
         4,
         0,
         true,
@@ -83,7 +83,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     // ask user for drop location.
     // uses _fallback_drop_location if can not get drop location.
-    Question_Double2 qHappinessDropLocation{
+    Question_Double qHappinessDropLocation{
         5,
         0.0,
         1.0,

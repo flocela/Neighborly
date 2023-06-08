@@ -13,12 +13,14 @@ SimulatorGetter::SimulatorGetter (City* city, unordered_set<Resident*> residents
     _number_of_houses_to_look_at{_city->getNumOfHouses()/5}
     {}
 
-Question_Double_II SimulatorGetter::createQuestionForPercentOfResidentsThatMustMove ()
+Question_Double SimulatorGetter::createQuestionForPercentOfResidentsThatMustMove ()
 {
-    return Question_Double_II{
+    return Question_Double{
         0,
         0.0,
         100.0,
+        true,
+        true,
         _percent_residents_to_move,
         _simulator_b_percentage_prompt,
         _simulator_b_percentage_value
@@ -56,7 +58,7 @@ unique_ptr<Simulator> SimulatorGetter::getSimulatorFromUser (const UI& ui)
     }
     else if (chosenSimulator == 1) // Simulator B
     {
-        Question_Double_II qPercentOfResidentsThatMustMove =
+        Question_Double qPercentOfResidentsThatMustMove =
             createQuestionForPercentOfResidentsThatMustMove();
         _percent_residents_to_move = stod(ui.getAnswer(qPercentOfResidentsThatMustMove));
 

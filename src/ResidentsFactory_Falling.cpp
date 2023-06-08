@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <iostream>
 #include "HappinessFunc_Falling.h"
-#include "Question_Double2.h"
+#include "Question_Double.h"
 #include "Resident_UsingFunction.h"
 
 using namespace std;
@@ -23,7 +23,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
 
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal if can not get happiness value corresponding to zero neighbors.
-    Question_Double2 qHappinessWithZeroNeighbors{
+    Question_Double qHappinessWithZeroNeighbors{
         1,
         0.0,
         100.0,
@@ -42,7 +42,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
 
     // ask user for high happiness value, corresponding to diversity of 0.0.
     // uses happiness goal if can not get high happiness value.
-    Question_Double2 qHighHappinessValue{
+    Question_Double qHighHappinessValue{
         2,
         0.0,
         100.0,
@@ -61,7 +61,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
 
     // ask user for low happiness value, corresponding to diversity of 1.0.
     // uses _fallback_low_happiness_value if can not get low happiness value
-    Question_Double2 qLowHappinessValue{
+    Question_Double qLowHappinessValue{
         3,
         0,
         highHappinessValue,

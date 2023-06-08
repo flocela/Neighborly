@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../src/Question_Double2.h"
+#include "../src/Question_Double.h"
 
 using Catch::Matchers::Contains;
 
@@ -10,7 +10,7 @@ using Catch::Matchers::Contains;
 TEST_CASE("Question_Double getPrompt() returns the origPrompt first.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
-    Question_Double2 q{1,
+    Question_Double q{1,
                       1,
                       10,
                       true,
@@ -24,7 +24,7 @@ TEST_CASE("Question_Double getPrompt() returns the origPrompt first.")
 TEST_CASE("Question_Double If answer is not a number, then is invalid. Get invaid prompt.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
-    Question_Double2 q{1,
+    Question_Double q{1,
                       1,
                       10,
                       true,
@@ -41,7 +41,7 @@ TEST_CASE("Question_Double If answer is not a number, then is invalid. Get invai
 TEST_CASE("Question_Double. Answers starting with '-' are negative numbers.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
-    Question_Double2 q{1,
+    Question_Double q{1,
                       1,
                       10,
                       true,
@@ -59,7 +59,7 @@ TEST_CASE("Question_Double. Answers starting with '-' are negative numbers.")
 TEST_CASE("Question_Double. Answers starting with '+' are positive numbers.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
-    Question_Double2 q{1,
+    Question_Double q{1,
                       1,
                       10,
                       true,
@@ -77,7 +77,7 @@ TEST_CASE("Question_Double. Answers starting with '+' are positive numbers.")
 TEST_CASE("Question_Double. Left edge of range determined correctly for an inclusive range.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
-    Question_Double2 q{1,
+    Question_Double q{1,
                       1,
                       10,
                       true,
@@ -94,7 +94,7 @@ TEST_CASE("Question_Double. Left edge of range determined correctly for an inclu
 TEST_CASE("Question_Double. Right edge of range determined correctly for an inclusive range.")
 {   
     std::string origPrompt = "Choose a number in the range [1, 10].";
-    Question_Double2 q{1,
+    Question_Double q{1,
                       1,
                       10,
                       true,
@@ -111,7 +111,7 @@ TEST_CASE("Question_Double. Right edge of range determined correctly for an incl
 TEST_CASE("Question_Double. Left edge of range determined correctly for an exclusive range..")
 {   
     std::string origPrompt = "Choose a number in the range (1, 10).";
-    Question_Double2 q{1,
+    Question_Double q{1,
                       1,
                       10,
                       false,
@@ -129,7 +129,7 @@ TEST_CASE("Question_Double. Left edge of range determined correctly for an exclu
 TEST_CASE("Question_Double. Right edge of range determined correctly for an exclusive range.")
 {   
     std::string origPrompt = "Choose a number in the range (1, 10).";
-    Question_Double2 q{1,
+    Question_Double q{1,
                       1,
                       10,
                       false,
@@ -147,7 +147,7 @@ TEST_CASE("Question_Double. Right edge of range determined correctly for an excl
 TEST_CASE("Question_Double runs through a sequence of answers.")
 {   
     std::string origPrompt = "Choose a number in the range (1, 10).";
-    Question_Double2 q{1,    // id
+    Question_Double q{1,    // id
                    1,    // min
                    10,   //max
                    false, // min is exclusive

@@ -8,7 +8,6 @@
 #include "HappinessFunc_Flat.h"
 #include "Resident_UsingFunction.h"
 #include "Question_Double.h"
-#include "Question_Double_II.h"
 #include "Question_Int.h"
 
 using namespace std;
@@ -28,10 +27,12 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
 
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal as fallback, if can not get happiness value for zero neighbors.
-    Question_Double_II qHappinessWithZeroNeighbors{
+    Question_Double qHappinessWithZeroNeighbors{
         3,
         0.0,
         100.0,
+        true,
+        true,
         happinessGoal,
         insertIntoString(
             _happinessWithZeroNeighborsPrompt,
@@ -44,10 +45,12 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
 
 
     // ask for happiness value. It's always the same.
-    Question_Double_II qHappinessValue{
+    Question_Double qHappinessValue{
         3,
         0.0,
         100.0,
+        true,
+        true,
         _fallback_happiness_value,
         insertIntoString(
             _happinessValueOrigPrompt,

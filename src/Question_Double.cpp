@@ -12,6 +12,8 @@ Question_Double::Question_Double (
     int id,
     double min, 
     double max,
+    bool minInclusive,
+    bool maxInclusive,
     double fallback,
     string origPrompt,
     string wrongTypePrompt, 
@@ -19,15 +21,20 @@ Question_Double::Question_Double (
     string invalidPrompt,
     string failedPrompt
 ): 
-    _ID{id},
+   _ID{id},
    _min{min},
    _max{max},
+   _min_inclusive{minInclusive},
+   _max_inclusive{maxInclusive},
    _fallback{fallback},
+   _answer{0.0},
+   _valid_answer{false},
    _orig_prompt{origPrompt},
-   _type_prompt{wrongTypePrompt},
    _invalid_prompt{invalidPrompt},
+   _type_prompt{wrongTypePrompt},
+   _range_prompt{inRangePrompt},
    _failed_prompt{failedPrompt},
-   _range_prompt{inRangePrompt}
+   _next_prompt{&_orig_prompt}
 {
     _next_prompt = &_orig_prompt;
     _valid_answer = false;
@@ -37,17 +44,33 @@ Question_Double::Question_Double (
     int id,
     double min, 
     double max,
+    bool minInclusive,
+    bool maxInclusive,
     double fallback,
     string origPrompt,
     string valueName
 ): _ID{id},
    _min{min},
    _max{max},
+   _min_inclusive{minInclusive},
+   _max_inclusive{maxInclusive},
    _fallback{fallback},
+   _answer{0.0},
+   _valid_answer{false},
    _orig_prompt{origPrompt}
 { 
     // setting _invalid_prompt
-    //_invalid_prompt.insert(_invalid_prompt.size()-10, _orig_prompt);
+    _invalid_prompt.insert(_invalid_prompt.size()-1, " ");
+    _invalid_prompt.insert(_invalid_prompt.size() - 2, _orig_prompt);
+    
+
+    char minEdge = minInclusive? '[' : '(';
+    char maxEdge = maxInclusive? ']' : ')';
+    // setting range_prompt
+    std::stringstream rangeStream;
+    rangeStream << fixed << setprecision(2);
+    rangeStream << minEdge << min << ", " << max << maxEdge;
+    _range_prompt.insert(_range_prompt.size()-3, rangeStream.str()); 
 
     // setting _failed_prompt
     stringstream fallbackStream;
@@ -55,9 +78,8 @@ Question_Double::Question_Double (
     _failed_prompt.insert(_failed_prompt.size()-2, fallbackStream.str());
     _failed_prompt.insert(_failed_prompt.size()-1, "as the " + valueName);
 
-    // set current _valid_answer and _next_prompt
+    // set _next_prompt to _orig_prompt
     _next_prompt = &_orig_prompt;
-    _valid_answer = false;
 }
 
 int Question_Double::getID () const
@@ -100,33 +122,67 @@ string Question_Double::getFailedResponse () const
 
 bool Question_Double::tryAnswer (string ans)
 {   
-    double doubleAnswer;
+    double doubleAnswer = -1.0;
+    _valid_answer = false;
+    // TODO delete these two lines about regex
     //string rs = "^\\-?\\d*\\.?\\d+$";
-    string rs = R"!(^[+-]?\d*\.?\d+$)!"; //TODO 72.
+    //string rs = R"!(^[+-]?\d*\.?\d+$)!"; //TODO 72.
+
+    // Determine if ans can be converted to a number.
     try {
-        if (regex_search(ans, regex(rs)) == false)
-        {
-            throw invalid_argument("string argument can not be converted into a double.");
-        }
-        
         doubleAnswer = stod(ans);
     }
-    catch(invalid_argument& e)
-    {
-        _next_prompt = &_type_prompt;
-        return false;
-    }
     catch(...)
-    { 
+    {
         _next_prompt = &_invalid_prompt;
         return false;
     }
-    if (!rangeFunction(_min, _max, doubleAnswer))
+
+    // Determine if ans is in range.
+    if (!rangeFunction(doubleAnswer))
     {   
         _next_prompt = &_range_prompt;
         return false;
     }
+
+    // ans is a valid answer.
     _valid_answer = true;
     _answer = doubleAnswer;
+    _next_prompt = &_orig_prompt;
+    return _valid_answer;
+}
+
+bool Question_Double::rangeFunction (double val) const
+{  
+    if (_min_inclusive == true)
+    {   
+        if (val < _min)
+        {
+            return false;
+        }
+    }
+    else
+    {    
+        if (val <= _min)
+        {
+            return false;
+        }
+    }
+    
+    if (_max_inclusive == true)
+    {
+        if (val > _max)
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if (val >= _max)
+        {
+            return false;
+        }
+    }
+    
     return true;
 }

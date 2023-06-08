@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "HappinessFunc_Rising.h"
-#include "Question_Double2.h"
+#include "Question_Double.h"
 #include "Resident_UsingFunction.h"
 
 using namespace std;
@@ -24,7 +24,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Rising::createResidents (
 
     // ask user for happiness value when there are zero neighbors.
     // uses happiness goal if can not get happiness value for zero neighbors.
-    Question_Double2 qHappinessWithZeroNeighbors{
+    Question_Double qHappinessWithZeroNeighbors{
         1,
         0.0,
         100.0,
@@ -42,7 +42,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Rising::createResidents (
 
     // ask user for low happiness value.
     // uses happiness goal if can not get low happiness value from user.
-    Question_Double2 qLowHappinessValue{
+    Question_Double qLowHappinessValue{
         2,
         0,
         100,
@@ -60,7 +60,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Rising::createResidents (
 
     // ask user for high happiness value.
     // uses _fallback_high_happiness_value if can not get a high happiness value from user.
-    Question_Double2 qHighHappinessValue{
+    Question_Double qHighHappinessValue{
         3,
         lowHappinessValue,
         100.0,

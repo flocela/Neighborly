@@ -3,7 +3,6 @@
 #include <sstream>
 
 #include "Question_Double.h"
-#include "Question_Double_II.h"
 #include "Question_Int.h"
 
 using namespace std;
@@ -171,9 +170,11 @@ double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
     );
 
     // create question, add color to prompt
-    Question_Double_II question{
+    Question_Double question{
         3,
         0.0,
+        true,
+        true,
         maxAllowedMovement,
         maxAllowedMovement/4,
         insertIntoString(
@@ -189,10 +190,12 @@ double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
 double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (const UI& ui, string color)
 {
     // create question, add color to prompot
-    Question_Double_II question{
+    Question_Double question{
         4,
         0.0,
         100.0,
+        true,
+        true,
         _fallback_group_happiness_goal_failure,
         insertIntoString(
             _happiness_goal_orig_prompt,
