@@ -1,17 +1,22 @@
-#ifndef SIMULATOR_Basic_A_H
+#ifndef SIMULATOR_BASIC_A_H
 #define SIMULATOR_BASIC_A_H
 
+#include <memory>
 #include <set>
 
 #include "City.h"
+#include "CityState.h"
 #include "Simulator.h"
-
 
 class Simulator_Basic_A: public Simulator
 {
 public:
     // @residents are all the residents in the city.
-    Simulator_Basic_A (const City* city, std::unordered_set<Resident*> residents);
+    Simulator_Basic_A (
+        const City* city,
+        std::unordered_set<Resident*> residents,
+        int numOfHousesToChooseFrom,
+        std::unique_ptr<CityState> cityState);
     Simulator_Basic_A () = delete;
     Simulator_Basic_A (const Simulator_Basic_A& o) = default;
     Simulator_Basic_A (Simulator_Basic_A&& o) noexcept = default;
@@ -56,36 +61,19 @@ private:
     // Number of houses resident will try before, giving up and not moving on this run.
     int _num_of_tries = 40;
 
+    std::unique_ptr<CityState> _city_state;
+
     // in first run, no resident has a house. And all residents are assigned a house.
     void firstRun ();
 
     // all runs which aren't the first run
     void normalRun ();
 
-    // Will try to move the resident into a random available house.
-    // An available house is an empty house, within the resident's allowable movement distance.
-    // If there are no available houses which will make the resident happy (hapiness greater
-    // or equal to happiness goal), then the resident will not be moved.
-    // Will randomly try available houses. If a house that will make the resident
-    // happy is not found within numOfTries, then the resident will not be moved.
-    void moveResident (Resident* res, int numOfTries);
-
-    // @res is the resident. @newHouse is the new house @res will be moved to.
-    // @newHouse is assumed to be currently unoccupied (is in _open_houses set).
-    // If @res has a current house, removes @res and that house from the
-    // _curr_house_to_res_map and the _curr_res_to_house_map.
-    // Adds the house (now the old house) into the _open_houses set.
-    // Then adds @res and @newHouse into said maps.
-    // Removes @newHouse from _open_houses.
-    void moveResidentIntoHouse (Resident* res, const House* newHouse);
-
     void setHappinessValuesForAllResidents();
 
-    double calculateHappinessValueFor(Resident* res, int address);
+    double calculateHappiness(Resident* res, int address);
 
-    // Returns residents that live in @houses. If a house is empty, then 
-    // returned set will be smaller than @houses.
-    std::unordered_set<const Resident*> getResidentsInTheseHouses(std::unordered_set<const House*> houses);
+    void moveResident (Resident* res, int numOfTries);
 };
 
 #endif

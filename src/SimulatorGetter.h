@@ -26,7 +26,7 @@ public:
 private:
     City* _city = nullptr;
     std::unordered_set<Resident*> _residents{};
-    double _percent_residents_to_move = 20.;
+    double _percent_residents_to_move = 20.0;
     int _number_of_houses_to_look_at = 5;
 
     Question_Double createQuestionForPercentOfResidentsThatMustMove ();
@@ -50,7 +50,7 @@ private:
         "percentage of residents moved per run";
 
     const std::string _simulator_b_number_of_houses_to_choose_from_prompt =
-        "The chosen residents will choose from a number of houses."
+        "The residents will choose from a number of houses."
         " How many houses should they choose from? _";
     const std::string _simulator_b_number_of_houses_to_choose_from_value =
         "number of housese to choose from";

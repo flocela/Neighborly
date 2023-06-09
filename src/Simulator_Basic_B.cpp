@@ -116,7 +116,7 @@ void Simulator_Basic_B::normalRun ()
         // select a resident
         Resident* curRes = selectRandom(_moving_residents_vector);
 
-        // remember a resident can not be chosen twice in one run
+        // a resident can not be chosen twice in one run
         while ( _residents_chosen_from_cur_vector.find(curRes) !=
                 _residents_chosen_from_cur_vector.end() )
         {
@@ -189,7 +189,7 @@ void Simulator_Basic_B::setHappinessValuesForAllResidents ()
 
         unordered_set<const House*> adjHouses = _city->getHousesAdjacent(resHouse->getAddress());
 
-        // populate adjacentNeighbors which contains all the resident's neighbors
+        // Create adjacentNeighbors which contains all the resident's neighbors
         unordered_set<const Resident*> adjacentNeighbors;
         for (const House* adjacentHouse : adjHouses)
         {   
@@ -199,7 +199,6 @@ void Simulator_Basic_B::setHappinessValuesForAllResidents ()
                 adjacentNeighbors.insert(adjacentNeighbor);
             }
         }
-
         res->setHappiness(adjacentNeighbors, adjHouses.size());
 
     }

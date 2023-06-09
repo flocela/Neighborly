@@ -4,6 +4,7 @@
 #include <string>
 #include "City_Grid.h"
 #include "CityState_Simple.h"
+#include "Simulator_Basic_A.h"
 #include "Simulator_Basic_B.h"
 #include "SimulationComponents.h"
 #include "Resident_UsingFunction.h"
@@ -82,15 +83,20 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
-
-            components.simulator = std::make_unique<Simulator_Basic_B>(
+            //TODO change back to Simulator_Basic_
+            /*components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30, // percent of residents that simulation tries to move at every run
                 20, // number of houses moving residents get to choose from
                 make_unique<CityState_Simple>(components.city.get())
+            );*/
+            components.simulator = std::make_unique<Simulator_Basic_A>(
+                components.city.get(),
+                getSetOfPointers(components.residents),
+                20,
+                make_unique<CityState_Simple>(components.city.get())
             );
-
             components.numOfRuns = 20;
             
             break;

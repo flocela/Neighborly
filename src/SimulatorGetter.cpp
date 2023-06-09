@@ -43,29 +43,35 @@ Question_Int SimulatorGetter::createQuestionForNumberOfHousesToChooseFrom ()
 
 unique_ptr<Simulator> SimulatorGetter::getSimulatorFromUser (const UI& ui)
 {
+    // Choose Simulator_Basic_A or Simulator_Basic_B
     int chosenSimulator = ui.menu(
         _simulator_menu_prompt, 
         _simulator_menu_items,
         _simulator_fallback,
         _simulator_menu_failure_response
     );
-    if (chosenSimulator == 0) //Simulator A
+
+    if (chosenSimulator == 0) // Basic_A
     {
+        Question_Int q = createQuestionForNumberOfHousesToChooseFrom();
+        _number_of_houses_to_look_at = 
+            stoi(ui.getAnswer(q));
+
         return make_unique<Simulator_Basic_A>(
             _city,
-            _residents
+            _residents,
+            _number_of_houses_to_look_at,
+            make_unique<CityState_Simple>(_city)
         );
     }
-    else if (chosenSimulator == 1) // Simulator B
+    else if (chosenSimulator == 1) // Basic_B
     {
-        Question_Double qPercentOfResidentsThatMustMove =
-            createQuestionForPercentOfResidentsThatMustMove();
-        _percent_residents_to_move = stod(ui.getAnswer(qPercentOfResidentsThatMustMove));
+        _percent_residents_to_move =
+            stod(ui.getAnswer(createQuestionForPercentOfResidentsThatMustMove()));
 
-        Question_Int qNumberOfHousesToChouseFrom = 
-            createQuestionForNumberOfHousesToChooseFrom();
         _number_of_houses_to_look_at = 
-            stoi(ui.getAnswer(qNumberOfHousesToChouseFrom));
+            stoi(ui.getAnswer(createQuestionForNumberOfHousesToChooseFrom()));
+
         return make_unique<Simulator_Basic_B>(
             _city,
             _residents,
@@ -74,7 +80,7 @@ unique_ptr<Simulator> SimulatorGetter::getSimulatorFromUser (const UI& ui)
             make_unique<CityState_Simple>(_city)
         );
     }
-    else
+    else //default is Basic_B
     {
         return make_unique<Simulator_Basic_B>(
             _city,

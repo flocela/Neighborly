@@ -19,6 +19,7 @@ public:
     UI_CMDLine& operator=(UI_CMDLine&& o) noexcept = default;
     ~UI_CMDLine () = default;
 
+    std::string getAnswer (Question&& question) const override;
     std::string getAnswer (Question& question) const override;
 
     int menu (

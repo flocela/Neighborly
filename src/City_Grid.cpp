@@ -195,18 +195,18 @@ vector<const House*> City_Grid::getHouses () const
 }
 
 unordered_set<const House*> City_Grid::getHousesAdjacent (int address) const
-{
+{	
 	if ( _adjacent_houses_per_house_address.find(address) != _adjacent_houses_per_house_address.end())
 	{
 		return _adjacent_houses_per_house_address[address];
 	}
-
+	
 	unordered_set<const House*> adjacentHouses = {};
 
 	Coordinate coord = getCoordinate(address);
 	int addr_x = coord.getX();
 	int addr_y = coord.getY();
-
+	
 	if (addr_y > 0)
 	{
 		if (addr_x > 0)

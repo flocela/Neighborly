@@ -7,6 +7,7 @@
 #include "City.h"
 #include "Color.h"
 #include "SimulationComponents.h"
+#include "Simulator_Basic_A.h"
 
 // takes in a file and returns a SimulationComponents
 class SimulationStarter
@@ -18,9 +19,15 @@ public:
 private:
     std::unique_ptr<City> getCity(std::string cityString, std::vector<std::string> cityTypes);
     std::pair<int, BaseColor> returnBaseColor (std::ifstream& inputStream);
+
     void returnResidents (
         std::ifstream& inputStream, 
         std::vector<std::unique_ptr<Resident>>& residents
+    );
+
+    std::unique_ptr<Simulator_Basic_A> returnSimulatorBasicA (
+        std::ifstream& inputStream,
+        SimulationComponents& components // TODO should be const, but getSetOfPOinters doesn't accept const
     );
 
     void returnResidentsWithStepDownFunc (
@@ -30,7 +37,8 @@ private:
         int numberOfResidents,
         int groupId,
         double allowedMovement,
-        double happinessGoal);
+        double happinessGoal
+    );
     
     void returnResidentsWithStepUpFunc (
         std::ifstream& inputStream,
@@ -39,7 +47,8 @@ private:
         int numberOfResidents,
         int groupId,
         double allowedMovement,
-        double happinessGoal);
+        double happinessGoal
+    );
 
     void returnResidentsWithFallingFunc (
         std::ifstream& inputStream,
@@ -70,6 +79,7 @@ private:
         double allowedMovement,
         double happinessGoal
     );
+
     std::string leftTrim (std::string str);
 };
 

@@ -171,7 +171,7 @@ int main(int argc, char* argv[])
         cout << "main about to print" << endl;
         graphicPrinter.print(&runMetrics, ii);
         cout << "main finished printing" << endl;
-        cmdLinePrinter.print(&runMetrics, ii);
+        //cmdLinePrinter.print(&runMetrics, ii);
         std::this_thread::sleep_until(timeStart + std::chrono::milliseconds(250));
     }
     graphicPrinter.keepScreen();

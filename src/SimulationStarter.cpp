@@ -4,6 +4,7 @@
 #include <iostream>
 #include <set>
 #include "City_Grid.h"
+#include "CityState_Simple.h"
 #include "Color.h"
 #include "HappinessFunc_Falling.h"
 #include "HappinessFunc_Flat.h"
@@ -11,7 +12,6 @@
 #include "HappinessFunc_StepDown.h"
 #include "HappinessFunc_StepUp.h"
 #include "Resident_UsingFunction.h"
-#include "Simulator_Basic_A.h"
 
 using namespace std;
 
@@ -81,7 +81,7 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
 
             getline(inputStream, line);
         }
-        
+        // TODO make text file that uses SimulatorBasicB
         // simulator
         if (line.find("<simulator>") != string::npos)
         {   
@@ -95,10 +95,10 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
             }
             if (simulator == "Simulator_Basic_A")
             {   
-                components.simulator = std::make_unique<Simulator_Basic_A>(
-                components.city.get(),
-                getSetOfPointers(components.residents)
-            );
+                components.simulator = returnSimulatorBasicA(
+                    inputStream,
+                    components
+                );
             }
             getline(inputStream, line); // </simulator>
         }
@@ -117,6 +117,29 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
     }
 
     return components;
+}
+
+std::unique_ptr<Simulator_Basic_A> SimulationStarter::returnSimulatorBasicA (
+    std::ifstream& inputStream,
+    SimulationComponents& components // should be const, but getSetOfPointers doesn't take const.
+)
+{
+    string line = "";
+    string numOfTries = "";
+
+    getline(inputStream, line);
+    if (line.find("num_of_tries") != string::npos)
+    {
+        getline(inputStream, numOfTries);
+        getline(inputStream, line);
+    }
+
+    return std::make_unique<Simulator_Basic_A>(
+            components.city.get(),
+            getSetOfPointers(components.residents),
+            stoi(numOfTries),
+            make_unique<CityState_Simple>(components.city.get())
+    );
 }
 
 pair<int, BaseColor> SimulationStarter::returnBaseColor (ifstream& inputStream)
@@ -146,6 +169,7 @@ pair<int, BaseColor> SimulationStarter::returnBaseColor (ifstream& inputStream)
     return {stoi(groupId), c};
 }
 
+// TODO bad name for this method
 void SimulationStarter::returnResidents (
     ifstream& inputStream,
     vector<unique_ptr<Resident>>& residents
