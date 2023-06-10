@@ -1,0 +1,4 @@
+/home/workspace/aminoshbh/sdl2-ttf-sample/tests/CMakeFiles/rebuild_cache.dir
+/home/workspace/aminoshbh/sdl2-ttf-sample/tests/CMakeFiles/edit_cache.dir
+/home/workspace/aminoshbh/sdl2-ttf-sample/tests/CMakeFiles/sdl2-ttf-sample.dir
+/home/workspace/aminoshbh/sdl2-ttf-sample/tests/CMakeFiles/RunTests.dir

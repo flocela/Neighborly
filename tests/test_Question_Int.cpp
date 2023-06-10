@@ -11,7 +11,7 @@ using Catch::Matchers::Contains;
 
 TEST_CASE("Question_Int getPrompt() returns the origPrompt first.")
 {   
-    std::string origPrompt = "Choose a number between 1 and 10 inclusive.";
+    string origPrompt = "Choose a number between 1 and 10 inclusive.";
     Question_Int q{1,    // id
                    1,    // min
                    10,   //max
@@ -27,7 +27,7 @@ TEST_CASE("Question_Int getPrompt() returns the origPrompt first.")
 TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
           " getPrompt returns invalid_prompt.")
 {   
-    std::string origPrompt = "Choose a number in the range [1, 10].";
+    string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
                    1,    // min
                    10,   //max
@@ -45,7 +45,7 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
 
 TEST_CASE("Question_Int. Answers starting with '-' are negative numbers.")
 {   
-    std::string origPrompt = "Choose a number in the range [1, 10].";
+    string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
                    1,    // min
                    10,   //max
@@ -63,7 +63,7 @@ TEST_CASE("Question_Int. Answers starting with '-' are negative numbers.")
 
 TEST_CASE("Question_Int. Answers starting with '+' are positive numbers.")
 {   
-    std::string origPrompt = "Choose a number in the range [1, 10].";
+    string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
                    1,    // min
                    10,   //max
@@ -80,7 +80,7 @@ TEST_CASE("Question_Int. Answers starting with '+' are positive numbers.")
 
 TEST_CASE("Question_Int. Answers that are doubles are invalid.")
 {   
-    std::string origPrompt = "Choose a number in the range [1, 10].";
+    string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
                    1,    // min
                    10,   //max
@@ -97,7 +97,7 @@ TEST_CASE("Question_Int. Answers that are doubles are invalid.")
 
 TEST_CASE("Question_Int. Left edge of range determined correctly for an inclusive range.")
 {   
-    std::string origPrompt = "Choose a number in the range [1, 10].";
+    string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
                    1,    // min
                    10,   //max
@@ -114,7 +114,7 @@ TEST_CASE("Question_Int. Left edge of range determined correctly for an inclusiv
 
 TEST_CASE("Question_Int. Right edge of range determined correctly for an inclusive range.")
 {   
-    std::string origPrompt = "Choose a number in the range [1, 10].";
+    string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
                    1,    // min
                    10,   //max
@@ -131,7 +131,7 @@ TEST_CASE("Question_Int. Right edge of range determined correctly for an inclusi
 
 TEST_CASE("Question_Int. Left edge of range determined correctly for an exclusive range.")
 {   
-    std::string origPrompt = "Choose a number in the range (1, 10).";
+    string origPrompt = "Choose a number in the range (1, 10).";
     Question_Int q{1,    // id
                    1,    // min
                    10,   //max
@@ -150,7 +150,7 @@ TEST_CASE("Question_Int. Left edge of range determined correctly for an exclusiv
 
 TEST_CASE("Question_Int. Right edge of range determined correctly for an exclusive range.")
 {   
-    std::string origPrompt = "Choose a number in the range (1, 10).";
+    string origPrompt = "Choose a number in the range (1, 10).";
     Question_Int q{1,    // id
                    1,    // min
                    10,   //max
@@ -168,7 +168,7 @@ TEST_CASE("Question_Int. Right edge of range determined correctly for an exclusi
 
 TEST_CASE("Question_Int runs through a sequence of answers.")
 {   
-    std::string origPrompt = "Choose a number in the range (1, 10).";
+    string origPrompt = "Choose a number in the range (1, 10).";
     Question_Int q{1,    // id
                    1,    // min
                    10,   //max

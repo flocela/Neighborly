@@ -9,9 +9,9 @@
 
 using namespace std;
 
-std::vector<Resident*> createResidents (int numOfResidents, int groupId, int firstId)
+vector<Resident*> createResidents (int numOfResidents, int groupId, int firstId)
 {   
-    std::vector<Resident*> residents{};
+    vector<Resident*> residents{};
     for (int ii=firstId; ii<numOfResidents+firstId; ++ii)
     {
         residents.push_back(new Resident_UsingFunction(
@@ -19,7 +19,7 @@ std::vector<Resident*> createResidents (int numOfResidents, int groupId, int fir
         groupId,
         2.2,
         .5,
-        std::make_unique<HappinessFunc_StepDown>(
+        make_unique<HappinessFunc_StepDown>(
             80,  // happinessWithZeroNeighbors
             100, // happinessAtZeroDiversity
             20,  // happinessAt100%Diversity
@@ -32,7 +32,7 @@ std::vector<Resident*> createResidents (int numOfResidents, int groupId, int fir
 
 unordered_set<const Resident*> createResidentsSet (int numOfResidents, int groupId, int firstId)
 {   
-    std::unordered_set<const Resident*> residents{};
+    unordered_set<const Resident*> residents{};
     for (int ii=firstId; ii<numOfResidents+firstId; ++ii)
     {
         residents.insert(new Resident_UsingFunction(
@@ -40,7 +40,7 @@ unordered_set<const Resident*> createResidentsSet (int numOfResidents, int group
         groupId,
         2.2,
         1.0,
-        std::make_unique<HappinessFunc_StepDown>(
+        make_unique<HappinessFunc_StepDown>(
             80,  // happinessWithZeroNeighbors
             100, // happinessAtZeroDiversity
             20,  // happinessAt100%Diversity
@@ -56,11 +56,11 @@ TEST_CASE("empty city")
     City_Grid city = City_Grid(20);
     RunMetrics rm{&city};
 
-    std::unordered_map<const House*, const Resident*> residentsPerHouse{};
-    std::unordered_map<int, int> numOfResidentsPerGroupId{};
-    std::unordered_map<int, int> numOfDiffNeighborsPerGroupId{};
-    std::unordered_map<int, double> happinessSumPerGroupId{};
-    std::unordered_map<int, const Resident*> residentExamplePerGroupId{};
+    unordered_map<const House*, const Resident*> residentsPerHouse{};
+    unordered_map<int, int> numOfResidentsPerGroupId{};
+    unordered_map<int, int> numOfDiffNeighborsPerGroupId{};
+    unordered_map<int, double> happinessSumPerGroupId{};
+    unordered_map<int, const Resident*> residentExamplePerGroupId{};
 
     REQUIRE(residentsPerHouse == rm.getResidentsPerHouse());
     REQUIRE(numOfResidentsPerGroupId == rm.getNumOfResidentsPerGroupId());
@@ -77,12 +77,12 @@ TEST_CASE("empty city")
 TEST_CASE("three columns of group1")
 {
     City_Grid city = City_Grid(20);
-    std::vector<const House*> cityHouses = city.getHouses();
+    vector<const House*> cityHouses = city.getHouses();
 
     int numOfResidents = 30;
     int groupNum = 1;
     int startId = 0;
-    std::vector<Resident*> group1Residents = createResidents(
+    vector<Resident*> group1Residents = createResidents(
         numOfResidents,
         groupNum,
         startId
@@ -91,7 +91,7 @@ TEST_CASE("three columns of group1")
     // Used for setting resident's happiness
     unordered_set<const Resident*> group1Set = createResidentsSet(1, 1, 0);
 
-    std::unordered_map<const House*, const Resident*> residentsPerHouse{};
+    unordered_map<const House*, const Resident*> residentsPerHouse{};
     int resCounter = 0;
     for (int col=5; col<=7; ++col)
     {
@@ -125,8 +125,8 @@ TEST_CASE("three columns of group1")
 TEST_CASE("four columns of group1, two columns of group2")
 {
     City_Grid city = City_Grid(20);
-    std::vector<const House*> cityHouses = city.getHouses();
-    std::unordered_map<const House*, const Resident*> residentsPerHouse{};
+    vector<const House*> cityHouses = city.getHouses();
+    unordered_map<const House*, const Resident*> residentsPerHouse{};
 
     // Used for setting resident's happiness
     unordered_set<const Resident*> group1Set = createResidentsSet(1, 1, 0);
@@ -135,7 +135,7 @@ TEST_CASE("four columns of group1, two columns of group2")
     int numOfResidentsA = 30;
     int groupNumA = 1;
     int startIdA = 0;
-    std::vector<Resident*> groupA = createResidents(
+    vector<Resident*> groupA = createResidents(
         numOfResidentsA,
         groupNumA,
         startIdA
@@ -158,7 +158,7 @@ TEST_CASE("four columns of group1, two columns of group2")
     int numOfResidentsB = 10;
     int groupNumB = 2;
     int startIdB = 30;
-    std::vector<Resident*> groupB = createResidents(
+    vector<Resident*> groupB = createResidents(
         numOfResidentsB,
         groupNumB,
         startIdB
@@ -180,7 +180,7 @@ TEST_CASE("four columns of group1, two columns of group2")
     int numOfResidentsC = 10;
     int groupNumC = 1;
     int startIdC = 40;
-    std::vector<Resident*> groupC = createResidents(
+    vector<Resident*> groupC = createResidents(
         numOfResidentsC,
         groupNumC,
         startIdC
@@ -209,7 +209,7 @@ TEST_CASE("four columns of group1, two columns of group2")
     int numOfResidentsD = 10;
     int groupNumD = 2;
     int startIdD = 50;
-    std::vector<Resident*> groupD = createResidents(
+    vector<Resident*> groupD = createResidents(
         numOfResidentsD,
         groupNumD,
         startIdD

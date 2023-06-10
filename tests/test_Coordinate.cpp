@@ -34,8 +34,8 @@ TEST_CASE("vector is sorted because operator< has been overriden")
     Coordinate c{5, 3};
     Coordinate d{20, 2};
     
-    std::vector<Coordinate> coordinates = {a, b, c, d};
-    std::sort(coordinates.begin(), coordinates.end());
+    vector<Coordinate> coordinates = {a, b, c, d};
+    sort(coordinates.begin(), coordinates.end());
     REQUIRE(coordinates[0].getX() == 8);
     REQUIRE(coordinates[1].getX() == 10);
     REQUIRE(coordinates[2].getX() == 20);
@@ -45,7 +45,7 @@ TEST_CASE("vector is sorted because operator< has been overriden")
 TEST_CASE("ostream operator")
 {
     Coordinate a{10, 1};
-    std::stringstream out;
+    stringstream out;
     out << a;
     REQUIRE(out.str() == "(10, 1)");
 }
