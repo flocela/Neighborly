@@ -146,11 +146,19 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                 ));
             }
 
-            components.simulator = std::make_unique<Simulator_Basic_B>(
+            //TODO change back to Simulation_Basic_B    
+            /*components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30, // percent of residents that simulation tries to move at every run
                 20, // number of houses moving residents get to choose from
+                make_unique<CityState_Simple>(components.city.get())
+            );*/
+
+            components.simulator = std::make_unique<Simulator_Basic_A>(
+                components.city.get(),
+                getSetOfPointers(components.residents),
+                20,
                 make_unique<CityState_Simple>(components.city.get())
             );
 

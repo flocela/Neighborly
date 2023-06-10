@@ -80,18 +80,18 @@ void Simulator_Basic_B::firstRun ()
         residentsCopy.insert(res);
     }
 
-    unordered_set<const House*> openHousesWithinRange = _city_state->getOpenHouses();
+    unordered_set<const House*> openHouses = _city_state->getOpenHouses();
 
     // for each resident, choose a random house.
-    while (residentsCopy.size() > 0 && openHousesWithinRange.size() > 0)
+    while (residentsCopy.size() > 0 && openHouses.size() > 0)
     {   
         Resident* randomResident = selectRandom(residentsCopy);
-        const House* randomHouse = selectRandom(openHousesWithinRange);
+        const House* randomHouse = selectRandom(openHouses);
 
         _city_state->moveIn(randomResident, randomHouse);
 
         residentsCopy.erase(randomResident);
-        openHousesWithinRange.erase(randomHouse);
+        openHouses.erase(randomHouse);
     }
 }
 
