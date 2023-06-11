@@ -45,8 +45,7 @@ public:
     void keepScreen();
 
     void print(
-        const RunMetrics* runMetrics,
-        int run
+        const RunMetrics* runMetrics
     ) const override;
 
 private:

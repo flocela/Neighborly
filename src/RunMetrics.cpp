@@ -13,7 +13,7 @@ RunMetrics::RunMetrics (
 }
 
 void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Resident*> residentsPerHouse)
-{   (void)run; // TODO maybe remove run
+{   
     // clear previous runs' metrics
     _residents_per_house = residentsPerHouse;
     _num_of_residents_per_group_id = unordered_map<int, int>{};
@@ -21,7 +21,8 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
     _happiness_sum_per_group_id = unordered_map<int, double>{};
     _resident_example_per_group_id = unordered_map<int, const Resident*>{};
 
-    
+    // set run number
+    _run_num = run;
     
     for (pair<const House*, const Resident*> houseThenResident : residentsPerHouse)
     {
@@ -99,4 +100,9 @@ unordered_map<int, double> RunMetrics::getHappinessSumPerGroupId () const
 unordered_map<int, const Resident*> RunMetrics::getResidentExamplePerGroupId () const
 {
     return _resident_example_per_group_id;
+}
+
+int RunMetrics::getRunNumber () const
+{
+    return _run_num;
 }

@@ -26,8 +26,7 @@ public:
     ~Printer_CMDLine () = default;
     
     void print(
-        const RunMetrics* runMetrics,
-        int run
+        const RunMetrics* runMetrics
     ) const override;
 
 private:

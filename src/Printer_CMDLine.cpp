@@ -17,7 +17,7 @@ Printer_CMDLine::Printer_CMDLine (
 , _city_ptr{cityPtr}
 {}
 
-void Printer_CMDLine::print (const RunMetrics* runMetrics, int run) const
+void Printer_CMDLine::print (const RunMetrics* runMetrics) const
 {   
     // Collect information from runMetrics.
     unordered_map<const House*, const Resident*> residentsPerHouse =
@@ -28,6 +28,7 @@ void Printer_CMDLine::print (const RunMetrics* runMetrics, int run) const
     unordered_map<int, double> happinessSumPerGroupId = runMetrics->getHappinessSumPerGroupId();
     unordered_map<int, const Resident*> residentExamplePerGroupId =
         runMetrics->getResidentExamplePerGroupId();
+    int run = runMetrics->getRunNumber();
 
     // Create a vector of group ids and sort the vector
     vector<int> groupIDs{};

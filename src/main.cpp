@@ -169,9 +169,9 @@ int main(int argc, char* argv[])
         // every run should show for at least 1/4 second
         auto timeStart = std::chrono::high_resolution_clock::now();
         cout << "main about to print" << endl;
-        graphicPrinter.print(&runMetrics, ii);
+        graphicPrinter.print(&runMetrics);
         cout << "main finished printing" << endl;
-        //cmdLinePrinter.print(&runMetrics, ii);
+        //cmdLinePrinter.print(&runMetrics);
         std::this_thread::sleep_until(timeStart + std::chrono::milliseconds(250));
     }
     graphicPrinter.keepScreen();

@@ -1,9 +1,11 @@
 #include "catch.hpp"
 #include "../src/Question_Int.h"
 
-using Catch::Matchers::Contains;
-
 #include <iostream>
+
+using Catch::Matchers::Contains;
+using namespace std;
+
 
 // TODO can this really run a single test? Delte note. Or maybe put it in instructions
 // Run from the command line:

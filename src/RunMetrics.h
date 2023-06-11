@@ -35,6 +35,8 @@ public:
     
     std::unordered_map<int, const Resident*> getResidentExamplePerGroupId() const;
 
+    int getRunNumber () const;
+
     void updateMetrics(
         int run,
         std::unordered_map<const House*, const Resident*> residentsPerHouse
@@ -42,6 +44,7 @@ public:
 
 private:
 
+    int _run_num = -1;
     const City* _city;
     std::unordered_map<const House*, std::unordered_set<const House*>> _adj_houses;
 

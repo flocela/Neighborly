@@ -19,7 +19,7 @@ protected:
 public:
     virtual ~Printer () = default;
 
-    virtual void print (const RunMetrics* runMetrics, int run) const = 0;
+    virtual void print (const RunMetrics* runMetrics) const = 0;
 };
 
 #endif

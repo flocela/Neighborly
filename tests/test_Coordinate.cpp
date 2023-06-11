@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <sstream>
 
+using namespace std;
+
 TEST_CASE("operator< 's primary axis is the y axis")
 {
     Coordinate a{10, 1};

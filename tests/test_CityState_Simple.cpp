@@ -5,17 +5,19 @@
 #include "../src/Resident_UsingFunction.h" // TODO delete
 #include "../src/City_Grid.h"
 
-std::vector<int> getOpenAddressesWithinRange(
+using namespace std;
+
+vector<int> getOpenAddressesWithinRange(
     const CityState_Simple cityState,
     int centerX,
     int centerY,
     double allowableDist
 )
 {
-    std::vector<const House*> houses =
+    vector<const House*> houses =
         cityState.getOpenHousesWithinRange(centerX, centerY, allowableDist);
     
-    std::vector<int> addresses(houses.size());
+    vector<int> addresses(houses.size());
     for (int ii=0; ii< houses.size(); ++ii)
     {
         addresses[ii] = houses[ii]->getAddress();
@@ -25,9 +27,9 @@ std::vector<int> getOpenAddressesWithinRange(
 }
 
 // returns pointers to Residents, which need to be deleted.
-std::vector<Resident*> createResidents (int numOfResidents)
+vector<Resident*> createResidents (int numOfResidents)
 {
-    std::vector<Resident*> residents{};
+    vector<Resident*> residents{};
     for (int ii=0; ii<numOfResidents; ++ii)
     {
         residents.push_back(new Resident_UsingFunction(
@@ -41,14 +43,14 @@ std::vector<Resident*> createResidents (int numOfResidents)
     return residents;
 }
 
-std::vector<int> createAddresses(
+vector<int> createAddresses(
     int width,
     int centerX,
     int centerY,
     double allowableDist,
-    std::unordered_set<int> excludeAddresses)
+    unordered_set<int> excludeAddresses)
 {
-    std::vector<int> addresses{};
+    vector<int> addresses{};
     int centerHouseAddress = centerY * width + centerX;
 
     for (int y = 0; y<=allowableDist; ++y)
@@ -103,11 +105,11 @@ TEST_CASE("empty city - getOpenHousesWithinRange() allowableDist=15")
     CityState_Simple cityState{&city};
 
     // expected
-    std::vector<int> expected = 
-        createAddresses(100, centerX, centerY, allowableDist,std::unordered_set<int>{});
+    vector<int> expected = 
+        createAddresses(100, centerX, centerY, allowableDist,unordered_set<int>{});
     
     // actual
-    std::vector<int> actual =
+    vector<int> actual =
         getOpenAddressesWithinRange(cityState, centerX, centerY, allowableDist);
 
     REQUIRE(expected == actual);
@@ -120,14 +122,14 @@ TEST_CASE("empty city - getOpenHouses() allowableDist encompasses every house")
     CityState_Simple cityState{&city};
 
     // expected
-    std::vector<int> expected{};
+    vector<int> expected{};
     for (int ii=0; ii<2500; ++ii)
     {
         expected.push_back(ii);
     }
 
     // actual
-    std::vector<int> actual = getOpenAddressesWithinRange(cityState, 25, 25, 200);
+    vector<int> actual = getOpenAddressesWithinRange(cityState, 25, 25, 200);
 
     REQUIRE(expected == actual);
 }
@@ -139,8 +141,8 @@ TEST_CASE("empty city - getResidentsPerHouse()")
     CityState_Simple cityState{&city};
 
     //expected is empty set.
-    std::unordered_map<const House*, Resident*> expected{};
-    std::unordered_map<const House*, Resident*> actual = cityState.getResidentsPerHouse();
+    unordered_map<const House*, Resident*> expected{};
+    unordered_map<const House*, Resident*> actual = cityState.getResidentsPerHouse();
 
     REQUIRE(expected == actual);
 }
@@ -169,7 +171,7 @@ TEST_CASE("empty city - getHousePerResident()")
 TEST_CASE("empty city - getResidentPerHouse()")
 {
     City_Grid city = City_Grid(10);
-    std::vector<const House*> houses = city.getHouses();
+    vector<const House*> houses = city.getHouses();
     CityState_Simple cityState{&city};
 
     // expectedResident is nullptr
@@ -183,7 +185,7 @@ TEST_CASE("city with 10 residents at y = 5 and y = 15 - getOpenHousesWithinRange
 {
     int width = 100;
     City_Grid city = City_Grid(width);
-    std::vector<const House*> houses = city.getHouses();
+    vector<const House*> houses = city.getHouses();
 
     int centerX = 4;
     int centerY = 5;
@@ -193,12 +195,12 @@ TEST_CASE("city with 10 residents at y = 5 and y = 15 - getOpenHousesWithinRange
     // Expected
     // all the houses within 15 units from centerX and centerY except those houses
     // that have residents in rows y=5 and y=15.
-    std::unordered_set<int> occupiedHouses = {
+    unordered_set<int> occupiedHouses = {
         500, 501, 502, 503, 504, 505, 506, 507, 508, 509,
         1500, 1501, 1502, 1503, 1504, 1505, 1506, 1507, 1508, 1509
     };
 
-    std::vector<int> expected = createAddresses(
+    vector<int> expected = createAddresses(
         100,
         centerX,
         centerY,
@@ -209,7 +211,7 @@ TEST_CASE("city with 10 residents at y = 5 and y = 15 - getOpenHousesWithinRange
     // Actual
     CityState_Simple cityState{&city};
 
-    std::vector<Resident*> residents = createResidents(20);
+    vector<Resident*> residents = createResidents(20);
 
     int curResId = 0;
     int y = 5;
@@ -226,7 +228,7 @@ TEST_CASE("city with 10 residents at y = 5 and y = 15 - getOpenHousesWithinRange
         ++curResId;
     }
 
-    std::vector<int> actual = getOpenAddressesWithinRange(
+    vector<int> actual = getOpenAddressesWithinRange(
         cityState,
         centerX,
         centerY,
@@ -254,9 +256,9 @@ TEST_CASE("move In and move Out")
 
     // houses vector used later when moving residents into houses, and testing
     // getResidentPerHouse() and getHousePerResident() methods.
-    std::vector<const House*> houses = city.getHouses();
+    vector<const House*> houses = city.getHouses();
 
-    std::vector<Resident*> residents = createResidents(10);
+    vector<Resident*> residents = createResidents(10);
 
     // moving residents in and out of row ten.
     int y = 10;
@@ -274,12 +276,12 @@ TEST_CASE("move In and move Out")
 
         // expected
         // exclude width * y + ii addresses, where ii is from 5 through 9.
-        std::unordered_set<int> occupiedHouses = {1005, 1006, 1007, 1008, 1009};
-        std::vector<int> expected = 
+        unordered_set<int> occupiedHouses = {1005, 1006, 1007, 1008, 1009};
+        vector<int> expected = 
             createAddresses(width, centerX, centerY, allowableDist, occupiedHouses);
 
         // actual is 
-        std::vector<int> actual = getOpenAddressesWithinRange(
+        vector<int> actual = getOpenAddressesWithinRange(
             cityState,
             centerX,
             centerY,
@@ -292,7 +294,7 @@ TEST_CASE("move In and move Out")
         cityState.moveIn(residents[0], houses[y*width]);
 
         //expected
-        std::unordered_set<int> exclude =  {1000, 1005, 1006, 1007, 1008, 1009};
+        unordered_set<int> exclude =  {1000, 1005, 1006, 1007, 1008, 1009};
         expected = createAddresses(width, centerX, centerY, allowableDist, exclude);
 
         // actual
@@ -303,7 +305,7 @@ TEST_CASE("move In and move Out")
     // check getResidentsPerHouse()
 
         // expected
-        std::unordered_map<int, Resident*> expectedResPerAddress{};
+        unordered_map<int, Resident*> expectedResPerAddress{};
         expectedResPerAddress.insert({y*width, residents[0]});
         for (int ii=5; ii<10; ++ii)
         {
@@ -311,8 +313,8 @@ TEST_CASE("move In and move Out")
         }
 
         // actual
-        std::unordered_map<int, Resident*> actualResPerAddress{};
-        std::unordered_map<const House*, Resident*> actualResPerHouse =
+        unordered_map<int, Resident*> actualResPerAddress{};
+        unordered_map<const House*, Resident*> actualResPerHouse =
             cityState.getResidentsPerHouse();
         for (auto p : actualResPerHouse)
         {
