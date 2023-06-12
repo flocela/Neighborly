@@ -4,7 +4,6 @@
 #include "ResidentsFactory.h"
 #include "Question_Int.h"
 #include "Question_Double.h"
-#include "Question_YN.h"
 
 // Creates residents that use a step up happiness function.
 // Residents' happiness is two tiered. The lower happiness value is found
