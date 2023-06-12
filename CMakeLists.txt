@@ -99,7 +99,6 @@ src/PlotA.cpp
 src/PlotB.cpp
 src/Question_Int.cpp
 src/Question_Double.cpp
-src/Question_Double2.cpp
 src/Question.cpp
 src/Resident_UsingFunction.cpp
 src/Renderer.cpp
