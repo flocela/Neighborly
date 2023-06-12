@@ -18,10 +18,8 @@ CityState_Simple::CityState_Simple (
         Coordinate xy = _city->getCoordinate(house->getAddress());
         int x = xy.getX();
         int y = xy.getY();
-        //cout <<"CityState_Simple DD" << endl;
         _open_houses_per_y_x[y][x/10].insert(house);
     }
-    //cout <<"CityState_Simple EE" << endl;
 }
 
 void CityState_Simple::moveOut (Resident* resident)

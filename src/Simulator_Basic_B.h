@@ -43,7 +43,6 @@ public:
 
 private:
     const City* _city;
-    bool _first_run_done = false;
 
     // all residents
     std::unordered_set<Resident*> _residents;
@@ -60,9 +59,6 @@ private:
 
     // all runs which aren't the first run
     void normalRun ();
-
-    //TODO delte just here for timeing
-    int runNum = 0;
 
     std::unique_ptr<CityState> _city_state;
 

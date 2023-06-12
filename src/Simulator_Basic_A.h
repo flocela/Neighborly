@@ -44,7 +44,6 @@ public:
 
 private:
     const City* _city;
-    bool _first_run_done = false;
 
     // all residents
     std::unordered_set<Resident*> _residents;

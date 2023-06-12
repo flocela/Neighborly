@@ -40,12 +40,10 @@ Simulator_Basic_B::Simulator_Basic_B (
 
 std::unordered_map<const House*, const Resident*> Simulator_Basic_B::run ()
 {   
-    std::unordered_map<const House*, const Resident*> results{};
-
-    if (!_first_run_done)
-    {   
+    // if no residents live in city, then populate city first
+    if (_city_state->getResidentsPerHouse().size() == 0)
+    {
         firstRun();
-        _first_run_done = true;
     }
     else
     {   
@@ -53,10 +51,12 @@ std::unordered_map<const House*, const Resident*> Simulator_Basic_B::run ()
     }
     
     setHappinessValuesForAllResidents();
-    ++runNum;
     
+    // _city_state resturns non-const Resident pointers, convert them to const Resident pointers
+    // before returning results.
     std::unordered_map<const House*, Resident*> resPerHouse = _city_state->getResidentsPerHouse();
 
+    std::unordered_map<const House*, const Resident*> results{};
     results.reserve(resPerHouse.size());
     for (auto pair : resPerHouse)
     {
