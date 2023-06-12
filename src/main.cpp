@@ -62,22 +62,8 @@ using namespace std;
 
 #define FONT_PATH "assets/pacifico/Pacifico.ttf"
 
-/* Function Declarations */
-template<typename T>
-set<T*> getSetOfPointers (vector<unique_ptr<T>>& ts)
-{
-    set<T*> pointers = {};
-    for (auto& t : ts)
-    {
-        pointers.insert(t.get());
-    }
-    return pointers;
-}
-
 const vector<unique_ptr<const CityFactory>> initCityFactories ();
 const vector<unique_ptr<const ResidentsFactory>> initResidentFactories ();
-void initForSimpleExample (int example);
-void initForUserDefinedRun ();
 
 const int SCREEN_WIDTH = 2400;
 const int SCREEN_HEIGHT = 1200;
@@ -87,49 +73,55 @@ const int MAX_NUM_OF_RESIDENT_GROUPS = 2;
 const int MAX_NUM_OF_RUNS = 200;
 
 int main(int argc, char* argv[])
-{   cout << "hardware concurrency: " <<std::thread::hardware_concurrency() << endl;
-    bool useFile = (argc >= 2);
-    string inputFile = (argc >= 2)? argv[1] : "";
-
-    // components will be populated by file, by premade examples, or by user choices.
+{   
+    // Components will be populated by file, by premade examples, or by user cmd line choices.
     SimulationComponents components;
 
-    const UI_CMDLine cmdLine{};
+    bool usingFile = (argc >= 2);
+    string inputFile = (argc >= 2)? argv[1] : "";
 
-    if (useFile)
+    if (usingFile)
     {
         SimulationStarter simulationStarter{};
         components = simulationStarter.createSimulationComponents("../" + inputFile);
     }
     else
     {   
+        // Gather information from user using the cmd line
+        const UI_CMDLine cmdLine{};
+
+        // User chooses to use pre-made examples, or type in required information.
         UsePremadeExampleQuestion usePremadeExamplesQuestion;
-        bool usesExamples = usePremadeExamplesQuestion.askUser(cmdLine);
-        if (usesExamples)
+        bool usingExamples = usePremadeExamplesQuestion.askUser(cmdLine);
+        if (usingExamples)
         {   
             PremadeExamplesMenu premadeExamplesMenu;
             components = premadeExamplesMenu.userChoosesExample(cmdLine);
         }
         else
         {
-            const vector<unique_ptr<const CityFactory>> cityFactories = initCityFactories();
-            const vector<unique_ptr<const ResidentsFactory>> residentFactories =
-                initResidentFactories();
             ComponentsGetter componentsGetter{};
             components = componentsGetter.askUserForComponents(
                 cmdLine,
-                cityFactories,
-                residentFactories,
+                initCityFactories(),
+                initResidentFactories(),
                 MAX_HOUSES_X,
                 MAX_HOUSES_Y,
                 MAX_NUM_OF_RESIDENT_GROUPS,
                 MAX_NUM_OF_RUNS
             );
         }
-    } 
-    // set srand with randomSeed
-    srand(components.randomSeed);
-    
+    }
+
+    // Set up graphical printer.
+
+    // graphic printer needs a renderer
+    unique_ptr<Renderer_SDL> renderer = make_unique<Renderer_SDL>(
+        SCREEN_WIDTH, 
+        SCREEN_HEIGHT, 
+        "Neighbors");
+
+    // set up graphicPrinter
     vector<const House*> houses = components.city->getHouses();
 
     unordered_map<const House*, unordered_set<const House*>> neighboringHousesPerHouse;
@@ -137,11 +129,6 @@ int main(int argc, char* argv[])
     {   
         neighboringHousesPerHouse[house] = components.city->getHousesAdjacent(house->getAddress());
     }
-
-    unique_ptr<Renderer_SDL> renderer = make_unique<Renderer_SDL>(
-        SCREEN_WIDTH, 
-        SCREEN_HEIGHT, 
-        "Neighbors");
 
     Printer_Graphic graphicPrinter{
         move(renderer),
@@ -152,29 +139,39 @@ int main(int argc, char* argv[])
         components.numOfRuns
     };
     
+    // Set up cmd line printer.
     Printer_CMDLine cmdLinePrinter{
         components.baseColorsPerGroupid,
         components.numOfRuns,
         components.city.get()
     };
-    cout <<"Main 160" << endl;
+
+    // Start simulation. Simulation runs in a for loop numOfRun times.
+    // Run metrics are updated after each run. Results are printed after each run.
+
+    // set srand with randomSeed
+    srand(components.randomSeed);
     RunMetrics runMetrics{components.city.get()};
-    unordered_map<const House*, const Resident*> residentPerHouse;
+    
     for (int ii=0; ii<components.numOfRuns; ii++)
-    {   cout << "Run Number: " << ii << endl;
-        residentPerHouse = components.simulator->run();
-        runMetrics.updateMetrics(ii, residentPerHouse);
-        cout << "main run done: " << ii << endl;
+    {   
+        unordered_map<const House*, const Resident*> residentsPerHouse = 
+            components.simulator->run();
+        runMetrics.updateMetrics(ii, residentsPerHouse);
 
         // every run should show for at least 1/4 second
         auto timeStart = std::chrono::high_resolution_clock::now();
-        cout << "main about to print" << endl;
+        
         graphicPrinter.print(&runMetrics);
-        cout << "main finished printing" << endl;
-        //cmdLinePrinter.print(&runMetrics);
+        
+        cmdLinePrinter.print(&runMetrics);
+
+        // show run for at least 1/4 second.
         std::this_thread::sleep_until(timeStart + std::chrono::milliseconds(250));
     }
+
     graphicPrinter.keepScreen();
+
     return 0; 
 }
 
