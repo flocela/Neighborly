@@ -253,7 +253,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
-            for (int jj=5761; jj<11520; ++jj)
+            for (int jj=5760; jj<11520; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_UsingFunction>(
                     jj,

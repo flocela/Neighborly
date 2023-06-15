@@ -152,9 +152,9 @@ int main(int argc, char* argv[])
     // set srand with randomSeed
     srand(components.randomSeed);
     RunMetrics runMetrics{components.city.get(), components.randomSeed};
-    
+    cout << "runs: " << components.numOfRuns << endl;
     for (int ii=0; ii<components.numOfRuns; ii++)
-    {   
+    {   cout << "about to run" << endl;
         unordered_map<const House*, const Resident*> residentsPerHouse = 
             components.simulator->run();
         runMetrics.updateMetrics(ii, residentsPerHouse);

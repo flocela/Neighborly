@@ -1,0 +1,113 @@
+<random_number>
+    0
+</random_number>
+<city>
+    <type>
+        City_Grid
+    </type>
+    <width>
+        120
+    </width>
+</city>
+<base_color_per_group>
+    <group>
+        <group_id>
+            1
+        </group_id>
+        <base_color>
+            blue
+        </base_color>
+    </group>
+    <group>
+        <group_id>
+            2
+        </group_id>
+        <base_color>
+            yellow
+        </base_color>
+    </group>
+</base_color_per_group>
+<resident_group>
+    <start_id>
+        0
+    </start_id>
+    <number_of>
+        5760
+    </number_of>
+    <group_id>
+        1
+    </group_id>
+    <allowed_movement>
+        30
+    </allowed_movement>
+    <happiness_goal>
+        60
+    </happiness_goal>
+    <resident_type>
+        Resident_UsingFunction
+    </resident_type>
+    <happiness_function>
+        HappinessFunction_Falling
+    </happiness_function>
+    <zero_neighbors>
+        70
+    </zero_neighbors>
+    <happiness_at_zero_diversity>
+        95
+    </happiness_at_zero_diversity>
+    <happiness_at_one_diversity>
+        10
+    </happiness_at_one_diversity>
+    <name>
+        Falling Resident
+    </name>
+</resident_group>
+<resident_group>
+    <start_id>
+        5760
+    </start_id>
+    <number_of>
+        5760
+    </number_of>
+    <group_id>
+        2
+    </group_id>
+    <allowed_movement>
+        30
+    </allowed_movement>
+    <happiness_goal>
+        60
+    </happiness_goal>
+    <resident_type>
+        Resident_UsingFunction
+    </resident_type>
+    <happiness_function>
+        HappinessFunction_Falling
+    </happiness_function>
+    <zero_neighbors>
+        70
+    </zero_neighbors>
+    <happiness_at_zero_diversity>
+        95
+    </happiness_at_zero_diversity>
+    <happiness_at_one_diversity>
+        10
+    </happiness_at_one_diversity>
+    <name>
+        Falling Resident
+    </name>
+</resident_group>
+<simulator>
+    <name>
+        Simulator_Basic_B
+    </name>
+    <percent_residents_to_move>
+        30
+    </percent_residents_to_move>
+    <num_of_tries>
+        20
+    </num_of_tries>
+</simulator>
+<num_of_runs>
+    30
+</num_of_runs>

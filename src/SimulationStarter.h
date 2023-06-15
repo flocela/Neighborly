@@ -8,6 +8,7 @@
 #include "Color.h"
 #include "SimulationComponents.h"
 #include "Simulator_Basic_A.h"
+#include "Simulator_Basic_B.h"
 
 // takes in a file and returns a SimulationComponents
 class SimulationStarter
@@ -26,6 +27,11 @@ private:
     );
 
     std::unique_ptr<Simulator_Basic_A> returnSimulatorBasicA (
+        std::ifstream& inputStream,
+        SimulationComponents& components // TODO should be const, but getSetOfPOinters doesn't accept const
+    );
+
+    std::unique_ptr<Simulator_Basic_B> returnSimulatorBasicB (
         std::ifstream& inputStream,
         SimulationComponents& components // TODO should be const, but getSetOfPOinters doesn't accept const
     );

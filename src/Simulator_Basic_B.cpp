@@ -26,10 +26,10 @@ Simulator_Basic_B::Simulator_Basic_B (
    _percent_of_residents{percentOfResidents},
    _max_num_of_tries_to_find_house{numOfHousesToChooseFrom},
    _city_state{std::move(cityState)}
-{}
+{ cout << "Basic B constructor" << endl;}
 
 std::unordered_map<const House*, const Resident*> Simulator_Basic_B::run ()
-{   
+{   cout << "Basic B run" << endl;
     // If city is empty, then populate city first
     if (_city_state->getResidentsPerHouse().size() == 0)
     {

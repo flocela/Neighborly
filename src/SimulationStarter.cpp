@@ -32,7 +32,7 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
     ifstream inputStream;
     inputStream.open(inputTextFile);
     if (inputStream.is_open())
-    {   cout << "SStarter: AA" << endl;
+    {   
         // seed for random number generator.
         string line = "";
         getline(inputStream, line);
@@ -41,7 +41,6 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
             string randNum = "";
             getline(inputStream, randNum);
             components.randomSeed = stoi(randNum);
-            cout << "rand seed: " << components.randomSeed << endl;
             getline(inputStream, line);      
         }
 
@@ -92,8 +91,6 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
 
             getline(inputStream, line);
         }
-        // TODO make text file that uses SimulatorBasicB
-        // simulator
         if (line.find("<simulator>") != string::npos)
         {   
             string simulator = "";
@@ -111,9 +108,15 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
                     components
                 );
             }
+            else if (simulator == "Simulator_Basic_B")
+            {
+                components.simulator = returnSimulatorBasicB(
+                    inputStream,
+                    components
+                );
+            }
             getline(inputStream, line); // </simulator>
         }
-        cout << "SStarter num of runs" << endl;
         // number of runs
         getline(inputStream, line);
         if (line.find("<num_of_runs>") != string::npos)
@@ -144,10 +147,38 @@ std::unique_ptr<Simulator_Basic_A> SimulationStarter::returnSimulatorBasicA (
         getline(inputStream, numOfTries);
         getline(inputStream, line);
     }
-    cout << "simulatorA: numOfTries: " << numOfTries << endl;
     return std::make_unique<Simulator_Basic_A>(
             components.city.get(),
             getSetOfPointers(components.residents),
+            stoi(numOfTries),
+            make_unique<CityState_Simple>(components.city.get())
+    );
+}
+
+std::unique_ptr<Simulator_Basic_B> SimulationStarter::returnSimulatorBasicB (
+    std::ifstream& inputStream,
+    SimulationComponents& components // should be const, but getSetOfPointers doesn't take const.
+)
+{
+    string line = "";
+    string percentResidentsToMove = "";
+    string numOfTries = "";
+    getline(inputStream, line);
+    if (line.find("percent_residents_to_move") != string::npos)
+    {
+        getline(inputStream, percentResidentsToMove);
+        getline(inputStream, line);
+    }
+    getline(inputStream, line);
+    if (line.find("num_of_tries") != string::npos)
+    {
+        getline(inputStream, numOfTries);
+        getline(inputStream, line);
+    }
+    return std::make_unique<Simulator_Basic_B>(
+            components.city.get(),
+            getSetOfPointers(components.residents),
+            stod(percentResidentsToMove),
             stoi(numOfTries),
             make_unique<CityState_Simple>(components.city.get())
     );
