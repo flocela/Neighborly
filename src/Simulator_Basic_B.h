@@ -80,10 +80,6 @@ private:
 
     Resident* chooseResident ();
 
-    void resetMovingResidentsVector ();
-
-    void updateMovingResidentsVector ();
-
 };
 
 #endif

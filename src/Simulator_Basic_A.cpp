@@ -4,7 +4,7 @@
 #include "RandomIntegers.h"
 using namespace std;
 
-// Used for sorting vectors
+// Used for sorting vectors of pointers
 template<class T>
 bool compare (T a, T b)
 {
@@ -39,8 +39,9 @@ unordered_map<const House*, const Resident*> Simulator_Basic_A::run ()
 
     // _city_state returns non-const Resident pointers.
     // Convert them to const Resident pointers before returning results.
-    std::unordered_map<const House*, const Resident*> results{};
     std::unordered_map<const House*, Resident*> resPerHouse = _city_state->getResidentsPerHouse();
+
+    std::unordered_map<const House*, const Resident*> results{};
     results.reserve(resPerHouse.size());
     for (auto pair : resPerHouse)
     {
@@ -113,7 +114,6 @@ void Simulator_Basic_A::normalRun ()
         {   
             moveResident(randRes, _num_of_tries);
         }
-
     }
 }
 
