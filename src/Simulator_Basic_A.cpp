@@ -4,24 +4,6 @@
 #include "RandomIntegers.h"
 using namespace std;
 
-template <typename T>
-T selectRandom(unordered_set<T>& setOfT, int temp)
-{
-    int size = setOfT.size();
-    int r = rand() % size;
-    auto it = setOfT.begin();
-    advance(it,r);
-    return *it;
-}
-
-template <typename T>
-T selectRandom(vector<T>& vectorOfT)
-{   
-    int size = vectorOfT.size();
-    int r = rand() % size;
-    return vectorOfT[r];
-}
-
 Simulator_Basic_A::Simulator_Basic_A (
     const City* city,
     unordered_set<Resident*> residents,
