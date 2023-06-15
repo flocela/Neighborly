@@ -4,6 +4,13 @@
 #include "RandomIntegers.h"
 using namespace std;
 
+// Used for sorting vectors
+template<class T>
+bool compare (T a, T b)
+{
+    return *a < *b;
+}
+
 Simulator_Basic_A::Simulator_Basic_A (
     const City* city,
     unordered_set<Resident*> residents,
@@ -17,7 +24,7 @@ Simulator_Basic_A::Simulator_Basic_A (
 
 unordered_map<const House*, const Resident*> Simulator_Basic_A::run ()
 {   
-    // if no residents live in city, then populate city first
+    // If city is empty, populate city.
     if (_city_state->getResidentsPerHouse().size() == 0)
     {   
         firstRun();
@@ -27,10 +34,11 @@ unordered_map<const House*, const Resident*> Simulator_Basic_A::run ()
         normalRun();
     }
     
+    // Update residents' happiness values.
     setHappinessValuesForAllResidents();
 
-    // _city_state resturns non-const Resident pointers, convert them to const Resident pointers
-    // before returning results.
+    // _city_state returns non-const Resident pointers.
+    // Convert them to const Resident pointers before returning results.
     std::unordered_map<const House*, const Resident*> results{};
     std::unordered_map<const House*, Resident*> resPerHouse = _city_state->getResidentsPerHouse();
     results.reserve(resPerHouse.size());
@@ -38,6 +46,7 @@ unordered_map<const House*, const Resident*> Simulator_Basic_A::run ()
     {
         results.insert(pair);
     }
+
     return results;
 }
 
@@ -50,9 +59,7 @@ void Simulator_Basic_A::firstRun ()
     {
         copyOfResidents.push_back(res);
     }
-    std::sort(copyOfResidents.begin(),
-              copyOfResidents.end(),
-              [](Resident* a, Resident* b)->bool{return *a < *b;});
+    std::sort(copyOfResidents.begin(), copyOfResidents.end(), compare<Resident*>);
 
     // For the first run, all houses in city are open.
     unordered_set<const House*> openHouses = _city_state->getOpenHouses();
@@ -64,9 +71,7 @@ void Simulator_Basic_A::firstRun ()
     {
         copyOfOpenHouses.push_back(h);
     }
-    sort(copyOfOpenHouses.begin(),
-         copyOfOpenHouses.end(),
-         [](const House* a, const House* b)->bool{return *a < *b;});
+    sort(copyOfOpenHouses.begin(), copyOfOpenHouses.end(), compare<const House*>);
 
     // For each resident, choose a random house.
     RandomIntegers randomIntegers{};
@@ -93,9 +98,7 @@ void Simulator_Basic_A::normalRun ()
     {
         copyOfResidents.push_back(res);
     }
-    std::sort(copyOfResidents.begin(),
-              copyOfResidents.end(),
-              [](Resident* a, Resident* b)->bool{return *a < *b;});
+    std::sort(copyOfResidents.begin(), copyOfResidents.end(), compare<Resident*>);
               
     // for each resident, if unhappy try to move resident
     RandomIntegers rI{};
@@ -124,9 +127,7 @@ void Simulator_Basic_A::moveResident (Resident* res, int numOfTries)
         currHouseCoord.getY(),
         res->getAllowedMovementDistance()
     );
-    sort(housesInRange.begin(),
-         housesInRange.end(),
-         [](const House* a, const House* b)->bool{return *a < *b;});
+    sort(housesInRange.begin(), housesInRange.end(), compare<const House*>);
 
     RandomIntegers randomIntegers{};
     vector<int> randIndices = randomIntegers.getRandomIntegers(housesInRange.size(), numOfTries);
@@ -134,7 +135,7 @@ void Simulator_Basic_A::moveResident (Resident* res, int numOfTries)
     {
         int randIndex = randIndices[ii];
         const House* randOpenHouse = housesInRange[randIndex];
-        // If house will make resident happy, then move in.
+        // if house will make resident happy, then move in.
         if ( calculateHappiness(res, randOpenHouse->getAddress()) > res->getHappinessGoal() )
         {   
             _city_state->moveInAndOutOfHouse(res, randOpenHouse);
