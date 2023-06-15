@@ -32,13 +32,24 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
     ifstream inputStream;
     inputStream.open(inputTextFile);
     if (inputStream.is_open())
-    {
+    {   cout << "SStarter: AA" << endl;
+        // seed for random number generator.
         string line = "";
         getline(inputStream, line);
+        if (line.find("<random_number>") != string::npos)
+        {
+            string randNum = "";
+            getline(inputStream, randNum);
+            components.randomSeed = stoi(randNum);
+            cout << "rand seed: " << components.randomSeed << endl;
+            getline(inputStream, line);      
+        }
+
         // city
+        getline(inputStream, line);
         if (line.find("<city>") != string::npos)
         {   
-            string cityType ="";
+            string cityType = "";
             getline(inputStream, line);
         
             if (line.find("<type>") != string::npos)
@@ -102,7 +113,7 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
             }
             getline(inputStream, line); // </simulator>
         }
-
+        cout << "SStarter num of runs" << endl;
         // number of runs
         getline(inputStream, line);
         if (line.find("<num_of_runs>") != string::npos)
@@ -133,7 +144,7 @@ std::unique_ptr<Simulator_Basic_A> SimulationStarter::returnSimulatorBasicA (
         getline(inputStream, numOfTries);
         getline(inputStream, line);
     }
-
+    cout << "simulatorA: numOfTries: " << numOfTries << endl;
     return std::make_unique<Simulator_Basic_A>(
             components.city.get(),
             getSetOfPointers(components.residents),

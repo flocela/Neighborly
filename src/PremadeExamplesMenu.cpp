@@ -69,7 +69,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
-            for (int jj=361; jj<720; ++jj)
+            for (int jj=360; jj<720; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_UsingFunction>(
                     jj,
@@ -97,7 +97,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                 20,
                 make_unique<CityState_Simple>(components.city.get())
             );
-            components.numOfRuns = 20;
+            components.numOfRuns = 10;
             
             break;
         }

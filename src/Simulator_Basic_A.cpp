@@ -1,10 +1,11 @@
 #include "Simulator_Basic_A.h"
 #include <iostream>
-
+#include <algorithm>
+#include "RandomIntegers.h"
 using namespace std;
 
 template <typename T>
-T selectRandom(unordered_set<T>& setOfT)
+T selectRandom(unordered_set<T>& setOfT, int temp)
 {
     int size = setOfT.size();
     int r = rand() % size;
@@ -61,52 +62,73 @@ unordered_map<const House*, const Resident*> Simulator_Basic_A::run ()
 void Simulator_Basic_A::firstRun ()
 {   
     // Make a copy of the set of residents; A copy is needed to randomly choose residents.
-    unordered_set<Resident*> copyOfResidents{};
+    vector<Resident*> copyOfResidents{};
+    copyOfResidents.reserve(_residents.size());
     for (Resident* res : _residents)
     {
-        copyOfResidents.insert(res);
+        copyOfResidents.push_back(res);
     }
+    std::sort(copyOfResidents.begin(),
+              copyOfResidents.end(),
+              [](Resident* a, Resident* b)->bool{return *a < *b;});
 
-    // For the first run all houses in city are open.
+    // For the first run, all houses in city are open.
     unordered_set<const House*> openHouses = _city_state->getOpenHouses();
 
-    // For each resident, choose a random house.
-    while (copyOfResidents.size() != 0)
-    {   
-        Resident* randRes = selectRandom(copyOfResidents);
-
-        const House* house = selectRandom(openHouses);
-        
-        _city_state->moveIn(randRes, house);
-
-        copyOfResidents.erase(randRes);
-        
-        openHouses.erase(house);
-        
+    // Make a copy of open houses; A copy is need to randomly choose houses.
+    vector<const House*> copyOfOpenHouses{};
+    copyOfOpenHouses.reserve(openHouses.size());
+    for (const House* h : openHouses)
+    {
+        copyOfOpenHouses.push_back(h);
     }
+    sort(copyOfOpenHouses.begin(),
+         copyOfOpenHouses.end(),
+         [](const House* a, const House* b)->bool{return *a < *b;});
+
+    // For each resident, choose a random house.
+    RandomIntegers randomIntegers{};
+    vector<int> randomIntegersForResidents = 
+        randomIntegers.getRandomIntegers(copyOfResidents.size(), copyOfResidents.size());
+    vector<int> randomIntegersForHouses = 
+        randomIntegers.getRandomIntegers(copyOfOpenHouses.size(), copyOfOpenHouses.size());
+    
+    for (size_t ii=0; ii<randomIntegersForResidents.size(); ++ii)
+    {   
+        Resident* randRes = copyOfResidents[randomIntegersForResidents[ii]];
+        
+        const House* randHouse = copyOfOpenHouses[randomIntegersForHouses[ii]];
+        _city_state->moveIn(randRes, randHouse);
+    } 
 }
 
 void Simulator_Basic_A::normalRun ()
-{
+{   
     // Make a copy of the set of residents; A copy is needed to randomly choose residents.
-    unordered_set<Resident*> copySetOfResidents{};
+    vector<Resident*> copyOfResidents{};
+    copyOfResidents.reserve(_residents.size());
     for (Resident* res : _residents)
     {
-        copySetOfResidents.insert(res);
+        copyOfResidents.push_back(res);
     }
-
+    std::sort(copyOfResidents.begin(),
+              copyOfResidents.end(),
+              [](Resident* a, Resident* b)->bool{return *a < *b;});
+              
     // for each resident, if unhappy try to move resident
-    while (copySetOfResidents.size() > 0)
+    RandomIntegers rI{};
+    vector<int> randomIntegersForResidents = 
+        rI.getRandomIntegers(copyOfResidents.size(), copyOfResidents.size());
+    for (size_t ii=0; ii<randomIntegersForResidents.size(); ++ii)
     {
-        Resident* randRes = selectRandom(copySetOfResidents);
+        Resident* randRes = copyOfResidents[randomIntegersForResidents[ii]];
         double curHappiness = 
             calculateHappiness(randRes, _city_state->getHousePerResident(randRes)->getAddress());
         if (curHappiness < randRes->getHappinessGoal())
-        {
+        {   
             moveResident(randRes, _num_of_tries);
         }
 
-        copySetOfResidents.erase(randRes);
     }
 }
 
@@ -120,26 +142,22 @@ void Simulator_Basic_A::moveResident (Resident* res, int numOfTries)
         currHouseCoord.getY(),
         res->getAllowedMovementDistance()
     );
-    
-    unordered_set<const House*> housesTried{};
-    while (numOfTries > 0 && housesInRange.size() != housesTried.size())
-    {  
-        // Choose a random house that has not been chosen before.
-        const House* randHouse = selectRandom(housesInRange);
-        while ( housesTried.find(randHouse) != housesTried.end() || randHouse == currHouse)
-        {
-            randHouse = selectRandom(housesInRange);
-        }
-        housesTried.insert(randHouse);
-        
+    sort(housesInRange.begin(),
+         housesInRange.end(),
+         [](const House* a, const House* b)->bool{return *a < *b;});
+
+    RandomIntegers randomIntegers{};
+    vector<int> randIndices = randomIntegers.getRandomIntegers(housesInRange.size(), numOfTries);
+    for (size_t ii=0; ii<randIndices.size(); ++ii)
+    {
+        int randIndex = randIndices[ii];
+        const House* randOpenHouse = housesInRange[randIndex];
         // If house will make resident happy, then move in.
-        if ( calculateHappiness(res, randHouse->getAddress()) > res->getHappinessGoal() )
+        if ( calculateHappiness(res, randOpenHouse->getAddress()) > res->getHappinessGoal() )
         {   
-            _city_state->moveInAndOutOfHouse(res, randHouse);
+            _city_state->moveInAndOutOfHouse(res, randOpenHouse);
             break;
         }
-
-        --numOfTries;
     }
 }
 
@@ -168,6 +186,7 @@ void Simulator_Basic_A::setHappinessValuesForAllResidents ()
 
 double Simulator_Basic_A::calculateHappiness(Resident* res, int address)
 {
+    
     // Create adjacentNeighbors which contains all the resident's neighbors
     unordered_set<const House*> adjacentHouses = _city->getHousesAdjacent(address);
     unordered_set<const Resident*> adjacentNeighbors;

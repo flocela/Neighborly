@@ -47,7 +47,7 @@ SimulationComponents ComponentsGetter::askUserForComponents (
     CityMaker_CMDLine cityMaker{ui};
     resultantComponents.city = cityMaker.makeCity(cityFactories, maxNumOfHousesX, maxNumOfHousesY);
 
-    // create group infor for residents
+    // create group info for residents
     ResidentsMaker_CMDLine residentsMaker{};
     ResidentsGroupInfo resGroupInfo = residentsMaker.makeResidents(
         ui,

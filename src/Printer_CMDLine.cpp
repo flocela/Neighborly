@@ -56,6 +56,7 @@ void Printer_CMDLine::print (const RunMetrics* runMetrics) const
                  << "      happiness goal: " << res->getHappinessGoal() << "," << endl
                  << "      " << res->toStrType() << endl;
         }
+        cout <<"  Seed for random number generator: " << runMetrics->getSeedNumber() << endl;
         cout << endl;
     }
 

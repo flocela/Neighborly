@@ -100,6 +100,7 @@ src/PlotB.cpp
 src/Question_Int.cpp
 src/Question_Double.cpp
 src/Question.cpp
+src/RandomIntegers.cpp
 src/Resident_UsingFunction.cpp
 src/Renderer.cpp
 src/Resident.cpp

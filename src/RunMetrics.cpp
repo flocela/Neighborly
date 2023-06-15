@@ -3,8 +3,10 @@
 using namespace std;
 
 RunMetrics::RunMetrics (
-    const City* cityPtr
-): _city{cityPtr}
+    const City* cityPtr,
+    int seedNumber
+): _city{cityPtr},
+   _seed_number{seedNumber}
 {
     for (const House* house : _city->getHouses())
     {
@@ -75,6 +77,16 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
         _num_of_residents_per_group_id[residentGroupId] += 1;
     }
 
+}
+
+void RunMetrics::setSeedNumber (int seedNumber)
+{
+    _seed_number = seedNumber;
+}
+
+int RunMetrics::getSeedNumber () const
+{
+    return _seed_number;
 }
 
 unordered_map<const House*, const Resident*> RunMetrics::getResidentsPerHouse() const
