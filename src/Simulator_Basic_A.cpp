@@ -130,7 +130,8 @@ void Simulator_Basic_A::moveResident (Resident* res, int numOfTries)
     sort(housesInRange.begin(), housesInRange.end(), compare<const House*>);
 
     RandomIntegers randomIntegers{};
-    vector<int> randIndices = randomIntegers.getRandomIntegers(housesInRange.size(), numOfTries);
+    int quantity = min(housesInRange.size(), numOfTries);
+    vector<int> randIndices = randomIntegers.getRandomIntegers(housesInRange.size(), quantity);
     for (size_t ii=0; ii<randIndices.size(); ++ii)
     {
         int randIndex = randIndices[ii];
