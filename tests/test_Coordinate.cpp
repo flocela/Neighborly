@@ -38,10 +38,10 @@ TEST_CASE("vector is sorted because operator< has been overriden")
     
     vector<Coordinate> coordinates = {a, b, c, d};
     sort(coordinates.begin(), coordinates.end());
-    REQUIRE(coordinates[0].getX() == 8);
-    REQUIRE(coordinates[1].getX() == 10);
-    REQUIRE(coordinates[2].getX() == 20);
-    REQUIRE(coordinates[3].getX() == 5);
+    REQUIRE(8 == coordinates[0].getX());
+    REQUIRE(10 ==coordinates[1].getX());
+    REQUIRE(20 == coordinates[2].getX());
+    REQUIRE(5 == coordinates[3].getX());
 }
 
 TEST_CASE("ostream operator")
@@ -49,7 +49,7 @@ TEST_CASE("ostream operator")
     Coordinate a{10, 1};
     stringstream out;
     out << a;
-    REQUIRE(out.str() == "(10, 1)");
+    REQUIRE("(10, 1)" == out.str());
 }
 
 TEST_CASE("operator==")
