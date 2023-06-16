@@ -152,7 +152,10 @@ int main(int argc, char* argv[])
     // set seed for randomization for simulation.
     srand(components.randomSeed);
 
-    RunMetrics runMetrics{components.city.get(), components.randomSeed};
+    RunMetrics runMetrics{
+        components.city.get(),
+        components.randomSeed,
+        components.simulator->toString()};
 
     for (int ii=0; ii<components.numOfRuns; ii++)
     {  

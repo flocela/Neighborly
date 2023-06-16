@@ -13,7 +13,7 @@ class RunMetrics
 
 public: 
 
-    RunMetrics (const City* city, int seedNumber);
+    RunMetrics (const City* city, int seedNumber, std::string simulator);
     RunMetrics () = delete;
     RunMetrics (const RunMetrics& o) = default;
     RunMetrics (RunMetrics&& o) noexcept = default;
@@ -42,6 +42,8 @@ public:
 
     int getRunNumber () const;
 
+    std::string getSimulator () const;
+
     void updateMetrics(
         int run,
         std::unordered_map<const House*, const Resident*> residentsPerHouse
@@ -52,6 +54,7 @@ private:
     int _run_num = -1;
     const City* _city;
     int _seed_number = 0;
+    std::string _simulator = "";
     std::unordered_map<const House*, std::unordered_set<const House*>> _adj_houses;
 
     std::unordered_map<const House*, const Resident*> _residents_per_house{};

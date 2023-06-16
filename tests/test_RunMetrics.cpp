@@ -54,7 +54,7 @@ unordered_set<const Resident*> createResidentsSet (int numOfResidents, int group
 TEST_CASE("empty city")
 {
     City_Grid city = City_Grid(20);
-    RunMetrics rm{&city, 0};
+    RunMetrics rm{&city, 0, "simA"};
 
     unordered_map<const House*, const Resident*> residentsPerHouse{};
     unordered_map<int, int> numOfResidentsPerGroupId{};
@@ -104,7 +104,7 @@ TEST_CASE("three columns of group1")
         }
     }
 
-    RunMetrics rm{&city, 0};
+    RunMetrics rm{&city, 0, "simA"};
     rm.updateMetrics(1, residentsPerHouse);
 
     REQUIRE(residentsPerHouse == rm.getResidentsPerHouse());
@@ -227,7 +227,7 @@ TEST_CASE("four columns of group1, two columns of group2")
         }
     }
 
-    RunMetrics rm{&city, 0};
+    RunMetrics rm{&city, 0, "simA"};
     rm.updateMetrics(1, residentsPerHouse);
 
     REQUIRE(residentsPerHouse == rm.getResidentsPerHouse());
