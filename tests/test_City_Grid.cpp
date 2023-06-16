@@ -29,7 +29,7 @@ TEST_CASE("dist()")
     vector<const House*> houses = city.getHouses();
     const int a1  = houses[1]->getAddress();
     const int a28 = houses[28]->getAddress();
-    REQUIRE( city.getDist(a1, a28) == sqrt( (3 * 3) + (4 * 4) ) ); // 
+    REQUIRE( sqrt( (3 * 3) + (4 * 4) ) == city.getDist(a1, a28) ); // 
 }
 
 TEST_CASE("getHousesWithinDistance() distance is 2.1, central house, all houses open")
@@ -67,7 +67,7 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, central house, all houses 
     expectedAddresses.insert(houses[13]->getAddress());
     expectedAddresses.insert(houses[12]->getAddress());
     
-    REQUIRE( actualAddresses == expectedAddresses );
+    REQUIRE( expectedAddresses == actualAddresses );
 }
 
 TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side, all houses open")
@@ -101,7 +101,7 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side, all houses 
     expectedAddresses.insert(houses[25]->getAddress());
     expectedAddresses.insert(houses[30]->getAddress());
     
-    REQUIRE( actualAddresses == expectedAddresses );
+    REQUIRE( expectedAddresses == actualAddresses );
 }
 
 TEST_CASE("getHousesWithinDistance() distance is 2.1, central house, some houses open")
@@ -133,7 +133,7 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, central house, some houses
     expectedAddresses.insert(houses[26]->getAddress());
     expectedAddresses.insert(houses[21]->getAddress());
     
-    REQUIRE( actualAddresses == expectedAddresses );
+    REQUIRE( expectedAddresses == actualAddresses );
 }
 
 TEST_CASE("getHousesAdjacent() for corner house (3 neighbors) ")
@@ -149,7 +149,7 @@ TEST_CASE("getHousesAdjacent() for corner house (3 neighbors) ")
     expectedNeighbors.insert(houses[6]);
     expectedNeighbors.insert(houses[7]);
 
-    REQUIRE( actualNeighbors == expectedNeighbors );
+    REQUIRE( expectedNeighbors == actualNeighbors );
 }
 
 TEST_CASE("getAdjacentHouses() for left edge house (5 neighbors)")
@@ -166,7 +166,7 @@ TEST_CASE("getAdjacentHouses() for left edge house (5 neighbors)")
     expectedNeighbors.insert(houses[18]);
     expectedNeighbors.insert(houses[19]);
 
-    REQUIRE( actualNeighbors == expectedNeighbors );
+    REQUIRE( expectedNeighbors == actualNeighbors );
 }
 
 TEST_CASE("getAdjacentHouses() for right edge house (5 neighbors)")
@@ -183,7 +183,7 @@ TEST_CASE("getAdjacentHouses() for right edge house (5 neighbors)")
     expectedNeighbors.insert(houses[34]);
     expectedNeighbors.insert(houses[35]);
 
-    REQUIRE( actualNeighbors == expectedNeighbors );
+    REQUIRE( expectedNeighbors == actualNeighbors );
 }
 
 TEST_CASE("getAdjacentHouses() for top edge house (5 neighbors)")
@@ -200,7 +200,7 @@ TEST_CASE("getAdjacentHouses() for top edge house (5 neighbors)")
     expectedNeighbors.insert(houses[11]);
     expectedNeighbors.insert(houses[5]);
 
-    REQUIRE( actualNeighbors == expectedNeighbors );
+    REQUIRE( expectedNeighbors == actualNeighbors );
 }
 
 TEST_CASE("getAdjacentHouses() for bottom edge house (5 neighbors)")
@@ -217,7 +217,7 @@ TEST_CASE("getAdjacentHouses() for bottom edge house (5 neighbors)")
     expectedNeighbors.insert(houses[30]);
     expectedNeighbors.insert(houses[32]);
 
-    REQUIRE( actualNeighbors == expectedNeighbors );
+    REQUIRE( expectedNeighbors == actualNeighbors );
 }
 
 TEST_CASE("getAdjacentHouses() for house in middle of grid (8 neighbors)")
@@ -237,13 +237,13 @@ TEST_CASE("getAdjacentHouses() for house in middle of grid (8 neighbors)")
     expectedNeighbors.insert(houses[21]);
     expectedNeighbors.insert(houses[22]);
 
-    REQUIRE( actualNeighbors == expectedNeighbors );
+    REQUIRE( expectedNeighbors == actualNeighbors );
 }
 
 TEST_CASE("getCoordinate() for a given address")
 {
     City_Grid city = City_Grid(6);
-    REQUIRE(city.getCoordinate(0) == Coordinate(0, 0)); // 0, 0
-    REQUIRE(city.getCoordinate(1) == Coordinate(1, 0)); // 1, 0
-    REQUIRE(city.getCoordinate(27) == Coordinate(3, 4));// 3, 4
+    REQUIRE(Coordinate(0, 0) == city.getCoordinate(0)); // 0, 0
+    REQUIRE(Coordinate(1, 0) == city.getCoordinate(1)); // 1, 0
+    REQUIRE(Coordinate(3, 4) == city.getCoordinate(27));// 3, 4
 }

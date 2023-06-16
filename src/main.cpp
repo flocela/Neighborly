@@ -113,6 +113,12 @@ int main(int argc, char* argv[])
         }
     }
 
+    // Throw exception if common input errors are made.
+    if (components.city->getNumOfHouses() < (int)components.residents.size())
+    {
+        throw invalid_argument("Number of houses needs to be larger than number of residents.");
+    }
+
     // Set up graphical printer.
 
     // graphic printer needs a renderer
