@@ -95,8 +95,9 @@ PlotA(  plotFormat,
 {}
 
 int PlotA::getCenterValueOfXAxisPx () const
-{
+{   
     return _x_axis.getCenterValXPx();
+    
 }
 
 int PlotA::getDotSizePx () const

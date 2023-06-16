@@ -174,6 +174,12 @@ int main(int argc, char* argv[])
         std::this_thread::sleep_until(timeStart + std::chrono::milliseconds(250));
     }
 
+    if (components.numOfRuns == 0)
+    {
+        graphicPrinter.print(&runMetrics);
+        cmdLinePrinter.print(&runMetrics);
+    }
+
     graphicPrinter.keepScreen();
 
     return 0; 

@@ -245,7 +245,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
         make_unique<PlotA>(
             rightColFormat,
             0,                // starting run number
-            maxNumOfRuns - 1, // last run number
+            max(0, maxNumOfRuns - 1), // last run number
             0,                // min number of neighbors
             maxNumOfNeighbors // max number of neighbors
         ),
@@ -283,7 +283,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
         make_unique<PlotA>(
             rightColFormat,
             0,               // starting run number
-            numberOfRuns -1, // last run number
+            max(0, numberOfRuns - 1), // last run number
             0,               // minimum resident happiness
             100              // resident happiness range is from 0 to 100.
         ),

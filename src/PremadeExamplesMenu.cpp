@@ -91,7 +91,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                 20,
                 make_unique<CityState_Simple>(components.city.get())
             );
-            components.numOfRuns = 10;
+            components.numOfRuns = 0;
             
             break;
         }
