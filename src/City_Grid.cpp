@@ -196,9 +196,8 @@ vector<const House*> City_Grid::getHouses () const
 
 unordered_set<const House*> City_Grid::getHousesAdjacent (int address) const
 {	
-	if (address == 91) {cout << "[91, "; }
 	if ( _adjacent_houses_per_house_address.find(address) != _adjacent_houses_per_house_address.end())
-	{	if (address == 91) {cout << "if ";}
+	{	
 		return _adjacent_houses_per_house_address[address];
 	}
 	
@@ -207,8 +206,6 @@ unordered_set<const House*> City_Grid::getHousesAdjacent (int address) const
 	Coordinate coord = getCoordinate(address);
 	int addr_x = coord.getX();
 	int addr_y = coord.getY();
-
-	if (address == 91) { cout << addr_x << ", " << addr_y << ", ";}
 	
 	if (addr_y > 0)
 	{
@@ -219,7 +216,7 @@ unordered_set<const House*> City_Grid::getHousesAdjacent (int address) const
 
 		adjacentHouses.insert(_houses[address-_width].get());
 
-		if (addr_x <= _width-1)
+		if (addr_x < _width-1)
 		{
 			adjacentHouses.insert(_houses[address - _width + 1].get());
 		}
@@ -230,7 +227,7 @@ unordered_set<const House*> City_Grid::getHousesAdjacent (int address) const
 		adjacentHouses.insert(_houses[address - 1].get());
 	}
 
-	if (addr_x <= _width-1)
+	if (addr_x < _width-1)
 	{
 		adjacentHouses.insert(_houses[address + 1].get());
 	}
@@ -244,12 +241,11 @@ unordered_set<const House*> City_Grid::getHousesAdjacent (int address) const
 
 		adjacentHouses.insert(_houses[address +_width].get());
 
-		if (addr_x <= _width-1)
+		if (addr_x < _width-1)
 		{
 			adjacentHouses.insert(_houses[address + _width + 1].get());
 		}
 	}
-	if (address == 91) { cout << "] ";}
 	_adjacent_houses_per_house_address[address] = adjacentHouses;
 
 	return adjacentHouses;

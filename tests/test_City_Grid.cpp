@@ -152,7 +152,7 @@ TEST_CASE("getHousesAdjacent() for corner house (3 neighbors) ")
     REQUIRE( actualNeighbors == expectedNeighbors );
 }
 
-TEST_CASE("getAdjacentHouses() for edge house (5 neighbors)")
+TEST_CASE("getAdjacentHouses() for left edge house (5 neighbors)")
 {
     City_Grid city = City_Grid(6);
     vector<const House*> houses = city.getHouses();
@@ -165,6 +165,57 @@ TEST_CASE("getAdjacentHouses() for edge house (5 neighbors)")
     expectedNeighbors.insert(houses[13]);
     expectedNeighbors.insert(houses[18]);
     expectedNeighbors.insert(houses[19]);
+
+    REQUIRE( actualNeighbors == expectedNeighbors );
+}
+
+TEST_CASE("getAdjacentHouses() for right edge house (5 neighbors)")
+{
+    City_Grid city = City_Grid(6);
+    vector<const House*> houses = city.getHouses();
+
+    const House* edgeHouse = houses[29];
+    unordered_set<const House*> actualNeighbors = city.getHousesAdjacent(edgeHouse->getAddress());
+    unordered_set<const House*> expectedNeighbors = {};
+    expectedNeighbors.insert(houses[22]);
+    expectedNeighbors.insert(houses[23]);
+    expectedNeighbors.insert(houses[28]);
+    expectedNeighbors.insert(houses[34]);
+    expectedNeighbors.insert(houses[35]);
+
+    REQUIRE( actualNeighbors == expectedNeighbors );
+}
+
+TEST_CASE("getAdjacentHouses() for top edge house (5 neighbors)")
+{
+    City_Grid city = City_Grid(6);
+    vector<const House*> houses = city.getHouses();
+
+    const House* edgeHouse = houses[4];
+    unordered_set<const House*> actualNeighbors = city.getHousesAdjacent(edgeHouse->getAddress());
+    unordered_set<const House*> expectedNeighbors = {};
+    expectedNeighbors.insert(houses[3]);
+    expectedNeighbors.insert(houses[9]);
+    expectedNeighbors.insert(houses[10]);
+    expectedNeighbors.insert(houses[11]);
+    expectedNeighbors.insert(houses[5]);
+
+    REQUIRE( actualNeighbors == expectedNeighbors );
+}
+
+TEST_CASE("getAdjacentHouses() for bottom edge house (5 neighbors)")
+{
+    City_Grid city = City_Grid(6);
+    vector<const House*> houses = city.getHouses();
+
+    const House* edgeHouse = houses[31];
+    unordered_set<const House*> actualNeighbors = city.getHousesAdjacent(edgeHouse->getAddress());
+    unordered_set<const House*> expectedNeighbors = {};
+    expectedNeighbors.insert(houses[24]);
+    expectedNeighbors.insert(houses[25]);
+    expectedNeighbors.insert(houses[26]);
+    expectedNeighbors.insert(houses[30]);
+    expectedNeighbors.insert(houses[32]);
 
     REQUIRE( actualNeighbors == expectedNeighbors );
 }

@@ -1,6 +1,6 @@
 #ifndef HOUSE_H
 #define HOUSE_H
-
+#include <iostream>
 #include <string>
 
 class House
@@ -15,7 +15,7 @@ class House
         House& operator= (House&& o) noexcept = default;
         ~House () = default;
 
-        int getAddress () const { return _address; }
+        int getAddress () const {return _address;}
         bool operator< (const House& other) const;
         std::string toStr () const;
         
