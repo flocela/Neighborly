@@ -22,7 +22,7 @@ TEST_CASE("Question_Int getPrompt() returns the origPrompt first.")
                    0,
                    origPrompt,
                    "age"};
-    REQUIRE ( q.getPrompt() == origPrompt);
+    REQUIRE ( origPrompt == q.getPrompt());
 }
 
 
@@ -39,10 +39,9 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
                    origPrompt,
                    "age"};
     bool ok = q.tryAnswer("x");
-    REQUIRE (ok == false);
-    REQUIRE (q.hasValidAnswer() == false);
-    REQUIRE( q.getPrompt() ==
-        "I didn't understand your answer. Choose a number in the range [1, 10].");
+    REQUIRE (false == ok);
+    REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]." ==
+             q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Answers starting with '-' are negative numbers.")
@@ -57,10 +56,9 @@ TEST_CASE("Question_Int. Answers starting with '-' are negative numbers.")
                    origPrompt,
                    "age"};
     bool ok = q.tryAnswer("-1");
-    REQUIRE (ok == false);
-    REQUIRE (q.hasValidAnswer() == false);
-    REQUIRE( q.getPrompt() !=
-        "That integer is not in range. Should be in the range . _");
+    REQUIRE (false == ok);
+    REQUIRE (false == q.hasValidAnswer());
+    REQUIRE( "That integer is not in range. Should be in the range . _" != q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Answers starting with '+' are positive numbers.")
@@ -75,9 +73,9 @@ TEST_CASE("Question_Int. Answers starting with '+' are positive numbers.")
                    origPrompt,
                    "age"};
     bool ok = q.tryAnswer("+2");
-    REQUIRE (ok == true);
-    REQUIRE( q.hasValidAnswer() == true);
-    REQUIRE( q.getPrompt() == origPrompt);
+    REQUIRE (true == ok);
+    REQUIRE( true == q.hasValidAnswer());
+    REQUIRE( origPrompt == q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Answers that are doubles are invalid.")
@@ -92,9 +90,9 @@ TEST_CASE("Question_Int. Answers that are doubles are invalid.")
                    origPrompt,
                    "age"};
     bool ok = q.tryAnswer("2.3");
-    REQUIRE (ok == false);
-    REQUIRE( q.hasValidAnswer() == false);
-    REQUIRE( q.getPrompt() == "Nope, that's not an integer, i.e 2, 5, or 199. _");
+    REQUIRE (false == ok);
+    REQUIRE( false == q.hasValidAnswer());
+    REQUIRE( "Nope, that's not an integer, i.e 2, 5, or 199. _" == q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Left edge of range determined correctly for an inclusive range.")
@@ -110,8 +108,8 @@ TEST_CASE("Question_Int. Left edge of range determined correctly for an inclusiv
                    "age"};
 
     bool ok = q.tryAnswer("1");
-    REQUIRE (ok == true);
-    REQUIRE( q.hasValidAnswer() == true);
+    REQUIRE (true == ok);
+    REQUIRE( true == q.hasValidAnswer());
 }
 
 TEST_CASE("Question_Int. Right edge of range determined correctly for an inclusive range.")
@@ -127,8 +125,8 @@ TEST_CASE("Question_Int. Right edge of range determined correctly for an inclusi
                    "age"};
 
     bool ok = q.tryAnswer("10");
-    REQUIRE (ok == true);
-    REQUIRE( q.hasValidAnswer() == true);
+    REQUIRE (true == ok);
+    REQUIRE( true == q.hasValidAnswer());
 }
 
 TEST_CASE("Question_Int. Left edge of range determined correctly for an exclusive range.")
@@ -144,9 +142,9 @@ TEST_CASE("Question_Int. Left edge of range determined correctly for an exclusiv
                    "age"};
 
     bool ok = q.tryAnswer("1");
-    REQUIRE (ok == false);
-    REQUIRE( q.hasValidAnswer() == false);
-    REQUIRE( q.getPrompt() == "That integer is not in range. Should be in the range (1, 10). _");
+    REQUIRE (false == ok);
+    REQUIRE( false == q.hasValidAnswer());
+    REQUIRE( "That integer is not in range. Should be in the range (1, 10). _" == q.getPrompt());
 }
 
 
@@ -163,9 +161,9 @@ TEST_CASE("Question_Int. Right edge of range determined correctly for an exclusi
                    "age"};
 
     bool ok = q.tryAnswer("10");
-    REQUIRE (ok == false);
-    REQUIRE( q.hasValidAnswer() == false);
-    REQUIRE( q.getPrompt() == "That integer is not in range. Should be in the range (1, 10). _");
+    REQUIRE (false == ok);
+    REQUIRE( false == q.hasValidAnswer());
+    REQUIRE( "That integer is not in range. Should be in the range (1, 10). _" == q.getPrompt());
 }
 
 TEST_CASE("Question_Int runs through a sequence of answers.")
@@ -180,18 +178,18 @@ TEST_CASE("Question_Int runs through a sequence of answers.")
                    origPrompt,
                    "age"};
     q.tryAnswer("nine");
-    REQUIRE( q.hasValidAnswer() == false);
-    REQUIRE( q.getPrompt() ==
-        "I didn't understand your answer. Choose a number in the range (1, 10).");
+    REQUIRE( false == q.hasValidAnswer());
+    REQUIRE( "I didn't understand your answer. Choose a number in the range (1, 10)." ==
+             q.getPrompt());
 
     q.tryAnswer("9.9");
-    REQUIRE( q.hasValidAnswer() == false);
-    REQUIRE( q.getPrompt() == "Nope, that's not an integer, i.e 2, 5, or 199. _");
+    REQUIRE( false == q.hasValidAnswer());
+    REQUIRE( "Nope, that's not an integer, i.e 2, 5, or 199. _" == q.getPrompt());
 
     q.tryAnswer("11");
-    REQUIRE( q.hasValidAnswer() == false);
-    REQUIRE( q.getPrompt() == "That integer is not in range. Should be in the range (1, 10). _");
+    REQUIRE( false == q.hasValidAnswer());
+    REQUIRE( "That integer is not in range. Should be in the range (1, 10). _" == q.getPrompt());
 
     q.tryAnswer("5");
-    REQUIRE( q.hasValidAnswer() == true);
+    REQUIRE( true == q.hasValidAnswer());
 }
