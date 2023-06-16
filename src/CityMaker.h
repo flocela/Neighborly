@@ -16,7 +16,7 @@ protected:
     CityMaker& operator= (CityMaker&& o) noexcept = default;
 
 public:
-    virtual ~CityMaker () = default;
+    virtual ~CityMaker () noexcept = default;
     
     virtual std::unique_ptr<City> makeCity (
         const std::vector<std::unique_ptr<const CityFactory>>& cityFactories,

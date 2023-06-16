@@ -19,7 +19,7 @@ protected:
     ResidentsMaker& operator= (ResidentsMaker&& o) noexcept = default;
 
 public:
-    virtual ~ResidentsMaker () = default;
+    virtual ~ResidentsMaker () noexcept = default;
     virtual ResidentsGroupInfo makeResidents (
         const UI& ui,
         const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories,

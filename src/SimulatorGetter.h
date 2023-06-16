@@ -19,7 +19,7 @@ public:
     SimulatorGetter& operator= (const SimulatorGetter& o) = default;
     SimulatorGetter (SimulatorGetter&& o) noexcept = default;
     SimulatorGetter& operator= (SimulatorGetter&& o) noexcept= default;
-    ~SimulatorGetter() = default;
+    ~SimulatorGetter () noexcept = default;
 
     std::unique_ptr<Simulator> getSimulatorFromUser (const UI& ui);
 

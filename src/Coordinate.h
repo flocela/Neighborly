@@ -12,7 +12,7 @@ public:
     Coordinate (Coordinate&& obj) noexcept = default;
     Coordinate& operator=(const Coordinate& obj) = default;
     Coordinate& operator=(Coordinate&& obj) noexcept = default;
-    ~Coordinate () = default;
+    ~Coordinate () noexcept = default;
 
     int getX() const { return _x; };
     int getY() const { return _y; };

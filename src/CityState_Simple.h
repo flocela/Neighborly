@@ -20,7 +20,7 @@ public:
     CityState_Simple (CityState_Simple&& o) noexcept = default;
     CityState_Simple& operator= (const CityState_Simple& o) = default;
     CityState_Simple& operator= (CityState_Simple&& o) noexcept = default;
-    ~CityState_Simple () = default;
+    ~CityState_Simple () noexcept = default;
 
     void moveOut (Resident* resident) override;
     void moveIn (Resident* resident, const House* house) override;

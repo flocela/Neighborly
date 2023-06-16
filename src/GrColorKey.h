@@ -35,7 +35,7 @@ public:
     GrColorKey (GrColorKey&& o) noexcept = default;
     GrColorKey& operator= (const GrColorKey& o) = default;
     GrColorKey& operator=(GrColorKey&& o) noexcept = default;
-    ~GrColorKey () = default;
+    ~GrColorKey () noexcept = default;
 
     void print (Renderer* renderer);
     int sizeXPx () override;

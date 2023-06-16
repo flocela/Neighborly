@@ -1,16 +1,17 @@
 #include "PremadeExamplesMenu.h"
-#include <iostream>
+
 #include <memory>
 #include <string>
 #include "City_Grid.h"
 #include "CityState_Simple.h"
+#include "HappinessFunc_Falling.h"
+#include "Resident_UsingFunction.h"
+#include "SimulationComponents.h"
 #include "Simulator_Basic_A.h"
 #include "Simulator_Basic_B.h"
-#include "SimulationComponents.h"
-#include "Resident_UsingFunction.h"
-#include "HappinessFunc_Falling.h"
 
 using namespace std;
+
 template<typename T>
 std::unordered_set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
 {
@@ -44,6 +45,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             // 30 x 30 city has 900 houses. 
             // 360 Falling Resdients (Group 1)
             // 360 Falling Residents (Group 2)
+            // SimulatorBasic_A
             components.randomSeed = 0;
             
             components.city = std::make_unique<City_Grid>(30);
@@ -83,14 +85,6 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
-            //TODO change back to Simulator_Basic_
-            /*components.simulator = std::make_unique<Simulator_Basic_B>(
-                components.city.get(),
-                getSetOfPointers(components.residents),
-                30, // percent of residents that simulation tries to move at every run
-                20, // number of houses moving residents get to choose from
-                make_unique<CityState_Simple>(components.city.get())
-            );*/
             components.simulator = std::make_unique<Simulator_Basic_A>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
@@ -106,6 +100,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             // 120 x 120 city with 14,400 houses. 
             // 5760 Falling Resdients (Group 1)
             // 5760 Falling Residents (Group 2)
+            // Simulator_Basic_A
             components.randomSeed = 0;
             
             components.city = std::make_unique<City_Grid>(120);
@@ -146,15 +141,6 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                 ));
             }
 
-            //TODO change back to Simulation_Basic_B    
-            /*components.simulator = std::make_unique<Simulator_Basic_B>(
-                components.city.get(),
-                getSetOfPointers(components.residents),
-                30, // percent of residents that simulation tries to move at every run
-                20, // number of houses moving residents get to choose from
-                make_unique<CityState_Simple>(components.city.get())
-            );*/
-
             components.simulator = std::make_unique<Simulator_Basic_A>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
@@ -171,6 +157,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             // 30 x 30 city with 900 houses. 
             // 360 Falling Resdients (Group 1)
             // 360 Falling Residents (Group 2)
+            // Simulator_Basic_B
             components.randomSeed = 0;
             
             components.city = std::make_unique<City_Grid>(30);
@@ -228,6 +215,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             // 120 x 120 city with 14,400 houses. 
             // 5760 Falling Resdients (Group 1)
             // 5760 Falling Residents (Group 2)
+            // Simulator_Basic_B
             components.randomSeed = 0;
             
             components.city = std::make_unique<City_Grid>(120);

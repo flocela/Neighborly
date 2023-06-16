@@ -47,7 +47,7 @@ public:
     PlotA (PlotA&& o) noexcept = default;
     PlotA& operator= (const PlotA& o) = default;
     PlotA& operator=(PlotA&& o) noexcept = default;
-    ~PlotA () = default;
+    ~PlotA () noexcept = default;
     
     int getCenterValueOfXAxisPx () const override;
 

@@ -49,7 +49,7 @@ public:
     Title_Basic (Title_Basic&& o) noexcept = default;
     Title_Basic& operator= (const Title_Basic& o) = default;
     Title_Basic& operator=(Title_Basic&& o) noexcept = default;
-    ~Title_Basic () = default;
+    ~Title_Basic () noexcept = default;
 
     int getLetterHeight () const override { return _l.letterHeight(); }
 

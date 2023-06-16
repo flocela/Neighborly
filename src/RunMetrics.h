@@ -19,7 +19,7 @@ public:
     RunMetrics (RunMetrics&& o) noexcept = default;
     RunMetrics& operator= (const RunMetrics& o) = default;
     RunMetrics& operator= (RunMetrics&& o) noexcept = default;
-    ~RunMetrics () = default;
+    ~RunMetrics () noexcept = default;
 
     void setSeedNumber (int seedNumber);
 

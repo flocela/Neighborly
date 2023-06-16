@@ -23,7 +23,7 @@ public:
     Printer_CMDLine (Printer_CMDLine&& o) noexcept = default;
     Printer_CMDLine& operator= (const Printer_CMDLine& o) = default;
     Printer_CMDLine& operator= (Printer_CMDLine&& o) noexcept = default;
-    ~Printer_CMDLine () = default;
+    ~Printer_CMDLine () noexcept = default;
     
     void print(
         const RunMetrics* runMetrics

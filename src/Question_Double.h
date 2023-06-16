@@ -13,7 +13,7 @@ protected:
     Question_Double& operator=(Question_Double&& obj) noexcept = default;
 public:
     Question_Double () = delete;
-    virtual ~Question_Double() = default;
+    virtual ~Question_Double () noexcept = default;
 
     Question_Double (
         int id,

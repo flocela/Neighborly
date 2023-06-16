@@ -13,7 +13,7 @@ public:
     CityFactory_Grid (CityFactory_Grid&& obj) noexcept = default;
     CityFactory_Grid& operator=(const CityFactory_Grid& obj) = default;
     CityFactory_Grid& operator=(CityFactory_Grid&& obj) noexcept = default;
-    ~CityFactory_Grid() = default;
+    ~CityFactory_Grid () noexcept = default;
 
     std::string cityType () const override;
 

@@ -14,7 +14,7 @@ public:
     CityMaker_CMDLine (CityMaker_CMDLine&& o) noexcept = default;
     CityMaker_CMDLine& operator= (const CityMaker_CMDLine& o) = default;
     CityMaker_CMDLine& operator=(CityMaker_CMDLine&& o) noexcept = default;
-    ~CityMaker_CMDLine () = default;
+    ~CityMaker_CMDLine () noexcept = default;
 
     std::unique_ptr<City> makeCity (
         const std::vector<std::unique_ptr<const CityFactory>>& cityFactories,

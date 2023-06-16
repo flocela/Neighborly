@@ -22,7 +22,7 @@ public:
     Simulator_Basic_A (Simulator_Basic_A&& o) noexcept = default;
     Simulator_Basic_A& operator= (const Simulator_Basic_A& o) = default;
     Simulator_Basic_A& operator= (Simulator_Basic_A&& o) noexcept = default;
-    ~Simulator_Basic_A () = default;
+    ~Simulator_Basic_A () noexcept = default;
 
     // simulates one run (or round). 
     // A run is: Take all residents that are unhappy. Then for each resident,

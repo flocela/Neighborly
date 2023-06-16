@@ -18,7 +18,7 @@ protected:
     CityFactory& operator= (CityFactory&& o) noexcept = default;
 
 public:
-    virtual ~CityFactory () = default;
+    virtual ~CityFactory () noexcept = default;
     
     // returns the name of the type of cities that are produced.
     virtual std::string cityType () const = 0; 

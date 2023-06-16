@@ -26,7 +26,7 @@ public:
     GrRunsChart (GrRunsChart&& obj) noexcept = default;
     GrRunsChart& operator= (const GrRunsChart& obj) = default;
     GrRunsChart& operator= (GrRunsChart&& obj) noexcept = default;
-    ~GrRunsChart () = default;
+    ~GrRunsChart () noexcept = default;
 
     void print (int numOfRuns, Renderer* renderer) const;
     int sizeXPx ();

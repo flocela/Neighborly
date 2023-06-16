@@ -38,7 +38,7 @@ public:
     GrDvstyChart (GrDvstyChart&& o) noexcept = default;
     GrDvstyChart& operator= (const GrDvstyChart& o) = default;
     GrDvstyChart& operator=(GrDvstyChart&& o) noexcept = default;
-    ~GrDvstyChart () = default;
+    ~GrDvstyChart () noexcept = default;
 
     void print (
         std::unordered_map<int, int> numOfResidentsPerGroupId,

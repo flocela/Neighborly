@@ -14,7 +14,7 @@ protected:
     Question& operator= (const Question& o) = default;
     Question& operator= (Question&& o) noexcept = default;
 public:
-    virtual ~Question() = default;
+    virtual ~Question () noexcept = default;
     
     // get question's id
     virtual int getID () const = 0;

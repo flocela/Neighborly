@@ -12,7 +12,7 @@ class Letter
         Letter (Letter&& o) noexcept = default;
         Letter& operator= (const Letter& o) = default;
         Letter& operator= (Letter&& o) = default;
-        ~Letter () = default;
+        ~Letter () noexcept = default;
 
         int letterHeight () const {return _letter_height;}
         int lineSpace () const {return _line_space;}

@@ -32,7 +32,7 @@ public:
     GrHapChart (GrHapChart&& o) noexcept = default;
     GrHapChart& operator= (const GrHapChart& o) = default;
     GrHapChart& operator=(GrHapChart&& o) noexcept = default;
-    ~GrHapChart () = default;
+    ~GrHapChart () noexcept = default;
 
     void print (
         std::unordered_map<int, int> numofResidentsPerGroup,

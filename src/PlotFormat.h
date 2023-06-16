@@ -30,7 +30,7 @@ public:
     PlotFormat (PlotFormat&& o) noexcept = default;
     PlotFormat& operator= (const PlotFormat& o) = default;
     PlotFormat& operator=(PlotFormat&& o) noexcept = default;
-    ~PlotFormat () = default;
+    ~PlotFormat () noexcept = default;
 
     AxisFormat axisFormatX () { return _a_format_x; }
     AxisFormat axisFormatY () { return _a_format_y; }

@@ -16,7 +16,7 @@ public:
 		const std::size_t screen_width,
 		const std::size_t screen_height,
 		std::string title);
-	~Renderer_SDL();
+	~Renderer_SDL () noexcept;
 	Renderer_SDL () = delete;
     Renderer_SDL (const Renderer_SDL& o) = delete;
     Renderer_SDL (Renderer_SDL&& o) noexcept = delete;

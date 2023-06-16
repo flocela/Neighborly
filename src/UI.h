@@ -17,7 +17,7 @@ protected:
     UI& operator= (UI&& o) noexcept = default;
 
 public:
-    virtual ~UI () = default;
+    virtual ~UI () noexcept = default;
 
     // presents the user with a menu of choices and returns the user's response.
     // if user does not reply with an number corresponding to an item, then returns the fallback item.

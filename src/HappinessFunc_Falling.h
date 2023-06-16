@@ -25,7 +25,7 @@ public:
     HappinessFunc_Falling (HappinessFunc_Falling&& obj) noexcept = default;
     HappinessFunc_Falling& operator=(const HappinessFunc_Falling& obj) = default;
     HappinessFunc_Falling& operator=(HappinessFunc_Falling&& obj) noexcept = default;
-    ~HappinessFunc_Falling() = default;
+    ~HappinessFunc_Falling () noexcept = default;
 
     double getLargestValue () const;
 

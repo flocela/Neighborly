@@ -14,7 +14,7 @@ protected:
     Title& operator= (Title&& o) noexcept = default;
 
 public:
-    virtual ~Title () = default;
+    virtual ~Title () noexcept = default;
     
     virtual int getLetterHeight () const = 0;
 

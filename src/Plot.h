@@ -16,7 +16,7 @@ protected:
     Plot& operator= (Plot&& o) noexcept = default;
 
 public:
-    virtual ~Plot() = default;
+    virtual ~Plot() noexcept = default;
     // the x axis has values. returns the most centarl value's pixel.
     virtual int getCenterValueOfXAxisPx () const = 0;
 

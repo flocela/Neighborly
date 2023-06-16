@@ -42,7 +42,7 @@ public:
     PlotB (PlotB&& o) noexcept = default;
     PlotB& operator= (const PlotB& o) = default;
     PlotB& operator=(PlotB&& o) noexcept = default;
-    ~PlotB () = default;
+    ~PlotB () noexcept = default;
 
     int getCenterValueOfXAxisPx () const override;
 

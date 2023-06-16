@@ -20,7 +20,7 @@ public:
     HappinessFunc_Flat (HappinessFunc_Flat&& obj) noexcept = default;
     HappinessFunc_Flat& operator=(const HappinessFunc_Flat& obj) = default;
     HappinessFunc_Flat& operator=(HappinessFunc_Flat&& obj) noexcept = default;
-    ~HappinessFunc_Flat() = default;
+    ~HappinessFunc_Flat () noexcept = default;
     
     double getLargestValue () const;
 

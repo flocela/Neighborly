@@ -14,7 +14,7 @@ protected:
     ColorKey& operator= (ColorKey&& o) noexcept = default;
 
 public:
-    virtual ~ColorKey () = default;
+    virtual ~ColorKey () noexcept = default;
 
     virtual void print (Renderer* renderer) = 0;
     virtual void setTopCenter (int xPx, int yPx) = 0;

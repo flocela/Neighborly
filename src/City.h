@@ -19,7 +19,7 @@ protected:
     City& operator= (City&& o) noexcept = default;
 
 public:
-    virtual ~City () = default;
+    virtual ~City () noexcept = default;
 
     // largest distance between any two houses (inclusively) in y direction.
     virtual double getHeight() const = 0;

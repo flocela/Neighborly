@@ -17,7 +17,7 @@ protected:
     Printer& operator= (Printer&& o) noexcept = default;
     
 public:
-    virtual ~Printer () = default;
+    virtual ~Printer () noexcept = default;
 
     virtual void print (const RunMetrics* runMetrics) const = 0;
 };

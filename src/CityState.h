@@ -19,7 +19,7 @@ protected:
     CityState& operator= (CityState&& o) noexcept = default;
 
 public:
-    virtual ~CityState () = default;
+    virtual ~CityState () noexcept = default;
     virtual void moveOut (Resident* resident) = 0;
     virtual void moveIn (Resident* resident, const House* house) = 0;
     virtual void moveInAndOutOfHouse (Resident* resident, const House* house) = 0;

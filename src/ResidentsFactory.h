@@ -17,7 +17,7 @@ protected:
     ResidentsFactory& operator= (ResidentsFactory&& o) noexcept = default;
 
 public:
-    virtual ~ResidentsFactory () = default;
+    virtual ~ResidentsFactory () noexcept = default;
     
     virtual std::vector<std::unique_ptr<Resident>> createResidents(
         const UI& ui,

@@ -13,7 +13,7 @@ protected:
     HappinessFunc& operator= (HappinessFunc&& o) noexcept = default;
 
 public:
-    virtual ~HappinessFunc () = default;
+    virtual ~HappinessFunc () noexcept = default;
 
     virtual double calcHappiness (
         int tot_num_of_possible_neighbors, 

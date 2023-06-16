@@ -23,7 +23,7 @@ public:
         std::unique_ptr<HappinessFunc> happinessFunc,
         std::string name);
     Resident_UsingFunction () = delete;
-    virtual ~Resident_UsingFunction() = default;
+    virtual ~Resident_UsingFunction () noexcept = default;
     double getMaximumPossibleHappiness () const;
     double getLeastPossibleHappiness () const;
 

@@ -34,7 +34,7 @@ public:
     GrCityChart (GrCityChart&& o) noexcept = default;
     GrCityChart& operator= (const GrCityChart& o) = default;
     GrCityChart& operator=(GrCityChart&& o) noexcept = default;
-    ~GrCityChart () = default;
+    ~GrCityChart () noexcept = default;
 
     //TODO hsould be const
     void print (

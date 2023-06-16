@@ -27,7 +27,7 @@ public:
     City_Grid (City_Grid&& o) noexcept = default;
     City_Grid& operator= (const City_Grid& o) = default;
     City_Grid& operator=(City_Grid&& o) noexcept = default;
-    ~City_Grid () = default;
+    ~City_Grid () noexcept = default;
 
     double getHeight() const override;
     double getWidth() const override;

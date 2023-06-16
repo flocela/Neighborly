@@ -17,7 +17,7 @@ public:
     UI_CMDLine (UI_CMDLine&& o) noexcept = default;
     UI_CMDLine& operator= (const UI_CMDLine& o) = default;
     UI_CMDLine& operator=(UI_CMDLine&& o) noexcept = default;
-    ~UI_CMDLine () = default;
+    ~UI_CMDLine () noexcept = default;
 
     std::string getAnswer (Question&& question) const override;
     std::string getAnswer (Question& question) const override;

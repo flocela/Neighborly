@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
         SCREEN_HEIGHT, 
         "Neighbors");
 
-    // set up graphicPrinter
+    // graphical printer needs map of adjacent houses per house
     vector<const House*> houses = components.city->getHouses();
 
     unordered_map<const House*, unordered_set<const House*>> neighboringHousesPerHouse;
@@ -149,9 +149,11 @@ int main(int argc, char* argv[])
     // Start simulation. Simulation runs in a for loop numOfRun times.
     // Run metrics are updated after each run. Results are printed after each run.
 
-    // set srand with randomSeed
+    // set seed for randomization for simulation.
     srand(components.randomSeed);
+
     RunMetrics runMetrics{components.city.get(), components.randomSeed};
+
     for (int ii=0; ii<components.numOfRuns; ii++)
     {  
         unordered_map<const House*, const Resident*> residentsPerHouse = 

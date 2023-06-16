@@ -15,7 +15,7 @@ protected:
     Simulator& operator= (Simulator&& o) noexcept = default;
 
 public:
-    virtual ~Simulator () = default;
+    virtual ~Simulator () noexcept = default;
     virtual std::unordered_map<const House*, const Resident*> run() = 0;
     virtual std::string toString() = 0;
 };

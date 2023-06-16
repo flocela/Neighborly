@@ -22,7 +22,7 @@ public:
         double allowedMovementDistance,
         double happinessGoal);
     Resident () = delete;
-    virtual ~Resident () = default;
+    virtual ~Resident () noexcept = default;
 
     // Only calculates happiness. Does not set the resident's happiness.
     double calculateHappiness (

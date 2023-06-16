@@ -25,7 +25,7 @@ class AxisLeftToRightT
         AxisLeftToRightT (AxisLeftToRightT&& o) noexcept = default;
         AxisLeftToRightT& operator= (const AxisLeftToRightT& o) = default;
         AxisLeftToRightT& operator=(AxisLeftToRightT&& o) noexcept = default;
-        ~AxisLeftToRightT () = default;
+        ~AxisLeftToRightT () noexcept = default;
 
         int getAxisLengthPx() const;
 

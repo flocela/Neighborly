@@ -24,7 +24,7 @@ class AxisTopToBottomL
         AxisTopToBottomL (AxisTopToBottomL&& o) noexcept = default;
         AxisTopToBottomL& operator= (const AxisTopToBottomL& o) = default;
         AxisTopToBottomL& operator=(AxisTopToBottomL&& o) noexcept = default;
-        ~AxisTopToBottomL () = default;
+        ~AxisTopToBottomL () noexcept = default;
 
         int getAxisLengthPx () const;
 

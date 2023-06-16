@@ -17,7 +17,7 @@ protected:
 
 public:
     Question_Int () = delete;
-    virtual ~Question_Int() = default;
+    virtual ~Question_Int () noexcept = default;
 
     Question_Int (
         int id,  // identifier for this question

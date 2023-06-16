@@ -25,7 +25,7 @@ public:
     Simulator_Basic_B (Simulator_Basic_B&& o) noexcept = default;
     Simulator_Basic_B& operator= (const Simulator_Basic_B& o) = default;
     Simulator_Basic_B& operator= (Simulator_Basic_B&& o) noexcept = default;
-    ~Simulator_Basic_B () = default;
+    ~Simulator_Basic_B () noexcept = default;
 
     // simulates one run (or round).
     // A run is: Randomly take percentage of residents and try to move them into a new house.

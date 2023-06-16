@@ -19,7 +19,7 @@ public:
     Point (Point&& o) noexcept = default;
     Point& operator= (const Point& o) = default;
     Point& operator= (Point&& o) noexcept = default;
-    ~Point () = default;
+    ~Point () noexcept = default;
 
     double x () {return _x;}
     double y () {return _y;}
