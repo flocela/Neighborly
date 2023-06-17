@@ -1,12 +1,12 @@
 <random_number>
-    0
+    10
 </random_number>
 <city>
     <type>
         City_Grid
     </type>
     <width>
-        120
+        30
     </width>
 </city>
 <base_color_per_group>
@@ -32,13 +32,13 @@
         0
     </start_id>
     <number_of>
-        5760
+        360
     </number_of>
     <group_id>
         1
     </group_id>
     <allowed_movement>
-        30
+        15
     </allowed_movement>
     <happiness_goal>
         60
@@ -56,7 +56,7 @@
         95
     </happiness_at_zero_diversity>
     <happiness_at_one_diversity>
-        10
+        50
     </happiness_at_one_diversity>
     <name>
         Falling Resident
@@ -64,16 +64,16 @@
 </resident_group>
 <resident_group>
     <start_id>
-        5760
+        360
     </start_id>
     <number_of>
-        5760
+        360
     </number_of>
     <group_id>
         2
     </group_id>
     <allowed_movement>
-        30
+        15
     </allowed_movement>
     <happiness_goal>
         60
@@ -91,7 +91,7 @@
         95
     </happiness_at_zero_diversity>
     <happiness_at_one_diversity>
-        10
+        50
     </happiness_at_one_diversity>
     <name>
         Falling Resident
@@ -106,5 +106,5 @@
     </num_of_tries>
 </simulator>
 <num_of_runs>
-    30
+    20
 </num_of_runs>

@@ -1,5 +1,5 @@
 <random_number>
-    0
+    10
 </random_number>
 <city>
     <type>
@@ -56,7 +56,7 @@
         95
     </happiness_at_zero_diversity>
     <happiness_at_one_diversity>
-        10
+        50
     </happiness_at_one_diversity>
     <name>
         Falling Resident
@@ -91,7 +91,7 @@
         95
     </happiness_at_zero_diversity>
     <happiness_at_one_diversity>
-        10
+        50
     </happiness_at_one_diversity>
     <name>
         Falling Resident

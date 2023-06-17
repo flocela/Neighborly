@@ -1,5 +1,5 @@
 <random_number>
-    0
+    10
 </random_number>
 <city>
     <type>
