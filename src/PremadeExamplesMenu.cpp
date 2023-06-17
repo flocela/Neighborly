@@ -7,7 +7,6 @@
 #include "HappinessFunc_Falling.h"
 #include "Resident_UsingFunction.h"
 #include "SimulationComponents.h"
-#include "Simulator_Basic_A.h"
 #include "Simulator_Basic_B.h"
 
 using namespace std;
@@ -45,7 +44,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
             // 30 x 30 city has 900 houses. 
             // 360 Falling Resdients (Group 1)
             // 360 Falling Residents (Group 2)
-            // SimulatorBasic_A
+            // SimulatorBasic_B
             components.randomSeed = 0;
             
             components.city = std::make_unique<City_Grid>(30);
@@ -85,13 +84,14 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     "Falling Resident"
                 ));
             }
-            components.simulator = std::make_unique<Simulator_Basic_A>(
+            components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
+                30,
                 20,
                 make_unique<CityState_Simple>(components.city.get())
             );
-            components.numOfRuns = 10;
+            components.numOfRuns = 20;
             
             break;
         }
@@ -141,9 +141,10 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                 ));
             }
 
-            components.simulator = std::make_unique<Simulator_Basic_A>(
+            components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
+                30,
                 20,
                 make_unique<CityState_Simple>(components.city.get())
             );
