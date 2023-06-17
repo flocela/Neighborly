@@ -140,6 +140,10 @@ vector<int> Printer_Graphic::determineMinMaxHouseCoords(
     unordered_map<const House*, Coordinate > coordPerHouse
 )
 {
+    if (coordPerHouse.size() == 0)
+    {
+        return vector<int>{0, 0, 0, 0};
+    }
     int minX = std::numeric_limits<int>::max();
     int maxX = std::numeric_limits<int>::min();
     int minY = std::numeric_limits<int>::max();
@@ -201,7 +205,6 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
     };
 
     set<Mood> moods{Mood::happy, Mood::unhappy};
-
     return make_unique<GrCityChart>(
         _coordinates_per_house,
         _colors,
