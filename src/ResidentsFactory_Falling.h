@@ -45,7 +45,7 @@ private:
     std::string _high_happiness_value_prompt =
         "\nDiversity is measured as the number of disparate neighbors divided by the total"
         " number of neighbors."
-        "\nFor the  group, enter the higher happiness value, corresponding to a diverstiy of"
+        "\nFor the  group, enter the higher happiness value, corresponding to a diversity of"
         " 0.0. _";
     
     // prompt for lower happiness value, when diversity is 1.0.

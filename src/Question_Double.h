@@ -57,7 +57,7 @@ private:
     double _answer = 0.0;
     bool _valid_answer = false;
     std::string _orig_prompt = "";
-    std::string _invalid_prompt = "I didn't understand your answer. _";
+    std::string _invalid_prompt = "I didn't understand your answer.  _";
     // TODO delete _type_prompt. it's a number should work.
     std::string _type_prompt = "Nope, that's not a number, i.e. 0.2, or 13.0. _";
     std::string  _range_prompt = "That number is not in range. Should be in the range . _"; 

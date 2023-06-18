@@ -51,7 +51,7 @@ private:
     std::string _group_movement_orig_prompt  = 
         "\nThe simulator you choose may restrict the residents' movements."
         " For the  group, when the residents move, how far away can their new house be from"
-        " their original house? Must be less than . _";
+        " their original house? Must be less than or equal to . _";
 
     // if can not get a resident type from the user using the menu, then
     // use _fallback_menu_response.

@@ -111,40 +111,52 @@ string Question_Int::getFailedResponse () const
 
 bool Question_Int::tryAnswer (string ans)
 {  
-    int intAnswer = -1;
     _valid_answer = false;
+    _answer = -1;
+    
+    // finds a digit. finds a digit with a dot. finds a digit with a dot and trailing zeros.
+    string rs1 = "^\\s*[+-]?\\d+(\\.[0]*)?\\s*$";
 
-    // Determine if ans can be converted to a number.
-    try 
+    // finds a dot. finds a dot with trailing zeros.
+    string rs2 = "^\\s*[+-]?\\.[0]*\\s*$";
+
+    // finds a digit with a dot with trailing non-zero numbers.
+    // find a dot with trailing non-zero numbers.
+    string rs3 = "^\\s*[+-]?\\d*(\\.[0-9]+)+\\s*$";
+
+    if (regex_search(ans, regex(rs1)) == true)
     {
-        intAnswer = stoi(ans);
-    }
-    catch(...)
-    {   
-        _next_prompt = &_invalid_prompt;
-        return false;
+        int tempIntAnswer = stoi(ans);
+        if (!rangeFunction(tempIntAnswer))
+        {   
+            _next_prompt = &_range_prompt;
+            return _valid_answer;
+        }
+        else
+        {
+            _valid_answer = true;
+            _answer = tempIntAnswer;
+            _next_prompt = &_orig_prompt;
+
+            return _valid_answer;
+        }  
     }
 
-    // ans string should represent an integer not a double.
-    string rs = "^[+-]?\\d+$";
-    if (regex_search(ans, regex(rs)) == false)
+    if (regex_search(ans, regex(rs2)) == true)
+    {
+        _next_prompt = &_invalid_prompt;
+        return _valid_answer;  
+    }
+
+    if (regex_search(ans, regex(rs3)) == true)
     {
         _next_prompt = &_type_prompt;
-        return false;  
+        return _valid_answer;  
     }
+
+    _next_prompt = &_invalid_prompt;
+    return false;
     
-    // Determine if ans is in range.
-    if (!rangeFunction(intAnswer))
-    {   
-        _next_prompt = &_range_prompt;
-        return false;
-    }
-    
-    // ans is a valid answer.
-    _valid_answer = true;
-    _answer = intAnswer;
-    _next_prompt = &_orig_prompt;
-    return _valid_answer;
 }
 
 bool Question_Int::rangeFunction (int val) const

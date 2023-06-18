@@ -1,7 +1,7 @@
 #include "ResidentsMaker_CMDLine.h"
 #include <iomanip>
 #include <sstream>
-
+#include <iostream> 
 #include "Question_Double.h"
 #include "Question_Int.h"
 
@@ -161,7 +161,6 @@ double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
 {   
     stringstream maxMovementStream;
     maxMovementStream << fixed << setprecision(2) << maxAllowedMovement;
-
     // add maximum movement to movement prompt
     string movementPrompt = insertIntoString (
         _group_movement_orig_prompt,
@@ -173,9 +172,9 @@ double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
     Question_Double question{
         3,
         0.0,
-        true,
-        true,
         maxAllowedMovement,
+        true,
+        true,
         maxAllowedMovement/4,
         insertIntoString(
             movementPrompt,

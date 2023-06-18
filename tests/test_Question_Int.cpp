@@ -27,7 +27,7 @@ TEST_CASE("Question_Int getPrompt() returns the origPrompt first.")
 
 
 TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
-          " getPrompt returns invalid_prompt.")
+          " getPrompt returns invalid_prompt. ans is 'x' ")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -42,6 +42,76 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
     REQUIRE (false == ok);
     REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]." ==
              q.getPrompt());
+}
+
+TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
+          " getPrompt returns invalid_prompt. ans is '7a' ")
+{   
+    string origPrompt = "Choose a number in the range [1, 10].";
+    Question_Int q{1,    // id
+                   1,    // min
+                   10,   //max
+                   true, // min inclusive
+                   true, // max inclusive,
+                   0,
+                   origPrompt,
+                   "age"};
+    bool ok = q.tryAnswer("7a");
+    REQUIRE (false == ok);
+    REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]." ==
+             q.getPrompt());
+}
+
+TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
+          " getPrompt returns invalid_prompt. ans is 'a7' ")
+{   
+    string origPrompt = "Choose a number in the range [1, 10].";
+    Question_Int q{1,    // id
+                   1,    // min
+                   10,   //max
+                   true, // min inclusive
+                   true, // max inclusive,
+                   0,
+                   origPrompt,
+                   "age"};
+    bool ok = q.tryAnswer("a7");
+    REQUIRE (false == ok);
+    REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]." ==
+             q.getPrompt());
+}
+
+TEST_CASE("Question_Int. white space at beginning of string is valid.")
+{   
+    string origPrompt = "Choose a number in the range [1, 10].";
+    Question_Int q{1,    // id
+                   1,    // min
+                   10,   //max
+                   true, // min inclusive
+                   true, // max inclusive,
+                   0,
+                   origPrompt,
+                   "age"};
+    bool ok = q.tryAnswer(" 2");
+    REQUIRE (true == ok);
+    REQUIRE (true == q.hasValidAnswer());
+    REQUIRE( "Choose a number in the range [1, 10]." == q.getPrompt());
+}
+
+TEST_CASE("Question_Int. white space at end of string is valid.")
+{   
+    string origPrompt = "Choose a number in the range [1, 10].";
+    Question_Int q{1,    // id
+                   1,    // min
+                   10,   //max
+                   true, // min inclusive
+                   true, // max inclusive,
+                   0,
+                   origPrompt,
+                   "age"};
+    bool ok = q.tryAnswer("2 ");
+    REQUIRE (true == ok);
+    REQUIRE (true == q.hasValidAnswer());
+    REQUIRE( "Choose a number in the range [1, 10]." == q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Answers starting with '-' are negative numbers.")
@@ -78,7 +148,8 @@ TEST_CASE("Question_Int. Answers starting with '+' are positive numbers.")
     REQUIRE( origPrompt == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. Answers that are doubles are invalid.")
+TEST_CASE("Question_Int. Answers that are doubles (with trailing on-zero numbers) are invalid."
+          " Try 2.3")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -93,6 +164,97 @@ TEST_CASE("Question_Int. Answers that are doubles are invalid.")
     REQUIRE (false == ok);
     REQUIRE( false == q.hasValidAnswer());
     REQUIRE( "Nope, that's not an integer, i.e 2, 5, or 199. _" == q.getPrompt());
+}
+
+TEST_CASE("Question_Int. Answers that are doubles (with trailing non-zero numbers) are invalid."
+          " Try .9")
+{   
+    string origPrompt = "Choose a number in the range [1, 10].";
+    Question_Int q{1,    // id
+                   1,    // min
+                   10,   //max
+                   true, // min inclusive
+                   true, // max inclusive,
+                   0,
+                   origPrompt,
+                   "age"};
+    bool ok = q.tryAnswer(".9");
+    REQUIRE (false == ok);
+    REQUIRE( false == q.hasValidAnswer());
+    REQUIRE( "Nope, that's not an integer, i.e 2, 5, or 199. _" == q.getPrompt());
+}
+
+TEST_CASE("Question_Int. Answers that are doubles with trailing zeros are valid "
+          " as long as there is a number before the decimal. Try 2.0")
+{   
+    string origPrompt = "Choose a number in the range [1, 10].";
+    Question_Int q{1,    // id
+                   1,    // min
+                   10,   //max
+                   true, // min inclusive
+                   true, // max inclusive,
+                   0,
+                   origPrompt,
+                   "age"};
+    bool ok = q.tryAnswer("2.0");
+    REQUIRE (true == ok);
+    REQUIRE( true == q.hasValidAnswer());
+    REQUIRE( "Choose a number in the range [1, 10]." == q.getPrompt());
+}
+
+
+TEST_CASE("Question_Int. Answers that are doubles with a zero before and after the"
+          " decimal are valid. Try 0.0")
+{   
+    string origPrompt = "Choose a number in the range [0, 10].";
+    Question_Int q{1,    // id
+                   0,    // min
+                   10,   //max
+                   true, // min inclusive
+                   true, // max inclusive,
+                   0,
+                   origPrompt,
+                   "age"};
+    bool ok = q.tryAnswer("0.0");
+    REQUIRE (true == ok);
+    REQUIRE( true == q.hasValidAnswer());
+    REQUIRE( "Choose a number in the range [0, 10]." == q.getPrompt());
+}
+
+TEST_CASE("Question_Int. Answers that are doubles with a zeros after the"
+          " decimal and no number before the decmial are invalid. Try .0")
+{   
+    string origPrompt = "Choose a number in the range [0, 10].";
+    Question_Int q{1,    // id
+                   0,    // min
+                   10,   //max
+                   true, // min inclusive
+                   true, // max inclusive,
+                   0,
+                   origPrompt,
+                   "age"};
+    bool ok = q.tryAnswer(".0");
+    REQUIRE (false == ok);
+    REQUIRE( false == q.hasValidAnswer());
+    REQUIRE( "I didn't understand your answer. Choose a number in the range [0, 10]." == q.getPrompt());
+}
+
+
+TEST_CASE("Question_Int. Answers that are just a decimal are invalid. Try .")
+{   
+    string origPrompt = "Choose a number in the range [0, 10].";
+    Question_Int q{1,    // id
+                   0,    // min
+                   10,   //max
+                   true, // min inclusive
+                   true, // max inclusive,
+                   0,
+                   origPrompt,
+                   "age"};
+    bool ok = q.tryAnswer(".");
+    REQUIRE (false == ok);
+    REQUIRE( false == q.hasValidAnswer());
+    REQUIRE( "I didn't understand your answer. Choose a number in the range [0, 10]." == q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Left edge of range determined correctly for an inclusive range.")

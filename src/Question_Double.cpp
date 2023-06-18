@@ -60,10 +60,8 @@ Question_Double::Question_Double (
    _orig_prompt{origPrompt}
 { 
     // setting _invalid_prompt
-    _invalid_prompt.insert(_invalid_prompt.size()-1, " ");
     _invalid_prompt.insert(_invalid_prompt.size() - 2, _orig_prompt);
     
-
     char minEdge = minInclusive? '[' : '(';
     char maxEdge = maxInclusive? ']' : ')';
     // setting range_prompt
@@ -126,11 +124,15 @@ bool Question_Double::tryAnswer (string ans)
     _valid_answer = false;
     // TODO delete these two lines about regex
     //string rs = "^\\-?\\d*\\.?\\d+$";
-    //string rs = R"!(^[+-]?\d*\.?\d+$)!"; //TODO 72.
+    string rs = R"!(^[+-]?\d*\.?\d+$)!"; //TODO 72.
 
     // Determine if ans can be converted to a number.
     try {
         doubleAnswer = stod(ans);
+        if (!regex_match(ans, regex(rs)))
+        {   cout << "not a double" << endl;
+            throw("Not a double.");
+        }
     }
     catch(...)
     {
