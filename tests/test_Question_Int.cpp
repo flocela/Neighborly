@@ -22,7 +22,7 @@ TEST_CASE("Question_Int getPrompt() returns the origPrompt first.")
                    0,
                    origPrompt,
                    "age"};
-    REQUIRE ( origPrompt == q.getPrompt());
+    REQUIRE ( "Choose a number between 1 and 10 inclusive. _" == q.getPrompt());
 }
 
 
@@ -40,7 +40,7 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
                    "age"};
     bool ok = q.tryAnswer("x");
     REQUIRE (false == ok);
-    REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]." ==
+    REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]. _" ==
              q.getPrompt());
 }
 
@@ -58,7 +58,7 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
                    "age"};
     bool ok = q.tryAnswer("7a");
     REQUIRE (false == ok);
-    REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]." ==
+    REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]. _" ==
              q.getPrompt());
 }
 
@@ -76,7 +76,7 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
                    "age"};
     bool ok = q.tryAnswer("a7");
     REQUIRE (false == ok);
-    REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]." ==
+    REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]. _" ==
              q.getPrompt());
 }
 
@@ -94,7 +94,8 @@ TEST_CASE("Question_Int. white space at beginning of string is valid.")
     bool ok = q.tryAnswer(" 2");
     REQUIRE (true == ok);
     REQUIRE (true == q.hasValidAnswer());
-    REQUIRE( "Choose a number in the range [1, 10]." == q.getPrompt());
+    REQUIRE ( 2 == stoi(q.getAnswer()));
+    REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
 
 TEST_CASE("Question_Int. white space at end of string is valid.")
@@ -111,7 +112,8 @@ TEST_CASE("Question_Int. white space at end of string is valid.")
     bool ok = q.tryAnswer("2 ");
     REQUIRE (true == ok);
     REQUIRE (true == q.hasValidAnswer());
-    REQUIRE( "Choose a number in the range [1, 10]." == q.getPrompt());
+    REQUIRE ( 2 == stoi(q.getAnswer()));
+    REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Answers starting with '-' are negative numbers.")
@@ -145,7 +147,8 @@ TEST_CASE("Question_Int. Answers starting with '+' are positive numbers.")
     bool ok = q.tryAnswer("+2");
     REQUIRE (true == ok);
     REQUIRE( true == q.hasValidAnswer());
-    REQUIRE( origPrompt == q.getPrompt());
+    REQUIRE ( 2 == stoi(q.getAnswer()));
+    REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Answers that are doubles (with trailing on-zero numbers) are invalid."
@@ -199,9 +202,9 @@ TEST_CASE("Question_Int. Answers that are doubles with trailing zeros are valid 
     bool ok = q.tryAnswer("2.0");
     REQUIRE (true == ok);
     REQUIRE( true == q.hasValidAnswer());
-    REQUIRE( "Choose a number in the range [1, 10]." == q.getPrompt());
+    REQUIRE ( 2 == stoi(q.getAnswer()));
+    REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
-
 
 TEST_CASE("Question_Int. Answers that are doubles with a zero before and after the"
           " decimal are valid. Try 0.0")
@@ -218,7 +221,8 @@ TEST_CASE("Question_Int. Answers that are doubles with a zero before and after t
     bool ok = q.tryAnswer("0.0");
     REQUIRE (true == ok);
     REQUIRE( true == q.hasValidAnswer());
-    REQUIRE( "Choose a number in the range [0, 10]." == q.getPrompt());
+    REQUIRE ( 0 == stoi(q.getAnswer()));
+    REQUIRE( "Choose a number in the range [0, 10]. _" == q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Answers that are doubles with a zeros after the"
@@ -236,9 +240,9 @@ TEST_CASE("Question_Int. Answers that are doubles with a zeros after the"
     bool ok = q.tryAnswer(".0");
     REQUIRE (false == ok);
     REQUIRE( false == q.hasValidAnswer());
-    REQUIRE( "I didn't understand your answer. Choose a number in the range [0, 10]." == q.getPrompt());
+    REQUIRE( "I didn't understand your answer. Choose a number in the range [0, 10]. _" 
+             == q.getPrompt());
 }
-
 
 TEST_CASE("Question_Int. Answers that are just a decimal are invalid. Try .")
 {   
@@ -254,7 +258,7 @@ TEST_CASE("Question_Int. Answers that are just a decimal are invalid. Try .")
     bool ok = q.tryAnswer(".");
     REQUIRE (false == ok);
     REQUIRE( false == q.hasValidAnswer());
-    REQUIRE( "I didn't understand your answer. Choose a number in the range [0, 10]." == q.getPrompt());
+    REQUIRE( "I didn't understand your answer. Choose a number in the range [0, 10]. _" == q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Left edge of range determined correctly for an inclusive range.")
@@ -271,7 +275,9 @@ TEST_CASE("Question_Int. Left edge of range determined correctly for an inclusiv
 
     bool ok = q.tryAnswer("1");
     REQUIRE (true == ok);
+    REQUIRE ( 1 == stoi(q.getAnswer()));
     REQUIRE( true == q.hasValidAnswer());
+    REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Right edge of range determined correctly for an inclusive range.")
@@ -288,7 +294,9 @@ TEST_CASE("Question_Int. Right edge of range determined correctly for an inclusi
 
     bool ok = q.tryAnswer("10");
     REQUIRE (true == ok);
+    REQUIRE ( 10 == stoi(q.getAnswer()));
     REQUIRE( true == q.hasValidAnswer());
+    REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Left edge of range determined correctly for an exclusive range.")
@@ -341,7 +349,7 @@ TEST_CASE("Question_Int runs through a sequence of answers.")
                    "age"};
     q.tryAnswer("nine");
     REQUIRE( false == q.hasValidAnswer());
-    REQUIRE( "I didn't understand your answer. Choose a number in the range (1, 10)." ==
+    REQUIRE( "I didn't understand your answer. Choose a number in the range (1, 10). _" ==
              q.getPrompt());
 
     q.tryAnswer("9.9");
@@ -354,4 +362,6 @@ TEST_CASE("Question_Int runs through a sequence of answers.")
 
     q.tryAnswer("5");
     REQUIRE( true == q.hasValidAnswer());
+    REQUIRE (5 == stoi(q.getAnswer()));
+    REQUIRE( "Choose a number in the range (1, 10). _" == q.getPrompt());
 }
