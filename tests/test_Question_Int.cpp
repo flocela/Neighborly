@@ -44,6 +44,24 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
              q.getPrompt());
 }
 
+
+TEST_CASE("Question_Int Invalid answer results in fallback answer.")
+{   
+    string origPrompt = "Choose a number in the range [1, 10].";
+    Question_Int q{1,
+                      1,
+                      10,
+                      true,
+                      true,
+                      5,
+                      origPrompt,
+                      "age"};
+    bool ok = q.tryAnswer("x");
+    REQUIRE (false == ok);
+    REQUIRE (false == q.hasValidAnswer());
+    REQUIRE (5 == stoi(q.getAnswer()));
+}
+
 TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
           " getPrompt returns invalid_prompt. ans is '7a' ")
 {   
@@ -80,7 +98,7 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
              q.getPrompt());
 }
 
-TEST_CASE("Question_Int. white space at beginning of string is valid.")
+TEST_CASE("Question_Int. White space at beginning of string is valid.")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -98,7 +116,7 @@ TEST_CASE("Question_Int. white space at beginning of string is valid.")
     REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. white space at end of string is valid.")
+TEST_CASE("Question_Int. White space at end of string is valid.")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id

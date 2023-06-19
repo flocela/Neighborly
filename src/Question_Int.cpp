@@ -56,6 +56,7 @@ Question_Int::Question_Int (
 {
     // setting _orig_prompt
     _orig_prompt.insert(_orig_prompt.size(), " _");
+    
     // setting _invalid_prompt
     _invalid_prompt.insert(_invalid_prompt.size(), " ");
     _invalid_prompt.insert(_invalid_prompt.size(), _orig_prompt);
