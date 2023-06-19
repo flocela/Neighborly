@@ -118,14 +118,14 @@ bool Question_Int::tryAnswer (string ans)
     _answer = -1;
     
     // finds a digit. finds a digit with a dot. finds a digit with a dot and trailing zeros.
-    string rs1 = "^\\s*[+-]?\\d+(\\.[0]*)?\\s*$";
+    string rs1 = R"!(^\s*[+-]?\d+(\.[0]*)?\s*$)!";
 
     // finds a dot. finds a dot with trailing zeros.
-    string rs2 = "^\\s*[+-]?\\.[0]*\\s*$";
+    string rs2 = R"!(^\s*[+-]?\.[0]*\s*$)!";
 
     // finds a digit with a dot with trailing non-zero numbers.
     // find a dot with trailing non-zero numbers.
-    string rs3 = "^\\s*[+-]?\\d*(\\.[0-9]+)+\\s*$";
+    string rs3 = R"!(^\s*[+-]?\d*(\.[0-9]+)+\s*$)!";
 
     if (regex_search(ans, regex(rs1)) == true)
     {
