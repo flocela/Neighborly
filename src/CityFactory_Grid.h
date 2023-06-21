@@ -29,13 +29,13 @@ private:
     // ask user for grid width with these prompts
     std::string _width_of_grid_orig_prompt =
         "\nEnter the width of the grid, (how many houses per side)?"
-        " The minimum width is 1 house. The maximum width is  houses. _";
+        " The minimum width is 1 house. The maximum width is  houses.";
     std::string _width_of_grid_type_prompt = 
         "Nope, that's not a whole number. Should be a number without any"
-        " decimals. _";
+        " decimals.";
     std::string _width_of_grid_range_prompt = 
         "That number is either too small or too large. Minimum allowed width"
-        " is 1, maximum allowed width is . _";
+        " is 1, maximum allowed width is .";
     std::string _width_of_grid_failure = 
         "Can not get a proper grid width. Using grid width of .";
 

@@ -108,7 +108,7 @@ int ResidentsMaker_CMDLine::askForNumOfResidents(const UI& ui, int count, string
     // add max number of residents to prompt
     string howManyResidentsPrompt = insertIntoString(
         _how_many_residents_orig_prompt,
-        _how_many_residents_orig_prompt.size() - 3,
+        _how_many_residents_orig_prompt.size() - 1,
         to_string(count)
     );
 
@@ -164,7 +164,7 @@ double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
     // add maximum movement to movement prompt
     string movementPrompt = insertIntoString (
         _group_movement_orig_prompt,
-        _group_movement_orig_prompt.size() - 3,
+        _group_movement_orig_prompt.size() - 1,
         maxMovementStream.str()
     );
 

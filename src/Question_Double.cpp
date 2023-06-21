@@ -62,13 +62,9 @@ Question_Double::Question_Double (
     // setting _orig_prompt
     _orig_prompt.insert(_orig_prompt.size(), " _");
 
-    // setting _invalid_prompt
-    _invalid_prompt.insert(_invalid_prompt.size(), " ");
-    _invalid_prompt.insert(_invalid_prompt.size(), _orig_prompt);
-    
+    // setting range_prompt
     char minEdge = minInclusive? '[' : '(';
     char maxEdge = maxInclusive? ']' : ')';
-    // setting range_prompt
     std::stringstream rangeStream;
     rangeStream << fixed << setprecision(2);
     rangeStream << minEdge << min << ", " << max << maxEdge;

@@ -45,7 +45,7 @@ private:
         " by the total number of neighbors. When a resident has no neighbors,"
         " diversity is undefined and the resident has a special happiness value."
         "\nFor the  group, enter the happiness value corresponding to when a resident has"
-        " no neighbors. _";
+        " no neighbors.";
 
     // prompt for high happiness value, from diversity equal to 0.0 to the drop-down
     // diversity (inclusive).
@@ -53,19 +53,19 @@ private:
         "\nDiversity is measured as the number of disparate neighbors divided by the total"
         " number of neighbors."
         "\nFor the  group, enter the higher happiness value, corresponding to a diversity of"
-        " 0.0 through to the drop-down diversity. _";
+        " 0.0 through to the drop-down diversity.";
     
     // prompt for the low happiness value, from after the drop-down diversity to 1.0.
     std::string _low_happiness_value_prompt  = 
         "\nFor the  group, enter the lower happiness value found after the drop-down"
-        " diversity. _";
+        " diversity.";
 
     // prompts for the location where the happiness drop happens along the diverstiy axis.
     std::string _dropLocationOrigPrompt  = 
         "\nFor the  group, enter the point at which the happiness value drops, the drop-down"
         " diversity. This will be the diversity value where the happiness drops from the higher"
         " value to the lower value. The diversity value must be between 0.0 and 1.0"
-        " inclusive. _";
+        " inclusive.";
     
     // inserts additional string at location
     std::string insertIntoString (

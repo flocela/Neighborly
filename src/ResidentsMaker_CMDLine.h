@@ -36,27 +36,27 @@ private:
 
     // prompt for the number of resident groups.
     std::string _how_many_groups_orig_prompt =
-        "\nHow many different groups of residents will there be? 1, 2, or ...? _";
+        "\nHow many different groups of residents will there be? 1, 2, or ...?";
     
     // prompt for the number of resdidents in this group.
     std::string _how_many_residents_orig_prompt = 
-        "\nHow many residents will be in the  group? Maximum allowable number is . _";
+        "\nHow many residents will be in the  group? Maximum allowable number is .";
 
     // prompt for the happiness for this group
     std::string _happiness_goal_orig_prompt = 
         "\nFor the  group, what will be the happiness goal for all members of the group? The"
-        " number must be between 0 and 100 inclusive. _";
+        " number must be between 0 and 100 inclusive.";
 
     // prompt for the allowed movement of each resident in the group.
     std::string _group_movement_orig_prompt  = 
         "\nThe simulator you choose may restrict the residents' movements."
         " For the  group, when the residents move, how far away can their new house be from"
-        " their original house? Must be less than or equal to . _";
+        " their original house? Must be less than or equal to .";
 
     // if can not get a resident type from the user using the menu, then
     // use _fallback_menu_response.
     std::string _fallback_res_type_response = "Could not determine the"
-        " resident group type, will be using ";
+        " resident group type, will be using .";
     
     void initColors (std::vector<BaseColor> colors);
 

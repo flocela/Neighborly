@@ -32,7 +32,7 @@ unique_ptr<City> CityMaker_CMDLine::makeCity (
     else
     {
         cityChoice = 
-            _ui.menu("Choose a city type by typing the corresponding number. _",
+            _ui.menu("Choose a city type by typing the corresponding number.",
             namesOfCityFactories,
             _fall_back,
             _choosing_city_failure);  

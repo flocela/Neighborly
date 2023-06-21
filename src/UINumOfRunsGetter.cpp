@@ -5,7 +5,7 @@ using namespace std;
 const int UINumOfRunsGetter::_fallback_num_of_runs = 20;
 
 const std::string UINumOfRunsGetter::_num_of_runs_orig_prompt = 
-        "\n How many runs should the simulation have? Must be a positive number. _";
+        "\nHow many runs should the simulation have? Must be a positive number.";
     
 const std::string UINumOfRunsGetter::_num_of_runs_type_prompt = 
         "Nope, that's not a positive whole number. _";

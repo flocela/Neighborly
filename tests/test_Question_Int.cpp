@@ -40,7 +40,7 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
                    "age"};
     bool ok = q.tryAnswer("x");
     REQUIRE (false == ok);
-    REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]. _" ==
+    REQUIRE( "I didn't understand your answer. _" ==
              q.getPrompt());
 }
 
@@ -76,7 +76,7 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
                    "age"};
     bool ok = q.tryAnswer("7a");
     REQUIRE (false == ok);
-    REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]. _" ==
+    REQUIRE( "I didn't understand your answer. _" ==
              q.getPrompt());
 }
 
@@ -94,7 +94,7 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
                    "age"};
     bool ok = q.tryAnswer("a7");
     REQUIRE (false == ok);
-    REQUIRE( "I didn't understand your answer. Choose a number in the range [1, 10]. _" ==
+    REQUIRE( "I didn't understand your answer. _" ==
              q.getPrompt());
 }
 
@@ -258,7 +258,7 @@ TEST_CASE("Question_Int. Answers that are doubles with a zeros after the"
     bool ok = q.tryAnswer(".0");
     REQUIRE (false == ok);
     REQUIRE( false == q.hasValidAnswer());
-    REQUIRE( "I didn't understand your answer. Choose a number in the range [0, 10]. _" 
+    REQUIRE( "I didn't understand your answer. _" 
              == q.getPrompt());
 }
 
@@ -276,7 +276,7 @@ TEST_CASE("Question_Int. Answers that are just a decimal are invalid. Try .")
     bool ok = q.tryAnswer(".");
     REQUIRE (false == ok);
     REQUIRE( false == q.hasValidAnswer());
-    REQUIRE( "I didn't understand your answer. Choose a number in the range [0, 10]. _" == q.getPrompt());
+    REQUIRE( "I didn't understand your answer. _" == q.getPrompt());
 }
 
 TEST_CASE("Question_Int. Left edge of range determined correctly for an inclusive range.")
@@ -367,7 +367,7 @@ TEST_CASE("Question_Int runs through a sequence of answers.")
                    "age"};
     q.tryAnswer("nine");
     REQUIRE( false == q.hasValidAnswer());
-    REQUIRE( "I didn't understand your answer. Choose a number in the range (1, 10). _" ==
+    REQUIRE( "I didn't understand your answer. _" ==
              q.getPrompt());
 
     q.tryAnswer("9.9");

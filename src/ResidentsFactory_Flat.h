@@ -34,14 +34,14 @@ private:
         " as the number of disparate neighbors divided by total number of neighbors. When a"
         " resident has no neighbors, diversity is undefined and the resident has a special"
         " happiness value."
-        "\nFor the  group, enter the happiness value corresponding to having no neighbors. _";
+        "\nFor the  group, enter the happiness value corresponding to having no neighbors.";
 
                                         
     // prompt for happiness value, which is constant for all diversities.
     std::string _happinessValueOrigPrompt  = 
         "\nFlat type residents have a constant happiness value."
         "\nFor the  group, enter the happiness value. The value must be between"
-        " 0.0 and 100.0 inclusive. _";
+        " 0.0 and 100.0 inclusive.";
 
     // inserts additional string at location
     std::string insertIntoString (

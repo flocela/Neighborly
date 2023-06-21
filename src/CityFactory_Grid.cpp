@@ -34,7 +34,10 @@ int CityFactory_Grid::askForGridWidth(const UI& ui, int maxWidth)const
         true, // min is inclusive
         true, // max is inclusive
         maxWidth/2, // fallback number of houses
-        insertIntoString(_width_of_grid_orig_prompt, 109, to_string(maxWidth)),
+        insertIntoString(
+            _width_of_grid_orig_prompt,
+            _width_of_grid_orig_prompt.size()-8,
+            to_string(maxWidth)),
         "city grid width"
     };
 

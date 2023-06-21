@@ -25,7 +25,7 @@ string UI_CMDLine::getAnswer (Question& question) const
         question.tryAnswer(answer);
         tries++;
     }
-    cout << "answer: " << answer << endl; // TODO delete later, when no longer manual testing
+    cout << "answer: " << question.getAnswer() << endl; // TODO delete later, when no longer manual testing
     if (!question.hasValidAnswer())
     {   
         cout << question.getFailedResponse() << endl;
@@ -50,13 +50,18 @@ int UI_CMDLine::menu (
     {
         ssPrompt << ii+1 << ")" << items[ii] << " ";
     }
-    ssPrompt << endl;
+    ssPrompt << endl << "_";
 
-    // create the in range prompt. (It has the original prompt appended to it.)
+    // Create the range in the range prompt. (It has the original prompt appended to it.)
     stringstream ssInRange;
     ssInRange << _menu_range_prompt;
-    ssInRange << items.size() << ".  ";
-    ssInRange << ssPrompt.str();
+    ssInRange << items.size() << ". _";
+
+    // Create invalid prompt with the number of items to the invalid prompt.
+    string invalidPrompt = insertIntoString(
+        _menu_invalid_prompt,
+        _menu_invalid_prompt.size()-3,
+        to_string(size));
 
     Question_Int chooseMenuItem{
         1,
@@ -66,9 +71,9 @@ int UI_CMDLine::menu (
         true,
         _fallback_menu_item,
         ssPrompt.str(),
-        _menu_type_prompt + ssPrompt.str(),
+        _menu_type_prompt,
         ssInRange.str(),
-        _menu_invalid_prompt + ssPrompt.str(),
+        invalidPrompt,
         insertIntoString(
             _menu_item_failure,
             _menu_item_failure.size() - 3,

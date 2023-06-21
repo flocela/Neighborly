@@ -62,7 +62,7 @@ private:
     int _answer = -1;
     int _valid_answer = false;
     std::string _orig_prompt = "";
-    std::string _invalid_prompt = "I didn't understand your answer.";
+    std::string _invalid_prompt = "I didn't understand your answer. _";
     std::string _type_prompt = "Nope, that's not an integer, i.e 2, 5, or 199. _";
     std::string _range_prompt = "That integer is not in range. Should be in the range . _";
     std::string _failed_prompt = "Was unable to understand your answer. To continue, will use  as the .";

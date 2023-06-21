@@ -39,18 +39,18 @@ private:
         " by the total number of neighbors. When a resident has no neighbors,"
         " diversity is undefined and the resident has a special happiness value."
         "\nFor the  group, enter the happiness value corresponding to when a resident has"
-        " no neighbors. _";
+        " no neighbors.";
 
     // prompt for higher happiness value, when diversity is 0.0
     std::string _high_happiness_value_prompt =
         "\nDiversity is measured as the number of disparate neighbors divided by the total"
         " number of neighbors."
         "\nFor the  group, enter the higher happiness value, corresponding to a diversity of"
-        " 0.0. _";
+        " 0.0.";
     
     // prompt for lower happiness value, when diversity is 1.0.
     std::string _low_happiness_value_prompt = 
-        "\nFor the  group, enter the lower happiness value, corresponding to a diversity of 1.0. _";
+        "\nFor the  group, enter the lower happiness value, corresponding to a diversity of 1.0.";
 
     // inserts additional string at location
     std::string insertIntoString (

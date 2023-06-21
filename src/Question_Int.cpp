@@ -32,8 +32,7 @@ Question_Int::Question_Int (
    _range_prompt{inRangePrompt},
    _failed_prompt{failedPrompt},
    _next_prompt{&_orig_prompt}
-{
-}
+{}
 
 Question_Int::Question_Int (
     int id,
@@ -56,21 +55,18 @@ Question_Int::Question_Int (
 {
     // setting _orig_prompt
     _orig_prompt.insert(_orig_prompt.size(), " _");
-    
-    // setting _invalid_prompt
-    _invalid_prompt.insert(_invalid_prompt.size(), " ");
-    _invalid_prompt.insert(_invalid_prompt.size(), _orig_prompt);
 
+    // setting range_prompt
     char minEdge = minInclusive? '[' : '(';
     char maxEdge = maxInclusive? ']' : ')';
-    // setting range_prompt
-        std::stringstream rangeStream;
-        rangeStream << minEdge;
-        rangeStream << min;
-        rangeStream << ',' << ' ';
-        rangeStream << max;
-        rangeStream << maxEdge;
-        _range_prompt.insert(_range_prompt.size()-3, rangeStream.str()); 
+    
+    std::stringstream rangeStream;
+    rangeStream << minEdge;
+    rangeStream << min;
+    rangeStream << ',' << ' ';
+    rangeStream << max;
+    rangeStream << maxEdge;
+    _range_prompt.insert(_range_prompt.size()-3, rangeStream.str());
 
     // setting _failed_prompt // TODO test this prompt
     _failed_prompt.insert(_failed_prompt.size()-9, to_string(fallback));

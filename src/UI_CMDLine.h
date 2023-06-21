@@ -35,7 +35,7 @@ private:
     // if can not get a menu item chosen from user, then use _fallback_menu_item
     int _fallback_menu_item = 1;
 
-    std::string _menu_type_prompt = "Please enter a whole number, like 2. ";
+    std::string _menu_type_prompt = "Please enter a whole number, like 2._ ";
     std::string _menu_range_prompt = "Please enter a number between 1 and ";
     std::string _menu_item_failure = "Could not determine which item was chosen, will be using .";
     std::string _menu_invalid_prompt = "Could not determine which item was chosen. Please enter a"

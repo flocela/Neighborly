@@ -26,7 +26,7 @@ public:
 private:
     const UI& _ui;
     int _fall_back = 0;
-    std::string _choosing_city_failure = "Couuld not determine the city type, will be using .";
+    std::string _choosing_city_failure = "Could not determine the city type, will be using .";
 };
 
 #endif

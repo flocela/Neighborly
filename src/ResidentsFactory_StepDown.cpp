@@ -68,9 +68,9 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     Question_Double qLowHappinessValue{
         4,
         0,
+        highHappinessValue,
         true,
         false,
-        highHappinessValue,
         _fallback_low_happiness_value,
         insertIntoString(
             _low_happiness_value_prompt,

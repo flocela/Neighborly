@@ -37,7 +37,7 @@ private:
         " are given the opportunity to move to a house that will make them happier.\n"
         "In each run of Simulator B, a percentage of residents are randomly chosen and"
         " forced to move. For each of these residents, a given number of houses are chosen, and the"
-        " resident chooses which one makes them happiest.\n";
+        " resident chooses which one makes them happiest.";
     const int _simulator_fallback = 1;
     const std::vector<std::string> _simulator_menu_items = {"Simulator A", "Simulator B"};
     const std::string _simulator_menu_failure_response =
@@ -45,13 +45,13 @@ private:
 
     const std::string _simulator_b_percentage_prompt =
         "For Simulator B, at each run a percentage of all residents are chosen and forced to"
-        " move. What should that percentage be? _";
+        " move. What should that percentage be?";
     const std::string _simulator_b_percentage_value =
         "percentage of residents moved per run";
 
     const std::string _simulator_b_number_of_houses_to_choose_from_prompt =
         "The residents will choose from a number of houses."
-        " How many houses should they choose from? _";
+        " How many houses should they choose from?";
     const std::string _simulator_b_number_of_houses_to_choose_from_value =
         "number of housese to choose from";
 
