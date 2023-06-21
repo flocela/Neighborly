@@ -98,9 +98,14 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     double locationOfDrop = stod(ui.getAnswer(qHappinessDropLocation));
 
-    cout << endl << "StepDown: " << groupNumber << ", " << allowedMovement << ", " <<
-    happinessGoal << ", " << happinessWithZeroNeighbors << ", " << highHappinessValue << ", " <<
-    lowHappinessValue << ", " << locationOfDrop << endl;
+    cout << endl << "Creating " << count << "Step-Down residents:: "
+         << "group number: " << groupNumber
+         << ", allowed movement: " << allowedMovement
+         << ", happiness goal: " << happinessGoal
+         << ", happiness w/ zero neighbors: " << happinessWithZeroNeighbors
+         << ", higher happiness value: " << highHappinessValue
+         << ", lower happiness value: " << lowHappinessValue
+         << ", diversity at drop-down: " << locationOfDrop << endl;
 
     vector<unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)

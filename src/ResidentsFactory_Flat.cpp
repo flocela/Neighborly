@@ -61,8 +61,12 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
 
     double happinessValue = stod(ui.getAnswer(qHappinessValue));
 
-    cout << endl << "flat residents: " << groupNumber << ", " << allowedMovement << ", " << happinessGoal << ", "
-    <<happinessWithZeroNeighbors << ", " << happinessValue << endl;
+    cout << endl << "Creating " << count << "Flat residents:: " 
+         << "group number: " << groupNumber
+         << ", allowed movement: " << allowedMovement
+         << ", happiness goal: " << happinessGoal
+         << ", happiness w/ zero neighbors: " <<happinessWithZeroNeighbors
+         << ", happiness value: " << happinessValue << endl;
 
     // create residents
     std::vector<std::unique_ptr<Resident>> residents = {};

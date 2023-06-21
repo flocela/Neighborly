@@ -25,7 +25,6 @@ string UI_CMDLine::getAnswer (Question& question) const
         question.tryAnswer(answer);
         tries++;
     }
-    cout << "answer: " << question.getAnswer() << endl; // TODO delete later, when no longer manual testing
     if (!question.hasValidAnswer())
     {   
         cout << question.getFailedResponse() << endl;
