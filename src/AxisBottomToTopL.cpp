@@ -95,7 +95,6 @@ void AxisBottomToTopL::print (Renderer* renderer) const
     renderer->renderTexts(texts);
 }
 
-//TODO, just use getLabelLength here
 int AxisBottomToTopL::sizeXPx () const
 {  
     return getLabelLengthPx();
