@@ -16,7 +16,6 @@ Question_Double::Question_Double (
     bool maxInclusive,
     double fallback,
     string origPrompt,
-    string wrongTypePrompt, 
     string inRangePrompt,
     string invalidPrompt,
     string failedPrompt
@@ -31,7 +30,6 @@ Question_Double::Question_Double (
    _valid_answer{false},
    _orig_prompt{origPrompt},
    _invalid_prompt{invalidPrompt},
-   _type_prompt{wrongTypePrompt},
    _range_prompt{inRangePrompt},
    _failed_prompt{failedPrompt},
    _next_prompt{&_orig_prompt}

@@ -23,7 +23,6 @@ public:
         bool maxInclusive, // true if max range value is inclusive, false if exclusive
         double fallback, // fallback value to return as answer, if can't get a double from user.
         std::string origPrompt,
-        std::string wrongTypePrompt, 
         std::string inRangePrompt,
         std::string invalidPrompt,
         std::string failedPrompt);
@@ -58,8 +57,6 @@ private:
     bool _valid_answer = false;
     std::string _orig_prompt = "";
     std::string _invalid_prompt = "I didn't understand your answer. _";
-    // TODO delete _type_prompt. it's a number should work.
-    std::string _type_prompt = "Nope, that's not a number, i.e. 0.2, or 13.0. _";
     std::string  _range_prompt = "That number is not in range. Should be in the range . _"; 
     std::string _failed_prompt = "Was unable to understand your answer. To continue, will use  .";
     std::string* _next_prompt;
