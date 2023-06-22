@@ -76,7 +76,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Rising::createResidents (
 
     double highHappinessValue = stod(ui.getAnswer(qHighHappinessValue));
 
-    cout << endl << "Creating " << count << "Rising residents:: " 
+    cout << endl << "Creating " << count << " Rising residents:: " 
          << "group number: " << groupNumber
          << ", allowed movement: " << allowedMovement
          << ", happiness goal: " << happinessGoal 

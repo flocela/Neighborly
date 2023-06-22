@@ -107,7 +107,6 @@ int main(int argc, char* argv[])
                 initResidentFactories(),
                 MAX_HOUSES_X,
                 MAX_HOUSES_Y,
-                MAX_NUM_OF_RESIDENT_GROUPS,
                 MAX_NUM_OF_RUNS
             );
         }

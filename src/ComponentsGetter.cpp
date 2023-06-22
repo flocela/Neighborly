@@ -28,7 +28,6 @@ SimulationComponents ComponentsGetter::askUserForComponents (
     const vector<unique_ptr<const ResidentsFactory>>& residentFactories,
     int maxNumOfHousesX,
     int maxNumOfHousesY,
-    int maxNumOfResidentGroups,
     int maxNumOfRuns
 )
 {
@@ -53,7 +52,6 @@ SimulationComponents ComponentsGetter::askUserForComponents (
         ui,
         residentFactories,
         resultantComponents.city->getNumOfHouses(),
-        maxNumOfResidentGroups,
         baseColors,
         min(resultantComponents.city->getWidth()/2, resultantComponents.city->getHeight()/2));
 

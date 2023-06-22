@@ -17,7 +17,6 @@ public:
         const std::vector<std::unique_ptr<const ResidentsFactory>>& residentFactories,
         int maxNumOfHousesX,
         int maxNumOfHousesY,
-        int maxNumOfResidentGroups,
         int maxNumOfRuns
     );
 };

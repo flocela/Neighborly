@@ -11,20 +11,10 @@ ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
     const UI& ui,
     const vector<unique_ptr<const ResidentsFactory>>& residentsFactories,
     int maxResidentCount,
-    int maxNumOfGroupsOfResidents,
     vector<BaseColor> colors,
     double maxAllowableMovement
 )
-{   // TODO only 2 groups allowed, so use an adapter class around this class.
-    if (maxNumOfGroupsOfResidents > 2)
-    {
-        _num_of_resident_groups = askForNumOfGroupsOfResidents(ui, maxNumOfGroupsOfResidents);
-    }
-    else
-    {
-        _num_of_resident_groups = maxNumOfGroupsOfResidents;
-    }
-    
+{   
     initColors(colors);
 
     // resGroupInfo is returned after adding residents and colors to it.

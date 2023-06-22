@@ -15,8 +15,7 @@ public:
 
     ResidentsGroupInfo makeResidents (
         const UI& ui,
-        const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories, 
-        int maxNumOfResidents,
+        const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories,
         int maxNumberOfGroupsOfResidents,
         std::vector<BaseColor> colors,
         double maxAllowableMovement
