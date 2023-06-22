@@ -2,7 +2,6 @@
 #include "../src/RunMetrics.h"
 
 #include <memory>
-#include <utility> // TODO is this needed?
 #include "../src/City_Grid.h"
 #include "../src/HappinessFunc_StepDown.h"
 #include "../src/Resident_UsingFunction.h"
