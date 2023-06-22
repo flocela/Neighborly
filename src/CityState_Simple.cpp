@@ -11,7 +11,6 @@ CityState_Simple::CityState_Simple (
     _open_houses_per_y_x(_city->getHeight(),
                         vector<unordered_set<const House*>>( ((_city->getWidth()-1)/10)+1 ))
 {
-    //TODO reserve space for _open_houses
     // to begin with, all houses are empty
     for (const House* house : _city->getHouses())
     {
