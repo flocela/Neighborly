@@ -1,8 +1,8 @@
 #include "catch.hpp"
 
 #include "../src/CityState_Simple.h"
-#include "../src/HappinessFunc_Flat.h" // TODO delete, only here for testing that a test works at all
-#include "../src/Resident_UsingFunction.h" // TODO delete
+#include "../src/HappinessFunc_Flat.h"
+#include "../src/Resident_UsingFunction.h"
 #include "../src/City_Grid.h"
 
 using namespace std;
