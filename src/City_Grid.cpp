@@ -253,16 +253,58 @@ unordered_set<const House*> City_Grid::getHousesAdjacent (int address) const
 
 std::string City_Grid::toString (const std::unordered_map<int, char>& characterPerAddress) const
 {	
-	
 	string result = "";
+	
+	for (int ii=0; ii<3; ++ii)
+	{	result.append("    ");
+		int divisor = pow(10, (2-ii));
+		for (int jj=0; jj<_width; ++jj)
+		{
+			if (ii == 2 && jj == 0)
+			{
+				result.push_back(48);
+			}
+			else if (jj/divisor != 0 && jj%5 == 0)
+			{
+				result.push_back(48+(jj/divisor)%10);
+			}
+			else
+			{
+				result.push_back(' ');
+			}
+			result.push_back(' ');
+		}
+		result.push_back('\n');
+	}
 	for (int ii = 0; ii<_width; ++ii)
 	{
+		if (ii%5 == 0)
+		{
+			if (ii/100 != 0)
+			{
+			}
+			else if (ii/10 != 0)
+			{
+				result.push_back(' ');
+			}
+			else
+			{
+				result.append("  ");
+			}
+			result.append(to_string(ii));
+			result.push_back(' ');
+		}
+		else
+		{
+			result.append("    ");
+		}
+		
 		for (int jj=0; jj<_width; ++jj)
 		{
 			const int address = ii * _width + jj;
 			if (characterPerAddress.find(address) == characterPerAddress.end())
 			{
-				result.push_back(' ');
+				result.push_back('-');
 			}
 			else
 			{
