@@ -211,7 +211,6 @@ pair<int, BaseColor> SimulationStarter::returnBaseColor (ifstream& inputStream)
     return {stoi(groupId), c};
 }
 
-// TODO bad name for this method
 void SimulationStarter::populateResidents (
     ifstream& inputStream,
     vector<unique_ptr<Resident>>& residents
