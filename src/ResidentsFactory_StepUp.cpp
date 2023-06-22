@@ -18,7 +18,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
     double happinessGoal,
     double allowedMovement,
     int groupNumber,
-    BaseColor baseColor //TODO possibley delete, then delete the (void) below
+    BaseColor baseColor
 ) const 
 {   
     stringstream colorStream;
