@@ -46,7 +46,7 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, central house, all houses 
 
     const House* house = houses[19];
     unordered_set<const House*> actualHouses = 
-        city.getHousesWithinDistance(house, 2.1, 2);
+        city.getHousesWithinDistance(house, 2.1);
 
     unordered_set<int> actualAddresses;
     for (const House* house :actualHouses)
@@ -83,7 +83,7 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side, all houses 
 
     const House* house = houses[18];
     unordered_set<const House*> actualHouses = 
-        city.getHousesWithinDistance(house, 2.1, 2);
+        city.getHousesWithinDistance(house, 2.1);
 
     unordered_set<int> actualAddresses;
     for (const House* house :actualHouses)
@@ -104,6 +104,33 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side, all houses 
     REQUIRE( expectedAddresses == actualAddresses );
 }
 
+TEST_CASE("getHousesWithinDistance() distance is 0.0, house at side")
+{
+    City_Grid city = City_Grid(6);
+    vector<const House*> houses = city.getHouses();
+
+    unordered_set<const House*> cityHouses{};
+    for (const House* h : houses)
+    {
+        cityHouses.insert(h);
+    }
+
+    const House* house = houses[18];
+    unordered_set<const House*> actualHouses = 
+        city.getHousesWithinDistance(house, 0.0);
+
+    unordered_set<int> actualAddresses;
+    for (const House* house :actualHouses)
+    {
+        actualAddresses.insert(house->getAddress());
+    }
+
+    unordered_set<int> expectedAddresses = {};
+    
+    REQUIRE( expectedAddresses == actualAddresses );
+}
+
+// TODO what does open houses have to do with it?
 TEST_CASE("getHousesWithinDistance() distance is 2.1, central house, some houses open")
 {
     City_Grid city = City_Grid(6);
@@ -112,7 +139,7 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, central house, some houses
 
     const House* house = houses[19];
     unordered_set<const House*> actualHouses = 
-        city.getHousesWithinDistance(house, 2.1, 2);
+        city.getHousesWithinDistance(house, 2.1);
 
     unordered_set<int> actualAddresses;
     for (const House* house :actualHouses)

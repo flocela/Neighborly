@@ -47,8 +47,7 @@ public:
     // returns houses within distance from house. Does not include the given house.
     virtual std::unordered_set<const House*> getHousesWithinDistance (
         const House* house,
-        double allowableDist,
-        int run
+        double allowableDist
     ) const = 0;
 
     // given a house's coordinates, returns the range of x coordinates that would still be

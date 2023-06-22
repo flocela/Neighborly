@@ -70,13 +70,11 @@ double City_Grid::getDist (
 		return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
 	}
 
-// TODO does this work with allowable distance == 0?
 unordered_set<const House*> City_Grid::getHousesWithinDistance (
         const House* house,
-        double allowableDist,
-		int run
+        double allowableDist
     ) const
-{	(void)run;
+{	
 	int central_address = house->getAddress();
 
 	int central_address_x = get_x(central_address);

@@ -68,7 +68,7 @@ vector<const House*> CityState_Simple::getOpenHousesWithinRange (
     double centerY,
     double allowableDistance)const
 {   
-    // todo ask city for minimum x and minimum y instead of getWidth and getHeight
+    // TODO ask city for minimum x and minimum y instead of getWidth and getHeight
     double minX = std::max(centerX - allowableDistance, 0.0);
     double maxX = std::min(centerX + allowableDistance, (double)_city->getWidth() - 1);
     double minY = std::max(centerY - allowableDistance, 0.0);

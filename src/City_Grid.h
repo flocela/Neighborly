@@ -47,8 +47,7 @@ public:
     // TODO shouldn't be using a refernce to get houses. Should return them.
     std::unordered_set<const House*> getHousesWithinDistance (
         const House* house,
-        double allowableDist,
-        int run
+        double allowableDist
     ) const override;
 
     std::pair<int, int> getXRangeForAllowableDistanceToHouse (
