@@ -43,7 +43,8 @@ int AxisBottomToTopL::getAxisLengthPx () const
 }
 
 int AxisBottomToTopL::getLabelLengthPx () const
-{
+{   
+    // Three is max number of digits in the y-axis label.
     return 
         (3) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
         _text_spacer +
@@ -97,12 +98,7 @@ void AxisBottomToTopL::print (Renderer* renderer) const
 //TODO, just use getLabelLength here
 int AxisBottomToTopL::sizeXPx () const
 {  
-    // Three is max number of digits in the y-axis label.
-    return 
-        (3) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
-        _text_spacer +
-        _axis_format.majTickLengthOutsideChartPx() +
-        _axis_format.axisThicknessPx();
+    return getLabelLengthPx();
 }
 
 int AxisBottomToTopL::sizeYPx () const

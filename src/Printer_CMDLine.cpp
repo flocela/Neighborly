@@ -93,7 +93,7 @@ void Printer_CMDLine::print (const RunMetrics* runMetrics) const
             }
             else
             {
-                characterPerAddress[address] = resident->getGroupId() + 48;
+                characterPerAddress[address] = resident->getGroupId() + 48; 
             }
         }
         cout << "    City Map" << endl << "      key: ";
