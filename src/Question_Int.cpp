@@ -68,7 +68,7 @@ Question_Int::Question_Int (
     rangeStream << maxEdge;
     _range_prompt.insert(_range_prompt.size()-3, rangeStream.str());
 
-    // setting _failed_prompt // TODO test this prompt
+    // setting _failed_prompt
     _failed_prompt.insert(_failed_prompt.size()-9, to_string(fallback));
     _failed_prompt.insert(_failed_prompt.size()-1, valueName);
 
