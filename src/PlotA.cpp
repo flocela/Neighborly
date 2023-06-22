@@ -58,7 +58,7 @@ PlotA::PlotA (
     _unit_x__px = unitSize.first;
     _unit_y__px = unitSize.second;
     _dot__px = calcDotSizePx();
-    int tickThickness = (_dot__px%2==0)? 2 : 1; // TODO needs to be determined every time unit_px and dot__px are determined
+    int tickThickness = (_dot__px%2==0)? 2 : 1;
     _cross_x__px = calcCrossXPx(topLeftXPx);
     _cross_y__px = calcCrossYPx(topLeftYPx);
 
