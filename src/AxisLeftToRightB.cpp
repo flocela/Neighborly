@@ -73,15 +73,9 @@ int AxisLeftToRightB::sizeXPx () const
     return getAxisLengthPx();
 }
 
-// TODO just use getLabelLength
 int AxisLeftToRightB::sizeYPx () const
 {   
-    int retVal =  
-        _axis_format.axisThicknessPx() +
-        _axis_format.majTickLengthOutsideChartPx() +
-        _axis_format.labelLineSpacePx() +
-        _axis_format.labelHeightPx();
-    return retVal;
+    return getLabelLengthPx();
 }
 
 void AxisLeftToRightB::moveCrossHairs (int xPx, int yPx)
