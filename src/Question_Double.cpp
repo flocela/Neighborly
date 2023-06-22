@@ -122,9 +122,8 @@ bool Question_Double::tryAnswer (string ans)
 {   
     double doubleAnswer = -1.0;
     _valid_answer = false;
-    // TODO delete these two lines about regex
-    //string rs = "^\\-?\\d*\\.?\\d+$";
-    string rs = R"!(^\s*[+-]?\d*\.?\d+\s*$)!"; //TODO 72.
+    
+    string rs = R"!(^\s*[+-]?\d*\.?\d+\s*$)!";
 
     // Determine if ans can be converted to a number.
     try {
