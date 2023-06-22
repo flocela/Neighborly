@@ -79,7 +79,7 @@ string Resident::toStrType () const
     return implimentToStrBasic();
 }
 
-bool Resident::operator< (const Resident& other) const // TODO upgrade this.
+bool Resident::operator< (const Resident& other) const
 {
     return _id < other._id;
 }
