@@ -1,8 +1,5 @@
 #include "City_Grid.h"
 
-//TODO delete chrono, only here for testing
-
-#include <chrono>
 #include <iostream>
 #include <math.h>
 #include <cmath>
