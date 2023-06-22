@@ -78,9 +78,6 @@ private:
     AxisFormat _axis_format_x;
     AxisFormat _axis_format_y;
 
-    // requested minimum unit size. //TODO maybe not have this min_unit_size
-    int _min_unit__px = 6;
-
     // _start_offset_m is used to determine space before the first values (_min_x or _min_y).
     // length of space is _start_offset_m * _unit_space__px. 
     int _start_offset_m;

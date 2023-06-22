@@ -18,7 +18,6 @@ PlotB::PlotB (
 ): 
     _axis_format_x{plotFormat.axisFormatX()},
     _axis_format_y{plotFormat.axisFormatY()},
-    _min_unit__px{plotFormat.minUnitSize()},
     _start_offset_m{plotFormat.startOffsetM()},
     _end_offset_m{plotFormat.endOffsetM()},
     _top_left_x__px{topLeftXPx},
