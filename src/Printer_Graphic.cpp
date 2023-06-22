@@ -94,15 +94,6 @@ void Printer_Graphic::print (
     const RunMetrics* runMetrics
 ) const
 {   
-    // TODO take out this rect and renderer is just for testing.
-    /*Rect rect {
-        0,
-        10,
-        600,
-        1
-    };
-    _renderer->fillBlock(rect, _the_color_rgba[Color::red_happy]);*/
-
     int run = runMetrics->getRunNumber();
 
     // Create vector of residents from runMetrics information.
