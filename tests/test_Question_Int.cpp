@@ -6,11 +6,6 @@
 using Catch::Matchers::Contains;
 using namespace std;
 
-
-// TODO can this really run a single test? Delte note. Or maybe put it in instructions
-// Run from the command line:
-// g++ --std=c++17 -o runme ../src/Question_Int.cpp test_question_int.cpp test_main.o
-
 TEST_CASE("Question_Int getPrompt() returns the origPrompt first.")
 {   
     string origPrompt = "Choose a number between 1 and 10 inclusive.";
