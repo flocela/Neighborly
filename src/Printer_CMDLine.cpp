@@ -103,7 +103,7 @@ void Printer_CMDLine::print (const RunMetrics* runMetrics) const
                  << "happy: " << happyCharacters[groupID] << ", "
                  << "unhappy: " << groupID << endl << "           ";
         }
-        cout << "empty house: blank" << endl;
+        cout << "empty house: -" << endl;
         cout << _city_ptr->toString(characterPerAddress) << endl;
         cout << endl;
     }
