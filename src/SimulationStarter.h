@@ -21,7 +21,7 @@ private:
     std::unique_ptr<City> getCity(std::string cityString, std::vector<std::string> cityTypes);
     std::pair<int, BaseColor> returnBaseColor (std::ifstream& inputStream);
 
-    void returnResidents (
+    void populateResidents (
         std::ifstream& inputStream, 
         std::vector<std::unique_ptr<Resident>>& residents
     );
@@ -36,7 +36,7 @@ private:
         SimulationComponents& components // TODO should be const, but getSetOfPOinters doesn't accept const
     );
 
-    void returnResidentsWithStepDownFunc (
+    void populateResidentsWithStepDownFunc (
         std::ifstream& inputStream,
         std::vector<std::unique_ptr<Resident>>& residents,
         int startId,
@@ -46,7 +46,7 @@ private:
         double happinessGoal
     );
     
-    void returnResidentsWithStepUpFunc (
+    void populateResidentsWithStepUpFunc (
         std::ifstream& inputStream,
         std::vector<std::unique_ptr<Resident>>& residents,
         int startId,
@@ -56,7 +56,7 @@ private:
         double happinessGoal
     );
 
-    void returnResidentsWithFallingFunc (
+    void populateResidentsWithFallingFunc (
         std::ifstream& inputStream,
         std::vector<std::unique_ptr<Resident>>& residents,
         int startId,
@@ -66,7 +66,7 @@ private:
         double happinessGoal
     );
 
-    void returnResidentsWithRisingFunc (
+    void populateResidentsWithRisingFunc (
         std::ifstream& inputStream,
         std::vector<std::unique_ptr<Resident>>& residents,
         int startId,
@@ -76,7 +76,7 @@ private:
         double happinessGoal
     );
 
-    void returnResidentsWithFlatFunc (
+    void populateResidentsWithFlatFunc (
         std::ifstream& inputStream,
         std::vector<std::unique_ptr<Resident>>& residents,
         int startId,

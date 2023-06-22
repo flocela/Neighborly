@@ -86,7 +86,7 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
         {
             if (line.find("<resident_group>") != string::npos)
             {
-            returnResidents(inputStream, components.residents);
+            populateResidents(inputStream, components.residents);
             }
 
             getline(inputStream, line);
@@ -212,7 +212,7 @@ pair<int, BaseColor> SimulationStarter::returnBaseColor (ifstream& inputStream)
 }
 
 // TODO bad name for this method
-void SimulationStarter::returnResidents (
+void SimulationStarter::populateResidents (
     ifstream& inputStream,
     vector<unique_ptr<Resident>>& residents
 )
@@ -273,7 +273,7 @@ void SimulationStarter::returnResidents (
         }
         if (happinessFunction == "HappinessFunction_StepDown")
         {   
-            returnResidentsWithStepDownFunc(
+            populateResidentsWithStepDownFunc(
                 inputStream,
                 residents,
                 stoi(startId),
@@ -284,7 +284,7 @@ void SimulationStarter::returnResidents (
         }
         if (happinessFunction == "HappinessFunction_StepUp")
         {   
-            returnResidentsWithStepUpFunc(
+            populateResidentsWithStepUpFunc(
                 inputStream,
                 residents,
                 stoi(startId),
@@ -295,7 +295,7 @@ void SimulationStarter::returnResidents (
         }
         if (happinessFunction == "HappinessFunction_Falling")
         {
-            returnResidentsWithFallingFunc(
+            populateResidentsWithFallingFunc(
                 inputStream,
                 residents,
                 stoi(startId),
@@ -306,7 +306,7 @@ void SimulationStarter::returnResidents (
         }
         if (happinessFunction == "HappinessFunction_Rising")
         {
-            returnResidentsWithRisingFunc(
+            populateResidentsWithRisingFunc(
                 inputStream,
                 residents,
                 stoi(startId),
@@ -317,7 +317,7 @@ void SimulationStarter::returnResidents (
         }
         if (happinessFunction == "HappinessFunction_Flat")
         {   
-            returnResidentsWithFlatFunc(
+            populateResidentsWithFlatFunc(
                 inputStream,
                 residents,
                 stoi(startId),
@@ -329,7 +329,7 @@ void SimulationStarter::returnResidents (
     }
 }
 
-void SimulationStarter::returnResidentsWithStepDownFunc (
+void SimulationStarter::populateResidentsWithStepDownFunc (
     std::ifstream& inputStream,
         std::vector<std::unique_ptr<Resident>>& residents,
         int startId,
@@ -397,7 +397,7 @@ void SimulationStarter::returnResidentsWithStepDownFunc (
     }
 }
 
-void SimulationStarter::returnResidentsWithStepUpFunc (
+void SimulationStarter::populateResidentsWithStepUpFunc (
     std::ifstream& inputStream,
         std::vector<std::unique_ptr<Resident>>& residents,
         int startId,
@@ -465,7 +465,7 @@ void SimulationStarter::returnResidentsWithStepUpFunc (
     }
 }
 
-void SimulationStarter::returnResidentsWithFallingFunc (
+void SimulationStarter::populateResidentsWithFallingFunc (
     std::ifstream& inputStream,
     std::vector<std::unique_ptr<Resident>>& residents,
     int startId,
@@ -525,7 +525,7 @@ void SimulationStarter::returnResidentsWithFallingFunc (
     }
 }
 
-void SimulationStarter::returnResidentsWithRisingFunc (
+void SimulationStarter::populateResidentsWithRisingFunc (
     std::ifstream& inputStream,
     std::vector<std::unique_ptr<Resident>>& residents,
     int startId,
@@ -585,7 +585,7 @@ void SimulationStarter::returnResidentsWithRisingFunc (
     }
 }
 
-void SimulationStarter::returnResidentsWithFlatFunc (
+void SimulationStarter::populateResidentsWithFlatFunc (
     std::ifstream& inputStream,
     std::vector<std::unique_ptr<Resident>>& residents,
     int startId,
