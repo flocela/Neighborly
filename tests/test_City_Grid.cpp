@@ -32,7 +32,7 @@ TEST_CASE("dist()")
     REQUIRE( sqrt( (3 * 3) + (4 * 4) ) == city.getDist(a1, a28) ); // 
 }
 
-TEST_CASE("getHousesWithinDistance() distance is 2.1, central house, all houses open")
+TEST_CASE("getHousesWithinDistance() distance is 2.1, central house")
 {
     City_Grid city = City_Grid(6);
 
@@ -70,7 +70,7 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, central house, all houses 
     REQUIRE( expectedAddresses == actualAddresses );
 }
 
-TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side, all houses open")
+TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side")
 {
     City_Grid city = City_Grid(6);
     vector<const House*> houses = city.getHouses();
@@ -126,39 +126,6 @@ TEST_CASE("getHousesWithinDistance() distance is 0.0, house at side")
     }
 
     unordered_set<int> expectedAddresses = {};
-    
-    REQUIRE( expectedAddresses == actualAddresses );
-}
-
-// TODO what does open houses have to do with it?
-TEST_CASE("getHousesWithinDistance() distance is 2.1, central house, some houses open")
-{
-    City_Grid city = City_Grid(6);
-
-    vector<const House*> houses = city.getHouses();
-
-    const House* house = houses[19];
-    unordered_set<const House*> actualHouses = 
-        city.getHousesWithinDistance(house, 2.1);
-
-    unordered_set<int> actualAddresses;
-    for (const House* house :actualHouses)
-    {
-        actualAddresses.insert(house->getAddress());
-    }
-
-    unordered_set<int> expectedAddresses = {};
-    expectedAddresses.insert(houses[12]->getAddress());
-    expectedAddresses.insert(houses[18]->getAddress());
-    expectedAddresses.insert(houses[24]->getAddress());
-    expectedAddresses.insert(houses[7]->getAddress());
-    expectedAddresses.insert(houses[13]->getAddress());
-    expectedAddresses.insert(houses[25]->getAddress());
-    expectedAddresses.insert(houses[31]->getAddress());
-    expectedAddresses.insert(houses[14]->getAddress());
-    expectedAddresses.insert(houses[20]->getAddress());
-    expectedAddresses.insert(houses[26]->getAddress());
-    expectedAddresses.insert(houses[21]->getAddress());
     
     REQUIRE( expectedAddresses == actualAddresses );
 }
