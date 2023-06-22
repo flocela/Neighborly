@@ -4,10 +4,6 @@
 using Catch::Matchers::Contains;
 using namespace std;
 
-//TODO get rid of this line
-// Run from the command line:
-// g++ --std=c++17 -o runme ../src/Question_Double.cpp test_Question_Double.cpp test_main.o
-
 TEST_CASE("Question_Double getPrompt() returns the origPrompt first.")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
