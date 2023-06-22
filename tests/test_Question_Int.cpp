@@ -59,6 +59,8 @@ TEST_CASE("Question_Int Invalid answer results in fallback answer.")
     bool ok = q.tryAnswer("x");
     REQUIRE (false == ok);
     REQUIRE (false == q.hasValidAnswer());
+    REQUIRE ("Was unable to understand your answer. To continue, will use 5 as the age." ==
+             q.getFailedResponse());
     REQUIRE (5 == stoi(q.getAnswer()));
 }
 
