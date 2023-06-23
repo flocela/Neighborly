@@ -368,12 +368,6 @@ void SimulationStarter::populateResidentsWithStepDownFunc (
         getline(inputStream, diversityDropLocation);
         getline(inputStream, line);
     }
-    getline(inputStream, line);
-    if (line.find("name") != string::npos)
-    {   
-        getline(inputStream, name);
-        getline(inputStream, line);
-    }
 
     getline(inputStream, line); // </resident_group
     
@@ -390,8 +384,7 @@ void SimulationStarter::populateResidentsWithStepDownFunc (
                 stod(happinessAtZeroDiversity),
                 stod(happinessAtOneDiversity),
                 stod(diversityDropLocation)
-            ),
-            name
+            )
         ));
     }
 }
@@ -411,7 +404,6 @@ void SimulationStarter::populateResidentsWithStepUpFunc (
     string happinessAtZeroDiversity = "";
     string happinessAtOneDiversity = "";
     string diversityDropLocation = "";
-    string name = "";
     getline(inputStream, line);
     if (line.find("zero_neighbors") != string::npos)
     {   
@@ -436,12 +428,6 @@ void SimulationStarter::populateResidentsWithStepUpFunc (
         getline(inputStream, diversityDropLocation);
         getline(inputStream, line);
     }
-    getline(inputStream, line);
-    if (line.find("name") != string::npos)
-    {   
-        getline(inputStream, name);
-        getline(inputStream, line);
-    }
 
     getline(inputStream, line); // </resident_group
     
@@ -458,8 +444,7 @@ void SimulationStarter::populateResidentsWithStepUpFunc (
                 stod(happinessAtZeroDiversity),
                 stod(happinessAtOneDiversity),
                 stod(diversityDropLocation)
-            ),
-            name
+            )
         ));
     }
 }
@@ -478,7 +463,6 @@ void SimulationStarter::populateResidentsWithFallingFunc (
     string zeroNeighbors = "";
     string happinessAtZeroDiversity = "";
     string happinessAtOneDiversity = "";
-    string name = "";
     getline(inputStream, line);
     if (line.find("zero_neighbors") != string::npos)
     {   
@@ -497,12 +481,6 @@ void SimulationStarter::populateResidentsWithFallingFunc (
         getline(inputStream, happinessAtOneDiversity);
         getline(inputStream, line);
     }
-    getline(inputStream, line);
-    if (line.find("name") != string::npos)
-    {   
-        getline(inputStream, name);
-        getline(inputStream, line);
-    }
 
     getline(inputStream, line); // </resident_group
     
@@ -518,8 +496,7 @@ void SimulationStarter::populateResidentsWithFallingFunc (
                 stod(zeroNeighbors),
                 stod(happinessAtZeroDiversity),
                 stod(happinessAtOneDiversity)
-            ),
-            name
+            )
         ));
     }
 }
@@ -538,7 +515,6 @@ void SimulationStarter::populateResidentsWithRisingFunc (
     string zeroNeighbors = "";
     string happinessAtZeroDiversity = "";
     string happinessAtOneDiversity = "";
-    string name = "";
     getline(inputStream, line);
     if (line.find("zero_neighbors") != string::npos)
     {   
@@ -557,12 +533,6 @@ void SimulationStarter::populateResidentsWithRisingFunc (
         getline(inputStream, happinessAtOneDiversity);
         getline(inputStream, line);
     }
-    getline(inputStream, line);
-    if (line.find("name") != string::npos)
-    {   
-        getline(inputStream, name);
-        getline(inputStream, line);
-    }
 
     getline(inputStream, line); // </resident_group
     
@@ -578,8 +548,7 @@ void SimulationStarter::populateResidentsWithRisingFunc (
                 stod(zeroNeighbors),
                 stod(happinessAtZeroDiversity),
                 stod(happinessAtOneDiversity)
-            ),
-            name
+            )
         ));
     }
 }
@@ -596,7 +565,6 @@ void SimulationStarter::populateResidentsWithFlatFunc (
 {   string line = "";
     string zeroNeighbors = "";
     string happinessValue = "";
-    string name = "";
     getline(inputStream, line);
     if (line.find("zero_neighbors") != string::npos)
     {   
@@ -607,12 +575,6 @@ void SimulationStarter::populateResidentsWithFlatFunc (
     if (line.find("happiness_value") != string::npos)
     {  
         getline(inputStream, happinessValue);
-        getline(inputStream, line);
-    }
-    getline(inputStream, line);
-    if (line.find("name") != string::npos)
-    {   
-        getline(inputStream, name);
         getline(inputStream, line);
     }
 
@@ -630,8 +592,7 @@ void SimulationStarter::populateResidentsWithFlatFunc (
             make_unique<HappinessFunc_Flat>(
                 stod(zeroNeighbors),
                 stod(happinessValue)
-            ),
-            name
+            )
         ));
     }
 }

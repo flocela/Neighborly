@@ -67,8 +67,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
                         50  // happiness value at one diversity
-                    ),
-                    "Falling Resident"
+                    )
                 ));
             }
             for (int jj=360; jj<720; ++jj)
@@ -81,8 +80,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     std::make_unique<HappinessFunc_Falling>(
                         70, // happiness value with zero neighbors
                         95,
-                        50),
-                    "Falling Resident"
+                        50)
                 ));
             }
             components.simulator = std::make_unique<Simulator_Basic_B>(
@@ -123,8 +121,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
                         50  // happiness value at one diversity
-                    ),
-                    "Falling Resident"
+                    )
                 ));
             }
             for (int jj=5760; jj<11520; ++jj)
@@ -137,8 +134,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     std::make_unique<HappinessFunc_Falling>(
                         70, // happiness value with zero neighbors
                         95,
-                        50),
-                    "Falling Resident"
+                        50)
                 ));
             }
 
@@ -181,8 +177,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
                         10  // happiness value at one diversity
-                    ),
-                    "Falling Resident"
+                    )
                 ));
             }
             for (int jj=360; jj<720; ++jj)
@@ -195,8 +190,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     std::make_unique<HappinessFunc_Falling>(
                         70, 
                         95,
-                        10),
-                    "Falling Resident"
+                        10)
                 ));
             }
 
@@ -239,8 +233,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
                         10  // happiness value at one diversity
-                    ),
-                    "Falling Resident"
+                    )
                 ));
             }
             for (int jj=5760; jj<11520; ++jj)
@@ -253,8 +246,7 @@ SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
                     std::make_unique<HappinessFunc_Falling>(
                         70, // happiness value with zero neighbors
                         95,
-                        10),
-                    "Falling Resident"
+                        10)
                 ));
             }
 

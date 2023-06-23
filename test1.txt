@@ -58,9 +58,6 @@
     <diversity_drop_location>
         0.25
     </diversity_drop_location>
-    <name>
-        Step Down Resident
-    </name>
 </resident_group>
 <resident_group>
     <start_id>

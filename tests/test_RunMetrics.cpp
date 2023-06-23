@@ -23,8 +23,7 @@ vector<Resident*> createResidents (int numOfResidents, int groupId, int firstId)
             100, // happinessAtZeroDiversity
             20,  // happinessAt100%Diversity
             .5   // step-down location
-        ),
-        "StepDown"));
+        )));
     }
     return residents;
 }
@@ -44,8 +43,7 @@ unordered_set<const Resident*> createResidentsSet (int numOfResidents, int group
             100, // happinessAtZeroDiversity
             20,  // happinessAt100%Diversity
             .5   // step-down location
-        ),
-        "StepDown"));
+        )));
     }
     return residents;
 }

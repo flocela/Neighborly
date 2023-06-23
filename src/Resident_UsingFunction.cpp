@@ -7,11 +7,9 @@ Resident_UsingFunction::Resident_UsingFunction (
     int groupNumber,
     double allowedMovementDistance,
     double happinessGoal,
-    std::unique_ptr<HappinessFunc> happinessFunc,
-    std::string name
+    std::unique_ptr<HappinessFunc> happinessFunc
 ): Resident(id, groupNumber, allowedMovementDistance, happinessGoal),
-   _hap_func{move(happinessFunc)},
-   _name{name}
+   _hap_func{move(happinessFunc)}
 {}
 
 double Resident_UsingFunction::getMaximumPossibleHappiness () const

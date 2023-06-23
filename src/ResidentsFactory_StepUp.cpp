@@ -122,8 +122,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepUp::createResidents (
                 lowHappinessValue,
                 highHappinessValue,
                 locationOfStep
-            ),
-            "Step Up Resident"
+            )
         ));
     }
     return residents;

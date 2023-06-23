@@ -82,8 +82,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
                 make_unique<HappinessFunc_Flat>(
                     happinessWithZeroNeighbors,
                     happinessValue
-                ),
-                "Flat Resident"
+                )
             )
         );
     }

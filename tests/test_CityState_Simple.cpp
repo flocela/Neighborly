@@ -37,8 +37,7 @@ vector<Resident*> createResidents (int numOfResidents)
         1,
         2.2,
         1.0,
-        make_unique<HappinessFunc_Flat>(22.3, 44),
-        "Flat"));
+        make_unique<HappinessFunc_Flat>(22.3, 44)));
     }
     return residents;
 }
@@ -161,8 +160,7 @@ TEST_CASE("empty city - getHousePerResident()")
         1,
         2.2,
         1.0,
-        make_unique<HappinessFunc_Flat>(22.3, 44),
-        "Flat");
+        make_unique<HappinessFunc_Flat>(22.3, 44));
 
     REQUIRE(expectedHouse == cityState.getHousePerResident(r));
 }

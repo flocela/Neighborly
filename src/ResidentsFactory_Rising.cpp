@@ -97,8 +97,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Rising::createResidents (
                 happinessWithZeroNeighbors,
                 lowHappinessValue,
                 highHappinessValue
-            ),
-            "Rising Resident"
+            )
         ));
     }
     return residents;

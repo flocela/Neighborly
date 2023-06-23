@@ -98,8 +98,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
                 happinessWithZeroNeighbors,
                 highHappinessValue,
                 lowHappinessValue
-            ),
-            "Falling Resident"
+            )
         ));
     }
     return residents;

@@ -121,8 +121,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
                 highHappinessValue,
                 lowHappinessValue,
                 locationOfDrop
-            ),
-            "Step Down Resident"
+            )
         ));
     }
     return residents;

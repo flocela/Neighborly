@@ -55,9 +55,6 @@
     <happiness_at_one_diversity>
         70
     </happiness_at_one_diversity>
-    <name>
-        Falling Resident
-    </name>
 </resident_group>
 <resident_group>
     <start_id>
@@ -90,9 +87,6 @@
     <happiness_at_one_diversity>
         100
     </happiness_at_one_diversity>
-    <name>
-        Rising Resident
-    </name>
 </resident_group>
 <simulator>
     <name>
