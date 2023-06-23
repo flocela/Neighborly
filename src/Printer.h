@@ -20,6 +20,9 @@ public:
     virtual ~Printer () noexcept = default;
 
     virtual void print (const RunMetrics* runMetrics) const = 0;
+
+    // Allows printer to do items after last print.
+    virtual void lastPrint () = 0;
 };
 
 #endif

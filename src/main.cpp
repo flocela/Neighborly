@@ -185,7 +185,8 @@ int main(int argc, char* argv[])
         cmdLinePrinter.print(&runMetrics);
     }
 
-    graphicPrinter.keepScreen();
+    graphicPrinter.lastPrint();
+    cmdLinePrinter.lastPrint();
 
     return 0; 
 }

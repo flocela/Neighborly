@@ -107,6 +107,8 @@ void Printer_CMDLine::print (const RunMetrics* runMetrics) const
         cout << _city_ptr->toString(characterPerAddress) << endl;
         cout << endl;
     }
-    
+}
 
-} 
+void Printer_CMDLine::lastPrint () {
+    cout << "End of Simulation" << endl;
+}

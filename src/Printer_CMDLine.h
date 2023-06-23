@@ -29,6 +29,8 @@ public:
         const RunMetrics* runMetrics
     ) const override;
 
+    void lastPrint () override;
+
 private:
     std::unordered_map<int, BaseColor> _base_colors_per_groupid;
 

@@ -41,12 +41,12 @@ public:
     Printer_Graphic& operator= (const Printer_Graphic& o) = default;
     Printer_Graphic& operator= (Printer_Graphic&& o) noexcept = default;
     ~Printer_Graphic () noexcept = default;
-    // TODO should this be included in Printer interface
-    void keepScreen();
-
+    
     void print(
         const RunMetrics* runMetrics
     ) const override;
+
+    void lastPrint () override;
 
 private:
 
@@ -164,6 +164,8 @@ private:
         int topLeftYPx,
         int availSpaceYPx
     );
+
+    void keepScreen() const;
 };
 
 #endif

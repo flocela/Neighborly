@@ -44,7 +44,6 @@ public:
         const double secondY
     ) const override ;
 
-    // TODO shouldn't be using a refernce to get houses. Should return them.
     std::unordered_set<const House*> getHousesWithinDistance (
         const House* house,
         double allowableDist

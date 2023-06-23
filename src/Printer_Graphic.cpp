@@ -125,7 +125,13 @@ void Printer_Graphic::print (
         run,
         _renderer.get());
     _renderer->endFrame();
-} 
+}
+
+// After last print. Printer_Graphic keeps window open until user clicks x.
+void Printer_Graphic::lastPrint ()
+{
+    keepScreen();
+}
 
 vector<int> Printer_Graphic::determineMinMaxHouseCoords(
     unordered_map<const House*, Coordinate > coordPerHouse
@@ -288,13 +294,11 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
     );
 }
 
-void Printer_Graphic::keepScreen()
+void Printer_Graphic::keepScreen() const
 {
     SDL_Event e;
-    int counter = 0;
     while (SDL_WaitEvent(&e) != 0)
     {   
-        counter ++;
         if (e.type == SDL_QUIT)
         {
             break;
