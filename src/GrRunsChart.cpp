@@ -30,13 +30,13 @@ void GrRunsChart::print (int numOfRuns, Renderer* renderer) const
         1);
 }
 
-int GrRunsChart::sizeXPx ()
+int GrRunsChart::sizeXPx () const
 {
     // number of letters is eight corresponding to "Runs: 999. assuming there is less than 1,000 runs."
     return (int)(9 * _title_letter.widthMultiplier() * _title_letter.letterHeight());
 }
 
-int GrRunsChart::sizeYPx ()
+int GrRunsChart::sizeYPx () const
 {
     return _title_letter.getHeightIncLSpace();
 }

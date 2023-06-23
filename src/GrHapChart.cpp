@@ -47,12 +47,12 @@ void GrHapChart::print (
     _plot->print(points, false, renderer);
 }
 
-int GrHapChart::sizeXPx ()
+int GrHapChart::sizeXPx () const
 {
     return _plot->sizeXPx();
 }
 
-int GrHapChart::sizeYPx ()
+int GrHapChart::sizeYPx () const
 {
     return _title->sizeYPx() + _key->sizeYPx() + _plot->sizeYPx();
 }

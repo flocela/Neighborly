@@ -68,12 +68,12 @@ void GrDvstyChart::print (
     _plot->print(points, false, renderer);
 }
 
-int GrDvstyChart::sizeXPx ()
+int GrDvstyChart::sizeXPx () const
 {
     return _plot->sizeXPx();
 }
 
-int GrDvstyChart::sizeYPx ()
+int GrDvstyChart::sizeYPx () const
 {
     return _title->sizeYPx() + _key->sizeYPx() + _plot->sizeYPx();
 }

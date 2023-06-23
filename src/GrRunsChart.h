@@ -29,8 +29,8 @@ public:
     ~GrRunsChart () noexcept = default;
 
     void print (int numOfRuns, Renderer* renderer) const;
-    int sizeXPx ();
-    int sizeYPx ();
+    int sizeXPx () const;
+    int sizeYPx () const;
 
 private:
 

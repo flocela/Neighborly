@@ -38,8 +38,8 @@ public:
     ~GrColorKey () noexcept = default;
 
     void print (Renderer* renderer) const;
-    int sizeXPx () override;
-    int sizeYPx () override;
+    int sizeXPx () const override;
+    int sizeYPx () const override;
 
     void setTextBackgroundColor (std::vector<uint8_t> color);
     void setTextColor (std::vector<uint8_t> color);

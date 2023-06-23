@@ -41,9 +41,8 @@ public:
         Renderer* renderer
     ) const;
 
-    // TODO should be const
-    int sizeXPx();
-    int sizeYPx();
+    int sizeXPx() const;
+    int sizeYPx() const;
 
     private:
     std::unordered_map<const House*, Coordinate> _coordinate_per_house;

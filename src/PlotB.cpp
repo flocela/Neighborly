@@ -218,7 +218,7 @@ int PlotB::calcUnitSizePx () const
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
     yUnitSize = max(yUnitSize, _min_unit_size);
 
-    return max(xUnitSize, yUnitSize);
+    return min(xUnitSize, yUnitSize);
 }
 
 int PlotB::calcDotSizePx () const

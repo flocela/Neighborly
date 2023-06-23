@@ -51,12 +51,12 @@ void GrCityChart::print(
     );
 }
 
-int GrCityChart::sizeXPx ()
+int GrCityChart::sizeXPx () const
 {
     return _plot->sizeXPx();
 }
 
-int GrCityChart::sizeYPx ()
+int GrCityChart::sizeYPx () const
 {
     return _title->sizeYPx() + _key->sizeYPx() + _plot->sizeYPx();
 }

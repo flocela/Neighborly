@@ -86,12 +86,12 @@ void GrColorKey::print (Renderer* renderer) const
     }
 }
 
-int GrColorKey::sizeXPx ()
+int GrColorKey::sizeXPx () const
 {
     return _b_color_per_groupId.size() * _moods.size() * _column_width;
 }
 
-int GrColorKey::sizeYPx ()
+int GrColorKey::sizeYPx () const
 {
     return _label_letter.getHeightIncLSpace();
 }

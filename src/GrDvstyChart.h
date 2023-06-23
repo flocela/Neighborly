@@ -47,8 +47,8 @@ public:
         Renderer* renderer
     ) const;
 
-    int sizeXPx();
-    int sizeYPx();
+    int sizeXPx() const;
+    int sizeYPx() const;
 
 private:
 
