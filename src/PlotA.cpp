@@ -222,7 +222,6 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
 
 pair<int, int> PlotA::calcUnitSizeXAndYPx () const
 {
-    // x-unit size (doesn't change)
     int allowableXAxisLengthPx = _x_space__px - _y_axis.getLabelLengthPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
@@ -237,13 +236,21 @@ pair<int, int> PlotA::calcUnitSizeXAndYPx () const
     // _unit_x__px and _unit_y__px must both be odd or both be even, so that dot is square.
     if ( (xUnitSize%2) != (yUnitSize%2) )
     {
-        if (yUnitSize > xUnitSize)
+        if (yUnitSize > xUnitSize && yUnitSize > _min_unit__px)
         {
             --yUnitSize;
         }
-        else
+        else if (xUnitSize > yUnitSize && xUnitSize > _min_unit__px)
         {
             --xUnitSize;
+        }
+        else if (yUnitSize > xUnitSize)
+        {
+            ++xUnitSize;
+        }
+        else
+        {
+            ++yUnitSize;
         }
     }
     return {xUnitSize, yUnitSize};

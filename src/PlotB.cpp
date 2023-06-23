@@ -18,6 +18,7 @@ PlotB::PlotB (
 ): 
     _axis_format_x{plotFormat.axisFormatX()},
     _axis_format_y{plotFormat.axisFormatY()},
+    _min_unit_size{plotFormat.minUnitSize()},
     _start_offset_m{plotFormat.startOffsetM()},
     _end_offset_m{plotFormat.endOffsetM()},
     _top_left_x__px{topLeftXPx},
@@ -210,12 +211,14 @@ int PlotB::calcUnitSizePx () const
     int allowableXAxisLengthPx = _x_space__px - _y_axis.getLabelLengthPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
+    xUnitSize = max(xUnitSize, _min_unit_size);
 
     int allowableYAxisLengthPx = _y_space__px - _x_axis.getLabelLengthPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
+    yUnitSize = max(yUnitSize, _min_unit_size);
 
-    return min(xUnitSize, yUnitSize);
+    return max(xUnitSize, yUnitSize);
 }
 
 int PlotB::calcDotSizePx () const

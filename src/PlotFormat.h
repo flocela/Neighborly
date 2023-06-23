@@ -52,7 +52,7 @@ private:
     AxisFormat _a_format_y;
     Letter _title_letter;
     Letter _key_letter;
-    int _min_unit_size__px;
+    int _min_unit_size__px = 1;
     
     // offsets are multipliers. length of axis before minimum value is _start_offset times _unit_size.
     int _start_offset_m;

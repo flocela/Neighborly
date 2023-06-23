@@ -81,7 +81,7 @@ private:
     AxisFormat _axis_format_Y{};
     Letter _chart_title_letter{30, 5, 0.35}; 
     Letter _chart_key_letter{24, 10, 0.35};
-    int _min_unit_size__px = 6; // TODO write note of how this is used. Is it honored?
+    int _min_unit_size__px = 4;
 
     // At the start of the axis, leave a space equal to cell size times offset multiplier.
     // At the end of the axis, leave a space equal to cell size times overrun multiplier.
