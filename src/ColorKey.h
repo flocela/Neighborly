@@ -16,7 +16,7 @@ protected:
 public:
     virtual ~ColorKey () noexcept = default;
 
-    virtual void print (Renderer* renderer) = 0;
+    virtual void print (Renderer* renderer) const = 0;
     virtual void setTopCenter (int xPx, int yPx) = 0;
     virtual int sizeXPx() = 0;
     virtual int sizeYPx() = 0;

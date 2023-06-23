@@ -36,11 +36,10 @@ public:
     GrCityChart& operator=(GrCityChart&& o) noexcept = default;
     ~GrCityChart () noexcept = default;
 
-    //TODO hsould be const
     void print (
         const std::unordered_map<const House*, const Resident*>& houseToResMap,
         Renderer* renderer
-    );
+    ) const;
 
     // TODO should be const
     int sizeXPx();
@@ -68,7 +67,7 @@ public:
     //   resident's group id.
     std::vector<Point> createVectorOfPoints (
         std::unordered_map<const House*, const Resident*> residentPerHouse
-    );
+    ) const;
 
     // there will be only one color, the default color for an empty house.
     // all addresses will be represented as being empty.

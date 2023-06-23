@@ -35,7 +35,7 @@ GrColorKey::GrColorKey (
    setAttributes(); 
 }
 
-void GrColorKey::print (Renderer* renderer)
+void GrColorKey::print (Renderer* renderer) const
 {   
     // Printed as a series of columns.
     // each column holds the groupId's colored box and the groupId's label.
