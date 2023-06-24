@@ -1,8 +1,6 @@
 #ifndef GR_DVSTY_CHART_H
 #define GR_DVSTY_CHART_H
 
-
-#include <memory> //TODO do we need memory here?
 #include <unordered_map>
 #include "Color.h"
 #include "Plot.h"
