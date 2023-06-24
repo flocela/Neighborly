@@ -1,3 +1,6 @@
+<random_number>
+    10
+</random_number>
 <city>
     <type>
         City_Grid
@@ -98,6 +101,9 @@
     <name>
         Simulator_Basic_A
     </name>
+    <num_of_tries>
+        20
+    </num_of_tries>
 </simulator>
 <num_of_runs>
     5

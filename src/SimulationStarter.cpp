@@ -79,7 +79,7 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
             components.baseColorsPerGroupid.insert(returnBaseColor(inputStream));
             getline(inputStream, line); // </base_color_per_group>
         }
-
+        cout << "ResidentsFactory AA" << endl;
         // residents
         getline(inputStream, line);
         while (line.find("<resident_group") != string::npos)
@@ -91,6 +91,7 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
 
             getline(inputStream, line);
         }
+        cout << "ResidentsFactory BB" << endl;
         if (line.find("<simulator>") != string::npos)
         {   
             string simulator = "";

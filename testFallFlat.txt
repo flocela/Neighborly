@@ -1,3 +1,6 @@
+<random_number>
+    10
+</random_number>
 <city>
     <type>
         City_Grid
@@ -26,7 +29,7 @@
 </base_color_per_group>
 <resident_group>
     <start_id>
-        1
+        0
     </start_id>
     <number_of>
         100
@@ -58,7 +61,7 @@
 </resident_group>
 <resident_group>
     <start_id>
-        101
+        100
     </start_id>
     <number_of>
         200
@@ -84,14 +87,14 @@
     <happiness_value>
         50
     </happiness_value>
-    <name>
-        Flat Resident
-    </name>
 </resident_group>
 <simulator>
     <name>
         Simulator_Basic_A
     </name>
+    <num_of_tries>
+        20
+    </num_of_tries>
 </simulator>
 <num_of_runs>
     5
