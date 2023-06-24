@@ -28,12 +28,12 @@ private:
 
     std::unique_ptr<Simulator_Basic_A> returnSimulatorBasicA (
         std::ifstream& inputStream,
-        SimulationComponents& components // TODO should be const, but getSetOfPOinters doesn't accept const
+        const SimulationComponents& components // TODO should be const, but getSetOfPOinters doesn't accept const
     );
 
     std::unique_ptr<Simulator_Basic_B> returnSimulatorBasicB (
         std::ifstream& inputStream,
-        SimulationComponents& components // TODO should be const, but getSetOfPOinters doesn't accept const
+        const SimulationComponents& components // TODO should be const, but getSetOfPOinters doesn't accept const
     );
 
     void populateResidentsWithStepDownFunc (

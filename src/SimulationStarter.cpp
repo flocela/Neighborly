@@ -16,7 +16,7 @@
 using namespace std;
 
 template<typename T>
-std::unordered_set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
+std::unordered_set<T*> getSetOfPointers (const std::vector<std::unique_ptr<T>>& ts)
 {
     std::unordered_set<T*> pointers = {};
     for (auto& t : ts)
@@ -136,7 +136,7 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
 
 std::unique_ptr<Simulator_Basic_A> SimulationStarter::returnSimulatorBasicA (
     std::ifstream& inputStream,
-    SimulationComponents& components // should be const, but getSetOfPointers doesn't take const.
+    const SimulationComponents& components
 )
 {
     string line = "";
@@ -158,7 +158,7 @@ std::unique_ptr<Simulator_Basic_A> SimulationStarter::returnSimulatorBasicA (
 
 std::unique_ptr<Simulator_Basic_B> SimulationStarter::returnSimulatorBasicB (
     std::ifstream& inputStream,
-    SimulationComponents& components // should be const, but getSetOfPointers doesn't take const.
+    const SimulationComponents& components
 )
 {
     string line = "";
