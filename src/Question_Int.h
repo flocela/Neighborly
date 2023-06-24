@@ -2,8 +2,6 @@
 #define QUESTION_INT_H
 
 #include "Question.h"
-#include <memory> // TODO delete <memory>
-#include <string> // TODO delte <string>
 // Creates successive prompts until a proper answer is given.
 // A proper answer is an integer.
 // It is within the range detailed in the constructor.
