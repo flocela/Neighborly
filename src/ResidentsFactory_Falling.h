@@ -23,8 +23,8 @@ public:
         BaseColor baseColor
     ) const override;
 
-    std::string residentType () const override; //TODO is this ever used?
-    std::string toString () override; //TODO is this ever used?
+    std::string residentType () const override;
+    std::string toString () override;
 
 private:
     // if can not get a low happiness value from the user, then use _fallback_low_happiness_value.
