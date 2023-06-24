@@ -113,8 +113,6 @@ private:
     // provides some vertical space between diversity and happiness charts.
     double _space_below_div_chart_y_axis_fraction = 0.01; 
 
-    int _max_number_of_neighbors; //TODO we need to set this and honor it.
-
     std::unique_ptr<GrDvstyChart> _div_chart;
     
     /* HAPPINESS CHART */
