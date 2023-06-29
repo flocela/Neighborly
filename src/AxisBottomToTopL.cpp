@@ -6,8 +6,8 @@ using namespace std;
 AxisBottomToTopL::AxisBottomToTopL (
     AxisFormat axisFormat,
     int horizLengthPx,
-    int x_coordinate__px, // where x and y axis meet
-    int y_coordinate__px, // where x and y axis meet
+    int x_coordinate__px, 
+    int y_coordinate__px, 
     int minVal,
     int maxVal, 
     int pxPerUnit,
@@ -31,10 +31,13 @@ AxisBottomToTopL::AxisBottomToTopL (
 {}
 
 int AxisBottomToTopL::getAxisLengthPx () const
-{   // Note when tick thickness is 1, the ticks at the ends of the line, are within
+{   
+    // Note:: when tick thickness is 1, the ticks at the ends of the line, are within
     // the line - so don't add to the axis length.
     // When the tick thickness is 2, the ticks at the ends of the line, are 1/2
     // on the line, 1/2 off the line. They add 1/2 tick thickness to both ends of the axis.
+    // This is represented by adding _tick_thickness__px/2 to both ends. This works
+    // for both even and odd tick thicknesses.
     return _y_cross__px -
            calcTopMostPixelWithValue_Y() +
            _tick_thickness__px/2 +
@@ -52,25 +55,28 @@ int AxisBottomToTopL::getLabelLengthPx () const
         _axis_format.axisThicknessPx();
 }
 
-int AxisBottomToTopL::getPixel (double yVal) const
+int AxisBottomToTopL::getPixel (double yVa) const
 {   
-    // line equation: y2 = y1 - m * (x2 - x1), m is in px per unit
-    // line equation: px2 = px1 - m * (v2 - v1), m is in px per unit.
-    // px2 is the pixel value we're looking for, given the real value yVal, v2.
-    // px1 is the pixel value corresponding to the smallest yvalue, v1.
+    // The standard line equation is y2 = y1 - m * (x2 - x1), m is in px per unit.
 
+    // Change the variables to denote pixels and y-values.
+
+    // Line equation: px2 = px1 - m * (v2 - v1), m is in px per unit.
+    // px2 is the pixel value we're looking for, given the real value yVal (v2 is set to yVal).
+    // px1 is the pixel value corresponding to the smallest yvalue, (v1 is the smallest y-value).
+    // If the tick thickness is even, then v1 is between two pixels, otherwise v1 is at one pixel.
+    // This assumes that if the user is using an even tick thickness, the axis will also
+    // be even thickness, centered between two pixels. 
+
+    double v1 = _min_val - _start_offset_m;
+
+    // Pixel values are doubles. If the _tick_thickness is odd, then the center of the
+    // tick is at the center of the pixel. The center of the pixel is at pixel plus 1/2 the pixel width.
+    // 1/2 the pixel width is (1/_px_per_unit)/2.
+    double px1 = (_tick_thickness__px % 2 == 0)? _y_cross__px + 1 : _y_cross__px + .5
     double v2 = yVal;
-    double v1 = _min_val-(((double)1)/_px_per_unit)/2;
-    double px1 = _y_cross__px - _start_offset_m * _px_per_unit;
     double diff = v2 - v1;
     int retVal = ceil(px1 - (_px_per_unit * diff));
-
-    // because pixels are counted from the window's y = 0 (which is at the
-    // top), but the axis runs from bottom to top. It's necessary
-    // to add 1 when the tick thickness is even.
-    // If the tick thickness is even, then the center is denoted by two pixels,
-    // and the returned value is the first pixel. (The first pixel is from the
-    // cross hairs or _y_cross__px.)
 
     retVal = (_tick_thickness__px%2 == 0? retVal+1 : retVal);
 
