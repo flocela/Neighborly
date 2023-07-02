@@ -45,6 +45,7 @@ PlotA::PlotA (
         _x_axis.getAxisLengthPx(),
         0, // use zero for default x_coordinate__px
         0, // use zero for default y_coordinate__px
+        false,
         _min_y,
         _max_y,
         0, // use zero for pxPerUnit
@@ -58,6 +59,7 @@ PlotA::PlotA (
     _unit_x__px = unitSize.first;
     _unit_y__px = unitSize.second;
     _dot__px = calcDotSizePx();
+    _y_axis.setCenteredOnPixel((_dot__px%2==0) ? false : true);
     int tickThickness = (_dot__px%2==0)? 2 : 1;
     _cross_x__px = calcCrossXPx(topLeftXPx);
     _cross_y__px = calcCrossYPx(topLeftYPx);
@@ -151,7 +153,7 @@ void PlotA::print (
     bool printAxes,
     Renderer* renderer
 ) const
-{
+{   (void) points;
     // only print axes once.
     if (!_printed_axes || printAxes)
     {
@@ -172,7 +174,7 @@ void PlotA::print (
         // x is the x-pixel of the top left pixel of dot-square
         // y is the y_pixel of the top left pixel of sot-square
         int x = _x_axis.getPixel(point.x()) - (_dot__px/2);                 
-        int y = _y_axis.getPixel(point.y()) - (_dot__px/2);
+        int y = _y_axis.getPixel(point.y(), _dot__px).first;
         coordinatesPerColor[point.color()].push_back(Coordinate(x, y));
     }
 
@@ -207,6 +209,7 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _unit_y__px = unit_sizes.second;
 
     _dot__px = calcDotSizePx();
+    _y_axis.setCenteredOnPixel((_dot__px%2==0) ? false : true);
     int tickThickness = (_dot__px%2==0)? 2 : 1;
 
     _cross_x__px = calcCrossXPx(_top_left_x__px);

@@ -14,6 +14,7 @@ class AxisBottomToTopL
             int horizLengthPx,
             int x_coordinate__px,
             int y_coordinate__px,
+            bool centeredOnPixel,
             int minVal,
             int maxVal,
             int pxPerUnit,
@@ -37,7 +38,7 @@ class AxisBottomToTopL
         // the length is in the x direction.
         int getLabelLengthPx () const;
 
-        int getPixel (double yVal) const;
+        std::pair<int, int> getPixel (double yVal, int dotSize) const;
         
         void print (Renderer* renderer) const;
         
@@ -59,6 +60,8 @@ class AxisBottomToTopL
         
         void setTickThickness (int tickThicknessPx);
 
+        void setCenteredOnPixel (bool centered);
+
     private:
         AxisFormat _axis_format;
         
@@ -67,6 +70,7 @@ class AxisBottomToTopL
         int _horiz_line_length__px;
         int _x_cross__px; // where x and y axis meet
         int _y_cross__px; // where x and y axis meet
+        bool _centered_on_pixel = false; // is y_cross__px centered on a pixel, or between two pixels
         int _min_val; // the minimum data point value
         int _max_val; // the maximum data point value
         int _diff; // _max_val minus _min_val
@@ -92,8 +96,6 @@ class AxisBottomToTopL
             std::vector<Rect>& horizLinesMin,
             std::vector<Rect>& rects,
             std::vector<TextRect>& texts) const;
-
-        int calcTopMostPixelWithValue_Y () const;
 
         int calcMinTickSpacing (int pixelsPerUnit) const;
 

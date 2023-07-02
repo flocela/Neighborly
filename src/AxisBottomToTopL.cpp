@@ -7,7 +7,8 @@ AxisBottomToTopL::AxisBottomToTopL (
     AxisFormat axisFormat,
     int horizLengthPx,
     int x_coordinate__px, 
-    int y_coordinate__px, 
+    int y_coordinate__px,
+    bool centeredOnPixel,
     int minVal,
     int maxVal, 
     int pxPerUnit,
@@ -19,6 +20,7 @@ AxisBottomToTopL::AxisBottomToTopL (
     _horiz_line_length__px{horizLengthPx},
     _x_cross__px{x_coordinate__px},
     _y_cross__px{y_coordinate__px},
+    _centered_on_pixel{centeredOnPixel},
     _min_val{minVal},
     _max_val{maxVal},
     _diff{_max_val - _min_val},
@@ -32,17 +34,12 @@ AxisBottomToTopL::AxisBottomToTopL (
 
 int AxisBottomToTopL::getAxisLengthPx () const
 {   
-    // Note:: when tick thickness is 1, the ticks at the ends of the line, are within
-    // the line - so don't add to the axis length.
-    // When the tick thickness is 2, the ticks at the ends of the line, are 1/2
-    // on the line, 1/2 off the line. They add 1/2 tick thickness to both ends of the axis.
-    // This is represented by adding _tick_thickness__px/2 to both ends. This works
-    // for both even and odd tick thicknesses.
-    return _y_cross__px -
-           calcTopMostPixelWithValue_Y() +
-           _tick_thickness__px/2 +
-           _tick_thickness__px/2 +
-           1;
+    pair<int, int> topPair = getPixel(_max_val + _end_offset_m, _tick_thickness__px);
+    int topPixel = topPair.first < 0 ? 0 : topPair.first;
+
+    int bottomPixel = getPixel(_min_val - _start_offset_m, _tick_thickness__px).second;
+
+    return bottomPixel - topPixel + 1;
 }
 
 int AxisBottomToTopL::getLabelLengthPx () const
@@ -55,32 +52,33 @@ int AxisBottomToTopL::getLabelLengthPx () const
         _axis_format.axisThicknessPx();
 }
 
-int AxisBottomToTopL::getPixel (double yVa) const
+pair<int, int>  AxisBottomToTopL::getPixel (double yVal, int dotSize) const
 {   
     // The standard line equation is y2 = y1 - m * (x2 - x1), m is in px per unit.
 
-    // Change the variables to denote pixels and y-values.
-
+    // Change the variable names to denote pixels and y-values.
     // Line equation: px2 = px1 - m * (v2 - v1), m is in px per unit.
     // px2 is the pixel value we're looking for, given the real value yVal (v2 is set to yVal).
     // px1 is the pixel value corresponding to the smallest yvalue, (v1 is the smallest y-value).
-    // If the tick thickness is even, then v1 is between two pixels, otherwise v1 is at one pixel.
-    // This assumes that if the user is using an even tick thickness, the axis will also
-    // be even thickness, centered between two pixels. 
 
     double v1 = _min_val - _start_offset_m;
 
-    // Pixel values are doubles. If the _tick_thickness is odd, then the center of the
-    // tick is at the center of the pixel. The center of the pixel is at pixel plus 1/2 the pixel width.
-    // 1/2 the pixel width is (1/_px_per_unit)/2.
-    double px1 = (_tick_thickness__px % 2 == 0)? _y_cross__px + 1 : _y_cross__px + .5
+    // If _y_cross__px is centered on a pixel, then px1 is _y_cross__px + 0.5.
+    // If _y_cross is between two pixels (spanning over 2 pixels). Then px1 is at_y_cross__px.
+    double px1 = _centered_on_pixel? _y_cross__px + .5 : _y_cross__px;
     double v2 = yVal;
     double diff = v2 - v1;
-    int retVal = ceil(px1 - (_px_per_unit * diff));
-
-    retVal = (_tick_thickness__px%2 == 0? retVal+1 : retVal);
-
-    return retVal;
+    double px2 = px1 - ((int)_px_per_unit * diff);
+    if (dotSize%2 == 0)
+    {
+        int topPixel = floor(px2 + .5) - (dotSize/2);
+        return {topPixel, topPixel + dotSize - 1};
+    }
+    else
+    {
+        int px2Int = floor(px2) - dotSize/2;
+        return {px2Int, px2Int + dotSize - 1};
+    }
 }
 
 void AxisBottomToTopL::print (Renderer* renderer) const
@@ -137,12 +135,18 @@ void AxisBottomToTopL::setTickThickness (int tickThicknessPx)
 
 void AxisBottomToTopL::setVerticalLine (std::vector<Rect>& rects) const
 {
+    // Calculate top most pixel.
+    pair<int, int> topPair = getPixel(_max_val + _end_offset_m, _tick_thickness__px);
+    int topPixel = topPair.first < 0 ? 0 : topPair.first;
+
+    // Rectangle represents vertical line.
     Rect rect{
         _x_cross__px,
-        calcTopMostPixelWithValue_Y() - (_tick_thickness__px/2),
+        topPixel,
         _axis_format.axisThicknessPx(),
         getAxisLengthPx()
     };
+
     rects.push_back(rect);
 }
         
@@ -157,11 +161,10 @@ void AxisBottomToTopL::setTicksAndLabels (
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
 
     int curVal = _min_val;
-    // curVal__px is the top left corner of the tick.
-    int curVal__px = getPixel(_min_val) - ( _tick_thickness__px/2 );
+    pair<int, int> curPixels = getPixel(_min_val, _tick_thickness__px);
     TextRect curText{
         majTickXPx - _text_spacer,
-        curVal__px,
+        curPixels.first,
         std::to_string(curVal),
         _axis_format.labelHeightPx(),
         _axis_format.labelWidthMultiplier(),
@@ -172,64 +175,67 @@ void AxisBottomToTopL::setTicksAndLabels (
 
     Rect horizLineRectMaj{
         minTickXPx,
-        curVal__px,
+        curPixels.first,
         _horiz_line_length__px,
         _tick_thickness__px
     };
 
     Rect horizLineRectMin{
         minTickXPx,
-        curVal__px,
+        curPixels.first,
         _horiz_line_length__px,
         _tick_thickness__px
     };
 
     Rect majRect{
         majTickXPx,
-        curVal__px,
+        curPixels.first,
         _axis_format.majTickLengthPx(),
         _tick_thickness__px
     };
 
     Rect minRect{
         minTickXPx,
-        curVal__px,
+        curPixels.first,
         _axis_format.minTickLengthPx(),
         _tick_thickness__px
     };
-    int topMostPixelY = calcTopMostPixelWithValue_Y() - ( _tick_thickness__px/2 );
 
-    while ( curVal__px >= topMostPixelY )
+    // Calculate top most pixel.
+    pair<int, int> topPair = getPixel(_max_val + _end_offset_m, _tick_thickness__px);
+    int topMostPixelY = topPair.first < 0 ? 0 : topPair.first;
+
+    while ( curPixels.first >= topMostPixelY )
     {   
         if (curVal % _maj_tick_spacing == 0)
         {
-            majRect._y__px = curVal__px;
+            majRect._y__px = curPixels.first;
             curText._text = std::to_string(curVal);
-            curText._y_px = curVal__px;
+            curText._y_px = curPixels.first;
 
             rects.push_back(majRect);
             texts.push_back(curText);
 
-            horizLineRectMaj._y__px = curVal__px;
+            horizLineRectMaj._y__px = curPixels.first;
             horizLinesMaj.push_back(horizLineRectMaj);
         }
         else if (curVal % _min_tick_spacing == 0)
         {
-            minRect._y__px = curVal__px;
+            minRect._y__px = curPixels.first;
             rects.push_back(minRect);
 
-            horizLineRectMin._y__px = curVal__px;
+            horizLineRectMin._y__px = curPixels.first;
             horizLinesMin.push_back(horizLineRectMin);
         }
 
         ++curVal;
-        curVal__px = getPixel(curVal) - ( _tick_thickness__px/2 );
+        curPixels = getPixel(curVal, _tick_thickness__px);
     }
 }
 
-int AxisBottomToTopL::calcTopMostPixelWithValue_Y () const
+void AxisBottomToTopL::setCenteredOnPixel (bool centered)
 {
-    return  getPixel(_max_val) - _px_per_unit * _end_offset_m;
+    _centered_on_pixel = centered;
 }
 
 int AxisBottomToTopL::calcMinTickSpacing (int pixelsPerUnit) const
