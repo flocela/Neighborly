@@ -1,8 +1,9 @@
 #ifndef AXIS_LEFT_TO_RIGHT_T__H
 #define AXIS_LEFT_TO_RIGHT_T__H
 
-#include "Renderer.h"
 #include "AxisFormat.h"
+#include "ForwardAxis.h"
+#include "Renderer.h"
 #include "TextRect.h"
 
 // Renders axis from left to right with title at top (used for horizontal axes).

@@ -33,6 +33,7 @@ PlotA::PlotA (
         _a_format_x,
         0, // use zero for default x_coordinate__px
         0, // use zero for default y_coordinate__px
+        false,
         _min_x,
         _max_x,
         0, // use zero for pxPerUnit
@@ -52,7 +53,6 @@ PlotA::PlotA (
         1, // use 1 for tickThickness
         plotFormat.startOffsetM(),
         plotFormat.endOffsetM(),
-        
     }
 {
     pair<int, int> unitSize = calcUnitSizeXAndYPx();
@@ -173,7 +173,7 @@ void PlotA::print (
         // dot is a square.
         // x is the x-pixel of the top left pixel of dot-square
         // y is the y_pixel of the top left pixel of sot-square
-        int x = _x_axis.getPixel(point.x()) - (_dot__px/2);                 
+        int x = _x_axis.getPixel(point.x(), _dot__px).first;                 
         int y = _y_axis.getPixel(point.y(), _dot__px).first;
         coordinatesPerColor[point.color()].push_back(Coordinate(x, y));
     }

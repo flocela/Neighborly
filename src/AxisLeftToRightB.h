@@ -1,11 +1,12 @@
 #ifndef AXIS_LEFT_TO_RIGHT_B__H
 #define AXIS_LEFT_TO_RIGHT_B__H
 
-#include "Renderer.h"
 #include "AxisFormat.h"
+#include "ForwardAxis.h"
+#include "Renderer.h"
 #include "TextRect.h"
 
-
+// 
 class AxisLeftToRightB
 {
     public:
@@ -13,6 +14,7 @@ class AxisLeftToRightB
             AxisFormat axisFormat,
             int xCrossPx, // where x and y axis meet
             int yCrossPx, // where x and y axis meet
+            bool centeredOnPixel,
             int minVal,
             int maxVal,
             int pxPerUnit,
@@ -38,10 +40,7 @@ class AxisLeftToRightB
 
         int getCenterValXPx () const;
 
-        // returns the y-pixel for yVal. If tick thickness is odd, then result is one pixel.
-        // If the tick thickness is even, then center is denoted by two pixels,
-        // and the result is the second pixel. (The second pixel is from the x's zero value.)
-        int getPixel (double xVal) const;
+        std::pair<int, int> getPixel (double xVal, int dotSize) const;
 
         int sizeXPx() const;
 
@@ -57,17 +56,11 @@ class AxisLeftToRightB
 
     private:
         AxisFormat _axis_format;
-        int _x_cross__px;
-        int _y_cross__px;
-        int _min_val;
-        int _max_val;
-        int _diff;
-        int _px_per_unit;
-        int _tick_thickness__px;
+        ForwardAxis _forward_axis;
+        int _y_cross__px; // where x and y axes cross, this is the y-coordinate
+        bool _centered_on_pixel = false; // y-axis is centered on a pixel, not between two pixels
         int _min_tick_spacing;
         int _maj_tick_spacing;
-        int _start_offset_m;
-        int _end_offset_m;
 
         void printHorizontalLine (std::vector<Rect>& rects) const;
 
@@ -75,11 +68,9 @@ class AxisLeftToRightB
             std::vector<Rect>& rects,
             std::vector<TextRect>& texts) const;
 
-        int calcRightMostPixelWithValue_X () const;
-
-        int calcMinTickSpacing (int pixelsPerUnit) const;
+        int calcMinTickSpacing () const;
         
-        int calcMajTickSpacing (int pixelsPerUnit) const;
+        int calcMajTickSpacing () const;
 
 };
 

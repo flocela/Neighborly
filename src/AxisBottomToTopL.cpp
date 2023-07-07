@@ -54,6 +54,7 @@ int AxisBottomToTopL::getLabelLengthPx () const
 
 pair<int, int>  AxisBottomToTopL::getPixel (double yVal, int dotSize) const
 {   
+    // TODO fix this line equation
     // The standard line equation is y2 = y1 - m * (x2 - x1), m is in px per unit.
 
     // Change the variable names to denote pixels and y-values.
@@ -68,7 +69,7 @@ pair<int, int>  AxisBottomToTopL::getPixel (double yVal, int dotSize) const
     double px1 = _centered_on_pixel? _y_cross__px + .5 : _y_cross__px;
     double v2 = yVal;
     double diff = v2 - v1;
-    double px2 = px1 - ((int)_px_per_unit * diff);
+    double px2 = px1 - ((int)_px_per_unit * diff);// TODO take out (int)
     if (dotSize%2 == 0)
     {
         int topPixel = floor(px2 + .5) - (dotSize/2);
@@ -76,7 +77,7 @@ pair<int, int>  AxisBottomToTopL::getPixel (double yVal, int dotSize) const
     }
     else
     {
-        int px2Int = floor(px2) - dotSize/2;
+        int px2Int = floor(px2) - dotSize/2; // floor returns an int. prepend an (int)
         return {px2Int, px2Int + dotSize - 1};
     }
 }
@@ -162,6 +163,7 @@ void AxisBottomToTopL::setTicksAndLabels (
 
     int curVal = _min_val;
     pair<int, int> curPixels = getPixel(_min_val, _tick_thickness__px);
+    
     TextRect curText{
         majTickXPx - _text_spacer,
         curPixels.first,
