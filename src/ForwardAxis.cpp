@@ -4,7 +4,6 @@ using namespace std;
 
 ForwardAxis::ForwardAxis (
     int crossPixel,
-    bool centeredOnPixel,
     int minVal,
     int maxVal,
     int pxPerUnit,
@@ -13,7 +12,6 @@ ForwardAxis::ForwardAxis (
     int endOffsetMultiplier
 ):
     _cross_pixel__px{crossPixel},
-    _centered_on_pixel{centeredOnPixel},
     _min_val{minVal},
     _max_val{maxVal},
     _diff{_max_val - _min_val},
@@ -23,16 +21,17 @@ ForwardAxis::ForwardAxis (
     _end_offset_m{endOffsetMultiplier}
 {}
 
+int ForwardAxis::getCenterValPx () const
+{
+    return getPixel(_min_val + (_max_val - _min_val)/2, 1).first;
+}
+
 int ForwardAxis::getAxisLengthPx () const
 {
     return getEndPixel() - getFrontPixel() + 1;
 }
 
-int ForwardAxis::getCenterValXPx () const
-{
-    return getPixel(_min_val + (_max_val-_min_val)/2, 1).first;
-}
-
+// Add testing for this for even sized dotSize.
 std::pair<int, int> ForwardAxis::getPixel (double val, int dotSize) const
 {
     // The standard line equation is y2 = y1 + m * (x2 - x1), m is in px per unit.
@@ -44,10 +43,9 @@ std::pair<int, int> ForwardAxis::getPixel (double val, int dotSize) const
     
     double v1 = _min_val - _start_offset_m;
 
-    // If cross axis is centered on a pixel, then px1 is at _cross_pixel__px + 0.5.
-    // If cross axis is between two pixels (spanning over 2 pixels).
-    // Then px1 is at _cross_pixel__px.
-    double px1 = _centered_on_pixel? _cross_pixel__px + .5 : _cross_pixel__px;
+    // Cross axis is centered on a pixel, so px1 is at _cross_pixel__px + 0.5.
+    // Cross axis is at the center of pixel.
+    double px1 = _cross_pixel__px + .5;
     double v2 = val;
     double diff = v2 - v1;
     double px2 = px1 + (_px_per_unit * diff);

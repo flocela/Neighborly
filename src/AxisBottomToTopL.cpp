@@ -8,7 +8,6 @@ AxisBottomToTopL::AxisBottomToTopL (
     int horizLengthPx,
     int x_coordinate__px, 
     int y_coordinate__px,
-    bool centeredOnPixel,
     int minVal,
     int maxVal, 
     int pxPerUnit,
@@ -20,7 +19,6 @@ AxisBottomToTopL::AxisBottomToTopL (
     _horiz_line_length__px{horizLengthPx},
     _x_cross__px{x_coordinate__px},
     _y_cross__px{y_coordinate__px},
-    _centered_on_pixel{centeredOnPixel},
     _min_val{minVal},
     _max_val{maxVal},
     _diff{_max_val - _min_val},
@@ -66,7 +64,7 @@ pair<int, int>  AxisBottomToTopL::getPixel (double yVal, int dotSize) const
 
     // If _y_cross__px is centered on a pixel, then px1 is _y_cross__px + 0.5.
     // If _y_cross is between two pixels (spanning over 2 pixels). Then px1 is at_y_cross__px.
-    double px1 = _centered_on_pixel? _y_cross__px + .5 : _y_cross__px;
+    double px1 = _y_cross__px + .5;
     double v2 = yVal;
     double diff = v2 - v1;
     double px2 = px1 - ((int)_px_per_unit * diff);// TODO take out (int)
@@ -233,11 +231,6 @@ void AxisBottomToTopL::setTicksAndLabels (
         ++curVal;
         curPixels = getPixel(curVal, _tick_thickness__px);
     }
-}
-
-void AxisBottomToTopL::setCenteredOnPixel (bool centered)
-{
-    _centered_on_pixel = centered;
 }
 
 int AxisBottomToTopL::calcMinTickSpacing (int pixelsPerUnit) const

@@ -14,7 +14,6 @@ class AxisBottomToTopL
             int horizLengthPx,
             int x_coordinate__px,
             int y_coordinate__px,
-            bool centeredOnPixel,
             int minVal,
             int maxVal,
             int pxPerUnit,
@@ -60,8 +59,6 @@ class AxisBottomToTopL
         
         void setTickThickness (int tickThicknessPx);
 
-        void setCenteredOnPixel (bool centered);
-
     private:
         AxisFormat _axis_format;
         
@@ -70,7 +67,6 @@ class AxisBottomToTopL
         int _horiz_line_length__px;
         int _x_cross__px; // where x and y axis meet
         int _y_cross__px; // where x and y axis meet
-        bool _centered_on_pixel = false; // x-axis is centered on a pixel, not between two pixels
         int _min_val; // the minimum data point value
         int _max_val; // the maximum data point value
         int _diff; // _max_val minus _min_val

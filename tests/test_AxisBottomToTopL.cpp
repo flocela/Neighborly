@@ -11,7 +11,6 @@ TEST_CASE("AxisBottomToTopL.getPixel()_x-axisCenteredOnPixel")
         1, // horiz length
         0, // x coord where x and y axes meet
         30, // y coord where x and y axes meet
-        true, // x-axis is centered at a pixel
         0, // minVal
         4, // maxVal
         5, // pxPerUnit
@@ -48,7 +47,6 @@ TEST_CASE("AxisBottomToTopL.getPixel()_x-axisCenteredOnPixel_Diff_DotSizes")
         1, // horiz length
         0, // x coord where x and y axes meet
         48, // y coord where x and y axes meet
-        true, // x-axis is centered at a pixel
         0, // minVal
         4, // maxVal
         8, // pxPerUnit
@@ -76,78 +74,6 @@ TEST_CASE("AxisBottomToTopL.getPixel()_x-axisCenteredOnPixel_Diff_DotSizes")
     REQUIRE( pair<int, int>{35, 38} == axis.getPixel(.4375, 4)); // {35, 38}
 }
 
-TEST_CASE("AxisBottomToTopL.getPixel()_x-axisBetweenPixels")
-{   
-    AxisFormat format{};
-    AxisBottomToTopL axis {
-        format,
-        1, // horiz length
-        0, // x coord where x and y axes meet
-        30, // y coord where x and y axes meet
-        false, // x-axis is between two pixels
-        0, // minVal
-        4, // maxVal
-        5, // pxPerUnit
-        2, // tickThickness
-        1, // start offset multiplier
-        1  // end offset multplier
-    };
-    
-    // value 5 is represented by pixels -1 and 0 (pixel -1 doesn't exist)
-    // value 4 is represented by pixels 4 and 5
-    // value 3 is represented by pixels 9 and 10
-    // value 2 is represented by pixels 14 and 15
-    // value 1 is represented by pixels 19 and 20
-    // value 0 is represented by pixels 24 and 25
-    // value -1 is represented by pixels 29 and 30
-    // Note pixel zero represents all values from (4.8, 5.2].
-
-    // Axis runs from -1 to 30, but there isn't a -1 pixel, so length is 31.
-    REQUIRE(31 == axis.getAxisLengthPx()); //31
-    REQUIRE( pair<int, int>{4, 5} == axis.getPixel(4, 2) ); // {4, 5}
-    REQUIRE( pair<int, int>{7, 8} == axis.getPixel(3.5, 2) ); // {7, 8}
-    REQUIRE( pair<int, int>{5, 6} == axis.getPixel(3.75, 2) ); // {5, 6}
-    REQUIRE( pair<int, int>{5, 6} == axis.getPixel(3.9, 2) );  // {5, 6}
-    REQUIRE( pair<int, int>{5, 5} == axis.getPixel(4, 1) ); // {5, 5}
-    REQUIRE( pair<int, int>{4, 4} == axis.getPixel(4.1, 1) ); // {4, 4}
-}
-
-// x-axis lies between two pixels. Test using dot sizes that aren't 2 and 1.
-TEST_CASE("AxisBottomToTopL.getPixel()_x-axisBetweenPixels_Diff_Dot_Sizes")
-{ 
-    AxisFormat format{};
-    AxisBottomToTopL axis {
-        format,
-        1, // horiz length
-        0, // x coord where x and y axes meet
-        48, // y coord where x and y axes meet
-        false, // x-axis is between two pixels
-        0, // minVal
-        4, // maxVal
-        8, // pxPerUnit
-        4, // tickThickness
-        1, // start offset multiplier
-        1  // end offset multplier
-    };
-    // value 5 is represented by pixels 0 and -1
-    // value 4 is represented by pixel 7 and 8
-    // value 3 is represented by pixel 15 and 16
-    // value 2 is represented by pixel 23 and 24
-    // value 1 is represented by pixel 31 and 32
-    // value 0 is represented by pixel 39 and 40
-    // value -1 is represented by pixel 47 and 48
-    // Note, pixel zero represents values from (4.875, 5.0]
-
-    // getAxisLengthPx is 50. Should be 52 ([-2 to 49]), but smallest pixel is 0, so it's 50
-    REQUIRE( 50 == axis.getAxisLengthPx() ); 
-    REQUIRE( pair<int, int>{6, 9} == axis.getPixel(4, 4) ); // {6, 9}
-    REQUIRE( pair<int, int>{10, 13} == axis.getPixel(3.5, 4) ); // {10, 13}
-    REQUIRE( pair<int, int>{11, 14} == axis.getPixel(3.4, 4) ); // {11, 14}
-    REQUIRE( pair<int, int>{22, 25} == axis.getPixel(2.0625, 4) ); // {22, 25}
-    REQUIRE( pair<int, int>{23, 26} == axis.getPixel(1.9375, 4) ); // {23, 26}
-    REQUIRE( pair<int, int>{31, 33} == axis.getPixel(1, 3)); // {31, 33}
-    REQUIRE( pair<int, int>{35, 37} == axis.getPixel(.4375, 3)); // {35, 37}
-}
 
 TEST_CASE("AxisBottomToTopL.getLabelLengthPx()")
 {
@@ -157,7 +83,6 @@ TEST_CASE("AxisBottomToTopL.getLabelLengthPx()")
         0, // horiz length
         0, // x coord where x and y axes meet
         0, // y coord where x and y axes meet
-        true,
         0, // minVal
         0, // maxVal
         0, // pxPerUnit

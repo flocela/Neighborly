@@ -6,7 +6,7 @@
 #include "Renderer.h"
 #include "TextRect.h"
 
-// 
+// Renders axis from left to right with title at bottom (used for horizontal axes).
 class AxisLeftToRightB
 {
     public:
@@ -14,7 +14,6 @@ class AxisLeftToRightB
             AxisFormat axisFormat,
             int xCrossPx, // where x and y axis meet
             int yCrossPx, // where x and y axis meet
-            bool centeredOnPixel,
             int minVal,
             int maxVal,
             int pxPerUnit,
@@ -31,6 +30,8 @@ class AxisLeftToRightB
 
         int getAxisLengthPx() const;
 
+        int getCenterValXPx () const;
+
         // the label length is the height of the numbers below the axis plus
         // the length of the tick outside the chart plus
         // the space between the label and the tick plus
@@ -38,17 +39,15 @@ class AxisLeftToRightB
         // the length is in the y direction.
         int getLabelLengthPx () const;
 
-        int getCenterValXPx () const;
-
         std::pair<int, int> getPixel (double xVal, int dotSize) const;
+
+        void print (Renderer* renderer) const;
 
         int sizeXPx() const;
 
         int sizeYPx() const;
 
         void moveCrossHairs (int xPx, int yPx);
-
-        void print (Renderer* renderer) const;
 
         void setPxPerUnit (int pixels);
         
@@ -58,7 +57,6 @@ class AxisLeftToRightB
         AxisFormat _axis_format;
         ForwardAxis _forward_axis;
         int _y_cross__px; // where x and y axes cross, this is the y-coordinate
-        bool _centered_on_pixel = false; // y-axis is centered on a pixel, not between two pixels
         int _min_tick_spacing;
         int _maj_tick_spacing;
 

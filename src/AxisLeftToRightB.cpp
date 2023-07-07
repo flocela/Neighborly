@@ -1,14 +1,14 @@
 #include "AxisLeftToRightB.h"
 
-#include <iostream>
 #include <cmath>
+#include <iostream>
+
 using namespace std;
 
 AxisLeftToRightB::AxisLeftToRightB (
     AxisFormat axisFormat,
     int xCrossPx,
     int yCrossPx,
-    bool centeredOnPixel,
     int minVal,
     int maxVal,
     int pxPerUnit,
@@ -19,7 +19,6 @@ AxisLeftToRightB::AxisLeftToRightB (
     _axis_format{axisFormat},
     _forward_axis{
         xCrossPx,
-        centeredOnPixel,
         minVal,
         maxVal,
         pxPerUnit,
@@ -37,6 +36,11 @@ int AxisLeftToRightB::getAxisLengthPx () const
     return _forward_axis.getAxisLengthPx();
 }
 
+int AxisLeftToRightB::getCenterValXPx () const
+{
+    return _forward_axis.getCenterValPx();
+}
+
 int AxisLeftToRightB::getLabelLengthPx () const
 {
     int retVal =  
@@ -47,14 +51,24 @@ int AxisLeftToRightB::getLabelLengthPx () const
     return retVal;
 }
 
-int AxisLeftToRightB::getCenterValXPx () const
-{
-    return _forward_axis.getCenterValXPx();
-}
-
 pair<int, int> AxisLeftToRightB::getPixel (double xVal, int dotSize) const
 {   
     return _forward_axis.getPixel(xVal, dotSize);
+}
+
+void AxisLeftToRightB::print (Renderer* renderer) const
+{   
+    // All lines and ticks are drawn as Rects and are held in rects vector.
+    std::vector<Rect> rects = {};
+
+    // Tick labels are in texts vector.
+    std::vector<TextRect> texts = {};
+    
+    printHorizontalLine(rects);
+    printTicksAndLabels(rects, texts);
+
+    renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
+    renderer->renderTexts(texts);
 }
 
 int AxisLeftToRightB::sizeXPx () const
@@ -71,18 +85,6 @@ void AxisLeftToRightB::moveCrossHairs (int xPx, int yPx)
 {
     _forward_axis.moveCrossPixel(xPx);
     _y_cross__px = yPx;
-}
-
-void AxisLeftToRightB::print (Renderer* renderer) const
-{   
-    std::vector<Rect> rects = {};
-    std::vector<TextRect> texts = {};
-    
-    printHorizontalLine(rects);
-    printTicksAndLabels(rects, texts);
-
-    renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
-    renderer->renderTexts(texts);
 }
 
 void AxisLeftToRightB::setPxPerUnit (int pixels)

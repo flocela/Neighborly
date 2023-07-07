@@ -8,7 +8,6 @@ class ForwardAxis
 public:
     ForwardAxis (
         int crossPixel,
-        bool centeredOnPixel,
         int minVal,
         int maxVal,
         int pxPerUnit,
@@ -25,13 +24,13 @@ public:
     ~ForwardAxis () noexcept = default;
 
     int getAxisLengthPx () const;
-    int getCenterValXPx () const;
 
     // Returns the pixel where the cross axis crosses this axis.
     // If _centered_on_pixel is false, then the cross axis actually crosses this axis
     // between the returned pixel and 1 minus the returned pixel.
     int getCrossPx__px () const;
 
+    int getCenterValPx () const;
     int getMinVal () const;
     int getMaxVal () const;
     int getDiff () const;
@@ -50,11 +49,9 @@ public:
     void setTickThickness (int tickThicknessPx);
 
 private:
-    int _cross_pixel__px; // where cross axis crosses this axis.
-
-    // _centered_on_pixel is true if cross axis is centered on a pixel, not between two pixels.
-    // False if centered between two pixels.
-    bool  _centered_on_pixel = false; 
+    // Where cross axis crosses this axis. The cross axis is centered on a pixel. The
+    // cross axis is not centered betwenn two pixels on this axis.
+    int _cross_pixel__px;
     int _min_val;
     int _max_val;
     int _diff;

@@ -156,7 +156,7 @@ void PlotB::print (
         // dot is a square.
         // x is the x-pixel of the top left pixel of dot-square
         // y is the y_pixel of the top left pixel of sot-square
-        int x = _x_axis.getPixel(point.x()) - (_dot__px/2);                 
+        int x = _x_axis.getPixel(point.x(), _dot__px).first;                 
         int y = _y_axis.getPixel(point.y()) - (_dot__px/2);
 
         coordinatesPerColor[point.color()].push_back(Coordinate(x, y));
@@ -192,7 +192,7 @@ void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _unit__px = calcUnitSizePx();
     _dot__px = calcDotSizePx();
 
-    int tickThickness = (_dot__px%2==0)? 2 : 1;
+    int tickThickness = (_dot__px > 12)? 3 : 1;
 
     _cross_x__px = calcCrossXPx(_top_left_x__px);
     _cross_y__px = calcCrossYPx (_top_left_y__px);
@@ -223,9 +223,16 @@ int PlotB::calcUnitSizePx () const
 
 int PlotB::calcDotSizePx () const
 {
-    int dotSize = _unit__px/2;
-    // equal space on either side of the dot, so dot is centered in unit
-    return ((_unit__px - dotSize) % 2 == 0) ? dotSize : (dotSize + 1);
+    // dot size based on unit size
+    int dotSize = _unit__px/3;
+
+    // Make dotSize odd.
+    dotSize = (dotSize%2==0)? dotSize+1 : dotSize;
+
+    // dot size of 3 is too small, increase to 5 at minimum.
+    dotSize = (dotSize <= 5)? 5 : dotSize;
+
+    return dotSize;
 }
 
 // x-axis is centered in the space available.

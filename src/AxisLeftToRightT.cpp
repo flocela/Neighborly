@@ -1,9 +1,10 @@
 #include "AxisLeftToRightT.h"
 
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
 using namespace std;
+
 AxisLeftToRightT::AxisLeftToRightT (
     AxisFormat axisFormat,
     int xCrossPx,
@@ -16,26 +17,23 @@ AxisLeftToRightT::AxisLeftToRightT (
     int endOffsetMultiplier
 ) :
     _axis_format{axisFormat},
-    _x_cross__px{xCrossPx},
+    _forward_axis{
+        xCrossPx,
+        minVal,
+        maxVal,
+        pxPerUnit,
+        tickThickness,
+        startOffsetMultiplier,
+        endOffsetMultiplier
+    },
     _y_cross__px{yCrossPx},
-    _min_val{minVal},
-    _max_val{maxVal},
-    _diff{_max_val - _min_val},
-    _px_per_unit{pxPerUnit},
-    _tick_thickness__px{tickThickness},
-    _min_tick_spacing{calcMinTickSpacing(_px_per_unit)},
-    _maj_tick_spacing{calcMajTickSpacing(_px_per_unit)},
-    _start_offset_m{startOffsetMultiplier},
-    _end_offset_m{endOffsetMultiplier}
+    _min_tick_spacing{calcMinTickSpacing()},
+    _maj_tick_spacing{calcMajTickSpacing()}
 {}
 
 int AxisLeftToRightT::getAxisLengthPx () const
 {
-    int isOdd = (_tick_thickness__px%2 == 0? 0 : 1);
-    return calcRightMostPixelWithValue_X() - _x_cross__px +
-        (_tick_thickness__px/2) +
-        (_tick_thickness__px/2) +
-        isOdd;
+    return _forward_axis.getAxisLengthPx();
 }
 
 int AxisLeftToRightT::getLabelLengthPx () const
@@ -50,28 +48,19 @@ int AxisLeftToRightT::getLabelLengthPx () const
 
 int AxisLeftToRightT::getCenterValXPx () const
 {
-    return getPixel(_min_val + (_max_val-_min_val)/2);
+    return _forward_axis.getCenterValPx();
 }
 
-int AxisLeftToRightT::getPixel (double xVal) const
+pair<int, int> AxisLeftToRightT::getPixel (double xVal, int dotSize) const
 {   
-    // line equation: y2 = y1 + m * (x2 - x1), m is in px per unit
-    // line equation: px2 = px1 + m * (v2 - v1), m is in px per unit.
-    // px2 is the pixel value we're looking for, given the real value xVal, v2.
-    // px1 is the pixel value corresponding to _min_val, v1.
-    double v2 = xVal;
-    double v1 = _min_val-(((double)1)/_px_per_unit)/2;
-    double px1 = _x_cross__px + _start_offset_m * _px_per_unit;
-    double diff = v2 - v1;
-    int retVal = floor(px1 + (_px_per_unit * diff));
-
-    return retVal;
+    return _forward_axis.getPixel(xVal, dotSize);
 }
 
 void AxisLeftToRightT::print (Renderer* renderer) const
 {   
-    // All lines and ticks are drawn as Rects, which are held in rects vector.
+    // All lines and ticks are drawn as Rects and are held in rects vector.
     std::vector<Rect> rects = {};
+
     // Tick labels are in texts vector.
     std::vector<TextRect> texts = {};
     
@@ -84,7 +73,7 @@ void AxisLeftToRightT::print (Renderer* renderer) const
 
 int AxisLeftToRightT::sizeXPx () const
 {
-    return getAxisLengthPx();
+    return _forward_axis.getAxisLengthPx();
 }
 
 int AxisLeftToRightT::sizeYPx () const
@@ -98,28 +87,29 @@ int AxisLeftToRightT::sizeYPx () const
 
 void AxisLeftToRightT::moveCrossHairs (int xPx, int yPx)
 {
-    _x_cross__px = xPx;
+    _forward_axis.moveCrossPixel(xPx);
     _y_cross__px = yPx;
 }
 
 void AxisLeftToRightT::setPxPerUnit (int pixels)
 {
-    _px_per_unit = pixels;
-    _min_tick_spacing = calcMinTickSpacing(_px_per_unit);
-    _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
+    _forward_axis.setPxPerUnit(pixels);
+    _min_tick_spacing = calcMinTickSpacing();
+    _maj_tick_spacing = calcMajTickSpacing();
 }
 
 void AxisLeftToRightT::setTickThickness (int tickThicknessPx)
 {
-    _tick_thickness__px = tickThicknessPx;
+    _forward_axis.setTickThickness(tickThicknessPx);
 }
 
 void AxisLeftToRightT::printHorizontalLine (std::vector<Rect>& rects) const
 {
+    int leftPixel = _forward_axis.getFrontPixel();
     Rect rect{
-        _x_cross__px,
+        leftPixel,
         _y_cross__px,
-        getAxisLengthPx(),
+        _forward_axis.getAxisLengthPx(),
         _axis_format.axisThicknessPx()
     };
 
@@ -131,16 +121,16 @@ void AxisLeftToRightT::printTicksAndLabels (
     std::vector<TextRect>& texts
 ) const
 {   
-    int curVal = _min_val;
-    int curVal__px = getPixel(curVal) - (_tick_thickness__px/2);
+    int curVal = _forward_axis.getMinVal();
+    pair<int, int> curPixels = getPixel(curVal, _forward_axis.getTickThichness__px());
 
-    int botOfLabelYPx = 
+    int botOfLabelYPx =  //TODO centered properly?
         _y_cross__px -
         _axis_format.majTickLengthOutsideChartPx() -
         _axis_format.labelLineSpacePx();
 
     TextRect curText{
-        curVal__px,
+        curPixels.first,
         botOfLabelYPx,
         std::to_string(curVal),
         _axis_format.labelHeightPx(),
@@ -154,55 +144,61 @@ void AxisLeftToRightT::printTicksAndLabels (
     int minTickYPx = _y_cross__px - _axis_format.minTickLengthOutsideChartPx();
     
     Rect majTick{
-        curVal__px,
+        curPixels.first,
         majTickYPx,
-        _tick_thickness__px,
+        _forward_axis.getTickThichness__px(),
         _axis_format.majTickLengthPx()
     };
 
     Rect minTick{
-        curVal__px,
+        curPixels.first,
         minTickYPx,
-        _tick_thickness__px,
+        _forward_axis.getTickThichness__px(),
         _axis_format.minTickLengthPx()
     };
     
-    int rightMostPixel = calcRightMostPixelWithValue_X();
+    // rightMostPixel on axis
+    int rightMostPixel = _forward_axis.getEndPixel();
     
-    while (curVal__px <= rightMostPixel)
+    while (curPixels.first <= rightMostPixel)
     {  
         if (curVal % _maj_tick_spacing == 0) // major tick with label
         { 
-            majTick._x__px = curVal__px;
+            majTick._x__px = curPixels.first;
                 
             curText._text = std::to_string(curVal);
-            curText._x_px = curVal__px;
+            curText._x_px = curPixels.first;
 
             texts.push_back(curText);
             rects.push_back(majTick);
         }
         else if (curVal % _min_tick_spacing == 0) // minor tick
         {   
-            minTick._x__px = curVal__px;
+            minTick._x__px = curPixels.first;
             rects.push_back(minTick);
         }
         
         ++curVal;
-        curVal__px = getPixel(curVal) - (_tick_thickness__px)/2;
+        curPixels = _forward_axis.getPixel(curVal, _forward_axis.getTickThichness__px());
     }
 }
 
-int AxisLeftToRightT::calcRightMostPixelWithValue_X () const
-{
-    return getPixel(_max_val) + _px_per_unit * _end_offset_m;
-}
-
-int AxisLeftToRightT::calcMinTickSpacing (int pixelsPerUnit) const
+int AxisLeftToRightT::calcMinTickSpacing () const
 { 
-    return (pixelsPerUnit >= 10)? 1 : 5; 
+    if (_forward_axis.getMaxVal() - _forward_axis.getMinVal() < 10)
+    {
+        return 1;
+    }
+
+    return (_forward_axis.getPixelsPerUnit() >= 10)? 1 : 5;
 }
         
-int AxisLeftToRightT::calcMajTickSpacing (int pixelsPerUnit) const
+int AxisLeftToRightT::calcMajTickSpacing () const
 { 
-    return (pixelsPerUnit > 10)? 5 : 10; 
+    if (_forward_axis.getMaxVal() - _forward_axis.getMinVal() < 10)
+    {
+        return 1;
+    }
+    
+    return (_forward_axis.getPixelsPerUnit() > 10)? 5 : 10; 
 }

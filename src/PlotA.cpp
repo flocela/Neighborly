@@ -33,7 +33,6 @@ PlotA::PlotA (
         _a_format_x,
         0, // use zero for default x_coordinate__px
         0, // use zero for default y_coordinate__px
-        false,
         _min_x,
         _max_x,
         0, // use zero for pxPerUnit
@@ -46,7 +45,6 @@ PlotA::PlotA (
         _x_axis.getAxisLengthPx(),
         0, // use zero for default x_coordinate__px
         0, // use zero for default y_coordinate__px
-        false,
         _min_y,
         _max_y,
         0, // use zero for pxPerUnit
@@ -58,9 +56,11 @@ PlotA::PlotA (
     pair<int, int> unitSize = calcUnitSizeXAndYPx();
     _unit_x__px = unitSize.first;
     _unit_y__px = unitSize.second;
+
     _dot__px = calcDotSizePx();
-    _y_axis.setCenteredOnPixel((_dot__px%2==0) ? false : true);
-    int tickThickness = (_dot__px%2==0)? 2 : 1;
+
+    int tickThickness = (_dot__px > 12)? 3 : 1;
+
     _cross_x__px = calcCrossXPx(topLeftXPx);
     _cross_y__px = calcCrossYPx(topLeftYPx);
 
@@ -209,8 +209,8 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _unit_y__px = unit_sizes.second;
 
     _dot__px = calcDotSizePx();
-    _y_axis.setCenteredOnPixel((_dot__px%2==0) ? false : true);
-    int tickThickness = (_dot__px%2==0)? 2 : 1;
+
+    int tickThickness = (_dot__px > 12)? 3 : 1;
 
     _cross_x__px = calcCrossXPx(_top_left_x__px);
     _cross_y__px = calcCrossYPx (_top_left_y__px);
@@ -259,11 +259,19 @@ pair<int, int> PlotA::calcUnitSizeXAndYPx () const
     return {xUnitSize, yUnitSize};
 }
 
+// Returns odd sized dot size.
 int PlotA::calcDotSizePx () const
 {   
+    // dot size somewhat based on smaller unitSize of axes.
     int minUnitSizePx = min(_unit_x__px, _unit_y__px);
     int dotSize = minUnitSizePx/4;
-    dotSize =  ((minUnitSizePx - dotSize) % 2 == 0) ? dotSize : (dotSize + 1);
+
+    // Make dotSize odd.
+    dotSize = (dotSize%2==0)? dotSize+1 : dotSize;
+
+    // dot size of 3 is too small, increase to 5 at minimum.
+    dotSize = (dotSize <= 5)? 5 : dotSize;
+
     return dotSize;
 }
 

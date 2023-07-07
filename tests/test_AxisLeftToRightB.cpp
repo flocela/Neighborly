@@ -10,7 +10,6 @@ TEST_CASE("AxisLeftToRightB.getLabelLengthPx()")
         format,
         0, // x coord where x and y axes meet
         0, // y coord where x and y axes meet
-        true,
         0, // minVal
         0, // maxVal
         0, // pxPerUnit
