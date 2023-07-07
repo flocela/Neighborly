@@ -157,7 +157,7 @@ void AxisLeftToRightT::printTicksAndLabels (
         _axis_format.minTickLengthPx()
     };
     
-    // rightMostPixel on axis
+    // right most pixel on axis
     int rightMostPixel = _forward_axis.getEndPixel();
     
     while (curPixels.first <= rightMostPixel)

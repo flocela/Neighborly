@@ -16,26 +16,23 @@ AxisTopToBottomL::AxisTopToBottomL (
     int endOffsetMultiplier
 ) : 
     _axis_format{axisFormat},
+    _forward_axis{
+        y_coordinate__px,
+        minVal,
+        maxVal,
+        pxPerUnit,
+        tickThickness,
+        startOffsetMultiplier,
+        endOffsetMultiplier
+    },
     _x_cross__px{x_coordinate__px},
-    _y_cross__px{y_coordinate__px},
-    _min_val{minVal},
-    _max_val{maxVal},
-    _diff{_max_val - _min_val},
-    _px_per_unit{pxPerUnit},
-    _tick_thickness__px{tickThickness},
-    _min_tick_spacing{calcMinTickSpacing(_px_per_unit)},
-    _maj_tick_spacing{calcMajTickSpacing(_px_per_unit)},
-    _start_offset_m{startOffsetMultiplier},
-    _end_offset_m{endOffsetMultiplier}
+    _min_tick_spacing{calcMinTickSpacing()},
+    _maj_tick_spacing{calcMajTickSpacing()}
 {}
 
 int AxisTopToBottomL::getAxisLengthPx() const
 {
-    int isOdd = (_tick_thickness__px%2 == 0? 0 : 1);
-    return calcBotMostPixel_Y () - _y_cross__px +
-        (_tick_thickness__px/2) +
-        (_tick_thickness__px/2) +
-        isOdd;
+    return _forward_axis.getAxisLengthPx();
 }
 
 int AxisTopToBottomL::getLabelLengthPx () const
@@ -47,19 +44,9 @@ int AxisTopToBottomL::getLabelLengthPx () const
         _axis_format.axisThicknessPx();
 }
 
-int AxisTopToBottomL::getPixel (double yVal) const
+pair<int,int> AxisTopToBottomL::getPixel (double yVal, int dotSize) const
 {
-    // line equation: y2 = y1 + m * (x2 - x1), m is in px per unit
-    // line equation: px2 = px1 + m * (v2 - v1), m is in px per unit.
-    // px2 is the pixel value we're looking for, given the real value yVal, v2.
-    // px1 is the pixel value corresponding to _min_val, v1.
-    double v2 = yVal;
-    double v1 = _min_val-(((double)1)/_px_per_unit)/2;
-    double px1 = _y_cross__px + _start_offset_m * _px_per_unit;
-    double diff = v2 - v1;
-    int retVal = floor(px1 + (_px_per_unit * diff));
-
-    return retVal;
+    return _forward_axis.getPixel(yVal, dotSize);
 }
 
 void AxisTopToBottomL::print (Renderer* renderer) const
@@ -92,30 +79,31 @@ int AxisTopToBottomL::sizeYPx() const
 void AxisTopToBottomL::moveCrossHairs (int xPx, int yPx)
 {
     _x_cross__px = xPx;
-    _y_cross__px = yPx;
+    _forward_axis.moveCrossPixel(yPx);
 }
 
 void AxisTopToBottomL::setPxPerUnit (int pixels)
 {
-    _px_per_unit = pixels;
-    _min_tick_spacing = calcMinTickSpacing(_px_per_unit);
-    _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
+    _forward_axis.setPxPerUnit(pixels);
+    _min_tick_spacing = calcMinTickSpacing();
+    _maj_tick_spacing = calcMajTickSpacing();
 
 }
 
 void AxisTopToBottomL::setTickThickness (int tickThicknessPx)
 {
-    _tick_thickness__px = tickThicknessPx;
+    _forward_axis.setTickThickness(tickThicknessPx);
 }
 
 
 void AxisTopToBottomL::printVerticalLine (std::vector<Rect>& rects) const
 {
+    int topPixel = _forward_axis.getFrontPixel();
     Rect rect{
         _x_cross__px,
-        _y_cross__px,
+        topPixel,
         _axis_format.axisThicknessPx(),
-        getAxisLengthPx()
+        _forward_axis.getAxisLengthPx()
     };
 
     rects.push_back(rect);
@@ -126,15 +114,16 @@ void AxisTopToBottomL::printTicksAndLabels (
     std::vector<TextRect>& texts
 ) const
 {
+    int curVal = _forward_axis.getMinVal();
+    pair<int, int> curPixels = getPixel(curVal, _forward_axis.getTickThichness__px());
+
     int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChartPx();
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
 
-    int curVal = _min_val;
-    int curVal__px = getPixel(_min_val) - (_tick_thickness__px/2) ;
     TextRect curText = {
         majTickXPx - _text_spacer,
-        curVal__px,
-        std::to_string(_min_val),
+        curPixels.first,
+        std::to_string(_forward_axis.getMinVal()),
         _axis_format.labelHeightPx(),
         _axis_format.labelWidthMultiplier(),
         _axis_format.textColor(),
@@ -144,56 +133,61 @@ void AxisTopToBottomL::printTicksAndLabels (
 
     Rect majRect{
         majTickXPx,
-        curVal__px - (_tick_thickness__px/2),
+        curPixels.first,
         _axis_format.majTickLengthPx(),
-        _tick_thickness__px
+        _forward_axis.getTickThichness__px()
     };
 
     Rect minRect{
         minTickXPx,
-        curVal__px,
+        curPixels.first,
         _axis_format.minTickLengthPx(),
-        _tick_thickness__px
+        _forward_axis.getTickThichness__px()
     };
     
-    int botMostPixelY = calcBotMostPixel_Y();
+    // bottom most pixel on axis
+    int botMostPixelY = _forward_axis.getEndPixel();
 
-    while (curVal__px <= botMostPixelY)
+    while (curPixels.first <= botMostPixelY)
     {   
         if (curVal % _maj_tick_spacing == 0)
         {
-            majRect._y__px = curVal__px;
+            majRect._y__px = curPixels.first;
 
             
             curText._text = std::to_string(curVal);
-            curText._y_px = curVal__px;
+            curText._y_px = curPixels.first;
 
             rects.push_back(majRect);
             texts.push_back(curText);
         }
         else if (curVal % _min_tick_spacing == 0)
         {
-            minRect._y__px = curVal__px;
+            minRect._y__px = curPixels.first;
             
             rects.push_back(minRect);
         }
         ++curVal;
-        curVal__px = getPixel(curVal) - (_tick_thickness__px/ 2 ) ;
+        curPixels = _forward_axis.getPixel(curVal, _forward_axis.getTickThichness__px());
     }
 }
 
-int AxisTopToBottomL::calcBotMostPixel_Y () const
+int AxisTopToBottomL::calcMinTickSpacing () const
 {
-    int val = getPixel(_max_val) + _px_per_unit * _end_offset_m;
-    return val;
-}
+    if (_forward_axis.getMaxVal() - _forward_axis.getMinVal() < 10)
+    {
+        return 1;
+    }
 
-int AxisTopToBottomL::calcMinTickSpacing (int pixelsPerUnit) const
-{
-    return (pixelsPerUnit >= 10)? 1 : 5;
+    return (_forward_axis.getPixelsPerUnit() >= 10)? 1 : 5;
 }     
 
-int AxisTopToBottomL::calcMajTickSpacing (int pixelsPerUnit) const
+int AxisTopToBottomL::calcMajTickSpacing () const
 {
-    return (pixelsPerUnit > 10)? 5 : 10;
+    if (_forward_axis.getMaxVal() - _forward_axis.getMinVal() < 10)
+    {
+        return 1;
+    }
+    
+    return (_forward_axis.getPixelsPerUnit() > 10)? 5 : 10; 
 }

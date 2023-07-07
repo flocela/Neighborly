@@ -1,8 +1,9 @@
 #ifndef AXIS_BOTTOM_TO_TOP_R_H
 #define AXIS_BOTTOM_TO_TOP_R_H
 
-#include "Renderer.h"
 #include "AxisFormat.h"
+#include "ForwardAxis.h"
+#include "Renderer.h"
 #include "TextRect.h"
 
 class AxisTopToBottomL
@@ -35,10 +36,7 @@ class AxisTopToBottomL
         // the length is in the x direction.
         int getLabelLengthPx () const;
 
-        // returns the y-pixel for yVal. If tick thickness is odd, then result is one pixel.
-        // If tick thickness is even, then center is denoted by two pixels,
-        // and the result is the second pixel. (The second pixel is from the y's zero.)
-        int getPixel (double yVal) const;
+        std::pair<int,int> getPixel (double yVal, int dotSize) const;
         
         // Renders axis from bottom to top, title is on left side (used for vertical axes).
         void print (Renderer* renderer) const;
@@ -55,17 +53,10 @@ class AxisTopToBottomL
 
     private:
         AxisFormat _axis_format;
+        ForwardAxis _forward_axis;
         int _x_cross__px;
-        int _y_cross__px;
-        int _min_val;
-        int _max_val;
-        int _diff;
-        int _px_per_unit;
-        int _tick_thickness__px;
-        int _min_tick_spacing; // in units, not pixels
-        int _maj_tick_spacing; // in units, not pixels
-        int _start_offset_m; // start offst multiplier; multiply by _px_per_unit
-        int _end_offset_m; // start offst multiplier; multiply by _px_per_unit
+        int _min_tick_spacing;
+        int _maj_tick_spacing;
         int _text_spacer = 3; // space to the right of labels, and to the left of tick marks.
 
         void printVerticalLine (std::vector<Rect>& rects) const;
@@ -74,11 +65,9 @@ class AxisTopToBottomL
             std::vector<Rect>& rects,
             std::vector<TextRect>& texts) const;
 
-        int calcBotMostPixel_Y () const;
+        int calcMinTickSpacing () const;
 
-        int calcMinTickSpacing (int pixelsPerUnit) const;
-
-        int calcMajTickSpacing (int pixelsPerUnit)  const;
+        int calcMajTickSpacing ()  const;
 };
 
 #endif
