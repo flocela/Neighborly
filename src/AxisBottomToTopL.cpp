@@ -17,27 +17,23 @@ AxisBottomToTopL::AxisBottomToTopL (
 ) : 
     _axis_format{axisFormat},
     _horiz_line_length__px{horizLengthPx},
+    _reverse_axis{
+        y_coordinate__px,
+        minVal,
+        maxVal,
+        pxPerUnit,
+        tickThickness,
+        startOffsetMultiplier,
+        endOffsetMultiplier
+    },
     _x_cross__px{x_coordinate__px},
-    _y_cross__px{y_coordinate__px},
-    _min_val{minVal},
-    _max_val{maxVal},
-    _diff{_max_val - _min_val},
-    _px_per_unit{pxPerUnit},
-    _tick_thickness__px{tickThickness},
-    _min_tick_spacing{calcMinTickSpacing(_px_per_unit)},
-    _maj_tick_spacing{calcMajTickSpacing(_px_per_unit)},
-    _start_offset_m{startOffsetMultiplier},
-    _end_offset_m{endOffsetMultiplier}
+    _min_tick_spacing{calcMinTickSpacing()},
+    _maj_tick_spacing{calcMajTickSpacing()}
 {}
 
 int AxisBottomToTopL::getAxisLengthPx () const
 {   
-    pair<int, int> topPair = getPixel(_max_val + _end_offset_m, _tick_thickness__px);
-    int topPixel = topPair.first < 0 ? 0 : topPair.first;
-
-    int bottomPixel = getPixel(_min_val - _start_offset_m, _tick_thickness__px).second;
-
-    return bottomPixel - topPixel + 1;
+    return _reverse_axis.getAxisLengthPx();
 }
 
 int AxisBottomToTopL::getLabelLengthPx () const
@@ -52,32 +48,7 @@ int AxisBottomToTopL::getLabelLengthPx () const
 
 pair<int, int>  AxisBottomToTopL::getPixel (double yVal, int dotSize) const
 {   
-    // TODO fix this line equation
-    // The standard line equation is y2 = y1 - m * (x2 - x1), m is in px per unit.
-
-    // Change the variable names to denote pixels and y-values.
-    // Line equation: px2 = px1 - m * (v2 - v1), m is in px per unit.
-    // px2 is the pixel value we're looking for, given the real value yVal (v2 is set to yVal).
-    // px1 is the pixel value corresponding to the smallest yvalue, (v1 is the smallest y-value).
-
-    double v1 = _min_val - _start_offset_m;
-
-    // If _y_cross__px is centered on a pixel, then px1 is _y_cross__px + 0.5.
-    // If _y_cross is between two pixels (spanning over 2 pixels). Then px1 is at_y_cross__px.
-    double px1 = _y_cross__px + .5;
-    double v2 = yVal;
-    double diff = v2 - v1;
-    double px2 = px1 - ((int)_px_per_unit * diff);// TODO take out (int)
-    if (dotSize%2 == 0)
-    {
-        int topPixel = floor(px2 + .5) - (dotSize/2);
-        return {topPixel, topPixel + dotSize - 1};
-    }
-    else
-    {
-        int px2Int = floor(px2) - dotSize/2; // floor returns an int. prepend an (int)
-        return {px2Int, px2Int + dotSize - 1};
-    }
+    return _reverse_axis.getPixel(yVal, dotSize);
 }
 
 void AxisBottomToTopL::print (Renderer* renderer) const
@@ -111,7 +82,7 @@ int AxisBottomToTopL::sizeYPx () const
 void AxisBottomToTopL::moveCrossHairs (int xPx, int yPx)
 {
     _x_cross__px = xPx;
-    _y_cross__px = yPx;
+    _reverse_axis.moveCrossPixel(yPx);
 }
 
 void AxisBottomToTopL::setHorizLength (int horizLengthPx)
@@ -121,23 +92,21 @@ void AxisBottomToTopL::setHorizLength (int horizLengthPx)
 
 void AxisBottomToTopL::setPxPerUnit (int pixels)
 {
-    _px_per_unit = pixels;
-    _min_tick_spacing = calcMinTickSpacing(_px_per_unit);
-    _maj_tick_spacing = calcMajTickSpacing(_px_per_unit);
+    _reverse_axis.setPxPerUnit(pixels);
+    _min_tick_spacing = calcMinTickSpacing();
+    _maj_tick_spacing = calcMajTickSpacing();
 
 }
 
 void AxisBottomToTopL::setTickThickness (int tickThicknessPx) 
 {
-    _tick_thickness__px = tickThicknessPx;
+    _reverse_axis.setTickThickness(tickThicknessPx);
 }
 
 void AxisBottomToTopL::setVerticalLine (std::vector<Rect>& rects) const
 {
     // Calculate top most pixel.
-    pair<int, int> topPair = getPixel(_max_val + _end_offset_m, _tick_thickness__px);
-    int topPixel = topPair.first < 0 ? 0 : topPair.first;
-
+    int topPixel = _reverse_axis.getEndPixel();
     // Rectangle represents vertical line.
     Rect rect{
         _x_cross__px,
@@ -159,9 +128,8 @@ void AxisBottomToTopL::setTicksAndLabels (
     int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChartPx();
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
 
-    int curVal = _min_val;
-    pair<int, int> curPixels = getPixel(_min_val, _tick_thickness__px);
-    
+    int curVal = _reverse_axis.getMinVal();
+    pair<int, int> curPixels = _reverse_axis.getPixel(curVal, _reverse_axis.getTickThichness__px());
     TextRect curText{
         majTickXPx - _text_spacer,
         curPixels.first,
@@ -177,33 +145,32 @@ void AxisBottomToTopL::setTicksAndLabels (
         minTickXPx,
         curPixels.first,
         _horiz_line_length__px,
-        _tick_thickness__px
+        _reverse_axis.getTickThichness__px()
     };
 
     Rect horizLineRectMin{
         minTickXPx,
         curPixels.first,
         _horiz_line_length__px,
-        _tick_thickness__px
+        _reverse_axis.getTickThichness__px()
     };
 
     Rect majRect{
         majTickXPx,
         curPixels.first,
         _axis_format.majTickLengthPx(),
-        _tick_thickness__px
+        _reverse_axis.getTickThichness__px()
     };
 
     Rect minRect{
         minTickXPx,
         curPixels.first,
         _axis_format.minTickLengthPx(),
-        _tick_thickness__px
+        _reverse_axis.getTickThichness__px()
     };
 
     // Calculate top most pixel.
-    pair<int, int> topPair = getPixel(_max_val + _end_offset_m, _tick_thickness__px);
-    int topMostPixelY = topPair.first < 0 ? 0 : topPair.first;
+    int topMostPixelY = _reverse_axis.getEndPixel();
 
     while ( curPixels.first >= topMostPixelY )
     {   
@@ -229,16 +196,26 @@ void AxisBottomToTopL::setTicksAndLabels (
         }
 
         ++curVal;
-        curPixels = getPixel(curVal, _tick_thickness__px);
+        curPixels = _reverse_axis.getPixel(curVal, _reverse_axis.getTickThichness__px());
     }
 }
 
-int AxisBottomToTopL::calcMinTickSpacing (int pixelsPerUnit) const
+int AxisBottomToTopL::calcMinTickSpacing () const
 { 
-    return (pixelsPerUnit >= 10)? 1 : 5;
+     if (_reverse_axis.getMaxVal() - _reverse_axis.getMinVal() < 10)
+    {
+        return 1;
+    }
+
+    return (_reverse_axis.getPixelsPerUnit() >= 10)? 1 : 5;
 }
 
-int AxisBottomToTopL::calcMajTickSpacing (int pixelsPerUnit) const
+int AxisBottomToTopL::calcMajTickSpacing () const
 { 
-    return (pixelsPerUnit > 10)? 5 : 10;
+    if (_reverse_axis.getMaxVal() - _reverse_axis.getMinVal() < 10)
+    {
+        return 1;
+    }
+    
+    return (_reverse_axis.getPixelsPerUnit() > 10)? 5 : 10; 
 }

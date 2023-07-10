@@ -102,9 +102,10 @@ src/Question_Int.cpp
 src/Question_Double.cpp
 src/Question.cpp
 src/RandomIntegers.cpp
-src/Resident_UsingFunction.cpp
 src/Renderer.cpp
+src/Resident_UsingFunction.cpp
 src/Resident.cpp
+src/ReverseAxis.cpp
 src/RunMetrics.cpp
 src/Simulator_Basic_A.cpp
 src/TextHelper.cpp

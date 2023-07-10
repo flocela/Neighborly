@@ -63,8 +63,7 @@ TEST_CASE("AxisBottomToTopL.getPixel()_x-axisCenteredOnPixel_Diff_DotSizes")
     // value -1 is represented by pixel 48
     // Note, pixel zero represents values from (4.9375, 5.0625]
 
-    // getAxisLengthPx is 50. Should be 51 ([-1 to 49]), but smallest pixel is 0, so it's 50
-    REQUIRE( 50 == axis.getAxisLengthPx() ); 
+    REQUIRE( 51 == axis.getAxisLengthPx() ); 
     REQUIRE( pair<int, int>{7, 9} == axis.getPixel(4, 3) ); // {7, 9}
     REQUIRE( pair<int, int>{11, 13} == axis.getPixel(3.5, 3) ); // {11, 13}
     REQUIRE( pair<int, int>{12, 14} == axis.getPixel(3.4, 3) ); // {12, 14}
