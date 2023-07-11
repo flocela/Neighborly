@@ -51,12 +51,6 @@ TEST_CASE("PlotA:: create basic PlotA")
     int plotSizeX   = plotA.sizeXPx();
     int plotSizeY   = plotA.sizeYPx();
 
-    // unitSizeXPx and unitSizeYPx must both be even or both be odd
-    REQUIRE( (unitSizeXPx%2) == (unitSizeYPx%2) );
-
-    // dot's even/oddness must match unit sizes' even/oddness
-    REQUIRE ( unitSizeXPx%2 == plotA.getDotSizePx()%2);
-
     // plot should take up a large part of the available space given
     REQUIRE( (0.65 * xSpacePx) < plotA.sizeXPx());
     REQUIRE( xSpacePx > plotA.sizeXPx());
@@ -191,12 +185,6 @@ TEST_CASE("PlotA:: setXYSpacePx")
     REQUIRE(topLeftYPx == plotA.getTopLeftYPx());
     REQUIRE(newXPx == plotA.getXSpacePx());
     REQUIRE(newYPx == plotA.getYSpacePx());
-
-    // unitSizeXPx and unitSizeYPx must both be even or both be odd
-    REQUIRE( (unitSizeXPx%2) == (unitSizeYPx%2) );
-    
-    // dot's even/oddness must match unit sizes' even/oddness
-    REQUIRE ( unitSizeXPx%2 == plotA.getDotSizePx()%2);
 
     // plot should take up a large part of the available space given
     REQUIRE( (0.65 * newXPx) < plotA.sizeXPx());

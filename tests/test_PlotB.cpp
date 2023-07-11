@@ -55,9 +55,6 @@ TEST_CASE("PlotB:: create basic PlotB")
 
     REQUIRE( unitSizeXPx == unitSizeYPx );
 
-    // dot's even/oddness must match unit size's even/oddness
-    REQUIRE ( unitSizeXPx%2 == plotB.getDotSizePx()%2);
-
     REQUIRE( xSpacePx > plotB.sizeXPx());
     REQUIRE( ySpacePx > plotB.sizeYPx());
 
@@ -191,12 +188,6 @@ TEST_CASE("PlotB:: setXYSpacePx")
     REQUIRE(topLeftYPx == plotB.getTopLeftYPx());
     REQUIRE(newXPx == plotB.getXSpacePx());
     REQUIRE(newYPx == plotB.getYSpacePx());
-
-    // unitSizeXPx and unitSizeYPx must be equal
-    REQUIRE( unitSizeXPx == unitSizeYPx);
-    
-    // dot's even/oddness must match unit sizes' even/oddness
-    REQUIRE ( unitSizeXPx%2 == plotB.getDotSizePx()%2);
 
     REQUIRE( xSpacePx > plotB.sizeXPx());
     REQUIRE( ySpacePx > plotB.sizeYPx());

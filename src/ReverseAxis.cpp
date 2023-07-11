@@ -25,14 +25,14 @@ ReverseAxis::ReverseAxis (
 
 int ReverseAxis::getAxisLengthPx () const
 {
-    cout << "frontPixel, endPixel: " << getFrontPixel() << ", " << getEndPixel() << endl;
     return abs(getEndPixel() - getFrontPixel()) + 1;
 }
 
 // TODO Add testing for this for even sized dotSize.
 std::pair<int, int> ReverseAxis::getPixel (double val, int dotSize) const
 {
-    // The standard line equation is y2 = y1 - m * (x2 - x1), m is in px per unit.
+    // The standard line equation is for downsloping line is
+    // y2 = y1 - m * (x2 - x1), m is in px per unit.
 
     // Change the variable names to denote pixels and axis-values.
     // Line equation: px2 = px1 - m * (v2 - v1), m is in px per unit.
@@ -50,13 +50,13 @@ std::pair<int, int> ReverseAxis::getPixel (double val, int dotSize) const
 
     if (dotSize%2 == 0)
     {
-        int latterPixel = floor(px2 + .5) - (dotSize/2);
-        return {latterPixel, latterPixel + dotSize-1};
+        int formerPixel = floor(px2 + .5) - (dotSize/2);
+        return {formerPixel, formerPixel + dotSize - 1};
     }
     else
     {
-        int latterPixel = floor(px2) - dotSize/2;
-        return {latterPixel, latterPixel + dotSize - 1};
+        int formerPixel = floor(px2) - dotSize/2;
+        return {formerPixel, formerPixel + dotSize - 1};
     }
 }
 
