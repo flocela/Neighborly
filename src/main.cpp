@@ -76,12 +76,11 @@ int main(int argc, char* argv[])
 {   
     // Components will be populated by file, by premade examples, or by user cmd line choices.
     SimulationComponents components;
-
     bool usingFile = (argc >= 2);
-    string inputFile = (argc >= 2)? argv[1] : "";
-
+    
     if (usingFile)
     {
+        string inputFile = argv[1];
         FromFileStarter fromFileStarter{};
         components = fromFileStarter.createSimulationComponents("../" + inputFile);
     }
