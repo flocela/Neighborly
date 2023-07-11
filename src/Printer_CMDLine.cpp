@@ -8,13 +8,14 @@
 using namespace std;
 
 Printer_CMDLine::Printer_CMDLine (
+    const City* cityPtr,
     unordered_map<int, BaseColor> baseColorsPerGroupid,
-    int maxNumofRuns,
-    const City* cityPtr
+    int maxNumofRuns
+    
 )
-: _base_colors_per_groupid{baseColorsPerGroupid}
+: _city_ptr{cityPtr}
+, _base_colors_per_groupid{baseColorsPerGroupid}
 , _max_num_of_runs{maxNumofRuns}
-, _city_ptr{cityPtr}
 {}
 
 void Printer_CMDLine::print (const RunMetrics* runMetrics) const

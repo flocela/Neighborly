@@ -10,12 +10,11 @@
 
 class Printer_CMDLine : public Printer
 {
-
 public:
     Printer_CMDLine (
+        const City* cityPtr,
         std::unordered_map<int, BaseColor> baseColorsPerGroupid,
-        int maxNumOfRuns,
-        const City* cityPtr
+        int maxNumOfRuns
     );
 
     Printer_CMDLine () = delete;
@@ -32,11 +31,9 @@ public:
     void lastPrint () override;
 
 private:
-    std::unordered_map<int, BaseColor> _base_colors_per_groupid;
-
-    int _max_num_of_runs;
-
     const City* _city_ptr;
+    std::unordered_map<int, BaseColor> _base_colors_per_groupid;
+    int _max_num_of_runs;
 
     // used for printing residents. happy characters per group Id.
     std::vector<char> happyCharacters = {'x', '!', '@', '#', '$', '%'};

@@ -146,9 +146,9 @@ int main(int argc, char* argv[])
     
     // Set up cmd line printer.
     Printer_CMDLine cmdLinePrinter{
+        components.city.get(),
         components.baseColorsPerGroupid,
-        components.numOfRuns,
-        components.city.get()
+        components.numOfRuns
     };
 
     // Start simulation. Simulation runs in a for loop numOfRun times.
