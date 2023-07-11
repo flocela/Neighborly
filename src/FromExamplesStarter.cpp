@@ -1,9 +1,9 @@
-#include "PremadeExamplesMenu.h"
-
 #include <memory>
 #include <string>
+
 #include "City_Grid.h"
 #include "CityState_Simple.h"
+#include "FromExamplesStarter.h"
 #include "HappinessFunc_Falling.h"
 #include "Resident_UsingFunction.h"
 #include "SimulationComponents.h"
@@ -23,7 +23,7 @@ std::unordered_set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
     return pointers;
 }
 
-SimulationComponents PremadeExamplesMenu::userChoosesExample (const UI& ui)
+SimulationComponents FromExamplesStarter::userChoosesExample (const UI& ui)
 {
     SimulationComponents components;
 

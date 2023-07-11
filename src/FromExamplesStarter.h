@@ -1,16 +1,17 @@
-#ifndef PREMADE_EXAMPLES_MENU_H
-#define PREMADE_EXAMPLES_MENU_H
+#ifndef FROM_EXAMPLES_STARTER_H
+#define FROM_EXAMPLES_STARTER_H
 
-#include <vector>
 #include <memory>
-#include "Resident.h"
+#include <vector>
+
 #include "City.h"
-#include "UI_CMDLine.h"
-#include "Simulator.h"
+#include "Resident.h"
 #include "SimulationComponents.h"
+#include "Simulator.h"
+#include "UI_CMDLine.h"
 
 // Asks the user which example to run.
-class PremadeExamplesMenu
+class FromExamplesStarter
 {
 public:
     // Asks user which example to run. Then returns the SimulationComponents that 

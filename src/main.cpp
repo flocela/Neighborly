@@ -41,8 +41,9 @@
 #include "CityFactory_Grid.h"
 #include "City_Grid.h"
 #include "Color.h"
-#include "ComponentsGetter.h"
-#include "PremadeExamplesMenu.h"
+#include "FromExamplesStarter.h"
+#include "FromQuestionsStarter.h"
+#include "FromFileStarter.h"
 #include "Printer_Graphic.h"
 #include "Printer_CMDLine.h"
 #include "Renderer_SDL.h"
@@ -55,9 +56,6 @@
 #include "Simulator.h"
 #include "Simulator_Basic_A.h"
 #include "SimulationComponents.h"
-#include "FromFileStarter.h"
-
-
 #include "UsePremadeExampleQuestion.h"
 
 using namespace std;
@@ -95,15 +93,16 @@ int main(int argc, char* argv[])
         // User chooses to use pre-made examples, or type in required information.
         UsePremadeExampleQuestion usePremadeExamplesQuestion;
         bool usingExamples = usePremadeExamplesQuestion.askUser(cmdLine);
+
         if (usingExamples)
         {   
-            PremadeExamplesMenu premadeExamplesMenu;
-            components = premadeExamplesMenu.userChoosesExample(cmdLine);
+            FromExamplesStarter fromExamplesStarter;
+            components = fromExamplesStarter.userChoosesExample(cmdLine);
         }
         else
         {
-            ComponentsGetter componentsGetter{};
-            components = componentsGetter.askUserForComponents(
+            FromQuestionsStarter fromQuestionsStarter{};
+            components = fromQuestionsStarter.askUserForComponents(
                 cmdLine,
                 initCityFactories(),
                 initResidentFactories(),

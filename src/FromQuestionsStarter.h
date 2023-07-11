@@ -1,5 +1,5 @@
-#ifndef COMPONENTSGETTER_H
-#define COMPONENTSGETTER_H
+#ifndef FROM_QUESTIONS_STARTER_H
+#define FROM_QUESTIONS_STARTER_H
 
 #include <vector>
 #include <memory>
@@ -8,7 +8,7 @@
 #include "ResidentsFactory.h"
 #include "SimulationComponents.h"
 
-class ComponentsGetter
+class FromQuestionsStarter
 {
 public:
     SimulationComponents askUserForComponents (
