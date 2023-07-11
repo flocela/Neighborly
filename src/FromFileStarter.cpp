@@ -1,5 +1,4 @@
-#include "SimulationStarter.h"
-
+#include "FromFileStarter.h"
 #include <fstream>
 #include <iostream>
 #include <set>
@@ -26,7 +25,7 @@ std::unordered_set<T*> getSetOfPointers (const std::vector<std::unique_ptr<T>>& 
     return pointers;
 }
 
-SimulationComponents SimulationStarter::createSimulationComponents(string inputTextFile)
+SimulationComponents FromFileStarter::createSimulationComponents(string inputTextFile)
 {
     SimulationComponents components;
     ifstream inputStream;
@@ -134,7 +133,7 @@ SimulationComponents SimulationStarter::createSimulationComponents(string inputT
     return components;
 }
 
-std::unique_ptr<Simulator_Basic_A> SimulationStarter::returnSimulatorBasicA (
+std::unique_ptr<Simulator_Basic_A> FromFileStarter::returnSimulatorBasicA (
     std::ifstream& inputStream,
     const SimulationComponents& components
 )
@@ -156,7 +155,7 @@ std::unique_ptr<Simulator_Basic_A> SimulationStarter::returnSimulatorBasicA (
     );
 }
 
-std::unique_ptr<Simulator_Basic_B> SimulationStarter::returnSimulatorBasicB (
+std::unique_ptr<Simulator_Basic_B> FromFileStarter::returnSimulatorBasicB (
     std::ifstream& inputStream,
     const SimulationComponents& components
 )
@@ -185,7 +184,7 @@ std::unique_ptr<Simulator_Basic_B> SimulationStarter::returnSimulatorBasicB (
     );
 }
 
-pair<int, BaseColor> SimulationStarter::returnBaseColor (ifstream& inputStream)
+pair<int, BaseColor> FromFileStarter::returnBaseColor (ifstream& inputStream)
 {
     string groupId = "";
     string baseColor = "";
@@ -212,7 +211,7 @@ pair<int, BaseColor> SimulationStarter::returnBaseColor (ifstream& inputStream)
     return {stoi(groupId), c};
 }
 
-void SimulationStarter::populateResidents (
+void FromFileStarter::populateResidents (
     ifstream& inputStream,
     vector<unique_ptr<Resident>>& residents
 )
@@ -329,7 +328,7 @@ void SimulationStarter::populateResidents (
     }
 }
 
-void SimulationStarter::populateResidentsWithStepDownFunc (
+void FromFileStarter::populateResidentsWithStepDownFunc (
     std::ifstream& inputStream,
         std::vector<std::unique_ptr<Resident>>& residents,
         int startId,
@@ -390,7 +389,7 @@ void SimulationStarter::populateResidentsWithStepDownFunc (
     }
 }
 
-void SimulationStarter::populateResidentsWithStepUpFunc (
+void FromFileStarter::populateResidentsWithStepUpFunc (
     std::ifstream& inputStream,
         std::vector<std::unique_ptr<Resident>>& residents,
         int startId,
@@ -450,7 +449,7 @@ void SimulationStarter::populateResidentsWithStepUpFunc (
     }
 }
 
-void SimulationStarter::populateResidentsWithFallingFunc (
+void FromFileStarter::populateResidentsWithFallingFunc (
     std::ifstream& inputStream,
     std::vector<std::unique_ptr<Resident>>& residents,
     int startId,
@@ -502,7 +501,7 @@ void SimulationStarter::populateResidentsWithFallingFunc (
     }
 }
 
-void SimulationStarter::populateResidentsWithRisingFunc (
+void FromFileStarter::populateResidentsWithRisingFunc (
     std::ifstream& inputStream,
     std::vector<std::unique_ptr<Resident>>& residents,
     int startId,
@@ -554,7 +553,7 @@ void SimulationStarter::populateResidentsWithRisingFunc (
     }
 }
 
-void SimulationStarter::populateResidentsWithFlatFunc (
+void FromFileStarter::populateResidentsWithFlatFunc (
     std::ifstream& inputStream,
     std::vector<std::unique_ptr<Resident>>& residents,
     int startId,
@@ -598,7 +597,7 @@ void SimulationStarter::populateResidentsWithFlatFunc (
     }
 }
 
-string SimulationStarter::leftTrim (string str)
+string FromFileStarter::leftTrim (string str)
 {
     size_t start = str.find_first_not_of(" ");
     return (start == std::string::npos) ? "" : str.substr(start);

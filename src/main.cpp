@@ -55,7 +55,9 @@
 #include "Simulator.h"
 #include "Simulator_Basic_A.h"
 #include "SimulationComponents.h"
-#include "SimulationStarter.h"
+#include "FromFileStarter.h"
+
+
 #include "UsePremadeExampleQuestion.h"
 
 using namespace std;
@@ -82,8 +84,8 @@ int main(int argc, char* argv[])
 
     if (usingFile)
     {
-        SimulationStarter simulationStarter{};
-        components = simulationStarter.createSimulationComponents("../" + inputFile);
+        FromFileStarter fromFileStarter{};
+        components = fromFileStarter.createSimulationComponents("../" + inputFile);
     }
     else
     {   

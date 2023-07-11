@@ -1,5 +1,5 @@
-#ifndef SIMULATION_STARTER_H
-#define SIMULATION_STARTER_H
+#ifndef FROM_FILE_STARTER_H
+#define FROM_FILE_STARTER_H
 
 #include <fstream>
 #include <memory>
@@ -11,7 +11,7 @@
 #include "Simulator_Basic_B.h"
 
 // takes in a file and returns a SimulationComponents
-class SimulationStarter
+class FromFileStarter
 {
 public:
 
