@@ -28,4 +28,17 @@ private:
     int _y = -1;
 
 };
+
+namespace std
+{
+    template<>
+    struct hash<Coordinate>
+    {
+        size_t operator()(const Coordinate& o) const
+        {
+            return ((hash<float>()(o.getX())^(hash<float>()(o.getY())<<1))>>1);
+        }
+    };
+}
+
 #endif

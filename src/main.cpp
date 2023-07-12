@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
         throw invalid_argument("Number of houses needs to be larger than number of residents.");
     }
 
-    // Set up graphical printer.
+    // Setup graphical printer.
 
     // graphic printer needs a renderer
     unique_ptr<Renderer_SDL> renderer = make_unique<Renderer_SDL>(
@@ -128,27 +128,30 @@ int main(int argc, char* argv[])
 
     // graphical printer needs map of adjacent houses per house
     vector<const House*> houses = components.city->getHouses();
-
-    unordered_map<const House*, unordered_set<const House*>> neighboringHousesPerHouse;
+    unordered_map<const House*, unordered_set<const House*>> adjacentHousesPerHouse;
     for (const House* house : houses)
     {   
-        neighboringHousesPerHouse[house] = components.city->getHousesAdjacent(house->getAddress());
+        adjacentHousesPerHouse[house] = components.city->getHousesAdjacent(house->getAddress());
     }
 
+    // construct graphic printer
     Printer_Graphic graphicPrinter{
         move(renderer),
         components.baseColorsPerGroupid,
         components.city->getCoordinatesPerHouse(),
-        neighboringHousesPerHouse,
+        adjacentHousesPerHouse,
         "Neighbors",
         components.numOfRuns
     };
     
-    // Set up cmd line printer.
+    // cmd line printer needs a CityPrinter
+    unique_ptr<CityPrinter> cityPrinter = make_unique<CityPrinter>(components.city.get());
+
+    // Setup cmd line printer.
     Printer_CMDLine cmdLinePrinter{
-        components.city.get(),
+        cityPrinter.get(),
         components.baseColorsPerGroupid,
-        components.numOfRuns
+        components.numOfRuns,
     };
 
     // Start simulation. Simulation runs in a for loop numOfRun times.

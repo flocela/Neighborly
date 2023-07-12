@@ -30,8 +30,8 @@ public:
     Printer_Graphic (
         std::unique_ptr<Renderer> renderer,
         std::unordered_map<int, BaseColor> colors,
-        std::unordered_map<const House*, Coordinate> coordinatesPerHouse,
-        std::unordered_map<const House*, std::unordered_set<const House*>> neighborHousesPerHouse,
+        std::unordered_map<const House*, Coordinate > coordinatesPerHouse,
+        std::unordered_map<const House*, std::unordered_set<const House*>> adjacentHousesPerHouse,
         std::string title,
         int numOfRuns
     );

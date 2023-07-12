@@ -33,7 +33,7 @@ public:
     double getWidth() const override;
 
     Coordinate getCoordinate (const int& address) const override;
-    std::unordered_map<const House*, Coordinate> getCoordinatesPerHouse();
+    std::unordered_map<const House*, Coordinate> getCoordinatesPerHouse() const;
 
     double getDist ( const int& from_address,  const int& to_address) const override;
 
@@ -62,8 +62,6 @@ public:
     int getNumOfHouses() const override;
     std::vector<const House*> getHouses () const override;
     std::unordered_set<const House*> getHousesAdjacent (int address) const override;
-    
-    std::string toString (const std::unordered_map<int, char>& characterPerAddress) const override;
 
 private:
     int _width;

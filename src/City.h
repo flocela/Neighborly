@@ -30,7 +30,7 @@ public:
     // returns coordinate of house (x, y).
     virtual Coordinate getCoordinate(const int& address) const = 0;
 
-    virtual std::unordered_map<const House*, Coordinate > getCoordinatesPerHouse() = 0;
+    virtual std::unordered_map<const House*, Coordinate > getCoordinatesPerHouse() const = 0;
 
     virtual double getDist (
         const int& from_address, 
@@ -72,9 +72,6 @@ public:
 
     // Returns all houses adjacent to address of house.
     virtual std::unordered_set<const House*> getHousesAdjacent (int address) const = 0;
-
-    // Returns a string representing the city. Characters will represent specific addresses.
-    virtual std::string toString (const std::unordered_map<int, char>& characterPerAddress) const = 0;
 };
 
 #endif

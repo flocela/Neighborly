@@ -8,12 +8,12 @@
 using namespace std;
 
 Printer_CMDLine::Printer_CMDLine (
-    const City* cityPtr,
+    const CityPrinter* cityPrinter,
     unordered_map<int, BaseColor> baseColorsPerGroupid,
     int maxNumofRuns
     
 )
-: _city_ptr{cityPtr}
+: _city_printer{cityPrinter}
 , _base_colors_per_groupid{baseColorsPerGroupid}
 , _max_num_of_runs{maxNumofRuns}
 {}
@@ -82,8 +82,9 @@ void Printer_CMDLine::print (const RunMetrics* runMetrics) const
     // Print city map if on first or last run.
     if (run == 0 || run == _max_num_of_runs-1)
     {
+        // Create characters per address map. It will assign a character to each 
+        // address based on the resident's happiness.
         unordered_map<int, char> characterPerAddress{};
-
         for (auto pair : residentsPerHouse)
         {
             const House* house = pair.first;
@@ -105,7 +106,7 @@ void Printer_CMDLine::print (const RunMetrics* runMetrics) const
                  << "unhappy: " << groupID << endl << "           ";
         }
         cout << "empty house: -" << endl;
-        cout << _city_ptr->toString(characterPerAddress) << endl;
+        cout << _city_printer->print(characterPerAddress) << endl;
         cout << endl;
     }
 }

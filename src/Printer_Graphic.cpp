@@ -14,7 +14,7 @@ Printer_Graphic::Printer_Graphic (
     std::unique_ptr<Renderer> renderer,
     unordered_map<int, BaseColor> colors,
     unordered_map<const House*, Coordinate > coordinatesPerHouse,
-    unordered_map<const House*, unordered_set<const House*>> neighborHousesPerHouse,
+    unordered_map<const House*, unordered_set<const House*>> adjacentHousesPerHouse,
     string title,
     int numOfRuns
 )
@@ -67,10 +67,10 @@ Printer_Graphic::Printer_Graphic (
     // Determine the available space for the diversity chart.
     int divChartAvailSpaceYPx = _div_chart_y_axis_fraction * colSpaceYPx;
 
-    int maxNumOfAdjHouses = determineMaxNumberOfAdjHouses(neighborHousesPerHouse);
+    int maxNumOfAdjHouses = determineMaxNumberOfAdjHouses(adjacentHousesPerHouse);
 
     _div_chart = createDvstyChart(
-        neighborHousesPerHouse,
+        adjacentHousesPerHouse,
         maxNumOfAdjHouses,
         _num_of_runs,
         chartsTopLeftYPx,
