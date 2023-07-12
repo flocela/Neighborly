@@ -12,9 +12,9 @@ using namespace std;
 
 Printer_Graphic::Printer_Graphic (
     std::unique_ptr<Renderer> renderer,
-    unordered_map<int, BaseColor> colors,
-    unordered_map<const House*, Coordinate > coordinatesPerHouse,
-    unordered_map<const House*, unordered_set<const House*>> adjacentHousesPerHouse,
+    const unordered_map<int, BaseColor>& colors,
+    const unordered_map<const House*, Coordinate>& coordinatesPerHouse,
+    const unordered_map<const House*, unordered_set<const House*>>& adjacentHousesPerHouse,
     string title,
     int numOfRuns
 )
@@ -168,7 +168,7 @@ vector<int> Printer_Graphic::determineMinMaxHouseCoords(
 }
 
 int Printer_Graphic::determineMaxNumberOfAdjHouses (
-    unordered_map<const House*, unordered_set<const House*>> neighbors
+    const unordered_map<const House*, unordered_set<const House*>>& neighbors
 )
 {
     int max = 0;
@@ -216,7 +216,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
 }
 
 unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
-    unordered_map<const House*, unordered_set<const House*>> neighbors,
+    const unordered_map<const House*, unordered_set<const House*>>& neighbors,
     int maxNumOfNeighbors,
     int maxNumOfRuns,
     int topLeftYPx,

@@ -118,50 +118,34 @@ int main(int argc, char* argv[])
         throw invalid_argument("Number of houses needs to be larger than number of residents.");
     }
 
-    // Setup graphical printer.
-
-    // graphic printer needs a renderer
-    unique_ptr<Renderer_SDL> renderer = make_unique<Renderer_SDL>(
-        SCREEN_WIDTH, 
-        SCREEN_HEIGHT, 
-        "Neighbors");
-
-    // graphical printer needs map of adjacent houses per house
-    vector<const House*> houses = components.city->getHouses();
-    unordered_map<const House*, unordered_set<const House*>> adjacentHousesPerHouse;
-    for (const House* house : houses)
-    {   
-        adjacentHousesPerHouse[house] = components.city->getHousesAdjacent(house->getAddress());
-    }
-
-    // construct graphic printer
+    // Construct graphic printer
     Printer_Graphic graphicPrinter{
-        move(renderer),
+        make_unique<Renderer_SDL>(SCREEN_WIDTH, SCREEN_HEIGHT,"Neighbors"),
         components.baseColorsPerGroupid,
         components.city->getCoordinatesPerHouse(),
-        adjacentHousesPerHouse,
+        *(components.city->getAdjacentHousesPerHouse()),
         "Neighbors",
         components.numOfRuns
     };
-    
+
     // cmd line printer needs a CityPrinter
     unique_ptr<CityPrinter> cityPrinter = make_unique<CityPrinter>(components.city.get());
 
-    // Setup cmd line printer.
+    // construct cmd line printer
     Printer_CMDLine cmdLinePrinter{
-        cityPrinter.get(),
+        *(cityPrinter.get()),
         components.baseColorsPerGroupid,
         components.numOfRuns,
     };
 
-    // Start simulation. Simulation runs in a for loop numOfRun times.
+    // Start simulation. Simulation runs in a for-loop numOfRun times.
     // Run metrics are updated after each run. Results are printed after each run.
 
     // set seed for randomization for simulation.
     srand(components.randomSeed);
 
     RunMetrics runMetrics{
-        components.city.get(),
+        *(components.city->getAdjacentHousesPerHouse()),
         components.randomSeed,
         components.simulator->toString()};
 

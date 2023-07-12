@@ -8,8 +8,8 @@
 using namespace std;
 
 Printer_CMDLine::Printer_CMDLine (
-    const CityPrinter* cityPrinter,
-    unordered_map<int, BaseColor> baseColorsPerGroupid,
+    const CityPrinter& cityPrinter,
+    const unordered_map<int, BaseColor>& baseColorsPerGroupid,
     int maxNumofRuns
     
 )
@@ -106,7 +106,7 @@ void Printer_CMDLine::print (const RunMetrics* runMetrics) const
                  << "unhappy: " << groupID << endl << "           ";
         }
         cout << "empty house: -" << endl;
-        cout << _city_printer->print(characterPerAddress) << endl;
+        cout << _city_printer.print(characterPerAddress) << endl;
         cout << endl;
     }
 }

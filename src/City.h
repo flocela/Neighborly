@@ -72,6 +72,10 @@ public:
 
     // Returns all houses adjacent to address of house.
     virtual std::unordered_set<const House*> getHousesAdjacent (int address) const = 0;
+
+    // Returns const pointer to map of adjacent houses for each house.
+    virtual const std::unordered_map<const House*, std::unordered_set<const House*>>* 
+        getAdjacentHousesPerHouse () const = 0;
 };
 
 #endif

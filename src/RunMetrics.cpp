@@ -1,20 +1,15 @@
 #include "RunMetrics.h"
-
+#include <iostream>
 using namespace std;
 
 RunMetrics::RunMetrics (
-    const City* cityPtr,
+    const unordered_map<const House*, unordered_set<const House*>>& adjacentHousesPerHouse,
     int seedNumber,
-    string simulator
-): _city{cityPtr},
+    string simulatorName
+): _adj_houses{adjacentHousesPerHouse},
    _seed_number{seedNumber},
-   _simulator{simulator}
-{
-    for (const House* house : _city->getHouses())
-    {
-        _adj_houses[house] = _city->getHousesAdjacent(house->getAddress());
-    }
-}
+   _simulator_name{simulatorName}
+{}
 
 void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Resident*> residentsPerHouse)
 {   
@@ -33,7 +28,7 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
         const House* house = houseThenResident.first;
         const Resident* resident = houseThenResident.second;
         int residentGroupId = resident->getGroupId();
-        unordered_set<const House*> housesAdjToRes = _adj_houses[house];
+        unordered_set<const House*> housesAdjToRes = _adj_houses.at(house);
        
         // populate _resident_example_per_group_id
         if ( _resident_example_per_group_id.find(resident->getGroupId()) ==
@@ -93,7 +88,7 @@ int RunMetrics::getSeedNumber () const
 
 string RunMetrics::getSimulator() const
 {
-    return _simulator;
+    return _simulator_name;
 }
 
 unordered_map<const House*, const Resident*> RunMetrics::getResidentsPerHouse() const

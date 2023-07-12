@@ -13,8 +13,8 @@ class Printer_CMDLine : public Printer
 {
 public:
     Printer_CMDLine (
-        const CityPrinter* cityPrinter,
-        std::unordered_map<int, BaseColor> baseColorsPerGroupid,
+        const CityPrinter& cityPrinter,
+        const std::unordered_map<int, BaseColor>& baseColorsPerGroupid,
         int maxNumOfRuns
     );
 
@@ -32,8 +32,8 @@ public:
     void lastPrint () override;
 
 private:
-    const CityPrinter* _city_printer;
-    std::unordered_map<int, BaseColor> _base_colors_per_groupid;
+    const CityPrinter& _city_printer;
+    const std::unordered_map<int, BaseColor>& _base_colors_per_groupid;
     int _max_num_of_runs;
 
     // used for printing residents. happy characters per group Id.

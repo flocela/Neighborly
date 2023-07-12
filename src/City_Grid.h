@@ -62,6 +62,8 @@ public:
     int getNumOfHouses() const override;
     std::vector<const House*> getHouses () const override;
     std::unordered_set<const House*> getHousesAdjacent (int address) const override;
+    const std::unordered_map<const House*, std::unordered_set<const House*>>*
+        getAdjacentHousesPerHouse () const override;
 
 private:
     int _width;
@@ -74,14 +76,14 @@ private:
 
     std::map<int, House*> _house_per_address;
 
-    // holds the return values for teh getHousesWithinDistance method. That way
+    // holds the return values for the getHousesWithinDistance method. That way
     // the results do not need to be calculated for every call.
     // holds an unordered list of houses that are within the allowable distance
     // per the house and the allowable distance.
     mutable std::map< std::pair<double, int>, std::unordered_set<const House*> >
         _houses_within_distance;
 
-    mutable std::map<int, std::unordered_set<const House*>> _adjacent_houses_per_house_address;
+    std::unordered_map<const House*, std::unordered_set<const House*>> _adjacent_houses_per_house{};
 
     // Returns x value of @address
     int get_x (const int& address) const;

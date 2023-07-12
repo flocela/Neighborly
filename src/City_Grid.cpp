@@ -23,6 +23,14 @@ City_Grid::City_Grid (int width):
 		  _house_per_address[addr] = (_houses[addr]).get();
         }
   	}
+
+	for (auto& house : _houses)
+	{
+		_adjacent_houses_per_house.insert(
+			{house.get(),
+			 getHousesAdjacent(house->getAddress())}
+		);
+	}
 }
 
 double City_Grid::getHeight() const
@@ -191,11 +199,6 @@ vector<const House*> City_Grid::getHouses () const
 
 unordered_set<const House*> City_Grid::getHousesAdjacent (int address) const
 {	
-	if ( _adjacent_houses_per_house_address.find(address) != _adjacent_houses_per_house_address.end())
-	{	
-		return _adjacent_houses_per_house_address[address];
-	}
-	
 	unordered_set<const House*> adjacentHouses = {};
 
 	Coordinate coord = getCoordinate(address);
@@ -241,9 +244,14 @@ unordered_set<const House*> City_Grid::getHousesAdjacent (int address) const
 			adjacentHouses.insert(_houses[address + _width + 1].get());
 		}
 	}
-	_adjacent_houses_per_house_address[address] = adjacentHouses;
 
 	return adjacentHouses;
+}
+
+const unordered_map<const House*, unordered_set<const House*>>*
+	City_Grid::getAdjacentHousesPerHouse () const
+{
+	return &_adjacent_houses_per_house;
 }
 
 const House* City_Grid::selectRandom (unordered_set<const House*>& setOfHouses) const

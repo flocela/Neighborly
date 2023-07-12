@@ -29,9 +29,9 @@ class Printer_Graphic : public Printer
 public:
     Printer_Graphic (
         std::unique_ptr<Renderer> renderer,
-        std::unordered_map<int, BaseColor> colors,
-        std::unordered_map<const House*, Coordinate > coordinatesPerHouse,
-        std::unordered_map<const House*, std::unordered_set<const House*>> adjacentHousesPerHouse,
+        const std::unordered_map<int, BaseColor>& colors,
+        const std::unordered_map<const House*, Coordinate>& coordinatesPerHouse,
+        const std::unordered_map<const House*, std::unordered_set<const House*>>& adjacentHousesPerHouse,
         std::string title,
         int numOfRuns
     );
@@ -64,9 +64,9 @@ private:
     int _col_inside_border__px = 50;
     int _x_center__px = _screen_width__px/2; // center of screen
 
-    std::unordered_map<int, BaseColor> _colors;
+    const std::unordered_map<int, BaseColor>& _colors;
     
-    std::unordered_map<const House*, Coordinate> _coordinates_per_house = {};
+    const std::unordered_map<const House*, Coordinate>& _coordinates_per_house;
     
     Letter _window_title_letter{44, 5, 0.35};
     std::unique_ptr<Title_Basic> _window_title;
@@ -138,7 +138,7 @@ private:
     // Finds the house with the largest number of adjacent houses from the unordered_map given.
     // Returns the number of adjacent houses.
     int determineMaxNumberOfAdjHouses (
-        std::unordered_map<const House*,std::unordered_set<const House*>> neighbors
+        const std::unordered_map<const House*,std::unordered_set<const House*>>& neighbors
     );
 
     std::unique_ptr<GrCityChart> createCityChart (
@@ -150,7 +150,7 @@ private:
         int availSpaceYPx);
 
     std::unique_ptr<GrDvstyChart> createDvstyChart(
-        std::unordered_map<const House*, std::unordered_set<const House*>> neighbors,
+        const std::unordered_map<const House*, std::unordered_set<const House*>>& neighbors,
         int maxNumOfNeighbors,
         int maxNumOfRuns,
         int topLeftYPx,
