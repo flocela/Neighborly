@@ -21,6 +21,7 @@ City_Grid::City_Grid (int width):
 		  int addr = (ii*width) + jj;
           _houses.emplace_back(make_unique<House>(addr));
 		  _house_per_address[addr] = (_houses[addr]).get();
+		  _coordinate_per_house.insert({_houses[addr].get(), Coordinate(ii, jj)});
         }
   	}
 
@@ -48,16 +49,9 @@ Coordinate City_Grid::getCoordinate(const int& address) const
 	return Coordinate{get_x(address), get_y(address)};
 }
 
-unordered_map<const House*, Coordinate> City_Grid::getCoordinatesPerHouse() const
+const unordered_map<const House*, Coordinate>* City_Grid::getCoordinatesPerHouse() const
 {
-	unordered_map<const House*, Coordinate> coordinatesPerHouse{};
-	
-	for (auto& pair : _house_per_address)
-	{
-		coordinatesPerHouse.emplace(pair.second, getCoordinate(pair.first));
-	}
-
-	return coordinatesPerHouse;
+	return &_coordinate_per_house;
 }
 
 double City_Grid::getDist (const int& fromAddress, const int& toAddress) const
@@ -182,7 +176,7 @@ pair<int, int> City_Grid::getYRangeForAllowableDistanceToHouse (
 	return pair<int, int> {minY, maxY};
 }
 
-int City_Grid::getNumOfHouses() const
+size_t City_Grid::getNumOfHouses() const
 {
 	return _houses.size();
 }

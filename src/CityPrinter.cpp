@@ -15,8 +15,9 @@ string CityPrinter::print (unordered_map<int, char> characterPerAddress) const
 
 	// Create map of houses per coordinate
 	unordered_map<Coordinate, const House*> housesPerCoordinate{};
-	unordered_map<const House*, Coordinate> coordinatesPerHouse = _city->getCoordinatesPerHouse();
-	for (auto houseAndCoord : coordinatesPerHouse)
+	const unordered_map<const House*, Coordinate>* coordinatesPerHouse =
+		_city->getCoordinatesPerHouse();
+	for (auto houseAndCoord : *coordinatesPerHouse)
 	{
 		housesPerCoordinate.insert({houseAndCoord.second, houseAndCoord.first});
 	}

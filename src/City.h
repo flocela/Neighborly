@@ -28,9 +28,9 @@ public:
     virtual double getWidth() const = 0;
 
     // returns coordinate of house (x, y).
-    virtual Coordinate getCoordinate(const int& address) const = 0;
+    virtual Coordinate getCoordinate (const int& address) const = 0;
 
-    virtual std::unordered_map<const House*, Coordinate > getCoordinatesPerHouse() const = 0;
+    virtual const std::unordered_map<const House*, Coordinate>* getCoordinatesPerHouse() const = 0;
 
     virtual double getDist (
         const int& from_address, 
@@ -50,6 +50,7 @@ public:
         double allowableDist
     ) const = 0;
 
+    // TODO not used, maybe delete
     // given a house's coordinates, returns the range of x coordinates that would still be
     // within an allowable distance from the house.
     virtual std::pair<int, int> getXRangeForAllowableDistanceToHouse (
@@ -57,6 +58,7 @@ public:
         double allowableDist
     ) const = 0;
 
+    // TODO not used, maybe delete
     // given a house's coordinates, returns the range of y coordinates that would still be
     // within an allowable distance from the house.
     virtual std::pair<int, int> getYRangeForAllowableDistanceToHouse (
@@ -65,7 +67,7 @@ public:
     ) const = 0;
 
     // total number of addresses. same as total number of houses.
-    virtual int getNumOfHouses() const = 0;
+    virtual size_t getNumOfHouses () const = 0;
 
     // Returns all the houses in the city.
     virtual std::vector<const House*> getHouses () const = 0;

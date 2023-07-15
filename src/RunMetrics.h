@@ -8,11 +8,11 @@
 #include "House.h"
 #include "Resident.h"
 
+// Used by Printer interface. Contains needed data for a printer to print output.
 class RunMetrics
 {
 
 public: 
-
     RunMetrics (
         const std::unordered_map<const House*, std::unordered_set<const House*>>& adjacentHousesPerHouse,
         int seedNumber,

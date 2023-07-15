@@ -64,6 +64,7 @@ using namespace std;
 
 const vector<unique_ptr<const CityFactory>> initCityFactories ();
 const vector<unique_ptr<const ResidentsFactory>> initResidentFactories ();
+SimulationComponents createSimulationComponents (int argc, char* argv[]);
 
 const int SCREEN_WIDTH = 2400;
 const int SCREEN_HEIGHT = 1200;
@@ -75,54 +76,27 @@ const int MAX_NUM_OF_RUNS = 200;
 int main(int argc, char* argv[])
 {   
     // Components will be populated by file, by premade examples, or by user cmd line choices.
-    SimulationComponents components;
-    bool usingFile = (argc >= 2);
-    
-    if (usingFile)
-    {
-        string inputFile = argv[1];
-        FromFileStarter fromFileStarter{};
-        components = fromFileStarter.createSimulationComponents("../" + inputFile);
-    }
-    else
-    {   
-        // Gather information from user using the cmd line
-        const UI_CMDLine cmdLine{};
+    SimulationComponents components = createSimulationComponents(argc, argv);
 
-        // User chooses to use pre-made examples, or type in required information.
-        UsePremadeExampleQuestion usePremadeExamplesQuestion;
-        bool usingExamples = usePremadeExamplesQuestion.askUser(cmdLine);
-
-        if (usingExamples)
-        {   
-            FromExamplesStarter fromExamplesStarter;
-            components = fromExamplesStarter.userChoosesExample(cmdLine);
-        }
-        else
-        {
-            FromQuestionsStarter fromQuestionsStarter{};
-            components = fromQuestionsStarter.askUserForComponents(
-                cmdLine,
-                initCityFactories(),
-                initResidentFactories(),
-                MAX_HOUSES_X,
-                MAX_HOUSES_Y,
-                MAX_NUM_OF_RUNS
-            );
-        }
-    }
-
-    // Throw exception if common input errors are made.
-    if (components.city->getNumOfHouses() < (int)components.residents.size())
+    // Throw exception if plain input errors are made.
+    if (components.city->getNumOfHouses() < components.residents.size())
     {
         throw invalid_argument("Number of houses needs to be larger than number of residents.");
+    }
+    if (components.city->getNumOfHouses() == 0)
+    {
+        throw invalid_argument("City must have at least one house.");// TODO test this.
+    }
+    if ((int)components.residents.size() == 0)
+    {
+        throw invalid_argument("There must be at least one resident.");// TODO test this.
     }
 
     // Construct graphic printer
     Printer_Graphic graphicPrinter{
         make_unique<Renderer_SDL>(SCREEN_WIDTH, SCREEN_HEIGHT,"Neighbors"),
         components.baseColorsPerGroupid,
-        components.city->getCoordinatesPerHouse(),
+        *(components.city->getCoordinatesPerHouse()),
         *(components.city->getAdjacentHousesPerHouse()),
         "Neighbors",
         components.numOfRuns
@@ -131,7 +105,7 @@ int main(int argc, char* argv[])
     // cmd line printer needs a CityPrinter
     unique_ptr<CityPrinter> cityPrinter = make_unique<CityPrinter>(components.city.get());
 
-    // construct cmd line printer
+    // Construct cmd line printer
     Printer_CMDLine cmdLinePrinter{
         *(cityPrinter.get()),
         components.baseColorsPerGroupid,
@@ -141,7 +115,7 @@ int main(int argc, char* argv[])
     // Start simulation. Simulation runs in a for-loop numOfRun times.
     // Run metrics are updated after each run. Results are printed after each run.
 
-    // set seed for randomization for simulation.
+    // Set seed for randomization for simulation.
     srand(components.randomSeed);
 
     RunMetrics runMetrics{
@@ -176,6 +150,52 @@ int main(int argc, char* argv[])
     cmdLinePrinter.lastPrint();
 
     return 0; 
+}
+
+// Create simulation components.
+// Pass in main arguments. If argv[1] contains a file name, then simulation components
+// are made from the file name. Otherwise user is asked if they want to choose
+// from premade examples or create simulation components from a series of questions.
+SimulationComponents createSimulationComponents (int argc, char* argv[])
+{
+    SimulationComponents components;
+
+    bool usingFile = (argc >= 2);
+    if (usingFile)
+    {
+        string inputFile = argv[1];
+        FromFileStarter fromFileStarter{};
+        components = fromFileStarter.createSimulationComponents("../" + inputFile);
+    }
+    else
+    {   
+        // Gather information from user using the cmd line
+        const UI_CMDLine cmdLine{};
+
+        // User chooses to use pre-made examples, or type in required information.
+        UsePremadeExampleQuestion usePremadeExamplesQuestion;
+        bool usingExamples = usePremadeExamplesQuestion.askUser(cmdLine);
+
+        if (usingExamples)
+        {   
+            FromExamplesStarter fromExamplesStarter;
+            components = fromExamplesStarter.userChoosesExample(cmdLine);
+        }
+        else
+        {
+            FromQuestionsStarter fromQuestionsStarter{};
+            components = fromQuestionsStarter.askUserForComponents(
+                cmdLine,
+                initCityFactories(),
+                initResidentFactories(),
+                MAX_HOUSES_X,
+                MAX_HOUSES_Y,
+                MAX_NUM_OF_RUNS
+            );
+        }
+    }
+    
+    return components;
 }
 
 const vector<unique_ptr<const CityFactory>> initCityFactories ()

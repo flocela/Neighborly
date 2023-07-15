@@ -27,7 +27,7 @@ private:
     City* _city = nullptr;
     std::unordered_set<Resident*> _residents{};
     double _percent_residents_to_move = 20.0;
-    int _number_of_houses_to_look_at = 5;
+    size_t _number_of_houses_to_look_at = 5;
 
     Question_Double createQuestionForPercentOfResidentsThatMustMove ();
     Question_Int createQuestionForNumberOfHousesToChooseFrom ();

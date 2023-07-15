@@ -32,10 +32,10 @@ Question_Int SimulatorGetter::createQuestionForNumberOfHousesToChooseFrom ()
     return Question_Int{
         1,
         1,
-        _city->getNumOfHouses(),
+        static_cast<int>(_city->getNumOfHouses()),
         true,
         true,
-        _number_of_houses_to_look_at,
+        static_cast<int>(_number_of_houses_to_look_at),
         _simulator_b_number_of_houses_to_choose_from_prompt,
         _simulator_b_number_of_houses_to_choose_from_value
     };

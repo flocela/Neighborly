@@ -33,7 +33,7 @@ public:
     double getWidth() const override;
 
     Coordinate getCoordinate (const int& address) const override;
-    std::unordered_map<const House*, Coordinate> getCoordinatesPerHouse() const;
+    const std::unordered_map<const House*, Coordinate>* getCoordinatesPerHouse() const;
 
     double getDist ( const int& from_address,  const int& to_address) const override;
 
@@ -59,7 +59,7 @@ public:
         double allowableDist
     ) const;
 
-    int getNumOfHouses() const override;
+    size_t getNumOfHouses() const override;
     std::vector<const House*> getHouses () const override;
     std::unordered_set<const House*> getHousesAdjacent (int address) const override;
     const std::unordered_map<const House*, std::unordered_set<const House*>>*
@@ -75,6 +75,8 @@ private:
     std::vector<std::unique_ptr<House>> _houses;
 
     std::map<int, House*> _house_per_address;
+
+    std::unordered_map<const House*, Coordinate> _coordinate_per_house{};
 
     // holds the return values for the getHousesWithinDistance method. That way
     // the results do not need to be calculated for every call.
