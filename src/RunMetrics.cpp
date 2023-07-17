@@ -4,10 +4,8 @@ using namespace std;
 
 RunMetrics::RunMetrics (
     const unordered_map<const House*, unordered_set<const House*>>& adjacentHousesPerHouse,
-    int seedNumber,
     string simulatorName
 ): _adj_houses{adjacentHousesPerHouse},
-   _seed_number{seedNumber},
    _simulator_name{simulatorName}
 {}
 
@@ -74,16 +72,6 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
         _num_of_residents_per_group_id[residentGroupId] += 1;
     }
 
-}
-
-void RunMetrics::setSeedNumber (int seedNumber)
-{
-    _seed_number = seedNumber;
-}
-
-int RunMetrics::getSeedNumber () const
-{
-    return _seed_number;
 }
 
 string RunMetrics::getSimulator() const

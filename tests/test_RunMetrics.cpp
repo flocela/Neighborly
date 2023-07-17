@@ -63,7 +63,7 @@ unordered_map<const House*, unordered_set<const House*>> getAdjacentHousesPerHou
 TEST_CASE("empty city")
 {
     City_Grid city = City_Grid(20);
-    RunMetrics rm{getAdjacentHousesPerHouse(&city), 0, "simA"};
+    RunMetrics rm{getAdjacentHousesPerHouse(&city), "simA"};
     unordered_map<const House*, const Resident*> residentsPerHouse{};
     unordered_map<int, int> numOfResidentsPerGroupId{};
     unordered_map<int, int> numOfDiffNeighborsPerGroupId{};
@@ -112,7 +112,7 @@ TEST_CASE("three columns of group1")
         }
     }
 
-    RunMetrics rm{getAdjacentHousesPerHouse(&city), 0, "simA"};
+    RunMetrics rm{getAdjacentHousesPerHouse(&city), "simA"};
     rm.updateMetrics(1, residentsPerHouse);
 
     REQUIRE(residentsPerHouse == rm.getResidentsPerHouse());
@@ -235,7 +235,7 @@ TEST_CASE("four columns of group1, two columns of group2")
         }
     }
 
-    RunMetrics rm{getAdjacentHousesPerHouse(&city), 0, "simA"};
+    RunMetrics rm{getAdjacentHousesPerHouse(&city), "simA"};
     rm.updateMetrics(1, residentsPerHouse);
 
     REQUIRE(residentsPerHouse == rm.getResidentsPerHouse());

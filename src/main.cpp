@@ -97,6 +97,7 @@ int main(int argc, char* argv[])
         components.baseColorsPerGroupid,
         components.residentTemplatePerGroupId,
         components.numOfRuns,
+        components.randomSeed
     };
 
     // Start simulation. Simulation runs in a for-loop numOfRun times.
@@ -107,7 +108,6 @@ int main(int argc, char* argv[])
 
     RunMetrics runMetrics{
         *(components.city->getAdjacentHousesPerHouse()),
-        components.randomSeed,
         components.simulator->toString()};
 
     for (int ii=0; ii<components.numOfRuns; ii++)

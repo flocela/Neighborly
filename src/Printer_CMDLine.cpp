@@ -11,12 +11,14 @@ Printer_CMDLine::Printer_CMDLine (
     const CityPrinter& cityPrinter,
     const unordered_map<int, BaseColor>& baseColorsPerGroupid,
     const std::unordered_map<int, unique_ptr<const ResidentTemplate>>& resTemplatePerGroupId,
-    int maxNumofRuns
+    int maxNumofRuns,
+    int seedNumber
 )
 : _city_printer{cityPrinter}
 , _base_colors_per_groupid{baseColorsPerGroupid}
 , _res_templates_per_group_id{resTemplatePerGroupId}
 , _max_num_of_runs{maxNumofRuns}
+, _seed_number{seedNumber}
 {}
 
 void Printer_CMDLine::print (const RunMetrics* runMetrics) const
@@ -61,7 +63,7 @@ void Printer_CMDLine::print (const RunMetrics* runMetrics) const
                  << "      " << _res_templates_per_group_id.at(groupID)->getType() << endl;
         }
         cout << "  Simulator: " << runMetrics->getSimulator() << endl;
-        cout << "  Seed for random number generator: " << runMetrics->getSeedNumber() << endl;
+        cout << "  Seed for random number generator: " << _seed_number << endl;
         cout << endl;
     }
 
