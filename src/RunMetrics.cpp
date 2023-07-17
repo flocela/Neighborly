@@ -3,10 +3,8 @@
 using namespace std;
 
 RunMetrics::RunMetrics (
-    const unordered_map<const House*, unordered_set<const House*>>& adjacentHousesPerHouse,
-    string simulatorName
-): _adj_houses{adjacentHousesPerHouse},
-   _simulator_name{simulatorName}
+    const unordered_map<const House*, unordered_set<const House*>>& adjacentHousesPerHouse
+): _adj_houses{adjacentHousesPerHouse}
 {}
 
 void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Resident*> residentsPerHouse)
@@ -22,18 +20,19 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
     _run_num = run;
     
     for (pair<const House*, const Resident*> houseThenResident : residentsPerHouse)
-    {
+    {   
         const House* house = houseThenResident.first;
         const Resident* resident = houseThenResident.second;
         int residentGroupId = resident->getGroupId();
         unordered_set<const House*> housesAdjToRes = _adj_houses.at(house);
-       
         // populate _resident_example_per_group_id
         if ( _resident_example_per_group_id.find(resident->getGroupId()) ==
             _resident_example_per_group_id.end() )
         {
             _resident_example_per_group_id[resident->getGroupId()] = resident;
         }
+
+        cout << "RunMetrics BB" << endl;
 
         // number of neighbors that have a different groupId than resident
         int disparateNeighbors = 0;
@@ -50,6 +49,8 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
                 }
             }
         }
+
+        cout << "RunMetrics CC" << endl;
         
         // add number of disparate neighbors to sum of different neighbors for this group's id
         if ( _num_of_diff_neighbors_per_group_id.find(residentGroupId) ==
@@ -57,7 +58,7 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
         {
             _num_of_diff_neighbors_per_group_id[residentGroupId] = 0;
         }
-
+        cout << "RunMetrics DD" << endl;
         _num_of_diff_neighbors_per_group_id[residentGroupId] += disparateNeighbors;
 
         // add resident's happiness to the group's happiness sum.
@@ -65,18 +66,14 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
         {
             _happiness_sum_per_group_id[residentGroupId] = 0;
         }
-
+        cout << "RunMetrics EE" << endl;
         _happiness_sum_per_group_id[residentGroupId] += resident->getHappiness();
 
         // increase the number of residents per this group id
         _num_of_residents_per_group_id[residentGroupId] += 1;
+        cout << "RunMetrics FF" << endl;
     }
-
-}
-
-string RunMetrics::getSimulator() const
-{
-    return _simulator_name;
+    cout << "RunMetrics ZZ" << endl;
 }
 
 unordered_map<const House*, const Resident*> RunMetrics::getResidentsPerHouse() const

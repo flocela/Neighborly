@@ -12,13 +12,15 @@ Printer_CMDLine::Printer_CMDLine (
     const unordered_map<int, BaseColor>& baseColorsPerGroupid,
     const std::unordered_map<int, unique_ptr<const ResidentTemplate>>& resTemplatePerGroupId,
     int maxNumofRuns,
-    int seedNumber
+    int seedNumber,
+    string simulatorName
 )
 : _city_printer{cityPrinter}
 , _base_colors_per_groupid{baseColorsPerGroupid}
 , _res_templates_per_group_id{resTemplatePerGroupId}
 , _max_num_of_runs{maxNumofRuns}
 , _seed_number{seedNumber}
+, _simulator_name{simulatorName}
 {}
 
 void Printer_CMDLine::print (const RunMetrics* runMetrics) const
@@ -62,7 +64,7 @@ void Printer_CMDLine::print (const RunMetrics* runMetrics) const
                  << _res_templates_per_group_id.at(groupID)->getHappinessGoal() << "," << endl
                  << "      " << _res_templates_per_group_id.at(groupID)->getType() << endl;
         }
-        cout << "  Simulator: " << runMetrics->getSimulator() << endl;
+        cout << "  Simulator: " << _simulator_name << endl;
         cout << "  Seed for random number generator: " << _seed_number << endl;
         cout << endl;
     }

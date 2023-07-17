@@ -18,7 +18,8 @@ public:
         const std::unordered_map<int, BaseColor>& baseColorsPerGroupid,
         const std::unordered_map<int, std::unique_ptr<const ResidentTemplate>>& resTemplatePerGroupId,
         int maxNumOfRuns,
-        int seedNumber
+        int seedNumber,
+        std::string simulatorString
     );
 
     Printer_CMDLine () = delete;
@@ -40,6 +41,7 @@ private:
     const std::unordered_map<int, std::unique_ptr<const ResidentTemplate>>& _res_templates_per_group_id;
     int _max_num_of_runs;
     int _seed_number;
+    std::string _simulator_name;
 
     // used for printing residents. happy characters per group Id.
     std::vector<char> happyCharacters = {'x', '!', '@', '#', '$', '%'};

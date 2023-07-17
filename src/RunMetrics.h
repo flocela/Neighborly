@@ -14,8 +14,7 @@ class RunMetrics
 
 public: 
     RunMetrics (
-        const std::unordered_map<const House*, std::unordered_set<const House*>>& adjacentHousesPerHouse,
-        std::string simulatorName
+        const std::unordered_map<const House*, std::unordered_set<const House*>>& adjacentHousesPerHouse
     );
     RunMetrics () = delete;
     RunMetrics (const RunMetrics& o) = default;
@@ -41,8 +40,6 @@ public:
 
     int getRunNumber () const;
 
-    std::string getSimulator () const;
-
     void updateMetrics(
         int run,
         std::unordered_map<const House*, const Resident*> residentsPerHouse
@@ -52,7 +49,6 @@ private:
 
     int _run_num = -1;
     const std::unordered_map<const House*, std::unordered_set<const House*>>& _adj_houses;
-    std::string _simulator_name = "";
 
     std::unordered_map<const House*, const Resident*> _residents_per_house{};
     std::unordered_map<int, int> _num_of_residents_per_group_id{};
