@@ -66,7 +66,11 @@ ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
         for (auto& r: newResidents)
             resGroupInfo._residents.emplace_back(move(r));
 
+        resGroupInfo._resident_template_per_group_id
+            .insert({newResidents[0]->getGroupId(), newResidents[0]->getTemplate()});
+
         numOfResidentsCreated += newResidents.size();
+
     }
     
     return resGroupInfo;

@@ -1,8 +1,10 @@
 #ifndef RESIDENT_H
 #define RESIDENT_H
 
+#include <memory>
 #include <unordered_set>
 #include <string>
+#include "ResidentTemplate.h"
 
 class Resident{
 
@@ -37,8 +39,9 @@ public:
     virtual double getMaximumPossibleHappiness () const = 0;
     virtual double getLeastPossibleHappiness () const = 0;
     int getID() const;
+    virtual std::unique_ptr<ResidentTemplate> getTemplate () const = 0;
     std::string toStr () const;
-    std::string toStrType () const;
+    std::string toStrType () const; // TODO delete toStrType
 
     bool operator< (const Resident& other) const;
     

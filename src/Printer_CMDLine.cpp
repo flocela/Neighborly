@@ -10,11 +10,12 @@ using namespace std;
 Printer_CMDLine::Printer_CMDLine (
     const CityPrinter& cityPrinter,
     const unordered_map<int, BaseColor>& baseColorsPerGroupid,
+    const std::unordered_map<int, unique_ptr<ResidentTemplate>>& resTemplatePerGroupId,
     int maxNumofRuns
-    
 )
 : _city_printer{cityPrinter}
 , _base_colors_per_groupid{baseColorsPerGroupid}
+, _res_templates_per_group_id{resTemplatePerGroupId}
 , _max_num_of_runs{maxNumofRuns}
 {}
 
@@ -49,13 +50,15 @@ void Printer_CMDLine::print (const RunMetrics* runMetrics) const
         cout << "  Resident group info per groupId:" << endl;
         for (auto groupID : groupIDs)
         {
-            const Resident* res = residentExamplePerGroupId[groupID];
+            //const Resident* res = residentExamplePerGroupId[groupID];
             cout << "    Group id " << groupID << ":" << endl;
             cout << "      base color: " << _base_colors_per_groupid.at(groupID)
                  << "      count: "<< numOfResidentsPerGroupId[groupID] << ", "
-                 << "      allowed movement: " << res->getAllowedMovementDistance() << ", "
-                 << "      happiness goal: " << res->getHappinessGoal() << "," << endl
-                 << "      " << res->toStrType() << endl;
+                 << "      allowed movement: "
+                 << _res_templates_per_group_id.at(groupID)->getAllowedMovementDistance() << ", "
+                 << "      happiness goal: "
+                 << _res_templates_per_group_id.at(groupID)->getHappinessGoal() << "," << endl
+                 << "      " << _res_templates_per_group_id.at(groupID)->getType() << endl;
         }
         cout << "  Simulator: " << runMetrics->getSimulator() << endl;
         cout << "  Seed for random number generator: " << runMetrics->getSeedNumber() << endl;

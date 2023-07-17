@@ -6,6 +6,8 @@
 #include <map>
 #include <utility>
 
+// Only has getter functions.
+// Can not change city's coordinates or addresses after construction.
 class City_Grid: public City
 {
 public:

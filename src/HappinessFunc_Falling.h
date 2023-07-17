@@ -37,6 +37,7 @@ public:
         int num_of_diff_neighbors) const override;
 
     std::string toStrBasic () const override;
+    
 private:
     double _happ_with_no_neighbors;
     double _happ_at_zero_diversity;

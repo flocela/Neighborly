@@ -35,7 +35,7 @@ Printer_Graphic::Printer_Graphic (
        _chart_title_letter.getHeightIncLSpace(),
        _chart_title_letter,
        _num_of_runs)}
-{   
+{  
     _window_title->setTextColor(_title_text_color);
 
     // Set vertical column space for left and right columns. Columns sit below the runs chart

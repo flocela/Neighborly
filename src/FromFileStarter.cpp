@@ -85,7 +85,12 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
         {
             if (line.find("<resident_group>") != string::npos)
             {
-            populateResidents(inputStream, components.residents);
+                populateResidents(inputStream, components.residents);
+
+                // resident types per group id
+                 const unique_ptr<Resident>& lastResident = components.residents.back();
+                components.residentTemplatePerGroupId
+                    .insert({lastResident->getGroupId(), lastResident->getTemplate()});
             }
 
             getline(inputStream, line);
@@ -117,6 +122,7 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
             }
             getline(inputStream, line); // </simulator>
         }
+
         // number of runs
         getline(inputStream, line);
         if (line.find("<num_of_runs>") != string::npos)

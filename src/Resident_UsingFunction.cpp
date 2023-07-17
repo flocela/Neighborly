@@ -1,4 +1,5 @@
 #include "Resident_UsingFunction.h"
+#include "ResidentTemplate_UsingFunction.h"
 
 using namespace std;
 
@@ -7,7 +8,7 @@ Resident_UsingFunction::Resident_UsingFunction (
     int groupNumber,
     double allowedMovementDistance,
     double happinessGoal,
-    std::unique_ptr<HappinessFunc> happinessFunc
+    unique_ptr<HappinessFunc> happinessFunc
 ): Resident(id, groupNumber, allowedMovementDistance, happinessGoal),
    _hap_func{move(happinessFunc)}
 {}
@@ -42,4 +43,13 @@ double Resident_UsingFunction::implimentHappiness(
             diff++;
     }
     return _hap_func->calcHappiness(numOfAdjacentHouses, like, diff);
+}
+
+std::unique_ptr<ResidentTemplate> Resident_UsingFunction::getTemplate () const
+{
+    return make_unique<ResidentTemplate_UsingFunction>(
+        getAllowedMovementDistance(),
+        getHappinessGoal(),
+        toStrType()
+    );
 }

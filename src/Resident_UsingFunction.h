@@ -26,6 +26,8 @@ public:
     double getMaximumPossibleHappiness () const;
     double getLeastPossibleHappiness () const;
 
+    std::unique_ptr<ResidentTemplate> getTemplate () const override;
+
 protected:
     double implimentHappiness (
         const std::unordered_set<const Resident*>& neighbors,

@@ -78,20 +78,6 @@ int main(int argc, char* argv[])
     // Components will be populated by file, by premade examples, or by user cmd line choices.
     SimulationComponents components = createSimulationComponents(argc, argv);
 
-    // Throw exception if plain input errors are made.
-    if (components.city->getNumOfHouses() < components.residents.size())
-    {
-        throw invalid_argument("Number of houses needs to be larger than number of residents.");
-    }
-    if (components.city->getNumOfHouses() == 0)
-    {
-        throw invalid_argument("City must have at least one house.");// TODO test this.
-    }
-    if ((int)components.residents.size() == 0)
-    {
-        throw invalid_argument("There must be at least one resident.");// TODO test this.
-    }
-
     // Construct graphic printer
     Printer_Graphic graphicPrinter{
         make_unique<Renderer_SDL>(SCREEN_WIDTH, SCREEN_HEIGHT,"Neighbors"),
@@ -109,6 +95,7 @@ int main(int argc, char* argv[])
     Printer_CMDLine cmdLinePrinter{
         *(cityPrinter.get()),
         components.baseColorsPerGroupid,
+        components.residentTemplatePerGroupId,
         components.numOfRuns,
     };
 
@@ -193,6 +180,20 @@ SimulationComponents createSimulationComponents (int argc, char* argv[])
                 MAX_NUM_OF_RUNS
             );
         }
+    }
+
+    // Throw exception if plain input errors are made.
+    if (components.city->getNumOfHouses() < components.residents.size())
+    {
+        throw invalid_argument("Number of houses needs to be larger than number of residents.");
+    }
+    if (components.city->getNumOfHouses() == 0)
+    {
+        throw invalid_argument("City must have at least one house.");// TODO test this.
+    }
+    if ((int)components.residents.size() == 0)
+    {
+        throw invalid_argument("There must be at least one resident.");// TODO test this.
     }
     
     return components;

@@ -83,6 +83,12 @@ SimulationComponents FromExamplesStarter::userChoosesExample (const UI& ui)
                         50)
                 ));
             }
+
+            components.residentTemplatePerGroupId
+                .insert({1, components.residents[0]->getTemplate()});
+            components.residentTemplatePerGroupId
+                .insert({2, components.residents[360]->getTemplate()});
+
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
@@ -90,7 +96,9 @@ SimulationComponents FromExamplesStarter::userChoosesExample (const UI& ui)
                 20,
                 make_unique<CityState_Simple>(components.city.get())
             );
+
             components.numOfRuns = 20;
+            
             
             break;
         }
@@ -137,6 +145,11 @@ SimulationComponents FromExamplesStarter::userChoosesExample (const UI& ui)
                         50)
                 ));
             }
+
+            components.residentTemplatePerGroupId
+                .insert({1, components.residents[0]->getTemplate()});
+            components.residentTemplatePerGroupId
+                .insert({2, components.residents[5760]->getTemplate()});
 
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
@@ -194,6 +207,11 @@ SimulationComponents FromExamplesStarter::userChoosesExample (const UI& ui)
                 ));
             }
 
+            components.residentTemplatePerGroupId
+                .insert({1, components.residents[0]->getTemplate()});
+            components.residentTemplatePerGroupId
+                .insert({2, components.residents[360]->getTemplate()});
+
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
@@ -249,6 +267,11 @@ SimulationComponents FromExamplesStarter::userChoosesExample (const UI& ui)
                         10)
                 ));
             }
+
+            components.residentTemplatePerGroupId
+                .insert({1, components.residents[0]->getTemplate()});
+            components.residentTemplatePerGroupId
+                .insert({2, components.residents[5760]->getTemplate()});
 
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),

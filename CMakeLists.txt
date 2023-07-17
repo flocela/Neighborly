@@ -103,6 +103,8 @@ src/Question_Double.cpp
 src/Question.cpp
 src/RandomIntegers.cpp
 src/Renderer.cpp
+src/ResidentTemplate.cpp
+src/ResidentTemplate_UsingFunction.cpp
 src/Resident_UsingFunction.cpp
 src/Resident.cpp
 src/ReverseAxis.cpp

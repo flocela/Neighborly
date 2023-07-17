@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
+// Holds the coordinates and addresses in a city.
+// Only has getter functions. 
 class City
 {
 
