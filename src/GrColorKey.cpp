@@ -7,7 +7,7 @@ GrColorKey::GrColorKey (
     int topCenterXPx,
     int topCenterYPx,
     Letter labelLetter,
-    std::unordered_map<int, BaseColor> colors,
+    const std::unordered_map<int, BaseColor>& colors,
     std::set<Mood> moods,
     std::vector<uint8_t> textColor,
     std::vector<uint8_t> textBackgroundColor
@@ -129,7 +129,7 @@ void GrColorKey::setAttributes ()
 
     for (int& groupId : groupIds)
     {
-        BaseColor baseColor = _b_color_per_groupId[groupId];
+        BaseColor baseColor = _b_color_per_groupId.at(groupId);
         for (auto mood : _moods)
         {
             string label = "Group: " + to_string(groupId);

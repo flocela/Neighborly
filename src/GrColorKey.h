@@ -18,7 +18,7 @@ public:
         int topCenterXPx, // x value of the top most center point.
         int topCenterYPx, // y value of the top most center point.
         Letter labelLetter, // each groupId will be labeled. this gives the size of the lettering
-        std::unordered_map<int, BaseColor> colors, // base color per groupId
+        const std::unordered_map<int, BaseColor>& colors, // base color per groupId
         std::set<Mood> moods, // keys for colors, e.g. happy, sad, neutral
         std::vector<uint8_t> textColor,
         std::vector<uint8_t> textBackgroundColor
@@ -49,7 +49,7 @@ private:
     int _top_center_x__px = 0;
     int _top_center_y__px = 0;
     Letter _label_letter;
-    std::unordered_map<int, BaseColor> _b_color_per_groupId;
+    const std::unordered_map<int, BaseColor>& _b_color_per_groupId;
     std::set<Mood> _moods;
     int _box_length__px = 0; // box is the colored square
     int _box_spacer__px = 6;
