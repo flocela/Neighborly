@@ -16,7 +16,7 @@ public:
     Printer_CMDLine (
         const CityPrinter& cityPrinter,
         const std::unordered_map<int, BaseColor>& baseColorsPerGroupid,
-        const std::unordered_map<int, std::unique_ptr<ResidentTemplate>>& resTemplatePerGroupId,
+        const std::unordered_map<int, std::unique_ptr<const ResidentTemplate>>& resTemplatePerGroupId,
         int maxNumOfRuns
     );
 
@@ -36,7 +36,7 @@ public:
 private:
     const CityPrinter& _city_printer;
     const std::unordered_map<int, BaseColor>& _base_colors_per_groupid;
-    const std::unordered_map<int, std::unique_ptr<ResidentTemplate>>& _res_templates_per_group_id;
+    const std::unordered_map<int, std::unique_ptr<const ResidentTemplate>>& _res_templates_per_group_id;
     int _max_num_of_runs;
 
     // used for printing residents. happy characters per group Id.

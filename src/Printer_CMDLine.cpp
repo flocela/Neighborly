@@ -10,7 +10,7 @@ using namespace std;
 Printer_CMDLine::Printer_CMDLine (
     const CityPrinter& cityPrinter,
     const unordered_map<int, BaseColor>& baseColorsPerGroupid,
-    const std::unordered_map<int, unique_ptr<ResidentTemplate>>& resTemplatePerGroupId,
+    const std::unordered_map<int, unique_ptr<const ResidentTemplate>>& resTemplatePerGroupId,
     int maxNumofRuns
 )
 : _city_printer{cityPrinter}

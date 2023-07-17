@@ -16,7 +16,7 @@ struct SimulationComponents
 public:
     int numOfRuns = 0;
     std::unordered_map<int, BaseColor> baseColorsPerGroupid{};
-    std::unordered_map<int, std::unique_ptr<ResidentTemplate>> residentTemplatePerGroupId{};
+    std::unordered_map<int, std::unique_ptr<const ResidentTemplate>> residentTemplatePerGroupId{};
     std::unique_ptr<City> city;
     std::vector<std::unique_ptr<Resident>> residents{};
     std::unique_ptr<Simulator> simulator;

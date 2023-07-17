@@ -59,7 +59,7 @@ SimulationComponents FromQuestionsStarter::askUserForComponents (
 
     // add resident type per group id
     resultantComponents.residentTemplatePerGroupId
-        = move(resGroupInfo._resident_template_per_group_id);
+        = move(resGroupInfo._res_template_per_group_id);
 
     // add group colors per resident
     resultantComponents.baseColorsPerGroupid = resGroupInfo._base_color_per_group_num;

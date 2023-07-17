@@ -45,9 +45,9 @@ double Resident_UsingFunction::implimentHappiness(
     return _hap_func->calcHappiness(numOfAdjacentHouses, like, diff);
 }
 
-std::unique_ptr<ResidentTemplate> Resident_UsingFunction::getTemplate () const
+std::unique_ptr<const ResidentTemplate> Resident_UsingFunction::getTemplate () const
 {
-    return make_unique<ResidentTemplate_UsingFunction>(
+    return make_unique<const ResidentTemplate_UsingFunction>(
         getAllowedMovementDistance(),
         getHappinessGoal(),
         toStrType()
