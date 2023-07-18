@@ -22,7 +22,7 @@ Simulator_Basic_A::Simulator_Basic_A (
    _city_state{std::move(cityState)}
 {}
 
-unordered_map<const House*, const Resident*> Simulator_Basic_A::run ()
+ResPerHouse Simulator_Basic_A::run ()
 {   
     // If city is empty, populate city.
     if (_city_state->getResidentsPerHouse().size() == 0)
@@ -41,7 +41,7 @@ unordered_map<const House*, const Resident*> Simulator_Basic_A::run ()
     // Convert them to const Resident pointers before returning results.
     std::unordered_map<const House*, Resident*> resPerHouse = _city_state->getResidentsPerHouse();
 
-    std::unordered_map<const House*, const Resident*> results{};
+    ResPerHouse results{};
     results.reserve(resPerHouse.size());
     for (auto pair : resPerHouse)
     {

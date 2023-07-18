@@ -7,10 +7,10 @@ RunMetrics::RunMetrics (
 ): _adj_houses{adjacentHousesPerHouse}
 {}
 
-void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Resident*> residentsPerHouse)
+void RunMetrics::updateMetrics(int run, const ResPerHouse residentsPerHouse)
 {   
     // clear previous runs' metrics
-    _residents_per_house = residentsPerHouse;
+    _residents_per_house = move(residentsPerHouse);
     _num_of_residents_per_group_id = unordered_map<int, int>{};
     _num_of_diff_neighbors_per_group_id = unordered_map<int, int>{};
     _happiness_sum_per_group_id = unordered_map<int, double>{};
@@ -19,7 +19,7 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
     // set run number
     _run_num = run;
     
-    for (pair<const House*, const Resident*> houseThenResident : residentsPerHouse)
+    for (auto houseThenResident : residentsPerHouse)
     {   
         const House* house = houseThenResident.first;
         const Resident* resident = houseThenResident.second;
@@ -39,7 +39,7 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
         for (const House* adjacentHouse : housesAdjToRes)
         {
             // if adjacent house is not empty
-            if (residentsPerHouse.find(adjacentHouse) != residentsPerHouse.end())
+            if (residentsPerHouse.contains(adjacentHouse))
             {
                 // adjacent resident's groupId
                 int adj_res_groupId = (residentsPerHouse.at(adjacentHouse))->getGroupId();
@@ -76,7 +76,7 @@ void RunMetrics::updateMetrics(int run, unordered_map<const House*, const Reside
     cout << "RunMetrics ZZ" << endl;
 }
 
-unordered_map<const House*, const Resident*> RunMetrics::getResidentsPerHouse() const
+ResPerHouse RunMetrics::getResidentsPerHouse() const
 {
     return _residents_per_house;
 }

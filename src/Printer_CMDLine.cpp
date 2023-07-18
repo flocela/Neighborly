@@ -26,8 +26,7 @@ Printer_CMDLine::Printer_CMDLine (
 void Printer_CMDLine::print (const RunMetrics* runMetrics) const
 {   
     // Collect information from runMetrics.
-    unordered_map<const House*, const Resident*> residentsPerHouse =
-        runMetrics->getResidentsPerHouse();
+    ResPerHouse residentsPerHouse = runMetrics->getResidentsPerHouse();
     unordered_map<int, int> numOfResidentsPerGroupId = runMetrics->getNumOfResidentsPerGroupId();
     unordered_map<int, int> numOfDiffNeighborsPerGroupId =
         runMetrics->getNumOfDiffNeighborsPerGroupId();

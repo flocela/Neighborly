@@ -107,6 +107,7 @@ src/ResidentTemplate.cpp
 src/ResidentTemplate_UsingFunction.cpp
 src/Resident_UsingFunction.cpp
 src/Resident.cpp
+src/ResPerHouse.cpp
 src/ReverseAxis.cpp
 src/RunMetrics.cpp
 src/Simulator_Basic_A.cpp

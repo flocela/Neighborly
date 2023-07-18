@@ -97,10 +97,8 @@ void Printer_Graphic::print (
     int run = runMetrics->getRunNumber();
 
     // Create vector of residents from runMetrics information.
-    unordered_map<const House*, const Resident*> residentPerHouse =
-        runMetrics->getResidentsPerHouse();
-        
     vector<const Resident*> residents;
+    ResPerHouse residentPerHouse = runMetrics->getResidentsPerHouse();
     for (auto houseAndResident : residentPerHouse)
     {
         if (houseAndResident.second != nullptr)

@@ -37,7 +37,7 @@ public:
     // ResidentA may move to a house that makes them happy, then subsequently residentB
     // may move next to the residentA. This could result in changing residentA's happiness,
     // making them happier or unhappy. 
-    std::unordered_map<const House*, const Resident*> run() override;
+    ResPerHouse run() override;
 
     std::string toString() override;
 

@@ -7,6 +7,7 @@
 #include "City.h"
 #include "House.h"
 #include "Resident.h"
+#include "ResPerHouse.h"
 
 // Used by Printer interface. Contains needed data for a printer to print output.
 class RunMetrics
@@ -23,7 +24,7 @@ public:
     RunMetrics& operator= (RunMetrics&& o) noexcept = default;
     ~RunMetrics () noexcept = default;
 
-    std::unordered_map<const House*, const Resident*> getResidentsPerHouse() const;
+    ResPerHouse getResidentsPerHouse() const;
     
     std::unordered_map<int, int> getNumOfResidentsPerGroupId () const;
 
@@ -42,7 +43,7 @@ public:
 
     void updateMetrics(
         int run,
-        std::unordered_map<const House*, const Resident*> residentsPerHouse
+        const ResPerHouse residentsPerHouse
     );
 
 private:
@@ -50,7 +51,7 @@ private:
     int _run_num = -1;
     const std::unordered_map<const House*, std::unordered_set<const House*>>& _adj_houses;
 
-    std::unordered_map<const House*, const Resident*> _residents_per_house{};
+    ResPerHouse _residents_per_house{};
     std::unordered_map<int, int> _num_of_residents_per_group_id{};
     std::unordered_map<int, int> _num_of_diff_neighbors_per_group_id{};
     std::unordered_map<int, double> _happiness_sum_per_group_id{};

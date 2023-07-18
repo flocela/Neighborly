@@ -1,18 +1,20 @@
 #ifndef GR_CITY_CHART_H
 #define GR_CITY_CHART_H
 
-#include "Renderer.h"
-#include "Coordinate.h"
-#include "TextRect.h"
-#include "Resident.h"
-#include <vector>
-#include "House.h"
 #include <memory>
+#include <vector>
+
 #include "AxisFormat.h"
-#include "Letter.h"
+#include "Coordinate.h"
 #include "GrColorKey.h"
-#include "Title.h"
+#include "House.h"
+#include "Letter.h"
 #include "Plot.h"
+#include "Renderer.h"
+#include "Resident.h"
+#include "ResPerHouse.h"
+#include "TextRect.h"
+#include "Title.h"
 
 // Used to print out a city map using a renderer.
 class GrCityChart
@@ -37,7 +39,7 @@ public:
     ~GrCityChart () noexcept = default;
 
     void print (
-        const std::unordered_map<const House*, const Resident*>& houseToResMap,
+        const ResPerHouse& houseToResMap,
         Renderer* renderer
     ) const;
 
@@ -64,9 +66,7 @@ public:
     // each point represents a house.
     // if a house is empty it gets a default color. if it is occupied, its color depends on the 
     //   resident's group id.
-    std::vector<Point> createVectorOfPoints (
-        std::unordered_map<const House*, const Resident*> residentPerHouse
-    ) const;
+    std::vector<Point> createVectorOfPoints (const ResPerHouse& residentPerHouse) const;
 
     // there will be only one color, the default color for an empty house.
     // all addresses will be represented as being empty.

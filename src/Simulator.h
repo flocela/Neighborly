@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include "Resident.h"
+#include "ResPerHouse.h"
 #include "House.h"
 
 class Simulator
@@ -16,7 +17,7 @@ protected:
 
 public:
     virtual ~Simulator () noexcept = default;
-    virtual std::unordered_map<const House*, const Resident*> run() = 0;
+    virtual ResPerHouse run() = 0;
     virtual std::string toString() = 0;
 };
 

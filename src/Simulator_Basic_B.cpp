@@ -28,7 +28,7 @@ Simulator_Basic_B::Simulator_Basic_B (
    _city_state{std::move(cityState)}
 { cout << "Basic B constructor" << endl;}
 
-std::unordered_map<const House*, const Resident*> Simulator_Basic_B::run ()
+ResPerHouse Simulator_Basic_B::run ()
 {   cout << "Basic B run" << endl;
     // If city is empty, then populate city first
     if (_city_state->getResidentsPerHouse().size() == 0)
@@ -46,7 +46,7 @@ std::unordered_map<const House*, const Resident*> Simulator_Basic_B::run ()
     // before returning results.
     std::unordered_map<const House*, Resident*> resPerHouse = _city_state->getResidentsPerHouse();
 
-    std::unordered_map<const House*, const Resident*> results{};
+    ResPerHouse results{};
     results.reserve(resPerHouse.size());
     for (auto pair : resPerHouse)
     {

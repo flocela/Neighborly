@@ -53,12 +53,14 @@
 #include "ResidentsFactory_StepDown.h"
 #include "ResidentsFactory_StepUp.h"
 #include "ResidentsFactory.h"
+#include "ResPerHouse.h"
 #include "Simulator.h"
 #include "Simulator_Basic_A.h"
 #include "SimulationComponents.h"
 #include "UsePremadeExampleQuestion.h"
 
 using namespace std;
+
 
 #define FONT_PATH "assets/pacifico/Pacifico.ttf"
 
@@ -112,9 +114,8 @@ int main(int argc, char* argv[])
 
     for (int ii=0; ii<components.numOfRuns; ii++)
     {  
-        unordered_map<const House*, const Resident*> residentsPerHouse = 
-            components.simulator->run();
-        runMetrics.updateMetrics(ii, residentsPerHouse);
+        ResPerHouse residentsPerHouse = components.simulator->run();
+        runMetrics.updateMetrics(ii, move(residentsPerHouse));
 
         // every run should show for at least 1/4 second
         auto timeStart = std::chrono::high_resolution_clock::now();

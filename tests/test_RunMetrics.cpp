@@ -64,12 +64,12 @@ TEST_CASE("empty city")
 {
     City_Grid city = City_Grid(20);
     RunMetrics rm{getAdjacentHousesPerHouse(&city)};
-    unordered_map<const House*, const Resident*> residentsPerHouse{};
+    ResPerHouse  residentsPerHouse{};
     unordered_map<int, int> numOfResidentsPerGroupId{};
     unordered_map<int, int> numOfDiffNeighborsPerGroupId{};
     unordered_map<int, double> happinessSumPerGroupId{};
     unordered_map<int, const Resident*> residentExamplePerGroupId{};
-
+//
     REQUIRE(residentsPerHouse == rm.getResidentsPerHouse());
     REQUIRE(numOfResidentsPerGroupId == rm.getNumOfResidentsPerGroupId());
     REQUIRE(numOfDiffNeighborsPerGroupId == rm.getNumOfDiffNeighborsPerGroupId());
@@ -101,7 +101,7 @@ TEST_CASE("three columns of group1")
     // Used for setting resident's happiness
     unordered_set<const Resident*> group1Set = createResidentsSet(1, 1, 0);
 
-    unordered_map<const House*, const Resident*> residentsPerHouse{};
+    ResPerHouse residentsPerHouse{};
     int resCounter = 0;
     for (int col=5; col<=7; ++col)
     {
@@ -118,13 +118,13 @@ TEST_CASE("three columns of group1")
         getAdjacentHousesPerHouse(&city);
     RunMetrics rm{adjacentHousesPerHouse};
     rm.updateMetrics(1, residentsPerHouse);
-/*
+
     REQUIRE(residentsPerHouse == rm.getResidentsPerHouse());
     REQUIRE(numOfResidents == rm.getNumOfResidentsPerGroupId()[1]);
     REQUIRE(0 == rm.getNumOfDiffNeighborsPerGroupId()[1]);
     REQUIRE(3000 == rm.getHappinessSumPerGroupId()[1]);
     REQUIRE(1 == rm.getResidentExamplePerGroupId()[1]->getGroupId());
-    */
+    
 }
 
 // 20 x 20 grid, three columns of group1
@@ -139,7 +139,7 @@ TEST_CASE("four columns of group1, two columns of group2")
 {
     City_Grid city = City_Grid(20);
     vector<const House*> cityHouses = city.getHouses();
-    unordered_map<const House*, const Resident*> residentsPerHouse{};
+    ResPerHouse residentsPerHouse{};
 
     // Used for setting resident's happiness
     unordered_set<const Resident*> group1Set = createResidentsSet(1, 1, 0);
@@ -276,3 +276,4 @@ TEST_CASE("four columns of group1, two columns of group2")
     REQUIRE(1 == rm.getResidentExamplePerGroupId()[1]->getGroupId());
     REQUIRE(2 == rm.getResidentExamplePerGroupId()[2]->getGroupId());
 }
+

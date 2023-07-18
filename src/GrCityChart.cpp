@@ -33,7 +33,7 @@ GrCityChart::GrCityChart (
 }
 
 void GrCityChart::print(
-    const unordered_map<const House*, const Resident*>& houseToResMap,
+    const ResPerHouse& houseToResMap,
     Renderer* renderer
 ) const
 {   
@@ -61,9 +61,7 @@ int GrCityChart::sizeYPx () const
     return _title->sizeYPx() + _key->sizeYPx() + _plot->sizeYPx();
 }
 
-vector<Point> GrCityChart::createVectorOfPoints (
-    unordered_map<const House *, const Resident *> residentPerHouse
-) const
+vector<Point> GrCityChart::createVectorOfPoints (const ResPerHouse& residentPerHouse) const
 {   
     vector<Point> points{};
 
@@ -76,13 +74,13 @@ vector<Point> GrCityChart::createVectorOfPoints (
         Color color; 
 
         // if house is empty then color is Color::absent.
-        if (residentPerHouse.find(house) == residentPerHouse.end()) 
+        if (!residentPerHouse.contains(house))
         {
             color = Color::absent;
         }
         else
         {
-            const Resident *res = residentPerHouse[house];
+            const Resident *res = residentPerHouse.at(house);
             int groupId = res->getGroupId();
             double happinessGoal  = res->getHappinessGoal();
             double happinessValue = res->getHappiness();
