@@ -13,7 +13,7 @@ class ResPerHouse
 public:
     void insert(std::pair<const House*, const Resident*> pair);
     bool contains (const House* house) const ;
-    const Resident* at(const House* house) const;
+    const Resident* at (const House* house) const;
     std::unordered_map<const House*, const Resident*>::const_iterator cbegin() const noexcept;
     std::unordered_map<const House*, const Resident*>::const_iterator cend() const noexcept;
     std::unordered_map<const House*, const Resident*>::const_iterator begin() const noexcept;

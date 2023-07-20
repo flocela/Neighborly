@@ -11,7 +11,7 @@
 class FromQuestionsStarter
 {
 public:
-    SimulationComponents askUserForComponents (
+    SimulationComponents createSimulationComponents (
         const UI& ui,
         const std::vector<std::unique_ptr<const CityFactory>>& cityFactories, 
         const std::vector<std::unique_ptr<const ResidentsFactory>>& residentFactories,

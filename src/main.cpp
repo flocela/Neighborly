@@ -30,17 +30,9 @@
 
 #include <chrono>
 #include <iostream>
-#include <memory>
-#include <SDL.h>
-#include <SDL_ttf.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <thread>
 
 #include "CityFactory.h"
 #include "CityFactory_Grid.h"
-#include "City_Grid.h"
-#include "Color.h"
 #include "FromExamplesStarter.h"
 #include "FromQuestionsStarter.h"
 #include "FromFileStarter.h"
@@ -52,17 +44,14 @@
 #include "ResidentsFactory_Rising.h"
 #include "ResidentsFactory_StepDown.h"
 #include "ResidentsFactory_StepUp.h"
-#include "ResidentsFactory.h"
 #include "ResPerHouse.h"
 #include "Simulator.h"
-#include "Simulator_Basic_A.h"
 #include "SimulationComponents.h"
 #include "UsePremadeExampleQuestion.h"
 
-using namespace std;
-
-
 #define FONT_PATH "assets/pacifico/Pacifico.ttf"
+
+using namespace std;
 
 const vector<unique_ptr<const CityFactory>> initCityFactories ();
 const vector<unique_ptr<const ResidentsFactory>> initResidentFactories ();
@@ -72,13 +61,20 @@ const int SCREEN_WIDTH = 2400;
 const int SCREEN_HEIGHT = 1200;
 const int MAX_HOUSES_X = 120;
 const int MAX_HOUSES_Y = 120;
-const int MAX_NUM_OF_RESIDENT_GROUPS = 2;
 const int MAX_NUM_OF_RUNS = 200;
 
 int main(int argc, char* argv[])
 {   
-    // Components will be populated by file, by premade examples, or by user cmd line choices.
+    // components will be populated using a file, premade examples,
+    // or user choices from the command line.
+    // components and attributes within SimulationComponents are owned
+    // by main. They are passed to other class' constructors by const reference,
+    // const pointer, or by value.
     SimulationComponents components = createSimulationComponents(argc, argv);
+
+    // CityPrinter cityPrinter is owned by main.
+    // It is passed to Printer_CMDLine's constructor by const pointer.
+    unique_ptr<CityPrinter> cityPrinter = make_unique<CityPrinter>(components.city.get());
 
     // Construct graphic printer
     Printer_Graphic graphicPrinter{
@@ -90,9 +86,6 @@ int main(int argc, char* argv[])
         components.numOfRuns
     };
 
-    // cmd line printer needs a CityPrinter
-    unique_ptr<CityPrinter> cityPrinter = make_unique<CityPrinter>(components.city.get());
-
     // Construct cmd line printer
     Printer_CMDLine cmdLinePrinter{
         *(cityPrinter.get()),
@@ -103,14 +96,12 @@ int main(int argc, char* argv[])
         components.simulator->toString()
     };
 
-    // Start simulation. Simulation runs in a for-loop numOfRun times.
-    // Run metrics are updated after each run. Results are printed after each run.
-
     // Set seed for randomization for simulation.
     srand(components.randomSeed);
 
-    RunMetrics runMetrics{
-        *(components.city->getAdjacentHousesPerHouse())};
+    // Start simulation. Simulation runs in a for-loop. Each loop is a run.
+    // runMetrics is updated after each run. Results are printed after each run.
+    RunMetrics runMetrics{*(components.city->getAdjacentHousesPerHouse())};
 
     for (int ii=0; ii<components.numOfRuns; ii++)
     {  
@@ -124,7 +115,7 @@ int main(int argc, char* argv[])
         
         cmdLinePrinter.print(&runMetrics);
 
-        // show run for at least 1/4 second.
+        // show results for at least 1/4 second.
         std::this_thread::sleep_until(timeStart + std::chrono::milliseconds(250));
     }
 
@@ -141,14 +132,15 @@ int main(int argc, char* argv[])
 }
 
 // Create simulation components.
-// Pass in main arguments. If argv[1] contains a file name, then simulation components
+// Pass in arguments from main. If argv[1] contains a file name, then simulation components
 // are made from the file name. Otherwise user is asked if they want to choose
-// from premade examples or create simulation components from a series of questions.
+// from premade examples or create simulation components from a series of questions on the command line.
 SimulationComponents createSimulationComponents (int argc, char* argv[])
 {
     SimulationComponents components;
 
     bool usingFile = (argc >= 2);
+
     if (usingFile)
     {
         string inputFile = argv[1];
@@ -167,12 +159,12 @@ SimulationComponents createSimulationComponents (int argc, char* argv[])
         if (usingExamples)
         {   
             FromExamplesStarter fromExamplesStarter;
-            components = fromExamplesStarter.userChoosesExample(cmdLine);
+            components = fromExamplesStarter.createSimulationComponents(cmdLine);
         }
         else
         {
             FromQuestionsStarter fromQuestionsStarter{};
-            components = fromQuestionsStarter.askUserForComponents(
+            components = fromQuestionsStarter.createSimulationComponents(
                 cmdLine,
                 initCityFactories(),
                 initResidentFactories(),

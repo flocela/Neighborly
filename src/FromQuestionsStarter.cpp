@@ -21,7 +21,7 @@ std::unordered_set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
     return pointers;
 }
 
-SimulationComponents FromQuestionsStarter::askUserForComponents (
+SimulationComponents FromQuestionsStarter::createSimulationComponents (
     const UI& ui,
     const vector<unique_ptr<const CityFactory>>& cityFactories,
     const vector<unique_ptr<const ResidentsFactory>>& residentFactories,

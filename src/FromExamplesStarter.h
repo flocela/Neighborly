@@ -16,7 +16,7 @@ class FromExamplesStarter
 public:
     // Asks user which example to run. Then returns the SimulationComponents that 
     // can be used to generate the simulation.
-    SimulationComponents userChoosesExample (const UI& ui);
+    SimulationComponents createSimulationComponents (const UI& ui);
 };
 
 #endif

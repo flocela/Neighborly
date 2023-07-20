@@ -23,7 +23,7 @@ std::unordered_set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
     return pointers;
 }
 
-SimulationComponents FromExamplesStarter::userChoosesExample (const UI& ui)
+SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& ui)
 {
     SimulationComponents components;
 
