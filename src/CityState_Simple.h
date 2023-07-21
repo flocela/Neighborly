@@ -43,6 +43,14 @@ private:
     std::unordered_map<const House*, Resident*> _resident_per_house = {};
     std::unordered_map<Resident*, const House*> _house_per_resident{};
 
+
+    double getDist (
+        const double firstX,
+        const double firstY,
+        const double secondX,
+        const double secondY
+    ) const;
+
 };
 
 #endif

@@ -1,6 +1,7 @@
-#include "CityState_Simple.h"
-
 #include <algorithm>
+#include <cmath>
+
+#include "CityState_Simple.h"
 #include "Coordinate.h"
 
 using namespace std;
@@ -81,7 +82,7 @@ vector<const House*> CityState_Simple::getOpenHousesWithinRange (
             for (const House* house : _open_houses_per_y_x[y][x])
             {  
                 Coordinate houseCoord = _city->getCoordinate(house->getAddress());
-                if (_city->getDist(houseCoord.getX(), houseCoord.getY(), centerX, centerY) <=
+                if (getDist(houseCoord.getX(), houseCoord.getY(), centerX, centerY) <=
                     allowableDistance)
                 {
                     openHousesInRange.push_back(house);
@@ -131,4 +132,13 @@ Resident* CityState_Simple::getResidentPerHouse(const House* house) const
     return nullptr;
 }
 
-
+double CityState_Simple::getDist (
+        const double firstX,
+        const double firstY,
+        const double secondX,
+        const double secondY) const 
+	{
+		double x_dist = fabs(firstX - secondX);
+		double y_dist = fabs(firstY - secondY);
+		return sqrt( (x_dist * x_dist) + (y_dist * y_dist));
+	}

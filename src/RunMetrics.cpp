@@ -32,8 +32,6 @@ void RunMetrics::updateMetrics(int run, const ResPerHouse residentsPerHouse)
             _resident_example_per_group_id[resident->getGroupId()] = resident;
         }
 
-        cout << "RunMetrics BB" << endl;
-
         // number of neighbors that have a different groupId than resident
         int disparateNeighbors = 0;
         for (const House* adjacentHouse : housesAdjToRes)
@@ -49,8 +47,6 @@ void RunMetrics::updateMetrics(int run, const ResPerHouse residentsPerHouse)
                 }
             }
         }
-
-        cout << "RunMetrics CC" << endl;
         
         // add number of disparate neighbors to sum of different neighbors for this group's id
         if ( _num_of_diff_neighbors_per_group_id.find(residentGroupId) ==
@@ -58,7 +54,7 @@ void RunMetrics::updateMetrics(int run, const ResPerHouse residentsPerHouse)
         {
             _num_of_diff_neighbors_per_group_id[residentGroupId] = 0;
         }
-        cout << "RunMetrics DD" << endl;
+
         _num_of_diff_neighbors_per_group_id[residentGroupId] += disparateNeighbors;
 
         // add resident's happiness to the group's happiness sum.
@@ -66,14 +62,13 @@ void RunMetrics::updateMetrics(int run, const ResPerHouse residentsPerHouse)
         {
             _happiness_sum_per_group_id[residentGroupId] = 0;
         }
-        cout << "RunMetrics EE" << endl;
+        
         _happiness_sum_per_group_id[residentGroupId] += resident->getHappiness();
 
         // increase the number of residents per this group id
         _num_of_residents_per_group_id[residentGroupId] += 1;
-        cout << "RunMetrics FF" << endl;
+        
     }
-    cout << "RunMetrics ZZ" << endl;
 }
 
 ResPerHouse RunMetrics::getResidentsPerHouse() const

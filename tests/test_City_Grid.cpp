@@ -68,6 +68,7 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, central house")
     expectedAddresses.insert(houses[12]->getAddress());
     
     REQUIRE( expectedAddresses == actualAddresses );
+
 }
 
 TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side")
