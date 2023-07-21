@@ -1,10 +1,7 @@
 #include "Printer_Graphic.h"
 
-#include <vector>
-#include <map>
-#include <utility>
-#include <thread>
 #include <iostream>
+
 #include "PlotA.h"
 #include "PlotB.h"
 
@@ -17,29 +14,28 @@ Printer_Graphic::Printer_Graphic (
     const unordered_map<const House*, unordered_set<const House*>>& adjacentHousesPerHouse,
     string title,
     int numOfRuns
-)
-: _renderer{move(renderer)}
-, _colors{colors}
-, _coordinates_per_house{coordinatesPerHouse}
-, _window_title{make_unique<Title_Basic>(
+): _renderer{move(renderer)},
+   _colors{colors},
+   _coordinates_per_house{coordinatesPerHouse},
+   _window_title{make_unique<Title_Basic>(
     _window_title_letter,
     _x_center__px,
     _top_border__px,
-    title)}
-, _num_of_runs{numOfRuns}
-, _runs_chart_top_y__px{_top_border__px + _window_title->sizeYPx()}
-, _runs_chart{make_unique<GrRunsChart>(
-       _side_borders__px,
-       _runs_chart_top_y__px,
-       _screen_width__px - (2 * _side_borders__px),
-       _chart_title_letter.getHeightIncLSpace(),
-       _chart_title_letter,
-       _num_of_runs)}
+    title)},
+   _num_of_runs{numOfRuns},
+   _runs_chart_top_y__px{_top_border__px + _window_title->sizeYPx()},
+   _runs_chart{make_unique<GrRunsChart>(
+    _side_borders__px,
+    _runs_chart_top_y__px,
+    _screen_width__px - (2 * _side_borders__px),
+    _chart_title_letter.getHeightIncLSpace(),
+    _chart_title_letter,
+    _num_of_runs)}
 {  
     _window_title->setTextColor(_title_text_color);
 
-    // Set vertical column space for left and right columns. Columns sit below the runs chart
-    // Left column holds city chart, right column holds diversity chart and happiness chart.
+    // Set vertical column space for left and right columns. Columns sit below the runs chart.
+    // Left column holds city chart. Right column holds diversity and happiness charts.
     int colSpaceYPx = 
         _screen_height__px -
         _top_border__px -
@@ -51,9 +47,9 @@ Printer_Graphic::Printer_Graphic (
     // They sit below the runs chart.
     int chartsTopLeftYPx = _runs_chart_top_y__px + _runs_chart->sizeYPx();
 
-    // For the city chart, determine the minimum and maximum required coordinates. These are
+    // For the city chart, ascertain the minimum and maximum required coordinates. These are
     // found from the given house coordinates.
-    vector<int> minsAndMaxCoords = determineMinMaxHouseCoords(_coordinates_per_house);
+    vector<int> minsAndMaxCoords = ascertainMinMaxHouseCoords(_coordinates_per_house);
 
     _city_chart =  createCityChart(
         minsAndMaxCoords[0],
@@ -67,11 +63,11 @@ Printer_Graphic::Printer_Graphic (
     // Determine the available space for the diversity chart.
     int divChartAvailSpaceYPx = _div_chart_y_axis_fraction * colSpaceYPx;
 
-    int maxNumOfAdjHouses = determineMaxNumberOfAdjHouses(adjacentHousesPerHouse);
+    int largestNumOfAdjHouses = ascertainLargestNumberOfAdjHouses(adjacentHousesPerHouse);
 
     _div_chart = createDvstyChart(
         adjacentHousesPerHouse,
-        maxNumOfAdjHouses,
+        largestNumOfAdjHouses,
         _num_of_runs,
         chartsTopLeftYPx,
         divChartAvailSpaceYPx
@@ -90,22 +86,12 @@ Printer_Graphic::Printer_Graphic (
     _happiness_chart = createHapChart(_num_of_runs, hapChartTopLeftYPx, hapChartAvailSpaceYPx);
 }
 
-void Printer_Graphic::print (
-    const RunMetrics* runMetrics
-) const
+void Printer_Graphic::print (const RunMetrics* runMetrics) const
 {   
     int run = runMetrics->getRunNumber();
 
-    // Create vector of residents from runMetrics information.
-    vector<const Resident*> residents;
+    // Get residents per house from runMetrics information.
     ResPerHouse residentPerHouse = runMetrics->getResidentsPerHouse();
-    for (auto houseAndResident : residentPerHouse)
-    {
-        if (houseAndResident.second != nullptr)
-        {
-            residents.push_back(houseAndResident.second);
-        }
-    }
 
     // Printing is from top to bottom, left to right.
     _window_title->print(_renderer.get());
@@ -131,7 +117,7 @@ void Printer_Graphic::lastPrint ()
     keepScreen();
 }
 
-vector<int> Printer_Graphic::determineMinMaxHouseCoords(
+vector<int> Printer_Graphic::ascertainMinMaxHouseCoords(
     unordered_map<const House*, Coordinate > coordPerHouse
 )
 {
@@ -165,19 +151,19 @@ vector<int> Printer_Graphic::determineMinMaxHouseCoords(
     return minsAndMaxes;
 }
 
-int Printer_Graphic::determineMaxNumberOfAdjHouses (
+int Printer_Graphic::ascertainLargestNumberOfAdjHouses (
     const unordered_map<const House*, unordered_set<const House*>>& neighbors
 )
 {
-    int max = 0;
+    size_t max = 0;
 
     for (auto& houseAndNeighbors : neighbors)
     {
-        if ((int)(houseAndNeighbors.second.size()) > max)
+        if (houseAndNeighbors.second.size() > max)
             max = houseAndNeighbors.second.size();
     }
 
-    return max;
+    return static_cast<int>(max);
 }
 
 unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
@@ -214,7 +200,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
 }
 
 unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
-    const unordered_map<const House*, unordered_set<const House*>>& neighbors,
+    const unordered_map<const House*, unordered_set<const House*>>& adjHouses,
     int maxNumOfNeighbors,
     int maxNumOfRuns,
     int topLeftYPx,
@@ -223,6 +209,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
 {
     AxisFormat axisYFormatForDivChart = _axis_format_Y;
     axisYFormatForDivChart.setBackgroundTickLines(true);
+
     PlotFormat rightColFormat{
         _axis_format_X,
         axisYFormatForDivChart,
@@ -237,7 +224,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
     return make_unique<GrDvstyChart> (
         _colors,
         moods,
-        neighbors,
+        adjHouses,
         make_unique<Title_Basic>(_chart_title_letter, _div_chart_title),
         make_unique<GrColorKey>(_chart_key_letter, _colors, moods),
         make_unique<PlotA>(
@@ -262,6 +249,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
 {  
     AxisFormat axisYFormatForHapChart = _axis_format_Y;
     axisYFormatForHapChart.setBackgroundTickLines(true);
+
     PlotFormat rightColFormat{
         _axis_format_X,
         axisYFormatForHapChart,
@@ -283,7 +271,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
             0,               // starting run number
             max(0, numberOfRuns - 1), // last run number
             0,               // minimum resident happiness
-            100              // resident happiness range is from 0 to 100.
+            100              // max resident happiness. range is from 0 to 100.
         ),
         _x_center__px + _col_inside_border__px, // top left corner of chart, x-value
         topLeftYPx,                             // top left corner of chart, y-value
@@ -302,4 +290,4 @@ void Printer_Graphic::keepScreen() const
             break;
         }
     }
-}
+} 

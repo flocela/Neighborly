@@ -30,6 +30,7 @@
 
 #include <chrono>
 #include <iostream>
+#include <thread>
 
 #include "CityFactory.h"
 #include "CityFactory_Grid.h"
@@ -175,18 +176,18 @@ SimulationComponents createSimulationComponents (int argc, char* argv[])
         }
     }
 
-    // Throw exception if plain input errors are made.
+    // Throw exception if it is plain that input errors were made.
     if (components.city->getNumOfHouses() < components.residents.size())
     {
         throw invalid_argument("Number of houses needs to be larger than number of residents.");
     }
     if (components.city->getNumOfHouses() == 0)
     {
-        throw invalid_argument("City must have at least one house.");// TODO test this.
+        throw invalid_argument("City must have at least one house.");
     }
-    if ((int)components.residents.size() == 0)
+    if (components.residents.size() == 0)
     {
-        throw invalid_argument("There must be at least one resident.");// TODO test this.
+        throw invalid_argument("There must be at least one resident.");
     }
     
     return components;
