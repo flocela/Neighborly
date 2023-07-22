@@ -7,6 +7,7 @@
 #include "GrHapChart.h"
 #include "GrRunsChart.h"
 #include "Printer.h"
+#include "SetOfHousesPerHouse.h"
 #include "Title_Basic.h"
 
 //  Displays CityMap, Diversity Chart, and HappinessChart in one window.
@@ -21,7 +22,7 @@ public:
         std::unique_ptr<Renderer> renderer,
         const std::unordered_map<int, BaseColor>& colors,
         const std::unordered_map<const House*, Coordinate>& coordinatesPerHouse,
-        const std::unordered_map<const House*, std::unordered_set<const House*>>& adjacentHousesPerHouse,
+        const SetOfHousesPerHouse& adjacentHousesPerHouse,
         std::string title,
         int numOfRuns
     );
@@ -125,9 +126,7 @@ private:
 
     // Ascertains the largest number of adjacent houses for a house from the given unordered_map.
     // Returns the largest number of adjacent houses.
-    int ascertainLargestNumberOfAdjHouses (
-        const std::unordered_map<const House*,std::unordered_set<const House*>>& neighbors
-    );
+    int ascertainLargestNumberOfAdjHouses (const SetOfHousesPerHouse& neighbors);
 
     std::unique_ptr<GrCityChart> createCityChart (
         int minXCoord,
@@ -139,7 +138,7 @@ private:
     );
 
     std::unique_ptr<GrDvstyChart> createDvstyChart(
-        const std::unordered_map<const House*, std::unordered_set<const House*>>& adjHouses,
+        const SetOfHousesPerHouse& adjHouses,
         int maxNumOfNeighbors,
         int maxNumOfRuns,
         int topLeftYPx,

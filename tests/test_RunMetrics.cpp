@@ -48,13 +48,13 @@ unordered_set<const Resident*> createResidentsSet (int numOfResidents, int group
     return residents;
 }
 
-unordered_map<const House*, unordered_set<const House*>> getAdjacentHousesPerHouse(const City* city)
+SetOfHousesPerHouse getAdjacentHousesPerHouse(const City* city)
 {
     vector<const House*> houses = city->getHouses();
-    unordered_map<const House*, unordered_set<const House*>> adjacentHousesPerHouse{};
+    SetOfHousesPerHouse adjacentHousesPerHouse{};
     for (const House* house : houses)
     {   
-        adjacentHousesPerHouse[house] = city->getHousesAdjacent(house->getAddress());
+        adjacentHousesPerHouse.insert(house, city->getHousesAdjacent(house->getAddress()));
     }
 
     return adjacentHousesPerHouse;
@@ -114,8 +114,7 @@ TEST_CASE("three columns of group1")
         }
     }
 
-    const unordered_map<const House*, std::unordered_set<const House*>> adjacentHousesPerHouse =
-        getAdjacentHousesPerHouse(&city);
+    const SetOfHousesPerHouse adjacentHousesPerHouse = getAdjacentHousesPerHouse(&city);
     RunMetrics rm{adjacentHousesPerHouse};
     rm.updateMetrics(1, residentsPerHouse);
 
@@ -240,8 +239,7 @@ TEST_CASE("four columns of group1, two columns of group2")
         }
     }
 
-    const unordered_map<const House*, std::unordered_set<const House*>> adjacentHousesPerHouse =
-        getAdjacentHousesPerHouse(&city);
+    const SetOfHousesPerHouse adjacentHousesPerHouse = getAdjacentHousesPerHouse(&city);
     RunMetrics rm{adjacentHousesPerHouse};
     rm.updateMetrics(1, residentsPerHouse);
 

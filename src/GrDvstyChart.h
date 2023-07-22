@@ -3,11 +3,12 @@
 
 #include <unordered_map>
 #include "Color.h"
+#include "City.h"
+#include "GrColorKey.h"
 #include "Plot.h"
 #include "Renderer.h"
-#include "City.h"
 #include "Resident.h"
-#include "GrColorKey.h"
+#include "SetOfHousesPerHouse.h"
 #include "Title.h"
 
 class GrDvstyChart {
@@ -21,7 +22,7 @@ public:
     GrDvstyChart (
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
-        std::unordered_map<const House*, std::unordered_set<const House*>> adjacentNeighbors, // TODO should be const reference
+        const SetOfHousesPerHouse& adjacentNeighbors,
         std::unique_ptr<Title> title,
         std::unique_ptr<ColorKey> colorKey,
         std::unique_ptr<Plot> plot,
@@ -52,7 +53,7 @@ private:
 
     std::unordered_map<int, BaseColor> _b_color_per_groupId;
     std::set<Mood> _moods;
-    std::unordered_map<const House*, std::unordered_set<const House*>> _adj_neighbors;
+    const SetOfHousesPerHouse& _adj_neighbors;
     std::unique_ptr<Title> _title;
     std::unique_ptr<ColorKey> _key;
     std::unique_ptr<Plot> _plot;

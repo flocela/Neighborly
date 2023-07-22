@@ -28,7 +28,7 @@ City_Grid::City_Grid (int width):
 	_adjacent_houses_per_house.reserve(_houses.size());
 	for (auto& house : _houses)
 	{
-		_adjacent_houses_per_house.insert({house.get(), getHousesAdjacent(house->getAddress())});
+		_adjacent_houses_per_house.insert(house.get(), move(getHousesAdjacent(house->getAddress())));
 	}
 }
 
@@ -237,8 +237,7 @@ unordered_set<const House*> City_Grid::getHousesAdjacent (int address) const
 	return adjacentHouses;
 }
 
-const unordered_map<const House*, unordered_set<const House*>>*
-	City_Grid::getAdjacentHousesPerHouse () const
+const SetOfHousesPerHouse* City_Grid::getAdjacentHousesPerHouse () const
 {
 	return &_adjacent_houses_per_house;
 }

@@ -46,8 +46,7 @@ public:
     // house that is not on an edge, that is 8 houses.
     std::unordered_set<const House*> getHousesAdjacent (int address) const override;
 
-    const std::unordered_map<const House*, std::unordered_set<const House*>>*
-        getAdjacentHousesPerHouse () const override;
+    const SetOfHousesPerHouse* getAdjacentHousesPerHouse () const override;
 
 private:
     int _width;
@@ -69,7 +68,7 @@ private:
     mutable std::map< std::pair<double, int>, std::unordered_set<const House*> >
         _houses_within_distance;
 
-    std::unordered_map<const House*, std::unordered_set<const House*>> _adjacent_houses_per_house{};
+    SetOfHousesPerHouse _adjacent_houses_per_house{};
 
     // Returns x value of @address
     int get_x (const int& address) const;

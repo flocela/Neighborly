@@ -2,9 +2,9 @@
 #define SIMULATOR_H
 
 #include <unordered_map>
+#include "House.h"
 #include "Resident.h"
 #include "ResPerHouse.h"
-#include "House.h"
 
 class Simulator
 {

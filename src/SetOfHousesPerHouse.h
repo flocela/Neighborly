@@ -13,8 +13,9 @@ class SetOfHousesPerHouse
 {
 public:
     void insert(const House* house, const House* houseInSet);
+    void insert(const House* house, std::unordered_set<const House*> setOfHouses);
     bool containsKey (const House* house) const ;
-    const std::unordered_set<const House*>* at (const House* house) const;
+    const std::unordered_set<const House*>& at (const House* house) const;
     sohph::const_iterator cbegin() const noexcept;
     sohph::const_iterator cend() const noexcept;
     sohph::const_iterator begin() const noexcept;

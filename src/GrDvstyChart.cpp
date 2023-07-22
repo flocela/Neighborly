@@ -5,7 +5,7 @@ using namespace std;
 GrDvstyChart::GrDvstyChart (
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
-        std::unordered_map<const House*, std::unordered_set<const House*>> adjacentNeighbors,
+        const SetOfHousesPerHouse& adjacentNeighbors,
         std::unique_ptr<Title> title,
         std::unique_ptr<ColorKey> colorKey,
         std::unique_ptr<Plot> plot,

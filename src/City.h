@@ -8,6 +8,7 @@
 
 #include "Coordinate.h"
 #include "House.h"
+#include "SetOfHousesPerHouse.h"
 
 // Holds the coordinates and addresses in a city.
 class City
@@ -51,9 +52,8 @@ public:
     // Returns all houses deemed to be adjacent to house with given address.
     virtual std::unordered_set<const House*> getHousesAdjacent (int address) const = 0;
 
-    // Returns const pointer to map of adjacent houses per house.
-    virtual const std::unordered_map<const House*, std::unordered_set<const House*>>* 
-        getAdjacentHousesPerHouse () const = 0;
+    // Returns const pointer to map of set of adjacent houses per house.
+    virtual const SetOfHousesPerHouse* getAdjacentHousesPerHouse () const = 0;
 };
 
 #endif

@@ -8,15 +8,14 @@
 #include "House.h"
 #include "Resident.h"
 #include "ResPerHouse.h"
+#include "SetOfHousesPerHouse.h"
 
 // Used by Printer interface. Contains needed data for a printer to print output.
 class RunMetrics
 {
 
 public: 
-    RunMetrics (
-        const std::unordered_map<const House*, std::unordered_set<const House*>>& adjacentHousesPerHouse
-    );
+    RunMetrics (const SetOfHousesPerHouse& adjacentHousesPerHouse);
     RunMetrics () = delete;
     RunMetrics (const RunMetrics& o) = default;
     RunMetrics (RunMetrics&& o) noexcept = default;
@@ -49,7 +48,7 @@ public:
 private:
 
     int _run_num = -1;
-    const std::unordered_map<const House*, std::unordered_set<const House*>>& _adj_houses;
+    const SetOfHousesPerHouse& _adj_houses;
 
     ResPerHouse _residents_per_house{};
     std::unordered_map<int, int> _num_of_residents_per_group_id{};

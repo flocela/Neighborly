@@ -11,7 +11,7 @@ Printer_Graphic::Printer_Graphic (
     std::unique_ptr<Renderer> renderer,
     const unordered_map<int, BaseColor>& colors,
     const unordered_map<const House*, Coordinate>& coordinatesPerHouse,
-    const unordered_map<const House*, unordered_set<const House*>>& adjacentHousesPerHouse,
+    const SetOfHousesPerHouse& adjacentHousesPerHouse,
     string title,
     int numOfRuns
 ): _renderer{move(renderer)},
@@ -151,9 +151,7 @@ vector<int> Printer_Graphic::ascertainMinMaxHouseCoords(
     return minsAndMaxes;
 }
 
-int Printer_Graphic::ascertainLargestNumberOfAdjHouses (
-    const unordered_map<const House*, unordered_set<const House*>>& neighbors
-)
+int Printer_Graphic::ascertainLargestNumberOfAdjHouses (const SetOfHousesPerHouse& neighbors)
 {
     size_t max = 0;
 
@@ -200,7 +198,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
 }
 
 unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
-    const unordered_map<const House*, unordered_set<const House*>>& adjHouses,
+    const SetOfHousesPerHouse& adjHouses,
     int maxNumOfNeighbors,
     int maxNumOfRuns,
     int topLeftYPx,

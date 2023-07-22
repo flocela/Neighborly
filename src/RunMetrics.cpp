@@ -3,7 +3,7 @@
 using namespace std;
 
 RunMetrics::RunMetrics (
-    const unordered_map<const House*, unordered_set<const House*>>& adjacentHousesPerHouse
+    const SetOfHousesPerHouse& adjacentHousesPerHouse
 ): _adj_houses{adjacentHousesPerHouse}
 {}
 
@@ -24,7 +24,7 @@ void RunMetrics::updateMetrics(int run, const ResPerHouse residentsPerHouse)
         const House* house = houseThenResident.first;
         const Resident* resident = houseThenResident.second;
         int residentGroupId = resident->getGroupId();
-        unordered_set<const House*> housesAdjToRes = _adj_houses.at(house);
+        const unordered_set<const House*>& housesAdjToRes = _adj_houses.at(house); //TODO make this a ref
         // populate _resident_example_per_group_id
         if ( _resident_example_per_group_id.find(resident->getGroupId()) ==
             _resident_example_per_group_id.end() )

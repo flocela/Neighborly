@@ -11,14 +11,29 @@ void SetOfHousesPerHouse::insert(const House* house, const House* houseInSet)
     _set_of_houses_per_house[house].insert(houseInSet);
 }
 
+void SetOfHousesPerHouse::insert(const House* house, std::unordered_set<const House*> setOfHouses)
+{
+    if (_set_of_houses_per_house.find(house) == _set_of_houses_per_house.end())
+    {
+        _set_of_houses_per_house.insert({house, move(setOfHouses)});
+    }
+    else
+    {
+        for (const House* house : setOfHouses)
+        {
+            _set_of_houses_per_house[house].insert(move(house));
+        }
+    }
+}
+
 bool SetOfHousesPerHouse::containsKey (const House* house) const
 {
     return _set_of_houses_per_house.find(house) != _set_of_houses_per_house.end();
 }
 
-const unordered_set<const House*>* SetOfHousesPerHouse::at(const House* house) const
+const unordered_set<const House*>& SetOfHousesPerHouse::at(const House* house) const
 {
-    return &(_set_of_houses_per_house.at(house));
+    return _set_of_houses_per_house.at(house);
 }
 
 sohph::const_iterator SetOfHousesPerHouse::cbegin() const noexcept
