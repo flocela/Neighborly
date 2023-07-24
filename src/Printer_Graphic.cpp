@@ -66,7 +66,6 @@ Printer_Graphic::Printer_Graphic (
     int largestNumOfAdjHouses = ascertainLargestNumberOfAdjHouses(adjacentHousesPerHouse);
 
     _div_chart = createDvstyChart(
-        adjacentHousesPerHouse,
         largestNumOfAdjHouses,
         _num_of_runs,
         chartsTopLeftYPx,
@@ -198,7 +197,6 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
 }
 
 unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
-    const SetOfHousesPerHouse& adjHouses,
     int maxNumOfNeighbors,
     int maxNumOfRuns,
     int topLeftYPx,
@@ -222,7 +220,6 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
     return make_unique<GrDvstyChart> (
         _colors,
         moods,
-        adjHouses,
         make_unique<Title_Basic>(_chart_title_letter, _div_chart_title),
         make_unique<GrColorKey>(_chart_key_letter, _colors, moods),
         make_unique<PlotA>(

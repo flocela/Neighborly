@@ -138,7 +138,6 @@ private:
     );
 
     std::unique_ptr<GrDvstyChart> createDvstyChart(
-        const SetOfHousesPerHouse& adjHouses,
         int maxNumOfNeighbors,
         int maxNumOfRuns,
         int topLeftYPx,

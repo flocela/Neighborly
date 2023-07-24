@@ -22,7 +22,6 @@ public:
     GrDvstyChart (
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
-        const SetOfHousesPerHouse& adjacentNeighbors,
         std::unique_ptr<Title> title,
         std::unique_ptr<ColorKey> colorKey,
         std::unique_ptr<Plot> plot,
@@ -53,7 +52,6 @@ private:
 
     std::unordered_map<int, BaseColor> _b_color_per_groupId;
     std::set<Mood> _moods;
-    const SetOfHousesPerHouse& _adj_neighbors;
     std::unique_ptr<Title> _title;
     std::unique_ptr<ColorKey> _key;
     std::unique_ptr<Plot> _plot;
