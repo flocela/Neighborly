@@ -10,10 +10,10 @@
 #include "Printer.h"
 #include "ResidentTemplate.h"
 
-class Printer_CMDLine : public Printer
+class Printer_CmdLine : public Printer
 {
 public:
-    Printer_CMDLine (
+    Printer_CmdLine (
         const CityPrinter& cityPrinter,
         const std::unordered_map<int, BaseColor>& baseColorsPerGroupid,
         const std::unordered_map<int, std::unique_ptr<const ResidentTemplate>>& resTemplatePerGroupId,
@@ -22,12 +22,12 @@ public:
         std::string simulatorString
     );
 
-    Printer_CMDLine () = delete;
-    Printer_CMDLine (const Printer_CMDLine& o) = default;
-    Printer_CMDLine (Printer_CMDLine&& o) noexcept = default;
-    Printer_CMDLine& operator= (const Printer_CMDLine& o) = default;
-    Printer_CMDLine& operator= (Printer_CMDLine&& o) noexcept = default;
-    ~Printer_CMDLine () noexcept = default;
+    Printer_CmdLine () = delete;
+    Printer_CmdLine (const Printer_CmdLine& o) = default;
+    Printer_CmdLine (Printer_CmdLine&& o) noexcept = default;
+    Printer_CmdLine& operator= (const Printer_CmdLine& o) = default;
+    Printer_CmdLine& operator= (Printer_CmdLine&& o) noexcept = default;
+    ~Printer_CmdLine () noexcept = default;
     
     void print(
         const RunMetrics* runMetrics

@@ -1,13 +1,13 @@
-#include "CityMaker_CMDLine.h"
-#include "UI_CMDLine.h"
+#include "CityMaker_CmdLine.h"
+#include "UI_CmdLine.h"
 
 using namespace std;
 
-CityMaker_CMDLine::CityMaker_CMDLine (const UI& ui)
+CityMaker_CmdLine::CityMaker_CmdLine (const UI& ui)
 :_ui{ui}
 {}
 
-unique_ptr<City> CityMaker_CMDLine::makeCity (
+unique_ptr<City> CityMaker_CmdLine::makeCity (
     const std::vector<unique_ptr<const CityFactory>>& cityFactories,
     int maxDeltaX,
     int maxDeltaY

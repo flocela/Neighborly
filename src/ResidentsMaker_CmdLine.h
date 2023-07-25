@@ -3,13 +3,13 @@
 
 #include "Color.h"
 #include "ResidentsMaker.h"
-#include "UI_CMDLine.h"
+#include "UI_CmdLine.h"
 
 // Creates Residents by asking user how many resident groups will be necessary.
 // Then for each group, asks what type of resident the group will be composed of.
 // For each type of Resident type, asks specific questions that are necessary
 // to create Residents of that type.
-class ResidentsMaker_CMDLine: public ResidentsMaker
+class ResidentsMaker_CmdLine: public ResidentsMaker
 {
 public:
 

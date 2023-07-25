@@ -1,8 +1,8 @@
-#include "CityMaker_CMDLine.h"
+#include "CityMaker_CmdLine.h"
 #include "CityState_Simple.h"
 #include "FromQuestionsStarter.h"
 #include "RandomSeedGetter.h"
-#include "ResidentsMaker_CMDLine.h"
+#include "ResidentsMaker_CmdLine.h"
 #include "Simulator_Basic_A.h"
 #include "Simulator_Basic_B.h"
 #include "SimulatorGetter.h"
@@ -42,11 +42,11 @@ SimulationComponents FromQuestionsStarter::createSimulationComponents (
     resultantComponents.randomSeed = RandomSeedGetter::getSeedFromUser(ui);
     
     // add city
-    CityMaker_CMDLine cityMaker{ui};
+    CityMaker_CmdLine cityMaker{ui};
     resultantComponents.city = cityMaker.makeCity(cityFactories, maxNumOfHousesX, maxNumOfHousesY);
 
     // create group info for residents
-    ResidentsMaker_CMDLine residentsMaker{};
+    ResidentsMaker_CmdLine residentsMaker{};
     ResidentsGroupInfo resGroupInfo = residentsMaker.makeResidents(
         ui,
         residentFactories,

@@ -3,21 +3,21 @@
 
 #include "UI.h"
 
-class UI_CMDLine: public UI
+class UI_CmdLine: public UI
 {
 public:
     
 
     // when getting an answer from user (for menu or question) will give the user
     // max number of tries to give a proper response, before using the fallback answer.
-    UI_CMDLine (int maxNumOfTries);
+    UI_CmdLine (int maxNumOfTries);
 
-    UI_CMDLine () = default;
-    UI_CMDLine (const UI_CMDLine& o) = default;
-    UI_CMDLine (UI_CMDLine&& o) noexcept = default;
-    UI_CMDLine& operator= (const UI_CMDLine& o) = default;
-    UI_CMDLine& operator=(UI_CMDLine&& o) noexcept = default;
-    ~UI_CMDLine () noexcept = default;
+    UI_CmdLine () = default;
+    UI_CmdLine (const UI_CmdLine& o) = default;
+    UI_CmdLine (UI_CmdLine&& o) noexcept = default;
+    UI_CmdLine& operator= (const UI_CmdLine& o) = default;
+    UI_CmdLine& operator=(UI_CmdLine&& o) noexcept = default;
+    ~UI_CmdLine () noexcept = default;
 
     std::string getAnswer (Question&& question) const override;
     std::string getAnswer (Question& question) const override;

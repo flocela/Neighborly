@@ -92,7 +92,7 @@ string CityPrinter::print (unordered_map<int, char> characterPerAddress) const
 		{
 			Coordinate coord = Coordinate{xVal, yVal};
 
-			// if house exists at coordinate
+			// If house exists at coordinate get character for address.
 			if (housesPerCoordinate.find(coord) != housesPerCoordinate.end())
 			{
 				const House* house = housesPerCoordinate.at(coord);
@@ -106,7 +106,7 @@ string CityPrinter::print (unordered_map<int, char> characterPerAddress) const
 					result.push_back(characterPerAddress.at(address));
 				}
 			}
-			// if house does not exist at coordinate
+			// If house does not exist at coordinate append empty space.
 			else
 			{
 				result.push_back(' ');

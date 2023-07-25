@@ -1,4 +1,4 @@
-#include "UI_CMDLine.h"
+#include "UI_CmdLine.h"
 
 #include <iostream>
 #include <sstream>
@@ -7,15 +7,15 @@
 
 using namespace std;
 
-UI_CMDLine:: UI_CMDLine (int maxNumOfTries) : _max_num_of_tries{maxNumOfTries}
+UI_CmdLine:: UI_CmdLine (int maxNumOfTries) : _max_num_of_tries{maxNumOfTries}
 {}
 
-string UI_CMDLine::getAnswer (Question&& question) const
+string UI_CmdLine::getAnswer (Question&& question) const
 {
     return getAnswer(question);
 }
 
-string UI_CMDLine::getAnswer (Question& question) const
+string UI_CmdLine::getAnswer (Question& question) const
 {   
     int tries = 0;
     string answer = "xx";
@@ -34,7 +34,7 @@ string UI_CMDLine::getAnswer (Question& question) const
     return answer;
 }
 
-int UI_CMDLine::menu (
+int UI_CmdLine::menu (
     string prompt,
     vector<string> items, 
     int fallBack,
@@ -97,7 +97,7 @@ int UI_CMDLine::menu (
     return stoi(answer) - 1;
 }
 
-std::string UI_CMDLine::insertIntoString  (
+std::string UI_CmdLine::insertIntoString  (
     string str,
     int location,
     string insert

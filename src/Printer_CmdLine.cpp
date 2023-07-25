@@ -1,4 +1,4 @@
-#include "Printer_CMDLine.h"
+#include "Printer_CmdLine.h"
 
 #include <algorithm>
 #include <iostream>
@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Printer_CMDLine::Printer_CMDLine (
+Printer_CmdLine::Printer_CmdLine (
     const CityPrinter& cityPrinter,
     const unordered_map<int, BaseColor>& baseColorsPerGroupid,
     const std::unordered_map<int, unique_ptr<const ResidentTemplate>>& resTemplatePerGroupId,
@@ -23,7 +23,7 @@ Printer_CMDLine::Printer_CMDLine (
 , _simulator_name{simulatorName}
 {}
 
-void Printer_CMDLine::print (const RunMetrics* runMetrics) const
+void Printer_CmdLine::print (const RunMetrics* runMetrics) const
 {   
     // Collect information from runMetrics.
     ResPerHouse residentsPerHouse = runMetrics->getResidentsPerHouse();
@@ -117,6 +117,6 @@ void Printer_CMDLine::print (const RunMetrics* runMetrics) const
     }
 }
 
-void Printer_CMDLine::lastPrint () {
+void Printer_CmdLine::lastPrint () {
     cout << "End of Simulation" << endl;
 }

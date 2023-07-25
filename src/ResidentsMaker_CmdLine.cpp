@@ -1,4 +1,4 @@
-#include "ResidentsMaker_CMDLine.h"
+#include "ResidentsMaker_CmdLine.h"
 #include <iomanip>
 #include <sstream>
 #include <iostream> 
@@ -7,7 +7,7 @@
 
 using namespace std;
 
-ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
+ResidentsGroupInfo ResidentsMaker_CmdLine::makeResidents (
     const UI& ui,
     const vector<unique_ptr<const ResidentsFactory>>& residentsFactories,
     int maxResidentCount,
@@ -76,13 +76,13 @@ ResidentsGroupInfo ResidentsMaker_CMDLine::makeResidents (
     return resGroupInfo;
 }
 
-void ResidentsMaker_CMDLine::initColors (vector<BaseColor> colors)
+void ResidentsMaker_CmdLine::initColors (vector<BaseColor> colors)
 {
     _available_colors = colors;
 }
 
 
-int ResidentsMaker_CMDLine::askForNumOfGroupsOfResidents(const UI& ui, int maxNumOfResidentGroups)
+int ResidentsMaker_CmdLine::askForNumOfGroupsOfResidents(const UI& ui, int maxNumOfResidentGroups)
 {
     Question_Int question = Question_Int{
         0,
@@ -97,7 +97,7 @@ int ResidentsMaker_CMDLine::askForNumOfGroupsOfResidents(const UI& ui, int maxNu
     return stoi(ui.getAnswer(question));
 }
 
-int ResidentsMaker_CMDLine::askForNumOfResidents(const UI& ui, int count, string color)
+int ResidentsMaker_CmdLine::askForNumOfResidents(const UI& ui, int count, string color)
 {
     // add max number of residents to prompt
     string howManyResidentsPrompt = insertIntoString(
@@ -124,7 +124,7 @@ int ResidentsMaker_CMDLine::askForNumOfResidents(const UI& ui, int count, string
     return stoi(ui.getAnswer(question));
 }
 
-int ResidentsMaker_CMDLine::askForGroupResidentType (
+int ResidentsMaker_CmdLine::askForGroupResidentType (
     const UI& ui,
     string color, 
     const vector<unique_ptr<const ResidentsFactory>>& residentsFactories
@@ -147,7 +147,7 @@ int ResidentsMaker_CMDLine::askForGroupResidentType (
             ));
 }
 
-double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
+double ResidentsMaker_CmdLine::askForAllowedMovementForGroup(
     const UI& ui,
     string color, 
     double maxAllowedMovement
@@ -180,7 +180,7 @@ double ResidentsMaker_CMDLine::askForAllowedMovementForGroup(
     return stod(ui.getAnswer(question));
 }
 
-double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (const UI& ui, string color)
+double ResidentsMaker_CmdLine::askForHappinessGoalForGroup (const UI& ui, string color)
 {
     // create question, add color to prompot
     Question_Double question{
@@ -199,7 +199,7 @@ double ResidentsMaker_CMDLine::askForHappinessGoalForGroup (const UI& ui, string
     return stod(ui.getAnswer(question));
 }
 
-vector<string> ResidentsMaker_CMDLine::getFactoryNames (
+vector<string> ResidentsMaker_CmdLine::getFactoryNames (
     const vector<unique_ptr<const ResidentsFactory>>& residentsFactories
 )
 {
@@ -211,7 +211,7 @@ vector<string> ResidentsMaker_CMDLine::getFactoryNames (
     return residentsFactoryNames;
 }
 
-std::string ResidentsMaker_CMDLine::insertIntoString  (
+std::string ResidentsMaker_CmdLine::insertIntoString  (
     string str,
     int location,
     string insert
@@ -221,7 +221,7 @@ std::string ResidentsMaker_CMDLine::insertIntoString  (
     return modifiedString.insert(location, insert);
 }
 
-int ResidentsMaker_CMDLine::charLocationForColor (string str)
+int ResidentsMaker_CmdLine::charLocationForColor (string str)
 {
     string target = "the  group";
     auto pos = str.find(target);

@@ -8,7 +8,7 @@
 #include "Resident.h"
 #include "SimulationComponents.h"
 #include "Simulator.h"
-#include "UI_CMDLine.h"
+#include "UI_CmdLine.h"
 
 // Asks the user which example to run.
 class FromExamplesStarter

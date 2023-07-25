@@ -38,7 +38,7 @@
 #include "FromQuestionsStarter.h"
 #include "FromFileStarter.h"
 #include "Printer_Graphic.h"
-#include "Printer_CMDLine.h"
+#include "Printer_CmdLine.h"
 #include "Renderer_SDL.h"
 #include "ResidentsFactory_Falling.h"
 #include "ResidentsFactory_Flat.h"
@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
     SimulationComponents components = createSimulationComponents(argc, argv);
 
     // CityPrinter cityPrinter is owned by main.
-    // It is passed to Printer_CMDLine's constructor by const pointer.
+    // It is passed to Printer_CmdLine's constructor by const pointer.
     unique_ptr<CityPrinter> cityPrinter = make_unique<CityPrinter>(components.city.get());
 
     // Construct graphic printer
@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
     };
 
     // Construct cmd line printer
-    Printer_CMDLine cmdLinePrinter{
+    Printer_CmdLine cmdLinePrinter{
         *(cityPrinter.get()),
         components.baseColorsPerGroupid,
         components.residentTemplatePerGroupId,
@@ -152,7 +152,7 @@ SimulationComponents createSimulationComponents (int argc, char* argv[])
     else
     {   
         // Gather information from user using the cmd line
-        const UI_CMDLine cmdLine{};
+        const UI_CmdLine cmdLine{};
 
         // User chooses to use pre-made examples, or type in required information.
         UsePremadeExampleQuestion usePremadeExamplesQuestion;
