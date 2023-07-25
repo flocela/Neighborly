@@ -41,7 +41,8 @@ private:
     int _seed_number;
     std::string _simulator_name;
 
-    // Used for printing residents. happy characters per group Id.
+    // Used for printing residents. These are the happy characters per group Id, where
+    // the group id is the vector index.
     std::vector<char> happyCharacters = {'x', '!', '@', '#', '$', '%'};
         
 };

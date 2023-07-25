@@ -25,15 +25,22 @@ Printer_CmdLine::Printer_CmdLine (
 void Printer_CmdLine::print (const RunMetrics* runMetrics) const
 {   
     // Collect information from runMetrics.
+    int run = runMetrics->getRunNumber();
     const ResPerHouse& residentsPerHouse = runMetrics->getResidentsPerHouse();
     const unordered_map<int, int>& numOfResidentsPerGroupId =
         runMetrics->getNumOfResidentsPerGroupId();
+
+    // The number of different neighbors per group id is a sum of disparate neighbors per group
+    // id. It is found by taking the sum of disparate neighbors for each resident in the 
+    // group. Add that sum to a total sum of different neighbors for that group id.
     const unordered_map<int, int>& numOfDiffNeighborsPerGroupId =
         runMetrics->getNumOfDiffNeighborsPerGroupId();
+    
+    // Happiness sum per group id is a sum per group id. Take each resident in the
+    // group and add their happiness to the group's happiness sum.
     const unordered_map<int, double>& happinessSumPerGroupId =
         runMetrics->getHappinessSumPerGroupId();
-    int run = runMetrics->getRunNumber();
-
+    
     // Create a vector of group ids and sort the vector
     vector<int> groupIDs{};
     for (auto groupIDAndCount : numOfResidentsPerGroupId)
@@ -89,23 +96,27 @@ void Printer_CmdLine::print (const RunMetrics* runMetrics) const
     // Print city map if on first or last run.
     if (run == 0 || run == _max_num_of_runs-1)
     {
-        // Create map of characters per address. It will assign a character to each 
-        // address based on the resident's happiness.
+        // Create map of characters per address. If the address is empty, then the
+        // character is an empty space. If the address has a resident, then the
+        // corresponding character depends on the resident's group id. If the
+        // resident's happiness is less than it's happiness goal, then the 
+        // address's corresponding character is the resident's group id . If the resident's
+        // happiness is greater or equal to the resident's happiness goal, then the
+        // corresponding character is group's happiness character (from happyCharacers vector).
         unordered_map<int, char> characterPerAddress{};
-        for (auto pair : residentsPerHouse)
+        for (auto houseAndRes : residentsPerHouse)
         {
-            const House* house = pair.first;
-            const Resident* resident = pair.second;
-            int address = house->getAddress();
-            // if resident's happiness is larger than happiness goal, assign the happiness
-            // character for this group.
-            if (resident->getHappiness() >= resident->getHappinessGoal()){
-                characterPerAddress[address] = happyCharacters[resident->getGroupId()];
+            int residentGroupId = houseAndRes.second->getGroupId();
+            double residentsHappiness = houseAndRes.second->getHappiness();
+            double residentsHappinessGoal = houseAndRes.second->getHappinessGoal();
+            int address = houseAndRes.first->getAddress();
+            if (residentsHappiness >= residentsHappinessGoal){
+                characterPerAddress[address] = happyCharacters[residentGroupId];
             }
-            // else assign the groupId for this group.
             else
             {
-                characterPerAddress[address] = resident->getGroupId() + 48; 
+                // ASCII numbers are offset by 48.
+                characterPerAddress[address] = residentGroupId + 48;
             }
         }
         // Print city map's key.

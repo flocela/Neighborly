@@ -150,6 +150,7 @@ private:
         int availSpaceYPx
     );
 
+    // Keeps window open until user clicks x.
     void keepScreen() const;
 };
 
