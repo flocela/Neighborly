@@ -71,27 +71,27 @@ void RunMetrics::updateMetrics(int run, const ResPerHouse residentsPerHouse)
     }
 }
 
-ResPerHouse RunMetrics::getResidentsPerHouse() const
+const ResPerHouse& RunMetrics::getResidentsPerHouse() const
 {
     return _residents_per_house;
 }
 
-unordered_map<int, int> RunMetrics::getNumOfResidentsPerGroupId () const
+const unordered_map<int, int>& RunMetrics::getNumOfResidentsPerGroupId () const
 {
     return _num_of_residents_per_group_id;
 }
 
-unordered_map<int, int> RunMetrics::getNumOfDiffNeighborsPerGroupId () const
+const unordered_map<int, int>& RunMetrics::getNumOfDiffNeighborsPerGroupId () const
 {
     return _num_of_diff_neighbors_per_group_id;
 }
 
-unordered_map<int, double> RunMetrics::getHappinessSumPerGroupId () const
+const unordered_map<int, double>& RunMetrics::getHappinessSumPerGroupId () const
 {
     return _happiness_sum_per_group_id;
 }
 
-unordered_map<int, const Resident*> RunMetrics::getResidentExamplePerGroupId () const
+const unordered_map<int, const Resident*>& RunMetrics::getResidentExamplePerGroupId () const
 {
     return _resident_example_per_group_id;
 }

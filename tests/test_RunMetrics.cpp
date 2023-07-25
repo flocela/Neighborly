@@ -119,10 +119,10 @@ TEST_CASE("three columns of group1")
     rm.updateMetrics(1, residentsPerHouse);
 
     REQUIRE(residentsPerHouse == rm.getResidentsPerHouse());
-    REQUIRE(numOfResidents == rm.getNumOfResidentsPerGroupId()[1]);
-    REQUIRE(0 == rm.getNumOfDiffNeighborsPerGroupId()[1]);
-    REQUIRE(3000 == rm.getHappinessSumPerGroupId()[1]);
-    REQUIRE(1 == rm.getResidentExamplePerGroupId()[1]->getGroupId());
+    REQUIRE(numOfResidents == rm.getNumOfResidentsPerGroupId().at(1));
+    REQUIRE(0 == rm.getNumOfDiffNeighborsPerGroupId().at(1));
+    REQUIRE(3000 == rm.getHappinessSumPerGroupId().at(1));
+    REQUIRE(1 == rm.getResidentExamplePerGroupId().at(1)->getGroupId());
     
 }
 
@@ -244,34 +244,34 @@ TEST_CASE("four columns of group1, two columns of group2")
     rm.updateMetrics(1, residentsPerHouse);
 
     REQUIRE(residentsPerHouse == rm.getResidentsPerHouse());
-    REQUIRE(40 == rm.getNumOfResidentsPerGroupId()[1]);
-    REQUIRE(20 == rm.getNumOfResidentsPerGroupId()[2]);
+    REQUIRE(40 == rm.getNumOfResidentsPerGroupId().at(1));
+    REQUIRE(20 == rm.getNumOfResidentsPerGroupId().at(2));
 
     // group1 disparate neighbors:
     //    groupA's 3rd column has 8X3 + 2X2
     //    groupC's column has 8X6 + 2X4
     //    total is 84
-    REQUIRE(84 == rm.getNumOfDiffNeighborsPerGroupId()[1]);
+    REQUIRE(84 == rm.getNumOfDiffNeighborsPerGroupId().at(1));
 
     // group2 disparate neighbors:
     //    groupB's column has 8X6 + 2X4
     //    groupD's column has 8X3 + 2X2
     //    total is 84
-    REQUIRE(84 == rm.getNumOfDiffNeighborsPerGroupId()[1]);
+    REQUIRE(84 == rm.getNumOfDiffNeighborsPerGroupId().at(1));
 
     // group1 happinessSum:
     //    groupA's is is 30X100
     //    groupC's is is 4X20 + 6X100
     //    total is 3680
-    REQUIRE(3680 == rm.getHappinessSumPerGroupId()[1]);
+    REQUIRE(3680 == rm.getHappinessSumPerGroupId().at(1));
 
     // group2 happinessSum:
     //    groupB's is is 10X20
     //    groupD's is is 10X20
     //    total is 400
-    REQUIRE(400 == rm.getHappinessSumPerGroupId()[2]);
+    REQUIRE(400 == rm.getHappinessSumPerGroupId().at(2));
 
-    REQUIRE(1 == rm.getResidentExamplePerGroupId()[1]->getGroupId());
-    REQUIRE(2 == rm.getResidentExamplePerGroupId()[2]->getGroupId());
+    REQUIRE(1 == rm.getResidentExamplePerGroupId().at(1)->getGroupId());
+    REQUIRE(2 == rm.getResidentExamplePerGroupId().at(2)->getGroupId());
 }
 

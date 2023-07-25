@@ -1,9 +1,9 @@
-#include "Printer_CmdLine.h"
-
 #include <algorithm>
 #include <iostream>
 #include <iomanip>
 #include <vector>
+
+#include "Printer_CmdLine.h"
 
 using namespace std;
 
@@ -14,13 +14,12 @@ Printer_CmdLine::Printer_CmdLine (
     int maxNumofRuns,
     int seedNumber,
     string simulatorName
-)
-: _city_printer{cityPrinter}
-, _base_colors_per_groupid{baseColorsPerGroupid}
-, _res_templates_per_group_id{resTemplatePerGroupId}
-, _max_num_of_runs{maxNumofRuns}
-, _seed_number{seedNumber}
-, _simulator_name{simulatorName}
+): _city_printer{cityPrinter},
+   _base_colors_per_groupid{baseColorsPerGroupid},
+   _res_templates_per_group_id{resTemplatePerGroupId},
+   _max_num_of_runs{maxNumofRuns},
+   _seed_number{seedNumber},
+   _simulator_name{simulatorName}
 {}
 
 void Printer_CmdLine::print (const RunMetrics* runMetrics) const

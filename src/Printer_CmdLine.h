@@ -29,9 +29,7 @@ public:
     Printer_CmdLine& operator= (Printer_CmdLine&& o) noexcept = default;
     ~Printer_CmdLine () noexcept = default;
     
-    void print(
-        const RunMetrics* runMetrics
-    ) const override;
+    void print(const RunMetrics* runMetrics) const override;
 
     void lastPrint () override;
 
@@ -43,7 +41,7 @@ private:
     int _seed_number;
     std::string _simulator_name;
 
-    // used for printing residents. happy characters per group Id.
+    // Used for printing residents. happy characters per group Id.
     std::vector<char> happyCharacters = {'x', '!', '@', '#', '$', '%'};
         
 };

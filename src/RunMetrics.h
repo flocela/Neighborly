@@ -23,20 +23,20 @@ public:
     RunMetrics& operator= (RunMetrics&& o) noexcept = default;
     ~RunMetrics () noexcept = default;
 
-    ResPerHouse getResidentsPerHouse() const;
+    const ResPerHouse& getResidentsPerHouse() const;
     
-    std::unordered_map<int, int> getNumOfResidentsPerGroupId () const;
+    const std::unordered_map<int, int>& getNumOfResidentsPerGroupId () const;
 
     // returns sum of each resident's disparate neighbors. Note,
     // total number of disparate neighobrs for a group may be less than
     // returned value because two members of the group may both be counting
     // the same disparate neighbor.
-    std::unordered_map<int, int> getNumOfDiffNeighborsPerGroupId () const;
+    const std::unordered_map<int, int>& getNumOfDiffNeighborsPerGroupId () const;
 
     // returns the sum of each resident's happiness
-    std::unordered_map<int, double> getHappinessSumPerGroupId() const;
+    const std::unordered_map<int, double>& getHappinessSumPerGroupId() const;
     
-    std::unordered_map<int, const Resident*> getResidentExamplePerGroupId() const;
+    const std::unordered_map<int, const Resident*>& getResidentExamplePerGroupId() const;
 
     int getRunNumber () const;
 
