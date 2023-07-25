@@ -39,8 +39,8 @@ public:
     ~GrDvstyChart () noexcept = default;
 
     void print (
-        std::unordered_map<int, int> numOfResidentsPerGroupId,
-        std::unordered_map<int, int> numOfDiffNeighborsPerGroupId,
+        const std::unordered_map<int, int>& numOfResidentsPerGroupId,
+        const std::unordered_map<int, int>& numOfDiffNeighborsPerGroupId,
         int run,
         Renderer* renderer
     ) const;

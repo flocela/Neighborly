@@ -90,7 +90,7 @@ void Printer_Graphic::print (const RunMetrics* runMetrics) const
     int run = runMetrics->getRunNumber();
 
     // Get residents per house from runMetrics information.
-    ResPerHouse residentPerHouse = runMetrics->getResidentsPerHouse();
+    const ResPerHouse& residentPerHouse = runMetrics->getResidentsPerHouse();
 
     // Printing is from top to bottom, left to right.
     _window_title->print(_renderer.get());

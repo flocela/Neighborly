@@ -25,8 +25,8 @@ GrDvstyChart::GrDvstyChart (
 }
 
 void GrDvstyChart::print (
-    unordered_map<int, int> numOfResidentsPerGroupId,
-        unordered_map<int, int> numOfDiffNeighborsPerGroupId,
+    const unordered_map<int, int>& numOfResidentsPerGroupId,
+    const unordered_map<int, int>& numOfDiffNeighborsPerGroupId,
     int run,
     Renderer* renderer
 ) const
@@ -46,7 +46,7 @@ void GrDvstyChart::print (
         }
 
         double averageNumOfDiffNeighbors = 
-            (double)numOfDiffNeighborsPerGroupId[groupId]/numOfResidentsInGroup;
+            (double)numOfDiffNeighborsPerGroupId.at(groupId)/numOfResidentsInGroup;
 
         Color groupColor = _colorrs_map.at(_b_color_per_groupId.at(groupId)).at(Mood::neutral)._color;
         points.push_back(Point((double)run, averageNumOfDiffNeighbors, groupColor));
