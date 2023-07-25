@@ -35,8 +35,8 @@ public:
     ~GrHapChart () noexcept = default;
 
     void print (
-        std::unordered_map<int, int> numofResidentsPerGroup,
-        std::unordered_map<int, double> happinessSumPerGroup,
+        const std::unordered_map<int, int>& numofResidentsPerGroup,
+        const std::unordered_map<int, double>& happinessSumPerGroup,
         int run,
         Renderer* renderer
     ) const;
