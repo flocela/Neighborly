@@ -120,6 +120,7 @@ int main(int argc, char* argv[])
         std::this_thread::sleep_until(timeStart + std::chrono::milliseconds(250));
     }
 
+    // Print out empty output if there are zero runs.
     if (components.numOfRuns == 0)
     {
         graphicPrinter.print(&runMetrics);

@@ -58,8 +58,8 @@ public:
 	void renderTexts (const std::vector<TextRect>& texts);
 	
 private:
-	SDL_Window *_sdl_window;
-	SDL_Renderer *_sdl_renderer;
+	SDL_Window *_sdl_window = nullptr;
+	SDL_Renderer *_sdl_renderer = nullptr;
 
 	const std::size_t _screen_width;
 	const std::size_t _screen_height;

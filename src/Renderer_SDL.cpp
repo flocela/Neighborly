@@ -29,6 +29,8 @@ Renderer_SDL::Renderer_SDL (
         return;
         
     initRenderer();
+    startFrame();
+    endFrame();
 }
 
 Renderer_SDL::~Renderer_SDL() {
@@ -40,7 +42,7 @@ Renderer_SDL::~Renderer_SDL() {
 
 void Renderer_SDL::startFrame()
 {
-    SDL_SetRenderDrawColor(_sdl_renderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(_sdl_renderer, 0, 0, 0, 255);
     SDL_RenderClear(_sdl_renderer);
 }
 
