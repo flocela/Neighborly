@@ -25,13 +25,13 @@ Printer_CmdLine::Printer_CmdLine (
 void Printer_CmdLine::print (const RunMetrics* runMetrics) const
 {   
     // Collect information from runMetrics.
-    ResPerHouse residentsPerHouse = runMetrics->getResidentsPerHouse();
-    unordered_map<int, int> numOfResidentsPerGroupId = runMetrics->getNumOfResidentsPerGroupId();
-    unordered_map<int, int> numOfDiffNeighborsPerGroupId =
+    const ResPerHouse& residentsPerHouse = runMetrics->getResidentsPerHouse();
+    const unordered_map<int, int>& numOfResidentsPerGroupId =
+        runMetrics->getNumOfResidentsPerGroupId();
+    const unordered_map<int, int>& numOfDiffNeighborsPerGroupId =
         runMetrics->getNumOfDiffNeighborsPerGroupId();
-    unordered_map<int, double> happinessSumPerGroupId = runMetrics->getHappinessSumPerGroupId();
-    unordered_map<int, const Resident*> residentExamplePerGroupId =
-        runMetrics->getResidentExamplePerGroupId();
+    const unordered_map<int, double>& happinessSumPerGroupId =
+        runMetrics->getHappinessSumPerGroupId();
     int run = runMetrics->getRunNumber();
 
     // Create a vector of group ids and sort the vector
@@ -48,26 +48,28 @@ void Printer_CmdLine::print (const RunMetrics* runMetrics) const
         cout << endl << "Command Line Printer" << endl << endl;
         cout << "Inputs: " << endl;
 
-        // print out resident information per group id and base colors.
+        // Print out resident information per group id and base colors.
         cout << "  Resident group info per groupId:" << endl;
         for (auto groupID : groupIDs)
         {
-            //const Resident* res = residentExamplePerGroupId[groupID];
             cout << "    Group id " << groupID << ":" << endl;
-            cout << "      base color: " << _base_colors_per_groupid.at(groupID)
-                 << "      count: "<< numOfResidentsPerGroupId[groupID] << ", "
+            cout << "      base color: "
+                 << _base_colors_per_groupid.at(groupID)
+                 << "      count: "
+                 << numOfResidentsPerGroupId.at(groupID) << ", "
                  << "      allowed movement: "
                  << _res_templates_per_group_id.at(groupID)->getAllowedMovementDistance() << ", "
                  << "      happiness goal: "
                  << _res_templates_per_group_id.at(groupID)->getHappinessGoal() << "," << endl
                  << "      " << _res_templates_per_group_id.at(groupID)->getType() << endl;
         }
+
         cout << "  Simulator: " << _simulator_name << endl;
         cout << "  Seed for random number generator: " << _seed_number << endl;
         cout << endl;
     }
 
-    // Print outputs.
+    // Print run outputs.
     cout << endl << "Outputs: " << endl;
 
     cout << "  Run: " << run << endl;
@@ -75,9 +77,9 @@ void Printer_CmdLine::print (const RunMetrics* runMetrics) const
 
     for (int groupID : groupIDs)
     {   
-        int numResidents = numOfResidentsPerGroupId[groupID];
-        double numDiffNeighbors = (double)numOfDiffNeighborsPerGroupId[groupID];
-        double happinessSum = happinessSumPerGroupId[groupID];
+        int numResidents = numOfResidentsPerGroupId.at(groupID);
+        double numDiffNeighbors = (double)numOfDiffNeighborsPerGroupId.at(groupID);
+        double happinessSum = happinessSumPerGroupId.at(groupID);
         cout << "    Group id " << groupID << " "
              << "diversity: " << (numDiffNeighbors/numResidents) << ", "
              << "happiness sum: " << (happinessSum/numResidents) << endl;
@@ -87,7 +89,7 @@ void Printer_CmdLine::print (const RunMetrics* runMetrics) const
     // Print city map if on first or last run.
     if (run == 0 || run == _max_num_of_runs-1)
     {
-        // Create characters per address map. It will assign a character to each 
+        // Create map of characters per address. It will assign a character to each 
         // address based on the resident's happiness.
         unordered_map<int, char> characterPerAddress{};
         for (auto pair : residentsPerHouse)
@@ -95,14 +97,18 @@ void Printer_CmdLine::print (const RunMetrics* runMetrics) const
             const House* house = pair.first;
             const Resident* resident = pair.second;
             int address = house->getAddress();
+            // if resident's happiness is larger than happiness goal, assign the happiness
+            // character for this group.
             if (resident->getHappiness() >= resident->getHappinessGoal()){
                 characterPerAddress[address] = happyCharacters[resident->getGroupId()];
             }
+            // else assign the groupId for this group.
             else
             {
                 characterPerAddress[address] = resident->getGroupId() + 48; 
             }
         }
+        // Print city map's key.
         cout << "    City Map" << endl << "      key: ";
         for (int groupID : groupIDs)
         {
@@ -111,6 +117,8 @@ void Printer_CmdLine::print (const RunMetrics* runMetrics) const
                  << "unhappy: " << groupID << endl << "           ";
         }
         cout << "empty house: -" << endl;
+
+        // Use city printer to print out city map (residents and houses).
         cout << _city_printer.print(characterPerAddress) << endl;
         cout << endl;
     }
