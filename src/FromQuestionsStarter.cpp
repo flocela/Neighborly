@@ -30,7 +30,7 @@ SimulationComponents FromQuestionsStarter::createSimulationComponents (
     int maxNumOfRuns
 )
 {
-    // Simulation Components. Need to add information to this container.
+    // Simulation Components. Need to add information to resultantComponents container.
     SimulationComponents resultantComponents{};
 
     // group colors
@@ -38,14 +38,14 @@ SimulationComponents FromQuestionsStarter::createSimulationComponents (
     baseColors.push_back(_ordered_base_colors[0]);
     baseColors.push_back(_ordered_base_colors[1]);
 
-    // add random seed
+    // Add random seed.
     resultantComponents.randomSeed = RandomSeedGetter::getSeedFromUser(ui);
     
-    // add city
+    // Add city.
     CityMaker_CmdLine cityMaker{ui};
     resultantComponents.city = cityMaker.makeCity(cityFactories, maxNumOfHousesX, maxNumOfHousesY);
 
-    // create group info for residents
+    // Create group info for residents.
     ResidentsMaker_CmdLine residentsMaker{};
     ResidentsGroupInfo resGroupInfo = residentsMaker.makeResidents(
         ui,
@@ -54,20 +54,20 @@ SimulationComponents FromQuestionsStarter::createSimulationComponents (
         baseColors,
         min(resultantComponents.city->getWidth()/2, resultantComponents.city->getHeight()/2));
 
-    // add residents
+    // Add residents.
     resultantComponents.residents = move(resGroupInfo._residents);
 
-    // add resident type per group id
+    // Add resident type per group id.
     resultantComponents.residentTemplatePerGroupId
         = move(resGroupInfo._res_template_per_group_id);
 
-    // add group colors per resident
+    // Add group colors per resident.
     resultantComponents.baseColorsPerGroupid = resGroupInfo._base_color_per_group_num;
 
-    // add number of runs.
+    // Add number of runs.
     resultantComponents.numOfRuns = UINumOfRunsGetter::getNumOfRunsFromUser(ui, maxNumOfRuns);
     
-    // add Simulator
+    // Add Simulator.
     SimulatorGetter simulatorGetter{
         resultantComponents.city.get(),
         getSetOfPointers(resultantComponents.residents)};

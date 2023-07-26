@@ -1,11 +1,10 @@
 #ifndef RESIDENTSMAKER_CMDLINE_H
 #define RESIDENTSMAKER_CMDLINE_H
 
-#include "Color.h"
 #include "ResidentsMaker.h"
 #include "UI_CmdLine.h"
 
-// Creates Residents by asking user how many resident groups will be necessary.
+// Creates Residents by asking user to choose resident types and characteristics.
 // Then for each group, asks what type of resident the group will be composed of.
 // For each type of Resident type, asks specific questions that are necessary
 // to create Residents of that type.
@@ -56,11 +55,8 @@ private:
     // use _fallback_menu_response.
     std::string _fallback_res_type_response = "Could not determine the"
         " resident group type, will be using .";
-    
-    void initColors (std::vector<BaseColor> colors);
 
-    int askForNumOfGroupsOfResidents (const UI& ui, int maxNumOfResidentGroups);
-    int askForNumOfResidents (const UI& ui, int count, std::string color);
+    int askForNumOfResidents (const UI& ui, int maxNumOfResidents, std::string color);
     int askForGroupResidentType (
         const UI& ui, 
         std::string color, 

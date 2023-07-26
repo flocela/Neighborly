@@ -1,8 +1,8 @@
 #ifndef FROM_QUESTIONS_STARTER_H
 #define FROM_QUESTIONS_STARTER_H
 
-#include <vector>
 #include <memory>
+#include <vector>
 
 #include "CityFactory.h"
 #include "ResidentsFactory.h"

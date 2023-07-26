@@ -1,8 +1,8 @@
 #ifndef CITYMAKER_H
 #define CITYMAKER_H
 
-#include <vector>
 #include <memory>
+#include <vector>
 #include "City.h"
 #include "CityFactory.h"
 

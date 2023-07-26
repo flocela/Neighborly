@@ -21,9 +21,7 @@ unique_ptr<City> CityMaker_CmdLine::makeCity (
 
     int cityChoice = 0;
 
-    string copyChoosingCityFailure = _choosing_city_failure;
-    copyChoosingCityFailure.insert(49, namesOfCityFactories[_fall_back]);
-
+    // If there is only one city choice, then force user to choose that one.
     if (cityFactories.size() == 1)
     {
         cout << "\nWell, there's only one type of city, so your city type will be " <<
@@ -31,12 +29,18 @@ unique_ptr<City> CityMaker_CmdLine::makeCity (
     }
     else
     {
+        // Use a menu to ask user to choose city
+        string failureResponseWithBackupCity = _choosing_city_failure;
+        failureResponseWithBackupCity.insert(49, namesOfCityFactories[_fall_back]);
+
         cityChoice = 
             _ui.menu("Choose a city type by typing the corresponding number.",
             namesOfCityFactories,
             _fall_back,
-            _choosing_city_failure);  
+            failureResponseWithBackupCity);  
     }
+
+    // Create city based on cityChoice.
     return cityFactories[cityChoice]->createCity(_ui, maxDeltaX, maxDeltaY);
 
 }

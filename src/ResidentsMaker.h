@@ -1,14 +1,14 @@
 #ifndef RESIDENTSMAKER_H
 #define RESIDENTSMAKER_H
 
-#include <vector>
 #include <memory>
+#include <vector>
+#include "Color.h"
 #include "Resident.h"
 #include "ResidentsFactory.h"
-#include "Color.h"
 #include "ResidentsGroupInfo.h"
 
-// creates residents
+// Creates residents based on user's choice.
 class ResidentsMaker
 {
 protected:
@@ -20,6 +20,7 @@ protected:
 
 public:
     virtual ~ResidentsMaker () noexcept = default;
+    
     virtual ResidentsGroupInfo makeResidents (
         const UI& ui,
         const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories,

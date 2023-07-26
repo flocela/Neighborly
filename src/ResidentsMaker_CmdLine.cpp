@@ -15,27 +15,28 @@ ResidentsGroupInfo ResidentsMaker_CmdLine::makeResidents (
     double maxAllowableMovement
 )
 {   
-    initColors(colors);
+    _available_colors = colors;
 
     // resGroupInfo is returned after adding residents and colors to it.
     ResidentsGroupInfo resGroupInfo;
     
-    int numOfResidentsCreated = 0; // first id is zero.
+    // Create a certain amount of residents per each resident group.
+    int numOfResidentsCreated = 0;
     for (int ii=0; ii<_num_of_resident_groups; ++ii)
     {
-        // set max number of resident spaces left
+        // Set max number of resident spaces left.
         int allowedNumOfResidents = maxResidentCount - numOfResidentsCreated;
 
         if (allowedNumOfResidents <= 0)
             break;
 
-        // set base color
+        // Set base color
         BaseColor curBaseColor = _available_colors[ii];
         resGroupInfo._base_color_per_group_num.insert({ii+1, curBaseColor});
 
+        // Create string representation of current base color name.
         stringstream colorStream;
         colorStream << curBaseColor;
-
         string curColorBaseName = colorStream.str();
         
 
@@ -53,6 +54,7 @@ ResidentsGroupInfo ResidentsMaker_CmdLine::makeResidents (
 
         double happinessGoal = askForHappinessGoalForGroup(ui, curColorBaseName);
 
+        // Create new residents.
         vector<unique_ptr<Resident>> newResidents = residentsFactories[choice]->createResidents(
             ui,
             numOfResidentsCreated,
@@ -63,9 +65,11 @@ ResidentsGroupInfo ResidentsMaker_CmdLine::makeResidents (
             _available_colors[ii]
             );
 
+        // Move residents to resGroupInfo._residents.
         for (auto& r: newResidents)
             resGroupInfo._residents.emplace_back(move(r));
 
+        // ResGroupInfo also keeps track of the type of resident templates per group id.
         resGroupInfo._res_template_per_group_id
             .insert({newResidents[0]->getGroupId(), newResidents[0]->getTemplate()});
 
@@ -76,44 +80,23 @@ ResidentsGroupInfo ResidentsMaker_CmdLine::makeResidents (
     return resGroupInfo;
 }
 
-void ResidentsMaker_CmdLine::initColors (vector<BaseColor> colors)
+int ResidentsMaker_CmdLine::askForNumOfResidents(const UI& ui, int maxNumOfResidents, string color)
 {
-    _available_colors = colors;
-}
-
-
-int ResidentsMaker_CmdLine::askForNumOfGroupsOfResidents(const UI& ui, int maxNumOfResidentGroups)
-{
-    Question_Int question = Question_Int{
-        0,
-        1,
-        maxNumOfResidentGroups,
-        true,
-        true,
-        2,
-        _how_many_groups_orig_prompt,
-        "number of groups"
-    };
-    return stoi(ui.getAnswer(question));
-}
-
-int ResidentsMaker_CmdLine::askForNumOfResidents(const UI& ui, int count, string color)
-{
-    // add max number of residents to prompt
+    // Add max number of residents to prompt.
     string howManyResidentsPrompt = insertIntoString(
         _how_many_residents_orig_prompt,
         _how_many_residents_orig_prompt.size() - 1,
-        to_string(count)
+        to_string(maxNumOfResidents)
     );
 
-    // create question, add color to prompt
+    // Create question. Add color to prompt.
     Question_Int question{
         1,
         1,
-        count,
+        maxNumOfResidents,
         true,
         true,
-        count/2,
+        maxNumOfResidents/2,
         insertIntoString(
             howManyResidentsPrompt,
             charLocationForColor(howManyResidentsPrompt),
