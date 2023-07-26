@@ -1,10 +1,9 @@
-#include "FromFileStarter.h"
-#include <fstream>
 #include <iostream>
-#include <set>
+
 #include "City_Grid.h"
 #include "CityState_Simple.h"
 #include "Color.h"
+#include "FromFileStarter.h"
 #include "HappinessFunc_Falling.h"
 #include "HappinessFunc_Flat.h"
 #include "HappinessFunc_Rising.h"
@@ -78,7 +77,7 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
             components.baseColorsPerGroupid.insert(returnBaseColor(inputStream));
             getline(inputStream, line); // </base_color_per_group>
         }
-        cout << "ResidentsFactory AA" << endl;
+        
         // residents
         getline(inputStream, line);
         while (line.find("<resident_group") != string::npos)
@@ -95,7 +94,7 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
 
             getline(inputStream, line);
         }
-        cout << "ResidentsFactory BB" << endl;
+        
         if (line.find("<simulator>") != string::npos)
         {   
             string simulator = "";

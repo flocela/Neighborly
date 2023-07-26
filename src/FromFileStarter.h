@@ -1,7 +1,6 @@
 #ifndef FROM_FILE_STARTER_H
 #define FROM_FILE_STARTER_H
 
-#include <fstream>
 #include <memory>
 #include <vector>
 #include "City.h"
@@ -10,7 +9,7 @@
 #include "Simulator_Basic_A.h"
 #include "Simulator_Basic_B.h"
 
-// takes in a file and returns a SimulationComponents
+// Takes in a file and returns a SimulationComponents
 class FromFileStarter
 {
 public:
