@@ -43,14 +43,14 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
         case 0:
         {
             // 30 x 30 city has 900 houses. 
-            // 360 Falling Resdients (Group 1)
+            // 360 Falling Residents (Group 1)
             // 360 Falling Residents (Group 2)
             // SimulatorBasic_B
             components.randomSeed = 0;
             
             components.city = std::make_unique<City_Grid>(30);
 
-            // Only two groups means only two colors. Group #1 and Group #2
+            // Two groups means only two colors. Group #1 and Group #2.
             for (int ii=1; ii<3; ++ii)
             {
                 components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
@@ -78,7 +78,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     15,
                     60,
                     std::make_unique<HappinessFunc_Falling>(
-                        70, // happiness value with zero neighbors
+                        70,
                         95,
                         50)
                 ));
@@ -92,15 +92,14 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
-                30,
-                20,
+                30, // percent of residents that are chosen to move each run
+                20, // number of houses the residents can choose from
                 make_unique<CityState_Simple>(components.city.get())
             );
 
             components.numOfRuns = 20;
-            
-            
             break;
+
         }
         case 1:
         {
@@ -112,7 +111,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             
             components.city = std::make_unique<City_Grid>(120);
 
-            // Only two groups. Group #1 and Group #2
+            // Two groups: Group #1 and Group #2
             for (int ii=1; ii<3; ++ii)
             {
                 components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
@@ -140,7 +139,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     30,
                     60,
                     std::make_unique<HappinessFunc_Falling>(
-                        70, // happiness value with zero neighbors
+                        70,
                         95,
                         50)
                 ));
@@ -154,8 +153,8 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
-                30,
-                20,
+                30, // percent of residents that are chosen to move each run
+                20, // number of houses the residents can choose from
                 make_unique<CityState_Simple>(components.city.get())
             );
 
@@ -173,7 +172,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             
             components.city = std::make_unique<City_Grid>(30);
 
-            // Only two groups. Group #1 and Group #2
+            // Two groups: Group #1 and Group #2
             for (int ii=1; ii<3; ++ii)
             {
                 components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
@@ -185,7 +184,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     ii,  // id
                     1,   // group number
                     15,   // allowed movement
-                    60,  // happiness goal
+                    80,  // happiness goal
                     std::make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
@@ -199,7 +198,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     jj,
                     2,
                     15,
-                    60,
+                    80,
                     std::make_unique<HappinessFunc_Falling>(
                         70, 
                         95,
@@ -215,7 +214,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
-                30,
+                30, // percent of residents that are chosen to move each run
                 20, // number of houses moving residents get to choose from
                 move(make_unique<CityState_Simple>(components.city.get()))
             );
@@ -246,7 +245,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     ii,  // id
                     1,   // group number
                     30,   // allowed movement
-                    60,  // happiness goal
+                    80,  // happiness goal
                     std::make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
@@ -260,9 +259,9 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     jj,
                     2,
                     30,
-                    60,
+                    80,
                     std::make_unique<HappinessFunc_Falling>(
-                        70, // happiness value with zero neighbors
+                        70,
                         95,
                         10)
                 ));
@@ -276,7 +275,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
-                30,
+                30, // percent of residents that are chosen to move each run
                 20, // number of houses moving residents get to choose from
                 make_unique<CityState_Simple>(components.city.get())
             );
