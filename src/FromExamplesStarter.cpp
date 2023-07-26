@@ -62,7 +62,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     ii,  // id
                     1,   // group number
                     15,  // allowed movement
-                    60,  // happiness goal
+                    80,  // happiness goal
                     std::make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
@@ -76,7 +76,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     jj,
                     2,
                     15,
-                    60,
+                    80,
                     std::make_unique<HappinessFunc_Falling>(
                         70,
                         95,
@@ -98,7 +98,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             );
 
             components.numOfRuns = 20;
-            break;
+            break; // end case 0
 
         }
         case 1:
@@ -123,7 +123,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     ii,  // id
                     1,   // group number
                     30,   // allowed movement
-                    60,  // happiness goal
+                    80,  // happiness goal
                     std::make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
@@ -137,7 +137,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     jj,
                     2,
                     30,
-                    60,
+                    80,
                     std::make_unique<HappinessFunc_Falling>(
                         70,
                         95,
@@ -158,9 +158,9 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                 make_unique<CityState_Simple>(components.city.get())
             );
 
-            components.numOfRuns = 30;
+            components.numOfRuns = 10;
             
-            break;
+            break; // end case 1
         }
         case 2:
         {
@@ -188,7 +188,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     std::make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
-                        10  // happiness value at one diversity
+                        50  // happiness value at one diversity
                     )
                 ));
             }
@@ -202,7 +202,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     std::make_unique<HappinessFunc_Falling>(
                         70, 
                         95,
-                        10)
+                        50)
                 ));
             }
 
@@ -221,7 +221,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             components.numOfRuns = 30;
             
-            break;
+            break; // end case 2
         }
         case 3:
         {
@@ -248,8 +248,8 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     80,  // happiness goal
                     std::make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
-                        95, // happiness value at zero diversity
-                        10  // happiness value at one diversity
+                        100, // happiness value at zero diversity
+                        0  // happiness value at one diversity
                     )
                 ));
             }
@@ -262,8 +262,8 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     80,
                     std::make_unique<HappinessFunc_Falling>(
                         70,
-                        95,
-                        10)
+                        100,
+                        0)
                 ));
             }
 
@@ -280,9 +280,9 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                 make_unique<CityState_Simple>(components.city.get())
             );
 
-            components.numOfRuns = 30;
+            components.numOfRuns = 10;
             
-            break;
+            break; // end case 3
         }
     }
 

@@ -1,14 +1,12 @@
 #ifndef SIMULATOR_Basic_B_H
 #define SIMULATOR_BASIC_B_H
 
-#include "City.h"
-
 #include <map>
 #include <memory>
 #include <unordered_set>
+#include "City.h"
 #include "CityState.h"
 #include "Simulator.h"
-
 
 class Simulator_Basic_B: public Simulator
 {
@@ -51,28 +49,29 @@ private:
     // to move if there's no empty houses within their allowed movement distance.
     double _percent_of_residents = 30;
 
-    // Number of randomly houses resident chosen. Resident will choose from these houses
+    // Number of houses randomly chosen by a resident. Resident will choose from these houses.
     int _max_num_of_tries_to_find_house = 30;
 
-    // in first run, no resident has a house. And all residents are assigned a house.
-    void firstRun ();
-
-    // all runs which aren't the first run
-    void normalRun ();
-
+    // The state of the city. (Mostly where each resident lives in the city.)
     std::unique_ptr<CityState> _city_state;
 
+    // The residents that are chosen to move in a run.
     std::vector<Resident*> _moving_residents_vector;
 
     std::unordered_set<Resident*> _residents_chosen_from_cur_vector;
-    
-    // Will try to move the resident into a random available house.
+
+    // At the begining of the first run no resident has a house. They are randomly assigned a house
+    // in first run.
+    void firstRun ();
+
+    // All runs which aren't the first run.
+    // Will try to move the resident into an available house.
     // An available house is an empty house, within the resident's allowable movement distance.
     // If there are no available houses which will make the resident happy (hapiness greater
     // or equal to happiness goal), then the resident will not be moved.
     // Will randomly try available houses. If a house that will make the resident
     // happy is not found within numOfTries, then the resident will not be moved.
-    void moveResident (Resident* res, int numOfTries);
+    void normalRun ();
 
     void setHappinessValuesForAllResidents();
 
