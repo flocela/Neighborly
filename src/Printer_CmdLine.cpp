@@ -30,9 +30,10 @@ void Printer_CmdLine::print (const RunMetrics* runMetrics) const
     const unordered_map<int, int>& numOfResidentsPerGroupId =
         runMetrics->getNumOfResidentsPerGroupId();
 
-    // The number of different neighbors per group id is a sum of disparate neighbors per group
-    // id. It is found by taking the sum of disparate neighbors for each resident in the 
-    // group. Add that sum to a total sum of different neighbors for that group id.
+    // The number of different neighbors per group id is the total sum of disparate neighbors
+    // per resident per group id.
+    // It is found by taking the sum of disparate neighbors for each resident in the 
+    // group and adding that sum to a total sum of different neighbors for that group id.
     const unordered_map<int, int>& numOfDiffNeighborsPerGroupId =
         runMetrics->getNumOfDiffNeighborsPerGroupId();
     

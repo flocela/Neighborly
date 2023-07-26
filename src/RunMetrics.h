@@ -10,10 +10,9 @@
 #include "ResPerHouse.h"
 #include "SetOfHousesPerHouse.h"
 
-// Used by Printer interface. Contains needed data for a printer to print output.
+// Countains output data from a simulation run.
 class RunMetrics
 {
-
 public: 
     RunMetrics (const SetOfHousesPerHouse& adjacentHousesPerHouse);
     RunMetrics () = delete;
@@ -27,16 +26,16 @@ public:
     
     const std::unordered_map<int, int>& getNumOfResidentsPerGroupId () const;
 
-    // returns sum of each resident's disparate neighbors. Note,
-    // total number of disparate neighobrs for a group may be less than
-    // returned value because two members of the group may both be counting
-    // the same disparate neighbor.
+    // Returns the sum of each resident's disparate neighbors per group. Found
+    // by creating a total sum for each group. The sum of each resident's 
+    // disparate neighbors is taken and added to the total sum for the group.
+    // Note disparate neighbors may be counted twice. If neighbors A and B
+    // are of group 1, and they both share neighbor C of group 2. Then neighbor
+    // C will be added to the sum of group 1's diparate neighbors twice.
     const std::unordered_map<int, int>& getNumOfDiffNeighborsPerGroupId () const;
 
-    // returns the sum of each resident's happiness
+    // Returns the sum of each resident's happiness per group.
     const std::unordered_map<int, double>& getHappinessSumPerGroupId() const;
-    
-    const std::unordered_map<int, const Resident*>& getResidentExamplePerGroupId() const;
 
     int getRunNumber () const;
 
@@ -46,15 +45,13 @@ public:
     );
 
 private:
-
-    int _run_num = -1;
     const SetOfHousesPerHouse& _adj_houses;
 
+    int _run_num = -1;
     ResPerHouse _residents_per_house{};
     std::unordered_map<int, int> _num_of_residents_per_group_id{};
     std::unordered_map<int, int> _num_of_diff_neighbors_per_group_id{};
     std::unordered_map<int, double> _happiness_sum_per_group_id{};
-    std::unordered_map<int, const Resident*> _resident_example_per_group_id{};
     
 };
 

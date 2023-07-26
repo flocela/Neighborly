@@ -68,13 +68,11 @@ TEST_CASE("empty city")
     unordered_map<int, int> numOfResidentsPerGroupId{};
     unordered_map<int, int> numOfDiffNeighborsPerGroupId{};
     unordered_map<int, double> happinessSumPerGroupId{};
-    unordered_map<int, const Resident*> residentExamplePerGroupId{};
 //
     REQUIRE(residentsPerHouse == rm.getResidentsPerHouse());
     REQUIRE(numOfResidentsPerGroupId == rm.getNumOfResidentsPerGroupId());
     REQUIRE(numOfDiffNeighborsPerGroupId == rm.getNumOfDiffNeighborsPerGroupId());
     REQUIRE(happinessSumPerGroupId == rm.getHappinessSumPerGroupId());
-    REQUIRE(residentExamplePerGroupId == rm.getResidentExamplePerGroupId());
 }
 
 // 20 x 20 city grid. three columns of group1 residents.
@@ -122,7 +120,6 @@ TEST_CASE("three columns of group1")
     REQUIRE(numOfResidents == rm.getNumOfResidentsPerGroupId().at(1));
     REQUIRE(0 == rm.getNumOfDiffNeighborsPerGroupId().at(1));
     REQUIRE(3000 == rm.getHappinessSumPerGroupId().at(1));
-    REQUIRE(1 == rm.getResidentExamplePerGroupId().at(1)->getGroupId());
     
 }
 
@@ -270,8 +267,5 @@ TEST_CASE("four columns of group1, two columns of group2")
     //    groupD's is is 10X20
     //    total is 400
     REQUIRE(400 == rm.getHappinessSumPerGroupId().at(2));
-
-    REQUIRE(1 == rm.getResidentExamplePerGroupId().at(1)->getGroupId());
-    REQUIRE(2 == rm.getResidentExamplePerGroupId().at(2)->getGroupId());
 }
 
