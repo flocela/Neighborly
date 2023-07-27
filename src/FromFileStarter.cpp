@@ -145,7 +145,15 @@ std::unique_ptr<Simulator_Basic_A> FromFileStarter::returnSimulatorBasicA (
 )
 {
     string line = "";
+    string percentResidentsToMove = "";
     string numOfTries = "";
+
+    getline(inputStream, line);
+    if (line.find("percent_residents_to_move") != string::npos)
+    {
+        getline(inputStream, percentResidentsToMove);
+        getline(inputStream, line);
+    }
 
     getline(inputStream, line);
     if (line.find("num_of_tries") != string::npos)
@@ -156,6 +164,7 @@ std::unique_ptr<Simulator_Basic_A> FromFileStarter::returnSimulatorBasicA (
     return std::make_unique<Simulator_Basic_A>(
             components.city.get(),
             getSetOfPointers(components.residents),
+            stod(percentResidentsToMove),
             stoi(numOfTries),
             make_unique<CityState_Simple>(components.city.get())
     );

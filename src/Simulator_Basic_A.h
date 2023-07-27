@@ -1,9 +1,9 @@
 #ifndef SIMULATOR_BASIC_A_H
 #define SIMULATOR_BASIC_A_H
 
+#include <map>
 #include <memory>
-#include <set>
-
+#include <unordered_set>
 #include "City.h"
 #include "CityState.h"
 #include "Simulator.h"
@@ -11,12 +11,13 @@
 class Simulator_Basic_A: public Simulator
 {
 public:
-    // @residents are all the residents in the city.
     Simulator_Basic_A (
         const City* city,
         std::unordered_set<Resident*> residents,
-        int numOfHousesToChooseFrom,
-        std::unique_ptr<CityState> cityState);
+        double percentOfResidents, // percent of residents that are chosen to move each run.
+        int numOfHousesToChooseFrom, // number of houses the residents can choose from
+        std::unique_ptr<CityState> cityState
+    );
     Simulator_Basic_A () = delete;
     Simulator_Basic_A (const Simulator_Basic_A& o) = default;
     Simulator_Basic_A (Simulator_Basic_A&& o) noexcept = default;
@@ -24,17 +25,13 @@ public:
     Simulator_Basic_A& operator= (Simulator_Basic_A&& o) noexcept = default;
     ~Simulator_Basic_A () noexcept = default;
 
-    // simulates one run (or round). 
-    // A run is: Take all residents that are unhappy. Then for each resident,
-    // try to move them to a new house.
-    // Trying to move them to a new house means:
-    // 2. Randomly choose empty houses that are within the resident's allowable movement distance.
-    // 3. See if that house will make them happy. If so, then move them.
-    // 4. Will only try so many houses, (see _num_of_tries) before giving up.
-    //    Then the resident won't move.
-    // 5. It may be the case that there are no empty houses within the allowable movement distance.
-    //    It may be that none of the empty houses within the allowable movement distance will make
-    //    the resident happy. In which case, the resident will not move.
+    // simulates one run (or round).
+    // A run is: Randomly take percentage of residents and try to move them into a new house.
+    // Randomly take a number of empty houses that are within the resident's allowable moving
+    // distance (the resident's current home is not included).
+    // Move the resident into the house that makes them the happiest.
+    // If there is no empty houses that are within the allowable moving distance, then the
+    // resident will not move.
     // ResidentA may move to a house that makes them happy, then subsequently residentB
     // may move next to the residentA. This could result in changing residentA's happiness,
     // making them happier or unhappy. 
@@ -48,31 +45,40 @@ private:
     // all residents
     std::unordered_set<Resident*> _residents;
 
-    // only houses that are occupied and their residents
-    std::unordered_map<const House*, Resident*> _res_per_house = {};
+    // Percent of residents that will be forced to move at each run. They don't have
+    // to move if there's no empty houses within their allowed movement distance.
+    double _percent_of_residents = 30;
 
-    // only residents that have houses and their houses
-    std::unordered_map<Resident*, const House*> _house_per_resident;
+    // Number of houses randomly chosen by a resident. Resident will choose from these houses.
+    int _max_num_of_tries_to_find_house = 30;
 
-    // all unoccupied houses
-    std::unordered_set<const House*> _open_houses;
-
-    // Number of houses resident will try before, giving up and not moving on this run.
-    int _num_of_tries = 40;
-
+    // The state of the city. (Mostly where each resident lives in the city.)
     std::unique_ptr<CityState> _city_state;
 
-    // in first run, no resident has a house. And all residents are assigned a house.
+    // The residents that are chosen to move in a run.
+    std::vector<Resident*> _moving_residents_vector;
+
+    std::unordered_set<Resident*> _residents_chosen_from_cur_vector;
+
+    // At the begining of the first run no resident has a house. They are randomly assigned a house
+    // in first run.
     void firstRun ();
 
-    // all runs which aren't the first run
+    // All runs which aren't the first run.
+    // Will try to move the resident into an available house.
+    // An available house is an empty house, within the resident's allowable movement distance.
+    // If there are no available houses which will make the resident happy (hapiness greater
+    // or equal to happiness goal), then the resident will not be moved.
+    // Will randomly try available houses. If a house that will make the resident
+    // happy is not found within numOfTries, then the resident will not be moved.
     void normalRun ();
 
     void setHappinessValuesForAllResidents();
 
-    double calculateHappiness(Resident* res, int address);
+    double calculateHappinessValueFor(Resident* res, int address);
 
-    void moveResident (Resident* res, int numOfTries);
+    Resident* chooseResident ();
+
 };
 
 #endif

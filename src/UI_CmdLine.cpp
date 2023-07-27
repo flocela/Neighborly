@@ -47,10 +47,25 @@ int UI_CmdLine::menu (
     ssPrompt << prompt << endl;
     for (int ii=0; ii<size; ++ii)
     {
-        ssPrompt << ii+1 << ")" << items[ii] << " ";
+        ssPrompt << ii+1 << ")" << items[ii];
+        if (size > 4)
+        {
+            ssPrompt << endl;
+        }
+        else
+        {
+            ssPrompt << " ";
+        }
     }
-    ssPrompt << endl << "_";
-
+    if (size > 4)
+    {
+        ssPrompt << "_";
+    }
+    else
+    {
+        ssPrompt << endl << "_";
+    }
+    
     // Create the range in the range prompt. (It has the original prompt appended to it.)
     stringstream ssInRange;
     ssInRange << _menu_range_prompt;

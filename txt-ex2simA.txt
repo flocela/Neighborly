@@ -95,6 +95,9 @@
     <name>
         Simulator_Basic_A
     </name>
+    <percent_residents_to_move>
+        30
+    </percent_residents_to_move>
     <num_of_tries>
         20
     </num_of_tries>

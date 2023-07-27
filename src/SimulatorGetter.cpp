@@ -53,13 +53,16 @@ unique_ptr<Simulator> SimulatorGetter::getSimulatorFromUser (const UI& ui)
 
     if (chosenSimulator == 0) // Basic_A
     {
-        Question_Int q = createQuestionForNumberOfHousesToChooseFrom();
+        _percent_residents_to_move =
+            stod(ui.getAnswer(createQuestionForPercentOfResidentsThatMustMove()));
+
         _number_of_houses_to_look_at = 
-            stoi(ui.getAnswer(q));
+            stoi(ui.getAnswer(createQuestionForNumberOfHousesToChooseFrom()));
 
         return make_unique<Simulator_Basic_A>(
             _city,
             _residents,
+            _percent_residents_to_move,
             _number_of_houses_to_look_at,
             make_unique<CityState_Simple>(_city)
         );

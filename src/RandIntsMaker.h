@@ -1,10 +1,10 @@
-#ifndef RANDOMINTEGERS
-#define RANDOMINTEGERS
+#ifndef RANDINTSMAKER_H
+#define RANDINTSMAKER_H
 
 #include <vector>
 
 // Produces a number of non-repeating numbers.
-class RandomIntegers
+class RandIntsMaker
 {
 public:
     std::vector<int> getRandomIntegers(int wellSize, int quantity) const;

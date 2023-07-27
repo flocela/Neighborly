@@ -1,30 +1,30 @@
 #include "catch.hpp"
-#include "../src/RandomIntegers.h"
+#include "../src/RandIntsMaker.h"
 
 #include <iostream>
 #include <unordered_set>
 using namespace std;
 using Catch::Matchers::Contains;
 
-TEST_CASE("RandomIntegers: Well size is zero.")
+TEST_CASE("RandIntsMaker: Well size is zero.")
 {   
-    RandomIntegers rI{};
+    RandIntsMaker rI{};
     vector<int> actual = rI.getRandomIntegers(0, 0);
 
     REQUIRE ( 0 == actual.size());
 }
 
-TEST_CASE("RandomIntegers: Well size is zero. Quantity is 10")
+TEST_CASE("RandIntsMaker: Well size is zero. Quantity is 10")
 {   
-    RandomIntegers rI{};
+    RandIntsMaker rI{};
 
     REQUIRE_THROWS_WITH ( rI.getRandomIntegers(0, 10),
                           Contains("Well size must be at least as large as quantity."));
 }
 
-TEST_CASE("RandomIntegers: Well size and quanity size are the same, test with 10")
+TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 10")
 {   
-    RandomIntegers rI{};
+    RandIntsMaker rI{};
     vector<int> actual = rI.getRandomIntegers(10, 10);
 
     vector<int> inOrder = vector<int>(10);
@@ -44,9 +44,9 @@ TEST_CASE("RandomIntegers: Well size and quanity size are the same, test with 10
     REQUIRE(inOrder != actual);
 }
 
-TEST_CASE("RandomIntegers: Well size and quanity size are the same, test with 1")
+TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 1")
 {   
-    RandomIntegers rI{};
+    RandIntsMaker rI{};
 
     vector<int> expected(1, 0);
 
@@ -54,9 +54,9 @@ TEST_CASE("RandomIntegers: Well size and quanity size are the same, test with 1"
     REQUIRE(expected == rI.getRandomIntegers(1, 1));
 }
 
-TEST_CASE("RandomIntegers: Well size and quanity size are the same, test with 5")
+TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 5")
 {   
-    RandomIntegers rI{};
+    RandIntsMaker rI{};
     vector<int> actual = rI.getRandomIntegers(5, 5);
 
     vector<int> inOrder = vector<int>(5);
@@ -78,9 +78,9 @@ TEST_CASE("RandomIntegers: Well size and quanity size are the same, test with 5"
 }
 
 
-TEST_CASE("RandomIntegers: Well size and quanity size are the same, test with 1,000")
+TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 1,000")
 {   
-    RandomIntegers rI{};
+    RandIntsMaker rI{};
     vector<int> actual = rI.getRandomIntegers(1000, 1000);
 
     vector<int> inOrder = vector<int>(1000);
@@ -101,9 +101,9 @@ TEST_CASE("RandomIntegers: Well size and quanity size are the same, test with 1,
     REQUIRE(inOrder != actual);
 }
 
-TEST_CASE("RandomIntegers: Well size is larger than quantity")
+TEST_CASE("RandIntsMaker: Well size is larger than quantity")
 {   
-    RandomIntegers rI{};
+    RandIntsMaker rI{};
     vector<int> actual = rI.getRandomIntegers(1000, 100);
 
     unordered_set<int> actualSet{};
