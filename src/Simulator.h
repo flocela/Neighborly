@@ -19,7 +19,7 @@ public:
     virtual ~Simulator () noexcept = default;
     
     virtual ResPerHouse run() = 0;
-    virtual std::string toString() = 0;
+    virtual std::string toString() const = 0;
 };
 
 #endif

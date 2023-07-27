@@ -111,7 +111,9 @@ src/ResPerHouse.cpp
 src/ReverseAxis.cpp
 src/RunMetrics.cpp
 src/SetOfHousesPerHouse.cpp
+src/Simulator_Basic.cpp
 src/Simulator_Basic_A.cpp
+src/Simulator_Basic_B.cpp
 src/TextHelper.cpp
 src/UI_CMDLine.cpp 
 )
