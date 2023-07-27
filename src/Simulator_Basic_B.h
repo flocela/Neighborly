@@ -26,19 +26,17 @@ public:
     Simulator_Basic_B& operator= (Simulator_Basic_B&& o) noexcept = default;
     ~Simulator_Basic_B () noexcept = default;
 
-    // Simulates one run (or round).
-    // A run is made of randomly taking a percentage of residents and trying to move each of them
-    // into a new house that was randomly chosen.
-    // To choose a house randomly, first take a number of empty houses that are within the
-    // resident's allowable moving distance (the resident's current home is not included).
-    // Randomly go through each house and find the one that makes the resident the
-    // happiest. If there is a tie (as to happiest house), then the house that was found first
-    // is chosen.
-    // If there is no empty houses that are within the allowable moving distance, then the
-    // resident will not move.
-    // If the house that is chosen to make the resident happiest still does not make
-    // the resident happy (resident's happiness is less than resident's happiness goal)
-    // then do not move the resident.
+    // In the first run, randomly assign each resident a house.
+    // For all subsequent runs:
+    // Randomly select a _percent_of_residents to be moved. In random order, go through
+    // selected residents and try to move them into an available house.
+    // An available house is an empty house within the resident's allowable movement distance.
+    // Try the available houses in random order. Find the house that would make the resident
+    // happiest. If there is a tie as to which house would make the resident happiest,
+    // the first randomly chosen house is selected.
+    // If none of the houses make the resident happy (happiness greater or equal to the resident's
+    // happiness goal, then the resident will not be moved. If there are no available houses
+    // within the resident's allowed movement distance, then the resident is not moved.
     // Note, ResidentA may move to a house that makes them happy, then subsequently residentB
     // may move next to the residentA. This could result in changing residentA's happiness,
     // making them happier or sadder. 
@@ -65,14 +63,8 @@ private:
     // in first run.
     void firstRun ();
 
-    // All runs which aren't the first run.
-    // Randomly select a _percent_of_residents to be moved. In random order, go through
-    // chosen residents and try to move them into an available house.
-    // An available house is an empty house, within the resident's allowable movement distance.
-    // If there are no available houses which will make the resident happy (happiness greater
-    // or equal to happiness goal), then the resident will not be moved.
-    // Will randomly try available houses. If a house that will make the resident
-    // happy is not found within numOfTries, then the resident will not be moved.
+    // normal run is all runs that aren't the first run. See run() for how a normal 
+    // progresses.
     void normalRun ();
 
     void setHappinessValuesForAllResidents();
