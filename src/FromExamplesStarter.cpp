@@ -121,7 +121,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                 components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
             }
 
-            for (int ii=0; ii<500; ++ii)
+            for (int ii=0; ii<5760; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_UsingFunction>(
                     ii,  // id
@@ -135,7 +135,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     )
                 ));
             }
-            for (int jj=5000; jj<10000; ++jj)
+            for (int jj=5760; jj<11520; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_UsingFunction>(
                     jj,
@@ -243,7 +243,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                 components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
             }
 
-            for (int ii=0; ii<5000; ++ii)
+            for (int ii=0; ii<5760; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_UsingFunction>(
                     ii,  // id
@@ -257,7 +257,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     )
                 ));
             }
-            for (int jj=5000; jj<10000; ++jj)
+            for (int jj=5760; jj<11520; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_UsingFunction>(
                     jj,
@@ -379,7 +379,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     )
                 ));
             }
-            for (int jj=5000; jj<10000; ++jj)
+            for (int jj=5760; jj<11520; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_UsingFunction>(
                     jj,
