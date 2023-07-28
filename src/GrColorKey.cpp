@@ -41,16 +41,14 @@ GrColorKey::GrColorKey (
 
 void GrColorKey::print (Renderer* renderer) const
 {   
-    // Printed as a series of columns.
-    // Each column holds the groupId's colored box and the groupId's label.
-    // Call this box and label a representation.
-    // Each representation is centered in its column.
+    // Prints each color and corresponding label in _label_per_color.
     int num_of_columns = _label_per_color.size();
     int top_of_label_y__px = _top_center_y__px;
     int top_of_box_y__px = _top_center_y__px + _label_letter.letterHeight()/2 - _box_length__px/2;
     int first_col_left__px = _top_center_x__px - (double)_column_width * num_of_columns/2;
 
-    int column_counter = 0;
+    // Total number of columns is _label_per_color.size().
+    int column_index = 0;
     for (auto& pair : _label_per_color)
     {  
         string label = pair.second;
@@ -62,7 +60,7 @@ void GrColorKey::print (Renderer* renderer) const
         // left edge of colored box
         int box_left_x__px =
             first_col_left__px +
-            (column_counter * _column_width) +
+            (column_index * _column_width) +
             (0.5 * _column_width) -
             ((labelWidth + _box_length__px + _box_spacer__px )/2);
 
@@ -86,7 +84,7 @@ void GrColorKey::print (Renderer* renderer) const
             _text_background_color,
             4
         );
-        column_counter += 1;
+        column_index += 1;
     }
 }
 
@@ -128,18 +126,18 @@ void GrColorKey::setAttributes ()
 
     // Populate the _label_per_color vector.
     // An example of a label would be "Group 1 happy".
-    // Every group id has a corresponding BaseColor.
-    // Each BaseColor has a corresponding mood (happy or unhappy).
-    // Each mood has a color associated with it, as in {12, 216, 255, 255}.
+    // Combine group ids with the moods in _moods to get all combinations of group id and moods.
+    // Each base color and mood has a color associated with it, as in {12, 216, 255, 255}.
 
     // While creating vector, keep track of longest string for later use in column size.
     int longestString = 0;
 
     for (int& groupId : groupIds)
     {
-        BaseColor baseColorForGroupId = _b_color_per_groupId.at(groupId);
         for (Mood mood : _moods)
         {
+            BaseColor baseColorForGroupId = _b_color_per_groupId.at(groupId);
+            
             stringstream labelStream;
             labelStream << "Group: " << to_string(groupId) << " " << mood;
 

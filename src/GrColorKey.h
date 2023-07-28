@@ -3,19 +3,23 @@
 
 #include <vector>
 
-#include "Renderer.h"
-#include "Letter.h"
 #include "ColorKey.h"
+#include "Letter.h"
+#include "Renderer.h"
 
+// Renders a key (labels corresponding to colors) for a chart.
 class GrColorKey : public ColorKey
 {
 
 public:
+    // A label is made for each group id and mood combination.
+    // So for two groups with two moods (happy and unhappy), there will be 4 labels:
+    // group1 happy, group 1 unhappy, group 2 happy, group2 unhappy.
     GrColorKey (
         // topCenter is the point at the top and center of the GrColorKey.
         int topCenterXPx, // x value of the top most center point
         int topCenterYPx, // y value of the top most center point
-        Letter labelLetter, // Each groupId will be labeled. This gives the size of the lettering.
+        Letter labelLetter, // gives the size of the lettering.
         const std::unordered_map<int, BaseColor>& colors, // base color per groupId
         std::set<Mood> moods, // keys for colors, e.g. happy, sad, neutral
         std::vector<uint8_t> textColor,
@@ -53,11 +57,10 @@ private:
     std::set<Mood> _moods;
     int _box_length__px = 0; // box is the colored square next to the label
     int _box_spacer__px = 6; // space between box and label
-    int _column_border__px = 8; // space between each pair of box and labels
+    int _column_border__px = 8; // space around each pair of box and label.
 
-    // A pair would be a color and its corresponding label.
-    // The label is the resident group id and if it's happy or unhappy.
-    // For example a label would be "Group 1 unhappy".
+    // Each label holds the group id and mood, for example "Group 1 happy".
+    // Each pair in the _label_per_color is the color and its corresponding label.
     // The size of _label_per_color is the number of group id's times the number of moods.
     // The number of group ids is the size of _b_color_per_groupId.
     // The number of moods is the size of _moods.
