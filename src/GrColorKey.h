@@ -1,29 +1,29 @@
 #ifndef GR_COLOR_KEY_H
 #define GR_COLOR_KEY_H
 
+#include <vector>
+
 #include "Renderer.h"
 #include "Letter.h"
 #include "ColorKey.h"
-#include "SDL.h"
-#include <utility>
-#include <vector>
-#include <algorithm>
 
 class GrColorKey : public ColorKey
 {
 
 public:
     GrColorKey (
-        // the point at the top and center of the GrColorKey. the top most, central most point.
-        int topCenterXPx, // x value of the top most center point.
-        int topCenterYPx, // y value of the top most center point.
-        Letter labelLetter, // each groupId will be labeled. this gives the size of the lettering
+        // topCenter is the point at the top and center of the GrColorKey.
+        int topCenterXPx, // x value of the top most center point
+        int topCenterYPx, // y value of the top most center point
+        Letter labelLetter, // Each groupId will be labeled. This gives the size of the lettering.
         const std::unordered_map<int, BaseColor>& colors, // base color per groupId
         std::set<Mood> moods, // keys for colors, e.g. happy, sad, neutral
         std::vector<uint8_t> textColor,
         std::vector<uint8_t> textBackgroundColor
     );
 
+    // Sets the top center point of the key at (0, 0).
+    // Uses default colors for text and background color from _the_color_rgba (See Color.h).
     GrColorKey (
         Letter labelLetter,
         std::unordered_map<int, BaseColor> colors,
@@ -51,10 +51,19 @@ private:
     Letter _label_letter;
     const std::unordered_map<int, BaseColor>& _b_color_per_groupId;
     std::set<Mood> _moods;
-    int _box_length__px = 0; // box is the colored square
-    int _box_spacer__px = 6;
-    int _column_border__px = 8;
+    int _box_length__px = 0; // box is the colored square next to the label
+    int _box_spacer__px = 6; // space between box and label
+    int _column_border__px = 8; // space between each pair of box and labels
+
+    // A pair would be a color and its corresponding label.
+    // The label is the resident group id and if it's happy or unhappy.
+    // For example a label would be "Group 1 unhappy".
+    // The size of _label_per_color is the number of group id's times the number of moods.
+    // The number of group ids is the size of _b_color_per_groupId.
+    // The number of moods is the size of _moods.
     std::vector<std::pair<Color, std::string>> _label_per_color;
+
+    // column_width is the box length + box spacer + longest label + column border * 2.
     int _column_width;
 
     std::vector<uint8_t> _text_color = _the_color_rgba[Color::text];

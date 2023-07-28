@@ -76,3 +76,25 @@ ostream& operator<<(ostream& os, BaseColor const& obj)
     os << colorString;
     return os;
 }
+
+ostream& operator<<(ostream& os, const Mood& obj)
+{ 
+    string moodString;
+    switch (obj)
+    {
+        case Mood::happy:
+            moodString = "happy";
+            break;
+        case Mood::unhappy:
+            moodString = "unhappy";
+            break;
+        case Mood::neutral:
+            moodString = "neutral";
+            break;
+        default:
+            moodString = "unknown";
+            break;
+    }
+    os << moodString;
+    return os;
+}

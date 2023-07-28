@@ -1,5 +1,9 @@
-#include "GrColorKey.h"
 #include <algorithm>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+
+#include "GrColorKey.h"
 
 using namespace std;
 
@@ -38,15 +42,15 @@ GrColorKey::GrColorKey (
 void GrColorKey::print (Renderer* renderer) const
 {   
     // Printed as a series of columns.
-    // each column holds the groupId's colored box and the groupId's label.
-    // call this box and label the group's representation.
-    // each representation is centered in it's column.
+    // Each column holds the groupId's colored box and the groupId's label.
+    // Call this box and label a representation.
+    // Each representation is centered in its column.
     int num_of_columns = _label_per_color.size();
     int top_of_label_y__px = _top_center_y__px;
     int top_of_box_y__px = _top_center_y__px + _label_letter.letterHeight()/2 - _box_length__px/2;
     int first_col_left__px = _top_center_x__px - (double)_column_width * num_of_columns/2;
 
-    int counter = 0;
+    int column_counter = 0;
     for (auto& pair : _label_per_color)
     {  
         string label = pair.second;
@@ -58,7 +62,7 @@ void GrColorKey::print (Renderer* renderer) const
         // left edge of colored box
         int box_left_x__px =
             first_col_left__px +
-            (counter * _column_width) +
+            (column_counter * _column_width) +
             (0.5 * _column_width) -
             ((labelWidth + _box_length__px + _box_spacer__px )/2);
 
@@ -82,7 +86,7 @@ void GrColorKey::print (Renderer* renderer) const
             _text_background_color,
             4
         );
-        counter += 1;
+        column_counter += 1;
     }
 }
 
@@ -114,7 +118,7 @@ void GrColorKey::setTopCenter (int xPx, int yPx) {
 
 void GrColorKey::setAttributes ()
 {
-    // create vector of groupIds, then order vector
+    // Create vector of groupIds, then sort vector.
     std::vector<int> groupIds;
     for (auto itr = _b_color_per_groupId.begin(); itr != _b_color_per_groupId.end(); ++itr)
     {
@@ -122,23 +126,28 @@ void GrColorKey::setAttributes ()
     }
     std::sort(groupIds.begin(), groupIds.end());
 
-    // populate vector _label_per_color with pairs.
-    // each pair is the group color and the groupId string.
-    // while creating vector, keep track of longest string for later use in column size.
+    // Populate the _label_per_color vector.
+    // An example of a label would be "Group 1 happy".
+    // Every group id has a corresponding BaseColor.
+    // Each BaseColor has a corresponding mood (happy or unhappy).
+    // Each mood has a color associated with it, as in {12, 216, 255, 255}.
+
+    // While creating vector, keep track of longest string for later use in column size.
     int longestString = 0;
 
     for (int& groupId : groupIds)
     {
-        BaseColor baseColor = _b_color_per_groupId.at(groupId);
-        for (auto mood : _moods)
+        BaseColor baseColorForGroupId = _b_color_per_groupId.at(groupId);
+        for (Mood mood : _moods)
         {
-            string label = "Group: " + to_string(groupId);
-            if (mood != Mood::neutral)
-            {
-                label = label + " " + _colorrs_map[baseColor][mood]._mood_name;
-            }
+            stringstream labelStream;
+            labelStream << "Group: " << to_string(groupId) << " " << mood;
 
-            _label_per_color.push_back({_colorrs_map[baseColor][mood]._color, label});
+            string label = labelStream.str();
+
+            _label_per_color.push_back({
+                _colorrs_map[baseColorForGroupId][mood]._color,
+                label});
 
             int textWidth = (int)(label.length() *
                 _label_letter.widthMultiplier() *
