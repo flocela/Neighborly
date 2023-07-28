@@ -2,8 +2,7 @@
 #define GR_DVSTY_CHART_H
 
 #include <unordered_map>
-#include "Color.h"
-#include "City.h"
+
 #include "GrColorKey.h"
 #include "Plot.h"
 #include "Renderer.h"
@@ -11,14 +10,14 @@
 #include "SetOfHousesPerHouse.h"
 #include "Title.h"
 
+// Used to print the average diversity of each group, per the run number.
+// Diversity of one resident is the number of disparate neighborst they have.
+// Diversity per group is adding the diversity of each resident in a group to come up with a total
+// sum, then dividing that sum by the number of residents in the group.
 class GrDvstyChart {
 
 public:
 
-    // Used to print the average diversity of each group, per the run number.
-    // diversity of one resident is the number of disparate neighbors.
-    // diversity per group is the the number of disparate neighbors
-    // divided by the number of residents in the group.
     GrDvstyChart (
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
