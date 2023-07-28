@@ -4,25 +4,26 @@
 #include <memory>
 #include <vector>
 
-#include "AxisFormat.h"
 #include "Coordinate.h"
 #include "GrColorKey.h"
 #include "House.h"
-#include "Letter.h"
 #include "Plot.h"
 #include "Renderer.h"
 #include "Resident.h"
 #include "ResPerHouse.h"
-#include "TextRect.h"
 #include "Title.h"
 
-// Used to print out a city map using a renderer.
+// Used to print out a city map using a renderer. Shows where each resident is 
+// on the map. Each resident is assigned a color based on their group id and their
+// happiness value.
+// Includes title for this map.
+// Includes printing the key to the map (color for each group id).
 class GrCityChart
 {
 public:
     GrCityChart (
         std::unordered_map<const House*, Coordinate> coordPerHouse,
-        std::unordered_map<int, BaseColor> resColors,
+        std::unordered_map<int, BaseColor> resColors, //resident BaseColors per id group
         std::unique_ptr<Title> title,
         std::unique_ptr<GrColorKey> key,
         std::unique_ptr<Plot> plot,
@@ -54,22 +55,23 @@ public:
     std::unique_ptr<GrColorKey> _key;
     std::unique_ptr<Plot> _plot;
 
-    // all house colors are set to absent.
-    // used as a way to clear the grid before new residents are colored in.
-    std::vector<Point> _clearing_vector;
-
     int _top_left_corner_x__px;
     int _top_left_corner_y__px;
     int _x_space__px;
     int _y_space__px;
 
-    // each point represents a house.
-    // if a house is empty it gets a default color. if it is occupied, its color depends on the 
-    //   resident's group id.
+    // Points contain an x and y coordinate and a color.
+    // _clearing_vector contains a Point for each house coordinate and each point is
+    // assigned the absent color. This is used to clear the map before rendering the 
+    // new set of Points with the new data from print().
+    std::vector<Point> _clearing_vector;
+
+    // Each Point represents a house.
+    // If a house is empty it gets a default color. If it is occupied, its color depends on the 
+    // resident's group id and happiness value.
     std::vector<Point> createVectorOfPoints (const ResPerHouse& residentPerHouse) const;
 
-    // there will be only one color, the default color for an empty house.
-    // all addresses will be represented as being empty.
+    // Creates _clearing_vector.
     std::vector<Point> createVectorForClearingGrid ();
     
 };

@@ -1,6 +1,7 @@
 #ifndef PRINTER_Graphic_H
 #define PRINTER_Graphic_H
 
+#include "AxisFormat.h"
 #include "GrCityChart.h"
 #include "GrColorKey.h"
 #include "GrDvstyChart.h"

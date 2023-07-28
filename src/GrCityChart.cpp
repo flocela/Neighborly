@@ -26,29 +26,31 @@ GrCityChart::GrCityChart (
     _y_space__px{ySpace}
 {   
     _clearing_vector = createVectorForClearingGrid();
+
+    // Plot's top left corner's x aligns with topLeftCornerXPx.
+    // Plot is below the title and the key.
     _plot->setTopLeft(topLeftCornerXPx, topLeftCornerYPx + _title->sizeYPx() + _key->sizeYPx());
+
+    // Plot's allowable x-space is all the space given by xSpace.
+    // Plot's allowable y-space is decreased by the title and key.
     _plot->setXYSpacePx(xSpace, _y_space__px - _title->sizeYPx() - _key->sizeYPx());
+
     _title->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftCornerYPx);
+
+    // Key is below the title.
     _key->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftCornerYPx + _title->sizeYPx());
 }
 
-void GrCityChart::print(
-    const ResPerHouse& houseToResMap,
-    Renderer* renderer
-) const
+void GrCityChart::print(const ResPerHouse& houseToResMap, Renderer* renderer) const
 {   
     _title->print(renderer);
     _key->print(renderer);
-    _plot->print(
-        _clearing_vector,
-        false,
-        renderer
-    );
-    _plot->print(
-        createVectorOfPoints(houseToResMap),
-        false,
-        renderer
-    );
+
+    // Print an empty plot to remove drawing of previous residents and houses.
+    _plot->print(_clearing_vector, false, renderer);
+
+    // Print new data on the plot.
+    _plot->print(createVectorOfPoints(houseToResMap), false, renderer);
 }
 
 int GrCityChart::sizeXPx () const
@@ -70,23 +72,24 @@ vector<Point> GrCityChart::createVectorOfPoints (const ResPerHouse& residentPerH
         const House* house = x.first;
         Coordinate coord = x.second;
 
-        // house color, which is absent if empty, or the resident group color if not empty.
+        // Point color
         Color color; 
 
-        // if house is empty then color is Color::absent.
+        // If house is empty then color is Color::absent.
         if (!residentPerHouse.contains(house))
         {
             color = Color::absent;
         }
         else
         {
+            // Color depends on group id and mood of the resident.
+            // If the resident's happiness value is greater or equal to its happiness goal,
+            // then the mood is happy, otherwise it's unhappy.
             const Resident *res = residentPerHouse.at(house);
             int groupId = res->getGroupId();
-            double happinessGoal  = res->getHappinessGoal();
-            double happinessValue = res->getHappiness();
 
             Mood mood = Mood::happy;
-            if (happinessValue < happinessGoal)
+            if (res->getHappiness() <= res->getHappinessGoal())
             {
                 mood = Mood::unhappy;
             }
@@ -95,6 +98,7 @@ vector<Point> GrCityChart::createVectorOfPoints (const ResPerHouse& residentPerH
                 
         }
 
+        // Point is made up of house's coordinate x and y and resident's color.
         points.emplace_back(Point{(double)coord.getX(), (double)coord.getY(), color});
     }
 
@@ -103,7 +107,7 @@ vector<Point> GrCityChart::createVectorOfPoints (const ResPerHouse& residentPerH
 
 vector<Point> GrCityChart::createVectorForClearingGrid ()
 {
-    // every house needs to have a Color::absent Point.
+    // Every house needs to have a Color::absent Point.
     vector<Point> points{};
 
     for (auto const& x : _coordinate_per_house)
