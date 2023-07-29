@@ -10,14 +10,24 @@ GrHapChart::GrHapChart (
         int topLeftYPx,
         int xSpace,
         int ySpace
-): _colors{colors},
+): _base_color_per_group_id{colors},
    _title{move(title)},
    _key{move(colorKey)},
    _plot{std::move(plot)}
 {   
+    // x-coordinate of plot's top left corner aligns with topLeftXPx.
+    // Plot is below the title and below the key.
     _plot->setTopLeft(topLeftXPx, topLeftYPx + _title->sizeYPx() + _key->sizeYPx());
+
+    // The available space in the x direction is xSpace.
+    // The available space in the y direction is decreased by the title and the key.
     _plot->setXYSpacePx(xSpace, ySpace - _title->sizeYPx() - _key->sizeYPx());
+
+    // In the x-direction, center title and key with the center of the plot.
+    // Title is at the top of the chart.
     _title->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx);
+
+    // Key is below the title.
     _key->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx + _title->sizeYPx());
 }
 
@@ -28,6 +38,9 @@ void GrHapChart::print (
     Renderer* renderer
 ) const
 {
+    // plot will print points.
+    // The point's y value is the average happiness for the group.
+    // The point's x value is the run number.
     vector<Point> points{};
     for (auto resCountPerGroup : numofResidentsPerGroup)
     {
@@ -38,12 +51,24 @@ void GrHapChart::print (
             continue;
         }
         double aveHappiness = happinessSumPerGroup.at(groupId)/countInGroup;
-        Color c = _colorrs_map.at(_colors.at(groupId)).at(Mood::neutral)._color;
+        Color c = _colorrs_map.at(_base_color_per_group_id.at(groupId)).at(Mood::neutral)._color;
         points.push_back( Point( (double)run, aveHappiness, c));
     }
 
-    _title->print(renderer);
-    _key->print(renderer);
+    // Only print the key once.
+    if (!_key_has_printed)
+    {
+        _key->print(renderer);
+        _key_has_printed = true;
+    }
+
+    // Only print the title once.
+    if (!_title_has_printed)
+    {
+        _title->print(renderer);
+        _title_has_printed = true;
+    }
+    
     _plot->print(points, false, renderer);
 }
 

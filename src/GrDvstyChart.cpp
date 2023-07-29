@@ -12,13 +12,13 @@ GrDvstyChart::GrDvstyChart (
         int topLeftYPx,
         int xSpace,
         int ySpace
-):  _b_color_per_groupId{colors},
+):  _b_color_per_group_id{colors},
     _moods{moods},
     _title{move(title)},
     _key{move(colorKey)},
     _plot{std::move(plot)}
 {   
-    // Top left corner of plot's x coordinate aligns with topLeftXPx.
+    // x-coordinate of plot's top left corner aligns with topLeftXPx.
     // Plot is below the title and below the key.
     _plot->setTopLeft(topLeftXPx, topLeftYPx + _title->sizeYPx() + _key->sizeYPx());
 
@@ -26,9 +26,10 @@ GrDvstyChart::GrDvstyChart (
     // The available space in the y direction is decreased by the title and the key.
     _plot->setXYSpacePx(xSpace, ySpace - _title->sizeYPx() - _key->sizeYPx());
 
-    // Center title and key with the center of the plot in the x direction.
+    // In the x-direction, center title and key with the center of the plot.
     // Title is at the top of the chart.
     _title->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx);
+
     // Key is below the title.
     _key->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx + _title->sizeYPx());
 }
@@ -40,6 +41,7 @@ void GrDvstyChart::print (
     Renderer* renderer
 ) const
 {
+    // plot will print points.
     // The diversity for a resident is the number of disperate neighbors the resident has.
     // The Point's y value is the average diversity for the residents in the group.
     // The Point's x value is the run number.
@@ -57,7 +59,7 @@ void GrDvstyChart::print (
         double averageNumOfDiffNeighbors = 
             (double)numOfDiffNeighborsPerGroupId.at(groupId)/numOfResidentsInGroup;
 
-        Color groupColor = _colorrs_map.at(_b_color_per_groupId.at(groupId)).at(Mood::neutral)._color;
+        Color groupColor = _colorrs_map.at(_b_color_per_group_id.at(groupId)).at(Mood::neutral)._color;
         points.push_back(Point((double)run, averageNumOfDiffNeighbors, groupColor));
     }
     

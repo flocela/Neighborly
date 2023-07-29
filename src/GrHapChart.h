@@ -1,19 +1,19 @@
 #ifndef GR_HAP_CHART_H
 #define GR_HAP_CHART_H
 
-#include "unordered_map"
-#include "Color.h"
+#include <iostream>
+#include <memory>
+
 #include "Plot.h"
 #include "Renderer.h"
-#include "City.h"
-#include "Resident.h"
 #include "ColorKey.h"
 #include "Title.h"
 
-#include <iostream>
-
 class GrHapChart {
 
+// Used to print the average happiness per each group, per run number.
+// This is found by adding the happiness value of each resident in the group and
+// then dividing this sum by the number of residents in the group.
 public:
 
     GrHapChart (
@@ -46,10 +46,16 @@ public:
 
 private:
 
-    std::unordered_map<int, BaseColor> _colors;
+    std::unordered_map<int, BaseColor> _base_color_per_group_id;
     std::unique_ptr<Title> _title;
     std::unique_ptr<ColorKey> _key;
     std::unique_ptr<Plot> _plot;
+
+    // used so that key is only prited once
+    mutable bool _key_has_printed = false;
+
+    // used so that title is only printed once.
+    mutable bool _title_has_printed = false;
 
 };
 

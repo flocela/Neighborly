@@ -26,7 +26,8 @@ bool Simulator_Basic_B::doMoveResident (
         const Resident* resident,
         const CityState* cityState,
         const City* city,
-        int curAddress) const
+        int curAddress
+) const
 {
     (void)cityState;
     (void)city;

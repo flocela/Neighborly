@@ -1,13 +1,12 @@
 #ifndef GR_DVSTY_CHART_H
 #define GR_DVSTY_CHART_H
 
+#include <memory>
 #include <unordered_map>
 
 #include "GrColorKey.h"
 #include "Plot.h"
 #include "Renderer.h"
-#include "Resident.h"
-#include "SetOfHousesPerHouse.h"
 #include "Title.h"
 
 // Used to print the average diversity of each group, per the run number.
@@ -49,7 +48,7 @@ public:
 
 private:
 
-    std::unordered_map<int, BaseColor> _b_color_per_groupId;
+    std::unordered_map<int, BaseColor> _b_color_per_group_id;
     std::set<Mood> _moods;
     std::unique_ptr<Title> _title;
     std::unique_ptr<ColorKey> _key;

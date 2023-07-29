@@ -84,8 +84,8 @@ void Simulator_Basic::firstRun ()
     vector<int> shuffledHouseVIndices = 
         randIntsMaker.getRandomIntegers(sortedOpenHouses.size(), sortedOpenHouses.size());
     
-    // Go through shuffledResidentsVIndices and find a house using the
-    // shuffledHouseVIndices. Resident order is random. House order is random.
+    // Go through residents by iterating through shuffledResidentsVIndices and find a house by
+    // going through the shuffledHouseVIndices. Resident order is random. House order is random.
     for (size_t ii=0; ii<shuffledResidentsVIndices.size(); ++ii)
     {   
         Resident* randRes = _sorted_residents[shuffledResidentsVIndices[ii]];
@@ -121,7 +121,8 @@ void Simulator_Basic::normalRun ()
         );
         sort(sortedOpenHouses.begin(), sortedOpenHouses.end(), compare<const House*>);
 
-        // Create a vector of shuffled indices from the sortedOpenHouses vector.
+        // Create a vector of shuffled indices from the sortedOpenHouses vector. Resident allowed
+        // to see _max_num_of_tries_to_find_House number of houses.
         RandIntsMaker randIntsMaker{};
         int maxTries = min((int)sortedOpenHouses.size(), _max_num_of_tries_to_find_house);
         vector<int> shuffledHouseVIndices = randIntsMaker.getRandomIntegers(
@@ -153,7 +154,7 @@ void Simulator_Basic::normalRun ()
             }
         }
 
-        // Concrete class decides if resident moves to selected house.
+        // Concrete class decides if resident moves into selected house.
         if (selectedHouse != nullptr && doMoveResident(
             selectedHappiness,
             curRes,

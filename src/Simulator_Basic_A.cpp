@@ -26,7 +26,8 @@ bool Simulator_Basic_A::doMoveResident (
         const Resident* resident,
         const CityState* cityState,
         const City* city,
-        int curAddress) const
+        int curAddress
+) const
 {
     // Calculate current happiness for resident. May have changed since run started.
     unordered_set<const Resident*> adjacentNeighbors;
