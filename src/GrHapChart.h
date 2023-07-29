@@ -11,7 +11,7 @@
 
 class GrHapChart {
 
-// Used to print the average happiness per each group, per run number.
+// Used to render the average happiness per each group, per run number.
 // This is found by adding the happiness value of each resident in the group and
 // then dividing this sum by the number of residents in the group.
 public:

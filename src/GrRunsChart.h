@@ -1,13 +1,13 @@
 #ifndef GR_RUNS_CHART_H
 #define GR_RUNS_CHART_H
 
-#include "Color.h"
-#include "Renderer.h"
 #include <iostream>
-#include "Letter.h"
-#include "SDL.h"
 
-// Graphic Run Counter Printer (prints the current run number).
+#include "Color.h"
+#include "Letter.h"
+#include "Renderer.h"
+
+// Used to render the current run number.
 class GrRunsChart
 {
 
@@ -36,7 +36,11 @@ private:
 
     int _x_offset = 0;
     int _y_offset = 0;
+
+    // allowed space in the x-direction
     int _x_space_length__px = 0;
+
+    // allowed space in the y-direction
     int _y_space_length__px = 0;
     Letter _title_letter;
     int _num_of_runs;

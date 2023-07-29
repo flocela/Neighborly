@@ -9,7 +9,7 @@
 #include "Renderer.h"
 #include "Title.h"
 
-// Used to print the average diversity of each group, per the run number.
+// Used to render the average diversity of each group, per the run number.
 // Diversity of one resident is the number of disparate neighborst they have.
 // Diversity per group is adding the diversity of each resident in a group to come up with a total
 // sum, then dividing that sum by the number of residents in the group.
