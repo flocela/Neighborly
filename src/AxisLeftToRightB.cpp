@@ -43,7 +43,6 @@ int AxisLeftToRightB::getCenterValXPx () const
 int AxisLeftToRightB::getLabelLengthPx () const
 {
     int retVal =  
-        _axis_format.axisThicknessPx() +
         _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.labelLineSpacePx() +
         _axis_format.labelHeightPx();
@@ -77,7 +76,7 @@ int AxisLeftToRightB::sizeXPx () const
 
 int AxisLeftToRightB::sizeYPx () const
 {   
-    return getLabelLengthPx();
+    return getLabelLengthPx() + _axis_format.axisThicknessPx();
 }
 
 void AxisLeftToRightB::moveCrossHairs (int xPx, int yPx)

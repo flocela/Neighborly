@@ -42,8 +42,7 @@ int AxisBottomToTopL::getLabelLengthPx () const
     return 
         (3) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
         _text_spacer +
-        _axis_format.majTickLengthOutsideChartPx() +
-        _axis_format.axisThicknessPx();
+        _axis_format.majTickLengthOutsideChartPx();
 }
 
 pair<int, int>  AxisBottomToTopL::getPixels (double yVal, int dotSize) const
@@ -71,7 +70,7 @@ void AxisBottomToTopL::print (Renderer* renderer) const
 
 int AxisBottomToTopL::sizeXPx () const
 {  
-    return getLabelLengthPx();
+    return getLabelLengthPx() + _axis_format.axisThicknessPx();
 }
 
 int AxisBottomToTopL::sizeYPx () const

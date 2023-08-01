@@ -208,12 +208,12 @@ void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) {
 
 int PlotB::calcUnitSizePx () const
 {
-    int allowableXAxisLengthPx = _x_space__px - _y_axis.getLabelLengthPx();
+    int allowableXAxisLengthPx = _x_space__px - _y_axis.sizeXPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
     xUnitSize = max(xUnitSize, _min_unit_size);
 
-    int allowableYAxisLengthPx = _y_space__px - _x_axis.getLabelLengthPx();
+    int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeYPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
     yUnitSize = max(yUnitSize, _min_unit_size);
@@ -239,14 +239,14 @@ int PlotB::calcDotSizePx () const
 int PlotB::calcCrossXPx (int topLeftXPx) const
 {
     int requiredXLength = 
-        _unit__px * ( _x_diff + _start_offset_m + _end_offset_m) + _y_axis.getLabelLengthPx();
+        _unit__px * ( _x_diff + _start_offset_m + _end_offset_m) + _y_axis.sizeXPx();
 
     // start at given most left point (topLeftXPx),
     // move to the center of given space, move to the left by 1/2 of the required length,
     // move crosshairs to the right making room for y-axis.
     return topLeftXPx +
            (int)( 0.5 * (_x_space__px - requiredXLength) ) +
-           _y_axis.getLabelLengthPx();
+           _y_axis.sizeXPx();
 }
 
 int PlotB::calcCrossYPx (int topLeftYPx) const

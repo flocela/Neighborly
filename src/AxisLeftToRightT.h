@@ -34,8 +34,7 @@ class AxisLeftToRightT
         // Their length includes more than just the number.
         // The label length is the height of the numbers plus
         // the space between the lable and the tick plus
-        // the length of the tick outside the chart plus
-        // the axis thickness.
+        // the length of the tick outside the chart.
         // The length is in the y direction.
         int getLabelLengthPx () const;
 
@@ -49,6 +48,7 @@ class AxisLeftToRightT
 
         int sizeXPx() const;
 
+        // Returns label length plus axis thickness.
         int sizeYPx() const;
 
         void moveCrossHairs (int xPx, int yPx);

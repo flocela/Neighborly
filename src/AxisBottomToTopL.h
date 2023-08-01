@@ -37,8 +37,7 @@ class AxisBottomToTopL
         // than just the number.
         // The label length is the length of the digits in the label plus
         // the space between the label and the tick plus
-        // the length of the tick outside the chart plus
-        // the axis thickness.
+        // the length of the tick outside the chart.
         // The length is in the x direction.
         int getLabelLengthPx () const;
 
@@ -48,7 +47,7 @@ class AxisBottomToTopL
         
         void print (Renderer* renderer) const;
         
-        // Same as getLabelLengthPx()
+        // The label length plus the axis thickness.
         int sizeXPx() const;
         
         // Same as getAxisLengthPx()
