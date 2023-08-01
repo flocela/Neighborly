@@ -63,8 +63,8 @@ void AxisLeftToRightT::print (Renderer* renderer) const
     // Tick labels are in texts vector.
     std::vector<TextRect> texts = {};
     
-    printHorizontalLine(rects);
-    printTicksAndLabels(rects, texts);
+    addHorizontalLine(rects);
+    addTicksAndLabels(rects, texts);
 
     renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
     renderer->renderTexts(texts);
@@ -77,11 +77,7 @@ int AxisLeftToRightT::sizeXPx () const
 
 int AxisLeftToRightT::sizeYPx () const
 {
-    return 
-        _axis_format.axisThicknessPx() +
-        _axis_format.majTickLengthOutsideChartPx() +
-        _axis_format.labelLineSpacePx() +
-        _axis_format.labelHeightPx();
+    return getLabelLengthPx();
 }
 
 void AxisLeftToRightT::moveCrossHairs (int xPx, int yPx)
@@ -102,7 +98,7 @@ void AxisLeftToRightT::setTickThickness (int tickThicknessPx)
     _forward_axis.setTickThickness(tickThicknessPx);
 }
 
-void AxisLeftToRightT::printHorizontalLine (std::vector<Rect>& rects) const
+void AxisLeftToRightT::addHorizontalLine (std::vector<Rect>& rects) const
 {
     int leftPixel = _forward_axis.getStartPixel();
     Rect rect{
@@ -115,15 +111,19 @@ void AxisLeftToRightT::printHorizontalLine (std::vector<Rect>& rects) const
     rects.push_back(rect);
 }
 
-void AxisLeftToRightT::printTicksAndLabels (
+void AxisLeftToRightT::addTicksAndLabels (
     std::vector<Rect>& rects, 
     std::vector<TextRect>& texts
 ) const
 {   
+    // First tick will represent the min val.
     int curVal = _forward_axis.getMinVal();
+
+    // curPixels describes one tick, it is the first and last pixels covered by the tick.
     pair<int, int> curPixels = getPixel(curVal, _forward_axis.getTickThichness__px());
 
-    int botOfLabelYPx =  //TODO centered properly?
+    // Bottom of number is at botOfLabelYPx.
+    int botOfLabelYPx =
         _y_cross__px -
         _axis_format.majTickLengthOutsideChartPx() -
         _axis_format.labelLineSpacePx();
@@ -136,10 +136,13 @@ void AxisLeftToRightT::printTicksAndLabels (
         _axis_format.labelWidthMultiplier(),
         _axis_format.textColor(),
         _axis_format.textBackgroundColor(),
-        5
+        5 // Renderer places text centered horizontally and bottom of text is at botOfLabelYPx
     };
 
+    // top of tick px for major tick
     int majTickYPx = _y_cross__px - _axis_format.majTickLengthOutsideChartPx();
+
+    // top of tick px for minor tick
     int minTickYPx = _y_cross__px - _axis_format.minTickLengthOutsideChartPx();
     
     Rect majTick{
@@ -156,11 +159,13 @@ void AxisLeftToRightT::printTicksAndLabels (
         _axis_format.minTickLengthPx()
     };
     
-    // right most pixel on axis
+    // Right most pixel on axis is farthest away from cross hairs.
     int rightMostPixel = _forward_axis.getEndPixel();
     
+    // Push ticks onto rects vector, from the left most tick until the right most tick.
     while (curPixels.first <= rightMostPixel)
     {  
+        // If curVal is divisible by _maj_tick_spacing then tick is a major tick
         if (curVal % _maj_tick_spacing == 0) // major tick with label
         { 
             majTick._x__px = curPixels.first;
@@ -171,6 +176,7 @@ void AxisLeftToRightT::printTicksAndLabels (
             texts.push_back(curText);
             rects.push_back(majTick);
         }
+        // Else if curVal is divisible by _min_tick_spacing then tick is a minor tick
         else if (curVal % _min_tick_spacing == 0) // minor tick
         {   
             minTick._x__px = curPixels.first;

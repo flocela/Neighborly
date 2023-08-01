@@ -40,6 +40,8 @@ class AxisLeftToRightB
         // the height of the number.
         int getLabelLengthPx () const;
 
+        // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
+        // would be {1, 5}.
         std::pair<int, int> getPixel (double xVal, int dotSize) const;
 
         void print (Renderer* renderer) const;

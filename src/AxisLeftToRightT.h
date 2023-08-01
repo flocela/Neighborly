@@ -30,18 +30,19 @@ class AxisLeftToRightT
 
         int getAxisLengthPx() const;
 
-        // the label length is the height of the numbers below the axis plus
+        // The labels are the numbers above the axis.
+        // Their length includes more than just the number.
+        // The label length is the height of the numbers plus
+        // the space between the lable and the tick plus
         // the length of the tick outside the chart plus
-        // the space between the label and the tick plus
         // the axis thickness.
-        // the length is in the y direction.
+        // The length is in the y direction.
         int getLabelLengthPx () const;
 
         int getCenterValXPx () const;
 
-        // returns the y-pixel for yVal. If tick thickness is odd, then result is one pixel.
-        // If the tick thickness is even, then center is denoted by two pixels,
-        // and the result is the second pixel. (The second pixel is from the x's zero value.)
+        // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
+        // would be {1, 5}.
         std::pair<int, int> getPixel (double xVal, int dotSize) const;
         
         void print (Renderer* renderer) const;
@@ -57,16 +58,16 @@ class AxisLeftToRightT
         void setTickThickness (int tickThicknessPx);
 
     private:
-        std::string _title; //TODO should probably get rid of this.
         AxisFormat _axis_format;
         ForwardAxis _forward_axis;
+        
         int _y_cross__px; // where x and y axes cross, this is the y-coordinate
         int _min_tick_spacing;
         int _maj_tick_spacing;
 
-        void printHorizontalLine (std::vector<Rect>& rects) const;
+        void addHorizontalLine (std::vector<Rect>& rects) const;
 
-        void printTicksAndLabels (
+        void addTicksAndLabels (
             std::vector<Rect>& rects,
             std::vector<TextRect>& texts) const;
 

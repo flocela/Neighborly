@@ -175,7 +175,7 @@ void AxisLeftToRightB::addTicksAndLabels (
             texts.push_back(curText);
             rects.push_back(majTick);
         }
-        // else if curVal is divisible by _min_tick_spacing then tick is a minor tick
+        // Else if curVal is divisible by _min_tick_spacing then tick is a minor tick
         else if (curVal % _min_tick_spacing == 0)
         {   
             minTick._x__px = curPixels.first;
