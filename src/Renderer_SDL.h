@@ -26,6 +26,8 @@ public:
 	void startFrame() override;
 	void endFrame() override;
 
+	void keepScreen() override;
+
 	void fillBlock (Rect blocks, const std::vector<uint8_t>& rgba) override;
 
 	void fillBlocks (const std::vector<Rect>& blocks, const std::vector<uint8_t>& rgba) override;

@@ -15,9 +15,8 @@ AxisLeftToRightB::AxisLeftToRightB (
     int tickThickness,
     int startOffsetMultiplier,
     int endOffsetMultiplier
-) : 
-    _axis_format{axisFormat},
-    _forward_axis{
+): _axis_format{axisFormat},
+   _forward_axis{
         xCrossPx,
         minVal,
         maxVal,
@@ -25,10 +24,10 @@ AxisLeftToRightB::AxisLeftToRightB (
         tickThickness,
         startOffsetMultiplier,
         endOffsetMultiplier
-    },
-    _y_cross__px{yCrossPx},
-    _min_tick_spacing{calcMinTickSpacing()},
-    _maj_tick_spacing{calcMajTickSpacing()}
+   },
+   _y_cross__px{yCrossPx},
+   _min_tick_spacing{calcMinTickSpacing()},
+   _maj_tick_spacing{calcMajTickSpacing()}
 {}
 
 int AxisLeftToRightB::getAxisLengthPx () const
@@ -64,8 +63,8 @@ void AxisLeftToRightB::print (Renderer* renderer) const
     // Tick labels are in texts vector.
     std::vector<TextRect> texts = {};
     
-    printHorizontalLine(rects);
-    printTicksAndLabels(rects, texts);
+    addHorizontalLine(rects);
+    addTicksAndLabels(rects, texts);
 
     renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
     renderer->renderTexts(texts);
@@ -99,42 +98,50 @@ void AxisLeftToRightB::setTickThickness (int tickThicknessPx)
     _forward_axis.setTickThickness(tickThicknessPx);
 }
 
-void AxisLeftToRightB::printHorizontalLine (std::vector<Rect>& rects) const
+void AxisLeftToRightB::addHorizontalLine (std::vector<Rect>& rects) const
 {
-    int leftPixel = _forward_axis.getFrontPixel();
+    int leftPixel = _forward_axis.getStartPixel();
     Rect rect{
-        leftPixel,
-        _y_cross__px, // TODO is this right, should _centered? come into play?
+        leftPixel, // top left corner pixel, x-coordinate of pixel
+        _y_cross__px, // top left corner pixel, y-coordinate of pixel
         _forward_axis.getAxisLengthPx(),
         _axis_format.axisThicknessPx(), 
     };
     rects.push_back(rect);
 }
 
-void AxisLeftToRightB::printTicksAndLabels (
+void AxisLeftToRightB::addTicksAndLabels (
     std::vector<Rect>& rects, 
     std::vector<TextRect>& texts
 ) const
 {   
+    // First tick will represent the min val.
     int curVal = _forward_axis.getMinVal();
+
+    // curPixels describes one tick, it is the first and last pixels covered by the tick.
     pair<int, int> curPixels = getPixel(curVal, _forward_axis.getTickThichness__px());
 
-    int topOfLabelYPx = //TODO centered properly?
+    // topOfLabelYPx is the top of the number shown.
+    int topOfNumberYPx =
         _y_cross__px +
         _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.labelLineSpacePx();
 
+    int centerOfTick = curPixels.first + (curPixels.second - curPixels.first)/2;
+
+    // text corresponding to the curVal
     TextRect curText{
-        curPixels.first,
-        topOfLabelYPx,
+        centerOfTick, // Text is centered at tick center.
+        topOfNumberYPx,
         std::to_string(curVal),
         _axis_format.labelHeightPx(),
         _axis_format.labelWidthMultiplier(),
         _axis_format.textColor(),
         _axis_format.textBackgroundColor(),
-        1
+        1 // text is centered
     };
 
+    // Top of tick is inside the chart.
     int tickYPx = _y_cross__px - _axis_format.tickLengthInsideChartPx();
 
     Rect majTick{
@@ -151,11 +158,13 @@ void AxisLeftToRightB::printTicksAndLabels (
         _axis_format.minTickLengthPx()
     };
 
-    // rightMostPixel on axis
+    // Right most pixel on axis is farthest away from cross hairs.
     int rightMostPixel = _forward_axis.getEndPixel();
     
+    // Push ticks onto rects vector, from the left most tick until the right most tick.
     while (curPixels.first <= rightMostPixel)
     {  
+        // If curVal is divisible by _maj_tick_spacing then tick is a major tick
         if (curVal % _maj_tick_spacing == 0)
         {   
             majTick._x__px = curPixels.first;
@@ -166,6 +175,7 @@ void AxisLeftToRightB::printTicksAndLabels (
             texts.push_back(curText);
             rects.push_back(majTick);
         }
+        // else if curVal is divisible by _min_tick_spacing then tick is a minor tick
         else if (curVal % _min_tick_spacing == 0)
         {   
             minTick._x__px = curPixels.first;

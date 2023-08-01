@@ -15,9 +15,8 @@ AxisLeftToRightT::AxisLeftToRightT (
     int tickThickness,
     int startOffsetMultiplier,
     int endOffsetMultiplier
-) :
-    _axis_format{axisFormat},
-    _forward_axis{
+): _axis_format{axisFormat},
+   _forward_axis{
         xCrossPx,
         minVal,
         maxVal,
@@ -25,10 +24,10 @@ AxisLeftToRightT::AxisLeftToRightT (
         tickThickness,
         startOffsetMultiplier,
         endOffsetMultiplier
-    },
-    _y_cross__px{yCrossPx},
-    _min_tick_spacing{calcMinTickSpacing()},
-    _maj_tick_spacing{calcMajTickSpacing()}
+   },
+   _y_cross__px{yCrossPx},
+   _min_tick_spacing{calcMinTickSpacing()},
+   _maj_tick_spacing{calcMajTickSpacing()}
 {}
 
 int AxisLeftToRightT::getAxisLengthPx () const
@@ -105,7 +104,7 @@ void AxisLeftToRightT::setTickThickness (int tickThicknessPx)
 
 void AxisLeftToRightT::printHorizontalLine (std::vector<Rect>& rects) const
 {
-    int leftPixel = _forward_axis.getFrontPixel();
+    int leftPixel = _forward_axis.getStartPixel();
     Rect rect{
         leftPixel,
         _y_cross__px,

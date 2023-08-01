@@ -225,41 +225,22 @@ void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) {
 
 pair<int, int> PlotA::calcUnitSizeXAndYPx () const
 {
+    // Calculate unit size in x-direction.
     int allowableXAxisLengthPx = _x_space__px - _y_axis.getLabelLengthPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
     xUnitSize = max(xUnitSize, _min_unit__px);
 
-    // preliminary y-unit size
+    // Calculate unit size in y-direction.
     int allowableYAxisLengthPx = _y_space__px - _x_axis.getLabelLengthPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
     yUnitSize = max(yUnitSize, _min_unit__px);
 
-    // _unit_x__px and _unit_y__px must both be odd or both be even, so that dot is square.
-    if ( (xUnitSize%2) != (yUnitSize%2) )
-    {
-        if (yUnitSize > xUnitSize && yUnitSize > _min_unit__px)
-        {
-            --yUnitSize;
-        }
-        else if (xUnitSize > yUnitSize && xUnitSize > _min_unit__px)
-        {
-            --xUnitSize;
-        }
-        else if (yUnitSize > xUnitSize)
-        {
-            ++xUnitSize;
-        }
-        else
-        {
-            ++yUnitSize;
-        }
-    }
     return {xUnitSize, yUnitSize};
 }
 
-// Returns odd sized dot size.
+// Returns dot size that is odd (not even).
 int PlotA::calcDotSizePx () const
 {   
     // dot size somewhat based on smaller unitSize of axes.

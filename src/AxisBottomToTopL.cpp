@@ -58,8 +58,8 @@ void AxisBottomToTopL::print (Renderer* renderer) const
     std::vector<Rect> rects = {};
     std::vector<TextRect> texts = {};
 
-    setVerticalLine(rects);
-    setTicksAndLabels (horizLinesMaj, horizLinesMin, rects, texts);
+    addVerticalLine(rects);
+    addTicksAndLabels (horizLinesMaj, horizLinesMin, rects, texts);
     if (_axis_format.showBackgroundTickLines())
     {
         renderer->fillBlocks(horizLinesMaj, _axis_format.tickBackgroundColorMaj());
@@ -103,14 +103,15 @@ void AxisBottomToTopL::setTickThickness (int tickThicknessPx)
     _reverse_axis.setTickThickness(tickThicknessPx);
 }
 
-void AxisBottomToTopL::setVerticalLine (std::vector<Rect>& rects) const
+void AxisBottomToTopL::addVerticalLine (std::vector<Rect>& rects) const
 {
     // Calculate top most pixel.
     int topPixel = _reverse_axis.getEndPixel();
+
     // Rectangle represents vertical line.
     Rect rect{
-        _x_cross__px,
-        topPixel,
+        _x_cross__px, // top left corner of line, x-coordinate
+        topPixel, // top left corner of line, y-coordinate
         _axis_format.axisThicknessPx(),
         getAxisLengthPx()
     };
@@ -118,7 +119,7 @@ void AxisBottomToTopL::setVerticalLine (std::vector<Rect>& rects) const
     rects.push_back(rect);
 }
         
-void AxisBottomToTopL::setTicksAndLabels (
+void AxisBottomToTopL::addTicksAndLabels (
     std::vector<Rect>& horizLinesMaj,
     std::vector<Rect>& horizLinesMin,
     std::vector<Rect>& rects, 
@@ -128,8 +129,13 @@ void AxisBottomToTopL::setTicksAndLabels (
     int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChartPx();
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
 
+    // The first value will be the minimum value given in the constructor.
     int curVal = _reverse_axis.getMinVal();
+
+    // curPixels describe one tick, it is the first and last pixels covered by the tick.
     pair<int, int> curPixels = _reverse_axis.getPixel(curVal, _reverse_axis.getTickThichness__px());
+
+    // text corresponding to the curVal
     TextRect curText{
         majTickXPx - _text_spacer,
         curPixels.first,
@@ -141,6 +147,7 @@ void AxisBottomToTopL::setTicksAndLabels (
         3
     };
 
+    // background line corresponding to major tick. Background lines run across the chart.
     Rect horizLineRectMaj{
         minTickXPx,
         curPixels.first,
@@ -148,6 +155,7 @@ void AxisBottomToTopL::setTicksAndLabels (
         _reverse_axis.getTickThichness__px()
     };
 
+    // background line corresponding to major tick. Background lines run across the chart.
     Rect horizLineRectMin{
         minTickXPx,
         curPixels.first,
@@ -155,6 +163,7 @@ void AxisBottomToTopL::setTicksAndLabels (
         _reverse_axis.getTickThichness__px()
     };
 
+    // Rect for major tick
     Rect majRect{
         majTickXPx,
         curPixels.first,
@@ -162,6 +171,7 @@ void AxisBottomToTopL::setTicksAndLabels (
         _reverse_axis.getTickThichness__px()
     };
 
+    // Rect for minor tick
     Rect minRect{
         minTickXPx,
         curPixels.first,
@@ -172,8 +182,10 @@ void AxisBottomToTopL::setTicksAndLabels (
     // Calculate top most pixel.
     int topMostPixelY = _reverse_axis.getEndPixel();
 
+    // Iterate through values from bottom of axis to top of axis.
     while ( curPixels.first >= topMostPixelY )
     {   
+        // If _maj_tick_spacing is a multiple of curVal, then this is a major tick.
         if (curVal % _maj_tick_spacing == 0)
         {
             majRect._y__px = curPixels.first;
@@ -186,6 +198,7 @@ void AxisBottomToTopL::setTicksAndLabels (
             horizLineRectMaj._y__px = curPixels.first;
             horizLinesMaj.push_back(horizLineRectMaj);
         }
+        // If _min_tick_spacing is a multiple of curVal, then this is a minor tick.
         else if (curVal % _min_tick_spacing == 0)
         {
             minRect._y__px = curPixels.first;

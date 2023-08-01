@@ -51,6 +51,18 @@ void Renderer_SDL::endFrame()
     SDL_RenderPresent(_sdl_renderer);
 }
 
+void Renderer_SDL::keepScreen()
+{
+    SDL_Event e;
+    while (SDL_WaitEvent(&e) != 0)
+    {   
+        if (e.type == SDL_QUIT)
+        {
+            break;
+        }
+    }
+} 
+
 void Renderer_SDL::fillBlock(Rect block, const vector<uint8_t>& rgba)
 {
     SDL_Rect rect = {block._x__px, block._y__px, block.width, block.height};

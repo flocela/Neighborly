@@ -12,6 +12,8 @@ class AxisBottomToTopL
     public:
         AxisBottomToTopL (
             AxisFormat axisFormat,
+            // length of horizontal background lines. They line up with ticks and go
+            // across the chart.
             int horizLengthPx,
             int x_coordinate__px,
             int y_coordinate__px,
@@ -31,18 +33,20 @@ class AxisBottomToTopL
 
         int getAxisLengthPx () const;
 
-        // the label are the numbers to the left of the axis plus
+        // The labels are the numbers to the left of the axis, but their length is more
+        // than just the number.
+        // The label length is the length of the digits in the label plus
         // the space between the label and the tick plus
         // the length of the tick outside the chart plus
         // the axis thickness.
-        // the length is in the x direction.
+        // The length is in the x direction.
         int getLabelLengthPx () const;
+
 
         std::pair<int, int> getPixel (double yVal, int dotSize) const;
         
         void print (Renderer* renderer) const;
         
-        // Does not include horizontal lines continuing from tick marks
         // Same as getLabelLengthPx()
         int sizeXPx() const;
         
@@ -51,7 +55,7 @@ class AxisBottomToTopL
         
         void moveCrossHairs (int xPx, int yPx);
 
-        // There's background horizontal lines that run across the chart. They
+        // There are background horizontal lines that run across the chart. They
         // line up with the major and minor tick marks.
         void setHorizLength (int horizLengthPx);
         
@@ -63,8 +67,8 @@ class AxisBottomToTopL
     private:
         AxisFormat _axis_format;
         
-        // width of horizontal lines that are a continuation of tick marks,
-        // they extend into the chart and are usually a greyed out color.
+        // width of horizontal background lines that are a continuation of tick marks.
+        // They extend into the chart and are usually a greyed out color.
         int _horiz_line_length__px;
         ReverseAxis _reverse_axis;
         int _x_cross__px; // where x and y axis meet
@@ -73,9 +77,10 @@ class AxisBottomToTopL
 
         int _text_spacer = 3; // space to the right of labels, and to the left of tick marks
 
-        void setVerticalLine (std::vector<Rect>& rects) const;
+        // This is the axis vertical line.
+        void addVerticalLine (std::vector<Rect>& rects) const;
 
-        void setTicksAndLabels (
+        void addTicksAndLabels (
             std::vector<Rect>& horizLinesMaj,
             std::vector<Rect>& horizLinesMin,
             std::vector<Rect>& rects,

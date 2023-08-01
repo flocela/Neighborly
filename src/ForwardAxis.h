@@ -26,22 +26,33 @@ public:
     int getAxisLengthPx () const;
 
     // Returns the pixel where the cross axis crosses this axis.
-    // If _centered_on_pixel is false, then the cross axis actually crosses this axis
-    // between the returned pixel and 1 minus the returned pixel.
     int getCrossPx__px () const;
 
+    // Returns the central pixel between the min and max values given in the constructor.
     int getCenterValPx () const;
+
     int getMinVal () const;
     int getMaxVal () const;
+
+    // Returns the difference between the min and max values given in the constructor.
     int getDiff () const;
+
     int getPixelsPerUnit () const;
     int getTickThichness__px () const;
+
+    // There is a space between the start of the axis and the first min value given in the
+    // constructor. That space is the start offset multiplier times the pixels per unit.
     int getStartOffsetMultiplier () const;
+
+    // There is a space between the max value given in the constructor and the end of the axis.
+    // That space is the end offset multiplier times the pixels per unit.
     int getEndOffsetMultiplier () const;
-    int getFrontPixel () const;
+    
+    int getStartPixel () const;
     int getEndPixel () const;
 
-    // Returns the pixels covered by a dot at value.
+    // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
+    // would be {1, 5}.
     std::pair<int, int> getPixel (double val, int dotSize) const;
 
     void moveCrossPixel (int pixel);
@@ -49,9 +60,11 @@ public:
     void setTickThickness (int tickThicknessPx);
 
 private:
+
     // Where cross axis crosses this axis. The cross axis is centered on a pixel. The
     // cross axis is not centered betwenn two pixels on this axis.
     int _cross_pixel__px;
+
     int _min_val;
     int _max_val;
     int _diff;

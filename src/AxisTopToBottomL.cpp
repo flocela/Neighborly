@@ -98,7 +98,7 @@ void AxisTopToBottomL::setTickThickness (int tickThicknessPx)
 
 void AxisTopToBottomL::printVerticalLine (std::vector<Rect>& rects) const
 {
-    int topPixel = _forward_axis.getFrontPixel();
+    int topPixel = _forward_axis.getStartPixel();
     Rect rect{
         _x_cross__px,
         topPixel,

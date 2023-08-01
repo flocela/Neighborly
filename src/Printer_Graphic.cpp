@@ -1,7 +1,6 @@
 #include "Printer_Graphic.h"
 
 #include <iostream>
-
 #include "PlotA.h"
 #include "PlotB.h"
 
@@ -113,7 +112,7 @@ void Printer_Graphic::print (const RunMetrics* runMetrics) const
 // After last print. Printer_Graphic keeps window open until user clicks x.
 void Printer_Graphic::lastPrint ()
 {
-    keepScreen();
+    _renderer->keepScreen();
 }
 
 vector<int> Printer_Graphic::ascertainMinMaxHouseCoords(
@@ -274,15 +273,3 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
         availSpaceYPx                           // space available, y-direction
     );
 }
-
-void Printer_Graphic::keepScreen() const
-{
-    SDL_Event e;
-    while (SDL_WaitEvent(&e) != 0)
-    {   
-        if (e.type == SDL_QUIT)
-        {
-            break;
-        }
-    }
-} 

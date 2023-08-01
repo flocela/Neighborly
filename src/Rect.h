@@ -7,8 +7,8 @@
 // holds information for rendering block
 struct Rect
 {
-    int _x__px; // top left corner x-pixel
-    int _y__px; // top left corner y-pixel
+    int _x__px; // top left corner x-coordinate of pixel
+    int _y__px; // top left corner y-coordinate of pixel
     int width;
     int height;
 };

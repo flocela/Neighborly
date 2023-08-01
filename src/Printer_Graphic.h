@@ -8,6 +8,7 @@
 #include "GrHapChart.h"
 #include "GrRunsChart.h"
 #include "Printer.h"
+#include "Renderer.h"
 #include "SetOfHousesPerHouse.h"
 #include "Title_Basic.h"
 

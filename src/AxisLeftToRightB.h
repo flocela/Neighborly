@@ -32,11 +32,12 @@ class AxisLeftToRightB
 
         int getCenterValXPx () const;
 
-        // the label length is the height of the numbers below the axis plus
+        // The labels are the numbers below the axis. Their length includes more than just the
+        // number. Length is a vertical length (y-direction).
+        // It includes the axis thickness plus
         // the length of the tick outside the chart plus
-        // the space between the label and the tick plus
-        // the axis thickness.
-        // the length is in the y direction.
+        // the space between the bottom of the tick and the number plus
+        // the height of the number.
         int getLabelLengthPx () const;
 
         std::pair<int, int> getPixel (double xVal, int dotSize) const;
@@ -60,9 +61,9 @@ class AxisLeftToRightB
         int _min_tick_spacing;
         int _maj_tick_spacing;
 
-        void printHorizontalLine (std::vector<Rect>& rects) const;
-
-        void printTicksAndLabels (
+        void addHorizontalLine (std::vector<Rect>& rects) const;
+        
+        void addTicksAndLabels (
             std::vector<Rect>& rects,
             std::vector<TextRect>& texts) const;
 

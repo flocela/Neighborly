@@ -13,6 +13,7 @@ public:
 		
 	virtual void startFrame() = 0;
 	virtual void endFrame() = 0;
+	virtual void keepScreen() = 0;
 
 	// draws a solid rectangle with the given color
 	virtual void fillBlock (Rect blocks, const std::vector<uint8_t>& rgba) = 0;
