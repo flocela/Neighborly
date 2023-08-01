@@ -24,8 +24,8 @@ TEST_CASE("AxisLeftToRightT.getLabelLengthPx()")
     int labelLength = 
         format.labelHeightPx() + // 22
         format.labelLineSpacePx() + // 2
-        format.majTickLengthOutsideChartPx() + //7
-        format.axisThicknessPx(); // 1
+        format.majTickLengthOutsideChartPx(); // 1
 
-    REQUIRE ( 32 == axis.getLabelLengthPx() );
+    REQUIRE ( labelLength == axis.getLabelLengthPx() );
+    REQUIRE ( labelLength + format.axisThicknessPx() == axis.sizeYPx() );
 }

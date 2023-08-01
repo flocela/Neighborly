@@ -21,8 +21,8 @@ TEST_CASE("AxisTopToBottomL.getLabelLengthPx()")
     int labelLength = 
         (3) * format.labelWidthMultiplier() * format.labelHeightPx() +
         3 + // text spacer defaults to 3
-        format.majTickLengthOutsideChartPx() +
-        format.axisThicknessPx();
+        format.majTickLengthOutsideChartPx();
 
     REQUIRE ( labelLength == axis.getLabelLengthPx() );
+    REQUIRE ( labelLength + format.axisThicknessPx() == axis.sizeXPx() );
 }
