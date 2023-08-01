@@ -42,7 +42,7 @@ class AxisLeftToRightB
 
         // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
         // would be {1, 5}.
-        std::pair<int, int> getPixel (double xVal, int dotSize) const;
+        std::pair<int, int> getPixels (double xVal, int dotSize) const;
 
         void print (Renderer* renderer) const;
 
@@ -52,6 +52,7 @@ class AxisLeftToRightB
 
         void moveCrossHairs (int xPx, int yPx);
 
+        // Sets the pixels per unit. Updates the major and minor tick spacing.
         void setPxPerUnit (int pixels);
         
         void setTickThickness (int tickThicknessPx);

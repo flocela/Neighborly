@@ -50,9 +50,9 @@ int AxisLeftToRightB::getLabelLengthPx () const
     return retVal;
 }
 
-pair<int, int> AxisLeftToRightB::getPixel (double xVal, int dotSize) const
+pair<int, int> AxisLeftToRightB::getPixels (double xVal, int dotSize) const
 {   
-    return _forward_axis.getPixel(xVal, dotSize);
+    return _forward_axis.getPixels(xVal, dotSize);
 }
 
 void AxisLeftToRightB::print (Renderer* renderer) const
@@ -119,7 +119,7 @@ void AxisLeftToRightB::addTicksAndLabels (
     int curVal = _forward_axis.getMinVal();
 
     // curPixels describes one tick, it is the first and last pixels covered by the tick.
-    pair<int, int> curPixels = getPixel(curVal, _forward_axis.getTickThichness__px());
+    pair<int, int> curPixels = getPixels(curVal, _forward_axis.getTickThichness__px());
 
     // topOfLabelYPx is the top of the number shown.
     int topOfNumberYPx =
@@ -183,7 +183,7 @@ void AxisLeftToRightB::addTicksAndLabels (
         }
         
         ++curVal;
-        curPixels = _forward_axis.getPixel(curVal, _forward_axis.getTickThichness__px());
+        curPixels = _forward_axis.getPixels(curVal, _forward_axis.getTickThichness__px());
     }
 }
 

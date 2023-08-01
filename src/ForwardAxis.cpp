@@ -23,7 +23,7 @@ ForwardAxis::ForwardAxis (
 
 int ForwardAxis::getCenterValPx () const
 {
-    return getPixel(_min_val + (_max_val - _min_val)/2, 1).first;
+    return getPixels(_min_val + (_max_val - _min_val)/2, 1).first;
 }
 
 int ForwardAxis::getAxisLengthPx () const
@@ -31,7 +31,7 @@ int ForwardAxis::getAxisLengthPx () const
     return getEndPixel() - getStartPixel() + 1;
 }
 
-std::pair<int, int> ForwardAxis::getPixel (double val, int dotSize) const
+std::pair<int, int> ForwardAxis::getPixels (double val, int dotSize) const
 {
     // The standard line equation is y2 = y1 + m * (x2 - x1), m is in px per unit.
 
@@ -104,13 +104,13 @@ int ForwardAxis::getEndOffsetMultiplier () const
 // first pixel on the axis (closest to cross axis)
 int ForwardAxis::getStartPixel () const
 {
-    return getPixel(_min_val - _start_offset_m, _tick_thickness__px).first;
+    return getPixels(_min_val - _start_offset_m, _tick_thickness__px).first;
 }
 
 // last pixel on the axis (farthest from cross axis)
 int ForwardAxis::getEndPixel () const
 {
-    return getPixel(_max_val + _end_offset_m, _tick_thickness__px).second;
+    return getPixels(_max_val + _end_offset_m, _tick_thickness__px).second;
 }
 
 void ForwardAxis::moveCrossPixel (int pixel)

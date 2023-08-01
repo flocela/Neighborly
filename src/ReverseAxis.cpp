@@ -28,7 +28,7 @@ int ReverseAxis::getAxisLengthPx () const
     return abs(getEndPixel() - getStartPixel()) + 1;
 }
 
-std::pair<int, int> ReverseAxis::getPixel (double val, int dotSize) const
+std::pair<int, int> ReverseAxis::getPixels (double val, int dotSize) const
 {
     // The standard line equation is for downsloping line is
     // y2 = y1 - m * (x2 - x1), m is in px per unit.
@@ -97,13 +97,13 @@ int ReverseAxis::getEndOffsetMultiplier () const
 int ReverseAxis::getStartPixel () const
 {
     // Closest pixel to the cross hairs is at the bottom of the graph, so the second in the pair.
-    return getPixel(_min_val - _start_offset_m, _tick_thickness__px).second;
+    return getPixels(_min_val - _start_offset_m, _tick_thickness__px).second;
 }
 
 int ReverseAxis::getEndPixel () const
 {
     // Farthest pixel to the cross hairs is at the top of the graph, so the first in the pair.
-    return getPixel(_max_val + _end_offset_m, _tick_thickness__px).first;
+    return getPixels(_max_val + _end_offset_m, _tick_thickness__px).first;
 }
 
 void ReverseAxis::moveCrossPixel (int pixel)

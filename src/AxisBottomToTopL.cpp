@@ -46,9 +46,9 @@ int AxisBottomToTopL::getLabelLengthPx () const
         _axis_format.axisThicknessPx();
 }
 
-pair<int, int>  AxisBottomToTopL::getPixel (double yVal, int dotSize) const
+pair<int, int>  AxisBottomToTopL::getPixels (double yVal, int dotSize) const
 {   
-    return _reverse_axis.getPixel(yVal, dotSize);
+    return _reverse_axis.getPixels(yVal, dotSize);
 }
 
 void AxisBottomToTopL::print (Renderer* renderer) const
@@ -133,7 +133,7 @@ void AxisBottomToTopL::addTicksAndLabels (
     int curVal = _reverse_axis.getMinVal();
 
     // curPixels describe one tick, it is the first and last pixels covered by the tick.
-    pair<int, int> curPixels = _reverse_axis.getPixel(curVal, _reverse_axis.getTickThichness__px());
+    pair<int, int> curPixels = _reverse_axis.getPixels(curVal, _reverse_axis.getTickThichness__px());
 
     // text corresponding to the curVal
     TextRect curText{
@@ -209,7 +209,7 @@ void AxisBottomToTopL::addTicksAndLabels (
         }
 
         ++curVal;
-        curPixels = _reverse_axis.getPixel(curVal, _reverse_axis.getTickThichness__px());
+        curPixels = _reverse_axis.getPixels(curVal, _reverse_axis.getTickThichness__px());
     }
 }
 

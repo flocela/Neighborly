@@ -28,18 +28,18 @@ TEST_CASE("AxisBottomToTopL.getPixel()_x-axisCenteredOnPixel")
     // value -1 is represented by pixel 30
     // Note pixel zero represents all values from (4.9, 5.1].
     REQUIRE( 31 == axis.getAxisLengthPx()); //31
-    REQUIRE( pair<int, int>{5, 5} == axis.getPixel(4, 1) ); // {5, 5}
-    REQUIRE( pair<int, int>{8, 8} == axis.getPixel(3.5, 1) ); // {8, 8}
-    REQUIRE( pair<int, int>{6, 6} == axis.getPixel(3.75, 1) ); // {6, 6}
-    REQUIRE( pair<int, int>{6, 6} == axis.getPixel(3.9, 1) );  // {6, 6}
-    REQUIRE( pair<int, int>{5, 6} == axis.getPixel(4, 2) ); // {5, 6}
-    REQUIRE( pair<int, int>{4, 5} == axis.getPixel(4.1, 2) ); // {5, 6}
+    REQUIRE( pair<int, int>{5, 5} == axis.getPixels(4, 1) ); // {5, 5}
+    REQUIRE( pair<int, int>{8, 8} == axis.getPixels(3.5, 1) ); // {8, 8}
+    REQUIRE( pair<int, int>{6, 6} == axis.getPixels(3.75, 1) ); // {6, 6}
+    REQUIRE( pair<int, int>{6, 6} == axis.getPixels(3.9, 1) );  // {6, 6}
+    REQUIRE( pair<int, int>{5, 6} == axis.getPixels(4, 2) ); // {5, 6}
+    REQUIRE( pair<int, int>{4, 5} == axis.getPixels(4.1, 2) ); // {5, 6}
 }
 
 // Use a dotSize which is not one. Also, getAxisLengthPx() should return
 // 50 instead of 51. The axis gets cut off at the top because the pixels only go to 0,
 // not -1.
-TEST_CASE("AxisBottomToTopL.getPixel()_x-axisCenteredOnPixel_Diff_DotSizes")
+TEST_CASE("AxisBottomToTopL.getPixels()_x-axisCenteredOnPixel_Diff_DotSizes")
 {
     AxisFormat format{};
     AxisBottomToTopL axis {
@@ -64,13 +64,13 @@ TEST_CASE("AxisBottomToTopL.getPixel()_x-axisCenteredOnPixel_Diff_DotSizes")
     // Note, pixel zero represents values from (4.9375, 5.0625]
 
     REQUIRE( 51 == axis.getAxisLengthPx() ); 
-    REQUIRE( pair<int, int>{7, 9} == axis.getPixel(4, 3) ); // {7, 9}
-    REQUIRE( pair<int, int>{11, 13} == axis.getPixel(3.5, 3) ); // {11, 13}
-    REQUIRE( pair<int, int>{12, 14} == axis.getPixel(3.4, 3) ); // {12, 14}
-    REQUIRE( pair<int, int>{23, 25} == axis.getPixel(2.0625, 3) ); // {23, 24}
-    REQUIRE( pair<int, int>{24, 26} == axis.getPixel(1.9375, 3) ); // {24, 25}
-    REQUIRE( pair<int, int>{31, 34} == axis.getPixel(1, 4)); // {31, 34}
-    REQUIRE( pair<int, int>{35, 38} == axis.getPixel(.4375, 4)); // {35, 38}
+    REQUIRE( pair<int, int>{7, 9} == axis.getPixels(4, 3) ); // {7, 9}
+    REQUIRE( pair<int, int>{11, 13} == axis.getPixels(3.5, 3) ); // {11, 13}
+    REQUIRE( pair<int, int>{12, 14} == axis.getPixels(3.4, 3) ); // {12, 14}
+    REQUIRE( pair<int, int>{23, 25} == axis.getPixels(2.0625, 3) ); // {23, 24}
+    REQUIRE( pair<int, int>{24, 26} == axis.getPixels(1.9375, 3) ); // {24, 25}
+    REQUIRE( pair<int, int>{31, 34} == axis.getPixels(1, 4)); // {31, 34}
+    REQUIRE( pair<int, int>{35, 38} == axis.getPixels(.4375, 4)); // {35, 38}
 }
 
 

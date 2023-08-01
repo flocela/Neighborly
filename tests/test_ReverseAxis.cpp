@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-TEST_CASE("ReverseAxis().getPixel_Cross_Centered_On_Pixel")
+TEST_CASE("ReverseAxis().getPixels_Cross_Centered_On_Pixel")
 {
     ReverseAxis axis {
         30, // coordinate where axis and cross axis meet
@@ -25,15 +25,15 @@ TEST_CASE("ReverseAxis().getPixel_Cross_Centered_On_Pixel")
     // pixel 0 represent values (4.9, 5.1]
     
     REQUIRE( 31 == axis.getAxisLengthPx() );//31
-    REQUIRE( pair<int, int>{5, 5} == axis.getPixel(4, 1) ); // {5, 5}
-    REQUIRE( pair<int, int>{19, 19} == axis.getPixel(1.3, 1) ); // {19, 19}
-    REQUIRE( pair<int, int>{14, 14} == axis.getPixel(2.2, 1) ); // {14, 14}
-    REQUIRE( pair<int, int>{16, 17} == axis.getPixel(1.7, 2) ); // {16, 17} 
-    REQUIRE( pair<int, int>{14, 15} == axis.getPixel(2.2, 2) ); // {14, 15}
+    REQUIRE( pair<int, int>{5, 5} == axis.getPixels(4, 1) ); // {5, 5}
+    REQUIRE( pair<int, int>{19, 19} == axis.getPixels(1.3, 1) ); // {19, 19}
+    REQUIRE( pair<int, int>{14, 14} == axis.getPixels(2.2, 1) ); // {14, 14}
+    REQUIRE( pair<int, int>{16, 17} == axis.getPixels(1.7, 2) ); // {16, 17} 
+    REQUIRE( pair<int, int>{14, 15} == axis.getPixels(2.2, 2) ); // {14, 15}
 }
 
 
-TEST_CASE("ReverseAxis.getPixel()_Cross_Centered_On_Pixel_Diff_Dot_Sizes")
+TEST_CASE("ReverseAxis.getPixels()_Cross_Centered_On_Pixel_Diff_Dot_Sizes")
 {
     ReverseAxis axis {
         30, // coordinate where axis and cross axis meet
@@ -55,9 +55,9 @@ TEST_CASE("ReverseAxis.getPixel()_Cross_Centered_On_Pixel_Diff_Dot_Sizes")
     // pixel 0 represent values (4.9, 5.1]
     
     REQUIRE( 33 == axis.getAxisLengthPx() );//33
-    REQUIRE( pair<int, int>{4, 6} == axis.getPixel(4, 3) ); // {4, 6}
-    REQUIRE( pair<int, int>{18, 20} == axis.getPixel(1.3, 3) ); // {18, 20}
-    REQUIRE( pair<int, int>{13, 15} == axis.getPixel(2.2, 3) ); // {13, 15}
-    REQUIRE( pair<int, int>{15, 18} == axis.getPixel(1.7, 4) ); // {15, 18}
-    REQUIRE( pair<int, int>{13, 16} == axis.getPixel(2.2, 4) ); // {13, 16}
+    REQUIRE( pair<int, int>{4, 6} == axis.getPixels(4, 3) ); // {4, 6}
+    REQUIRE( pair<int, int>{18, 20} == axis.getPixels(1.3, 3) ); // {18, 20}
+    REQUIRE( pair<int, int>{13, 15} == axis.getPixels(2.2, 3) ); // {13, 15}
+    REQUIRE( pair<int, int>{15, 18} == axis.getPixels(1.7, 4) ); // {15, 18}
+    REQUIRE( pair<int, int>{13, 16} == axis.getPixels(2.2, 4) ); // {13, 16}
 }

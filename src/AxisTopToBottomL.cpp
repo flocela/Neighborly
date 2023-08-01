@@ -4,6 +4,7 @@
 #include "AxisTopToBottomL.h"
 
 using namespace std;
+
 AxisTopToBottomL::AxisTopToBottomL (
     AxisFormat axisFormat,
     int x_coordinate__px, // where x and y axis meet
@@ -37,6 +38,7 @@ int AxisTopToBottomL::getAxisLengthPx() const
 
 int AxisTopToBottomL::getLabelLengthPx () const
 {
+    // Three is max number of digits in the y-axis label.
     return 
         (3) * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
         _text_spacer +
@@ -44,9 +46,9 @@ int AxisTopToBottomL::getLabelLengthPx () const
         _axis_format.axisThicknessPx();
 }
 
-pair<int,int> AxisTopToBottomL::getPixel (double yVal, int dotSize) const
+pair<int,int> AxisTopToBottomL::getPixels (double yVal, int dotSize) const
 {
-    return _forward_axis.getPixel(yVal, dotSize);
+    return _forward_axis.getPixels(yVal, dotSize);
 }
 
 void AxisTopToBottomL::print (Renderer* renderer) const
@@ -54,8 +56,8 @@ void AxisTopToBottomL::print (Renderer* renderer) const
     std::vector<Rect> rects = {};
     std::vector<TextRect> texts = {};
 
-    printVerticalLine(rects);
-    printTicksAndLabels (rects, texts);
+    addVerticalLine(rects);
+    addTicksAndLabels (rects, texts);
 
     renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
     renderer->renderTexts(texts);
@@ -63,12 +65,7 @@ void AxisTopToBottomL::print (Renderer* renderer) const
 
 int AxisTopToBottomL::sizeXPx () const
 {
-    // Three is max number of digits in the y-axis label.
-    return 
-        3 * _axis_format.labelWidthMultiplier() * _axis_format.labelHeightPx() +
-        _text_spacer + 
-        _axis_format.majTickLengthOutsideChartPx() +
-        _axis_format.axisThicknessPx();
+    return getLabelLengthPx();
 }
 
 int AxisTopToBottomL::sizeYPx() const
@@ -96,7 +93,7 @@ void AxisTopToBottomL::setTickThickness (int tickThicknessPx)
 }
 
 
-void AxisTopToBottomL::printVerticalLine (std::vector<Rect>& rects) const
+void AxisTopToBottomL::addVerticalLine (std::vector<Rect>& rects) const
 {
     int topPixel = _forward_axis.getStartPixel();
     Rect rect{
@@ -109,13 +106,16 @@ void AxisTopToBottomL::printVerticalLine (std::vector<Rect>& rects) const
     rects.push_back(rect);
 }
 
-void AxisTopToBottomL::printTicksAndLabels (
+void AxisTopToBottomL::addTicksAndLabels (
     std::vector<Rect>& rects, 
     std::vector<TextRect>& texts
 ) const
 {
+    // The first value will be the minimum value given in the constructor.
     int curVal = _forward_axis.getMinVal();
-    pair<int, int> curPixels = getPixel(curVal, _forward_axis.getTickThichness__px());
+
+    // curPixels describe one tick, it is the first and last pixels covered by the tick.
+    pair<int, int> curPixels = getPixels(curVal, _forward_axis.getTickThichness__px());
 
     int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChartPx();
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
@@ -148,8 +148,10 @@ void AxisTopToBottomL::printTicksAndLabels (
     // bottom most pixel on axis
     int botMostPixelY = _forward_axis.getEndPixel();
 
+    // Iterate through values from top to bottom of axis.
     while (curPixels.first <= botMostPixelY)
     {   
+        // If _maj_tick_spacing is a multiple of curVal, then this is a major tick.
         if (curVal % _maj_tick_spacing == 0)
         {
             majRect._y__px = curPixels.first;
@@ -161,6 +163,7 @@ void AxisTopToBottomL::printTicksAndLabels (
             rects.push_back(majRect);
             texts.push_back(curText);
         }
+        // If _min_tick_spacing is a multiple of curVal, then this is a minor tick.
         else if (curVal % _min_tick_spacing == 0)
         {
             minRect._y__px = curPixels.first;
@@ -168,7 +171,7 @@ void AxisTopToBottomL::printTicksAndLabels (
             rects.push_back(minRect);
         }
         ++curVal;
-        curPixels = _forward_axis.getPixel(curVal, _forward_axis.getTickThichness__px());
+        curPixels = _forward_axis.getPixels(curVal, _forward_axis.getTickThichness__px());
     }
 }
 

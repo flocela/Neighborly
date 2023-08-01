@@ -49,7 +49,7 @@ public:
     int getEndPixel () const;
 
     // Returns the pixels covered by a dot at value.
-    std::pair<int, int> getPixel (double val, int dotSize) const;
+    std::pair<int, int> getPixels (double val, int dotSize) const;
 
     void moveCrossPixel (int pixel);
     void setPxPerUnit (int pixels);

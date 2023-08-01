@@ -173,8 +173,8 @@ void PlotA::print (
         // dot is a square.
         // x is the x-pixel of the top left pixel of dot-square
         // y is the y_pixel of the top left pixel of sot-square
-        int x = _x_axis.getPixel(point.x(), _dot__px).first;                 
-        int y = _y_axis.getPixel(point.y(), _dot__px).first;
+        int x = _x_axis.getPixels(point.x(), _dot__px).first;                 
+        int y = _y_axis.getPixels(point.y(), _dot__px).first;
         coordinatesPerColor[point.color()].push_back(Coordinate(x, y));
     }
 

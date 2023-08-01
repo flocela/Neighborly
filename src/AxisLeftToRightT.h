@@ -43,7 +43,7 @@ class AxisLeftToRightT
 
         // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
         // would be {1, 5}.
-        std::pair<int, int> getPixel (double xVal, int dotSize) const;
+        std::pair<int, int> getPixels (double xVal, int dotSize) const;
         
         void print (Renderer* renderer) const;
 
@@ -53,6 +53,7 @@ class AxisLeftToRightT
 
         void moveCrossHairs (int xPx, int yPx);
 
+        // Sets the pixels per unit. Updates the major and minor tick spacing.
         void setPxPerUnit (int pixels);
         
         void setTickThickness (int tickThicknessPx);
@@ -60,7 +61,7 @@ class AxisLeftToRightT
     private:
         AxisFormat _axis_format;
         ForwardAxis _forward_axis;
-        
+
         int _y_cross__px; // where x and y axes cross, this is the y-coordinate
         int _min_tick_spacing;
         int _maj_tick_spacing;

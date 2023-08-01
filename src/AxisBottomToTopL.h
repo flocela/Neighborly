@@ -42,8 +42,9 @@ class AxisBottomToTopL
         // The length is in the x direction.
         int getLabelLengthPx () const;
 
-
-        std::pair<int, int> getPixel (double yVal, int dotSize) const;
+        // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
+        // would be {1, 5}.
+        std::pair<int, int> getPixels (double yVal, int dotSize) const;
         
         void print (Renderer* renderer) const;
         
@@ -59,7 +60,7 @@ class AxisBottomToTopL
         // line up with the major and minor tick marks.
         void setHorizLength (int horizLengthPx);
         
-        // Sets the pixels per unit. May change the major and minor tick spacing.
+        // Sets the pixels per unit. Updates the major and minor tick spacing.
         void setPxPerUnit (int pixels);
         
         void setTickThickness (int tickThicknessPx);

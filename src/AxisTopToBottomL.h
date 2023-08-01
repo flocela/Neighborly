@@ -6,6 +6,7 @@
 #include "Renderer.h"
 #include "TextRect.h"
 
+// Vertical axis, number run from top to bottom. Labels are on left.
 class AxisTopToBottomL
 {
     public:
@@ -13,8 +14,8 @@ class AxisTopToBottomL
             AxisFormat axisFormat,
             int x_coordinate__px, // where x and y axis meet
             int y_coordinate__px, // where x and y axis meet
-            int minVal, // min value delineated with tick. It is startOffset__px from the start of axis.
-            int maxVal, // max value delineated with tick. Axis continues for endOffset__px afer maxVal.
+            int minVal, 
+            int maxVal, 
             int pxPerUnit,
             int tickThickness,
             int startOffsetMultiplier,
@@ -29,24 +30,30 @@ class AxisTopToBottomL
 
         int getAxisLengthPx () const;
 
-        // the label are the numbers to the right of the axis plus
-        // the length of the tick outside the chart plus
+        // The labels are the numbers to the left of the axis, but their length is more
+        // than just the number.
+        // The label length is the length of the digits in the label plus
         // the space between the label and the tick plus
+        // the length of the tick outside the chart plus
         // the axis thickness.
-        // the length is in the x direction.
+        // The length is in the x direction.
         int getLabelLengthPx () const;
 
-        std::pair<int,int> getPixel (double yVal, int dotSize) const;
+        // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
+        // would be {1, 5}.
+        std::pair<int, int> getPixels (double xVal, int dotSize) const;
         
-        // Renders axis from bottom to top, title is on left side (used for vertical axes).
         void print (Renderer* renderer) const;
 
+        // Same as getLabelLengthPx()
         int sizeXPx() const;
 
+        // Same as getAxisLengthPx()
         int sizeYPx() const;
 
         void moveCrossHairs (int xPx, int yPx);
 
+        // Sets the pixels per unit. Updates the major and minor tick spacing.
         void setPxPerUnit (int pixels);
 
         void setTickThickness (int tickThicknessPx);
@@ -54,14 +61,15 @@ class AxisTopToBottomL
     private:
         AxisFormat _axis_format;
         ForwardAxis _forward_axis;
+
         int _x_cross__px;
         int _min_tick_spacing;
         int _maj_tick_spacing;
         int _text_spacer = 3; // space to the right of labels, and to the left of tick marks.
 
-        void printVerticalLine (std::vector<Rect>& rects) const;
+        void addVerticalLine (std::vector<Rect>& rects) const;
 
-        void printTicksAndLabels (
+        void addTicksAndLabels (
             std::vector<Rect>& rects,
             std::vector<TextRect>& texts) const;
 
