@@ -191,8 +191,8 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     80,  // happiness goal
                     std::make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
-                        95, // happiness value at zero diversity
-                        50  // happiness value at one diversity
+                        100, // happiness value at zero diversity
+                        0  // happiness value at one diversity
                     )
                 ));
             }
@@ -205,8 +205,8 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     80,
                     std::make_unique<HappinessFunc_Falling>(
                         70, 
-                        95,
-                        50)
+                        100,
+                        0)
                 ));
             }
 
@@ -435,8 +435,8 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     80,  // happiness goal
                     std::make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
-                        95, // happiness value at zero diversity
-                        50  // happiness value at one diversity
+                        100, // happiness value at zero diversity
+                        0  // happiness value at one diversity
                     )
                 ));
             }
@@ -449,8 +449,8 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     80,
                     std::make_unique<HappinessFunc_Falling>(
                         70, 
-                        95,
-                        50)
+                        100,
+                        0)
                 ));
             }
 
