@@ -3,8 +3,6 @@
 #include <iostream>
 using namespace std;
 
-// PlotB has the same pixels per unit in the x and y directions
-// It plots the y axis from top to bottom and the x axis from left to right
 PlotB::PlotB ( 
         PlotFormat plotFormat,
         int topLeftXPx, // top left corner of plot
@@ -18,7 +16,7 @@ PlotB::PlotB (
 ): 
     _axis_format_x{plotFormat.axisFormatX()},
     _axis_format_y{plotFormat.axisFormatY()},
-    _min_unit_size{plotFormat.minUnitSize()},
+    _min_unit_size__px{plotFormat.minUnitSize()},
     _start_offset_m{plotFormat.startOffsetM()},
     _end_offset_m{plotFormat.endOffsetM()},
     _min_x{minX},
@@ -51,8 +49,9 @@ PlotB::PlotB (
         plotFormat.endOffsetM(),
     }
 {
+    // Update attributes that are affected by change to the top left corner coordinate and
+    // available space in the x and y directions.
     setPlot(topLeftXPx, topLeftYPx, xSpacePx, ySpacePx);
-    cout << "In formal PLotB constructor" << endl;
 }
 
 PlotB::PlotB (
@@ -135,6 +134,7 @@ void PlotB::print (
     Renderer* renderer
 ) const
 {   
+    // Only print axes once.
     if (!_printed_axes || printAxes) 
     {
         _x_axis.print(renderer);
@@ -142,30 +142,18 @@ void PlotB::print (
         _printed_axes = true;
     }
     
-    unordered_map<Color, vector<Coordinate>> coordinatesPerColor;
+    // Print each point. A colored dot will represent each point.
     for (auto& point : points)
     {
-        if (coordinatesPerColor.find(point.color()) == coordinatesPerColor.end())
-        {
-            coordinatesPerColor.insert({point.color(), vector<Coordinate>{}});
-        }
-
-        // dot is a square.
-        // x is the x-pixel of the top left pixel of dot-square
-        // y is the y_pixel of the top left pixel of sot-square
+        // Dot is a square. Convert point's value to the coordinate of the dot's top left corner.
         int x = _x_axis.getPixels(point.x(), _dot__px).first;                 
         int y = _y_axis.getPixels(point.y(), _dot__px).first;
 
-        coordinatesPerColor[point.color()].push_back(Coordinate(x, y));
-    }
-
-    for (auto& pair: coordinatesPerColor)
-    {   
-        renderer->fillBlocks(
-            _dot__px,
-            _dot__px,
-            pair.second,
-            _the_color_rgba[pair.first]
+        renderer->fillBlock(
+            _dot__px, // width
+            _dot__px, // height
+            Coordinate(x, y),
+            _the_color_rgba[point.color()]
         );
     }
 }
@@ -197,29 +185,32 @@ void PlotB::setPlot (int topLeftCornerXPx, int topLeftCornerYPx, int xSpacePx, i
 
 int PlotB::calcUnitSizePx () const
 {
+    // Calculate unit size in x-direction.
     int allowableXAxisLengthPx = _x_space__px - _y_axis.sizeXPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
-    xUnitSize = max(xUnitSize, _min_unit_size);
+    xUnitSize = max(xUnitSize, _min_unit_size__px);
 
+    // Calculate unit size in y-direction.
     int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeYPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
-    yUnitSize = max(yUnitSize, _min_unit_size);
+    yUnitSize = max(yUnitSize, _min_unit_size__px);
 
     return min(xUnitSize, yUnitSize);
 }
 
+// Returns dot size that is odd (not even).
 int PlotB::calcDotSizePx () const
 {
-    // dot size based on unit size
+    // Dot size based on unit size
     int dotSize = _unit__px/3;
 
     // Make dotSize odd.
     dotSize = (dotSize%2==0)? dotSize+1 : dotSize;
 
-    // dot size of 3 is too small, increase to 5 at minimum.
-    dotSize = (dotSize <= 5)? 5 : dotSize;
+    // Dot size must be equal or greater than _min_dot_size__px.
+    dotSize = (dotSize <= _min_dot_size__px)? _min_dot_size__px : dotSize;
 
     return dotSize;
 }
@@ -230,7 +221,7 @@ int PlotB::calcCrossXPx (int topLeftXPx) const
     int requiredXLength = 
         _unit__px * ( _x_diff + _start_offset_m + _end_offset_m) + _y_axis.sizeXPx();
 
-    // start at given most left point (topLeftXPx),
+    // Start at given most left point (topLeftXPx),
     // move to the center of given space, move to the left by 1/2 of the required length,
     // move crosshairs to the right making room for y-axis.
     return topLeftXPx +

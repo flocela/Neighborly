@@ -53,6 +53,8 @@ PlotA::PlotA (
         plotFormat.endOffsetM(),
     }
 {
+    // Update attributes that are affected by change to top left corner coordinate and
+    // available space in the x and y directions.
     setPlot(_top_left_x__px, _top_left_y__px, _x_space__px, _y_space__px);
 }
 
@@ -131,8 +133,8 @@ void PlotA::print (
     bool printAxes,
     Renderer* renderer
 ) const
-{   (void) points;
-    // only print axes once.
+{   
+    // Only print axes once.
     if (!_printed_axes || printAxes)
     {
         _x_axis.print(renderer);
@@ -140,29 +142,18 @@ void PlotA::print (
         _printed_axes = true;
     }
 
-    unordered_map<Color, vector<Coordinate>> coordinatesPerColor;
+    // Print each point. A colored dot will represent each point.
     for (auto& point : points)
     {
-        if (coordinatesPerColor.find(point.color()) == coordinatesPerColor.end())
-        {
-            coordinatesPerColor.insert({point.color(), vector<Coordinate>{}});
-        }
-
-        // dot is a square.
-        // x is the x-pixel of the top left pixel of dot-square
-        // y is the y_pixel of the top left pixel of sot-square
+        // Dot is a square. Convert point's value to the coordinate of the dot's top left corner.
         int x = _x_axis.getPixels(point.x(), _dot__px).first;                 
         int y = _y_axis.getPixels(point.y(), _dot__px).first;
-        coordinatesPerColor[point.color()].push_back(Coordinate(x, y));
-    }
 
-    for (auto& pair: coordinatesPerColor)
-    {
-        renderer->fillBlocks(
-            _dot__px,
-            _dot__px,
-            pair.second,
-            _the_color_rgba[pair.first]
+        renderer->fillBlock(
+            _dot__px, // width
+            _dot__px, // height
+            Coordinate(x, y),
+            _the_color_rgba[point.color()]
         );
     }
 }
@@ -192,8 +183,7 @@ void PlotA::setPlot (int topLeftCornerXPx, int topLeftCornerYPx, int xSpacePx, i
     _y_axis.setPxPerUnit(_unit_y__px);
     _y_axis.setTickThickness(tickThickness);
 
-    // horizontal length of extended tick marks.
-    // they are inside the chart and area usually a greyed out color
+    // horizontal length of background lines that extend from the tick marks across the graph.
     _y_axis.setHorizLength(_x_axis.getAxisLengthPx());
 }
 
@@ -217,28 +207,28 @@ pair<int, int> PlotA::calcUnitSizeXAndYPx () const
 // Returns dot size that is odd (not even).
 int PlotA::calcDotSizePx () const
 {   
-    // dot size somewhat based on smaller unitSize of axes.
+    // Dot size based on smaller unitSize of axes.
     int minUnitSizePx = min(_unit_x__px, _unit_y__px);
     int dotSize = minUnitSizePx/4;
 
     // Make dotSize odd.
     dotSize = (dotSize%2==0)? dotSize+1 : dotSize;
 
-    // dot size of 3 is too small, increase to 5 at minimum.
-    dotSize = (dotSize <= 5)? 5 : dotSize;
+    // Dot size must be equal or greater than _min_dot__px.
+    dotSize = (dotSize <= _min_dot__px)? _min_dot__px : dotSize;
 
     return dotSize;
 }
 
-// x-axis is centered in the space available.
+// x-axis is centered in the available space.
 int PlotA::calcCrossXPx (int topLeftXPx) const
 {
     int requiredXLength = 
         (_unit_x__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _y_axis.sizeXPx();
 
-    // start at given most left point (topLeftXPx),
-    // move to the center of given space, move to the left by 1/2 of the required length,
-    // move crosshairs to the right making room for y-axis.
+    // Start at given most left point (topLeftXPx),
+    // Move to the center of given space, move to the left by 1/2 of the required length,
+    // Move crosshairs to the right making room for y-axis.
     return topLeftXPx +
            (int)( 0.5 * (_x_space__px - requiredXLength) ) +
            _y_axis.sizeXPx();

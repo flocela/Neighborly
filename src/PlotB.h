@@ -9,11 +9,18 @@
 #include "Plot.h"
 #include "PlotFormat.h"
 
-// x-axis runs horizontally from left to right, labels are on top of axis
-// y-axis runs vertically from bottom to top, labels are on the left of the axis
+// Plot contains the x and y axis, their labels, and the data points inside the graph.
+// x-axis runs horizontally from left to right. Labels are on top of axis.
+// y-axis runs vertically from top to bottom. Labels are on the left of the axis.
 class PlotB: public Plot
 {
+
 public:
+
+    // The top left corner of the plot does not align with the axes. The top left corner
+    // is not at the axes' crosshairs. The top left corner aligns vertically
+    // with the left side of the vertical axis' labels and aligns horizontally with the top of the 
+    // vertical axes' labels. The plot encompasses the axes' labels.
     PlotB ( 
         PlotFormat plotFormat,
         int topLeftXPx, // top left corner of plot, not the same as where x and y axes cross
@@ -28,7 +35,7 @@ public:
 
     // Creates a plot with top left corner at (0,0) pixels.
     // Size of plot is zero in x and y directions.
-    // This is a temporary plot. Use setTopLeft() and setXYSpacePx() to finish it.
+    // This is a temporary plot. Use setPlot() method to finish it.
     PlotB (
         PlotFormat plotFormat,
         int minX,
@@ -69,6 +76,10 @@ public:
         bool clear,
         Renderer* renderer) const override;
 
+    // Setting the top left corner and the available space affects the unit sizes in the x and
+    // y axes. Updating the unit size affects the data dot's width and the tick thickness.
+    // Updating the unit size also affects the cross hairs' coordinate (where x and y axes cross).
+    // setPlot() updates these affected attributes.
     void setPlot (int topLeftCornerXPx, int topLeftCornerYPx, int xSpacePx, int ySpacePx) override;
 
 private:
@@ -76,28 +87,32 @@ private:
     AxisFormat _axis_format_x;
     AxisFormat _axis_format_y;
 
-    int _min_unit_size = 1;
+    // minimum unit size
+    int _min_unit_size__px = 5;
+
+    // minimum dot width
+    int _min_dot_size__px = 3;
 
     // _start_offset_m is used to determine space before the first values (_min_x or _min_y).
-    // length of space is _start_offset_m * _unit_space__px. 
+    // Length of space is _start_offset_m * _unit_space__px. 
     int _start_offset_m;
 
     // _end_offset_m is used to determine space after the last value (_max_x or _max_y).
-    // length of space is _end_offset_m * _unit_space__px.
+    // Length of space is _end_offset_m * _unit_space__px.
     int _end_offset_m;
 
-    // top left corner of plot. This is not at the x-y axes' cross hairs. it takes into
-    // account the width of the y-axis labels.
+    // Top left corner of plot. This is not at the x-y axes' cross hairs. it takes into
+    // account the width of the y-axis labels and the height of the x-axis labels.
     int _top_left_x__px = 0;
     int _top_left_y__px = 0;
 
-    // smallest values on the axes with data.
+    // smallest values on the axes. These values are given in the constructor.
     int _min_x;
     int _min_y;
 
-    // largest values on the axes with data.
+    // largest values on the axes. These values are given in the constructor.
     // Note: the axes stretch past the largest value with data.
-    // the largest value on the axes will be _max_y + (_end_offset_m * unit size ).
+    // The largest value on the axes will be _max_y + (_end_offset_m * unit size ).
     int _max_x;
     int _max_y;
     
@@ -105,13 +120,11 @@ private:
     int _x_space__px;
     int _y_space__px;
 
-    int _x_diff; // max minus min axis values
-    int _y_diff; // max minus min axis values
+    int _x_diff; // difference between max and min values on the x-axis
+    int _y_diff; // difference between the max and min values on the y-axis
     int _unit__px; // pixels per unit
 
-    // dot represents a value. the dot is a colored square, same length in the x and y directions.
-    // dot is inside the unit.
-    // _dot__px is the length of the square
+    // Dots are colored squares that represent values on the graph. The width of a dot is _dot__px.
     int _dot__px;
 
     // where x and y axes cross
@@ -121,20 +134,24 @@ private:
     AxisLeftToRightT _x_axis;
     AxisTopToBottomL _y_axis;
 
-    // only print axes once, they don't change.
+    // Only print axes once, they don't change.
     mutable bool _printed_axes = false;
 
-    // Use the given allowable spaces in the x and y directions and the number of units in the axes
-    // to determine the unit size.
+    // For the x and y axes: Use the given allowable space and the required number of
+    // units in the axis to determine the unit size. Each unit size must be equal to or larger
+    // than _min_unit_size.
+    // Returns a pair where the first value is the unit size in the x direction, and the second
+    // value is the unit size in the y direction. 
     int calcUnitSizePx () const;
 
-    // returns length of the square dot. the length is 1/2 the _unit__px
+    // Returns width of square dot. The width is 1/3 the smaller of _unit_x__px and _unit_y__px.
+    // Returns an odd dot size that is at least the _min_dot__px in width.
     int calcDotSizePx () const;
 
-    // retuns x value of cross hairs.
+    // Retuns x value of cross hairs.
     int calcCrossXPx (int topLeftX) const;
 
-    // returns y values of cross hairs.
+    // Returns y values of cross hairs.
     int calcCrossYPx (int topLeftY) const;
 };
 
