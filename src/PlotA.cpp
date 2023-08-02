@@ -53,29 +53,8 @@ PlotA::PlotA (
         plotFormat.endOffsetM(),
     }
 {
-    pair<int, int> unitSize = calcUnitSizeXAndYPx();
-    _unit_x__px = unitSize.first;
-    _unit_y__px = unitSize.second;
-
-    _dot__px = calcDotSizePx();
-
-    int tickThickness = (_dot__px > 12)? 3 : 1;
-
-    _cross_x__px = calcCrossXPx(topLeftXPx);
-    _cross_y__px = calcCrossYPx(topLeftYPx);
-
-    _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
-    _x_axis.setPxPerUnit(_unit_x__px);
-    _x_axis.setTickThickness(tickThickness);
-    _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
-    _y_axis.setPxPerUnit(_unit_y__px);
-    _y_axis.setTickThickness(tickThickness);
-    
-    // horizontal length of extended tick marks.
-    // they are inside the chart and area usually a greyed out color
-    _y_axis.setHorizLength(_x_axis.getAxisLengthPx());
-
- }
+    setPlot(_top_left_x__px, _top_left_y__px, _x_space__px, _y_space__px);
+}
 
 PlotA::PlotA (
     PlotFormat plotFormat,
@@ -99,7 +78,6 @@ PlotA(  plotFormat,
 int PlotA::getCenterValueOfXAxisPx () const
 {   
     return _x_axis.getCenterValXPx();
-    
 }
 
 int PlotA::getDotSizePx () const
@@ -189,37 +167,33 @@ void PlotA::print (
     }
 }
 
-void PlotA::setTopLeft (int topLeftXPx, int topLeftYPx)
+void PlotA::setPlot (int topLeftCornerXPx, int topLeftCornerYPx, int xSpacePx, int ySpacePx)
 {
-    _top_left_x__px = topLeftXPx;
-    _top_left_y__px = topLeftYPx;
-    _cross_x__px = calcCrossXPx(topLeftXPx);
-    _cross_y__px = calcCrossYPx(topLeftYPx);
-    
-    _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
-    _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
-}
-
-void PlotA::setXYSpacePx (int xSpacePx, int ySpacePx) { 
+    _top_left_x__px = topLeftCornerXPx;
+    _top_left_y__px = topLeftCornerYPx;
     _x_space__px = xSpacePx;
     _y_space__px = ySpacePx;
-    
-    pair<int, int> unit_sizes = calcUnitSizeXAndYPx();
-    _unit_x__px = unit_sizes.first;
-    _unit_y__px = unit_sizes.second;
+
+    pair<int, int> unitSize = calcUnitSizeXAndYPx();
+    _unit_x__px = unitSize.first;
+    _unit_y__px = unitSize.second;
 
     _dot__px = calcDotSizePx();
 
     int tickThickness = (_dot__px > 12)? 3 : 1;
 
     _cross_x__px = calcCrossXPx(_top_left_x__px);
-    _cross_y__px = calcCrossYPx (_top_left_y__px);
+    _cross_y__px = calcCrossYPx(_top_left_y__px);
+
     _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _x_axis.setPxPerUnit(_unit_x__px);
     _x_axis.setTickThickness(tickThickness);
     _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.setPxPerUnit(_unit_y__px);
     _y_axis.setTickThickness(tickThickness);
+
+    // horizontal length of extended tick marks.
+    // they are inside the chart and area usually a greyed out color
     _y_axis.setHorizLength(_x_axis.getAxisLengthPx());
 }
 

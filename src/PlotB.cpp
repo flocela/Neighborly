@@ -21,14 +21,10 @@ PlotB::PlotB (
     _min_unit_size{plotFormat.minUnitSize()},
     _start_offset_m{plotFormat.startOffsetM()},
     _end_offset_m{plotFormat.endOffsetM()},
-    _top_left_x__px{topLeftXPx},
-    _top_left_y__px{topLeftYPx},
     _min_x{minX},
     _min_y{minY},
     _max_x{maxX},
     _max_y{maxY},
-    _x_space__px{xSpacePx},
-    _y_space__px{ySpacePx},
     _x_diff{maxX - minX},
     _y_diff{maxY - minY},
     _x_axis{
@@ -55,7 +51,8 @@ PlotB::PlotB (
         plotFormat.endOffsetM(),
     }
 {
-    setXYSpacePx(xSpacePx, ySpacePx);
+    setPlot(topLeftXPx, topLeftYPx, xSpacePx, ySpacePx);
+    cout << "In formal PLotB constructor" << endl;
 }
 
 PlotB::PlotB (
@@ -173,19 +170,10 @@ void PlotB::print (
     }
 }
 
-void PlotB::setTopLeft (int topLeftXPx, int topLeftYPx)
+void PlotB::setPlot (int topLeftCornerXPx, int topLeftCornerYPx, int xSpacePx, int ySpacePx)
 {
-    _top_left_x__px = topLeftXPx;
-    _top_left_y__px = topLeftYPx;
-
-    _cross_x__px = calcCrossXPx(topLeftXPx);
-    _cross_y__px = calcCrossYPx(topLeftYPx);
-
-    _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
-    _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
-}
-
-void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) {
+    _top_left_x__px = topLeftCornerXPx;
+    _top_left_y__px = topLeftCornerYPx;
     _x_space__px = xSpacePx;
     _y_space__px = ySpacePx;
     
@@ -204,6 +192,7 @@ void PlotB::setXYSpacePx (int xSpacePx, int ySpacePx) {
     _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis.setPxPerUnit(_unit__px);
     _y_axis.setTickThickness(tickThickness);
+
 }
 
 int PlotB::calcUnitSizePx () const

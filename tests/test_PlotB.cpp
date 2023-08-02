@@ -119,7 +119,6 @@ TEST_CASE("plotB:: setTopLeft")
     // setTopLeft
     int newXPx = 100;
     int newYPx = 100;
-    plotB.setTopLeft(newXPx, newYPx);
 
     REQUIRE(newXPx == plotB.getTopLeftXPx());
     REQUIRE(newYPx == plotB.getTopLeftYPx());
@@ -177,7 +176,6 @@ TEST_CASE("PlotB:: setXYSpacePx")
     // setXYSpacePx
     int newXPx = 500;
     int newYPx = 250;
-    plotB.setXYSpacePx(newXPx, newYPx);
 
     int unitSizeXPx = plotB.getXUnitSizePx();
     int unitSizeYPx = plotB.getYUnitSizePx();

@@ -47,20 +47,18 @@ public:
     // The size of the plot in the x direction. This is smaller than or equal to the given y space.
     virtual int sizeYPx () const = 0;
 
-    // Set the top left corner of the plot.
-    // Does not change the unitSize of the axes, or the total length of the axes.
-    // Does not change the dot size
-    virtual void setTopLeft (int xPx, int yPx) = 0;
-
     virtual void print (
         std::vector<Point> points,
         bool printAxes,
         Renderer* renderer
     ) const = 0;
 
-    // Set the space available from the top left corner of the plot in the x and y directions.
-    // Coordinates of top left corner of plot do not change. Plot does not move.
-    virtual void setXYSpacePx (int xSpacePx, int ySpacePx) = 0;
+    // Sets the top left corner of the plot and sets the available space in the x and y directions.
+    virtual void setPlot (
+        int topLeftCornerXPx,
+        int topLeftCornerYPx,
+        int xSpacePx,
+        int ySpacePx) = 0;
 
 };
 

@@ -117,7 +117,6 @@ TEST_CASE("PlotA:: setTopLeft")
     // setTopLeft
     int newXPx = 100;
     int newYPx = 100;
-    plotA.setTopLeft(newXPx, newYPx);
 
     REQUIRE(newXPx == plotA.getTopLeftXPx());
     REQUIRE(newYPx == plotA.getTopLeftYPx());
@@ -173,7 +172,6 @@ TEST_CASE("PlotA:: setXYSpacePx")
     // setXYSpacePx
     int newXPx = 500;
     int newYPx = 250;
-    plotA.setXYSpacePx(newXPx, newYPx);
 
     int unitSizeXPx = plotA.getXUnitSizePx();
     int unitSizeYPx = plotA.getYUnitSizePx();

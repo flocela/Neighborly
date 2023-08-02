@@ -20,11 +20,14 @@ GrDvstyChart::GrDvstyChart (
 {   
     // x-coordinate of plot's top left corner aligns with topLeftXPx.
     // Plot is below the title and below the key.
-    _plot->setTopLeft(topLeftXPx, topLeftYPx + _title->sizeYPx() + _key->sizeYPx());
-
     // The available space in the x direction is xSpace.
     // The available space in the y direction is decreased by the title and the key.
-    _plot->setXYSpacePx(xSpace, ySpace - _title->sizeYPx() - _key->sizeYPx());
+    _plot->setPlot(
+        topLeftXPx,
+        topLeftYPx + _title->sizeYPx() + _key->sizeYPx(),
+        xSpace,
+        ySpace - _title->sizeYPx() - _key->sizeYPx()
+    );
 
     // In the x-direction, center title and key with the center of the plot.
     // Title is at the top of the chart.

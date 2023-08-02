@@ -26,14 +26,16 @@ GrCityChart::GrCityChart (
     _y_space__px{ySpace}
 {   
     _clearing_vector = createVectorForClearingGrid();
-
+    
     // Plot's top left corner's x aligns with topLeftCornerXPx.
     // Plot is below the title and the key.
-    _plot->setTopLeft(topLeftCornerXPx, topLeftCornerYPx + _title->sizeYPx() + _key->sizeYPx());
-
     // Plot's allowable x-space is all the space given by xSpace.
     // Plot's allowable y-space is decreased by the title and key.
-    _plot->setXYSpacePx(xSpace, _y_space__px - _title->sizeYPx() - _key->sizeYPx());
+    _plot->setPlot(
+        topLeftCornerXPx,
+        topLeftCornerYPx + _title->sizeYPx() + _key->sizeYPx(),
+        xSpace,
+        _y_space__px - _title->sizeYPx() - _key->sizeYPx());
 
     _title->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftCornerYPx);
 
