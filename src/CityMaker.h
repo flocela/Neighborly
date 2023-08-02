@@ -8,7 +8,9 @@
 
 class CityMaker
 {
+
 protected:
+
     CityMaker () = default;
     CityMaker (const CityMaker& o) = default;
     CityMaker (CityMaker&& o) noexcept = default;
@@ -16,6 +18,7 @@ protected:
     CityMaker& operator= (CityMaker&& o) noexcept = default;
 
 public:
+
     virtual ~CityMaker () noexcept = default;
     
     virtual std::unique_ptr<City> makeCity (

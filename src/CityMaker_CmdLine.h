@@ -6,6 +6,7 @@
 
 class CityMaker_CmdLine: public CityMaker
 {
+
 public:
 
     CityMaker_CmdLine (const UI& ui);
@@ -24,8 +25,12 @@ public:
     override;
 
 private:
+
     const UI& _ui;
-    int _fall_back = 0;
+
+    // If the user can not choose a city from the menu, then choose the first city.
+    int _fall_back = 0; 
+
     std::string _choosing_city_failure = "Could not determine the city type, will be using .";
 };
 

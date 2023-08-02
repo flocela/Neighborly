@@ -13,15 +13,10 @@ unique_ptr<City> CityMaker_CmdLine::makeCity (
     int maxDeltaY
 )
 {
-    vector<string> namesOfCityFactories = {};
-    for (auto& factory : cityFactories)
-    {
-        namesOfCityFactories.push_back(factory->cityType());
-    }
-
+    // The current city choice is the made by the factory at index zero in cityFactories.
     int cityChoice = 0;
 
-    // If there is only one city choice, then force user to choose that one.
+    // If there is only one city factory, then force user to choose that one.
     if (cityFactories.size() == 1)
     {
         cout << "\nWell, there's only one type of city, so your city type will be " <<
@@ -29,7 +24,16 @@ unique_ptr<City> CityMaker_CmdLine::makeCity (
     }
     else
     {
-        // Use a menu to ask user to choose city
+        // Create vector of city type names to display to the user.
+        vector<string> namesOfCityFactories = {};
+        for (auto& factory : cityFactories)
+        {
+            namesOfCityFactories.push_back(factory->cityType());
+        }
+
+        // Use a menu to ask user to choose city.
+
+        // Create response string in the case that user can not give a proper response to the menu.
         string failureResponseWithBackupCity = _choosing_city_failure;
         failureResponseWithBackupCity.insert(49, namesOfCityFactories[_fall_back]);
 
