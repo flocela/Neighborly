@@ -45,7 +45,7 @@ TEST_CASE("PlotB:: create basic PlotB")
     REQUIRE(xSpacePx == plotB.getXSpacePx());
     REQUIRE(ySpacePx == plotB.getYSpacePx());
 
-    // need unit sizes and plot sizes to test if increasing the unit sizes would
+    // Need unit sizes and plot sizes to test if increasing the unit sizes would
     // make the plot exceed its allowable space
     // PlotB uses the same unit size in both directions.
     int unitSizeXPx = plotB.getXUnitSizePx();
@@ -130,7 +130,7 @@ TEST_CASE("plotB:: setTopLeft")
     REQUIRE(dotSizePx == plotB.getDotSizePx());
 }
 
-TEST_CASE("PlotB:: setXYSpacePx")
+TEST_CASE("PlotB:: change available space")
 {
     int topLeftXPx = 0;
     int topLeftYPx = 0;
@@ -174,10 +174,10 @@ TEST_CASE("PlotB:: setXYSpacePx")
     xSpacePx = plotB.getXSpacePx();
     ySpacePx = plotB.getYSpacePx();
 
-    // setXYSpacePx
-    int newXPx = 500;
-    int newYPx = 250;
-    plotB.setPlot(topLeftXPx, topLeftYPx, newXPx, newYPx);
+    // change the available space
+    int newSpaceXPx = 500;
+    int newSpaceYPx = 250;
+    plotB.setPlot(topLeftXPx, topLeftYPx, newSpaceXPx, newSpaceYPx);
 
     int unitSizeXPx = plotB.getXUnitSizePx();
     int unitSizeYPx = plotB.getYUnitSizePx();
@@ -186,20 +186,21 @@ TEST_CASE("PlotB:: setXYSpacePx")
     int sizeYPx = plotB.sizeYPx();
     REQUIRE(topLeftXPx == plotB.getTopLeftXPx());
     REQUIRE(topLeftYPx == plotB.getTopLeftYPx());
-    REQUIRE(newXPx == plotB.getXSpacePx());
-    REQUIRE(newYPx == plotB.getYSpacePx());
+    REQUIRE(newSpaceXPx == plotB.getXSpacePx());
+    REQUIRE(newSpaceYPx == plotB.getYSpacePx());
 
     REQUIRE( xSpacePx > plotB.sizeXPx());
     REQUIRE( ySpacePx > plotB.sizeYPx());
 
     // PlotB uses the same unit size in both directions.
     // Increasing the unit size will make one or both of the
-    // axes too long to fit in XYSpace.
+    // axes too long to fit in new available space.
     // For instance increasing the unit size by one will increase the plotSizeY
-    // by 1 x (maxY - minY) which may be over the allowable size ySpacePx. 
-    int increasedXSize = sizeXPx + ( (maxX-minX + startOffsetMultiplier + endOffsetMultiplier) * 1);
-    int increasedYSize = sizeYPx + ( (maxY-minY + startOffsetMultiplier + endOffsetMultiplier) * 1);
-    int isWithinAllowable = (increasedXSize <= newXPx) && (increasedYSize <= newYPx);
+    // by 1 x (maxY - minY + startOffsetMultiplier + endOffsetMultiplier) which may be over the
+    // allowable size ySpacePx. 
+    int increasedXSize = sizeXPx + ( (maxX-minX + startOffsetMultiplier + endOffsetMultiplier) );
+    int increasedYSize = sizeYPx + ( (maxY-minY + startOffsetMultiplier + endOffsetMultiplier) );
+    int isWithinAllowable = (increasedXSize <= newSpaceXPx) && (increasedYSize <= newSpaceYPx);
     REQUIRE( isWithinAllowable == false);
 }
 

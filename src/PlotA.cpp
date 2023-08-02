@@ -200,7 +200,6 @@ pair<int, int> PlotA::calcUnitSizeXAndYPx () const
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
     yUnitSize = max(yUnitSize, _min_unit__px);
-
     return {xUnitSize, yUnitSize};
 }
 

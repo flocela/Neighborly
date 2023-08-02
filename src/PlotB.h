@@ -138,10 +138,8 @@ private:
     mutable bool _printed_axes = false;
 
     // For the x and y axes: Use the given allowable space and the required number of
-    // units in the axis to determine the unit size. Each unit size must be equal to or larger
-    // than _min_unit_size.
-    // Returns a pair where the first value is the unit size in the x direction, and the second
-    // value is the unit size in the y direction. 
+    // units in the axis to determine the unit size. Choose the smaller unit size.
+    // The unit size must be equal or greater to _min_unit_size__px.
     int calcUnitSizePx () const;
 
     // Returns width of square dot. The width is 1/3 the smaller of _unit_x__px and _unit_y__px.

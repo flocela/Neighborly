@@ -1,6 +1,7 @@
 #include "catch.hpp"
 #include "../src/PlotA.h"
 
+using namespace std;
 
 TEST_CASE("PlotA:: create basic PlotA")
 {
@@ -57,16 +58,14 @@ TEST_CASE("PlotA:: create basic PlotA")
     REQUIRE( (0.65 * ySpacePx) < plotA.sizeYPx());
     REQUIRE( ySpacePx > plotA.sizeYPx());
 
-    // increasing one or both of the unitSizes will make one or both of the
-    // axes too long to fit in XYSpace.
-    // for instance increasing the unitSizeXPx by one will increase the plotSizeY
-    // by 1 x (maxY - minY) which would be over the allowable size ySpacePx
-    // since the unit sizes' odd/evenness has to match, an increase of one in the
-    // y unit size would result in an increase by one in the x unit size.
-    int increasedXSize = plotSizeX + ( (maxX-minX) * 1);
-    int increasedYSize = plotSizeY + ( (maxY-minY) * 1);
-    int isWithinAllowable = (increasedXSize <= xSpacePx) && (increasedYSize <= ySpacePx);
-    REQUIRE( isWithinAllowable == false);
+    // Increasing the unitSizes will make the axes too long to fit in available space.
+    // For instance increasing the unit size in the y-direction by one will increase the plotSizeY
+    // by 1 x (maxY - minY + startOffsetMultiplier + endOffsetMultiplier). That would
+    // would make the axis larger than the allowable space, ySpacePx.
+    int increasedXSize = plotSizeX + ( (maxX - minX + startOffsetMultiplier + endOffsetMultiplier) );
+    int increasedYSize = plotSizeY + ( (maxY - minY + startOffsetMultiplier + endOffsetMultiplier) );
+    REQUIRE(increasedXSize > xSpacePx);
+    REQUIRE(increasedYSize > ySpacePx);
 }
 
 TEST_CASE("PlotA:: setTopLeft")
@@ -114,11 +113,11 @@ TEST_CASE("PlotA:: setTopLeft")
     int unitSizeYPx = plotA.getYUnitSizePx();
     int dotSizePx = plotA.getDotSizePx();
 
-    // setTopLeft, don't change available space
+    // Changing the top left corner location doesn't change available space
     int newXPx = 100;
     int newYPx = 100;
     plotA.setPlot(newXPx, newYPx, xSpacePx, ySpacePx);
-
+    
     REQUIRE(newXPx == plotA.getTopLeftXPx());
     REQUIRE(newYPx == plotA.getTopLeftYPx());
     REQUIRE(xSpacePx == plotA.getXSpacePx());
@@ -128,7 +127,7 @@ TEST_CASE("PlotA:: setTopLeft")
     REQUIRE(dotSizePx == plotA.getDotSizePx());
 }
 
-TEST_CASE("PlotA:: setXYSpacePx")
+TEST_CASE("PlotA:: change available space")
 {
     int topLeftXPx = 0;
     int topLeftYPx = 0;
@@ -170,10 +169,15 @@ TEST_CASE("PlotA:: setXYSpacePx")
     xSpacePx = plotA.getXSpacePx();
     ySpacePx = plotA.getYSpacePx();
 
-    // setXYSpacePx
-    int newXPx = 500;
-    int newYPx = 250;
-    plotA.setPlot(topLeftXPx, topLeftYPx, newXPx, newYPx);
+    // Changing available space doesn't change top left corner
+    int newSpaceXPx = 500;
+    int newSpaceYPx = 250;
+    plotA.setPlot(topLeftXPx, topLeftYPx, newSpaceXPx, newSpaceYPx);
+    
+    REQUIRE(topLeftXPx == plotA.getTopLeftXPx());
+    REQUIRE(topLeftYPx == plotA.getTopLeftYPx());
+    REQUIRE(newSpaceXPx == plotA.getXSpacePx());
+    REQUIRE(newSpaceYPx == plotA.getYSpacePx());
 
     int unitSizeXPx = plotA.getXUnitSizePx();
     int unitSizeYPx = plotA.getYUnitSizePx();
@@ -181,27 +185,21 @@ TEST_CASE("PlotA:: setXYSpacePx")
     int sizeXPx = plotA.sizeXPx();
     int sizeYPx = plotA.sizeYPx();
 
-    REQUIRE(topLeftXPx == plotA.getTopLeftXPx());
-    REQUIRE(topLeftYPx == plotA.getTopLeftYPx());
-    REQUIRE(newXPx == plotA.getXSpacePx());
-    REQUIRE(newYPx == plotA.getYSpacePx());
-
-    // plot should take up a large part of the available space given
-    REQUIRE( (0.65 * newXPx) < plotA.sizeXPx());
+    // Plot should take up a large part of the available space given.
+    REQUIRE( (0.65 * newSpaceXPx) < plotA.sizeXPx());
     REQUIRE( xSpacePx > plotA.sizeXPx());
     REQUIRE( (0.65 * ySpacePx) < plotA.sizeYPx());
     REQUIRE( ySpacePx > plotA.sizeYPx());
 
-    // increasing one or both of the unitSizes will make one or both of the
-    // axes too long to fit in XYSpace.
-    // for instance increasing the unitSizeXPx by one will increase the plotSizeY
-    // by 1 x (maxY - minY) which would be over the allowable size ySpacePx
-    // since the unit sizes' odd/evenness has to match, an increase of one in the
-    // y unit size would result in an increase by one in the x unit size.
-    int increasedXSize = sizeXPx + ( (maxX-minX) * 1);
-    int increasedYSize = sizeYPx + ( (maxY-minY) * 1);
-    int isWithinAllowable = (increasedXSize <= newXPx) && (increasedYSize <= newYPx);
-    REQUIRE( isWithinAllowable == false);
+    // Increasing the unitSizes will make the axes too long to fit in the new available spaces.
+    // For instance increasing the unit size in the y-direction by one will increase the plotSizeY
+    // by 1 x (maxY - minY + startOffsetMultiplier + endOffsetMultiplier). That would
+    // would make the axis larger than the allowable space, newSpaceYPx.
+    int increasedXSize = sizeXPx + (maxX - minX + startOffsetMultiplier + endOffsetMultiplier);
+    int increasedYSize = sizeYPx + (maxY - minY + startOffsetMultiplier + endOffsetMultiplier);
+
+    REQUIRE(increasedXSize > newSpaceXPx);
+    REQUIRE(increasedYSize > newSpaceYPx);
 }
 
 
