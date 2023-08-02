@@ -22,11 +22,11 @@ vector<uint8_t> AxisFormat::textColor () const { return _text_color;}
 
 vector<uint8_t> AxisFormat::textBackgroundColor () const { return _text_background_color;}
 
+vector<uint8_t> AxisFormat::axisColor () const {return _axis_color;}
+
 vector<uint8_t> AxisFormat::tickColor () const { return _tick_color;}
 
-vector<uint8_t> AxisFormat::tickBackgroundColorMaj () const { return _tick_background_color_maj;}
-
-vector<uint8_t> AxisFormat::tickBackgroundColorMin () const { return _tick_background_color_min;}
+vector<uint8_t> AxisFormat::tickLineBackgroundColor () const { return _tick_line_background_color;}
 
 int AxisFormat::majTickLengthOutsideChartPx () const
 {
@@ -74,15 +74,20 @@ void AxisFormat::setBackgroundTickLines (bool show)
 {
     _include_background_tick_marks = show;
 }
+
+void AxisFormat::setTextColor (vector<uint8_t> color)
+{
+    _text_color = color;
+}
         
 void AxisFormat::setTextBackgroundColor (vector<uint8_t> color)
 {
     _text_background_color = color;
 }
 
-void AxisFormat::setTextColor (vector<uint8_t> color)
+void AxisFormat::setAxisColor (std::vector<uint8_t> color)
 {
-    _text_color = color;
+    _axis_color = color;
 }
 
 void AxisFormat::setTickColor (vector<uint8_t> color)
@@ -90,12 +95,7 @@ void AxisFormat::setTickColor (vector<uint8_t> color)
     _tick_color = color;
 }
 
-void AxisFormat::setTickBackgroundColorMaj (vector<uint8_t> color)
+void AxisFormat::setTickLineBackgroundColor (vector<uint8_t> color)
 {
-    _tick_background_color_maj = color;
-}
-
-void AxisFormat::setTickBackgroundColorMin (vector<uint8_t> color)
-{
-    _tick_background_color_min = color;
+    _tick_line_background_color = color;
 }

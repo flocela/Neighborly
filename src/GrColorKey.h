@@ -69,8 +69,8 @@ private:
     // column_width is the box length + box spacer + longest label + column border * 2.
     int _column_width;
 
-    std::vector<uint8_t> _text_color = _the_color_rgba[Color::text];
-    std::vector<uint8_t> _text_background_color = _the_color_rgba[Color::text_background];
+    std::vector<uint8_t> _text_color = _the_color_rgba[Color::gray100];
+    std::vector<uint8_t> _text_background_color = _the_color_rgba[Color::gray900];
 
     void setAttributes ();
 };

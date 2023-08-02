@@ -66,6 +66,8 @@ public:
     // new set of Points with the new data from print().
     std::vector<Point> _clearing_vector;
 
+    Color _absent_color = Color::gray850;
+
     // Each Point represents a house.
     // If a house is empty it gets a default color. If it is occupied, its color depends on the 
     // resident's group id and happiness value.

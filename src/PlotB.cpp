@@ -204,7 +204,7 @@ int PlotB::calcUnitSizePx () const
 int PlotB::calcDotSizePx () const
 {
     // Dot size based on unit size
-    int dotSize = _unit__px/3;
+    int dotSize = _unit__px/2;
 
     // Make dotSize odd.
     dotSize = (dotSize%2==0)? dotSize+1 : dotSize;

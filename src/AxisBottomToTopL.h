@@ -81,10 +81,10 @@ class AxisBottomToTopL
         void addVerticalLine (std::vector<Rect>& rects) const;
 
         void addTicksAndLabels (
-            std::vector<Rect>& horizLinesMaj,
-            std::vector<Rect>& horizLinesMin,
-            std::vector<Rect>& rects,
-            std::vector<TextRect>& texts) const;
+            std::vector<Rect>& backgroundLinesMaj, // horizontal lines that cross the chart
+            std::vector<Rect>& backgroundLinesMin, // horizontal lines that cross the chart
+            std::vector<Rect>& ticks,
+            std::vector<TextRect>& texts) const; // number next to tick
 
         int calcMinTickSpacing () const;
 

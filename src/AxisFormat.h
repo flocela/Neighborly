@@ -1,5 +1,6 @@
 #ifndef AXIS_FORMAT_H
 #define AXIS_FORMAT_H
+
 #include <vector>
 #include "Color.h"
 #include "Letter.h"
@@ -21,35 +22,36 @@ public:
     double labelWidthMultiplier () const;
     std::vector<uint8_t> textColor () const;
     std::vector<uint8_t> textBackgroundColor () const;
+    std::vector<uint8_t> axisColor () const;
     std::vector<uint8_t> tickColor () const;
-    std::vector<uint8_t> tickBackgroundColorMaj () const;
-    std::vector<uint8_t> tickBackgroundColorMin () const;
+    std::vector<uint8_t> tickLineBackgroundColor () const;
 
     bool showBackgroundTickLines () const { return _include_background_tick_marks;}
 
-    // label letter height will be set to 1, if size is less than 1.
+    // Label letter height is the letter height. It will be set to 1, if size is less than 1.
     void setLabelLetterHeight (int size);
 
-    // label space, space below letter, is set to zero if space is less than 1.
+    // Label space is the space below letter. It is set to zero if space is less than 1.
     void setLabelSpacePx (int space);
     void setLabelWidthMultiplier (double widthMultiplier);
 
-    // maj tick length is set to zero if length is less than zero.
+    // Major tick length is the longer tick length. It is set to zero if length is less than zero.
     void setMajTickLengthPx (int length);
 
-    // min tick length is set to zero if length is less than zero.
+    // Minor tick length is the shorter tick length. It is set to zero if length is less than zero.
     void setMinTickLengthPx (int length);
 
-    // tick length inside chart is set to zero if less than zero.
+    // A small portion of the tick crosses to inside the chart. It is set to zero if less than zero.
     void setTickLengthInsideChartPx (int length);
 
+    // Background lines extend beyond the tick into the chart area.
     void setBackgroundTickLines (bool show);
     
-    void setTextBackgroundColor (std::vector<uint8_t> color);
     void setTextColor (std::vector<uint8_t> color);
+    void setTextBackgroundColor (std::vector<uint8_t> color);
+    void setAxisColor (std::vector<uint8_t> color);
     void setTickColor (std::vector<uint8_t> color);
-    void setTickBackgroundColorMaj (std::vector<uint8_t> color);
-    void setTickBackgroundColorMin (std::vector<uint8_t> color);
+    void setTickLineBackgroundColor (std::vector<uint8_t> color);
 
 private:
     int _axis_thickness__px{1};
@@ -59,16 +61,16 @@ private:
     int _maj_tick_length__px{10};
     int _min_tick_length__px{4};
 
-    std::vector<uint8_t> _text_color = _the_color_rgba[Color::text];
-    std::vector<uint8_t> _text_background_color = _the_color_rgba[Color::text_background];
-    std::vector<uint8_t> _tick_color = _the_color_rgba[Color::grid];
-    std::vector<uint8_t> _tick_background_color_maj = _the_color_rgba[Color::tick_background_maj];
-    std::vector<uint8_t> _tick_background_color_min = _the_color_rgba[Color::tick_background_min];
+    std::vector<uint8_t> _text_color = _the_color_rgba[Color::gray200];
+    std::vector<uint8_t> _text_background_color = _the_color_rgba[Color::gray900];
+    std::vector<uint8_t> _axis_color = _the_color_rgba[Color::gray100];
+    std::vector<uint8_t> _tick_color = _the_color_rgba[Color::gray100];
+    std::vector<uint8_t> _tick_line_background_color = _the_color_rgba[Color::gray800];
 
     // _tick_length_inside_chart__px does not include thickness of axis
     int _tick_length_inside_chart__px = 2; 
 
-    // extend tick marks horizontally across chart
+    // Extend tick marks horizontally across chart
     bool _include_background_tick_marks = false;   
 };
 

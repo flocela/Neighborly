@@ -54,17 +54,18 @@ void AxisBottomToTopL::print (Renderer* renderer) const
 {
     std::vector<Rect> horizLinesMaj = {};
     std::vector<Rect> horizLinesMin = {};
-    std::vector<Rect> rects = {};
+    std::vector<Rect> ticks = {};
     std::vector<TextRect> texts = {};
 
-    addVerticalLine(rects);
-    addTicksAndLabels (horizLinesMaj, horizLinesMin, rects, texts);
+    addVerticalLine(ticks);
+    addTicksAndLabels (horizLinesMaj, horizLinesMin, ticks, texts);
+
     if (_axis_format.showBackgroundTickLines())
     {
-        renderer->fillBlocks(horizLinesMaj, _axis_format.tickBackgroundColorMaj());
-        renderer->fillBlocks(horizLinesMin, _axis_format.tickBackgroundColorMin());
+        renderer->fillBlocks(horizLinesMaj, _axis_format.tickLineBackgroundColor());
+        renderer->fillBlocks(horizLinesMin, _axis_format.tickLineBackgroundColor());
     }
-    renderer->fillBlocks(rects, _the_color_rgba[Color::grid]);
+    renderer->fillBlocks(ticks, _axis_format.tickColor());
     renderer->renderTexts(texts);
 }
 
@@ -119,9 +120,9 @@ void AxisBottomToTopL::addVerticalLine (std::vector<Rect>& rects) const
 }
         
 void AxisBottomToTopL::addTicksAndLabels (
-    std::vector<Rect>& horizLinesMaj,
-    std::vector<Rect>& horizLinesMin,
-    std::vector<Rect>& rects, 
+    std::vector<Rect>& backgroundLinesMaj,
+    std::vector<Rect>& backgroundLinesMin,
+    std::vector<Rect>& ticks, 
     std::vector<TextRect>& texts
 ) const
 {   
@@ -154,7 +155,7 @@ void AxisBottomToTopL::addTicksAndLabels (
         _reverse_axis.getTickThichness__px()
     };
 
-    // background line corresponding to major tick. Background lines run across the chart.
+    // background line corresponding to minor tick. Background lines run across the chart.
     Rect horizLineRectMin{
         minTickXPx,
         curPixels.first,
@@ -163,7 +164,7 @@ void AxisBottomToTopL::addTicksAndLabels (
     };
 
     // Rect for major tick
-    Rect majRect{
+    Rect majTick{
         majTickXPx,
         curPixels.first,
         _axis_format.majTickLengthPx(),
@@ -171,7 +172,7 @@ void AxisBottomToTopL::addTicksAndLabels (
     };
 
     // Rect for minor tick
-    Rect minRect{
+    Rect minTick{
         minTickXPx,
         curPixels.first,
         _axis_format.minTickLengthPx(),
@@ -187,24 +188,24 @@ void AxisBottomToTopL::addTicksAndLabels (
         // If _maj_tick_spacing is a multiple of curVal, then this is a major tick.
         if (curVal % _maj_tick_spacing == 0)
         {
-            majRect._y__px = curPixels.first;
+            majTick._y__px = curPixels.first;
             curText._text = std::to_string(curVal);
             curText._y_px = curPixels.first;
 
-            rects.push_back(majRect);
+            ticks.push_back(majTick);
             texts.push_back(curText);
 
             horizLineRectMaj._y__px = curPixels.first;
-            horizLinesMaj.push_back(horizLineRectMaj);
+            backgroundLinesMaj.push_back(horizLineRectMaj);
         }
         // If _min_tick_spacing is a multiple of curVal, then this is a minor tick.
         else if (curVal % _min_tick_spacing == 0)
         {
-            minRect._y__px = curPixels.first;
-            rects.push_back(minRect);
+            minTick._y__px = curPixels.first;
+            ticks.push_back(minTick);
 
             horizLineRectMin._y__px = curPixels.first;
-            horizLinesMin.push_back(horizLineRectMin);
+            backgroundLinesMin.push_back(horizLineRectMin);
         }
 
         ++curVal;

@@ -77,10 +77,10 @@ vector<Point> GrCityChart::createVectorOfPoints (const ResPerHouse& residentPerH
         // Point color
         Color color; 
 
-        // If house is empty then color is Color::absent.
+        // If house is empty then color absent color.
         if (!residentPerHouse.contains(house))
         {
-            color = Color::absent;
+            color = _absent_color;
         }
         else
         {
@@ -115,7 +115,7 @@ vector<Point> GrCityChart::createVectorForClearingGrid ()
     for (auto const& x : _coordinate_per_house)
     {
         Coordinate coord = x.second;
-        points.emplace_back(Point{(double)coord.getX(), (double)coord.getY(), Color::absent});
+        points.emplace_back(Point{(double)coord.getX(), (double)coord.getY(), _absent_color});
     }
     return points;
 }

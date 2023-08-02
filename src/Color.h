@@ -19,13 +19,12 @@ enum class Color {
     yellow_neutral,
     yellow_unhappy,
     yellow_happy, 
-    absent,
-    grid,
-    text,
-    text_background,
-    background,
-    tick_background_maj,
-    tick_background_min
+    gray100,
+    gray200,
+    gray700,
+    gray800,
+    gray850,
+    gray900
 };
 
 enum class BaseColor {red, blue, green, yellow};
@@ -172,13 +171,13 @@ inline std::map<Color, std::vector<uint8_t>> _the_color_rgba = {
     {Color::yellow_neutral, _colorrs_map[BaseColor::yellow][Mood::neutral].rgba},
     {Color::yellow_happy, _colorrs_map[BaseColor::yellow][Mood::happy].rgba},
     {Color::yellow_unhappy, _colorrs_map[BaseColor::yellow][Mood::unhappy].rgba},
-    {Color::absent,  {40, 40, 40, 255}},
-    {Color::grid,{210, 215, 211, 255}},
-    {Color::text,{200, 200, 200, 220}},
-    {Color::text_background,{20, 20, 20, 255}},
-    {Color::background,{105, 105, 105, 255}},
-    {Color::tick_background_maj, {40, 40, 40, 255}},
-    {Color::tick_background_min, {20, 20, 20, 255}},
+    {Color::gray100,  {245, 245, 245, 255}},
+    {Color::gray100,{238, 238, 238, 255}},
+    {Color::gray200,{200, 200, 200, 220}},
+    {Color::gray700,{97, 97, 97, 255}},
+    {Color::gray800,{66, 66, 66, 255}},
+    {Color::gray850,{50, 50, 50, 255}},
+    {Color::gray900, {21, 21, 21, 255}},
 };
 
 #endif
