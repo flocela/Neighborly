@@ -1,11 +1,10 @@
 #ifndef CITYFACTORY_H
 #define CITYFACTORY_H
 
+#include <memory>
+
 #include "City.h"
 #include "UI.h"
-#include <map>
-#include <string>
-#include <memory>
 
 class CityFactory
 {
@@ -19,7 +18,7 @@ protected:
 public:
     virtual ~CityFactory () noexcept = default;
     
-    // returns the name of the type of cities that are produced.
+    // Returns the name of the type of city that is produced.
     virtual std::string cityType () const = 0; 
     
     virtual std::unique_ptr<City> createCity (
