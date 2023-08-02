@@ -139,7 +139,14 @@ void GrColorKey::setAttributes ()
             BaseColor baseColorForGroupId = _b_color_per_groupId.at(groupId);
             
             stringstream labelStream;
-            labelStream << "Group: " << to_string(groupId) << " " << mood;
+            labelStream << "Group: " << to_string(groupId);;
+
+            // If there is only one mood, then there's no need to name it.
+            // Group name alone is enough.
+            if (_moods.size() > 1)
+            {
+                labelStream << " " << mood;
+            }
 
             string label = labelStream.str();
 
