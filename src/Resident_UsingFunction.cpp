@@ -1,6 +1,6 @@
 #include "Resident_UsingFunction.h"
 #include "ResidentTemplate_UsingFunction.h"
-
+#include <iostream>
 using namespace std;
 
 Resident_UsingFunction::Resident_UsingFunction (

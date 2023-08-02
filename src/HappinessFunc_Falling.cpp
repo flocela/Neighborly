@@ -13,6 +13,7 @@ HappinessFunc_Falling::HappinessFunc_Falling (
     _happ_at_zero_diversity{happinessAtZeroDiversity},
     _happ_at_100_diversity{happinessAt100Diversity}
 {
+
     if (_happ_at_zero_diversity < 0.0 || 
         _happ_at_zero_diversity > 100.0 )
     {
@@ -29,8 +30,7 @@ HappinessFunc_Falling::HappinessFunc_Falling (
     {
         throw invalid_argument("happinessAtZeroDiversity must be"
         " larger than happinessAt100Diversity.");
-    }
-
+    } 
 }
 
 double HappinessFunc_Falling::getLargestValue () const

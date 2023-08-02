@@ -65,16 +65,16 @@ ResidentsGroupInfo ResidentsMaker_CmdLine::makeResidents (
             _available_colors[ii]
             );
 
+        resGroupInfo._res_template_per_group_id.insert({
+            newResidents[0]->getGroupId(),
+            newResidents[0]->getTemplate()});
+
         // Move residents to resGroupInfo._residents.
         for (auto& r: newResidents)
             resGroupInfo._residents.emplace_back(move(r));
-
         // ResGroupInfo also keeps track of the type of resident templates per group id.
-        resGroupInfo._res_template_per_group_id
-            .insert({newResidents[0]->getGroupId(), newResidents[0]->getTemplate()});
-
+        
         numOfResidentsCreated += newResidents.size();
-
     }
     
     return resGroupInfo;

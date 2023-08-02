@@ -3,7 +3,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <iomanip>
-
+#include <iostream>
 using namespace std;
 
 ResidentTemplate::ResidentTemplate (

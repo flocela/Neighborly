@@ -101,6 +101,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
             )
         ));
     }
+    
     return residents;
 }
 
