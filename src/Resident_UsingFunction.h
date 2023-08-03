@@ -33,7 +33,7 @@ protected:
         const std::unordered_set<const Resident*>& neighbors,
         int numOfAdjacentHouses) const override;
     
-    std::string implimentToStrBasic () const override; 
+    std::string implimentGetType () const override; 
 
 private:
     std::unique_ptr<HappinessFunc> _hap_func;

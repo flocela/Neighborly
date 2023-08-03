@@ -40,8 +40,14 @@ public:
     virtual double getLeastPossibleHappiness () const = 0;
     int getID() const;
     virtual std::unique_ptr<const ResidentTemplate> getTemplate () const = 0;
+
+    // Returns information identifying and describing the resident, including: id, group id,
+    // allowed movement, current happiness, happiness goal, and information on the resident's
+    // type.
     std::string toStr () const;
-    std::string toStrType () const; // TODO delete toStrType
+
+    // Returns information describing the resident's type.
+    std::string getType () const;
 
     bool operator< (const Resident& other) const;
     
@@ -56,7 +62,7 @@ protected:
         int numOfAdjacentHouses
     ) const = 0;
 
-    virtual std::string implimentToStrBasic () const = 0;
+    virtual std::string implimentGetType () const = 0;
 
 private:
     int    _id;

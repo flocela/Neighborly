@@ -69,14 +69,14 @@ string Resident::toStr () const
     returnStream << fixed << setprecision(2) << _curr_happiness;
     returnStream << " /";
     returnStream << fixed << setprecision(2) << _happiness_goal;
-    returnStream << implimentToStrBasic();
+    returnStream << implimentGetType();
 
     return returnStream.str();
 }
 
-string Resident::toStrType () const
+string Resident::getType () const
 {
-    return implimentToStrBasic();
+    return implimentGetType();
 }
 
 bool Resident::operator< (const Resident& other) const

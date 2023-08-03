@@ -22,7 +22,7 @@ double Resident_UsingFunction::getLeastPossibleHappiness () const
     return _hap_func->getSmallestValue();
 }
 
-std::string Resident_UsingFunction::implimentToStrBasic () const
+std::string Resident_UsingFunction::implimentGetType () const
 {
     string funcType = "Resident Using Function: "; 
     return funcType + _hap_func->toStrBasic();
@@ -50,6 +50,6 @@ std::unique_ptr<const ResidentTemplate> Resident_UsingFunction::getTemplate () c
     return make_unique<const ResidentTemplate_UsingFunction>(
         getAllowedMovementDistance(),
         getHappinessGoal(),
-        toStrType()
+        getType()
     );
 }
