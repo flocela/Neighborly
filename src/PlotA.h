@@ -11,6 +11,7 @@
 // Plot contains the x and y axis, their labels, and the data points inside the graph.
 // x-axis runs horizontally on the bottom of the plot (left to right).
 // y-axis runs vertically on the left (bottom to top).
+// The unit size in the x and y directions is the same.
 class PlotA: public Plot
 {
 
