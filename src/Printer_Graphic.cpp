@@ -186,7 +186,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
         _coordinates_per_house,
         _colors,
         make_unique<Title_Basic>(_chart_title_letter,_city_chart_title),
-        make_unique<GrColorKey>(_chart_key_letter, _colors, moods),
+        make_unique<GrColorKey_Basic>(_chart_key_letter, _colors, moods),
         make_unique<PlotB>(cityPlotFormat, minXCoord, maxXCoord, minYCoord, maxYCoord),
         _side_borders__px,  // top left corner of chart, x-value
         topLeftYPx,         // top left corner of chart, y-value
@@ -220,7 +220,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
         _colors,
         moods,
         make_unique<Title_Basic>(_chart_title_letter, _div_chart_title),
-        make_unique<GrColorKey>(_chart_key_letter, _colors, moods),
+        make_unique<GrColorKey_Basic>(_chart_key_letter, _colors, moods),
         make_unique<PlotA>(
             rightColFormat,
             0,                // starting run number
@@ -259,7 +259,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
     return make_unique<GrHapChart> (
         _colors,
         make_unique<Title_Basic>( _chart_title_letter, _hap_chart_title),
-        make_unique<GrColorKey>( _chart_key_letter, _colors, moods),
+        make_unique<GrColorKey_Basic>( _chart_key_letter, _colors, moods),
         make_unique<PlotA>(
             rightColFormat,
             0,               // starting run number

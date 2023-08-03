@@ -21,7 +21,7 @@ public:
         std::unordered_map<int, BaseColor> colors,
         std::set<Mood> moods,
         std::unique_ptr<Title> title,
-        std::unique_ptr<ColorKey> colorKey,
+        std::unique_ptr<GrColorKey> colorKey,
         std::unique_ptr<Plot> plot,
         int topLeftXPx,
         int topLeftYPx,
@@ -51,7 +51,7 @@ private:
     std::unordered_map<int, BaseColor> _b_color_per_group_id;
     std::set<Mood> _moods;
     std::unique_ptr<Title> _title;
-    std::unique_ptr<ColorKey> _key;
+    std::unique_ptr<GrColorKey> _key;
     std::unique_ptr<Plot> _plot;
 
     // used so that key is only prited once

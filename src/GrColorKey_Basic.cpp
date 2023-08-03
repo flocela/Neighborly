@@ -3,11 +3,11 @@
 #include <iostream>
 #include <sstream>
 
-#include "GrColorKey.h"
+#include "GrColorKey_Basic.h"
 
 using namespace std;
 
-GrColorKey::GrColorKey (
+GrColorKey_Basic::GrColorKey_Basic (
     int topCenterXPx,
     int topCenterYPx,
     Letter labelLetter,
@@ -27,7 +27,7 @@ GrColorKey::GrColorKey (
     setAttributes();
 }
 
-GrColorKey::GrColorKey (
+GrColorKey_Basic::GrColorKey_Basic (
     Letter labelLetter,
     std::unordered_map<int, BaseColor> colors,
     std::set<Mood> moods
@@ -39,7 +39,7 @@ GrColorKey::GrColorKey (
    setAttributes(); 
 }
 
-void GrColorKey::print (Renderer* renderer) const
+void GrColorKey_Basic::print (Renderer* renderer) const
 {   
     // Prints each color and corresponding label in _label_per_color.
     int num_of_columns = _label_per_color.size();
@@ -88,33 +88,33 @@ void GrColorKey::print (Renderer* renderer) const
     }
 }
 
-int GrColorKey::sizeXPx () const
+int GrColorKey_Basic::sizeXPx () const
 {
     return _b_color_per_groupId.size() * _moods.size() * _column_width;
 }
 
-int GrColorKey::sizeYPx () const
+int GrColorKey_Basic::sizeYPx () const
 {
     return _label_letter.getHeightIncLSpace();
 }
 
 
-void GrColorKey::setTextBackgroundColor (vector<uint8_t> color)
+void GrColorKey_Basic::setTextBackgroundColor (vector<uint8_t> color)
 {
     _text_background_color = color;
 }
 
-void GrColorKey::setTextColor (vector<uint8_t>  color)
+void GrColorKey_Basic::setTextColor (vector<uint8_t>  color)
 {
     _text_color = color;
 }
 
-void GrColorKey::setTopCenter (int xPx, int yPx) {
+void GrColorKey_Basic::setTopCenter (int xPx, int yPx) {
     _top_center_x__px = xPx;
     _top_center_y__px = yPx;
 }
 
-void GrColorKey::setAttributes ()
+void GrColorKey_Basic::setAttributes ()
 {
     // Create vector of groupIds, then sort vector.
     std::vector<int> groupIds;

@@ -4,7 +4,7 @@ using namespace std;
 GrHapChart::GrHapChart (
         std::unordered_map<int, BaseColor> colors,
         std::unique_ptr<Title> title,
-        std::unique_ptr<ColorKey> colorKey,
+        std::unique_ptr<GrColorKey> colorKey,
         std::unique_ptr<Plot> plot,
         int topLeftXPx,
         int topLeftYPx,
