@@ -41,7 +41,7 @@ GrColorKey_Basic::GrColorKey_Basic (
 
 void GrColorKey_Basic::print (Renderer* renderer) const
 {   
-    // Prints each color and corresponding label in _label_per_color.
+    // Prints each color box and corresponding label in _label_per_color.
     int num_of_columns = _label_per_color.size();
     int top_of_label_y__px = _top_center_y__px;
     int top_of_box_y__px = _top_center_y__px + _label_letter.letterHeight()/2 - _box_length__px/2;
@@ -126,7 +126,7 @@ void GrColorKey_Basic::setAttributes ()
 
     // Populate the _label_per_color vector.
     // An example of a label would be "Group 1 happy".
-    // Combine group ids with the moods in _moods to get all combinations of group id and moods.
+    // Combine group ids with the moods in _moods to get all combinations of group ids and moods.
     // Each base color and mood has a color associated with it, as in {12, 216, 255, 255}.
 
     // While creating vector, keep track of longest string for later use in column size.

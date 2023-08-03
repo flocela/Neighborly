@@ -27,7 +27,6 @@ public:
     );
 
     // Sets the top center point of the key at (0, 0).
-    // Uses default colors for text and background color from _the_color_rgba (See Color.h).
     GrColorKey_Basic (
         Letter labelLetter,
         std::unordered_map<int, BaseColor> colors,
@@ -57,7 +56,7 @@ private:
     std::set<Mood> _moods;
     int _box_length__px = 0; // box is the colored square next to the label
     int _box_spacer__px = 6; // space between box and label
-    int _column_border__px = 8; // space around each pair of box and label.
+    int _column_border__px = 8; // space around each pair of box and label
 
     // Each label holds the group id and mood, for example "Group 1 happy".
     // Each pair in the _label_per_color is the color and its corresponding label.
