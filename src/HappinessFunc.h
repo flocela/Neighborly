@@ -2,7 +2,7 @@
 #define HAPPINESSFUNCTION_H
 
 // HappinessFunc has an x-axis of Diversity and a y-axis of Happiness.
-// Both axes range from 0.0 to 1.0.
+// Happiness range is [0, 100]. Diversity range is [0.0 to 1.0].
 class HappinessFunc
 {
 protected:

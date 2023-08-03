@@ -8,10 +8,10 @@ using namespace std;
 HappinessFunc_Falling::HappinessFunc_Falling (
     double happinessWithNoNeighbors, 
     double happinessAtZeroDiversity,
-    double happinessAt100Diversity
+    double happinessAtOneDiversity
 ):  _happ_with_no_neighbors{happinessWithNoNeighbors},
     _happ_at_zero_diversity{happinessAtZeroDiversity},
-    _happ_at_100_diversity{happinessAt100Diversity}
+    _happ_at_one_diversity{happinessAtOneDiversity}
 {
 
     if (_happ_at_zero_diversity < 0.0 || 
@@ -20,16 +20,16 @@ HappinessFunc_Falling::HappinessFunc_Falling (
         throw invalid_argument("happiness At Zero Diversity must be "
         "between 0.0 and 100.0 inclusive.");
     }
-    if (_happ_at_100_diversity < 0.0 ||
-        _happ_at_100_diversity > 100.0)
+    if (_happ_at_one_diversity < 0.0 ||
+        _happ_at_one_diversity > 100.0)
     {
         throw invalid_argument("happiness At One Diversity must be "
         "between 0.0 and 100.0 inclusive.");
     }
-    if (_happ_at_zero_diversity <= _happ_at_100_diversity)
+    if (_happ_at_zero_diversity <= _happ_at_one_diversity)
     {
         throw invalid_argument("happinessAtZeroDiversity must be"
-        " larger than happinessAt100Diversity.");
+        " larger than happinessAtOneDiversity.");
     } 
 }
 
@@ -40,7 +40,7 @@ double HappinessFunc_Falling::getLargestValue () const
 
 double HappinessFunc_Falling::getSmallestValue () const
 {   
-    return min(_happ_with_no_neighbors, _happ_at_100_diversity);
+    return min(_happ_with_no_neighbors, _happ_at_one_diversity);
 }
 
 double HappinessFunc_Falling::calcHappiness ( 
@@ -59,7 +59,7 @@ double HappinessFunc_Falling::calcHappiness (
                        (double)(num_of_diff_neighbors + num_of_like_neighbors);
 
     return _happ_at_zero_diversity + 
-           (_happ_at_100_diversity -_happ_at_zero_diversity) * diversity;
+           (_happ_at_one_diversity -_happ_at_zero_diversity) * diversity;
 }
 
 string HappinessFunc_Falling::toStrBasic () const
@@ -71,7 +71,7 @@ string HappinessFunc_Falling::toStrBasic () const
     returnStream << ", zero diversity: ";
     returnStream << fixed << setprecision(2) << _happ_at_zero_diversity;
     returnStream << ", one hundred diversity: ";
-    returnStream << fixed << setprecision(2) << _happ_at_100_diversity;
+    returnStream << fixed << setprecision(2) << _happ_at_one_diversity;
     
     return returnStream.str();
 }
