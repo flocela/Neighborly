@@ -162,7 +162,7 @@ void Simulator_Basic::normalRun ()
             _city,
             curHouse->getAddress()))
         {   
-            _city_state->moveInAndOutOfHouse(curRes, selectedHouse);
+            _city_state->moveOutAndIntoHouse(curRes, selectedHouse);
         }
     }
 }

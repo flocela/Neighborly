@@ -9,15 +9,16 @@ using namespace std;
 CityState_Simple::CityState_Simple (
     const City* city
 ): _city{city},
-    _open_houses_per_y_x(_city->getHeight(),
+   _open_houses_per_y_x(_city->getHeight(),
                         vector<unordered_set<const House*>>( ((_city->getWidth()-1)/10)+1 ))
 {
-    // to begin with, all houses are empty
+    // To begin with, all houses are empty.
     for (const House* house : _city->getHouses())
     {
         Coordinate xy = _city->getCoordinate(house->getAddress());
         int x = xy.getX();
         int y = xy.getY();
+
         _open_houses_per_y_x[y][x/10].insert(house);
     }
 }
@@ -37,7 +38,7 @@ void CityState_Simple::moveOut (Resident* resident)
 
 void CityState_Simple::moveIn (Resident* resident, const House* newHouse)
 {   
-    if (_resident_per_house.find(newHouse) == _resident_per_house.end() ||
+    if (_resident_per_house.find(newHouse) == _resident_per_house.end() &&
         _house_per_resident.find(resident) == _house_per_resident.end())
     {
         _resident_per_house.insert({newHouse, resident});
@@ -53,7 +54,7 @@ void CityState_Simple::moveIn (Resident* resident, const House* newHouse)
     }
 }
 
-void CityState_Simple::moveInAndOutOfHouse (Resident* resident, const House* newHouse)
+void CityState_Simple::moveOutAndIntoHouse (Resident* resident, const House* newHouse)
 {
     if (_house_per_resident.find(resident) != _house_per_resident.end() &&
         _resident_per_house.find(newHouse) == _resident_per_house.end() )
@@ -66,7 +67,7 @@ void CityState_Simple::moveInAndOutOfHouse (Resident* resident, const House* new
 vector<const House*> CityState_Simple::getOpenHousesWithinRange (
     double centerX,
     double centerY,
-    double allowableDistance)const
+    double allowableDistance) const
 {   
     double minX = std::max(centerX - allowableDistance, 0.0);
     double maxX = std::min(centerX + allowableDistance, (double)_city->getWidth() - 1);
