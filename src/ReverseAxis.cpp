@@ -106,6 +106,12 @@ int ReverseAxis::getEndPixel () const
     return getPixels(_max_val + _end_offset_m, _tick_thickness__px).first;
 }
 
+
+int ReverseAxis::getCenterValPx () const
+{
+    return getPixels(_min_val + (_max_val - _min_val)/2, 1).first;
+}
+
 void ReverseAxis::moveCrossPixel (int pixel)
 {
     _cross_pixel__px = pixel;

@@ -216,20 +216,35 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
     };
 
     set<Mood> moods{Mood::neutral};
+
     return make_unique<GrDvstyChart> (
         _colors,
         moods,
         make_unique<Title_Basic>(_chart_title_letter, _div_chart_title),
         make_unique<GrColorKey_Basic>(_chart_key_letter, _colors, moods),
         make_unique<PlotA>(
-            rightColFormat,
-            0,                // starting run number
-            max(0, maxNumOfRuns - 1), // last run number
-            0,                // min number of neighbors
-            maxNumOfNeighbors // max number of neighbors
-        ),
-        _x_center__px + _col_inside_border__px, // top left corner of chart, x-value
-        topLeftYPx,                             // top left corner of chart, y-value
+            rightColFormat,                   // plot format for charts on right column
+            0,                                // starting run number
+            max(0, maxNumOfRuns - 1),         // last run number
+            0,                                // smallest number of neighbors for a resident is 0
+            maxNumOfNeighbors,                // largest number of neighbors for a resident
+            make_unique<AxisBottomToTopL>(
+                make_unique<ReverseAxis>(
+                    0,                         // starting pixel for y-axis, use zero for now
+                    0,                         // smallest number of neighbors for a resident is 0
+                    maxNumOfNeighbors,         // largest number of neighbors for a resident
+                    0,                         // pixels per unit, use zero for now
+                    1,                         // TODO make tick thickness a variable
+                    _y_offset_multiplier,
+                    _y_offset_multiplier
+                ),
+                _axis_format_Y,
+                0,                             // length of horiz background lines, zero for now
+                0                              // y-axis's x-coordinate (pixel)
+            )
+        ),                                      // end of plot's constructor call
+        _x_center__px + _col_inside_border__px, // top left corner of chart, x-coordinate
+        topLeftYPx,                             // top left corner of chart, y-coordinate
         _chart_space_x__px,                     // space available, x-direction
         availSpaceYPx                           // space available, y-direction
     );
@@ -260,12 +275,26 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
         _colors,
         make_unique<Title_Basic>( _chart_title_letter, _hap_chart_title),
         make_unique<GrColorKey_Basic>( _chart_key_letter, _colors, moods),
-        make_unique<PlotA>(
-            rightColFormat,
-            0,               // starting run number
-            max(0, numberOfRuns - 1), // last run number
-            0,               // minimum resident happiness
-            100              // max resident happiness. range is from 0 to 100.
+         make_unique<PlotA>(
+            rightColFormat,                   // plot format for charts on right column
+            0,                                // starting run number
+            max(0, numberOfRuns - 1),         // last run number
+            0,                                // smallest number of neighbors for a resident is 0
+            100,                // largest number of neighbors for a resident
+            make_unique<AxisBottomToTopL>(
+                make_unique<ReverseAxis>(
+                    0,                         // starting pixel for y-axis, use zero for now
+                    0,                         // smallest number of neighbors for a resident is 0
+                    100,         // largest number of neighbors for a resident
+                    0,                         // pixels per unit, use zero for now
+                    1,                         // TODO make tick thickness a variable
+                    _y_offset_multiplier,
+                    _y_offset_multiplier
+                ),
+                _axis_format_Y,
+                0,                             // length of horiz background lines, zero for now
+                0                              // y-axis's x-coordinate (pixel)
+            )
         ),
         _x_center__px + _col_inside_border__px, // top left corner of chart, x-value
         topLeftYPx,                             // top left corner of chart, y-value

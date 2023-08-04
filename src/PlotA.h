@@ -1,9 +1,11 @@
 #ifndef PLOT_A_H
 #define PLOT_A_H
 
+#include <memory>
 #include "AxisBottomToTopL.h"
 #include "AxisFormat.h"
 #include "AxisLeftToRightB.h"
+#include "GrAxis.h"
 #include "Plot.h"
 #include "PlotFormat.h"
 #include "Point.h"
@@ -30,7 +32,8 @@ public:
         int minY, // minimum data value on y-axis
         int maxY, // maximum data value on y-axis
         int xSpacePx, // allowable space to put the axes (including labels)
-        int ySpacePx  // allowable space to put the axes (including labels)
+        int ySpacePx,  // allowable space to put the axes (including labels)
+        std::unique_ptr<GrAxis> yAxis
     );
 
     // Creates a plot with top left corner at (0,0) pixels. Top left corener is not the
@@ -42,7 +45,8 @@ public:
         int minX,
         int maxX,
         int minY, 
-        int maxY
+        int maxY,
+        std::unique_ptr<GrAxis> yAxis
     );
 
     PlotA () = delete;
@@ -85,8 +89,8 @@ public:
 
 private:
 
-    AxisFormat _a_format_x;
-    AxisFormat _a_format_y;
+    AxisFormat _a_format_x{};
+    AxisFormat _a_format_y{};
 
     // minimum unit size
     int _min_unit__px = 5;
@@ -96,11 +100,11 @@ private:
 
     // _start_offset_m is used to determine space before the first values (_min_x or _min_y).
     // Length of space is _start_offset_m * _unit_space__px. 
-    int _start_offset_m;
+    int _start_offset_m = 1;
 
     // _end_offset_m is used to determine space after the last value (_max_x or _max_y).
     // Length of space is _end_offset_m * _unit_space__px.
-    int _end_offset_m;
+    int _end_offset_m = 1;
 
     // Top left corner of plot. This is not at the x-y axes cross hairs. It takes into
     // account the width of the y-axis labels.
@@ -108,33 +112,33 @@ private:
     int _top_left_y__px = 0;
 
     // smallest values on the axes. These values are given in the constructor.
-    int _min_x;
-    int _min_y;
+    int _min_x = 0;
+    int _min_y = 0;
     
     // largest values on the axes with data. These values are given in the constructor.
     // Note: the axes stretch past the largest value with data.
     // The largest value on the axes will be _max_y + _end_offset_m.
-    int _max_x;
-    int _max_y;
+    int _max_x = 0;
+    int _max_y = 0;
     
     // given allowable space in the x and y directions
-    int _x_space__px;
-    int _y_space__px;
+    int _x_space__px = 0;
+    int _y_space__px = 0;
 
-    int _x_diff; // difference between max and min values on the x-axis
-    int _y_diff; // difference between the max and min values on the y-axis
+    int _x_diff = 0; // difference between max and min values on the x-axis
+    int _y_diff = 0; // difference between the max and min values on the y-axis
     int _unit_x__px = 0; // unit size in pixels in x direction
     int _unit_y__px = 0; // unit size in pixels in y direction
 
     // Dots are colored squares that represent values on the graph. The width of a dot is _dot__px.
-    int _dot__px;
+    int _dot__px = 0;
 
     // where x and y axes cross.
-    int _cross_x__px;
-    int _cross_y__px; 
+    int _cross_x__px = 0;
+    int _cross_y__px = 0; 
 
     AxisLeftToRightB _x_axis;
-    AxisBottomToTopL _y_axis;
+    std::unique_ptr<GrAxis> _y_axis;
 
     // Only print axes once, they don't change.
     mutable bool _printed_axes = false;

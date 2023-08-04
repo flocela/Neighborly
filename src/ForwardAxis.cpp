@@ -10,15 +10,14 @@ ForwardAxis::ForwardAxis (
     int tickThickness,
     int startOffsetMultiplier,
     int endOffsetMultiplier
-):
-    _cross_pixel__px{crossPixel},
-    _min_val{minVal},
-    _max_val{maxVal},
-    _diff{_max_val - _min_val},
-    _px_per_unit{pxPerUnit},
-    _tick_thickness__px{tickThickness},
-    _start_offset_m{startOffsetMultiplier},
-    _end_offset_m{endOffsetMultiplier}
+): _cross_pixel__px{crossPixel},
+   _min_val{minVal},
+   _max_val{maxVal},
+   _diff{_max_val - _min_val},
+   _px_per_unit{pxPerUnit},
+   _tick_thickness__px{tickThickness},
+   _start_offset_m{startOffsetMultiplier},
+   _end_offset_m{endOffsetMultiplier}
 {}
 
 int ForwardAxis::getCenterValPx () const
@@ -59,11 +58,6 @@ std::pair<int, int> ForwardAxis::getPixels (double val, int dotSize) const
         int latterPixel = floor(px2) - dotSize/2;
         return {latterPixel, latterPixel + dotSize - 1};
     }
-}
-
-int ForwardAxis::getCrossPx__px () const
-{
-    return _cross_pixel__px;
 }
 
 int ForwardAxis::getMinVal () const

@@ -4,36 +4,21 @@
 using namespace std;
 
 AxisBottomToTopL::AxisBottomToTopL (
+    unique_ptr<Axis> axis,
     AxisFormat axisFormat,
     int horizLengthPx,
-    int x_coordinate__px, 
-    int y_coordinate__px,
-    int minVal,
-    int maxVal, 
-    int pxPerUnit,
-    int tickThickness,
-    int startOffsetMultiplier,
-    int endOffsetMultiplier
-) : 
-    _axis_format{axisFormat},
-    _horiz_line_length__px{horizLengthPx},
-    _reverse_axis{
-        y_coordinate__px,
-        minVal,
-        maxVal,
-        pxPerUnit,
-        tickThickness,
-        startOffsetMultiplier,
-        endOffsetMultiplier
-    },
-    _x_cross__px{x_coordinate__px},
-    _min_tick_spacing{calcMinTickSpacing()},
-    _maj_tick_spacing{calcMajTickSpacing()}
+    int x_coordinate__px
+): GrAxis{move(axis)},
+   _axis_format{axisFormat},
+   _horiz_line_length__px{horizLengthPx},
+   _x_cross__px{x_coordinate__px},
+   _min_tick_spacing{calcMinTickSpacing()},
+   _maj_tick_spacing{calcMajTickSpacing()}
 {}
 
 int AxisBottomToTopL::getAxisLengthPx () const
 {   
-    return _reverse_axis.getAxisLengthPx();
+    return _axis->getAxisLengthPx();
 }
 
 int AxisBottomToTopL::getLabelLengthPx () const
@@ -47,7 +32,7 @@ int AxisBottomToTopL::getLabelLengthPx () const
 
 pair<int, int>  AxisBottomToTopL::getPixels (double yVal, int dotSize) const
 {   
-    return _reverse_axis.getPixels(yVal, dotSize);
+    return _axis->getPixels(yVal, dotSize);
 }
 
 void AxisBottomToTopL::print (Renderer* renderer) const
@@ -82,7 +67,7 @@ int AxisBottomToTopL::sizeYPx () const
 void AxisBottomToTopL::moveCrossHairs (int xPx, int yPx)
 {
     _x_cross__px = xPx;
-    _reverse_axis.moveCrossPixel(yPx);
+    _axis->moveCrossPixel(yPx);
 }
 
 void AxisBottomToTopL::setHorizLength (int horizLengthPx)
@@ -92,7 +77,7 @@ void AxisBottomToTopL::setHorizLength (int horizLengthPx)
 
 void AxisBottomToTopL::setPxPerUnit (int pixels)
 {
-    _reverse_axis.setPxPerUnit(pixels);
+    _axis->setPxPerUnit(pixels);
     _min_tick_spacing = calcMinTickSpacing();
     _maj_tick_spacing = calcMajTickSpacing();
 
@@ -100,13 +85,13 @@ void AxisBottomToTopL::setPxPerUnit (int pixels)
 
 void AxisBottomToTopL::setTickThickness (int tickThicknessPx) 
 {
-    _reverse_axis.setTickThickness(tickThicknessPx);
+    _axis->setTickThickness(tickThicknessPx);
 }
 
 void AxisBottomToTopL::addVerticalLine (std::vector<Rect>& rects) const
 {
     // Calculate top most pixel.
-    int topPixel = _reverse_axis.getEndPixel();
+    int topPixel = _axis->getEndPixel();
 
     // Rectangle represents vertical line.
     Rect rect{
@@ -130,10 +115,10 @@ void AxisBottomToTopL::addTicksAndLabels (
     int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
 
     // The first value will be the minimum value given in the constructor.
-    int curVal = _reverse_axis.getMinVal();
+    int curVal = _axis->getMinVal();
 
     // curPixels describe one tick, it is the first and last pixels covered by the tick.
-    pair<int, int> curPixels = _reverse_axis.getPixels(curVal, _reverse_axis.getTickThichness__px());
+    pair<int, int> curPixels = _axis->getPixels(curVal, _axis->getTickThichness__px());
 
     // text corresponding to the curVal
     TextRect curText{
@@ -152,7 +137,7 @@ void AxisBottomToTopL::addTicksAndLabels (
         minTickXPx,
         curPixels.first,
         _horiz_line_length__px,
-        _reverse_axis.getTickThichness__px()
+        _axis->getTickThichness__px()
     };
 
     // background line corresponding to minor tick. Background lines run across the chart.
@@ -160,7 +145,7 @@ void AxisBottomToTopL::addTicksAndLabels (
         minTickXPx,
         curPixels.first,
         _horiz_line_length__px,
-        _reverse_axis.getTickThichness__px()
+        _axis->getTickThichness__px()
     };
 
     // Rect for major tick
@@ -168,7 +153,7 @@ void AxisBottomToTopL::addTicksAndLabels (
         majTickXPx,
         curPixels.first,
         _axis_format.majTickLengthPx(),
-        _reverse_axis.getTickThichness__px()
+        _axis->getTickThichness__px()
     };
 
     // Rect for minor tick
@@ -176,11 +161,11 @@ void AxisBottomToTopL::addTicksAndLabels (
         minTickXPx,
         curPixels.first,
         _axis_format.minTickLengthPx(),
-        _reverse_axis.getTickThichness__px()
+        _axis->getTickThichness__px()
     };
 
     // Calculate top most pixel.
-    int topMostPixelY = _reverse_axis.getEndPixel();
+    int topMostPixelY = _axis->getEndPixel();
 
     // Iterate through values from bottom of axis to top of axis.
     while ( curPixels.first >= topMostPixelY )
@@ -209,26 +194,26 @@ void AxisBottomToTopL::addTicksAndLabels (
         }
 
         ++curVal;
-        curPixels = _reverse_axis.getPixels(curVal, _reverse_axis.getTickThichness__px());
+        curPixels = _axis->getPixels(curVal, _axis->getTickThichness__px());
     }
 }
 
 int AxisBottomToTopL::calcMinTickSpacing () const
 { 
-     if (_reverse_axis.getMaxVal() - _reverse_axis.getMinVal() < 10)
+     if (_axis->getMaxVal() - _axis->getMinVal() < 10)
     {
         return 1;
     }
 
-    return (_reverse_axis.getPixelsPerUnit() >= 10)? 1 : 5;
+    return (_axis->getPixelsPerUnit() >= 10)? 1 : 5;
 }
 
 int AxisBottomToTopL::calcMajTickSpacing () const
 { 
-    if (_reverse_axis.getMaxVal() - _reverse_axis.getMinVal() < 10)
+    if (_axis->getMaxVal() - _axis->getMinVal() < 10)
     {
         return 1;
     }
     
-    return (_reverse_axis.getPixelsPerUnit() > 10)? 5 : 10; 
+    return (_axis->getPixelsPerUnit() > 10)? 5 : 10; 
 }

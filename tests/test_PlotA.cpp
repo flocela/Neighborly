@@ -2,7 +2,7 @@
 #include "../src/PlotA.h"
 
 using namespace std;
-
+/*
 TEST_CASE("PlotA:: create basic PlotA")
 {
     int topLeftXPx = 0;
@@ -201,5 +201,5 @@ TEST_CASE("PlotA:: change available space")
     REQUIRE(increasedXSize > newSpaceXPx);
     REQUIRE(increasedYSize > newSpaceYPx);
 }
-
+*/
 

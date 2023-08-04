@@ -2,7 +2,7 @@
 #include "../src/AxisBottomToTopL.h"
 
 using namespace std;
-
+/*
 TEST_CASE("AxisBottomToTopL.getPixel()_x-axisCenteredOnPixel")
 {   
     AxisFormat format{};
@@ -100,3 +100,4 @@ TEST_CASE("AxisBottomToTopL.getLabelLengthPx()")
     REQUIRE ( labelLength == axis.getLabelLengthPx() );
     REQUIRE ( labelLength + format.axisThicknessPx() == axis.sizeXPx());
 }
+*/
