@@ -1,5 +1,5 @@
-#ifndef AXIS_BOTTOM_TO_TOP_L_H
-#define AXIS_BOTTOM_TO_TOP_L_H
+#ifndef GR_AXIS_VERTICAL_H
+#define GR_AXIS_VERTICAL_H
 
 #include "Axis.h"
 #include "AxisFormat.h"
@@ -9,29 +9,26 @@
 #include "TextRect.h"
 
 // Vertical axis, numbers run from bottom to top. Labels are on the left.
-class AxisBottomToTopL : public GrAxis
+class GrAxis_Vertical : public GrAxis
 {
     public:
-        AxisBottomToTopL (
-            std::unique_ptr<Axis> axis, // TODO change to unique pointer
+        GrAxis_Vertical (
+            std::unique_ptr<Axis> axis,
             AxisFormat axisFormat,
-            // length of horizontal background lines. They line up with ticks and go
-            // across the chart.
-            int horizLengthPx,
             int x_coordinate__px
         );
-        AxisBottomToTopL () = delete;
-        AxisBottomToTopL (const AxisBottomToTopL& o) = default;
-        AxisBottomToTopL (AxisBottomToTopL&& o) noexcept = default;
-        AxisBottomToTopL& operator= (const AxisBottomToTopL& o) = default;
-        AxisBottomToTopL& operator=(AxisBottomToTopL&& o) noexcept = default;
-        ~AxisBottomToTopL () noexcept = default;
+        GrAxis_Vertical () = delete;
+        GrAxis_Vertical (const GrAxis_Vertical& o) = default;
+        GrAxis_Vertical (GrAxis_Vertical&& o) noexcept = default;
+        GrAxis_Vertical& operator= (const GrAxis_Vertical& o) = default;
+        GrAxis_Vertical& operator=(GrAxis_Vertical&& o) noexcept = default;
+        ~GrAxis_Vertical () noexcept = default;
 
         int getAxisLengthPx () const override;
 
         // The labels are the numbers to the left of the axis, but their length is more
-        // than just the number.
-        // The label length is the length of the digits in the label plus
+        // than just the number. The label length is in the x-dirction.
+        // It is the length of the digits in the label plus
         // the space between the label and the tick plus
         // the length of the tick outside the chart.
         // The length is in the x direction.
@@ -40,8 +37,6 @@ class AxisBottomToTopL : public GrAxis
         // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
         // would be {1, 5}.
         std::pair<int, int> getPixels (double yVal, int dotSize) const override;
-        
-        void print (Renderer* renderer) const override;
         
         // The label length plus the axis thickness.
         int sizeXPx() const override;
@@ -59,13 +54,22 @@ class AxisBottomToTopL : public GrAxis
         void setPxPerUnit (int pixels) override;
         
         void setTickThickness (int tickThicknessPx) override;
+    
+    protected:
+
+        // This is the axis vertical line.
+        void implimentAddAxisLine (std::vector<Rect>& rects) const override;
+
+        void implimentAddTicksAndLabels (
+            std::vector<Rect>& backgroundLinesMaj, // horizontal lines that cross the chart
+            std::vector<Rect>& backgroundLinesMin, // horizontal lines that cross the chart
+            std::vector<Rect>& ticks,
+            std::vector<TextRect>& texts) const override; // number next to tick
+
 
     private:
-        AxisFormat _axis_format;
-        
-        // width of horizontal background lines that are a continuation of tick marks.
-        // They extend into the chart and are usually a greyed out color.
-        int _horiz_line_length__px;
+        // length of horizontal background lines
+        int _horiz_line_length__px = 0;
 
         int _x_cross__px; // where x and y axis meet
         int _min_tick_spacing; // in units, not pixels
@@ -73,14 +77,7 @@ class AxisBottomToTopL : public GrAxis
 
         int _text_spacer = 3; // space to the right of labels, and to the left of tick marks
 
-        // This is the axis vertical line.
-        void addVerticalLine (std::vector<Rect>& rects) const;
-
-        void addTicksAndLabels (
-            std::vector<Rect>& backgroundLinesMaj, // horizontal lines that cross the chart
-            std::vector<Rect>& backgroundLinesMin, // horizontal lines that cross the chart
-            std::vector<Rect>& ticks,
-            std::vector<TextRect>& texts) const; // number next to tick
+        
 
         int calcMinTickSpacing () const;
 

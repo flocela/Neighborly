@@ -1,27 +1,24 @@
-#include "AxisBottomToTopL.h"
+#include "GrAxis_Vertical.h"
 #include <iostream>
 #include <cmath>
 using namespace std;
 
-AxisBottomToTopL::AxisBottomToTopL (
+GrAxis_Vertical::GrAxis_Vertical (
     unique_ptr<Axis> axis,
     AxisFormat axisFormat,
-    int horizLengthPx,
     int x_coordinate__px
-): GrAxis{move(axis)},
-   _axis_format{axisFormat},
-   _horiz_line_length__px{horizLengthPx},
+): GrAxis{move(axis), axisFormat},
    _x_cross__px{x_coordinate__px},
    _min_tick_spacing{calcMinTickSpacing()},
    _maj_tick_spacing{calcMajTickSpacing()}
 {}
 
-int AxisBottomToTopL::getAxisLengthPx () const
+int GrAxis_Vertical::getAxisLengthPx () const
 {   
     return _axis->getAxisLengthPx();
 }
 
-int AxisBottomToTopL::getLabelLengthPx () const
+int GrAxis_Vertical::getLabelLengthPx () const
 {   
     // Three is max number of digits in the y-axis label.
     return 
@@ -30,52 +27,33 @@ int AxisBottomToTopL::getLabelLengthPx () const
         _axis_format.majTickLengthOutsideChartPx();
 }
 
-pair<int, int>  AxisBottomToTopL::getPixels (double yVal, int dotSize) const
+pair<int, int>  GrAxis_Vertical::getPixels (double yVal, int dotSize) const
 {   
     return _axis->getPixels(yVal, dotSize);
 }
 
-void AxisBottomToTopL::print (Renderer* renderer) const
-{
-    std::vector<Rect> horizLinesMaj = {};
-    std::vector<Rect> horizLinesMin = {};
-    std::vector<Rect> ticks = {};
-    std::vector<TextRect> texts = {};
-
-    addVerticalLine(ticks);
-    addTicksAndLabels (horizLinesMaj, horizLinesMin, ticks, texts);
-
-    if (_axis_format.showBackgroundTickLines())
-    {
-        renderer->fillBlocks(horizLinesMaj, _axis_format.tickLineBackgroundColor());
-        renderer->fillBlocks(horizLinesMin, _axis_format.tickLineBackgroundColor());
-    }
-    renderer->fillBlocks(ticks, _axis_format.tickColor());
-    renderer->renderTexts(texts);
-}
-
-int AxisBottomToTopL::sizeXPx () const
+int GrAxis_Vertical::sizeXPx () const
 {  
     return getLabelLengthPx() + _axis_format.axisThicknessPx();
 }
 
-int AxisBottomToTopL::sizeYPx () const
+int GrAxis_Vertical::sizeYPx () const
 {
     return getAxisLengthPx();
 }
 
-void AxisBottomToTopL::moveCrossHairs (int xPx, int yPx)
+void GrAxis_Vertical::moveCrossHairs (int xPx, int yPx)
 {
     _x_cross__px = xPx;
     _axis->moveCrossPixel(yPx);
 }
 
-void AxisBottomToTopL::setHorizLength (int horizLengthPx)
+void GrAxis_Vertical::setHorizLength (int horizLengthPx)
 {
     _horiz_line_length__px = horizLengthPx;
 }
 
-void AxisBottomToTopL::setPxPerUnit (int pixels)
+void GrAxis_Vertical::setPxPerUnit (int pixels)
 {
     _axis->setPxPerUnit(pixels);
     _min_tick_spacing = calcMinTickSpacing();
@@ -83,12 +61,12 @@ void AxisBottomToTopL::setPxPerUnit (int pixels)
 
 }
 
-void AxisBottomToTopL::setTickThickness (int tickThicknessPx) 
+void GrAxis_Vertical::setTickThickness (int tickThicknessPx) 
 {
     _axis->setTickThickness(tickThicknessPx);
 }
 
-void AxisBottomToTopL::addVerticalLine (std::vector<Rect>& rects) const
+void GrAxis_Vertical::implimentAddAxisLine (std::vector<Rect>& rects) const
 {
     // Calculate top most pixel.
     int topPixel = _axis->getEndPixel();
@@ -104,7 +82,7 @@ void AxisBottomToTopL::addVerticalLine (std::vector<Rect>& rects) const
     rects.push_back(rect);
 }
         
-void AxisBottomToTopL::addTicksAndLabels (
+void GrAxis_Vertical::implimentAddTicksAndLabels (
     std::vector<Rect>& backgroundLinesMaj,
     std::vector<Rect>& backgroundLinesMin,
     std::vector<Rect>& ticks, 
@@ -198,7 +176,7 @@ void AxisBottomToTopL::addTicksAndLabels (
     }
 }
 
-int AxisBottomToTopL::calcMinTickSpacing () const
+int GrAxis_Vertical::calcMinTickSpacing () const
 { 
      if (_axis->getMaxVal() - _axis->getMinVal() < 10)
     {
@@ -208,7 +186,7 @@ int AxisBottomToTopL::calcMinTickSpacing () const
     return (_axis->getPixelsPerUnit() >= 10)? 1 : 5;
 }
 
-int AxisBottomToTopL::calcMajTickSpacing () const
+int GrAxis_Vertical::calcMajTickSpacing () const
 { 
     if (_axis->getMaxVal() - _axis->getMinVal() < 10)
     {

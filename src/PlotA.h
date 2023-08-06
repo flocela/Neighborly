@@ -2,10 +2,9 @@
 #define PLOT_A_H
 
 #include <memory>
-#include "AxisBottomToTopL.h"
 #include "AxisFormat.h"
 #include "AxisLeftToRightB.h"
-#include "GrAxis.h"
+#include "GrAxis_Vertical.h"
 #include "Plot.h"
 #include "PlotFormat.h"
 #include "Point.h"
@@ -33,7 +32,7 @@ public:
         int maxY, // maximum data value on y-axis
         int xSpacePx, // allowable space to put the axes (including labels)
         int ySpacePx,  // allowable space to put the axes (including labels)
-        std::unique_ptr<GrAxis> yAxis
+        std::unique_ptr<GrAxis_Vertical> yAxis
     );
 
     // Creates a plot with top left corner at (0,0) pixels. Top left corener is not the
@@ -46,7 +45,7 @@ public:
         int maxX,
         int minY, 
         int maxY,
-        std::unique_ptr<GrAxis> yAxis
+        std::unique_ptr<GrAxis_Vertical> yAxis
     );
 
     PlotA () = delete;

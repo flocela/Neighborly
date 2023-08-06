@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "Axis.h"
+#include "AxisFormat.h"
 #include "Renderer.h"
 
 class GrAxis
@@ -10,7 +11,7 @@ class GrAxis
 
 public:
 
-    GrAxis (std::unique_ptr<Axis> axis);
+    GrAxis (std::unique_ptr<Axis> axis, AxisFormat axisFormat);
     ~GrAxis () noexcept = default;
 
     virtual int getAxisLengthPx () const = 0;
@@ -27,7 +28,7 @@ public:
     // would be {1, 5}.
     virtual std::pair<int, int> getPixels (double yVal, int dotSize) const = 0;
     
-    virtual void print (Renderer* renderer) const = 0;
+    void print (Renderer* renderer) const;
     
     // The label length plus the axis thickness.
     virtual int sizeXPx() const = 0;
@@ -53,7 +54,16 @@ protected:
     GrAxis& operator= (const GrAxis& o) = default;
     GrAxis& operator= (GrAxis&& o) noexcept = default;
 
+    virtual void implimentAddAxisLine (std::vector<Rect>& rects) const = 0;
+
+    virtual void implimentAddTicksAndLabels (
+        std::vector<Rect>& backgroundLinesMaj,
+        std::vector<Rect>& backgroundLinesMin,
+        std::vector<Rect>& ticks, 
+        std::vector<TextRect>& texts) const = 0;
+
     std::unique_ptr<Axis> _axis;
+    AxisFormat _axis_format;
 
 };
 

@@ -1,6 +1,7 @@
 #include "Printer_Graphic.h"
 
 #include <iostream>
+#include "GrAxis_Vertical.h"
 #include "PlotA.h"
 #include "PlotB.h"
 
@@ -228,7 +229,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             max(0, maxNumOfRuns - 1),         // last run number
             0,                                // smallest number of neighbors for a resident is 0
             maxNumOfNeighbors,                // largest number of neighbors for a resident
-            make_unique<AxisBottomToTopL>(
+            make_unique<GrAxis_Vertical>(
                 make_unique<ReverseAxis>(
                     0,                         // starting pixel for y-axis, use zero for now
                     0,                         // smallest number of neighbors for a resident is 0
@@ -238,8 +239,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
                     _y_offset_multiplier,
                     _y_offset_multiplier
                 ),
-                _axis_format_Y,
-                0,                             // length of horiz background lines, zero for now
+                axisYFormatForDivChart,
                 0                              // y-axis's x-coordinate (pixel)
             )
         ),                                      // end of plot's constructor call
@@ -279,20 +279,19 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
             rightColFormat,                   // plot format for charts on right column
             0,                                // starting run number
             max(0, numberOfRuns - 1),         // last run number
-            0,                                // smallest number of neighbors for a resident is 0
-            100,                // largest number of neighbors for a resident
-            make_unique<AxisBottomToTopL>(
+            0,                                // least possible happiness for a resident 
+            100,                              // largest possible happiness for a resident
+            make_unique<GrAxis_Vertical>(
                 make_unique<ReverseAxis>(
                     0,                         // starting pixel for y-axis, use zero for now
-                    0,                         // smallest number of neighbors for a resident is 0
-                    100,         // largest number of neighbors for a resident
+                    0,                         // least possible happiness for a resident
+                    100,                       // largest possible happiness for a resident
                     0,                         // pixels per unit, use zero for now
                     1,                         // TODO make tick thickness a variable
                     _y_offset_multiplier,
                     _y_offset_multiplier
                 ),
-                _axis_format_Y,
-                0,                             // length of horiz background lines, zero for now
+                axisYFormatForHapChart,
                 0                              // y-axis's x-coordinate (pixel)
             )
         ),

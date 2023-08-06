@@ -88,6 +88,7 @@ src/Converter.cpp
 src/Coordinate.cpp
 src/ForwardAxis.cpp
 src/GrAxis.cpp
+src/GrAxis_Vertical.cpp
 src/HappinessFunc_Falling.cpp
 src/HappinessFunc_Flat.cpp
 src/HappinessFunc_Rising.cpp
