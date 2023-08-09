@@ -173,8 +173,6 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
 )
 {   
     PlotFormat cityPlotFormat{
-        _axis_format_X,
-        _axis_format_Y,
         _chart_title_letter,
         _chart_key_letter,
         _min_unit_size__px,
@@ -190,23 +188,34 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
         make_unique<GrColorKey_Basic>(_chart_key_letter, _colors, moods),
         make_unique<PlotB>(
             cityPlotFormat,
-            minXCoord,
-            maxXCoord,
-            minYCoord,
-            maxYCoord,
+            make_unique<GrAxis_Horizontal>(
+                make_unique<BasicAxis>(
+                    true,                   // axis values increase as window's coordinates increase
+                    0,                      // starting pixel for x-axis, use zero for now
+                    minXCoord,              // smallest coordinate in the x-direction             
+                    maxXCoord,              // largest coordinate in the x-direction
+                    0,                      // pixels per unit, use zero for now
+                    1,                      // TODO make tick thickness a variable
+                    _x_offset_multiplier,
+                    _x_offset_multiplier
+                ),
+                _axis_format_X,
+                0,                          // y-coordinate for x-axis, use zero for now.
+                true
+            ),
             make_unique<GrAxis_Vertical>(
                 make_unique<BasicAxis>(
                     true,
-                    0,                         // starting pixel for y-axis, use zero for now
-                    minYCoord,                 // smallest coordinate in y-direction
-                    maxYCoord,                 // largest coordinate in y-direction
-                    0,                         // pixels per unit, use zero for now
-                    1,                         // TODO make tick thickness a variable
+                    0,                      // starting pixel for y-axis, use zero for now
+                    minYCoord,              // smallest coordinate in y-direction
+                    maxYCoord,              // largest coordinate in y-direction
+                    0,                      // pixels per unit, use zero for now
+                    1,                      // TODO make tick thickness a variable
                     _y_offset_multiplier,
                     _y_offset_multiplier
                 ),
                 _axis_format_Y,
-                0                              // y-axis's x-coordinate (pixel), use zero for now
+                0                           // y-axis's x-coordinate (pixel), use zero for now
             )
         ),
         _side_borders__px,  // top left corner of chart, x-value
@@ -223,12 +232,11 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
     int availSpaceYPx
 )
 {
-    AxisFormat axisYFormatForDivChart = _axis_format_Y;
-    axisYFormatForDivChart.setBackgroundTickLines(true);
+    AxisFormat axisFormatForDivChartY = _axis_format_Y;
+    axisFormatForDivChartY.setBackgroundTickLines(true);
 
+    // the plot format used for charts, modified to show background tick lines
     PlotFormat rightColFormat{
-        _axis_format_X,
-        axisYFormatForDivChart,
         _chart_title_letter,
         _chart_key_letter,
         _min_unit_size__px,
@@ -244,7 +252,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
         make_unique<Title_Basic>(_chart_title_letter, _div_chart_title),
         make_unique<GrColorKey_Basic>(_chart_key_letter, _colors, moods),
         make_unique<PlotA>(
-            rightColFormat,                   // the plot format used for charts in the right column
+            rightColFormat,                   
             make_unique<GrAxis_Horizontal>(
                 make_unique<BasicAxis>(
                     true,                      // axis values increase as window's coordinates increase
@@ -257,7 +265,8 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
                     _x_offset_multiplier
                 ),
                 _axis_format_X,
-                0                              // y-coordinate for x-axis, use zero for now.
+                0,                             // y-coordinate for x-axis, use zero for now.
+                false
             ),
             make_unique<GrAxis_Vertical>(
                 make_unique<BasicAxis>(
@@ -270,7 +279,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
                     _y_offset_multiplier,
                     _y_offset_multiplier
                 ),
-                axisYFormatForDivChart,
+                axisFormatForDivChartY,
                 0                              // x-coordinate for y-axis, use zero for now
             )
         ),                                      
@@ -287,12 +296,10 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
     int availSpaceYPx
 )
 {  
-    AxisFormat axisYFormatForHapChart = _axis_format_Y;
-    axisYFormatForHapChart.setBackgroundTickLines(true);
+    AxisFormat axisFormatForHapChartY = _axis_format_Y;
+    axisFormatForHapChartY.setBackgroundTickLines(true);
 
     PlotFormat rightColFormat{
-        _axis_format_X,
-        axisYFormatForHapChart,
         _chart_title_letter,
         _chart_key_letter,
         _min_unit_size__px,
@@ -320,7 +327,8 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
                     _x_offset_multiplier
                 ),
                 _axis_format_X,
-                0                              // x-axis's x-coordinate (pixel) // TODO better note
+                0,                             // x-axis's x-coordinate (pixel) // TODO better note
+                false
             ),
             make_unique<GrAxis_Vertical>(
                 make_unique<BasicAxis>(
@@ -333,7 +341,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
                     _y_offset_multiplier,
                     _y_offset_multiplier
                 ),
-                axisYFormatForHapChart,
+                axisFormatForHapChartY,
                 0                              // y-axis's x-coordinate (pixel)
             )
         ),

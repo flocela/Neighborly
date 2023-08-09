@@ -12,8 +12,6 @@ PlotA::PlotA (
     unique_ptr<GrAxis_Horizontal> xAxis,
     unique_ptr<GrAxis_Vertical> yAxis
 ):
-    _a_format_x{plotFormat.axisFormatX()},
-    _a_format_y{plotFormat.axisFormatY()},
     _min_unit__px{plotFormat.minUnitSize()},
     _start_offset_m{plotFormat.startOffsetM()},
     _end_offset_m{plotFormat.endOffsetM()},
@@ -93,13 +91,12 @@ int PlotA::getYUnitSizePx () const
 
 int PlotA::sizeYPx() const
 {  
-    // subraction takes care of double counting of horizontal axis' thickness.
-    return _y_axis->sizeYPx() + _x_axis->sizeYPx() - (_a_format_x.axisThicknessPx()/2);
+    return _y_axis->sizeYPx() + _x_axis->getLabelLengthPx();
 }
 
 int PlotA::sizeXPx () const
 {
-    return _y_axis->sizeXPx() + _x_axis->sizeXPx() - (_a_format_y.axisThicknessPx()/2);
+    return _y_axis->getLabelLengthPx() + _x_axis->sizeXPx();
 }
 
 void PlotA::print (

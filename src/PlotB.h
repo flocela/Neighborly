@@ -2,8 +2,8 @@
 #define PLOT_B_H
 
 #include "AxisFormat.h"
-#include "AxisLeftToRightT.h"
 #include "Coordinate.h"
+#include "GrAxis_Horizontal.h"
 #include "GrAxis_Vertical.h"
 #include "Point.h"
 #include "Plot.h"
@@ -26,12 +26,9 @@ public:
         PlotFormat plotFormat,
         int topLeftXPx, // top left corner of plot, not the same as where x and y axes cross
         int topLeftYPx, // top left corner of plot, not the same as where x and y axes cross
-        int minX,
-        int maxX,
-        int minY, 
-        int maxY,
         int xSpacePx,
         int ySpacePx,
+        std::unique_ptr<GrAxis_Horizontal> xAxis,
         std::unique_ptr<GrAxis_Vertical> yAxis
     );
 
@@ -40,10 +37,7 @@ public:
     // This is a temporary plot. Use setPlot() method to finish it.
     PlotB (
         PlotFormat plotFormat,
-        int minX,
-        int maxX,
-        int minY, 
-        int maxY,
+        std::unique_ptr<GrAxis_Horizontal> xAxis,
         std::unique_ptr<GrAxis_Vertical> yAxis
     );
 
@@ -86,9 +80,6 @@ public:
     void setPlot (int topLeftCornerXPx, int topLeftCornerYPx, int xSpacePx, int ySpacePx) override;
 
 private:
-
-    AxisFormat _axis_format_x;
-    AxisFormat _axis_format_y;
 
     // minimum unit size
     int _min_unit_size__px = 5;
@@ -134,7 +125,7 @@ private:
     int _cross_x__px; 
     int _cross_y__px; 
 
-    AxisLeftToRightT _x_axis;
+    std::unique_ptr<GrAxis_Horizontal> _x_axis;
     std::unique_ptr<GrAxis_Vertical> _y_axis;
 
     // Only print axes once, they don't change.

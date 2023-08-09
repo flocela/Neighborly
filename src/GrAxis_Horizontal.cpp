@@ -8,9 +8,11 @@ using namespace std;
 GrAxis_Horizontal::GrAxis_Horizontal (
     std::unique_ptr<Axis> axis,
     AxisFormat axisFormat,
-    int yCoordPx
+    int yCoordPx,
+    bool labelsOnTop
 ): GrAxis{move(axis), axisFormat},
     _y_coord__px{yCoordPx},
+    _labels_on_top{labelsOnTop},
     _min_tick_spacing{calcMinTickSpacing()},
     _maj_tick_spacing{calcMajTickSpacing()}
 {}
@@ -112,7 +114,12 @@ void GrAxis_Horizontal::implimentAddTicksAndLabels (
     int curVal = _axis->getMinVal();
 
     // topOfLabelYPx is the top of the number shown.
-    int topOfNumberYPx =
+    int topOfNumberYPx = (_labels_on_top) ?
+        _y_coord__px - 
+        _axis_format.majTickLengthOutsideChartPx() -
+        _axis_format.labelLineSpacePx() -
+        _axis_format.labelHeightPx()
+        :
         _y_coord__px +
         _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.labelLineSpacePx();
@@ -120,11 +127,12 @@ void GrAxis_Horizontal::implimentAddTicksAndLabels (
     // curPixels the first and last pixels covered by one tick.
     pair<int, int> curPixels = getPixels(curVal, _axis->getTickThichness__px());
 
+    // Text is at the center of the tick.
     int centerOfTick = curPixels.first + (curPixels.second - curPixels.first)/2;
 
     // text corresponding to the curVal
     TextRect curText{
-        centerOfTick, // Text is centered at tick center.
+        centerOfTick,
         topOfNumberYPx,
         std::to_string(curVal),
         _axis_format.labelHeightPx(),
@@ -134,19 +142,25 @@ void GrAxis_Horizontal::implimentAddTicksAndLabels (
         1 // text is centered
     };
 
-    // Top of tick is inside the chart.
-    int tickYPx = _y_coord__px - _axis_format.tickLengthInsideChartPx();
+    // top of tick
+    int majTickYPx = (_labels_on_top) ?
+        _y_coord__px - _axis_format.majTickLengthOutsideChartPx() :
+        _y_coord__px + _axis_format.tickLengthInsideChartPx();
+
+    int minTickYPx = (_labels_on_top) ?
+        _y_coord__px - _axis_format.minTickLengthOutsideChartPx() :
+        _y_coord__px + _axis_format.tickLengthInsideChartPx();
 
     Rect majTick{
         curPixels.first,
-        tickYPx,
+        majTickYPx,
         _axis->getTickThichness__px(),
         _axis_format.majTickLengthPx()
     };
 
     Rect minTick{
         curPixels.first,
-        tickYPx,
+        minTickYPx,
         _axis->getTickThichness__px(),
         _axis_format.minTickLengthPx()
     };

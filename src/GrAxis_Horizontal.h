@@ -16,7 +16,8 @@ public:
     GrAxis_Horizontal (
         std::unique_ptr<Axis> axis,
         AxisFormat axisFormat,
-        int yCoordPx 
+        int yCoordPx,
+        bool labelsOnTop
     );
     
     GrAxis_Horizontal () = delete;
@@ -75,6 +76,7 @@ void implimentAddTicksAndLabels (
 private:
     AxisFormat _axis_format;
     int _y_coord__px; // the axis's y-coordinate in pixels
+    bool _labels_on_top; // true if the labels should be above the axis, false if below
     int _min_tick_spacing;
     int _maj_tick_spacing;
 

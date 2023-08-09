@@ -8,16 +8,12 @@ class PlotFormat
 {
 public:
     PlotFormat (
-        AxisFormat aFormatX,
-        AxisFormat aFormatY,
         Letter titleLetter,
         Letter keyLetter,
         int minUnitSizePx,
         int startOffsetMultiplier,
         int endOffsetMultiplier
     ) :
-       _a_format_x{aFormatX},
-       _a_format_y{aFormatY},
        _title_letter{titleLetter},
        _key_letter{keyLetter},
        _min_unit_size__px{minUnitSizePx},
@@ -32,9 +28,6 @@ public:
     PlotFormat& operator=(PlotFormat&& o) noexcept = default;
     ~PlotFormat () noexcept = default;
 
-    AxisFormat axisFormatX () { return _a_format_x; }
-    AxisFormat axisFormatY () { return _a_format_y; }
-
     Letter keyLetter () { return _key_letter; }
     int keyLetterHeight () { return _key_letter.letterHeight();}
     int keyLetterHeightInclSpace () { return _key_letter.getHeightIncLSpace();}
@@ -48,8 +41,6 @@ public:
     int minUnitSize() { return _min_unit_size__px;}
 
 private:
-    AxisFormat _a_format_x;
-    AxisFormat _a_format_y;
     Letter _title_letter;
     Letter _key_letter;
     int _min_unit_size__px = 1;

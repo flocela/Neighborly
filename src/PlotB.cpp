@@ -7,37 +7,21 @@ PlotB::PlotB (
         PlotFormat plotFormat,
         int topLeftXPx, // top left corner of plot
         int topLeftYPx, // top left corner of plot
-        int minX,
-        int maxX,
-        int minY, 
-        int maxY,
         int xSpacePx,
         int ySpacePx,
+        unique_ptr<GrAxis_Horizontal> xAxis,
         unique_ptr<GrAxis_Vertical> yAxis
 ): 
-    _axis_format_x{plotFormat.axisFormatX()},
-    _axis_format_y{plotFormat.axisFormatY()},
     _min_unit_size__px{plotFormat.minUnitSize()},
     _start_offset_m{plotFormat.startOffsetM()},
     _end_offset_m{plotFormat.endOffsetM()},
-    _min_x{minX},
-    _min_y{minY},
-    _max_x{maxX},
-    _max_y{maxY},
-    _x_diff{maxX - minX},
-    _y_diff{maxY - minY},
-    _x_axis{
-        _axis_format_x,
-        0, // use zero for default x_coordinate__px
-        0, // use zero for default y_coordinate__px
-        _min_x,
-        _max_x,
-        0, // use zero for pxPerUnit
-        1, // use 1 for tickThickness
-        plotFormat.startOffsetM(),
-        plotFormat.endOffsetM(),
-        
-    },
+    _min_x{xAxis->getMinVal()},
+    _min_y{yAxis->getMinVal()},
+    _max_x{xAxis->getMaxVal()},
+    _max_y{yAxis->getMaxVal()},
+    _x_diff{_max_x - _min_x},
+    _y_diff{_max_x - _min_y},
+    _x_axis{move(xAxis)},
     _y_axis{move(yAxis)}
 {
     // Update attributes that are affected by change to the top left corner coordinate and
@@ -47,27 +31,21 @@ PlotB::PlotB (
 
 PlotB::PlotB (
         PlotFormat plotFormat,
-        int minX,
-        int maxX,
-        int minY, 
-        int maxY,
+        unique_ptr<GrAxis_Horizontal> xAxis,
         unique_ptr<GrAxis_Vertical> yAxis
 ): PlotB(
     plotFormat,
     0,
     0,
-    minX,
-    maxX,
-    minY,
-    maxY,
     0,
     0,
+    move(xAxis),
     move(yAxis)
 ){}
 
 int PlotB::getCenterValueOfXAxisPx () const 
 {
-    return _x_axis.getCenterValXPx();
+    return _x_axis->getCentralValuePx();
 }
 
 int PlotB::getDotSizePx () const
@@ -107,18 +85,12 @@ int PlotB::getYUnitSizePx () const
 
 int PlotB::sizeXPx () const 
 {
-    // subraction takes care of double counting of horizontal axis' thickness.
-    return
-        _y_axis->sizeXPx() + _x_axis.sizeXPx() - (_axis_format_y.axisThicknessPx()/2);
+    return _x_axis->sizeXPx() + _y_axis->getLabelLengthPx();
 }
 
 int PlotB::sizeYPx() const
 {  
-    // subraction takes care of double counting of horizontal axis' thickness.
-    return 
-        _y_axis->sizeYPx() +
-        _x_axis.sizeYPx() -
-        (_axis_format_x.axisThicknessPx()/2);
+    return _y_axis->sizeYPx() + _x_axis->getLabelLengthPx();
 }
 
 void PlotB::print (
@@ -130,7 +102,7 @@ void PlotB::print (
     // Only print axes once.
     if (!_printed_axes || printAxes) 
     {
-        _x_axis.print(renderer);
+        _x_axis->print(renderer);
         _y_axis->print(renderer);
         _printed_axes = true;
     }
@@ -139,7 +111,7 @@ void PlotB::print (
     for (auto& point : points)
     {
         // Dot is a square. Convert point's value to the coordinate of the dot's top left corner.
-        int x = _x_axis.getPixels(point.x(), _dot__px).first;                 
+        int x = _x_axis->getPixels(point.x(), _dot__px).first;                 
         int y = _y_axis->getPixels(point.y(), _dot__px).first;
 
         renderer->fillBlock(
@@ -161,14 +133,14 @@ void PlotB::setPlot (int topLeftCornerXPx, int topLeftCornerYPx, int xSpacePx, i
     _unit__px = calcUnitSizePx();
     _dot__px = calcDotSizePx();
 
-    int tickThickness = (_dot__px > 12)? 3 : 1;
+    int tickThickness = (_dot__px > 20)? 3 : 1;
 
     _cross_x__px = calcCrossXPx(_top_left_x__px);
     _cross_y__px = calcCrossYPx (_top_left_y__px);
 
-    _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
-    _x_axis.setPxPerUnit(_unit__px);
-    _x_axis.setTickThickness(tickThickness);
+    _x_axis->moveCrossHairs(_cross_x__px, _cross_y__px);
+    _x_axis->setPxPerUnit(_unit__px);
+    _x_axis->setTickThickness(tickThickness);
 
     _y_axis->moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis->setPxPerUnit(_unit__px);
@@ -185,7 +157,7 @@ int PlotB::calcUnitSizePx () const
     xUnitSize = max(xUnitSize, _min_unit_size__px);
 
     // Calculate unit size in y-direction.
-    int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeYPx();
+    int allowableYAxisLengthPx = _y_space__px - _x_axis->sizeYPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
     yUnitSize = max(yUnitSize, _min_unit_size__px);
@@ -224,5 +196,5 @@ int PlotB::calcCrossXPx (int topLeftXPx) const
 
 int PlotB::calcCrossYPx (int topLeftYPx) const
 {
-    return topLeftYPx + _x_axis.sizeYPx();
+    return topLeftYPx + _x_axis->sizeYPx();
 }
