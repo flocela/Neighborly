@@ -142,17 +142,13 @@ void PlotA::setPlot (int topLeftCornerXPx, int topLeftCornerYPx, int xSpacePx, i
 
     _dot__px = calcDotSizePx();
 
-    int tickThickness = (_dot__px > 12)? 3 : 1;
-
     _cross_x__px = calcCrossXPx(_top_left_x__px);
     _cross_y__px = calcCrossYPx(_top_left_y__px);
 
     _x_axis->moveCrossHairs(_cross_x__px, _cross_y__px);
     _x_axis->setPxPerUnit(_unit_x__px);
-    _x_axis->setTickThickness(tickThickness);
     _y_axis->moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis->setPxPerUnit(_unit_y__px);
-    _y_axis->setTickThickness(tickThickness);
 
     // horizontal length of background lines that extend from the tick marks across the graph.
     _y_axis->setHorizLength(_x_axis->getAxisLengthPx());

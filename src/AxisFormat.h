@@ -15,6 +15,7 @@ public:
     int majTickLengthOutsideChartPx () const;
     int minTickLengthOutsideChartPx () const;
     int tickLengthInsideChartPx () const;
+    int tickThicknessPx () const;
 
     // labels are the numbers along the axis
     int labelHeightPx () const;
@@ -55,6 +56,7 @@ public:
 
 private:
     int _axis_thickness__px{1};
+    int _tick_thickness__px{1};
 
     Letter _label_letter{22, 2, 0.3};
 

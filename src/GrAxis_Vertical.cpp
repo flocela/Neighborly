@@ -77,11 +77,6 @@ void GrAxis_Vertical::setPxPerUnit (int pixels)
 
 }
 
-void GrAxis_Vertical::setTickThickness (int tickThicknessPx) 
-{
-    _axis->setTickThickness(tickThicknessPx);
-}
-
 void GrAxis_Vertical::implimentAddAxisLine (std::vector<Rect>& rects) const
 {
     // Calculate top most pixel.
@@ -112,7 +107,7 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
     int curVal = _axis->getMinVal();
 
     // curPixels describe one tick, it is the first and last pixels covered by the tick.
-    pair<int, int> curPixels = _axis->getPixels(curVal, _axis->getTickThichness__px());
+    pair<int, int> curPixels = _axis->getPixels(curVal, _axis->getTickThickness__px());
 
     // text corresponding to the curVal
     TextRect curText{
@@ -131,7 +126,7 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
         minTickXPx,
         curPixels.first,
         _horiz_line_length__px,
-        _axis->getTickThichness__px()
+        _axis->getTickThickness__px()
     };
 
     // background line corresponding to minor tick. Background lines run across the chart.
@@ -139,7 +134,7 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
         minTickXPx,
         curPixels.first,
         _horiz_line_length__px,
-        _axis->getTickThichness__px()
+        _axis->getTickThickness__px()
     };
 
     // Rect for major tick
@@ -147,7 +142,7 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
         majTickXPx,
         curPixels.first,
         _axis_format.majTickLengthPx(),
-        _axis->getTickThichness__px()
+        _axis->getTickThickness__px()
     };
 
     // Rect for minor tick
@@ -155,7 +150,7 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
         minTickXPx,
         curPixels.first,
         _axis_format.minTickLengthPx(),
-        _axis->getTickThichness__px()
+        _axis->getTickThickness__px()
     };
 
     // Calculate top most pixel.
@@ -164,7 +159,7 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
     // Iterate through values from bottom of axis to top of axis.
     while ( curVal <= _axis->getMaxVal() + _axis->getEndOffsetMultiplier() )
     {   
-        curPixels = _axis->getPixels(curVal, _axis->getTickThichness__px());
+        curPixels = _axis->getPixels(curVal, _axis->getTickThickness__px());
 
         // If _maj_tick_spacing is a multiple of curVal, then this is a major tick.
         if (curVal % _maj_tick_spacing == 0)

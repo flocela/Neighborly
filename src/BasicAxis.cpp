@@ -12,7 +12,6 @@ BasicAxis::BasicAxis(
     int minVal,
     int maxVal,
     int pxPerUnit,
-    int tickThickness,
     int startOffsetMultiplier,
     int endOffsetMultiplier
 ):  
@@ -24,7 +23,6 @@ BasicAxis::BasicAxis(
     _end_val{ forward ? maxVal: minVal},
     _diff{_max_val - _min_val},
     _px_per_unit{forward ? pxPerUnit : -pxPerUnit},
-    _tick_thickness__px{tickThickness},
     _start_offset_m{startOffsetMultiplier},
     _end_offset_m{endOffsetMultiplier}
 {}
@@ -96,7 +94,7 @@ int BasicAxis::getPixelsPerUnit () const
     return _px_per_unit;
 }
 
-int BasicAxis::getTickThichness__px () const
+int BasicAxis::getTickThickness__px () const
 {
     return _tick_thickness__px;
 }
@@ -113,7 +111,7 @@ int BasicAxis::getEndOffsetMultiplier () const
 
 int BasicAxis::getStartPixel () const
 {   
-    // Closest pixel to the cross hairs is at the bottom of the graph, so the second in the pair.
+    // Closest pixel to the cross hairs on the axis.
     return getPixels(
         _start_val + (_forward ? -_start_offset_m : _start_offset_m),
         _tick_thickness__px).first;
@@ -121,7 +119,7 @@ int BasicAxis::getStartPixel () const
 
 int BasicAxis::getEndPixel () const
 {
-    // Farthest pixel to the cross hairs is at the top of the graph, so the first in the pair.
+    // Farthest pixel to the cross hairs on the axis.
     return getPixels(
         _end_val + ( _forward ? _end_offset_m : -_end_offset_m),
         _tick_thickness__px).second;
@@ -141,9 +139,4 @@ void BasicAxis::moveCrossPixel (int pixel)
 void BasicAxis::setPxPerUnit (int pixels)
 {
     _px_per_unit = _forward? pixels: -pixels;
-}
-
-void BasicAxis::setTickThickness (int tickThicknessPx)
-{
-    _tick_thickness__px = tickThicknessPx;
 }

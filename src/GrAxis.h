@@ -50,8 +50,6 @@ public:
     
     // Sets the pixels per unit. Updates the major and minor tick spacing.
     virtual void setPxPerUnit (int pixels) = 0;
-    
-    virtual void setTickThickness (int tickThicknessPx) = 0;
 
 protected:
     GrAxis () = delete;

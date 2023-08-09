@@ -18,7 +18,6 @@ public:
         int minVal,
         int maxVal,
         int pxPerUnit,
-        int tickThickness,
         int startOffsetMultiplier,
         int endOffset
     );
@@ -40,7 +39,7 @@ public:
 
     int getPixelsPerUnit () const override;
 
-    int getTickThichness__px () const override;
+    int getTickThickness__px () const override;
 
     int getStartOffsetMultiplier () const override;
 
@@ -60,7 +59,6 @@ public:
 
     void moveCrossPixel (int pixel) override;
     void setPxPerUnit (int pixels) override;
-    void setTickThickness (int tickThicknessPx) override;
 
 private:
 
@@ -81,7 +79,7 @@ private:
     
     int _diff;
     int _px_per_unit;
-    int _tick_thickness__px;
+    int _tick_thickness__px{1};
     int _start_offset_m;
     int _end_offset_m;
 };

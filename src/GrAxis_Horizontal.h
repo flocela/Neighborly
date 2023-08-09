@@ -59,8 +59,6 @@ public:
 
     // Sets the pixels per unit. Updates the major and minor tick spacing.
     void setPxPerUnit (int pixels) override;
-    
-    void setTickThickness (int tickThicknessPx) override;
 
 protected:
 

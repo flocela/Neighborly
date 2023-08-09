@@ -12,6 +12,8 @@ int AxisFormat::minTickLengthPx () const {return _min_tick_length__px;}
 
 int AxisFormat::tickLengthInsideChartPx () const {return _tick_length_inside_chart__px;}
 
+int AxisFormat::tickThicknessPx () const {return _tick_thickness__px;}
+
 int AxisFormat::labelHeightPx () const {return _label_letter.letterHeight();} 
 
 int AxisFormat::labelLineSpacePx () const {return _label_letter.lineSpace();}

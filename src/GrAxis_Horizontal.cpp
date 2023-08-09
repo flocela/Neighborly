@@ -80,11 +80,6 @@ void GrAxis_Horizontal::setPxPerUnit (int pixels)
     _maj_tick_spacing = calcMajTickSpacing();
 }
 
-void GrAxis_Horizontal::setTickThickness (int tickThicknessPx)
-{
-    _axis->setTickThickness(tickThicknessPx);
-}
-
 void GrAxis_Horizontal::implimentAddAxisLine (std::vector<Rect>& rects) const
 {
     // Calculate top most pixel.
@@ -125,7 +120,7 @@ void GrAxis_Horizontal::implimentAddTicksAndLabels (
         _axis_format.labelLineSpacePx();
 
     // curPixels the first and last pixels covered by one tick.
-    pair<int, int> curPixels = getPixels(curVal, _axis->getTickThichness__px());
+    pair<int, int> curPixels = getPixels(curVal, _axis->getTickThickness__px());
 
     // Text is at the center of the tick.
     int centerOfTick = curPixels.first + (curPixels.second - curPixels.first)/2;
@@ -154,21 +149,21 @@ void GrAxis_Horizontal::implimentAddTicksAndLabels (
     Rect majTick{
         curPixels.first,
         majTickYPx,
-        _axis->getTickThichness__px(),
+        _axis->getTickThickness__px(),
         _axis_format.majTickLengthPx()
     };
 
     Rect minTick{
         curPixels.first,
         minTickYPx,
-        _axis->getTickThichness__px(),
+        _axis->getTickThickness__px(),
         _axis_format.minTickLengthPx()
     };
     
     // Push ticks onto ticks vector, from the left most tick until the right most tick.
     while (curVal <= _axis->getMaxVal() + _axis->getEndOffsetMultiplier())
     {  
-        curPixels = getPixels(curVal, _axis->getTickThichness__px());
+        curPixels = getPixels(curVal, _axis->getTickThickness__px());
 
         // If curVal is divisible by _maj_tick_spacing then tick is a major tick
         if (curVal % _maj_tick_spacing == 0)

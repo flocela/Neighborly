@@ -12,7 +12,6 @@ TEST_CASE("BasicAxis().reverse_axis_dot_size_1 and_2")
         0, // minVal
         4, // maxVal
         5, // pxPerUnit
-        1, // tickThickness
         1, // start offset multiplier
         1  // end offset multplier
     };
@@ -44,7 +43,6 @@ TEST_CASE("BasicAxis.reverse_axis_dot_size_3 and_4")
         0, // minVal
         4, // maxVal
         5, // pxPerUnit
-        3, // tickThickness
         1, // start offset multiplier
         1  // end offset multplier
     };
@@ -76,7 +74,6 @@ TEST_CASE("ForwardAxis.forward_axis_dot_size_1 and_2")
         0, // minVal
         4, // maxVal
         5, // pxPerUnit
-        1, // tickThickness
         1, // start offset multiplier
         1  // end offset multplier
     };
@@ -108,7 +105,6 @@ TEST_CASE("ForwardAxis.forward_axis_dot_size_3 and_4")
         0, // minVal
         4, // maxVal
         5, // pxPerUnit
-        3, // tickThickness
         1, // start offset multiplier
         1  // end offset multplier
     };

@@ -195,7 +195,6 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
                     minXCoord,              // smallest coordinate in the x-direction             
                     maxXCoord,              // largest coordinate in the x-direction
                     0,                      // pixels per unit, use zero for now
-                    1,                      // TODO make tick thickness a variable
                     _x_offset_multiplier,
                     _x_offset_multiplier
                 ),
@@ -210,7 +209,6 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
                     minYCoord,              // smallest coordinate in y-direction
                     maxYCoord,              // largest coordinate in y-direction
                     0,                      // pixels per unit, use zero for now
-                    1,                      // TODO make tick thickness a variable
                     _y_offset_multiplier,
                     _y_offset_multiplier
                 ),
@@ -260,7 +258,6 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
                     0,                         // The first run number is zero.
                     max(0, maxNumOfRuns-1),    // the last run number TODO why do I check for max??
                     0,                         // pixels per unit, use zero for now
-                    1,                         // TODO make tick thickness a variable
                     _x_offset_multiplier,
                     _x_offset_multiplier
                 ),
@@ -275,7 +272,6 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
                     0,                         // smallest number of neighbors for a resident is 0
                     maxNumOfNeighbors,         // largest number of neighbors for a resident
                     0,                         // pixels per unit, use zero for now
-                    1,                         // TODO make tick thickness a variable
                     _y_offset_multiplier,
                     _y_offset_multiplier
                 ),
@@ -322,7 +318,6 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
                     0,                         // Zero is the starting run number.
                     max(0, numberOfRuns-1),    // index of the last run TODO why do I check for max??
                     0,                         // pixels per unit, use zero for now
-                    1,                         // TODO make tick thickness a variable
                     _x_offset_multiplier,
                     _x_offset_multiplier
                 ),
@@ -337,7 +332,6 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
                     0,                         // least possible happiness for a resident
                     100,                       // largest possible happiness for a resident
                     0,                         // pixels per unit, use zero for now
-                    1,                         // TODO make tick thickness a variable
                     _y_offset_multiplier,
                     _y_offset_multiplier
                 ),

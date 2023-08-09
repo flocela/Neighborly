@@ -30,7 +30,7 @@ public:
 
     virtual int getPixelsPerUnit () const = 0;
 
-    virtual int getTickThichness__px () const = 0;
+    virtual int getTickThickness__px () const = 0;
 
     // There is a space between the start of the axis and the first min value given in the
     // constructor. That space is the start offset multiplier times the pixels per unit.
@@ -56,7 +56,6 @@ public:
 
     virtual void moveCrossPixel (int pixel) = 0;
     virtual void setPxPerUnit (int pixels) = 0;
-    virtual void setTickThickness (int tickThicknessPx) = 0;
 };
 
 #endif
