@@ -12,10 +12,11 @@ class GrAxis_Horizontal :public GrAxis
 
 public:
 
+    // yCoordPx is the axis's y-coordinate in pixels. As yCoordPx increases, the axis moves down.
     GrAxis_Horizontal (
         std::unique_ptr<Axis> axis,
         AxisFormat axisFormat,
-        int yCrossPx // y-pixel-value of where x and y axes meet
+        int yCoordPx 
     );
     
     GrAxis_Horizontal () = delete;
@@ -73,7 +74,7 @@ void implimentAddTicksAndLabels (
 
 private:
     AxisFormat _axis_format;
-    int _y_cross__px; // where x and y axes cross, this is the y-coordinate
+    int _y_coord__px; // the axis's y-coordinate in pixels
     int _min_tick_spacing;
     int _maj_tick_spacing;
 

@@ -14,10 +14,11 @@ class GrAxis_Vertical : public GrAxis
 
 public:
 
+    // xCoordPx is the axis's x-coordinate in pixels. As xCoordPx increases, the axis moves right.
     GrAxis_Vertical (
         std::unique_ptr<Axis> axis,
         AxisFormat axisFormat,
-        int x_coordinate__px
+        int xCoordPx
     );
 
     GrAxis_Vertical () = delete;
@@ -73,12 +74,11 @@ protected:
         std::vector<Rect>& ticks,
         std::vector<TextRect>& texts) const override; // number next to tick
 
-
 private:
     // length of horizontal background lines
     int _horiz_line_length__px = 0;
 
-    int _x_cross__px; // where x and y axis meet
+    int _x_coord__px; // the axis's x-coordinate in pixels.
     int _min_tick_spacing; // in units, not pixels
     int _maj_tick_spacing; // in units, not pixels
 

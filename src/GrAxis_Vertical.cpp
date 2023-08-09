@@ -6,10 +6,10 @@ using namespace std;
 GrAxis_Vertical::GrAxis_Vertical (
     unique_ptr<Axis> axis,
     AxisFormat axisFormat,
-    int x_coordinate__px
+    int xCoordPx
 ):
     GrAxis{move(axis), axisFormat},
-    _x_cross__px{x_coordinate__px},
+    _x_coord__px{xCoordPx},
     _min_tick_spacing{calcMinTickSpacing()},
     _maj_tick_spacing{calcMajTickSpacing()}
 {}
@@ -60,7 +60,7 @@ int GrAxis_Vertical::sizeYPx () const
 
 void GrAxis_Vertical::moveCrossHairs (int xPx, int yPx)
 {
-    _x_cross__px = xPx;
+    _x_coord__px = xPx;
     _axis->moveCrossPixel(yPx);
 }
 
@@ -87,9 +87,9 @@ void GrAxis_Vertical::implimentAddAxisLine (std::vector<Rect>& rects) const
     // Calculate top most pixel.
     int topPixel = _axis->getStartPixel();
 
-    // Rectangle represents vertical line.
+    // Rectangle represents vertical line. // TODO this has to take into account the axis thickness.
     Rect rect{
-        _x_cross__px, // top left corner of line, x-coordinate
+        _x_coord__px, // top left corner of line, x-coordinate
         topPixel, // top left corner of line, y-coordinate
         _axis_format.axisThicknessPx(),
         getAxisLengthPx()
@@ -105,8 +105,8 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
     std::vector<TextRect>& texts
 ) const
 {   
-    int majTickXPx = _x_cross__px - _axis_format.majTickLengthOutsideChartPx();
-    int minTickXPx = _x_cross__px - _axis_format.minTickLengthOutsideChartPx();
+    int majTickXPx = _x_coord__px - _axis_format.majTickLengthOutsideChartPx();
+    int minTickXPx = _x_coord__px - _axis_format.minTickLengthOutsideChartPx();
 
     // The first value will be the minimum value given in the constructor.
     int curVal = _axis->getMinVal();

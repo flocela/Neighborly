@@ -244,20 +244,20 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
         make_unique<Title_Basic>(_chart_title_letter, _div_chart_title),
         make_unique<GrColorKey_Basic>(_chart_key_letter, _colors, moods),
         make_unique<PlotA>(
-            rightColFormat,                   // plot format for charts on right columnclear
+            rightColFormat,                   // the plot format used for charts in the right column
             make_unique<GrAxis_Horizontal>(
                 make_unique<BasicAxis>(
                     true,                      // axis values increase as window's coordinates increase
                     0,                         // starting pixel for x-axis, use zero for now
-                    0,                         // Zero is the starting run number.
-                    max(0, maxNumOfRuns-1),    // index of the last run TODO why do I check for max??
+                    0,                         // The first run number is zero.
+                    max(0, maxNumOfRuns-1),    // the last run number TODO why do I check for max??
                     0,                         // pixels per unit, use zero for now
                     1,                         // TODO make tick thickness a variable
                     _x_offset_multiplier,
                     _x_offset_multiplier
                 ),
                 _axis_format_X,
-                0                              // x-axis's x-coordinate (pixel) // TODO better note
+                0                              // y-coordinate for x-axis, use zero for now.
             ),
             make_unique<GrAxis_Vertical>(
                 make_unique<BasicAxis>(
@@ -271,9 +271,9 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
                     _y_offset_multiplier
                 ),
                 axisYFormatForDivChart,
-                0                              // y-axis's x-coordinate (pixel) // TODO better note
+                0                              // x-coordinate for y-axis, use zero for now
             )
-        ),                                      // end of plot's constructor call
+        ),                                      
         _x_center__px + _col_inside_border__px, // top left corner of chart, x-coordinate
         topLeftYPx,                             // top left corner of chart, y-coordinate
         _chart_space_x__px,                     // space available, x-direction

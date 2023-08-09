@@ -8,9 +8,9 @@ using namespace std;
 GrAxis_Horizontal::GrAxis_Horizontal (
     std::unique_ptr<Axis> axis,
     AxisFormat axisFormat,
-    int yCrossPx // y-pixel-value of where x and y axes meet
+    int yCoordPx
 ): GrAxis{move(axis), axisFormat},
-    _y_cross__px{yCrossPx},
+    _y_coord__px{yCoordPx},
     _min_tick_spacing{calcMinTickSpacing()},
     _maj_tick_spacing{calcMajTickSpacing()}
 {}
@@ -62,7 +62,7 @@ int GrAxis_Horizontal::sizeYPx () const
 void GrAxis_Horizontal::moveCrossHairs (int xPx, int yPx)
 {
     _axis->moveCrossPixel(xPx);
-    _y_cross__px = yPx;
+    _y_coord__px = yPx;
 }
 
 void GrAxis_Horizontal::setHorizLength (int horizLengthPx)
@@ -91,7 +91,7 @@ void GrAxis_Horizontal::implimentAddAxisLine (std::vector<Rect>& rects) const
     // Rectangle represents vertical line.
     Rect rect{
         leftPixel,      // top left corner of line, x-coordinate
-        _y_cross__px,   // top left corner of line, y-coordinate
+        _y_coord__px,   // top left corner of line, y-coordinate
         _axis->getAxisLengthPx(),
         _axis_format.axisThicknessPx()
     };
@@ -113,7 +113,7 @@ void GrAxis_Horizontal::implimentAddTicksAndLabels (
 
     // topOfLabelYPx is the top of the number shown.
     int topOfNumberYPx =
-        _y_cross__px +
+        _y_coord__px +
         _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.labelLineSpacePx();
 
@@ -135,7 +135,7 @@ void GrAxis_Horizontal::implimentAddTicksAndLabels (
     };
 
     // Top of tick is inside the chart.
-    int tickYPx = _y_cross__px - _axis_format.tickLengthInsideChartPx();
+    int tickYPx = _y_coord__px - _axis_format.tickLengthInsideChartPx();
 
     Rect majTick{
         curPixels.first,
