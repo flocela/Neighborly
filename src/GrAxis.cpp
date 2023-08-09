@@ -26,5 +26,6 @@ void GrAxis::print (Renderer* renderer) const
     }
 
     renderer->fillBlocks(ticks, _axis_format.tickColor());
+    
     renderer->renderTexts(texts);
 }

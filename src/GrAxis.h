@@ -47,6 +47,8 @@ public:
     
     virtual void setTickThickness (int tickThicknessPx) = 0;
 
+    virtual int getCentralValuePx () const = 0;
+
 protected:
     GrAxis () = delete;
     GrAxis (const GrAxis& o) = default;

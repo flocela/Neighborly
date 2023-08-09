@@ -11,77 +11,78 @@
 // Vertical axis, numbers run from bottom to top. Labels are on the left.
 class GrAxis_Vertical : public GrAxis
 {
-    public:
-        GrAxis_Vertical (
-            std::unique_ptr<Axis> axis,
-            AxisFormat axisFormat,
-            int x_coordinate__px
-        );
-        GrAxis_Vertical () = delete;
-        GrAxis_Vertical (const GrAxis_Vertical& o) = default;
-        GrAxis_Vertical (GrAxis_Vertical&& o) noexcept = default;
-        GrAxis_Vertical& operator= (const GrAxis_Vertical& o) = default;
-        GrAxis_Vertical& operator=(GrAxis_Vertical&& o) noexcept = default;
-        ~GrAxis_Vertical () noexcept = default;
 
-        int getAxisLengthPx () const override;
+public:
 
-        // The labels are the numbers to the left of the axis, but their length is more
-        // than just the number. The label length is in the x-dirction.
-        // It is the length of the digits in the label plus
-        // the space between the label and the tick plus
-        // the length of the tick outside the chart.
-        // The length is in the x direction.
-        int getLabelLengthPx () const override;
+    GrAxis_Vertical (
+        std::unique_ptr<Axis> axis,
+        AxisFormat axisFormat,
+        int x_coordinate__px
+    );
 
-        // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
-        // would be {1, 5}.
-        std::pair<int, int> getPixels (double yVal, int dotSize) const override;
-        
-        // The label length plus the axis thickness.
-        int sizeXPx() const override;
-        
-        // Same as getAxisLengthPx()
-        int sizeYPx() const override;
-        
-        void moveCrossHairs (int xPx, int yPx) override;
+    GrAxis_Vertical () = delete;
+    GrAxis_Vertical (const GrAxis_Vertical& o) = default;
+    GrAxis_Vertical (GrAxis_Vertical&& o) noexcept = default;
+    GrAxis_Vertical& operator= (const GrAxis_Vertical& o) = default;
+    GrAxis_Vertical& operator=(GrAxis_Vertical&& o) noexcept = default;
+    ~GrAxis_Vertical () noexcept = default;
 
-        // There are background horizontal lines that run across the chart. They
-        // line up with the major and minor tick marks.
-        void setHorizLength (int horizLengthPx) override;
-        
-        // Sets the pixels per unit. Updates the major and minor tick spacing.
-        void setPxPerUnit (int pixels) override;
-        
-        void setTickThickness (int tickThicknessPx) override;
+    int getAxisLengthPx () const override;
+
+    int getCentralValuePx () const override;
+
+    // Labels are the numbers to the left of the axis, but their length is more than just the
+    // number.
+    // It is the length of the digits in the label plus the space between the label and the tick
+    // plus the length of the tick outside the chart.
+    int getLabelLengthPx () const override;
+
+    // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
+    // would be {1, 5}.
+    std::pair<int, int> getPixels (double yVal, int dotSize) const override;
     
-    protected:
+    // The label length plus the axis thickness.
+    int sizeXPx() const override;
+    
+    // Same as getAxisLengthPx()
+    int sizeYPx() const override;
+    
+    void moveCrossHairs (int xPx, int yPx) override;
 
-        // This is the axis vertical line.
-        void implimentAddAxisLine (std::vector<Rect>& rects) const override;
+    // There are background horizontal lines that run across the chart. They
+    // line up with the major and minor tick marks.
+    void setHorizLength (int horizLengthPx) override;
+    
+    // Sets the pixels per unit. Updates the major and minor tick spacing.
+    void setPxPerUnit (int pixels) override;
+    
+    void setTickThickness (int tickThicknessPx) override;
 
-        void implimentAddTicksAndLabels (
-            std::vector<Rect>& backgroundLinesMaj, // horizontal lines that cross the chart
-            std::vector<Rect>& backgroundLinesMin, // horizontal lines that cross the chart
-            std::vector<Rect>& ticks,
-            std::vector<TextRect>& texts) const override; // number next to tick
+protected:
+
+    // This is the axis vertical line.
+    void implimentAddAxisLine (std::vector<Rect>& rects) const override;
+
+    void implimentAddTicksAndLabels (
+        std::vector<Rect>& backgroundLinesMaj, // horizontal lines that cross the chart
+        std::vector<Rect>& backgroundLinesMin, // horizontal lines that cross the chart
+        std::vector<Rect>& ticks,
+        std::vector<TextRect>& texts) const override; // number next to tick
 
 
-    private:
-        // length of horizontal background lines
-        int _horiz_line_length__px = 0;
+private:
+    // length of horizontal background lines
+    int _horiz_line_length__px = 0;
 
-        int _x_cross__px; // where x and y axis meet
-        int _min_tick_spacing; // in units, not pixels
-        int _maj_tick_spacing; // in units, not pixels
+    int _x_cross__px; // where x and y axis meet
+    int _min_tick_spacing; // in units, not pixels
+    int _maj_tick_spacing; // in units, not pixels
 
-        int _text_spacer = 3; // space to the right of labels, and to the left of tick marks
+    int _text_spacer = 3; // space to the right of labels, and to the left of tick marks
 
-        
+    int calcMinTickSpacing () const;
 
-        int calcMinTickSpacing () const;
-
-        int calcMajTickSpacing () const;
+    int calcMajTickSpacing () const;
         
 };
 

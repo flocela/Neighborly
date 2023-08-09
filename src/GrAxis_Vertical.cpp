@@ -19,6 +19,11 @@ int GrAxis_Vertical::getAxisLengthPx () const
     return _axis->getAxisLengthPx();
 }
 
+int GrAxis_Vertical::getCentralValuePx () const
+{
+    return _axis->getCenterValPx();
+}
+
 int GrAxis_Vertical::getLabelLengthPx () const
 {   
     // Three is max number of digits in the y-axis label.
@@ -150,6 +155,7 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
     while ( curVal <= _axis->getMaxVal() + _axis->getEndOffsetMultiplier() )
     {   
         curPixels = _axis->getPixels(curVal, _axis->getTickThichness__px());
+
         // If _maj_tick_spacing is a multiple of curVal, then this is a major tick.
         if (curVal % _maj_tick_spacing == 0)
         {
@@ -174,8 +180,6 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
         }
 
         ++curVal;
-        
-        cout << curPixels.first << endl;
     }
 }
 

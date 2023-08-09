@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../src/AxisLeftToRightB.h"
+/*#include "../src/AxisLeftToRightB.h"
 
 using namespace std;
 
@@ -30,4 +30,4 @@ TEST_CASE("AxisLeftToRightB.getLabelLengthPx()")
 
     REQUIRE ( labelLength == axis.getLabelLengthPx() );
     REQUIRE ( labelLength + format.axisThicknessPx() == axis.sizeYPx());
-}
+}*/

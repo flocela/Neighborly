@@ -13,8 +13,8 @@ PlotA::PlotA (
     int maxY,
     int xSpacePx,
     int ySpacePx,
+    unique_ptr<GrAxis_Horizontal> xAxis,
     unique_ptr<GrAxis_Vertical> yAxis
-    unique_ptr<GrAxis_Horizontal> xAxis
 ):
     _a_format_x{plotFormat.axisFormatX()},
     _a_format_y{plotFormat.axisFormatY()},
@@ -31,17 +31,7 @@ PlotA::PlotA (
     _y_space__px{ySpacePx},
     _x_diff{maxX - minX},
     _y_diff{maxY - minY},
-    _x_axis{
-        _a_format_x,
-        0, // use zero for default x_coordinate__px
-        0, // use zero for default y_coordinate__px
-        _min_x,
-        _max_x,
-        0, // use zero for pxPerUnit
-        1, // use 1 for tickThickness
-        plotFormat.startOffsetM(),
-        plotFormat.endOffsetM()
-    },
+    _x_axis{move(xAxis)},
     _y_axis{move(yAxis)}
 {
     // Update attributes that are affected by change to top left corner coordinate and
@@ -55,25 +45,27 @@ PlotA::PlotA (
     int maxX,
     int minY, 
     int maxY,
-    unique_ptr<GrAxis_Vertical> yAxis,
-    unique_ptr<GrAxis_Horizontal> xAxis
-): PlotA(
-    plotFormat,
-    0,
-    0,
-    minX,
-    maxX,
-    minY,
-    maxY,
-    0,
-    0,
-    move(yAxis)
-   )
+    unique_ptr<GrAxis_Horizontal> xAxis,
+    unique_ptr<GrAxis_Vertical> yAxis
+):
+    PlotA(
+        plotFormat,
+        0,         
+        0,         
+        minX,
+        maxX,
+        minY,
+        maxY,
+        0,
+        0,
+        move(xAxis),
+        move(yAxis)
+    )
 {}
 
 int PlotA::getCenterValueOfXAxisPx () const
 {   
-    return _x_axis.getCenterValXPx();
+    return _x_axis->getCentralValuePx();
 }
 
 int PlotA::getDotSizePx () const
@@ -114,12 +106,12 @@ int PlotA::getYUnitSizePx () const
 int PlotA::sizeYPx() const
 {  
     // subraction takes care of double counting of horizontal axis' thickness.
-    return _y_axis->sizeYPx() + _x_axis.sizeYPx() - (_a_format_x.axisThicknessPx()/2);
+    return _y_axis->sizeYPx() + _x_axis->sizeYPx() - (_a_format_x.axisThicknessPx()/2);
 }
 
 int PlotA::sizeXPx () const
 {
-    return _y_axis->sizeXPx() + _x_axis.sizeXPx() - (_a_format_y.axisThicknessPx()/2);
+    return _y_axis->sizeXPx() + _x_axis->sizeXPx() - (_a_format_y.axisThicknessPx()/2);
 }
 
 void PlotA::print (
@@ -131,7 +123,7 @@ void PlotA::print (
     // Only print axes once.
     if (!_printed_axes || printAxes)
     {
-        _x_axis.print(renderer);
+        _x_axis->print(renderer);
         _y_axis->print(renderer);
         _printed_axes = true;
     }
@@ -140,7 +132,7 @@ void PlotA::print (
     for (auto& point : points)
     {
         // Dot is a square. Convert point's value to the coordinate of the dot's top left corner.
-        int x = _x_axis.getPixels(point.x(), _dot__px).first;                 
+        int x = _x_axis->getPixels(point.x(), _dot__px).first;                 
         int y = _y_axis->getPixels(point.y(), _dot__px).first;
 
         renderer->fillBlock(
@@ -170,15 +162,15 @@ void PlotA::setPlot (int topLeftCornerXPx, int topLeftCornerYPx, int xSpacePx, i
     _cross_x__px = calcCrossXPx(_top_left_x__px);
     _cross_y__px = calcCrossYPx(_top_left_y__px);
 
-    _x_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
-    _x_axis.setPxPerUnit(_unit_x__px);
-    _x_axis.setTickThickness(tickThickness);
+    _x_axis->moveCrossHairs(_cross_x__px, _cross_y__px);
+    _x_axis->setPxPerUnit(_unit_x__px);
+    _x_axis->setTickThickness(tickThickness);
     _y_axis->moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis->setPxPerUnit(_unit_y__px);
     _y_axis->setTickThickness(tickThickness);
 
     // horizontal length of background lines that extend from the tick marks across the graph.
-    _y_axis->setHorizLength(_x_axis.getAxisLengthPx());
+    _y_axis->setHorizLength(_x_axis->getAxisLengthPx());
 }
 
 pair<int, int> PlotA::calcUnitSizeXAndYPx () const
@@ -190,7 +182,7 @@ pair<int, int> PlotA::calcUnitSizeXAndYPx () const
     xUnitSize = max(xUnitSize, _min_unit__px);
 
     // Calculate unit size in y-direction.
-    int allowableYAxisLengthPx = _y_space__px - _x_axis.sizeYPx();
+    int allowableYAxisLengthPx = _y_space__px - _x_axis->sizeYPx();
     int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
     yUnitSize = max(yUnitSize, _min_unit__px);
