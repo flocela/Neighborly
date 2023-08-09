@@ -37,6 +37,16 @@ pair<int, int>  GrAxis_Vertical::getPixels (double yVal, int dotSize) const
 {   
     return _axis->getPixels(yVal, dotSize);
 }
+   
+int GrAxis_Vertical::getMinVal () const
+{
+    return _axis->getMinVal();
+}
+
+int GrAxis_Vertical::getMaxVal () const
+{
+    return _axis->getMaxVal();
+}
 
 int GrAxis_Vertical::sizeXPx () const
 {  

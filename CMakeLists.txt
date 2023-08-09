@@ -75,10 +75,7 @@ target_link_libraries(${PROJECT_NAME} SDL2::TTF)
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
 file(GLOB test_SRCS tests/*.cpp
-src/AxisBottomToTopL.cpp
-src/AxisLeftToRightB.cpp
 src/AxisLeftToRightT.cpp
-src/AxisTopToBottomL.cpp
 src/AxisFormat.cpp
 src/BasicAxis.cpp
 src/City_Grid.cpp

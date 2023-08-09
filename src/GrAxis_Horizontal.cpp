@@ -9,8 +9,7 @@ GrAxis_Horizontal::GrAxis_Horizontal (
     std::unique_ptr<Axis> axis,
     AxisFormat axisFormat,
     int yCrossPx // y-pixel-value of where x and y axes meet
-): 
-    GrAxis{move(axis), axisFormat},
+): GrAxis{move(axis), axisFormat},
     _y_cross__px{yCrossPx},
     _min_tick_spacing{calcMinTickSpacing()},
     _maj_tick_spacing{calcMajTickSpacing()}
@@ -38,6 +37,16 @@ int GrAxis_Horizontal::getLabelLengthPx () const
 pair<int, int> GrAxis_Horizontal::getPixels (double xVal, int dotSize) const
 {   
     return _axis->getPixels(xVal, dotSize);
+}
+   
+int GrAxis_Horizontal::getMinVal () const
+{
+    return _axis->getMinVal();
+}
+
+int GrAxis_Horizontal::getMaxVal () const
+{
+    return _axis->getMaxVal();
 }
 
 int GrAxis_Horizontal::sizeXPx () const

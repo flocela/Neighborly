@@ -25,10 +25,6 @@ public:
         PlotFormat plotFormat,
         int topLeftXPx, // top left corner of plot
         int topLeftYPx, // top left corner of plot
-        int minX, // minimum data value on x-axis
-        int maxX, // maximum data value on x-axis
-        int minY, // minimum data value on y-axis
-        int maxY, // maximum data value on y-axis
         int xSpacePx, // allowable space to put the axes (including labels)
         int ySpacePx,  // allowable space to put the axes (including labels)
         std::unique_ptr<GrAxis_Horizontal> xAxis,
@@ -41,10 +37,6 @@ public:
     // This is a temporary plot. Use setPlot() to finish it.
     PlotA (
         PlotFormat plotFormat,
-        int minX,
-        int maxX,
-        int minY, 
-        int maxY,
         std::unique_ptr<GrAxis_Horizontal> xAxis,
         std::unique_ptr<GrAxis_Vertical> yAxis
     );
@@ -115,7 +107,7 @@ private:
     int _min_x = 0;
     int _min_y = 0;
     
-    // largest values on the axes with data. These values are given in the constructor.
+    // largest values on the axes. These values are given in the constructor.
     // Note: the axes stretch past the largest value with data.
     // The largest value on the axes will be _max_y + _end_offset_m.
     int _max_x = 0;

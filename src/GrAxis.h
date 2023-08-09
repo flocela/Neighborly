@@ -12,9 +12,11 @@ class GrAxis
 public:
 
     GrAxis (std::unique_ptr<Axis> axis, AxisFormat axisFormat);
-    ~GrAxis () noexcept = default;
+    virtual ~GrAxis () noexcept = default;
 
     virtual int getAxisLengthPx () const = 0;
+
+    virtual int getCentralValuePx () const = 0;
 
     // The labels are the numbers to the left of the axis, but their length is more
     // than just the number.
@@ -27,6 +29,10 @@ public:
     // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
     // would be {1, 5}.
     virtual std::pair<int, int> getPixels (double yVal, int dotSize) const = 0;
+
+    virtual int getMinVal () const = 0;
+
+    virtual int getMaxVal () const = 0;
     
     void print (Renderer* renderer) const;
     
@@ -46,8 +52,6 @@ public:
     virtual void setPxPerUnit (int pixels) = 0;
     
     virtual void setTickThickness (int tickThicknessPx) = 0;
-
-    virtual int getCentralValuePx () const = 0;
 
 protected:
     GrAxis () = delete;

@@ -244,11 +244,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
         make_unique<Title_Basic>(_chart_title_letter, _div_chart_title),
         make_unique<GrColorKey_Basic>(_chart_key_letter, _colors, moods),
         make_unique<PlotA>(
-            rightColFormat,                   // plot format for charts on right column
-            0,                                // starting run number
-            max(0, maxNumOfRuns - 1),         // last run number
-            0,                                // smallest number of neighbors for a resident is 0
-            maxNumOfNeighbors,                // largest number of neighbors for a resident
+            rightColFormat,                   // plot format for charts on right columnclear
             make_unique<GrAxis_Horizontal>(
                 make_unique<BasicAxis>(
                     true,                      // axis values increase as window's coordinates increase
@@ -312,10 +308,6 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
         make_unique<GrColorKey_Basic>( _chart_key_letter, _colors, moods),
         make_unique<PlotA>(
             rightColFormat,                   // plot format for charts on right column
-            0,                                // starting run number
-            max(0, numberOfRuns - 1),         // last run number
-            0,                                // least possible happiness for a resident 
-            100,                              // largest possible happiness for a resident
             make_unique<GrAxis_Horizontal>(
                 make_unique<BasicAxis>(
                     true,                      // axis values increase as window's coordinates increase

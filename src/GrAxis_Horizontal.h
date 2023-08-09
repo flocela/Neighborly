@@ -9,70 +9,77 @@
 // Renders axis from left to right with title at bottom (used for horizontal axes).
 class GrAxis_Horizontal :public GrAxis
 {
-    public:
-        GrAxis_Horizontal (
-            std::unique_ptr<Axis> axis,
-            AxisFormat axisFormat,
-            int yCrossPx // y-pixel-value of where x and y axes meet
-        );
-        GrAxis_Horizontal () = delete;
-        GrAxis_Horizontal (const GrAxis_Horizontal& o) = default;
-        GrAxis_Horizontal (GrAxis_Horizontal&& o) noexcept = default;
-        GrAxis_Horizontal& operator= (const GrAxis_Horizontal& o) = default;
-        GrAxis_Horizontal& operator=(GrAxis_Horizontal&& o) noexcept = default;
-        ~GrAxis_Horizontal () noexcept = default;
 
-        int getAxisLengthPx() const override;
+public:
 
-        int getCentralValuePx () const override;
+    GrAxis_Horizontal (
+        std::unique_ptr<Axis> axis,
+        AxisFormat axisFormat,
+        int yCrossPx // y-pixel-value of where x and y axes meet
+    );
+    
+    GrAxis_Horizontal () = delete;
+    GrAxis_Horizontal (const GrAxis_Horizontal& o) = default;
+    GrAxis_Horizontal (GrAxis_Horizontal&& o) noexcept = default;
+    GrAxis_Horizontal& operator= (const GrAxis_Horizontal& o) = default;
+    GrAxis_Horizontal& operator=(GrAxis_Horizontal&& o) noexcept = default;
+    ~GrAxis_Horizontal () noexcept = default;
 
-        // The labels are the numbers below the axis. Their length includes more than just the
-        // number. Length is a vertical length (y-direction).
-        // It includes the length of the tick outside the chart plus
-        // the space between the bottom of the tick and the number plus
-        // the height of the number.
-        int getLabelLengthPx () const override;
+    int getAxisLengthPx() const override;
 
-        // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
-        // would be {1, 5}.
-        std::pair<int, int> getPixels (double xVal, int dotSize) const override;
+    int getCentralValuePx () const override;
 
-        int sizeXPx() const override;
+    // The labels are the numbers below the axis. Their length includes more than just the
+    // number. Length is a vertical length (y-direction).
+    // It includes the length of the tick outside the chart plus
+    // the space between the bottom of the tick and the number plus
+    // the height of the number.
+    int getLabelLengthPx () const override;
 
-        // The label length plus the axis thickness.
-        int sizeYPx() const override;
+    // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
+    // would be {1, 5}.
+    std::pair<int, int> getPixels (double xVal, int dotSize) const override;
 
-        void moveCrossHairs (int xPx, int yPx) override;
+    int getMinVal () const override;
 
-        // There are background horizontal lines that run across the chart. They
-        // line up with the major and minor tick marks.
-        void setHorizLength (int horizLengthPx) override;
+    int getMaxVal () const override;
 
-        // Sets the pixels per unit. Updates the major and minor tick spacing.
-        void setPxPerUnit (int pixels) override;
-        
-        void setTickThickness (int tickThicknessPx) override;
+    int sizeXPx() const override;
 
-    protected:
+    // The label length plus the axis thickness.
+    int sizeYPx() const override;
 
-    // This is the axis horizontal line.
-    void implimentAddAxisLine (std::vector<Rect>& rects) const override;
+    void moveCrossHairs (int xPx, int yPx) override;
 
-    void implimentAddTicksAndLabels (
-        std::vector<Rect>& backgroundLinesMaj, // horizontal lines that cross the chart
-        std::vector<Rect>& backgroundLinesMin, // horizontal lines that cross the chart
-        std::vector<Rect>& ticks,
-        std::vector<TextRect>& texts) const override; // number next to tick
+    // There are background horizontal lines that run across the chart. They
+    // line up with the major and minor tick marks.
+    void setHorizLength (int horizLengthPx) override;
 
-    private:
-        AxisFormat _axis_format;
-        int _y_cross__px; // where x and y axes cross, this is the y-coordinate
-        int _min_tick_spacing;
-        int _maj_tick_spacing;
+    // Sets the pixels per unit. Updates the major and minor tick spacing.
+    void setPxPerUnit (int pixels) override;
+    
+    void setTickThickness (int tickThicknessPx) override;
 
-        int calcMinTickSpacing () const;
-        
-        int calcMajTickSpacing () const;
+protected:
+
+// This is the axis horizontal line.
+void implimentAddAxisLine (std::vector<Rect>& rects) const override;
+
+void implimentAddTicksAndLabels (
+    std::vector<Rect>& backgroundLinesMaj, // horizontal lines that cross the chart
+    std::vector<Rect>& backgroundLinesMin, // horizontal lines that cross the chart
+    std::vector<Rect>& ticks,
+    std::vector<TextRect>& texts) const override; // number next to tick
+
+private:
+    AxisFormat _axis_format;
+    int _y_cross__px; // where x and y axes cross, this is the y-coordinate
+    int _min_tick_spacing;
+    int _maj_tick_spacing;
+
+    int calcMinTickSpacing () const;
+    
+    int calcMajTickSpacing () const;
 
 };
 
