@@ -188,7 +188,27 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
         _colors,
         make_unique<Title_Basic>(_chart_title_letter,_city_chart_title),
         make_unique<GrColorKey_Basic>(_chart_key_letter, _colors, moods),
-        make_unique<PlotB>(cityPlotFormat, minXCoord, maxXCoord, minYCoord, maxYCoord),
+        make_unique<PlotB>(
+            cityPlotFormat,
+            minXCoord,
+            maxXCoord,
+            minYCoord,
+            maxYCoord,
+            make_unique<GrAxis_Vertical>(
+                make_unique<BasicAxis>(
+                    true,
+                    0,                         // starting pixel for y-axis, use zero for now
+                    minYCoord,                 // smallest coordinate in y-direction
+                    maxYCoord,                 // largest coordinate in y-direction
+                    0,                         // pixels per unit, use zero for now
+                    1,                         // TODO make tick thickness a variable
+                    _y_offset_multiplier,
+                    _y_offset_multiplier
+                ),
+                _axis_format_Y,
+                0                              // y-axis's x-coordinate (pixel), use zero for now
+            )
+        ),
         _side_borders__px,  // top left corner of chart, x-value
         topLeftYPx,         // top left corner of chart, y-value
         _chart_space_x__px, // space available, x-direction
@@ -229,8 +249,12 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             max(0, maxNumOfRuns - 1),         // last run number
             0,                                // smallest number of neighbors for a resident is 0
             maxNumOfNeighbors,                // largest number of neighbors for a resident
+            make_unique<GrAxis_Horizontal>(
+                
+            )
             make_unique<GrAxis_Vertical>(
-                make_unique<ReverseAxis>(
+                make_unique<BasicAxis>(
+                    false,                     // axis values increase as window's coordinates decrease
                     0,                         // starting pixel for y-axis, use zero for now
                     0,                         // smallest number of neighbors for a resident is 0
                     maxNumOfNeighbors,         // largest number of neighbors for a resident
@@ -275,14 +299,15 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
         _colors,
         make_unique<Title_Basic>( _chart_title_letter, _hap_chart_title),
         make_unique<GrColorKey_Basic>( _chart_key_letter, _colors, moods),
-         make_unique<PlotA>(
+        make_unique<PlotA>(
             rightColFormat,                   // plot format for charts on right column
             0,                                // starting run number
             max(0, numberOfRuns - 1),         // last run number
             0,                                // least possible happiness for a resident 
             100,                              // largest possible happiness for a resident
             make_unique<GrAxis_Vertical>(
-                make_unique<ReverseAxis>(
+                make_unique<BasicAxis>(
+                    false,                     // axis values increase as window's coordinates decrease
                     0,                         // starting pixel for y-axis, use zero for now
                     0,                         // least possible happiness for a resident
                     100,                       // largest possible happiness for a resident

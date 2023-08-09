@@ -5,7 +5,7 @@
 #include "AxisFormat.h"
 #include "GrAxis.h"
 #include "Renderer.h"
-#include "ReverseAxis.h"
+#include "BasicAxis.h"
 #include "TextRect.h"
 
 // Vertical axis, numbers run from bottom to top. Labels are on the left.

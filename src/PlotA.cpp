@@ -14,6 +14,7 @@ PlotA::PlotA (
     int xSpacePx,
     int ySpacePx,
     unique_ptr<GrAxis_Vertical> yAxis
+    unique_ptr<GrAxis_Horizontal> xAxis
 ):
     _a_format_x{plotFormat.axisFormatX()},
     _a_format_y{plotFormat.axisFormatY()},
@@ -54,7 +55,8 @@ PlotA::PlotA (
     int maxX,
     int minY, 
     int maxY,
-    unique_ptr<GrAxis_Vertical> yAxis
+    unique_ptr<GrAxis_Vertical> yAxis,
+    unique_ptr<GrAxis_Horizontal> xAxis
 ): PlotA(
     plotFormat,
     0,

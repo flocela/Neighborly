@@ -3,8 +3,8 @@
 
 #include "AxisFormat.h"
 #include "AxisLeftToRightT.h"
-#include "AxisTopToBottomL.h"
 #include "Coordinate.h"
+#include "GrAxis_Vertical.h"
 #include "Point.h"
 #include "Plot.h"
 #include "PlotFormat.h"
@@ -12,6 +12,7 @@
 // Plot contains the x and y axis, their labels, and the data points inside the graph.
 // x-axis runs horizontally from left to right. Labels are on top of axis.
 // y-axis runs vertically from top to bottom. Labels are on the left of the axis.
+// The unit size in the x and y directions is the same.
 class PlotB: public Plot
 {
 
@@ -30,7 +31,8 @@ public:
         int minY, 
         int maxY,
         int xSpacePx,
-        int ySpacePx
+        int ySpacePx,
+        std::unique_ptr<GrAxis_Vertical> yAxis
     );
 
     // Creates a plot with top left corner at (0,0) pixels.
@@ -41,7 +43,8 @@ public:
         int minX,
         int maxX,
         int minY, 
-        int maxY
+        int maxY,
+        std::unique_ptr<GrAxis_Vertical> yAxis
     );
 
     PlotB () = delete;
@@ -132,7 +135,7 @@ private:
     int _cross_y__px; 
 
     AxisLeftToRightT _x_axis;
-    AxisTopToBottomL _y_axis;
+    std::unique_ptr<GrAxis_Vertical> _y_axis;
 
     // Only print axes once, they don't change.
     mutable bool _printed_axes = false;

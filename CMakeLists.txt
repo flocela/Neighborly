@@ -80,13 +80,13 @@ src/AxisLeftToRightB.cpp
 src/AxisLeftToRightT.cpp
 src/AxisTopToBottomL.cpp
 src/AxisFormat.cpp
+src/BasicAxis.cpp
 src/City_Grid.cpp
 src/CityFactory_Grid.cpp
 src/CityState_Simple.cpp
 src/Color.cpp
 src/Converter.cpp
 src/Coordinate.cpp
-src/ForwardAxis.cpp
 src/GrAxis.cpp
 src/GrAxis_Vertical.cpp
 src/HappinessFunc_Falling.cpp
@@ -110,7 +110,6 @@ src/ResidentTemplate_UsingFunction.cpp
 src/Resident_UsingFunction.cpp
 src/Resident.cpp
 src/ResPerHouse.cpp
-src/ReverseAxis.cpp
 src/RunMetrics.cpp
 src/SetOfHousesPerHouse.cpp
 src/Simulator_Basic.cpp

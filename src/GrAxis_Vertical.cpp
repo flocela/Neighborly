@@ -7,10 +7,11 @@ GrAxis_Vertical::GrAxis_Vertical (
     unique_ptr<Axis> axis,
     AxisFormat axisFormat,
     int x_coordinate__px
-): GrAxis{move(axis), axisFormat},
-   _x_cross__px{x_coordinate__px},
-   _min_tick_spacing{calcMinTickSpacing()},
-   _maj_tick_spacing{calcMajTickSpacing()}
+):
+    GrAxis{move(axis), axisFormat},
+    _x_cross__px{x_coordinate__px},
+    _min_tick_spacing{calcMinTickSpacing()},
+    _maj_tick_spacing{calcMajTickSpacing()}
 {}
 
 int GrAxis_Vertical::getAxisLengthPx () const
@@ -69,7 +70,7 @@ void GrAxis_Vertical::setTickThickness (int tickThicknessPx)
 void GrAxis_Vertical::implimentAddAxisLine (std::vector<Rect>& rects) const
 {
     // Calculate top most pixel.
-    int topPixel = _axis->getEndPixel();
+    int topPixel = _axis->getStartPixel();
 
     // Rectangle represents vertical line.
     Rect rect{
@@ -144,10 +145,11 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
 
     // Calculate top most pixel.
     int topMostPixelY = _axis->getEndPixel();
-
+    cout << "topMostPixelY, curPixels.first: " << topMostPixelY << ", " << curPixels.first << endl;;
     // Iterate through values from bottom of axis to top of axis.
-    while ( curPixels.first >= topMostPixelY )
+    while ( curVal <= _axis->getMaxVal() + _axis->getEndOffsetMultiplier() )
     {   
+        curPixels = _axis->getPixels(curVal, _axis->getTickThichness__px());
         // If _maj_tick_spacing is a multiple of curVal, then this is a major tick.
         if (curVal % _maj_tick_spacing == 0)
         {
@@ -172,7 +174,8 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
         }
 
         ++curVal;
-        curPixels = _axis->getPixels(curVal, _axis->getTickThichness__px());
+        
+        cout << curPixels.first << endl;
     }
 }
 

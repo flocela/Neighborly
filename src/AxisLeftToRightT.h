@@ -2,7 +2,7 @@
 #define AXIS_LEFT_TO_RIGHT_T__H
 
 #include "AxisFormat.h"
-#include "ForwardAxis.h"
+#include "BasicAxis.h"
 #include "Renderer.h"
 #include "TextRect.h"
 
@@ -60,7 +60,7 @@ class AxisLeftToRightT
 
     private:
         AxisFormat _axis_format;
-        ForwardAxis _forward_axis;
+        BasicAxis _axis;
 
         int _y_cross__px; // where x and y axes cross, this is the y-coordinate
         int _min_tick_spacing;

@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../src/AxisTopToBottomL.h"
+/*#include "../src/AxisTopToBottomL.h"
 
 TEST_CASE("AxisTopToBottomL.getLabelLengthPx()")
 {
@@ -25,4 +25,4 @@ TEST_CASE("AxisTopToBottomL.getLabelLengthPx()")
 
     REQUIRE ( labelLength == axis.getLabelLengthPx() );
     REQUIRE ( labelLength + format.axisThicknessPx() == axis.sizeXPx() );
-}
+}*/

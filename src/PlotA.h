@@ -12,7 +12,6 @@
 // Plot contains the x and y axis, their labels, and the data points inside the graph.
 // x-axis runs horizontally on the bottom of the plot (left to right).
 // y-axis runs vertically on the left (bottom to top).
-// The unit size in the x and y directions is the same.
 class PlotA: public Plot
 {
 
@@ -33,6 +32,7 @@ public:
         int xSpacePx, // allowable space to put the axes (including labels)
         int ySpacePx,  // allowable space to put the axes (including labels)
         std::unique_ptr<GrAxis_Vertical> yAxis
+        std::unique_ptr<GrAxis_Horizontal> xAxis
     );
 
     // Creates a plot with top left corner at (0,0) pixels. Top left corener is not the
@@ -46,6 +46,7 @@ public:
         int minY, 
         int maxY,
         std::unique_ptr<GrAxis_Vertical> yAxis
+        std::unique_ptr<GrAxis_Horizontal> xAxis
     );
 
     PlotA () = delete;
@@ -136,8 +137,8 @@ private:
     int _cross_x__px = 0;
     int _cross_y__px = 0; 
 
-    AxisLeftToRightB _x_axis;
-    std::unique_ptr<GrAxis> _y_axis;
+    std::unique_ptr<GrAxis_Horizontal> _y_axis;
+    std::unique_ptr<GrAxis_Vertical> _y_axis;
 
     // Only print axes once, they don't change.
     mutable bool _printed_axes = false;

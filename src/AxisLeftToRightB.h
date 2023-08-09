@@ -2,12 +2,12 @@
 #define AXIS_LEFT_TO_RIGHT_B__H
 
 #include "AxisFormat.h"
-#include "ForwardAxis.h"
+#include "GrAxis.h"
 #include "Renderer.h"
 #include "TextRect.h"
 
 // Renders axis from left to right with title at bottom (used for horizontal axes).
-class AxisLeftToRightB
+class AxisLeftToRightB :public GrAxis
 {
     public:
         AxisLeftToRightB (
@@ -59,7 +59,7 @@ class AxisLeftToRightB
 
     private:
         AxisFormat _axis_format;
-        ForwardAxis _forward_axis;
+        BasicAxis _axis;
         int _y_cross__px; // where x and y axes cross, this is the y-coordinate
         int _min_tick_spacing;
         int _maj_tick_spacing;

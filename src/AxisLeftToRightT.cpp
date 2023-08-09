@@ -1,7 +1,6 @@
 #include "AxisLeftToRightT.h"
 
 #include <cmath>
-#include <iostream>
 
 using namespace std;
 
@@ -16,7 +15,8 @@ AxisLeftToRightT::AxisLeftToRightT (
     int startOffsetMultiplier,
     int endOffsetMultiplier
 ): _axis_format{axisFormat},
-   _forward_axis{
+   _axis{
+        true,
         xCrossPx,
         minVal,
         maxVal,
@@ -32,7 +32,7 @@ AxisLeftToRightT::AxisLeftToRightT (
 
 int AxisLeftToRightT::getAxisLengthPx () const
 {
-    return _forward_axis.getAxisLengthPx();
+    return _axis.getAxisLengthPx();
 }
 
 int AxisLeftToRightT::getLabelLengthPx () const
@@ -46,12 +46,12 @@ int AxisLeftToRightT::getLabelLengthPx () const
 
 int AxisLeftToRightT::getCenterValXPx () const
 {
-    return _forward_axis.getCenterValPx();
+    return _axis.getCenterValPx();
 }
 
 pair<int, int> AxisLeftToRightT::getPixels (double xVal, int dotSize) const
 {   
-    return _forward_axis.getPixels(xVal, dotSize);
+    return _axis.getPixels(xVal, dotSize);
 }
 
 void AxisLeftToRightT::print (Renderer* renderer) const
@@ -71,7 +71,7 @@ void AxisLeftToRightT::print (Renderer* renderer) const
 
 int AxisLeftToRightT::sizeXPx () const
 {
-    return _forward_axis.getAxisLengthPx();
+    return _axis.getAxisLengthPx();
 }
 
 int AxisLeftToRightT::sizeYPx () const
@@ -81,29 +81,29 @@ int AxisLeftToRightT::sizeYPx () const
 
 void AxisLeftToRightT::moveCrossHairs (int xPx, int yPx)
 {
-    _forward_axis.moveCrossPixel(xPx);
+    _axis.moveCrossPixel(xPx);
     _y_cross__px = yPx;
 }
 
 void AxisLeftToRightT::setPxPerUnit (int pixels)
 {
-    _forward_axis.setPxPerUnit(pixels);
+    _axis.setPxPerUnit(pixels);
     _min_tick_spacing = calcMinTickSpacing();
     _maj_tick_spacing = calcMajTickSpacing();
 }
 
 void AxisLeftToRightT::setTickThickness (int tickThicknessPx)
 {
-    _forward_axis.setTickThickness(tickThicknessPx);
+    _axis.setTickThickness(tickThicknessPx);
 }
 
 void AxisLeftToRightT::addHorizontalLine (std::vector<Rect>& rects) const
 {
-    int leftPixel = _forward_axis.getStartPixel();
+    int leftPixel = _axis.getStartPixel();
     Rect rect{
         leftPixel,
         _y_cross__px,
-        _forward_axis.getAxisLengthPx(),
+        _axis.getAxisLengthPx(),
         _axis_format.axisThicknessPx()
     };
 
@@ -116,10 +116,10 @@ void AxisLeftToRightT::addTicksAndLabels (
 ) const
 {   
     // First tick will represent the min val.
-    int curVal = _forward_axis.getMinVal();
+    int curVal = _axis.getMinVal();
 
     // curPixels describes one tick, it is the first and last pixels covered by the tick.
-    pair<int, int> curPixels = getPixels(curVal, _forward_axis.getTickThichness__px());
+    pair<int, int> curPixels = getPixels(curVal, _axis.getTickThichness__px());
 
     // Bottom of number is at botOfLabelYPx.
     int botOfLabelYPx =
@@ -147,19 +147,19 @@ void AxisLeftToRightT::addTicksAndLabels (
     Rect majTick{
         curPixels.first,
         majTickYPx,
-        _forward_axis.getTickThichness__px(),
+        _axis.getTickThichness__px(),
         _axis_format.majTickLengthPx()
     };
 
     Rect minTick{
         curPixels.first,
         minTickYPx,
-        _forward_axis.getTickThichness__px(),
+        _axis.getTickThichness__px(),
         _axis_format.minTickLengthPx()
     };
     
     // Right most pixel on axis is farthest away from cross hairs.
-    int rightMostPixel = _forward_axis.getEndPixel();
+    int rightMostPixel = _axis.getEndPixel();
     
     // Push ticks onto rects vector, from the left most tick until the right most tick.
     while (curPixels.first <= rightMostPixel)
@@ -183,26 +183,26 @@ void AxisLeftToRightT::addTicksAndLabels (
         }
         
         ++curVal;
-        curPixels = _forward_axis.getPixels(curVal, _forward_axis.getTickThichness__px());
+        curPixels = _axis.getPixels(curVal, _axis.getTickThichness__px());
     }
 }
 
 int AxisLeftToRightT::calcMinTickSpacing () const
 { 
-    if (_forward_axis.getMaxVal() - _forward_axis.getMinVal() < 10)
+    if (_axis.getMaxVal() - _axis.getMinVal() < 10)
     {
         return 1;
     }
 
-    return (_forward_axis.getPixelsPerUnit() >= 10)? 1 : 5;
+    return (_axis.getPixelsPerUnit() >= 10)? 1 : 5;
 }
         
 int AxisLeftToRightT::calcMajTickSpacing () const
 { 
-    if (_forward_axis.getMaxVal() - _forward_axis.getMinVal() < 10)
+    if (_axis.getMaxVal() - _axis.getMinVal() < 10)
     {
         return 1;
     }
     
-    return (_forward_axis.getPixelsPerUnit() > 10)? 5 : 10; 
+    return (_axis.getPixelsPerUnit() > 10)? 5 : 10; 
 }

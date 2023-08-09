@@ -54,7 +54,7 @@ TEST_CASE(
 {   
     REQUIRE_THROWS_WITH(
         HappinessFunc_Falling(0.0, 9.0, 10), 
-        Contains("happinessAtZeroDiversity must be larger than happinessAt100Diversity.") 
+        Contains("happinessAtZeroDiversity must be larger than happinessAtOneDiversity.") 
     );
 }
 

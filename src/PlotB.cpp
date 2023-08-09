@@ -12,7 +12,8 @@ PlotB::PlotB (
         int minY, 
         int maxY,
         int xSpacePx,
-        int ySpacePx
+        int ySpacePx,
+        unique_ptr<GrAxis_Vertical> yAxis
 ): 
     _axis_format_x{plotFormat.axisFormatX()},
     _axis_format_y{plotFormat.axisFormatY()},
@@ -37,17 +38,7 @@ PlotB::PlotB (
         plotFormat.endOffsetM(),
         
     },
-    _y_axis{
-        _axis_format_y,
-        0, // use zero for default x_coordinate__px
-        0, // use zero for default y_coordinate__px
-        _min_y,
-        _max_y,
-        0, // use zero for pxPerUnit
-        1, // use 1 for tickThickness
-        plotFormat.startOffsetM(),
-        plotFormat.endOffsetM(),
-    }
+    _y_axis{move(yAxis)}
 {
     // Update attributes that are affected by change to the top left corner coordinate and
     // available space in the x and y directions.
@@ -59,7 +50,8 @@ PlotB::PlotB (
         int minX,
         int maxX,
         int minY, 
-        int maxY
+        int maxY,
+        unique_ptr<GrAxis_Vertical> yAxis
 ): PlotB(
     plotFormat,
     0,
@@ -69,7 +61,8 @@ PlotB::PlotB (
     minY,
     maxY,
     0,
-    0
+    0,
+    move(yAxis)
 ){}
 
 int PlotB::getCenterValueOfXAxisPx () const 
@@ -116,14 +109,14 @@ int PlotB::sizeXPx () const
 {
     // subraction takes care of double counting of horizontal axis' thickness.
     return
-        _y_axis.sizeXPx() + _x_axis.sizeXPx() - (_axis_format_y.axisThicknessPx()/2);
+        _y_axis->sizeXPx() + _x_axis.sizeXPx() - (_axis_format_y.axisThicknessPx()/2);
 }
 
 int PlotB::sizeYPx() const
 {  
     // subraction takes care of double counting of horizontal axis' thickness.
     return 
-        _y_axis.sizeYPx() +
+        _y_axis->sizeYPx() +
         _x_axis.sizeYPx() -
         (_axis_format_x.axisThicknessPx()/2);
 }
@@ -138,7 +131,7 @@ void PlotB::print (
     if (!_printed_axes || printAxes) 
     {
         _x_axis.print(renderer);
-        _y_axis.print(renderer);
+        _y_axis->print(renderer);
         _printed_axes = true;
     }
     
@@ -147,7 +140,7 @@ void PlotB::print (
     {
         // Dot is a square. Convert point's value to the coordinate of the dot's top left corner.
         int x = _x_axis.getPixels(point.x(), _dot__px).first;                 
-        int y = _y_axis.getPixels(point.y(), _dot__px).first;
+        int y = _y_axis->getPixels(point.y(), _dot__px).first;
 
         renderer->fillBlock(
             _dot__px, // width
@@ -177,16 +170,16 @@ void PlotB::setPlot (int topLeftCornerXPx, int topLeftCornerYPx, int xSpacePx, i
     _x_axis.setPxPerUnit(_unit__px);
     _x_axis.setTickThickness(tickThickness);
 
-    _y_axis.moveCrossHairs(_cross_x__px, _cross_y__px);
-    _y_axis.setPxPerUnit(_unit__px);
-    _y_axis.setTickThickness(tickThickness);
+    _y_axis->moveCrossHairs(_cross_x__px, _cross_y__px);
+    _y_axis->setPxPerUnit(_unit__px);
+    _y_axis->setTickThickness(tickThickness);
 
 }
 
 int PlotB::calcUnitSizePx () const
 {
     // Calculate unit size in x-direction.
-    int allowableXAxisLengthPx = _x_space__px - _y_axis.sizeXPx();
+    int allowableXAxisLengthPx = _x_space__px - _y_axis->sizeXPx();
     int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
     xUnitSize = max(xUnitSize, _min_unit_size__px);
@@ -219,14 +212,14 @@ int PlotB::calcDotSizePx () const
 int PlotB::calcCrossXPx (int topLeftXPx) const
 {
     int requiredXLength = 
-        _unit__px * ( _x_diff + _start_offset_m + _end_offset_m) + _y_axis.sizeXPx();
+        _unit__px * ( _x_diff + _start_offset_m + _end_offset_m) + _y_axis->sizeXPx();
 
     // Start at given most left point (topLeftXPx),
     // move to the center of given space, move to the left by 1/2 of the required length,
     // move crosshairs to the right making room for y-axis.
     return topLeftXPx +
            (int)( 0.5 * (_x_space__px - requiredXLength) ) +
-           _y_axis.sizeXPx();
+           _y_axis->sizeXPx();
 }
 
 int PlotB::calcCrossYPx (int topLeftYPx) const
