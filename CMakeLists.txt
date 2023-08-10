@@ -75,8 +75,8 @@ target_link_libraries(${PROJECT_NAME} SDL2::TTF)
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
 file(GLOB test_SRCS tests/*.cpp
+src/Axis_Basic.cpp
 src/AxisFormat.cpp
-src/BasicAxis.cpp
 src/City_Grid.cpp
 src/CityFactory_Grid.cpp
 src/CityState_Simple.cpp
@@ -84,8 +84,8 @@ src/Color.cpp
 src/Converter.cpp
 src/Coordinate.cpp
 src/GrAxis.cpp
-src/GrAxis_Horizontal.cpp
-src/GrAxis_Vertical.cpp
+src/GrAxisHorizontalSimple.cpp
+src/GrAxisVerticalSimple.cpp
 src/HappinessFunc_Falling.cpp
 src/HappinessFunc_Flat.cpp
 src/HappinessFunc_Rising.cpp

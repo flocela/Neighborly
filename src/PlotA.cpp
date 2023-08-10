@@ -9,8 +9,8 @@ PlotA::PlotA (
     int topLeftYPx,
     int xSpacePx,
     int ySpacePx,
-    unique_ptr<GrAxis_Horizontal> xAxis,
-    unique_ptr<GrAxis_Vertical> yAxis
+    unique_ptr<GrAxisHorizontalSimple> xAxis,
+    unique_ptr<GrAxisVerticalSimple> yAxis
 ):
     _min_unit__px{plotFormat.minUnitSize()},
     _start_offset_m{plotFormat.startOffsetM()},
@@ -35,8 +35,8 @@ PlotA::PlotA (
 
 PlotA::PlotA (
     PlotFormat plotFormat,
-    unique_ptr<GrAxis_Horizontal> xAxis,
-    unique_ptr<GrAxis_Vertical> yAxis
+    unique_ptr<GrAxisHorizontalSimple> xAxis,
+    unique_ptr<GrAxisVerticalSimple> yAxis
 ):
     PlotA(
         plotFormat,

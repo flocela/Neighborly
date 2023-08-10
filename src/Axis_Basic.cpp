@@ -1,12 +1,12 @@
 #include <cmath>
-#include "BasicAxis.h"
+#include "Axis_Basic.h"
 
 using namespace std;
 
 // If forward is true, then the axis values run in the direction of the window's coordinates.
 // If forwards is false: then the _start_val is the maxVal, the _end_val is the minVal,
 // and the _px_per_unit is negative.
-BasicAxis::BasicAxis(
+Axis_Basic::Axis_Basic(
     bool forward,
     int crossPixel,
     int minVal,
@@ -27,12 +27,12 @@ BasicAxis::BasicAxis(
     _end_offset_m{endOffsetMultiplier}
 {}
 
-int BasicAxis::getAxisLengthPx () const
+int Axis_Basic::getAxisLengthPx () const
 {   
     return abs(getEndPixel() - getStartPixel()) + 1;
 }
 
-std::pair<int, int> BasicAxis::getPixels (double val, int dotSize) const
+std::pair<int, int> Axis_Basic::getPixels (double val, int dotSize) const
 {
     // The standard line equation
     // y2 = y1 + m * (x2 - x1), m is in px per unit.
@@ -74,42 +74,42 @@ std::pair<int, int> BasicAxis::getPixels (double val, int dotSize) const
     return {formerPixel, latterPixel};
 }
 
-int BasicAxis::getMinVal () const
+int Axis_Basic::getMinVal () const
 {
     return _min_val;
 }
 
-int BasicAxis::getMaxVal () const
+int Axis_Basic::getMaxVal () const
 {
     return _max_val;
 }
 
-int BasicAxis::getDiff () const
+int Axis_Basic::getDiff () const
 {
     return _diff;
 }
 
-int BasicAxis::getPixelsPerUnit () const
+int Axis_Basic::getPixelsPerUnit () const
 {
     return _px_per_unit;
 }
 
-int BasicAxis::getTickThickness__px () const
+int Axis_Basic::getTickThickness__px () const
 {
     return _tick_thickness__px;
 }
 
-int BasicAxis::getStartOffsetMultiplier () const
+int Axis_Basic::getStartOffsetMultiplier () const
 {
     return _start_offset_m;
 }
 
-int BasicAxis::getEndOffsetMultiplier () const
+int Axis_Basic::getEndOffsetMultiplier () const
 {
     return _end_offset_m;
 }
 
-int BasicAxis::getStartPixel () const
+int Axis_Basic::getStartPixel () const
 {   
     // Closest pixel to the cross hairs on the axis.
     return getPixels(
@@ -117,7 +117,7 @@ int BasicAxis::getStartPixel () const
         _tick_thickness__px).first;
 }
 
-int BasicAxis::getEndPixel () const
+int Axis_Basic::getEndPixel () const
 {
     // Farthest pixel to the cross hairs on the axis.
     return getPixels(
@@ -126,17 +126,17 @@ int BasicAxis::getEndPixel () const
 }
 
 
-int BasicAxis::getCenterValPx () const
+int Axis_Basic::getCenterValPx () const
 {
     return getPixels(_start_val + (_end_val - _start_val)/2, 1).first;
 }
 
-void BasicAxis::moveCrossPixel (int pixel)
+void Axis_Basic::moveCrossPixel (int pixel)
 {
     _cross_pixel__px = pixel;
 }
 
-void BasicAxis::setPxPerUnit (int pixels)
+void Axis_Basic::setPxPerUnit (int pixels)
 {
     _px_per_unit = _forward? pixels: -pixels;
 }

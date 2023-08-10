@@ -1,8 +1,8 @@
 #include "catch.hpp"
-#include "../src/PlotA.h"
+/*#include "../src/PlotA.h"
 
 using namespace std;
-/*
+
 TEST_CASE("PlotA:: create basic PlotA")
 {
     int topLeftXPx = 0;

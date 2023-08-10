@@ -3,8 +3,8 @@
 
 #include "AxisFormat.h"
 #include "Coordinate.h"
-#include "GrAxis_Horizontal.h"
-#include "GrAxis_Vertical.h"
+#include "GrAxisHorizontalSimple.h"
+#include "GrAxisVerticalSimple.h"
 #include "Point.h"
 #include "Plot.h"
 #include "PlotFormat.h"
@@ -28,8 +28,8 @@ public:
         int topLeftYPx, // top left corner of plot, not the same as where x and y axes cross
         int xSpacePx,
         int ySpacePx,
-        std::unique_ptr<GrAxis_Horizontal> xAxis,
-        std::unique_ptr<GrAxis_Vertical> yAxis
+        std::unique_ptr<GrAxisHorizontalSimple> xAxis,
+        std::unique_ptr<GrAxisVerticalSimple> yAxis
     );
 
     // Creates a plot with top left corner at (0,0) pixels.
@@ -37,8 +37,8 @@ public:
     // This is a temporary plot. Use setPlot() method to finish it.
     PlotB (
         PlotFormat plotFormat,
-        std::unique_ptr<GrAxis_Horizontal> xAxis,
-        std::unique_ptr<GrAxis_Vertical> yAxis
+        std::unique_ptr<GrAxisHorizontalSimple> xAxis,
+        std::unique_ptr<GrAxisVerticalSimple> yAxis
     );
 
     PlotB () = delete;
@@ -125,8 +125,8 @@ private:
     int _cross_x__px; 
     int _cross_y__px; 
 
-    std::unique_ptr<GrAxis_Horizontal> _x_axis;
-    std::unique_ptr<GrAxis_Vertical> _y_axis;
+    std::unique_ptr<GrAxisHorizontalSimple> _x_axis;
+    std::unique_ptr<GrAxisVerticalSimple> _y_axis;
 
     // Only print axes once, they don't change.
     mutable bool _printed_axes = false;

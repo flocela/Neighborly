@@ -1,10 +1,10 @@
-#ifndef BASIC_AXIS_H
-#define BASIC_AXIS_H
+#ifndef AXIS_BASIC_H
+#define AXIS_BASIC_H
 
 #include <utility>
 #include "Axis.h"
 
-class BasicAxis : public Axis
+class Axis_Basic : public Axis
 {
 
 public:
@@ -12,7 +12,7 @@ public:
     // Forward is true, means the values on the axis run in the direction of the coordinates
     // in the window.
     // CrossPixel is where the perpendicular axis crosses this axis.
-    BasicAxis (
+    Axis_Basic (
         bool forward,
         int crossPixel,
         int minVal,
@@ -22,12 +22,12 @@ public:
         int endOffset
     );
 
-    BasicAxis () = delete;
-    BasicAxis (const BasicAxis& o) = default;
-    BasicAxis (BasicAxis&& o) noexcept = default;
-    BasicAxis& operator= (const BasicAxis& o) = default;
-    BasicAxis& operator= (BasicAxis&& o) noexcept = default;
-    ~BasicAxis () noexcept = default;
+    Axis_Basic () = delete;
+    Axis_Basic (const Axis_Basic& o) = default;
+    Axis_Basic (Axis_Basic&& o) noexcept = default;
+    Axis_Basic& operator= (const Axis_Basic& o) = default;
+    Axis_Basic& operator= (Axis_Basic&& o) noexcept = default;
+    ~Axis_Basic () noexcept = default;
 
     int getAxisLengthPx () const override;
 

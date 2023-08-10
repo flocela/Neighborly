@@ -9,8 +9,8 @@ PlotB::PlotB (
         int topLeftYPx, // top left corner of plot
         int xSpacePx,
         int ySpacePx,
-        unique_ptr<GrAxis_Horizontal> xAxis,
-        unique_ptr<GrAxis_Vertical> yAxis
+        unique_ptr<GrAxisHorizontalSimple> xAxis,
+        unique_ptr<GrAxisVerticalSimple> yAxis
 ): 
     _min_unit_size__px{plotFormat.minUnitSize()},
     _start_offset_m{plotFormat.startOffsetM()},
@@ -31,8 +31,8 @@ PlotB::PlotB (
 
 PlotB::PlotB (
         PlotFormat plotFormat,
-        unique_ptr<GrAxis_Horizontal> xAxis,
-        unique_ptr<GrAxis_Vertical> yAxis
+        unique_ptr<GrAxisHorizontalSimple> xAxis,
+        unique_ptr<GrAxisVerticalSimple> yAxis
 ): PlotB(
     plotFormat,
     0,

@@ -1,7 +1,9 @@
 #include "Printer_Graphic.h"
 
 #include <iostream>
-#include "GrAxis_Vertical.h"
+#include "Axis_Basic.h"
+#include "GrAxisHorizontalSimple.h"
+#include "GrAxisVerticalSimple.h"
 #include "PlotA.h"
 #include "PlotB.h"
 
@@ -188,8 +190,8 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
         make_unique<GrColorKey_Basic>(_chart_key_letter, _colors, moods),
         make_unique<PlotB>(
             cityPlotFormat,
-            make_unique<GrAxis_Horizontal>(
-                make_unique<BasicAxis>(
+            make_unique<GrAxisHorizontalSimple>(
+                make_unique<Axis_Basic>(
                     true,                   // axis values increase as window's coordinates increase
                     0,                      // starting pixel for x-axis, use zero for now
                     minXCoord,              // smallest coordinate in the x-direction             
@@ -202,8 +204,8 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
                 0,                          // y-coordinate for x-axis, use zero for now.
                 true
             ),
-            make_unique<GrAxis_Vertical>(
-                make_unique<BasicAxis>(
+            make_unique<GrAxisVerticalSimple>(
+                make_unique<Axis_Basic>(
                     true,
                     0,                      // starting pixel for y-axis, use zero for now
                     minYCoord,              // smallest coordinate in y-direction
@@ -251,8 +253,8 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
         make_unique<GrColorKey_Basic>(_chart_key_letter, _colors, moods),
         make_unique<PlotA>(
             rightColFormat,                   
-            make_unique<GrAxis_Horizontal>(
-                make_unique<BasicAxis>(
+            make_unique<GrAxisHorizontalSimple>(
+                make_unique<Axis_Basic>(
                     true,                      // axis values increase as window's coordinates increase
                     0,                         // starting pixel for x-axis, use zero for now
                     0,                         // The first run number is zero.
@@ -265,8 +267,8 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
                 0,                             // y-coordinate for x-axis, use zero for now.
                 false
             ),
-            make_unique<GrAxis_Vertical>(
-                make_unique<BasicAxis>(
+            make_unique<GrAxisVerticalSimple>(
+                make_unique<Axis_Basic>(
                     false,                     // axis values increase as window's coordinates decrease
                     0,                         // starting pixel for y-axis, use zero for now
                     0,                         // smallest number of neighbors for a resident is 0
@@ -311,8 +313,8 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
         make_unique<GrColorKey_Basic>( _chart_key_letter, _colors, moods),
         make_unique<PlotA>(
             rightColFormat,                   // plot format for charts on right column
-            make_unique<GrAxis_Horizontal>(
-                make_unique<BasicAxis>(
+            make_unique<GrAxisHorizontalSimple>(
+                make_unique<Axis_Basic>(
                     true,                      // axis values increase as window's coordinates increase
                     0,                         // starting pixel for x-axis, use zero for now
                     0,                         // Zero is the starting run number.
@@ -325,8 +327,8 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
                 0,                             // x-axis's x-coordinate (pixel) // TODO better note
                 false
             ),
-            make_unique<GrAxis_Vertical>(
-                make_unique<BasicAxis>(
+            make_unique<GrAxisVerticalSimple>(
+                make_unique<Axis_Basic>(
                     false,                     // axis values increase as window's coordinates decrease
                     0,                         // starting pixel for y-axis, use zero for now
                     0,                         // least possible happiness for a resident

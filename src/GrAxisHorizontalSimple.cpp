@@ -1,33 +1,35 @@
-#include "GrAxis_Horizontal.h"
+#include "GrAxisHorizontalSimple.h"
 
 #include <cmath>
 #include <iostream>
 
 using namespace std;
 
-GrAxis_Horizontal::GrAxis_Horizontal (
+GrAxisHorizontalSimple::GrAxisHorizontalSimple (
     std::unique_ptr<Axis> axis,
     AxisFormat axisFormat,
     int yCoordPx,
     bool labelsOnTop
-): GrAxis{move(axis), axisFormat},
+): 
+    _axis{move(axis)},
+    _axis_format{axisFormat},
     _y_coord__px{yCoordPx},
     _labels_on_top{labelsOnTop},
     _min_tick_spacing{calcMinTickSpacing()},
     _maj_tick_spacing{calcMajTickSpacing()}
 {}
 
-int GrAxis_Horizontal::getAxisLengthPx () const
+int GrAxisHorizontalSimple::getAxisLengthPx () const
 {
     return _axis->getAxisLengthPx();
 }
 
-int GrAxis_Horizontal::getCentralValuePx () const
+int GrAxisHorizontalSimple::getCentralValuePx () const
 {
     return _axis->getCenterValPx();
 }
 
-int GrAxis_Horizontal::getLabelLengthPx () const
+int GrAxisHorizontalSimple::getLabelLengthPx () const
 {
     int retVal =  
         _axis_format.majTickLengthOutsideChartPx() +
@@ -36,51 +38,61 @@ int GrAxis_Horizontal::getLabelLengthPx () const
     return retVal;
 }
 
-pair<int, int> GrAxis_Horizontal::getPixels (double xVal, int dotSize) const
+pair<int, int> GrAxisHorizontalSimple::getPixels (double xVal, int dotSize) const
 {   
     return _axis->getPixels(xVal, dotSize);
 }
    
-int GrAxis_Horizontal::getMinVal () const
+int GrAxisHorizontalSimple::getMinVal () const
 {
     return _axis->getMinVal();
 }
 
-int GrAxis_Horizontal::getMaxVal () const
+int GrAxisHorizontalSimple::getMaxVal () const
 {
     return _axis->getMaxVal();
 }
 
-int GrAxis_Horizontal::sizeXPx () const
+int GrAxisHorizontalSimple::sizeXPx () const
 {
     return _axis->getAxisLengthPx();
 }
 
-int GrAxis_Horizontal::sizeYPx () const
+int GrAxisHorizontalSimple::sizeYPx () const
 {   
     return getLabelLengthPx() + _axis_format.axisThicknessPx();
 }
 
-void GrAxis_Horizontal::moveCrossHairs (int xPx, int yPx)
+void GrAxisHorizontalSimple::print (Renderer* renderer) const
+{
+    vector<Rect> axis{};
+    vector<Rect> ticks{};
+    vector<TextRect> texts{};
+
+    implimentAddAxisLine(axis);
+    
+    implimentAddTicksAndLabels(ticks, texts);
+
+    renderer->fillBlocks(axis, _axis_format.tickColor());
+    renderer->fillBlocks(ticks, _axis_format.tickColor()); // TODO shouuld be tickLines
+    renderer->renderTexts(texts); 
+
+}
+
+void GrAxisHorizontalSimple::moveCrossHairs (int xPx, int yPx)
 {
     _axis->moveCrossPixel(xPx);
     _y_coord__px = yPx;
 }
 
-void GrAxis_Horizontal::setHorizLength (int horizLengthPx)
-{
-    (void) horizLengthPx;
-    //TODO write something for this.
-}
-
-void GrAxis_Horizontal::setPxPerUnit (int pixels)
+void GrAxisHorizontalSimple::setPxPerUnit (int pixels)
 {
     _axis->setPxPerUnit(pixels);
     _min_tick_spacing = calcMinTickSpacing();
     _maj_tick_spacing = calcMajTickSpacing();
 }
 
-void GrAxis_Horizontal::implimentAddAxisLine (std::vector<Rect>& rects) const
+void GrAxisHorizontalSimple::implimentAddAxisLine (std::vector<Rect>& rects) const
 {
     // Calculate top most pixel.
     int leftPixel = _axis->getStartPixel();
@@ -96,15 +108,11 @@ void GrAxis_Horizontal::implimentAddAxisLine (std::vector<Rect>& rects) const
     rects.push_back(rect);
 }
 
-void GrAxis_Horizontal::implimentAddTicksAndLabels (
-    std::vector<Rect>& backgroundLinesMaj,
-    std::vector<Rect>& backgroundLinesMin,
+void GrAxisHorizontalSimple::implimentAddTicksAndLabels (
     std::vector<Rect>& ticks, 
     std::vector<TextRect>& texts
 ) const
 {   
-    (void)backgroundLinesMaj;
-    (void)backgroundLinesMin;
     // First tick will represent the min val.
     int curVal = _axis->getMinVal();
 
@@ -187,7 +195,7 @@ void GrAxis_Horizontal::implimentAddTicksAndLabels (
     }
 }
 
-int GrAxis_Horizontal::calcMinTickSpacing () const
+int GrAxisHorizontalSimple::calcMinTickSpacing () const
 {
     if (_axis->getMaxVal() - _axis->getMinVal() < 10)
     {
@@ -197,7 +205,7 @@ int GrAxis_Horizontal::calcMinTickSpacing () const
     return (_axis->getPixelsPerUnit() >= 10)? 1 : 5;
 }
 
-int GrAxis_Horizontal::calcMajTickSpacing () const
+int GrAxisHorizontalSimple::calcMajTickSpacing () const
 {        
     if (_axis->getMaxVal() - _axis->getMinVal() < 10)
     {

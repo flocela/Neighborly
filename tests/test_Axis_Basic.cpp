@@ -1,12 +1,12 @@
 #include "catch.hpp"
 
-#include "../src/BasicAxis.h"
+#include "../src/Axis_Basic.h"
 
 using namespace std;
 
-TEST_CASE("BasicAxis().reverse_axis_dot_size_1 and_2")
+TEST_CASE("Axis_Basic().reverse_axis_dot_size_1 and_2")
 {
-    BasicAxis axis {
+    Axis_Basic axis {
         false,
         30, // coordinate where axis and cross axis meet
         0, // minVal
@@ -35,9 +35,9 @@ TEST_CASE("BasicAxis().reverse_axis_dot_size_1 and_2")
     
 }
 
-TEST_CASE("BasicAxis.reverse_axis_dot_size_3 and_4")
+TEST_CASE("Axis_Basic.reverse_axis_dot_size_3 and_4")
 {
-    BasicAxis axis {
+    Axis_Basic axis {
         false,
         30, // coordinate where axis and cross axis meet
         0, // minVal
@@ -68,7 +68,7 @@ TEST_CASE("BasicAxis.reverse_axis_dot_size_3 and_4")
 
 TEST_CASE("ForwardAxis.forward_axis_dot_size_1 and_2")
 {
-    BasicAxis axis {
+    Axis_Basic axis {
         true,
         0, // coordinate where axis and cross axis meet
         0, // minVal
@@ -99,7 +99,7 @@ TEST_CASE("ForwardAxis.forward_axis_dot_size_1 and_2")
 
 TEST_CASE("ForwardAxis.forward_axis_dot_size_3 and_4")
 {
-    BasicAxis axis {
+    Axis_Basic axis {
         true,
         0, // coordinate where axis and cross axis meet
         0, // minVal

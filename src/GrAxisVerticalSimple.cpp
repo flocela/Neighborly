@@ -1,30 +1,31 @@
-#include "GrAxis_Vertical.h"
+#include "GrAxisVerticalSimple.h"
 #include <iostream>
 #include <cmath>
 using namespace std;
 
-GrAxis_Vertical::GrAxis_Vertical (
+GrAxisVerticalSimple::GrAxisVerticalSimple (
     unique_ptr<Axis> axis,
     AxisFormat axisFormat,
     int xCoordPx
 ):
-    GrAxis{move(axis), axisFormat},
+    _axis{move(axis)},
+    _axis_format{axisFormat},
     _x_coord__px{xCoordPx},
     _min_tick_spacing{calcMinTickSpacing()},
     _maj_tick_spacing{calcMajTickSpacing()}
 {}
 
-int GrAxis_Vertical::getAxisLengthPx () const
+int GrAxisVerticalSimple::getAxisLengthPx () const
 {   
     return _axis->getAxisLengthPx();
 }
 
-int GrAxis_Vertical::getCentralValuePx () const
+int GrAxisVerticalSimple::getCentralValuePx () const
 {
     return _axis->getCenterValPx();
 }
 
-int GrAxis_Vertical::getLabelLengthPx () const
+int GrAxisVerticalSimple::getLabelLengthPx () const
 {   
     // Three is max number of digits in the y-axis label.
     return 
@@ -33,43 +34,67 @@ int GrAxis_Vertical::getLabelLengthPx () const
         _axis_format.majTickLengthOutsideChartPx();
 }
 
-pair<int, int>  GrAxis_Vertical::getPixels (double yVal, int dotSize) const
+pair<int, int>  GrAxisVerticalSimple::getPixels (double yVal, int dotSize) const
 {   
     return _axis->getPixels(yVal, dotSize);
 }
    
-int GrAxis_Vertical::getMinVal () const
+int GrAxisVerticalSimple::getMinVal () const
 {
     return _axis->getMinVal();
 }
 
-int GrAxis_Vertical::getMaxVal () const
+int GrAxisVerticalSimple::getMaxVal () const
 {
     return _axis->getMaxVal();
 }
 
-int GrAxis_Vertical::sizeXPx () const
+int GrAxisVerticalSimple::sizeXPx () const
 {  
     return getLabelLengthPx() + _axis_format.axisThicknessPx();
 }
 
-int GrAxis_Vertical::sizeYPx () const
+int GrAxisVerticalSimple::sizeYPx () const
 {
     return getAxisLengthPx();
 }
 
-void GrAxis_Vertical::moveCrossHairs (int xPx, int yPx)
+void GrAxisVerticalSimple::print (Renderer* renderer) const
+{
+    vector<Rect> horizLinesMaj{};
+    vector<Rect> horizLinesMin{};
+    vector<Rect> axis{};
+    vector<Rect> ticks{};
+    vector<TextRect> texts{};
+
+    implimentAddAxisLine(axis);
+    
+    implimentAddTicksAndLabels(horizLinesMaj, horizLinesMin, ticks, texts);
+
+    if (_axis_format.showBackgroundTickLines())
+    {
+        renderer->fillBlocks(horizLinesMaj, _axis_format.tickLineBackgroundColor());// TODO shouuld be tickLines
+        renderer->fillBlocks(horizLinesMin, _axis_format.tickLineBackgroundColor());
+    }
+
+    renderer->fillBlocks(axis, _axis_format.tickColor());
+    renderer->fillBlocks(ticks, _axis_format.tickColor()); // TODO shouuld be tickLines
+    renderer->renderTexts(texts);
+
+}
+
+void GrAxisVerticalSimple::moveCrossHairs (int xPx, int yPx)
 {
     _x_coord__px = xPx;
     _axis->moveCrossPixel(yPx);
 }
 
-void GrAxis_Vertical::setHorizLength (int horizLengthPx)
+void GrAxisVerticalSimple::setHorizLength (int horizLengthPx)
 {
     _horiz_line_length__px = horizLengthPx;
 }
 
-void GrAxis_Vertical::setPxPerUnit (int pixels)
+void GrAxisVerticalSimple::setPxPerUnit (int pixels)
 {
     _axis->setPxPerUnit(pixels);
     _min_tick_spacing = calcMinTickSpacing();
@@ -77,14 +102,15 @@ void GrAxis_Vertical::setPxPerUnit (int pixels)
 
 }
 
-void GrAxis_Vertical::implimentAddAxisLine (std::vector<Rect>& rects) const
+void GrAxisVerticalSimple::implimentAddAxisLine (std::vector<Rect>& rects) const
 {
     // Calculate top most pixel.
     int topPixel = _axis->getStartPixel();
 
+    // TODO this should be using axis methods not _axis_format's methods.
     // Rectangle represents vertical line. // TODO this has to take into account the axis thickness.
     Rect rect{
-        _x_coord__px, // top left corner of line, x-coordinate
+        _x_coord__px - _axis_format.axisThicknessPx()/2, // top left corner of line, x-coordinate
         topPixel, // top left corner of line, y-coordinate
         _axis_format.axisThicknessPx(),
         getAxisLengthPx()
@@ -93,7 +119,7 @@ void GrAxis_Vertical::implimentAddAxisLine (std::vector<Rect>& rects) const
     rects.push_back(rect);
 }
         
-void GrAxis_Vertical::implimentAddTicksAndLabels (
+void GrAxisVerticalSimple::implimentAddTicksAndLabels (
     std::vector<Rect>& backgroundLinesMaj,
     std::vector<Rect>& backgroundLinesMin,
     std::vector<Rect>& ticks, 
@@ -152,10 +178,7 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
         _axis_format.minTickLengthPx(),
         _axis->getTickThickness__px()
     };
-
-    // Calculate top most pixel.
-    int topMostPixelY = _axis->getEndPixel();
-    cout << "topMostPixelY, curPixels.first: " << topMostPixelY << ", " << curPixels.first << endl;;
+    
     // Iterate through values from bottom of axis to top of axis.
     while ( curVal <= _axis->getMaxVal() + _axis->getEndOffsetMultiplier() )
     {   
@@ -188,7 +211,7 @@ void GrAxis_Vertical::implimentAddTicksAndLabels (
     }
 }
 
-int GrAxis_Vertical::calcMinTickSpacing () const
+int GrAxisVerticalSimple::calcMinTickSpacing () const
 { 
      if (_axis->getMaxVal() - _axis->getMinVal() < 10)
     {
@@ -198,7 +221,7 @@ int GrAxis_Vertical::calcMinTickSpacing () const
     return (_axis->getPixelsPerUnit() >= 10)? 1 : 5;
 }
 
-int GrAxis_Vertical::calcMajTickSpacing () const
+int GrAxisVerticalSimple::calcMajTickSpacing () const
 { 
     if (_axis->getMaxVal() - _axis->getMinVal() < 10)
     {

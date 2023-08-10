@@ -1,6 +1,6 @@
 #include "catch.hpp"
-#include "../src/PlotB.h"
-/*
+/*#include "../src/PlotB.h"
+
 TEST_CASE("PlotB:: create basic PlotB")
 {
     int topLeftXPx = 0;
