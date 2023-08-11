@@ -43,14 +43,14 @@ pair<int, int> GrAxisHorizontalSimple::getPixels (double xVal, int dotSize) cons
     return _axis->getPixels(xVal, dotSize);
 }
    
-int GrAxisHorizontalSimple::getMinVal () const
+int GrAxisHorizontalSimple::getLowVal () const
 {
-    return _axis->getMinVal();
+    return _axis->getLowVal();
 }
 
-int GrAxisHorizontalSimple::getMaxVal () const
+int GrAxisHorizontalSimple::getHighVal () const
 {
-    return _axis->getMaxVal();
+    return _axis->getHighVal();
 }
 
 int GrAxisHorizontalSimple::sizeXPx () const
@@ -73,8 +73,8 @@ void GrAxisHorizontalSimple::print (Renderer* renderer) const
     
     implimentAddTicksAndLabels(ticks, texts);
 
-    renderer->fillBlocks(axis, _axis_format.tickColor());
-    renderer->fillBlocks(ticks, _axis_format.tickColor()); // TODO shouuld be tickLines
+    renderer->fillBlocks(axis, _axis_format.axisColor());
+    renderer->fillBlocks(ticks, _axis_format.tickColor());
     renderer->renderTexts(texts); 
 
 }
@@ -94,10 +94,9 @@ void GrAxisHorizontalSimple::setPxPerUnit (int pixels)
 
 void GrAxisHorizontalSimple::implimentAddAxisLine (std::vector<Rect>& rects) const
 {
-    // Calculate top most pixel.
     int leftPixel = _axis->getStartPixel();
 
-    // Rectangle represents vertical line.
+    // Rectangle represents horizontal axis line.
     Rect rect{
         leftPixel,      // top left corner of line, x-coordinate
         _y_coord__px,   // top left corner of line, y-coordinate
@@ -113,8 +112,8 @@ void GrAxisHorizontalSimple::implimentAddTicksAndLabels (
     std::vector<TextRect>& texts
 ) const
 {   
-    // First tick will represent the min val.
-    int curVal = _axis->getMinVal();
+    // First tick will represent the low value on the axis.
+    int curVal = _axis->getLowVal();
 
     // topOfLabelYPx is the top of the number shown.
     int topOfNumberYPx = (_labels_on_top) ?
@@ -127,7 +126,7 @@ void GrAxisHorizontalSimple::implimentAddTicksAndLabels (
         _axis_format.majTickLengthOutsideChartPx() +
         _axis_format.labelLineSpacePx();
 
-    // curPixels the first and last pixels covered by one tick.
+    // curPixels is the first and last pixels covered by one tick.
     pair<int, int> curPixels = getPixels(curVal, _axis->getTickThickness__px());
 
     // Text is at the center of the tick.
@@ -169,11 +168,11 @@ void GrAxisHorizontalSimple::implimentAddTicksAndLabels (
     };
     
     // Push ticks onto ticks vector, from the left most tick until the right most tick.
-    while (curVal <= _axis->getMaxVal() + _axis->getEndOffsetMultiplier())
+    while (curVal <= _axis->getHighVal() + _axis->getEndOffset())
     {  
         curPixels = getPixels(curVal, _axis->getTickThickness__px());
 
-        // If curVal is divisible by _maj_tick_spacing then tick is a major tick
+        // If curVal is divisible by _maj_tick_spacing then tick is a major tick.
         if (curVal % _maj_tick_spacing == 0)
         {   
             majTick._x__px = curPixels.first;
@@ -184,7 +183,7 @@ void GrAxisHorizontalSimple::implimentAddTicksAndLabels (
             texts.push_back(curText);
             ticks.push_back(majTick);
         }
-        // Else if curVal is divisible by _min_tick_spacing then tick is a minor tick
+        // Else if curVal is divisible by _min_tick_spacing then tick is a minor tick.
         else if (curVal % _min_tick_spacing == 0)
         {   
             minTick._x__px = curPixels.first;
@@ -197,20 +196,32 @@ void GrAxisHorizontalSimple::implimentAddTicksAndLabels (
 
 int GrAxisHorizontalSimple::calcMinTickSpacing () const
 {
-    if (_axis->getMaxVal() - _axis->getMinVal() < 10)
+    if (_axis->getHighVal() - _axis->getLowVal() < 10)
     {
         return 1;
     }
-
-    return (_axis->getPixelsPerUnit() >= 10)? 1 : 5;
+    else
+    {
+        return (_axis->getPixelsPerUnit() >= 10)? 1 : 5;
+    }
+    
+    
 }
 
 int GrAxisHorizontalSimple::calcMajTickSpacing () const
 {        
-    if (_axis->getMaxVal() - _axis->getMinVal() < 10)
+    if (_axis->getHighVal() - _axis->getLowVal() < 10)
     {
         return 1;
     }
-    
-    return (_axis->getPixelsPerUnit() > 10)? 5 : 10; 
+    else
+    {
+        return (_axis->getPixelsPerUnit() > 10)? 5 : 10;
+    } 
+}
+
+
+void GrAxisHorizontalSimple::setDirectionOfAxis (bool forward)
+{
+    _axis->setDirectionOfAxis(forward);
 }

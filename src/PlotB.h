@@ -18,10 +18,9 @@ class PlotB: public Plot
 
 public:
 
-    // The top left corner of the plot does not align with the axes. The top left corner
-    // is not at the axes' crosshairs. The top left corner aligns vertically
-    // with the left side of the vertical axis' labels and aligns horizontally with the top of the 
-    // vertical axes' labels. The plot encompasses the axes' labels.
+    // The top left corner aligns vertically with the left side of the vertical axis' labels
+    // and aligns horizontally with the top of the horizontal axis' labels.
+    // The top left corner of the plot does not align with the axes' cross hairs.
     PlotB ( 
         PlotFormat plotFormat,
         int topLeftXPx, // top left corner of plot, not the same as where x and y axes cross
@@ -74,7 +73,7 @@ public:
         Renderer* renderer) const override;
 
     // Setting the top left corner and the available space affects the unit sizes in the x and
-    // y axes. Updating the unit size affects the data dot's width and the tick thickness.
+    // y axes. Updating the unit size affects the data dot's width.
     // Updating the unit size also affects the cross hairs' coordinate (where x and y axes cross).
     // setPlot() updates these affected attributes.
     void setPlot (int topLeftCornerXPx, int topLeftCornerYPx, int xSpacePx, int ySpacePx) override;
@@ -87,35 +86,35 @@ private:
     // minimum dot width
     int _min_dot_size__px = 3;
 
-    // _start_offset_m is used to determine space before the first values (_min_x or _min_y).
-    // Length of space is _start_offset_m * _unit_space__px. 
-    int _start_offset_m;
+    // _start_offset is used to determine space before the low values (_low_x or _low_y).
+    // Length of space is _start_offset * _unit_space__px. 
+    int _start_offset;
 
-    // _end_offset_m is used to determine space after the last value (_max_x or _max_y).
-    // Length of space is _end_offset_m * _unit_space__px.
-    int _end_offset_m;
+    // _end_offset is used to determine space after the high values (_high_x or _high_y).
+    // Length of space is _end_offset * _unit_space__px.
+    int _end_offset;
 
-    // Top left corner of plot. This is not at the x-y axes' cross hairs. it takes into
+    // Top left corner of plot. This is not at the x-y axes' cross hairs. It takes into
     // account the width of the y-axis labels and the height of the x-axis labels.
     int _top_left_x__px = 0;
     int _top_left_y__px = 0;
 
-    // smallest values on the axes. These values are given in the constructor.
-    int _min_x;
+    // Smallest values on the axes that is expected to have data.
+    int _low_x;
     int _min_y;
 
-    // largest values on the axes. These values are given in the constructor.
+    // largest values on the axes that is expected to have data.
     // Note: the axes stretch past the largest value with data.
-    // The largest value on the axes will be _max_y + (_end_offset_m * unit size ).
-    int _max_x;
+    // The largest value on the axes will be _max_y + (_end_offset * unit size ).
+    int _high_x;
     int _max_y;
     
     // given allowable space in the x and y directions
     int _x_space__px;
     int _y_space__px;
 
-    int _x_diff; // difference between max and min values on the x-axis
-    int _y_diff; // difference between the max and min values on the y-axis
+    int _x_diff; // difference between high and low values on the x-axis
+    int _y_diff; // difference between the high and low values on the y-axis
     int _unit__px; // pixels per unit
 
     // Dots are colored squares that represent values on the graph. The width of a dot is _dot__px.

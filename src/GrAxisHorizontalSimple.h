@@ -7,14 +7,17 @@
 #include "Renderer.h"
 #include "TextRect.h"
 
-// Renders axis from left to right.
+// Used to render a horizontal axis
 class GrAxisHorizontalSimple
 {
 
 public:
 
-    // yCoordPx is the axis's y-coordinate in pixels. The all points on the axis line will have
-    // this same y-coordinate.
+    // The axis lies on a horizontal line, so all points on the axis have the same y-coordinate
+    // in pixels.
+    // yCoordPx is the axis's y-coordinate in pixels.
+    // labelsOnTop as true, signifies that the labels will be above the axis. Otherwise
+    // the labels are below the axis.
     GrAxisHorizontalSimple (
         std::unique_ptr<Axis> axis,
         AxisFormat axisFormat,
@@ -29,14 +32,14 @@ public:
     GrAxisHorizontalSimple& operator=(GrAxisHorizontalSimple&& o) noexcept = default;
     ~GrAxisHorizontalSimple () noexcept = default;
 
-    // Returns length of long horizontal line (the axis).
+    // Returns length of horizontal line (the axis).
     int getAxisLengthPx() const;
 
-    // Returns the pixel of the average of the min and max values on the axis.
+    // Returns the pixel of the average of the low and high values on the axis.
     int getCentralValuePx () const;
 
-    // The labels are the numbers below the axis. Their length includes more than just the
-    // number. Length is a vertical length (y-direction).
+    // Ticks and numberes designate the value at a point on the axis. The length of the labels is
+    // taken perpendicular to the axis (a vertical length, as in the y-direction).
     // It includes the length of the tick outside the chart plus
     // the space between the bottom of the tick and the number plus
     // the height of the number.
@@ -46,13 +49,13 @@ public:
     // would be {1, 5}.
     std::pair<int, int> getPixels (double xVal, int dotSize) const;
 
-    // Returns the min value as given in the axis in the constructor.
-    int getMinVal () const;
+    // Returns the low value as given in the axis in the constructor.
+    int getLowVal () const;
 
-    // Returns the max value as given in the axis in the constructor. // TODO may never be called
-    int getMaxVal () const;
+    // Returns the high value as given in the axis in the constructor.
+    int getHighVal () const;
 
-    // Same as getAxisLengthPx()
+    // Since this is a horizontal axis, returns the same as getAxisLengthPx().
     int sizeXPx () const;
 
     // The label length plus the axis thickness.
@@ -65,11 +68,18 @@ public:
     // Sets the pixels per unit. Updates the major and minor tick spacing.
     void setPxPerUnit (int pixels);
 
+    void setDirectionOfAxis (bool forward);
+
 private:
+
     std::unique_ptr<Axis> _axis;
     AxisFormat _axis_format;
-    int _y_coord__px; // the axis's y-coordinate in pixels
-    bool _labels_on_top; // true if the labels should be above the axis, false if below
+
+     // the axis's y-coordinate in pixels
+    int _y_coord__px;
+
+    // true if the labels should be above the axis, false if below
+    bool _labels_on_top; 
     int _min_tick_spacing;
     int _maj_tick_spacing;
 
@@ -77,12 +87,12 @@ private:
     
     int calcMajTickSpacing () const;
 
-    // This is the axis horizontal line.
+    // This is the axis' horizontal line.
     void implimentAddAxisLine (std::vector<Rect>& rects) const;
 
     void implimentAddTicksAndLabels (
         std::vector<Rect>& ticks,
-        std::vector<TextRect>& texts) const; // number next to tick
+        std::vector<TextRect>& texts) const;
 
 };
 

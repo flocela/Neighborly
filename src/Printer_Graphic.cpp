@@ -192,7 +192,9 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             cityPlotFormat,
             make_unique<GrAxisHorizontalSimple>(
                 make_unique<Axis_Basic>(
-                    true,                   // axis values increase as window's coordinates increase
+                    // axis values increase as window's coordinates increase, set as true.
+                    // PlotB's constructor sets the x-axis as a forward axis.
+                    true,                   
                     0,                      // starting pixel for x-axis, use zero for now
                     minXCoord,              // smallest coordinate in the x-direction             
                     maxXCoord,              // largest coordinate in the x-direction
@@ -206,6 +208,8 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             ),
             make_unique<GrAxisVerticalSimple>(
                 make_unique<Axis_Basic>(
+                    // axis values increase as window's coordinates increase, set as true.
+                    // PlotB's constructor sets the y-axis as a forward axis.
                     true,
                     0,                      // starting pixel for y-axis, use zero for now
                     minYCoord,              // smallest coordinate in y-direction
@@ -255,7 +259,9 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             rightColFormat,                   
             make_unique<GrAxisHorizontalSimple>(
                 make_unique<Axis_Basic>(
-                    true,                      // axis values increase as window's coordinates increase
+                    // axis values increase as window's coordinates increase, set as true.
+                    // PlotA's constructor sets the x-axis as a forward axis.
+                    true,                      
                     0,                         // starting pixel for x-axis, use zero for now
                     0,                         // The first run number is zero.
                     max(0, maxNumOfRuns-1),    // the last run number TODO why do I check for max??
@@ -269,7 +275,9 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             ),
             make_unique<GrAxisVerticalSimple>(
                 make_unique<Axis_Basic>(
-                    false,                     // axis values increase as window's coordinates decrease
+                    // axis values increase as window's coordinates decrease, set as false.
+                    // PlotA's constructor sets the y-axis as reverse axis.
+                    false,                     
                     0,                         // starting pixel for y-axis, use zero for now
                     0,                         // smallest number of neighbors for a resident is 0
                     maxNumOfNeighbors,         // largest number of neighbors for a resident
@@ -315,7 +323,9 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
             rightColFormat,                   // plot format for charts on right column
             make_unique<GrAxisHorizontalSimple>(
                 make_unique<Axis_Basic>(
-                    true,                      // axis values increase as window's coordinates increase
+                    // axis values increase as window's coordinates increase, set as true.
+                    // PlotA's constructor sets the x-axis as a forward axis also.
+                    true,                      
                     0,                         // starting pixel for x-axis, use zero for now
                     0,                         // Zero is the starting run number.
                     max(0, numberOfRuns-1),    // index of the last run TODO why do I check for max??
@@ -329,7 +339,9 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
             ),
             make_unique<GrAxisVerticalSimple>(
                 make_unique<Axis_Basic>(
-                    false,                     // axis values increase as window's coordinates decrease
+                    // axis values increase as window's coordinates decrease, set as false.
+                    // PlotA's constructor sets the y-axis as reverse axis.
+                    false,                     
                     0,                         // starting pixel for y-axis, use zero for now
                     0,                         // least possible happiness for a resident
                     100,                       // largest possible happiness for a resident

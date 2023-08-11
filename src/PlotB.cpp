@@ -13,17 +13,23 @@ PlotB::PlotB (
         unique_ptr<GrAxisVerticalSimple> yAxis
 ): 
     _min_unit_size__px{plotFormat.minUnitSize()},
-    _start_offset_m{plotFormat.startOffsetM()},
-    _end_offset_m{plotFormat.endOffsetM()},
-    _min_x{xAxis->getMinVal()},
-    _min_y{yAxis->getMinVal()},
-    _max_x{xAxis->getMaxVal()},
-    _max_y{yAxis->getMaxVal()},
-    _x_diff{_max_x - _min_x},
-    _y_diff{_max_x - _min_y},
+    _start_offset{plotFormat.startOffsetM()},
+    _end_offset{plotFormat.endOffsetM()},
+    _low_x{xAxis->getLowVal()},
+    _min_y{yAxis->getLowVal()},
+    _high_x{xAxis->getHighVal()},
+    _max_y{yAxis->getHighVal()},
+    _x_diff{_high_x - _low_x},
+    _y_diff{_high_x - _min_y},
     _x_axis{move(xAxis)},
     _y_axis{move(yAxis)}
 {
+    // Axis values will increate from left to right.
+    _x_axis->setDirectionOfAxis(true);
+
+    // Axis values will increase from top to bottom.
+    _y_axis->setDirectionOfAxis(true);
+
     // Update attributes that are affected by change to the top left corner coordinate and
     // available space in the x and y directions.
     setPlot(topLeftXPx, topLeftYPx, xSpacePx, ySpacePx);
@@ -142,19 +148,22 @@ void PlotB::setPlot (int topLeftCornerXPx, int topLeftCornerYPx, int xSpacePx, i
     _y_axis->moveCrossHairs(_cross_x__px, _cross_y__px);
     _y_axis->setPxPerUnit(_unit__px);
 
+    // horizontal length of background lines that extend from the tick marks across the graph.
+    _y_axis->setHorizLength(_x_axis->getAxisLengthPx());
+
 }
 
 int PlotB::calcUnitSizePx () const
 {
     // Calculate unit size in x-direction.
     int allowableXAxisLengthPx = _x_space__px - _y_axis->sizeXPx();
-    int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
+    int numOfCellsX = _x_diff + _start_offset + _end_offset;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
     xUnitSize = max(xUnitSize, _min_unit_size__px);
 
     // Calculate unit size in y-direction.
     int allowableYAxisLengthPx = _y_space__px - _x_axis->sizeYPx();
-    int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
+    int numOfCellsY = _y_diff + _start_offset + _end_offset;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
     yUnitSize = max(yUnitSize, _min_unit_size__px);
 
@@ -180,7 +189,7 @@ int PlotB::calcDotSizePx () const
 int PlotB::calcCrossXPx (int topLeftXPx) const
 {
     int requiredXLength = 
-        _unit__px * ( _x_diff + _start_offset_m + _end_offset_m) + _y_axis->sizeXPx();
+        _unit__px * ( _x_diff + _start_offset + _end_offset) + _y_axis->sizeXPx();
 
     // Start at given most left point (topLeftXPx),
     // move to the center of given space, move to the left by 1/2 of the required length,

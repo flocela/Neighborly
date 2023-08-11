@@ -3,6 +3,7 @@
 
 #include <utility>
 
+// Represents an axis. Used to get the pixels designating values on the axis.
 class Axis
 {
 
@@ -19,31 +20,29 @@ public:
 
     virtual int getAxisLengthPx () const = 0;
 
-    // Returns the min val given in the constructor.
-    virtual int getMinVal () const = 0;
+    // Returns the low value that must be labeled on the axis.
+    virtual int getLowVal () const = 0;
 
-    // Returns the max val given in the constructor.
-    virtual int getMaxVal () const = 0;
-
-    // Returns the difference between the min and max values given in the constructor.
-    virtual int getDiff () const = 0;
+    // Returns the high value that must be labeled on the axis.
+    virtual int getHighVal () const = 0;
 
     virtual int getPixelsPerUnit () const = 0;
 
     virtual int getTickThickness__px () const = 0;
 
-    // There is a space between the start of the axis and the first min value given in the
-    // constructor. That space is the start offset multiplier times the pixels per unit.
-    virtual int getStartOffsetMultiplier () const = 0;
+    // There is a space between the start of the axis and the low value. That space is the
+    // start offset times the pixels per unit.
+    virtual int getStartOffset () const = 0;
 
-    // There is a space between the max value given in the constructor and the end of the axis.
-    // That space is the end offset multiplier times the pixels per unit.
-    virtual int getEndOffsetMultiplier () const = 0;
+    // There is a space between the high value and the end of the axis.
+    // That space is the end offset times the pixels per unit. The max value is the
+    // value given by getMaxVal().
+    virtual int getEndOffset () const = 0;
 
-    // Returns pixel smallest pixel on the axis.
+    // Returns pixel smallest pixel (closest to zero) on the axis.
     virtual int getStartPixel () const = 0;
 
-    // Returns the largest pixel on the axis.
+    // Returns the largest pixel (farthest from zero) on the axis.
     virtual int getEndPixel () const = 0;
 
     // Returns the pixels covered by a dot at the value. If a dot is 5 pixels wide, a possible result
@@ -51,11 +50,13 @@ public:
     virtual std::pair<int, int> getPixels (double val, int dotSize) const = 0;
 
 
-    // Returns the central pixel between the min and max values given in the constructor.
+    // Returns the central pixel between the low and high values. The low and high values are given
+    // by getLowVal() and getHighVal().
     virtual int getCenterValPx () const = 0;
 
     virtual void moveCrossPixel (int pixel) = 0;
     virtual void setPxPerUnit (int pixels) = 0;
+    virtual void setDirectionOfAxis (bool forward) = 0;
 };
 
 #endif

@@ -18,7 +18,7 @@ protected:
 public:
     virtual ~Plot() noexcept = default;
 
-    // Returns the most central-value's pixel.
+    // Returns the x-axis' most central-value's pixel.
     virtual int getCenterValueOfXAxisPx () const = 0;
 
     virtual int getDotSizePx () const = 0;
@@ -29,22 +29,24 @@ public:
     // Get y-coordinate of top left corner of plot. This is not the same as x-y cross hairs.
     virtual int getTopLeftYPx () const = 0;
     
-    // Returns the given allowed space (in the x-direction) from when the plot was constructed,
-    // or when setXYSpacePx was last called. Returns the allowed space in the x-direction.
+    // Returns the allowed space (in the x-direction). This value was given when the plot was
+    // constructed or updated when setXYSpacePx was last called.
     virtual int getXSpacePx () const = 0;
 
+    // Returns the allowed space (in the y-direction). This value was given when the plot was
+    // constructed or updated when setXYSpacePx was last called.
     virtual int getYSpacePx () const = 0;
 
-    // Returns unit size in x direction
+    // Returns unit size in x direction.
     virtual int getXUnitSizePx () const = 0;
 
-    // Return unit size in y direction
+    // Return unit size in y direction.
     virtual int getYUnitSizePx () const = 0;
 
-    // The size of the plot in the x direction. This is smaller than or equal to the given x space.
+    // The size of the plot in the x direction. This is smaller than or equal to the allowed space.
     virtual int sizeXPx () const = 0;
 
-    // The size of the plot in the x direction. This is smaller than or equal to the given y space.
+    // The size of the plot in the y direction. This is smaller than or equal to the allowed space.
     virtual int sizeYPx () const = 0;
 
     virtual void print (

@@ -1,6 +1,7 @@
-#include "GrAxisVerticalSimple.h"
-#include <iostream>
 #include <cmath>
+#include <iostream>
+#include "GrAxisVerticalSimple.h"
+
 using namespace std;
 
 GrAxisVerticalSimple::GrAxisVerticalSimple (
@@ -39,14 +40,14 @@ pair<int, int>  GrAxisVerticalSimple::getPixels (double yVal, int dotSize) const
     return _axis->getPixels(yVal, dotSize);
 }
    
-int GrAxisVerticalSimple::getMinVal () const
+int GrAxisVerticalSimple::getLowVal () const
 {
-    return _axis->getMinVal();
+    return _axis->getLowVal();
 }
 
-int GrAxisVerticalSimple::getMaxVal () const
+int GrAxisVerticalSimple::getHighVal () const
 {
-    return _axis->getMaxVal();
+    return _axis->getHighVal();
 }
 
 int GrAxisVerticalSimple::sizeXPx () const
@@ -73,12 +74,12 @@ void GrAxisVerticalSimple::print (Renderer* renderer) const
 
     if (_axis_format.showBackgroundTickLines())
     {
-        renderer->fillBlocks(horizLinesMaj, _axis_format.tickLineBackgroundColor());// TODO shouuld be tickLines
+        renderer->fillBlocks(horizLinesMaj, _axis_format.tickLineBackgroundColor());
         renderer->fillBlocks(horizLinesMin, _axis_format.tickLineBackgroundColor());
     }
 
-    renderer->fillBlocks(axis, _axis_format.tickColor());
-    renderer->fillBlocks(ticks, _axis_format.tickColor()); // TODO shouuld be tickLines
+    renderer->fillBlocks(axis, _axis_format.axisColor());
+    renderer->fillBlocks(ticks, _axis_format.tickColor());
     renderer->renderTexts(texts);
 
 }
@@ -94,9 +95,9 @@ void GrAxisVerticalSimple::setHorizLength (int horizLengthPx)
     _horiz_line_length__px = horizLengthPx;
 }
 
-void GrAxisVerticalSimple::setPxPerUnit (int pixels)
+void GrAxisVerticalSimple::setPxPerUnit (int pixelsPerUnit)
 {
-    _axis->setPxPerUnit(pixels);
+    _axis->setPxPerUnit(pixelsPerUnit);
     _min_tick_spacing = calcMinTickSpacing();
     _maj_tick_spacing = calcMajTickSpacing();
 
@@ -104,14 +105,12 @@ void GrAxisVerticalSimple::setPxPerUnit (int pixels)
 
 void GrAxisVerticalSimple::implimentAddAxisLine (std::vector<Rect>& rects) const
 {
-    // Calculate top most pixel.
     int topPixel = _axis->getStartPixel();
 
-    // TODO this should be using axis methods not _axis_format's methods.
-    // Rectangle represents vertical line. // TODO this has to take into account the axis thickness.
+    // Rectangle represents vertical line.
     Rect rect{
-        _x_coord__px - _axis_format.axisThicknessPx()/2, // top left corner of line, x-coordinate
-        topPixel, // top left corner of line, y-coordinate
+        _x_coord__px - _axis_format.axisThicknessPx()/2, // top left corner of line, x-coord
+        topPixel,                                        // top left corner of line, y-coord
         _axis_format.axisThicknessPx(),
         getAxisLengthPx()
     };
@@ -129,8 +128,8 @@ void GrAxisVerticalSimple::implimentAddTicksAndLabels (
     int majTickXPx = _x_coord__px - _axis_format.majTickLengthOutsideChartPx();
     int minTickXPx = _x_coord__px - _axis_format.minTickLengthOutsideChartPx();
 
-    // The first value will be the minimum value given in the constructor.
-    int curVal = _axis->getMinVal();
+    // The first value will be the low value on the axis.
+    int curVal = _axis->getLowVal();
 
     // curPixels describe one tick, it is the first and last pixels covered by the tick.
     pair<int, int> curPixels = _axis->getPixels(curVal, _axis->getTickThickness__px());
@@ -144,7 +143,7 @@ void GrAxisVerticalSimple::implimentAddTicksAndLabels (
         _axis_format.labelWidthMultiplier(),
         _axis_format.textColor(),
         _axis_format.textBackgroundColor(),
-        3
+        3 // left text alignment
     };
 
     // background line corresponding to major tick. Background lines run across the chart.
@@ -179,8 +178,8 @@ void GrAxisVerticalSimple::implimentAddTicksAndLabels (
         _axis->getTickThickness__px()
     };
     
-    // Iterate through values from bottom of axis to top of axis.
-    while ( curVal <= _axis->getMaxVal() + _axis->getEndOffsetMultiplier() )
+    // Iterate through values from start of axis to end of axis.
+    while ( curVal <= _axis->getHighVal() + _axis->getEndOffset() )
     {   
         curPixels = _axis->getPixels(curVal, _axis->getTickThickness__px());
 
@@ -213,20 +212,29 @@ void GrAxisVerticalSimple::implimentAddTicksAndLabels (
 
 int GrAxisVerticalSimple::calcMinTickSpacing () const
 { 
-     if (_axis->getMaxVal() - _axis->getMinVal() < 10)
+     if (_axis->getHighVal() - _axis->getLowVal() < 10)
     {
         return 1;
     }
-
-    return (_axis->getPixelsPerUnit() >= 10)? 1 : 5;
+    else
+    {
+        return (_axis->getPixelsPerUnit() >= 10)? 1 : 5;
+    }
 }
 
 int GrAxisVerticalSimple::calcMajTickSpacing () const
 { 
-    if (_axis->getMaxVal() - _axis->getMinVal() < 10)
+    if (_axis->getHighVal() - _axis->getLowVal() < 10)
     {
         return 1;
     }
-    
-    return (_axis->getPixelsPerUnit() > 10)? 5 : 10; 
+    else
+    {
+        return (_axis->getPixelsPerUnit() > 10)? 5 : 10;
+    }
+}
+
+void GrAxisVerticalSimple::setDirectionOfAxis (bool forward)
+{
+    _axis->setDirectionOfAxis(forward);
 }

@@ -13,21 +13,27 @@ PlotA::PlotA (
     unique_ptr<GrAxisVerticalSimple> yAxis
 ):
     _min_unit__px{plotFormat.minUnitSize()},
-    _start_offset_m{plotFormat.startOffsetM()},
-    _end_offset_m{plotFormat.endOffsetM()},
+    _start_offset{plotFormat.startOffsetM()},
+    _end_offset{plotFormat.endOffsetM()},
     _top_left_x__px{topLeftXPx},
     _top_left_y__px{topLeftYPx},
-    _min_x{xAxis->getMinVal()},
-    _min_y{yAxis->getMinVal()},
-    _max_x{xAxis->getMaxVal()},
-    _max_y{yAxis->getMaxVal()},
+    _low_x{xAxis->getLowVal()},
+    _low_y{yAxis->getLowVal()},
+    _high_x{xAxis->getHighVal()},
+    _high_y{yAxis->getHighVal()},
     _x_space__px{xSpacePx},
     _y_space__px{ySpacePx},
-    _x_diff{_max_x - _min_x},
-    _y_diff{_max_y - _min_y},
+    _x_diff{_high_x - _low_x},
+    _y_diff{_high_y - _low_y},
     _x_axis{move(xAxis)},
     _y_axis{move(yAxis)}
 {
+    // Axis values will increate from left to right.
+    _x_axis->setDirectionOfAxis(true);
+
+    // Axis values will increase from bottom to top.
+    _y_axis->setDirectionOfAxis(false);
+
     // Update attributes that are affected by change to top left corner coordinate and
     // available space in the x and y directions.
     setPlot(_top_left_x__px, _top_left_y__px, _x_space__px, _y_space__px);
@@ -158,13 +164,13 @@ pair<int, int> PlotA::calcUnitSizeXAndYPx () const
 {
     // Calculate unit size in x-direction.
     int allowableXAxisLengthPx = _x_space__px - _y_axis->sizeXPx();
-    int numOfCellsX = _x_diff + _start_offset_m + _end_offset_m;
+    int numOfCellsX = _x_diff + _start_offset + _end_offset;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
     xUnitSize = max(xUnitSize, _min_unit__px);
 
     // Calculate unit size in y-direction.
     int allowableYAxisLengthPx = _y_space__px - _x_axis->sizeYPx();
-    int numOfCellsY = _y_diff + _start_offset_m + _end_offset_m;
+    int numOfCellsY = _y_diff + _start_offset + _end_offset;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
     yUnitSize = max(yUnitSize, _min_unit__px);
     return {xUnitSize, yUnitSize};
@@ -190,7 +196,7 @@ int PlotA::calcDotSizePx () const
 int PlotA::calcCrossXPx (int topLeftXPx) const
 {
     int requiredXLength = 
-        (_unit_x__px * ( _x_diff + _start_offset_m + _end_offset_m)) + _y_axis->sizeXPx();
+        (_unit_x__px * ( _x_diff + _start_offset + _end_offset)) + _y_axis->sizeXPx();
 
     // Start at given most left point (topLeftXPx),
     // Move to the center of given space, move to the left by 1/2 of the required length,
@@ -202,7 +208,7 @@ int PlotA::calcCrossXPx (int topLeftXPx) const
 
 int PlotA::calcCrossYPx (int topLeftYPx) const
 {
-    int retVal =  topLeftYPx + _unit_y__px * (_y_diff + _start_offset_m + _end_offset_m);
+    int retVal =  topLeftYPx + _unit_y__px * (_y_diff + _start_offset + _end_offset);
     return retVal;
        
 }
