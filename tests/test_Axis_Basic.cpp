@@ -4,11 +4,11 @@
 
 using namespace std;
 
-TEST_CASE("Axis_Basic().reverse_axis_dot_size_1 and_2")
+TEST_CASE("Axis_Basic::forward_is_negative_and_dot_size_is_1_and_2")
 {
     Axis_Basic axis {
         false,
-        30, // coordinate where axis and cross axis meet
+        30, // largest pixel on axis
         0, // minVal
         4, // maxVal
         5, // pxPerUnit
@@ -35,11 +35,11 @@ TEST_CASE("Axis_Basic().reverse_axis_dot_size_1 and_2")
     
 }
 
-TEST_CASE("Axis_Basic.reverse_axis_dot_size_3 and_4")
+TEST_CASE("Axis_Basic::forward_is_negative_and_dot_size_is_3_and_4")
 {
     Axis_Basic axis {
         false,
-        30, // coordinate where axis and cross axis meet
+        30, // largest pixel on axis
         0, // minVal
         4, // maxVal
         5, // pxPerUnit
@@ -57,8 +57,8 @@ TEST_CASE("Axis_Basic.reverse_axis_dot_size_3 and_4")
     // pixel 0 represent values (4.9, 5.1]
     
     REQUIRE(0 == axis.getStartPixel()); // 0
-    REQUIRE(31 == axis.getEndPixel()); // 31
-    REQUIRE( 32 == axis.getAxisLengthPx() );//33
+    REQUIRE(30 == axis.getEndPixel()); // 30
+    REQUIRE( 31 == axis.getAxisLengthPx() );//31
     REQUIRE( pair<int, int>{4, 6} == axis.getPixels(4, 3) ); // {4, 6}
     REQUIRE( pair<int, int>{18, 20} == axis.getPixels(1.3, 3) ); // {18, 20}
     REQUIRE( pair<int, int>{13, 15} == axis.getPixels(2.2, 3) ); // {13, 15}
@@ -66,11 +66,11 @@ TEST_CASE("Axis_Basic.reverse_axis_dot_size_3 and_4")
     REQUIRE( pair<int, int>{13, 16} == axis.getPixels(2.2, 4) ); // {13, 16}
 }
 
-TEST_CASE("ForwardAxis.forward_axis_dot_size_1 and_2")
+TEST_CASE("Axis_Basic::forward_is_positive_and_dot_size_is_1_and_2")
 {
     Axis_Basic axis {
         true,
-        0, // coordinate where axis and cross axis meet
+        0, // smallest pixel on axis
         0, // minVal
         4, // maxVal
         5, // pxPerUnit
@@ -97,11 +97,11 @@ TEST_CASE("ForwardAxis.forward_axis_dot_size_1 and_2")
     REQUIRE( pair<int, int>{16, 17} == axis.getPixels(2.2, 2) ); // {16, 17}
 }
 
-TEST_CASE("ForwardAxis.forward_axis_dot_size_3 and_4")
+TEST_CASE("Axis_Basic::forward_is_positive_and_dot_size_is_3_and_4")
 {
     Axis_Basic axis {
         true,
-        0, // coordinate where axis and cross axis meet
+        0, // smallest pixel on axis
         0, // minVal
         4, // maxVal
         5, // pxPerUnit
@@ -119,12 +119,11 @@ TEST_CASE("ForwardAxis.forward_axis_dot_size_3 and_4")
     // pixel 0 represent values (-.9, -1.1]
     
     REQUIRE(0 == axis.getStartPixel()); // 0
-    REQUIRE(31 == axis.getEndPixel()); // 31
-    REQUIRE( 32 == axis.getAxisLengthPx() );//32
+    REQUIRE(30 == axis.getEndPixel()); // 30
+    REQUIRE( 31 == axis.getAxisLengthPx() );//31
     REQUIRE( pair<int, int>{24, 26} == axis.getPixels(4, 3) ); // {24, 26}
     REQUIRE( pair<int, int>{11, 13} == axis.getPixels(1.3, 3) ); // {11, 13}
     REQUIRE( pair<int, int>{15, 17} == axis.getPixels(2.2, 3) ); // {15, 17}
     REQUIRE( pair<int, int>{12, 15} == axis.getPixels(1.7, 4) ); // {12, 15}
     REQUIRE( pair<int, int>{15, 18} == axis.getPixels(2.2, 4) ); // {15, 18}
 }
-// TODO test for getting pixel with even dotSize.

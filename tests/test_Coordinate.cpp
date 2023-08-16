@@ -6,7 +6,7 @@
 
 using namespace std;
 
-TEST_CASE("operator< 's primary axis is the y axis")
+TEST_CASE("less-than-opertor's primary axis is the y axis")
 {
     Coordinate a{10, 1};
     Coordinate b{8, 2};
@@ -14,7 +14,7 @@ TEST_CASE("operator< 's primary axis is the y axis")
     REQUIRE(a < b);
 }
 
-TEST_CASE("operator< 's secondary axis is the x axis")
+TEST_CASE("less-than-opertor's secondary axis is the x axis")
 {
     Coordinate a{10, 1};
     Coordinate b{8, 1};
@@ -22,7 +22,7 @@ TEST_CASE("operator< 's secondary axis is the x axis")
     REQUIRE(b < a);
 }
 
-TEST_CASE("operator<, a is not less than a")
+TEST_CASE("less-than-opertor:: a is not less than a")
 {
     Coordinate a{10, 1};
 

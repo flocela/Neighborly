@@ -10,23 +10,23 @@ class Axis_Basic : public Axis
 
 public:
 
-    // Forward is true, means the values on the axis run in the direction of the coordinates
+    // Forward is true, means the values on the axis run in the direction of the pixels
     // in the window.
-    // Pixels in window: 000   005   010   150
+    // Pixels in window: 000   005   010   015
     // Values on axis:   100   200   300   400
 
     // If forward is false, then the values on the axis run in the direction opposite
-    // the coordinates in the window.
-    // Pixels in window: 000   005   010    150
+    // the pixels in the window.
+    // Pixels in window: 000   005   010    015
     // Values on axis:   400   300   200    100
 
-    // crossPixel is at the start of the axis. It is startOffset units away from the lowVal.
+    // crossPixel is the pixel at the start of the axis. It is startOffset units before the lowVal.
     // The units for crossPixel is pixels. The units for startOffset and endOffset is units.
     // The units for pxPerUnit is px/unit.
-    // The starting pixel of the axis is startOffset * pxPerUnit away from the low value pixel. The
-    // end of the axis is endOffset * pxPerUnit away from the high value.
+    // The crossPixel of the axis is startOffset * pxPerUnit before the low value pixel. The
+    // end of the axis is endOffset * pxPerUnit after from the high value.
 
-    // pxPerUnit should be positive.
+    // pxPerUnit must be positive.
     Axis_Basic (
         bool forward,
         int crossPixel,
@@ -78,17 +78,17 @@ public:
 
 private:
 
-    // Axis values increase in the direction of the window coordinate system.
+    // Axis values increase in the direction of the window's pixels.
     bool _forward = true;
 
     int _cross_pixel__px;
     int _low_val;
     int _high_val;
 
-    // val that is closest to zero coordinate in window
+    // value that is closest to zero pixel in window (must be either _low_val or _high_val)
     int _start_val;
 
-    // val that is farthest from zero coordinate in window
+    // value that is farthest from zero pixel in window (must be either _low_val or _high_val)
     int _end_val;
     
     int _px_per_unit;

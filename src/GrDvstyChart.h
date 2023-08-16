@@ -10,9 +10,9 @@
 #include "Title.h"
 
 // Used to render the average diversity of each group, per the run number.
-// Diversity of one resident is the number of disparate neighborst they have.
+// Diversity of one resident is the number of disparate neighbors they have.
 // Diversity per group is adding the diversity of each resident in a group to come up with a total
-// sum, then dividing that sum by the number of residents in the group.
+// sum, then dividing that sum by the number of residents in that group.
 class GrDvstyChart {
 
 public:
@@ -54,7 +54,7 @@ private:
     std::unique_ptr<GrColorKey> _key;
     std::unique_ptr<Plot> _plot;
 
-    // used so that key is only prited once
+    // used so that key is only printed once
     mutable bool _key_has_printed = false;
 
     // used so that title is only printed once.

@@ -27,7 +27,7 @@ GrCityChart::GrCityChart (
 {   
     _clearing_vector = createVectorForClearingGrid();
     
-    // Plot's top left corner's x aligns with topLeftCornerXPx.
+    // Plot's top-left corner's x aligns with topLeftCornerXPx.
     // Plot is below the title and the key.
     // Plot's allowable x-space is all the space given by xSpace.
     // Plot's allowable y-space is decreased by the title and key.
@@ -71,37 +71,37 @@ vector<Point> GrCityChart::createVectorOfPoints (const ResPerHouse& residentPerH
 
     for (auto const &x : _coordinate_per_house)
     {   
-        const House* house = x.first;
-        Coordinate coord = x.second;
+        const House* curHouse = x.first;
+        Coordinate curCoord = x.second;
 
         // Point color
         Color color; 
 
         // If house is empty then color absent color.
-        if (!residentPerHouse.contains(house))
+        if (!residentPerHouse.contains(curHouse))
         {
             color = _absent_color;
         }
         else
         {
-            // Color depends on group id and mood of the resident.
+            // Color depends on resident's group id and mood.
             // If the resident's happiness value is greater or equal to its happiness goal,
             // then the mood is happy, otherwise it's unhappy.
-            const Resident *res = residentPerHouse.at(house);
-            int groupId = res->getGroupId();
+            const Resident *curRes = residentPerHouse.at(curHouse);
+            int curGroupId = curRes->getGroupId();
 
             Mood mood = Mood::happy;
-            if (res->getHappiness() <= res->getHappinessGoal())
+            if (curRes->getHappiness() <= curRes->getHappinessGoal())
             {
                 mood = Mood::unhappy;
             }
 
-            color = _colorrs_map.at(_resident_b_color_per_groupid.at(groupId)).at(mood)._color;
+            color = _colorrs_map.at(_resident_b_color_per_groupid.at(curGroupId)).at(mood)._color;
                 
         }
 
-        // Point is made up of house's coordinate x and y and resident's color.
-        points.emplace_back(Point{(double)coord.getX(), (double)coord.getY(), color});
+        // Point is made up of house's x-coordinate, y-coordinate, and resident's color.
+        points.emplace_back(Point{(double)curCoord.getX(), (double)curCoord.getY(), color});
     }
 
     return points;

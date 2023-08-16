@@ -13,17 +13,18 @@
 #include "ResPerHouse.h"
 #include "Title.h"
 
-// Used to print out a city map using a renderer. Shows where each resident is 
+// Used to print out a city map using a renderer. Shows where each resident group is 
 // on the map. Each resident is assigned a color based on their group id and their
-// happiness value.
+// happiness value and a square of that color is shown at that address in the map.
 // Includes title for this map.
-// Includes printing the key to the map (color for each group id).
+// Includes key to the map (color for each group id).
 class GrCityChart
 {
 public:
     GrCityChart (
         std::unordered_map<const House*, Coordinate> coordPerHouse,
-        std::unordered_map<int, BaseColor> resColors, //resident BaseColors per id group
+        // BaseColor for each group
+        std::unordered_map<int, BaseColor> resColors,
         std::unique_ptr<Title> title,
         std::unique_ptr<GrColorKey_Basic> key,
         std::unique_ptr<Plot> plot,
@@ -60,8 +61,8 @@ public:
     int _x_space__px;
     int _y_space__px;
 
-    // Points contain an x and y coordinate and a color.
-    // _clearing_vector contains a Point for each house coordinate and each point is
+    // Points contain an x coordinate, y coordinate, and a color.
+    // _clearing_vector contains a Point for each house address and each Point is
     // assigned the absent color. This is used to clear the map before rendering the 
     // new set of Points with the new data from print().
     std::vector<Point> _clearing_vector;
@@ -69,7 +70,7 @@ public:
     Color _absent_color = Color::gray850;
 
     // Each Point represents a house.
-    // If a house is empty it gets a default color. If it is occupied, its color depends on the 
+    // If a house is empty it gets a default-absent color. If it is occupied, its color depends on the 
     // resident's group id and happiness value.
     std::vector<Point> createVectorOfPoints (const ResPerHouse& residentPerHouse) const;
 

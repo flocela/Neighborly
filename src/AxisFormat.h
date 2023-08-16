@@ -10,17 +10,28 @@ class AxisFormat
 public:
 
     int axisThicknessPx () const;
+
+    // get major tick length
     int majTickLengthPx () const;
-    int minTickLengthPx () const;
+
+    // get minor tick length
+    int minTickLengthPx () const; 
+
     int majTickLengthOutsideChartPx () const;
+
     int minTickLengthOutsideChartPx () const;
+
     int tickLengthInsideChartPx () const;
+
     int tickThicknessPx () const;
 
-    // labels are the numbers along the axis
+    // labels denote the numbers along the axis
     int labelHeightPx () const;
+
     int labelLineSpacePx () const;
+
     double labelWidthMultiplier () const;
+
     std::vector<uint8_t> textColor () const;
     std::vector<uint8_t> textBackgroundColor () const;
     std::vector<uint8_t> axisColor () const;
@@ -34,6 +45,7 @@ public:
 
     // Label space is the space below letter. It is set to zero if space is less than 1.
     void setLabelSpacePx (int space);
+    
     void setLabelWidthMultiplier (double widthMultiplier);
 
     // Major tick length is the longer tick length. It is set to zero if length is less than zero.

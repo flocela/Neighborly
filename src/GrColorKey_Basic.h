@@ -7,19 +7,19 @@
 #include "Letter.h"
 #include "Renderer.h"
 
-// Renders a key (labels corresponding to colors) for a chart.
+// Renders a key (colors corresponding to labels) for a chart.
 class GrColorKey_Basic : public GrColorKey
 {
 
 public:
-    // A label is made for each group id and mood combination.
+    // A label is made for each combination of group id and mood.
     // So for two groups with two moods (happy and unhappy), there will be 4 labels:
     // group1 happy, group 1 unhappy, group 2 happy, group2 unhappy.
     GrColorKey_Basic (
         // topCenter is the point at the top and center of the GrColorKey.
         int topCenterXPx, // x value of the top most center point
         int topCenterYPx, // y value of the top most center point
-        Letter labelLetter, // gives the size of the lettering.
+        Letter labelLetter, // gives the font size of the lettering.
         const std::unordered_map<int, BaseColor>& colors, // base color per groupId
         std::set<Mood> moods, // keys for colors, e.g. happy, sad, neutral
         std::vector<uint8_t> textColor,
@@ -55,8 +55,8 @@ private:
     const std::unordered_map<int, BaseColor>& _b_color_per_groupId;
     std::set<Mood> _moods;
     int _box_length__px = 0; // box is the colored square next to the label
-    int _box_spacer__px = 6; // space between box and label
-    int _column_border__px = 8; // space around each pair of box and label
+    int _box_spacer__px = 6; // space between colored box and label
+    int _column_border__px = 8; // space around each pair of colored box and label
 
     // Each label holds the group id and mood, for example "Group 1 happy".
     // Each pair in the _label_per_color is the color and its corresponding label.
@@ -65,7 +65,7 @@ private:
     // The number of moods is the size of _moods.
     std::vector<std::pair<Color, std::string>> _label_per_color;
 
-    // column_width is the box length + box spacer + longest label + column border * 2.
+    // column_width is the box width + box spacer + longest label + column border * 2.
     int _column_width;
 
     std::vector<uint8_t> _text_color = _the_color_rgba[Color::gray100];

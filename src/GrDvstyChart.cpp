@@ -18,7 +18,7 @@ GrDvstyChart::GrDvstyChart (
     _key{move(colorKey)},
     _plot{std::move(plot)}
 {   
-    // x-coordinate of plot's top left corner aligns with topLeftXPx.
+    // x-coordinate of plot's top-left corner aligns with topLeftXPx.
     // Plot is below the title and below the key.
     // The available space in the x direction is xSpace.
     // The available space in the y direction is decreased by the title and the key.
@@ -44,7 +44,7 @@ void GrDvstyChart::print (
     Renderer* renderer
 ) const
 {
-    // plot will print points.
+    // Plot will print Points. Points have an x-coordinate, y-coordinate, and color.
     // The diversity for a resident is the number of disperate neighbors the resident has.
     // The Point's y value is the average diversity for the residents in the group.
     // The Point's x value is the run number.
