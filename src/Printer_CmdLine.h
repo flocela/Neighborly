@@ -43,7 +43,7 @@ private:
 
     // Used for printing residents. These are the happy characters per group Id, where
     // the group id is the vector index.
-    std::vector<char> happyCharacters = {'x', '!', '@', '#', '$', '%'};
+    std::vector<char> _happy_characters = {'x', '!', '@', '#', '$', '%'};
         
 };
 

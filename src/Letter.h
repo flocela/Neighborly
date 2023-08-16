@@ -15,8 +15,8 @@ class Letter
         ~Letter () noexcept = default;
 
         int letterHeight () const {return _letter_height;}
-        int lineSpace () const {return _line_space;}
-        int getHeightIncLSpace () const { return letterHeight() + _line_space;}
+        int lineSpace () const {return _line_space__px;}
+        int getHeightIncLSpace () const { return letterHeight() + _line_space__px;}
         double widthMultiplier () const { return _width_multiplier;}
         
         void setLetterHeight (int size);
@@ -25,7 +25,7 @@ class Letter
 
     private:
         int _letter_height = 30;
-        int _line_space = 2; // clear space below letter (in pixels).
+        int _line_space__px = 2; // clear space below letter (in pixels).
         double _width_multiplier = 0.35;
 };
 #endif

@@ -17,14 +17,10 @@ PlotA::PlotA (
     _end_offset{plotFormat.endOffsetM()},
     _top_left_x__px{topLeftXPx},
     _top_left_y__px{topLeftYPx},
-    _low_x{xAxis->getLowVal()},
-    _low_y{yAxis->getLowVal()},
-    _high_x{xAxis->getHighVal()},
-    _high_y{yAxis->getHighVal()},
     _x_space__px{xSpacePx},
     _y_space__px{ySpacePx},
-    _x_diff{_high_x - _low_x},
-    _y_diff{_high_y - _low_y},
+    _x_diff{xAxis->getHighVal() - xAxis->getLowVal()},
+    _y_diff{yAxis->getHighVal() - yAxis->getLowVal()},
     _x_axis{move(xAxis)},
     _y_axis{move(yAxis)}
 {

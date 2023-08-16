@@ -30,10 +30,8 @@ void Printer_CmdLine::print (const RunMetrics* runMetrics) const
     const unordered_map<int, int>& numOfResidentsPerGroupId =
         runMetrics->getNumOfResidentsPerGroupId();
 
-    // The number of different neighbors per group id is the total sum of disparate neighbors
-    // per resident per group id.
-    // It is found by taking the sum of disparate neighbors for each resident in the 
-    // group and adding that sum to a total sum of different neighbors for that group id.
+    // The number of different neighbors per group is found by taking the sum of disparate
+    // neighbors for each resident in the group.
     const unordered_map<int, int>& numOfDiffNeighborsPerGroupId =
         runMetrics->getNumOfDiffNeighborsPerGroupId();
     
@@ -99,11 +97,11 @@ void Printer_CmdLine::print (const RunMetrics* runMetrics) const
     {
         // Create map of characters per address. If the address is empty, then the
         // character is an empty space. If the address has a resident, then the
-        // corresponding character depends on the resident's group id. If the
+        // corresponding character depends on the resident's group id and happiness. If the
         // resident's happiness is less than it's happiness goal, then the 
         // address's corresponding character is the resident's group id . If the resident's
         // happiness is greater or equal to the resident's happiness goal, then the
-        // corresponding character is group's happiness character (from happyCharacers vector).
+        // corresponding character is group's happiness character (from _happy_characers vector).
         unordered_map<int, char> characterPerAddress{};
         for (auto houseAndRes : residentsPerHouse)
         {
@@ -112,7 +110,7 @@ void Printer_CmdLine::print (const RunMetrics* runMetrics) const
             double residentsHappinessGoal = houseAndRes.second->getHappinessGoal();
             int address = houseAndRes.first->getAddress();
             if (residentsHappiness >= residentsHappinessGoal){
-                characterPerAddress[address] = happyCharacters[residentGroupId];
+                characterPerAddress[address] = _happy_characters[residentGroupId];
             }
             else
             {
@@ -125,7 +123,7 @@ void Printer_CmdLine::print (const RunMetrics* runMetrics) const
         for (int groupID : groupIDs)
         {
             cout << "GroupID " << groupID << ":: "
-                 << "happy: " << happyCharacters[groupID] << ", "
+                 << "happy: " << _happy_characters[groupID] << ", "
                  << "unhappy: " << groupID << endl << "           ";
         }
         cout << "empty house: -" << endl;

@@ -2,7 +2,7 @@
 
 Letter::Letter (int letterHeight, int lineSpace, double widthMultiplier):
     _letter_height{letterHeight},
-    _line_space{lineSpace},
+    _line_space__px{lineSpace},
     _width_multiplier{widthMultiplier}
 {}
 
@@ -26,7 +26,7 @@ void Letter::setLineSpace (int space)
     }
     else
     {
-        _line_space = space;
+        _line_space__px = space;
     }
 }
 

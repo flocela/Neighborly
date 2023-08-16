@@ -20,7 +20,7 @@ class PlotA: public Plot
 public:
 
     // The top left corner aligns vertically with the left side of the vertical axis' labels and
-    // aligns horizontally with the top of the vertical axes. The plot encompasses the axes'
+    // aligns horizontally with the top of the vertical axis. The plot encompasses the axes'
     // labels.
     // The top left corner is not at the axes' crosshairs. The top left corner of the plot does
     // not align with the axes.
@@ -34,8 +34,7 @@ public:
         std::unique_ptr<GrAxisVerticalSimple> yAxis
     );
 
-    // Creates a plot with top left corner at (0,0) pixels. Top left corner is not the crosshairs
-    // of x and y axes.
+    // Creates a plot with top left corner at (0,0) pixels.
     // Size of plot is zero in x and y directions.
     // This is a temporary plot. Use setPlot() to finish it.
     PlotA (
@@ -102,16 +101,6 @@ private:
     // account the width of the y-axis labels.
     int _top_left_x__px = 0;
     int _top_left_y__px = 0;
-
-    // smallest values with expected data on the axes.
-    int _low_x = 0;
-    int _low_y = 0;
-    
-    // largest values with expected data on the axes.
-    // Note: the axes stretch past the largest value with data.
-    // The largest value on the axes will be _high_y + _end_offset and _high_x + end_offset.
-    int _high_x = 0;
-    int _high_y = 0;
     
     // given allowable space in the x and y directions
     int _x_space__px = 0;

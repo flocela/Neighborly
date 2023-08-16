@@ -18,9 +18,9 @@ class PlotB: public Plot
 
 public:
 
-    // The top left corner aligns vertically with the left side of the vertical axis' labels
+    // The top-left corner aligns vertically with the left side of the vertical axis' labels
     // and aligns horizontally with the top of the horizontal axis' labels.
-    // The top left corner of the plot does not align with the axes' cross hairs.
+    // The top-left corner of the plot does not align with the axes' cross hairs.
     PlotB ( 
         PlotFormat plotFormat,
         int topLeftXPx, // top left corner of plot, not the same as where x and y axes cross
@@ -98,16 +98,6 @@ private:
     // account the width of the y-axis labels and the height of the x-axis labels.
     int _top_left_x__px = 0;
     int _top_left_y__px = 0;
-
-    // Smallest values on the axes that is expected to have data.
-    int _low_x;
-    int _min_y;
-
-    // largest values on the axes that is expected to have data.
-    // Note: the axes stretch past the largest value with data.
-    // The largest value on the axes will be _max_y + (_end_offset * unit size ).
-    int _high_x;
-    int _max_y;
     
     // given allowable space in the x and y directions
     int _x_space__px;
@@ -135,7 +125,7 @@ private:
     // The unit size must be equal or greater to _min_unit_size__px.
     int calcUnitSizePx () const;
 
-    // Returns width of square dot. The width is 1/3 the smaller of _unit_x__px and _unit_y__px.
+    // Returns width of square dot. The width is 1/2 the smaller of _unit__px.
     // Returns an odd dot size that is at least the _min_dot__px in width.
     int calcDotSizePx () const;
 

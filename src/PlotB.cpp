@@ -15,22 +15,18 @@ PlotB::PlotB (
     _min_unit_size__px{plotFormat.minUnitSize()},
     _start_offset{plotFormat.startOffsetM()},
     _end_offset{plotFormat.endOffsetM()},
-    _low_x{xAxis->getLowVal()},
-    _min_y{yAxis->getLowVal()},
-    _high_x{xAxis->getHighVal()},
-    _max_y{yAxis->getHighVal()},
-    _x_diff{_high_x - _low_x},
-    _y_diff{_high_x - _min_y},
+    _x_diff{xAxis->getHighVal() - xAxis->getLowVal()},
+    _y_diff{yAxis->getHighVal() - yAxis->getLowVal()},
     _x_axis{move(xAxis)},
     _y_axis{move(yAxis)}
 {
-    // Axis values will increate from left to right.
+    // Axis values will increase from left to right.
     _x_axis->setDirectionOfAxis(true);
 
     // Axis values will increase from top to bottom.
     _y_axis->setDirectionOfAxis(true);
 
-    // Update attributes that are affected by change to the top left corner coordinate and
+    // Update attributes that are affected by change to the top-left corner and
     // available space in the x and y directions.
     setPlot(topLeftXPx, topLeftYPx, xSpacePx, ySpacePx);
 }

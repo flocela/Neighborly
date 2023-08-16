@@ -5,7 +5,7 @@
 #include "Point.h"
 #include "Renderer.h"
 
-// A Plot has an x and y axis. It prints data points (dots) in its plot area.
+// A Plot has an x and y axis. It prints data points (square dots) in its plot area.
 class Plot
 {
 protected:

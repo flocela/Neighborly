@@ -11,14 +11,14 @@ public:
         Letter titleLetter,
         Letter keyLetter,
         int minUnitSizePx,
-        int startOffsetMultiplier,
-        int endOffsetMultiplier
+        int startOffset,
+        int endOffset
     ) :
        _title_letter{titleLetter},
        _key_letter{keyLetter},
        _min_unit_size__px{minUnitSizePx},
-       _start_offset_m{startOffsetMultiplier},
-       _end_offset_m{endOffsetMultiplier}
+       _start_offset_m{startOffset},
+       _end_offset_m{endOffset}
     {}
 
     PlotFormat () = delete;
@@ -45,10 +45,10 @@ private:
     Letter _key_letter;
     int _min_unit_size__px = 1;
     
-    // offsets are multipliers. length of axis before minimum value is _start_offset times _unit_size.
+    // Length of axis before minimum value is _start_offset times _unit_size.
     int _start_offset_m;
 
-    // offsets are multipliers. length of axis after maximum value is _end_offset times _unit_size.
+    // Length of axis after maximum value is _end_offset times _unit_size.
     int _end_offset_m;
 };
 
