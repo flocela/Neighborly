@@ -3,10 +3,11 @@
 
 #include <iostream>
 #include <unordered_set>
+
 using namespace std;
 using Catch::Matchers::Contains;
 
-TEST_CASE("RandIntsMaker: Well size is zero.")
+TEST_CASE("RandIntsMaker:: Well size is zero, returns vector of size zero.")
 {   
     RandIntsMaker rI{};
     vector<int> actual = rI.getRandomIntegers(0, 0);
@@ -27,17 +28,12 @@ TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 10"
     RandIntsMaker rI{};
     vector<int> actual = rI.getRandomIntegers(10, 10);
 
-    vector<int> inOrder = vector<int>(10);
-    for (int ii=0; ii < inOrder.size(); ++ii)
-    {
-        inOrder[ii] = ii;
-    }
+    vector<int> inOrder = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 
     vector<int> sortedActual = actual;
     sort(sortedActual.begin(), sortedActual.end());
 
-    // all the numbers in actual are in inOrder.
     REQUIRE(inOrder == sortedActual);
 
     // actual has the numbers in different order than inOrder
