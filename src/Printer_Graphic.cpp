@@ -16,23 +16,24 @@ Printer_Graphic::Printer_Graphic (
     const SetOfHousesPerHouse& adjacentHousesPerHouse,
     string title,
     int numOfRuns
-): _renderer{move(renderer)},
-   _colors{colors},
-   _coordinates_per_house{coordinatesPerHouse},
-   _window_title{make_unique<Title_Basic>(
-    _window_title_letter,
-    _x_center__px,
-    _top_border__px,
-    title)},
-   _num_of_runs{numOfRuns},
-   _runs_chart_top_y__px{_top_border__px + _window_title->sizeYPx()},
-   _runs_chart{make_unique<GrRunsChart>(
-    _side_borders__px,
-    _runs_chart_top_y__px,
-    _screen_width__px - (2 * _side_borders__px),
-    _chart_title_letter.getHeightIncLSpace(),
-    _chart_title_letter,
-    _num_of_runs)}
+): 
+    _renderer{move(renderer)},
+    _colors{colors},
+    _coordinates_per_house{coordinatesPerHouse},
+    _window_title{make_unique<Title_Basic>(
+        _window_title_letter,
+        _x_center__px,
+        _top_border__px,
+        title)},
+    _num_of_runs{numOfRuns},
+    _runs_chart_top_y__px{_top_border__px + _window_title->sizeYPx()},
+    _runs_chart{make_unique<GrRunsChart>(
+        _side_borders__px,
+        _runs_chart_top_y__px,
+        _screen_width__px - (2 * _side_borders__px),
+        _chart_title_letter.getHeightIncLSpace(),
+        _chart_title_letter,
+        _num_of_runs)}
 {  
     _window_title->setTextColor(_title_text_color);
 
@@ -62,7 +63,7 @@ Printer_Graphic::Printer_Graphic (
         colSpaceYPx // city chart takes up the whole left column (vertically).
     );
 
-    // Determine the available space for the diversity chart.
+    // Determine the available space for the diversity chart (vertically).
     int divChartAvailSpaceYPx = _div_chart_y_axis_fraction * colSpaceYPx;
 
     int largestNumOfAdjHouses = ascertainLargestNumberOfAdjHouses(adjacentHousesPerHouse);
@@ -74,9 +75,9 @@ Printer_Graphic::Printer_Graphic (
         divChartAvailSpaceYPx
     );
 
+    // Determine the y value of the top left corner of the happiness chart.
     // Happiness chart sits below diversity chart. There's a vertical space between the 
     // diversity chart and the happiness chart. See _space_below_div_chart_y_axis_fraction.
-    // Determine the y value of the top left corner of the happiness chart.
     int hapChartTopLeftYPx = 
         chartsTopLeftYPx +
         colSpaceYPx * (_div_chart_y_axis_fraction + _space_below_div_chart_y_axis_fraction);
@@ -177,9 +178,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
     PlotFormat cityPlotFormat{
         _chart_title_letter,
         _chart_key_letter,
-        _min_unit_size__px,
-        _x_offset_multiplier,
-        _x_overrun_multiplier
+        _min_unit_size__px
     };
 
     set<Mood> moods{Mood::happy, Mood::unhappy};
@@ -199,8 +198,8 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
                     minXCoord,              // smallest coordinate in the x-direction             
                     maxXCoord,              // largest coordinate in the x-direction
                     0,                      // pixels per unit, use zero for now
-                    _x_offset_multiplier,
-                    _x_offset_multiplier
+                    _x_offset,
+                    _x_overrun
                 ),
                 _axis_format_X,
                 0,                          // y-coordinate for x-axis, use zero for now.
@@ -215,8 +214,8 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
                     minYCoord,              // smallest coordinate in y-direction
                     maxYCoord,              // largest coordinate in y-direction
                     0,                      // pixels per unit, use zero for now
-                    _y_offset_multiplier,
-                    _y_offset_multiplier
+                    _y_offset,
+                    _y_overrun
                 ),
                 _axis_format_Y,
                 0                           // y-axis's x-coordinate (pixel), use zero for now
@@ -243,9 +242,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
     PlotFormat rightColFormat{
         _chart_title_letter,
         _chart_key_letter,
-        _min_unit_size__px,
-        _x_offset_multiplier,
-        _x_overrun_multiplier
+        _min_unit_size__px
     };
 
     set<Mood> moods{Mood::neutral};
@@ -266,8 +263,8 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
                     0,                         // The first run number is zero.
                     max(0, maxNumOfRuns-1),    // the last run number TODO why do I check for max??
                     0,                         // pixels per unit, use zero for now
-                    _x_offset_multiplier,
-                    _x_offset_multiplier
+                    _x_offset,
+                    _x_overrun
                 ),
                 _axis_format_X,
                 0,                             // y-coordinate for x-axis, use zero for now.
@@ -282,8 +279,8 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
                     0,                         // smallest number of neighbors for a resident is 0
                     maxNumOfNeighbors,         // largest number of neighbors for a resident
                     0,                         // pixels per unit, use zero for now
-                    _y_offset_multiplier,
-                    _y_offset_multiplier
+                    _y_offset,
+                    _y_overrun
                 ),
                 axisFormatForDivChartY,
                 0                              // x-coordinate for y-axis, use zero for now
@@ -308,9 +305,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
     PlotFormat rightColFormat{
         _chart_title_letter,
         _chart_key_letter,
-        _min_unit_size__px,
-        _x_offset_multiplier,
-        _x_overrun_multiplier
+        _min_unit_size__px
     };
 
     set<Mood> moods{Mood::neutral};
@@ -330,8 +325,8 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
                     0,                         // Zero is the starting run number.
                     max(0, numberOfRuns-1),    // index of the last run TODO why do I check for max??
                     0,                         // pixels per unit, use zero for now
-                    _x_offset_multiplier,
-                    _x_offset_multiplier
+                    _x_offset,
+                    _x_overrun
                 ),
                 _axis_format_X,
                 0,                             // x-axis's x-coordinate (pixel) // TODO better note
@@ -346,8 +341,8 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
                     0,                         // least possible happiness for a resident
                     100,                       // largest possible happiness for a resident
                     0,                         // pixels per unit, use zero for now
-                    _y_offset_multiplier,
-                    _y_offset_multiplier
+                    _y_offset,
+                    _y_overrun
                 ),
                 axisFormatForHapChartY,
                 0                              // y-axis's x-coordinate (pixel)

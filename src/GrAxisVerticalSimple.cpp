@@ -60,6 +60,16 @@ int GrAxisVerticalSimple::sizeYPx () const
     return getAxisLengthPx();
 }
 
+int GrAxisVerticalSimple::getStartOffset () const
+{
+    return _axis->getStartOffset();;
+}
+
+int GrAxisVerticalSimple::getEndOffset () const
+{
+    return _axis->getEndOffset();;
+}
+
 void GrAxisVerticalSimple::print (Renderer* renderer) const
 {
     vector<Rect> horizLinesMaj{};

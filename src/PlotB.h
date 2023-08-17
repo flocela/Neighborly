@@ -87,12 +87,13 @@ private:
     int _min_dot_size__px = 3;
 
     // _start_offset is used to determine space before the low values (_low_x or _low_y).
-    // Length of space is _start_offset * _unit_space__px. 
-    int _start_offset;
-
+    // Length of space is _start_offset_m * _unit_space__px.
     // _end_offset is used to determine space after the high values (_high_x or _high_y).
-    // Length of space is _end_offset * _unit_space__px.
-    int _end_offset;
+    // Length of space is _end_offset * _unit_space__px. 
+    int _x_start_offset = 1;
+    int _x_end_offset = 1;
+    int _y_start_offset = 1;
+    int _y_end_offset = 1;
 
     // Top left corner of plot. This is not at the x-y axes' cross hairs. It takes into
     // account the width of the y-axis labels and the height of the x-axis labels.

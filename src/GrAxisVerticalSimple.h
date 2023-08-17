@@ -42,6 +42,10 @@ public:
     // the width of the digits in the number.
     int getLabelLengthPx () const;
 
+    int getStartOffset () const;
+
+    int getEndOffset () const;
+
     // Returns the pixels covered by a dot at value. If a dot is 5 pixels wide, a possible result
     // would be {1, 5}.
     std::pair<int, int> getPixels (double yVal, int dotSize) const;

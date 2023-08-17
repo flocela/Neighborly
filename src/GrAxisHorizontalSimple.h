@@ -61,6 +61,10 @@ public:
     // The label length plus the axis thickness.
     int sizeYPx () const;
 
+    int getStartOffset () const;
+
+    int getEndOffset () const;
+
     void print (Renderer* renderer) const;
 
     void moveCrossHairs (int xPx, int yPx);

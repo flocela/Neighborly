@@ -13,8 +13,10 @@ PlotB::PlotB (
         unique_ptr<GrAxisVerticalSimple> yAxis
 ): 
     _min_unit_size__px{plotFormat.minUnitSize()},
-    _start_offset{plotFormat.startOffsetM()},
-    _end_offset{plotFormat.endOffsetM()},
+    _x_start_offset{xAxis->getStartOffset()},
+    _x_end_offset{xAxis->getEndOffset()},
+    _y_start_offset{yAxis->getStartOffset()},
+    _y_end_offset{yAxis->getEndOffset()},
     _x_diff{xAxis->getHighVal() - xAxis->getLowVal()},
     _y_diff{yAxis->getHighVal() - yAxis->getLowVal()},
     _x_axis{move(xAxis)},
@@ -153,13 +155,13 @@ int PlotB::calcUnitSizePx () const
 {
     // Calculate unit size in x-direction.
     int allowableXAxisLengthPx = _x_space__px - _y_axis->sizeXPx();
-    int numOfCellsX = _x_diff + _start_offset + _end_offset;
+    int numOfCellsX = _x_diff + _x_start_offset + _x_end_offset;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
     xUnitSize = max(xUnitSize, _min_unit_size__px);
 
     // Calculate unit size in y-direction.
     int allowableYAxisLengthPx = _y_space__px - _x_axis->sizeYPx();
-    int numOfCellsY = _y_diff + _start_offset + _end_offset;
+    int numOfCellsY = _y_diff + _y_start_offset + _y_end_offset;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
     yUnitSize = max(yUnitSize, _min_unit_size__px);
 
@@ -185,7 +187,7 @@ int PlotB::calcDotSizePx () const
 int PlotB::calcCrossXPx (int topLeftXPx) const
 {
     int requiredXLength = 
-        _unit__px * ( _x_diff + _start_offset + _end_offset) + _y_axis->sizeXPx();
+        _unit__px * ( _x_diff + _x_start_offset + _x_end_offset) + _y_axis->sizeXPx();
 
     // Start at given most left point (topLeftXPx),
     // move to the center of given space, move to the left by 1/2 of the required length,

@@ -13,8 +13,10 @@ PlotA::PlotA (
     unique_ptr<GrAxisVerticalSimple> yAxis
 ):
     _min_unit__px{plotFormat.minUnitSize()},
-    _start_offset{plotFormat.startOffsetM()},
-    _end_offset{plotFormat.endOffsetM()},
+    _x_start_offset{xAxis->getStartOffset()},
+    _x_end_offset{xAxis->getEndOffset()},
+    _y_start_offset{yAxis->getStartOffset()},
+    _y_end_offset{yAxis->getEndOffset()},
     _top_left_x__px{topLeftXPx},
     _top_left_y__px{topLeftYPx},
     _x_space__px{xSpacePx},
@@ -160,13 +162,13 @@ pair<int, int> PlotA::calcUnitSizeXAndYPx () const
 {
     // Calculate unit size in x-direction.
     int allowableXAxisLengthPx = _x_space__px - _y_axis->sizeXPx();
-    int numOfCellsX = _x_diff + _start_offset + _end_offset;
+    int numOfCellsX = _x_diff + _x_start_offset + _x_end_offset;
     int xUnitSize = allowableXAxisLengthPx/numOfCellsX;
     xUnitSize = max(xUnitSize, _min_unit__px);
 
     // Calculate unit size in y-direction.
     int allowableYAxisLengthPx = _y_space__px - _x_axis->sizeYPx();
-    int numOfCellsY = _y_diff + _start_offset + _end_offset;
+    int numOfCellsY = _y_diff + _y_start_offset + _y_end_offset;
     int yUnitSize =  allowableYAxisLengthPx/numOfCellsY;
     yUnitSize = max(yUnitSize, _min_unit__px);
     return {xUnitSize, yUnitSize};
@@ -192,7 +194,7 @@ int PlotA::calcDotSizePx () const
 int PlotA::calcCrossXPx (int topLeftXPx) const
 {
     int requiredXLength = 
-        (_unit_x__px * ( _x_diff + _start_offset + _end_offset)) + _y_axis->sizeXPx();
+        (_unit_x__px * ( _x_diff + _x_start_offset + _x_end_offset)) + _y_axis->sizeXPx();
 
     // Start at given most left point (topLeftXPx),
     // Move to the center of given space, move to the left by 1/2 of the required length,
@@ -204,7 +206,7 @@ int PlotA::calcCrossXPx (int topLeftXPx) const
 
 int PlotA::calcCrossYPx (int topLeftYPx) const
 {
-    int retVal =  topLeftYPx + _unit_y__px * (_y_diff + _start_offset + _end_offset);
+    int retVal =  topLeftYPx + _unit_y__px * (_y_diff + _y_start_offset + _y_end_offset);
     return retVal;
        
 }

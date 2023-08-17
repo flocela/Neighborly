@@ -11,7 +11,7 @@
 #include "SetOfHousesPerHouse.h"
 #include "Title_Basic.h"
 
-//  Displays CityMap, Diversity Chart, and HappinessChart in one window.
+//  Displays GrCityChart, GrDiversity Chart, and GrHappinessChart in one window.
 //  Uses a screen width and height of 2400px.
 //  The left half of the screen holds the CityMap.
 //  The right half of the screen holds the Diversity Chart and the HappinessChart below that.
@@ -60,7 +60,7 @@ private:
     
     Letter _window_title_letter{44, 5, 0.35};
     std::unique_ptr<Title_Basic> _window_title;
-    std::vector<uint8_t> _title_text_color = {255, 255, 255, 255};
+    std::vector<uint8_t> _title_text_color = _the_color_rgba[Color::gray900];
     
     /* COLUMNS */
     /* Two columns: City chart is on the left. Diversity and Happiness charts are on the right.*/
@@ -73,12 +73,12 @@ private:
     Letter _chart_key_letter{24, 10, 0.35}; // chart key shows group number and corresponding color
     int _min_unit_size__px = 4;
 
-    // At the start of the axes, leave a space equal to the cell size times the offset multiplier.
-    // At the end of the axes, leave a space equal to the cell size times the overrun multiplier.
-    const int _x_offset_multiplier  = 1;
-    const int _x_overrun_multiplier = 1;
-    const int _y_offset_multiplier  = 1;
-    const int _y_overrun_multiplier = 1;
+    // At the start of the axes, leave a space equal to the cell size times the offset.
+    // At the end of the axes, leave a space equal to the cell size times the overrun.
+    const int _x_offset  = 1;
+    const int _x_overrun = 1;
+    const int _y_offset  = 1;
+    const int _y_overrun = 1;
 
     int _chart_space_x__px = _x_center__px - _side_borders__px - _col_inside_border__px;
 

@@ -63,6 +63,16 @@ int GrAxisHorizontalSimple::sizeYPx () const
     return getLabelLengthPx() + _axis_format.axisThicknessPx();
 }
 
+int GrAxisHorizontalSimple::getStartOffset () const
+{
+    return _axis->getStartOffset();;
+}
+
+int GrAxisHorizontalSimple::getEndOffset () const
+{
+    return _axis->getEndOffset();;
+}
+
 void GrAxisHorizontalSimple::print (Renderer* renderer) const
 {
     vector<Rect> axis{};
