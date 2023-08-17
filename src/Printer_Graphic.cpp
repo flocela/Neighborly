@@ -175,11 +175,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
     int availSpaceYPx
 )
 {   
-    PlotFormat cityPlotFormat{
-        _chart_title_letter,
-        _chart_key_letter,
-        _min_unit_size__px
-    };
+    PlotFormat cityPlotFormat{_chart_title_letter, _chart_key_letter, _min_unit_size__px};
 
     set<Mood> moods{Mood::happy, Mood::unhappy};
     return make_unique<GrCityChart>(
@@ -239,11 +235,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
     axisFormatForDivChartY.setBackgroundTickLines(true);
 
     // the plot format used for charts, modified to show background tick lines
-    PlotFormat rightColFormat{
-        _chart_title_letter,
-        _chart_key_letter,
-        _min_unit_size__px
-    };
+    PlotFormat rightColFormat{_chart_title_letter, _chart_key_letter, _min_unit_size__px};
 
     set<Mood> moods{Mood::neutral};
 
@@ -302,11 +294,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
     AxisFormat axisFormatForHapChartY = _axis_format_Y;
     axisFormatForHapChartY.setBackgroundTickLines(true);
 
-    PlotFormat rightColFormat{
-        _chart_title_letter,
-        _chart_key_letter,
-        _min_unit_size__px
-    };
+    PlotFormat rightColFormat{_chart_title_letter, _chart_key_letter, _min_unit_size__px};
 
     set<Mood> moods{Mood::neutral};
 
