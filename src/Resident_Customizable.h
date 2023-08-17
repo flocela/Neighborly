@@ -1,28 +1,31 @@
-#ifndef RESIDENT_USING_FUNCTION_H
-#define RESIDENT_USING_FUNCTION_H
+#ifndef RESIDENT_CUSTOMIABLE_H
+#define RESIDENT_CUSTOMIZABLE_H
 
 #include <memory>
 #include "Resident.h"
 #include "HappinessFunc.h"
 
 // Uses the HappinessFunc given in the constructor to determine the resident happiness.
-class Resident_UsingFunction : public Resident
+class Resident_Customizable : public Resident
 {
+
 protected:
-    Resident_UsingFunction (const Resident_UsingFunction& obj) = default;
-    Resident_UsingFunction (Resident_UsingFunction&& obj) noexcept = default;
-    Resident_UsingFunction& operator= (const Resident_UsingFunction& obj) = default;
-    Resident_UsingFunction& operator= (Resident_UsingFunction&& obj) noexcept = default;
+
+    Resident_Customizable (const Resident_Customizable& obj) = default;
+    Resident_Customizable (Resident_Customizable&& obj) noexcept = default;
+    Resident_Customizable& operator= (const Resident_Customizable& obj) = default;
+    Resident_Customizable& operator= (Resident_Customizable&& obj) noexcept = default;
 
 public:
-    Resident_UsingFunction (
+    Resident_Customizable (
         int id,
         int groupNumber,
         double allowedMovementDistance,
         double happinessGoal,
         std::unique_ptr<HappinessFunc> happinessFunc);
-    Resident_UsingFunction () = delete;
-    virtual ~Resident_UsingFunction () noexcept = default;
+    Resident_Customizable () = delete;
+    virtual ~Resident_Customizable () noexcept = default;
+    
     double getMaximumPossibleHappiness () const;
     double getLeastPossibleHappiness () const;
 

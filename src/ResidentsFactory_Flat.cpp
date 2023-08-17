@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "HappinessFunc_Flat.h"
-#include "Resident_UsingFunction.h"
+#include "Resident_Customizable.h"
 #include "Question_Double.h"
 #include "Question_Int.h"
 
@@ -74,7 +74,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     for ( int ii=0; ii<count; ++ii)
     {
         residents.push_back(
-            std::make_unique<Resident_UsingFunction>(
+            std::make_unique<Resident_Customizable>(
                 firstID+ii,
                 groupNumber,
                 allowedMovement,

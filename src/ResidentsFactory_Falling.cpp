@@ -4,7 +4,7 @@
 #include <iostream>
 #include "HappinessFunc_Falling.h"
 #include "Question_Double.h"
-#include "Resident_UsingFunction.h"
+#include "Resident_Customizable.h"
 
 using namespace std;
 
@@ -88,8 +88,8 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
     vector<unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)
     {
-        // Resident_UsingFunction requires a HappinessFunc unique pointer
-        residents.push_back(make_unique<Resident_UsingFunction>(
+        // Resident_Customizable requires a HappinessFunc unique pointer
+        residents.push_back(make_unique<Resident_Customizable>(
             firstID+ii,
             groupNumber,
             allowedMovement,

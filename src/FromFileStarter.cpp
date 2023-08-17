@@ -10,7 +10,7 @@
 #include "HappinessFunc_Rising.h"
 #include "HappinessFunc_StepDown.h"
 #include "HappinessFunc_StepUp.h"
-#include "Resident_UsingFunction.h"
+#include "Resident_Customizable.h"
 
 using namespace std;
 
@@ -275,7 +275,7 @@ void FromFileStarter::populateResidents (
         residentType = leftTrim(residentType);
         getline(inputStream, line);
     }
-    if (residentType == "Resident_UsingFunction")
+    if (residentType == "Resident_Customizable")
     {  
         string happinessFunction = "";
         getline(inputStream, line);
@@ -389,7 +389,7 @@ void FromFileStarter::populateResidentsWithStepDownFunc (
     int firstID = startId;
     for (int ii = 0; ii< numberOfResidents; ++ii)
     {   
-        residents.push_back(make_unique<Resident_UsingFunction> (
+        residents.push_back(make_unique<Resident_Customizable> (
             firstID + ii,
             groupId,
             allowedMovement,
@@ -449,7 +449,7 @@ void FromFileStarter::populateResidentsWithStepUpFunc (
     int firstID = startId;
     for (int ii = 0; ii< numberOfResidents; ++ii)
     {   
-        residents.push_back(make_unique<Resident_UsingFunction> (
+        residents.push_back(make_unique<Resident_Customizable> (
             firstID + ii,
             groupId,
             allowedMovement,
@@ -502,7 +502,7 @@ void FromFileStarter::populateResidentsWithFallingFunc (
     int firstID = startId;
     for (int ii = 0; ii< numberOfResidents; ++ii)
     {   
-        residents.push_back(make_unique<Resident_UsingFunction> (
+        residents.push_back(make_unique<Resident_Customizable> (
             firstID + ii,
             groupId,
             allowedMovement,
@@ -554,7 +554,7 @@ void FromFileStarter::populateResidentsWithRisingFunc (
     int firstID = startId;
     for (int ii = 0; ii< numberOfResidents; ++ii)
     {   
-        residents.push_back(make_unique<Resident_UsingFunction> (
+        residents.push_back(make_unique<Resident_Customizable> (
             firstID + ii,
             groupId,
             allowedMovement,
@@ -599,7 +599,7 @@ void FromFileStarter::populateResidentsWithFlatFunc (
     int firstID = startId;
     for (int ii = 0; ii< numberOfResidents; ++ii)
     {   
-        residents.push_back(make_unique<Resident_UsingFunction> (
+        residents.push_back(make_unique<Resident_Customizable> (
             firstID + ii,
             groupId,
             allowedMovement,

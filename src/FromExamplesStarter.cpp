@@ -5,7 +5,7 @@
 #include "CityState_Simple.h"
 #include "FromExamplesStarter.h"
 #include "HappinessFunc_Falling.h"
-#include "Resident_UsingFunction.h"
+#include "Resident_Customizable.h"
 #include "SimulationComponents.h"
 #include "Simulator_Basic_A.h"
 #include "Simulator_Basic_B.h"
@@ -62,7 +62,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<360; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     15,  // allowed movement
@@ -76,7 +76,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=360; jj<720; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     jj,
                     2,
                     15,
@@ -123,7 +123,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<5760; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     30,   // allowed movement
@@ -137,7 +137,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=5760; jj<11520; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     jj,
                     2,
                     30,
@@ -184,7 +184,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<360; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     15,   // allowed movement
@@ -198,7 +198,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=360; jj<720; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     jj,
                     2,
                     15,
@@ -245,7 +245,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<5760; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     30,   // allowed movement
@@ -259,7 +259,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=5760; jj<11520; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     jj,
                     2,
                     30,
@@ -306,7 +306,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<360; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     15,  // allowed movement
@@ -320,7 +320,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=360; jj<720; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     jj,
                     2,
                     15,
@@ -367,7 +367,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<5760; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     30,   // allowed movement
@@ -381,7 +381,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=5760; jj<11520; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     jj,
                     2,
                     30,
@@ -428,7 +428,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<360; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     15,   // allowed movement
@@ -442,7 +442,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=360; jj<720; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     jj,
                     2,
                     15,
@@ -489,7 +489,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<5760; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     30,   // allowed movement
@@ -503,7 +503,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=5760; jj<11520; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_UsingFunction>(
+                components.residents.push_back(std::make_unique<Resident_Customizable>(
                     jj,
                     2,
                     30,

@@ -104,7 +104,7 @@ src/RandIntsMaker.cpp
 src/Renderer.cpp
 src/ResidentTemplate.cpp
 src/ResidentTemplate_UsingFunction.cpp
-src/Resident_UsingFunction.cpp
+src/Resident_Customizable.cpp
 src/Resident.cpp
 src/ResPerHouse.cpp
 src/RunMetrics.cpp

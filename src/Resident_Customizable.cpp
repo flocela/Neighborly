@@ -1,9 +1,9 @@
-#include "Resident_UsingFunction.h"
+#include "Resident_Customizable.h"
 #include "ResidentTemplate_UsingFunction.h"
 #include <iostream>
 using namespace std;
 
-Resident_UsingFunction::Resident_UsingFunction (
+Resident_Customizable::Resident_Customizable (
     int id,
     int groupNumber,
     double allowedMovementDistance,
@@ -13,22 +13,22 @@ Resident_UsingFunction::Resident_UsingFunction (
    _hap_func{move(happinessFunc)}
 {}
 
-double Resident_UsingFunction::getMaximumPossibleHappiness () const
+double Resident_Customizable::getMaximumPossibleHappiness () const
 {
     return _hap_func->getLargestValue();
 }
-double Resident_UsingFunction::getLeastPossibleHappiness () const
+double Resident_Customizable::getLeastPossibleHappiness () const
 {
     return _hap_func->getSmallestValue();
 }
 
-std::string Resident_UsingFunction::implimentGetType () const
+std::string Resident_Customizable::implimentGetType () const
 {
-    string funcType = "Resident Using Function: "; 
+    string funcType = "Customizable Resident: "; 
     return funcType + _hap_func->toStrBasic();
 }
 
-double Resident_UsingFunction::implimentHappiness(
+double Resident_Customizable::implimentHappiness(
     const std::unordered_set<const Resident*>& neighbors,
     int numOfAdjacentHouses
 ) const
@@ -45,7 +45,7 @@ double Resident_UsingFunction::implimentHappiness(
     return _hap_func->calcHappiness(numOfAdjacentHouses, like, diff);
 }
 
-std::unique_ptr<const ResidentTemplate> Resident_UsingFunction::getTemplate () const
+std::unique_ptr<const ResidentTemplate> Resident_Customizable::getTemplate () const
 {
     return make_unique<const ResidentTemplate_UsingFunction>(
         getAllowedMovementDistance(),

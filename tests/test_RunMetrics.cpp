@@ -4,7 +4,7 @@
 #include <memory>
 #include "../src/City_Grid.h"
 #include "../src/HappinessFunc_StepDown.h"
-#include "../src/Resident_UsingFunction.h"
+#include "../src/Resident_Customizable.h"
 
 using namespace std;
 
@@ -13,7 +13,7 @@ vector<Resident*> createResidents (int numOfResidents, int groupId, int firstId)
     vector<Resident*> residents{};
     for (int ii=firstId; ii<numOfResidents+firstId; ++ii)
     {
-        residents.push_back(new Resident_UsingFunction(
+        residents.push_back(new Resident_Customizable(
         ii,
         groupId,
         2.2,
@@ -33,7 +33,7 @@ unordered_set<const Resident*> createResidentsSet (int numOfResidents, int group
     unordered_set<const Resident*> residents{};
     for (int ii=firstId; ii<numOfResidents+firstId; ++ii)
     {
-        residents.insert(new Resident_UsingFunction(
+        residents.insert(new Resident_Customizable(
         ii,
         groupId,
         2.2,

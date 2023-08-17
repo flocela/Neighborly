@@ -2,7 +2,7 @@
 
 #include "../src/CityState_Simple.h"
 #include "../src/HappinessFunc_Flat.h"
-#include "../src/Resident_UsingFunction.h"
+#include "../src/Resident_Customizable.h"
 #include "../src/City_Grid.h"
 
 using namespace std;
@@ -32,7 +32,7 @@ vector<Resident*> createResidents (int numOfResidents)
     vector<Resident*> residents{};
     for (int ii=0; ii<numOfResidents; ++ii)
     {
-        residents.push_back(new Resident_UsingFunction(
+        residents.push_back(new Resident_Customizable(
         ii,
         1,
         2.2,
@@ -155,7 +155,7 @@ TEST_CASE("empty city - getHousePerResident()")
     // expected is nullptr
     const House* expectedHouse = nullptr;
 
-    Resident* r = new Resident_UsingFunction(
+    Resident* r = new Resident_Customizable(
         12,
         1,
         2.2,
