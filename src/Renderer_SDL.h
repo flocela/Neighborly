@@ -11,7 +11,9 @@
 #include "TextRect.h"
 
 class Renderer_SDL : public Renderer {
+
 public:
+
 	Renderer_SDL (
 		const std::size_t screen_width,
 		const std::size_t screen_height,
@@ -23,12 +25,10 @@ public:
     Renderer_SDL& operator= (const Renderer_SDL& o) = delete;
     Renderer_SDL& operator=(Renderer_SDL&& o) noexcept = delete;
 		
-	void startFrame() override;
-	void endFrame() override;
+
+	void endFrame();
 
 	void keepScreen() override;
-
-	void fillBlock (Rect blocks, const std::vector<uint8_t>& rgba) override;
 
 	void fillBlocks (const std::vector<Rect>& blocks, const std::vector<uint8_t>& rgba) override;
 
@@ -36,13 +36,6 @@ public:
 		int width, 
 		int height,
 		Coordinate coordinate,
-		const std::vector<uint8_t>& rgba
-	) override;
-
-	void fillBlocks(
-		int width,
-		int height,
-		const std::vector<Coordinate>& coordinates,
 		const std::vector<uint8_t>& rgba
 	) override;
 
@@ -70,6 +63,8 @@ private:
 	bool initVideo ();
 	bool initWindow (std::string title);
 	bool linuxSettings ();
+
+	void startFrame();
 	
 };
 

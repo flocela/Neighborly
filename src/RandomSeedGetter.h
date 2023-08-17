@@ -12,7 +12,7 @@ class RandomSeedGetter
     private:
         static Question_Int createQuestionForSeed ();
 
-        // if can not get a seed for random generator, then use _seed_fallback
+        // If can not get a seed for random generator, then use _seed_fallback
         static const int _seed_fallback;
 
         static const std::string _seed_orig_prompt;

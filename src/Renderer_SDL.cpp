@@ -14,8 +14,9 @@ Renderer_SDL::Renderer_SDL (
     const size_t screen_width,
     const size_t screen_height,
     string title
-): _screen_width(screen_width),
-   _screen_height(screen_height)
+):
+    _screen_width(screen_width),
+    _screen_height(screen_height)
 {
   	if (!initVideo())
       return;
@@ -63,16 +64,8 @@ void Renderer_SDL::keepScreen()
     }
 } 
 
-void Renderer_SDL::fillBlock(Rect block, const vector<uint8_t>& rgba)
-{
-    SDL_Rect rect = {block._x__px, block._y__px, block.width, block.height};
-    SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
-    SDL_RenderFillRect(_sdl_renderer, &rect);
-}
-
 void Renderer_SDL::fillBlocks (const vector<Rect>& blocks, const vector<uint8_t>& rgba)
 {
-
     SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
     for (Rect block : blocks)
     {   SDL_Rect rect = {block._x__px, block._y__px, block.width, block.height};
@@ -95,27 +88,6 @@ void Renderer_SDL::fillBlock (
 
     SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
     SDL_RenderFillRect(_sdl_renderer, &block);
-}
-
-void Renderer_SDL::fillBlocks(
-	int width,
-	int height,
-	const vector<Coordinate>& coordinates,
-	const vector<uint8_t>& rgba
-)
-{
-    SDL_Rect block;
-    block.w = width;
-    block.h = height;
-
-    SDL_SetRenderDrawColor(_sdl_renderer, rgba[0], rgba[1], rgba[2], rgba[3]);
-
-    for (Coordinate c : coordinates)
-    {
-        block.x = c.getX();
-        block.y = c.getY();
-        SDL_RenderFillRect(_sdl_renderer, &block);
-    }
 }
 
 void Renderer_SDL::renderText (

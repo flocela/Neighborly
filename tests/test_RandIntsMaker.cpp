@@ -15,7 +15,7 @@ TEST_CASE("RandIntsMaker:: Well size is zero, returns vector of size zero.")
     REQUIRE ( 0 == actual.size());
 }
 
-TEST_CASE("RandIntsMaker: Well size is zero. Quantity is 10")
+TEST_CASE("RandIntsMaker:: Well size is zero. Quantity is 10")
 {   
     RandIntsMaker rI{};
 
@@ -23,7 +23,7 @@ TEST_CASE("RandIntsMaker: Well size is zero. Quantity is 10")
                           Contains("Well size must be at least as large as quantity."));
 }
 
-TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 10")
+TEST_CASE("RandIntsMaker:: Well size and quanity size are the same, test with 10")
 {   
     RandIntsMaker rI{};
     vector<int> actual = rI.getRandomIntegers(10, 10);
@@ -40,7 +40,7 @@ TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 10"
     REQUIRE(inOrder != actual);
 }
 
-TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 1")
+TEST_CASE("RandIntsMaker:: Well size and quanity size are the same, test with 1")
 {   
     RandIntsMaker rI{};
 
@@ -50,7 +50,7 @@ TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 1")
     REQUIRE(expected == rI.getRandomIntegers(1, 1));
 }
 
-TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 5")
+TEST_CASE("RandIntsMaker:: Well size and quanity size are the same, test with 5")
 {   
     RandIntsMaker rI{};
     vector<int> actual = rI.getRandomIntegers(5, 5);
@@ -74,7 +74,7 @@ TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 5")
 }
 
 
-TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 1,000")
+TEST_CASE("RandIntsMaker:: Well size and quanity size are the same, test with 1,000")
 {   
     RandIntsMaker rI{};
     vector<int> actual = rI.getRandomIntegers(1000, 1000);
@@ -97,7 +97,7 @@ TEST_CASE("RandIntsMaker: Well size and quanity size are the same, test with 1,0
     REQUIRE(inOrder != actual);
 }
 
-TEST_CASE("RandIntsMaker: Well size is larger than quantity")
+TEST_CASE("RandIntsMaker:: Well size is larger than quantity")
 {   
     RandIntsMaker rI{};
     vector<int> actual = rI.getRandomIntegers(1000, 100);

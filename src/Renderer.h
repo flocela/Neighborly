@@ -11,12 +11,8 @@
 class Renderer {
 public:
 		
-	virtual void startFrame() = 0;
 	virtual void endFrame() = 0;
 	virtual void keepScreen() = 0;
-
-	// draws a solid rectangle with the given color
-	virtual void fillBlock (Rect blocks, const std::vector<uint8_t>& rgba) = 0;
 
 	// draws solid rectangles for the given blocks with the given color
 	virtual void fillBlocks (const std::vector<Rect>& blocks, const std::vector<uint8_t>& rgba) = 0;
@@ -27,15 +23,6 @@ public:
 		int width, 
 		int height,
 		Coordinate coordinate,
-		const std::vector<uint8_t>& rgba
-	) = 0;
-
-	// draws solid rectangles with the given dimentions, and corresponding coordinates and colors
-	// in the vectors. note @coordinates are in pixels.
-	virtual void fillBlocks(
-		int width,
-		int height,
-		const std::vector<Coordinate>& coordinates,
 		const std::vector<uint8_t>& rgba
 	) = 0;
 
