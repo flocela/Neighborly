@@ -18,20 +18,21 @@ Question_Int::Question_Int (
     string inRangePrompt,
     string invalidPrompt,
     string failedPrompt
-): _ID{id},
-   _min{min},
-   _max{max},
-   _min_inclusive{minInclusive},
-   _max_inclusive{maxInclusive},
-   _fallback{fallback},
-   _answer{-1},
-   _valid_answer{false},
-   _orig_prompt{origPrompt},
-   _invalid_prompt{invalidPrompt},
-   _type_prompt{wrongTypePrompt},
-   _range_prompt{inRangePrompt},
-   _failed_prompt{failedPrompt},
-   _next_prompt{&_orig_prompt}
+): 
+    _ID{id},
+    _min{min},
+    _max{max},
+    _min_inclusive{minInclusive},
+    _max_inclusive{maxInclusive},
+    _fallback{fallback},
+    _answer{-1},
+    _valid_answer{false},
+    _orig_prompt{origPrompt},
+    _invalid_prompt{invalidPrompt},
+    _type_prompt{wrongTypePrompt},
+    _range_prompt{inRangePrompt},
+    _failed_prompt{failedPrompt},
+    _next_prompt{&_orig_prompt}
 {}
 
 Question_Int::Question_Int (
@@ -43,15 +44,16 @@ Question_Int::Question_Int (
     int fallback,
     string origPrompt,
     string valueName
-): _ID{id},
-   _min{min},
-   _max{max},
-   _min_inclusive{minInclusive},
-   _max_inclusive{maxInclusive},
-   _fallback{fallback},
-   _answer{-1},
-   _valid_answer{false},
-   _orig_prompt{origPrompt}
+): 
+    _ID{id},
+    _min{min},
+    _max{max},
+    _min_inclusive{minInclusive},
+    _max_inclusive{maxInclusive},
+    _fallback{fallback},
+    _answer{-1},
+    _valid_answer{false},
+    _orig_prompt{origPrompt}
 {
     // setting _orig_prompt
     _orig_prompt.insert(_orig_prompt.size(), " _");

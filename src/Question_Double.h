@@ -5,12 +5,14 @@
 
 class Question_Double: public Question
 {
+
 protected:
     
     Question_Double (const Question_Double& obj) = default;
     Question_Double (Question_Double&& obj) noexcept = default;
     Question_Double& operator=(const Question_Double& obj) = default;
     Question_Double& operator=(Question_Double&& obj) noexcept = default;
+    
 public:
     Question_Double () = delete;
     virtual ~Question_Double () noexcept = default;

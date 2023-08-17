@@ -6,7 +6,7 @@
 using Catch::Matchers::Contains;
 using namespace std;
 
-TEST_CASE("Question_Int getPrompt() returns the origPrompt first.")
+TEST_CASE("Question_Int:: getPrompt() returns the origPrompt first.")
 {   
     string origPrompt = "Choose a number between 1 and 10 inclusive.";
     Question_Int q{1,    // id
@@ -21,7 +21,7 @@ TEST_CASE("Question_Int getPrompt() returns the origPrompt first.")
 }
 
 
-TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
+TEST_CASE("Question_Int:: If answer is not a number, answer is invalid and"
           " getPrompt returns invalid_prompt. ans is 'x' ")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
@@ -40,7 +40,7 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
 }
 
 
-TEST_CASE("Question_Int Invalid answer results in fallback answer.")
+TEST_CASE("Question_Int:: Invalid answer results in fallback answer.")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,
@@ -59,7 +59,7 @@ TEST_CASE("Question_Int Invalid answer results in fallback answer.")
     REQUIRE (5 == stoi(q.getAnswer()));
 }
 
-TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
+TEST_CASE("Question_Int:: If answer is not a number, answer is invalid and"
           " getPrompt returns invalid_prompt. ans is '7a' ")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
@@ -77,7 +77,7 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
              q.getPrompt());
 }
 
-TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
+TEST_CASE("Question_Int:: If answer is not a number, answer is invalid and"
           " getPrompt returns invalid_prompt. ans is 'a7' ")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
@@ -95,7 +95,7 @@ TEST_CASE("Question_Int. If answer is not a number, answer is invalid and"
              q.getPrompt());
 }
 
-TEST_CASE("Question_Int. White space at beginning of string is valid.")
+TEST_CASE("Question_Int:: White space at beginning of string is valid.")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -113,7 +113,7 @@ TEST_CASE("Question_Int. White space at beginning of string is valid.")
     REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. White space at end of string is valid.")
+TEST_CASE("Question_Int:: White space at end of string is valid.")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -131,7 +131,7 @@ TEST_CASE("Question_Int. White space at end of string is valid.")
     REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. Answers starting with '-' are negative numbers.")
+TEST_CASE("Question_Int:: Answers starting with '-' are negative numbers.")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -148,7 +148,7 @@ TEST_CASE("Question_Int. Answers starting with '-' are negative numbers.")
     REQUIRE( "That integer is not in range. Should be in the range . _" != q.getPrompt());
 }
 
-TEST_CASE("Question_Int. Answers starting with '+' are positive numbers.")
+TEST_CASE("Question_Int:: Answers starting with '+' are positive numbers.")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -166,7 +166,7 @@ TEST_CASE("Question_Int. Answers starting with '+' are positive numbers.")
     REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. Answers that are doubles (with trailing on-zero numbers) are invalid."
+TEST_CASE("Question_Int:: Answers that are doubles (with trailing non-zero numbers) are invalid."
           " Try 2.3")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
@@ -184,7 +184,7 @@ TEST_CASE("Question_Int. Answers that are doubles (with trailing on-zero numbers
     REQUIRE( "Nope, that's not an integer, i.e 2, 5, or 199. _" == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. Answers that are doubles (with trailing non-zero numbers) are invalid."
+TEST_CASE("Question_Int:: Answers that are doubles (with trailing non-zero numbers) are invalid."
           " Try .9")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
@@ -202,7 +202,7 @@ TEST_CASE("Question_Int. Answers that are doubles (with trailing non-zero number
     REQUIRE( "Nope, that's not an integer, i.e 2, 5, or 199. _" == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. Answers that are doubles with trailing zeros are valid "
+TEST_CASE("Question_Int:: Answers that are doubles with trailing zeros are valid "
           " as long as there is a number before the decimal. Try 2.0")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
@@ -221,7 +221,7 @@ TEST_CASE("Question_Int. Answers that are doubles with trailing zeros are valid 
     REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. Answers that are doubles with a zero before and after the"
+TEST_CASE("Question_Int:: Answers that are doubles with a zero before and after the"
           " decimal are valid. Try 0.0")
 {   
     string origPrompt = "Choose a number in the range [0, 10].";
@@ -240,7 +240,7 @@ TEST_CASE("Question_Int. Answers that are doubles with a zero before and after t
     REQUIRE( "Choose a number in the range [0, 10]. _" == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. Answers that are doubles with a zeros after the"
+TEST_CASE("Question_Int:: Answers that are doubles with a zeros after the"
           " decimal and no number before the decmial are invalid. Try .0")
 {   
     string origPrompt = "Choose a number in the range [0, 10].";
@@ -259,7 +259,7 @@ TEST_CASE("Question_Int. Answers that are doubles with a zeros after the"
              == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. Answers that are just a decimal are invalid. Try .")
+TEST_CASE("Question_Int:: Answers that are just a decimal are invalid. Try .")
 {   
     string origPrompt = "Choose a number in the range [0, 10].";
     Question_Int q{1,    // id
@@ -276,7 +276,7 @@ TEST_CASE("Question_Int. Answers that are just a decimal are invalid. Try .")
     REQUIRE( "I didn't understand your answer. _" == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. Left edge of range determined correctly for an inclusive range.")
+TEST_CASE("Question_Int:: Left edge of range determined correctly for an inclusive range.")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -295,7 +295,7 @@ TEST_CASE("Question_Int. Left edge of range determined correctly for an inclusiv
     REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. Right edge of range determined correctly for an inclusive range.")
+TEST_CASE("Question_Int:: Right edge of range determined correctly for an inclusive range.")
 {   
     string origPrompt = "Choose a number in the range [1, 10].";
     Question_Int q{1,    // id
@@ -314,7 +314,7 @@ TEST_CASE("Question_Int. Right edge of range determined correctly for an inclusi
     REQUIRE( "Choose a number in the range [1, 10]. _" == q.getPrompt());
 }
 
-TEST_CASE("Question_Int. Left edge of range determined correctly for an exclusive range.")
+TEST_CASE("Question_Int:: Left edge of range determined correctly for an exclusive range.")
 {   
     string origPrompt = "Choose a number in the range (1, 10).";
     Question_Int q{1,    // id
@@ -333,7 +333,7 @@ TEST_CASE("Question_Int. Left edge of range determined correctly for an exclusiv
 }
 
 
-TEST_CASE("Question_Int. Right edge of range determined correctly for an exclusive range.")
+TEST_CASE("Question_Int:: Right edge of range determined correctly for an exclusive range.")
 {   
     string origPrompt = "Choose a number in the range (1, 10).";
     Question_Int q{1,    // id
@@ -351,7 +351,7 @@ TEST_CASE("Question_Int. Right edge of range determined correctly for an exclusi
     REQUIRE( "That integer is not in range. Should be in the range (1, 10). _" == q.getPrompt());
 }
 
-TEST_CASE("Question_Int runs through a sequence of answers.")
+TEST_CASE("Question_Int:: runs through a sequence of answers.")
 {   
     string origPrompt = "Choose a number in the range (1, 10).";
     Question_Int q{1,    // id

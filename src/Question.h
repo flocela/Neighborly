@@ -16,24 +16,23 @@ protected:
 public:
     virtual ~Question () noexcept = default;
     
-    // get question's id
+    // Returns the question's id.
     virtual int getID () const = 0;
 
-    // get the appropriate prompt
+    // Returns the appropriate prompt.
     virtual std::string getPrompt () const = 0;
 
     virtual bool hasValidAnswer () const = 0;
 
     virtual std::string getAnswer () const  = 0;
 
-    // returns the fallback string
+    // Returns the fallback string.
     virtual std::string getFallback () const = 0;
 
-    // returns an explanation or what will happen next for the user, since the
-    // system could not get a proper answer.
+    // Returns an explanation to the user, since the system could not get a proper answer.
     virtual std::string getFailedResponse () const = 0;
 
-    // returns true if answer is a proper answer.
+    // Returns true if answer is a proper answer.
     virtual bool tryAnswer (std::string answer) = 0;
 };
 

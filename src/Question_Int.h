@@ -8,12 +8,14 @@
 class Question_Int: public Question
 {
 protected:
+
     Question_Int (const Question_Int& obj) = default;
     Question_Int (Question_Int&& obj) noexcept = default;
     Question_Int& operator=(const Question_Int& obj) = default;
     Question_Int& operator=(Question_Int&& obj) noexcept = default;
 
 public:
+
     Question_Int () = delete;
     virtual ~Question_Int () noexcept = default;
 
@@ -23,10 +25,10 @@ public:
         int max, // the maximum of the range of allowable integers
         bool minInclusive, // true if the range's minimum integer is inclusive, false otherwise
         bool maxInclusive, // true if the range's maximum integer is inclusive, false otherwise
-        int fallback, // a fallback integer. can always be retrieved,
-                      //but presumably retrieved when user does not provide an integer in range
+        int fallback, // a fallback integer. It can always be retrieved,
+                      //but presumably retrieved when user does not provide an integer in range.
         std::string origPrompt, // first prompt
-        std::string wrongTypePrompt, // prompt detailing that the answer was a nu
+        std::string wrongTypePrompt, // prompt detailing that the answer was a not an integer
         std::string inRangePrompt, // prompt detailing that the answer was not in range
         std::string invalidPrompt, // prompt detailing that the answer was not 
         std::string failedPrompt);
