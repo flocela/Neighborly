@@ -10,10 +10,12 @@
 #include "ResPerHouse.h"
 #include "SetOfHousesPerHouse.h"
 
-// Countains output data from a simulation run.
+// Contains output data from a simulation run.
 class RunMetrics
 {
+
 public: 
+
     RunMetrics (const SetOfHousesPerHouse& adjacentHousesPerHouse);
     RunMetrics () = delete;
     RunMetrics (const RunMetrics& o) = default;
@@ -45,6 +47,7 @@ public:
     );
 
 private:
+
     const SetOfHousesPerHouse& _adj_houses;
 
     int _run_num = -1;

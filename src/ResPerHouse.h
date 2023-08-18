@@ -10,7 +10,9 @@
 // A class that houses an unordered_map<const House*, const Resident*>
 class ResPerHouse
 {
+
 public:
+
     void insert(std::pair<const House*, const Resident*> pair);
     bool contains (const House* house) const;
     const Resident* at (const House* house) const;
@@ -23,6 +25,7 @@ public:
     bool operator== (const ResPerHouse& o) const;
 
 private:
+
     std::unordered_map<const House*, const Resident*> _res_per_house{};
 
 };

@@ -6,7 +6,8 @@ using namespace std;
 
 RunMetrics::RunMetrics (
     const SetOfHousesPerHouse& adjacentHousesPerHouse
-): _adj_houses{adjacentHousesPerHouse}
+):
+    _adj_houses{adjacentHousesPerHouse}
 {}
 
 void RunMetrics::updateMetrics(int run, const ResPerHouse residentsPerHouse)
@@ -62,6 +63,11 @@ void RunMetrics::updateMetrics(int run, const ResPerHouse residentsPerHouse)
         _happiness_sum_per_group_id[resGroupId] += resident->getHappiness();
 
         // Increase the number of residents per resident's group id
+        if (_num_of_residents_per_group_id.find(resGroupId) ==
+            _num_of_residents_per_group_id.end())
+        {
+            _num_of_residents_per_group_id[resGroupId] = 0;
+        }
         _num_of_residents_per_group_id[resGroupId] += 1;
         
     }
