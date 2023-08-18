@@ -1,7 +1,7 @@
-#include "ResidentsMaker_CmdLine.h"
 #include <iomanip>
+#include <iostream>
 #include <sstream>
-#include <iostream> 
+#include "ResidentsMaker_CmdLine.h"
 #include "Question_Double.h"
 #include "Question_Int.h"
 
@@ -72,7 +72,6 @@ ResidentsGroupInfo ResidentsMaker_CmdLine::makeResidents (
         // Move residents to resGroupInfo._residents.
         for (auto& r: newResidents)
             resGroupInfo._residents.emplace_back(move(r));
-        // ResGroupInfo also keeps track of the type of resident templates per group id.
         
         numOfResidentsCreated += newResidents.size();
     }
@@ -96,7 +95,7 @@ int ResidentsMaker_CmdLine::askForNumOfResidents(const UI& ui, int maxNumOfResid
         maxNumOfResidents,
         true,
         true,
-        maxNumOfResidents/2,
+        max(1, maxNumOfResidents/2),
         insertIntoString(
             howManyResidentsPrompt,
             charLocationForColor(howManyResidentsPrompt),
@@ -115,7 +114,7 @@ int ResidentsMaker_CmdLine::askForGroupResidentType (
 {
     vector<string> factoryNames = getFactoryNames(residentsFactories);
 
-    // insert color into _which_type_prompt and insert first factory name into fallback response.
+    // Insert color into _which_type_prompt and insert first factory name into fallback response.
     return ui.menu(
             insertIntoString(
                 _which_type_prompt,
@@ -138,14 +137,14 @@ double ResidentsMaker_CmdLine::askForAllowedMovementForGroup(
 {   
     stringstream maxMovementStream;
     maxMovementStream << fixed << setprecision(2) << maxAllowedMovement;
-    // add maximum movement to movement prompt
+    // Add maximum movement to movement prompt.
     string movementPrompt = insertIntoString (
         _group_movement_orig_prompt,
         _group_movement_orig_prompt.size() - 1,
         maxMovementStream.str()
     );
 
-    // create question, add color to prompt
+    // Create question, add color to prompt.
     Question_Double question{
         3,
         0.0,
@@ -165,7 +164,7 @@ double ResidentsMaker_CmdLine::askForAllowedMovementForGroup(
 
 double ResidentsMaker_CmdLine::askForHappinessGoalForGroup (const UI& ui, string color)
 {
-    // create question, add color to prompot
+    // Create question.  Add color to prompt.
     Question_Double question{
         4,
         0.0,
