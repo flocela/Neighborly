@@ -1,8 +1,8 @@
 #ifndef RESIDENTSFACTORY_H
 #define RESIDENTSFACTORY_H
 
-#include <vector>
 #include <memory>
+#include <vector>
 #include "Color.h"
 #include "Resident.h"
 #include "UI.h"
