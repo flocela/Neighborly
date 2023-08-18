@@ -25,15 +25,15 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     stringstream colorStream;
     colorStream << baseColor;
 
-    // ask user for happiness value when there are zero neighbors.
-    // uses happiness goal if can not get happiness value for zero neighbors.
+    // Ask user for happiness value when there are zero neighbors.
+    // Uses happiness goal if can not get happiness value for zero neighbors.
     Question_Double qHappinessWithZeroNeighbors{
         3,
         0.0,
         100.0,
         true,
         true,
-        happinessGoal,
+        happinessGoal, // fallback
         insertIntoString(
             _happinessWithZeroNeighborsPrompt,
             charLocationForColor(_happinessWithZeroNeighborsPrompt),
@@ -44,15 +44,15 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     double happinessWithZeroNeighbors = stod(ui.getAnswer(qHappinessWithZeroNeighbors));
 
 
-    // ask user for high happiness value.
-    // uses happiness goal if can not get high happiness value.
+    // Ask user for high happiness value.
+    // Uses happiness goal if can not get high happiness value.
     Question_Double qHighHappinessValue{
         3,
         0.0,
         100.0,
         false,
         true,
-        happinessGoal,
+        happinessGoal, // fallback
         insertIntoString(
             _high_happiness_value_prompt,
             charLocationForColor(_high_happiness_value_prompt),
@@ -63,15 +63,15 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     double highHappinessValue = stod(ui.getAnswer(qHighHappinessValue));
 
 
-    // ask user for low happiness value.
-    // uses _fallback_low_happiness_value if can not get low happiness value
+    // Ask user for low happiness value.
+    // Uses _fallback_low_happiness_value if can not get low happiness value.
     Question_Double qLowHappinessValue{
         4,
         0,
         highHappinessValue,
         true,
         false,
-        _fallback_low_happiness_value,
+        _fallback_low_happiness_value, // fallback
         insertIntoString(
             _low_happiness_value_prompt,
             charLocationForColor(_low_happiness_value_prompt),
@@ -81,8 +81,8 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
 
     double lowHappinessValue = stod(ui.getAnswer(qLowHappinessValue));
 
-    // ask user for drop location.
-    // uses _fallback_drop_location if can not get drop location.
+    // Ask user for drop location.
+    // Uses _fallback_drop_location if can not get drop location.
     Question_Double qHappinessDropLocation{
         5,
         0.0,
@@ -110,7 +110,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_StepDown::createResidents (
     vector<unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)
     {
-        // Resident_Customizable requires a HappinessFunc unique pointer
+        // Resident_Customizable requires a unique pointer of type HappinessFunc.
         residents.push_back(make_unique<Resident_Customizable>(
             firstID+ii,
             groupNumber,

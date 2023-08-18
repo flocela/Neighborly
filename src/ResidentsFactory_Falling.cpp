@@ -1,10 +1,10 @@
-#include "ResidentsFactory_Falling.h"
-#include <sstream>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include "HappinessFunc_Falling.h"
 #include "Question_Double.h"
 #include "Resident_Customizable.h"
+#include "ResidentsFactory_Falling.h"
 
 using namespace std;
 
@@ -21,15 +21,15 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
     stringstream colorStream;
     colorStream << baseColor;
 
-    // ask user for happiness value when there are zero neighbors.
-    // uses happiness goal if can not get happiness value corresponding to zero neighbors.
+    // Ask user for happiness value when there are zero neighbors.
+    // Uses happiness goal as happiness value, if can not get value for zero neighbors.
     Question_Double qHappinessWithZeroNeighbors{
         1,
         0.0,
         100.0,
         true,
         true,
-        happinessGoal,
+        happinessGoal, // fallback
         insertIntoString(
             _happinessWithZeroNeighborsPrompt,
             charLocationForColor(_happinessWithZeroNeighborsPrompt),
@@ -40,15 +40,15 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
     double happinessWithZeroNeighbors = stod(ui.getAnswer(qHappinessWithZeroNeighbors));
 
 
-    // ask user for high happiness value, corresponding to diversity of 0.0.
-    // uses happiness goal if can not get high happiness value.
+    // Ask user for high happiness value, which corresponds to a diversity of 0.0.
+    // Uses happiness goal if can not get high happiness value.
     Question_Double qHighHappinessValue{
         2,
         0.0,
         100.0,
         false,
         true,
-        happinessGoal,
+        happinessGoal, // fallback
         insertIntoString(
             _high_happiness_value_prompt, 
             charLocationForColor(_high_happiness_value_prompt),
@@ -59,8 +59,8 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
     double highHappinessValue = stod(ui.getAnswer(qHighHappinessValue));
 
 
-    // ask user for low happiness value, corresponding to diversity of 1.0.
-    // uses _fallback_low_happiness_value if can not get low happiness value
+    // Ask user for low happiness value, which corresponds to a diversity of 1.0.
+    // Uses _fallback_low_happiness_value if can not get low happiness value
     Question_Double qLowHappinessValue{
         3,
         0,
@@ -88,7 +88,7 @@ vector<unique_ptr<Resident>> ResidentsFactory_Falling::createResidents (
     vector<unique_ptr<Resident>> residents = {};
     for ( int ii=0; ii<count; ++ii)
     {
-        // Resident_Customizable requires a HappinessFunc unique pointer
+        // Resident_Customizable requires a unique pointer of type HappinessFunc.
         residents.push_back(make_unique<Resident_Customizable>(
             firstID+ii,
             groupNumber,

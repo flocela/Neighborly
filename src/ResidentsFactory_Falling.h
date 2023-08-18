@@ -7,12 +7,14 @@
 // Residents' happiness is steadily decreasing as diversity increases.
 class ResidentsFactory_Falling: public ResidentsFactory
 {
+    
 public:
+
     // Creates Residents that use the HappinessFunc_Falling to determine their happiness.
     // Basically the residents' happiness slopes down as diversity increases.
     // The function will use the ui to get information from the user to create the 
     // happiness function.
-    // Creates @count number of residents. Their ids' range from firstID to firstID + count -1.
+    // Creates count number of residents. Their ids' range from firstID to firstID + count -1.
     std::vector<std::unique_ptr<Resident>> createResidents(
         const UI& ui,
         int firstID, 
@@ -27,7 +29,7 @@ public:
     std::string toString () override;
 
 private:
-    // if can not get a low happiness value from the user, then use _fallback_low_happiness_value.
+    // If can not get a low happiness value from the user, then use _fallback_low_happiness_value.
     double _fallback_low_happiness_value = 0.0;
 
     // User prompts for getting information from user.
@@ -58,9 +60,10 @@ private:
         int location,
         std::string insert) const;
     
-    // Often have to place the group color in "For the ____ group". This method returns the 
-    // character index where the group color would go. It's a very specialized method, in that
-    // it finds the specific words "th  group" and returns character after "the" and space.
+    // Often have to place the group color in the sentence fragment "For the ____ group". This
+    // method returns the character index where the group color would go. It's a very specialized
+    // method, in that it finds the specific words "the  group" and returns the character after
+    // "the" and space.
     int charLocationForColor (std::string str) const;
 };
 

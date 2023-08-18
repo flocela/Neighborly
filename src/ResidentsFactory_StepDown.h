@@ -28,10 +28,10 @@ public:
     
 private:
 
-    // if can not get a low happiness value from user, then use _fall_back_low_happiness_value
+    // If can not get a low happiness value from user, then use _fall_back_low_happiness_value
     double _fallback_low_happiness_value = 0.0;
 
-    // if can not get a happiness drop-down location from user, then use _fall_back_drop_location
+    // If can not get a happiness drop-down location from user, then use _fall_back_drop_location
     double _fallback_drop_location = 0.5;
 
     // User prompts for getting information from user.
@@ -62,10 +62,10 @@ private:
 
     // prompts for the location where the happiness drop happens along the diverstiy axis.
     std::string _dropLocationOrigPrompt  = 
-        "\nFor the  group, enter the point at which the happiness value drops, the drop-down"
-        " diversity. This will be the diversity value where the happiness drops from the higher"
-        " value to the lower value. The diversity value must be between 0.0 and 1.0"
-        " inclusive.";
+        "\nFor the  group, enter the point at which the happiness value drops, otherwise known"
+        " as the drop-down diversity. This will be the diversity value where the happiness drops"
+        " from the higher value to the lower value. The diversity value must be between 0.0 and"
+        " 1.0 inclusive.";
     
     // inserts additional string at location
     std::string insertIntoString (
@@ -73,9 +73,10 @@ private:
         int location,
         std::string insert) const;
     
-    // Often have to place the group color in "For the ____ group". This method returns the 
-    // character index where the group color would go. It's a very specialized method, in that
-    // it finds the specific words "the  group" and returns character after "the" and space.
+    // Often have to place the group color in the sentence fragment "For the ____ group". This
+    // method returns the character index where the group color would go. It's a very specialized
+    // method, in that it finds the specific words "the  group" and returns the character after
+    // "the" and space.
     int charLocationForColor (std::string str) const ;
 };
 

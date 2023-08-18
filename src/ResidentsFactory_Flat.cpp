@@ -1,14 +1,14 @@
 #include "ResidentsFactory_Flat.h"
 
 #include <iomanip>
+#include <iostream>
 #include <limits>
 #include <sstream>
-#include <iostream>
 
 #include "HappinessFunc_Flat.h"
 #include "Resident_Customizable.h"
-#include "Question_Double.h"
 #include "Question_Int.h"
+#include "Question_Double.h"
 
 using namespace std;
 
@@ -25,15 +25,15 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     stringstream colorStream;
     colorStream << baseColor;
 
-    // ask user for happiness value when there are zero neighbors.
-    // uses happiness goal as fallback, if can not get happiness value for zero neighbors.
+    // Ask user for happiness value when there are zero neighbors.
+    // Uses happiness goal as fallback, if can not get happiness value for zero neighbors.
     Question_Double qHappinessWithZeroNeighbors{
         3,
         0.0,
         100.0,
         true,
         true,
-        happinessGoal,
+        happinessGoal, // fallback
         insertIntoString(
             _happinessWithZeroNeighborsPrompt,
             charLocationForColor(_happinessWithZeroNeighborsPrompt),
@@ -44,7 +44,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
     double happinessWithZeroNeighbors = stod(ui.getAnswer(qHappinessWithZeroNeighbors));
 
 
-    // ask for happiness value. It's always the same.
+    // Ask for happiness value. It's constant.
     Question_Double qHappinessValue{
         3,
         0.0,
@@ -68,7 +68,7 @@ std::vector<std::unique_ptr<Resident>> ResidentsFactory_Flat::createResidents (
          << ", happiness w/ zero neighbors: " <<happinessWithZeroNeighbors
          << ", happiness value: " << happinessValue << endl;
 
-    // create residents
+    // Create residents.
     std::vector<std::unique_ptr<Resident>> residents = {};
 
     for ( int ii=0; ii<count; ++ii)

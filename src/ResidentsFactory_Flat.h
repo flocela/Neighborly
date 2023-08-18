@@ -23,7 +23,7 @@ public:
 
 private:
 
-    // if can not get happiness value from user, then use _fallback_happiness_value
+    // If can not get happiness value from user, then use _fallback_happiness_value
     double _fallback_happiness_value = 50.0;
 
     // User prompts for getting information from user.
@@ -49,9 +49,10 @@ private:
         int location,
         std::string insert) const;
     
-    // Often have to place the group color in "For the ____ group". This method returns the 
-    // character index where the group color would go. It's a very specialized method, in that
-    // it finds the specific words "the  group" and returns character after "the" and space.
+    // Often have to place the group color in the sentence fragment "For the ____ group". This
+    // method returns the character index where the group color would go. It's a very specialized
+    // method, in that it finds the specific words "the  group" and returns the character after
+    // "the" and space.
     int charLocationForColor (std::string str) const;
 };
 
