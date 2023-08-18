@@ -28,7 +28,6 @@ public:
     
     double getMaximumPossibleHappiness () const;
     double getLeastPossibleHappiness () const;
-
     std::unique_ptr<const ResidentTemplate> getTemplate () const override;
 
 protected:

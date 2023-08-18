@@ -9,23 +9,28 @@ Resident_Customizable::Resident_Customizable (
     double allowedMovementDistance,
     double happinessGoal,
     unique_ptr<HappinessFunc> happinessFunc
-): Resident(id, groupNumber, allowedMovementDistance, happinessGoal),
-   _hap_func{move(happinessFunc)}
+): 
+    Resident(id, groupNumber, allowedMovementDistance, happinessGoal),
+    _hap_func{move(happinessFunc)}
 {}
 
 double Resident_Customizable::getMaximumPossibleHappiness () const
 {
     return _hap_func->getLargestValue();
 }
+
 double Resident_Customizable::getLeastPossibleHappiness () const
 {
     return _hap_func->getSmallestValue();
 }
 
-std::string Resident_Customizable::implimentGetType () const
+std::unique_ptr<const ResidentTemplate> Resident_Customizable::getTemplate () const
 {
-    string funcType = "Customizable Resident: "; 
-    return funcType + _hap_func->toStrBasic();
+    return make_unique<const ResidentTemplate_UsingFunction>(
+        getAllowedMovementDistance(),
+        getHappinessGoal(),
+        getType()
+    );
 }
 
 double Resident_Customizable::implimentHappiness(
@@ -45,11 +50,9 @@ double Resident_Customizable::implimentHappiness(
     return _hap_func->calcHappiness(numOfAdjacentHouses, like, diff);
 }
 
-std::unique_ptr<const ResidentTemplate> Resident_Customizable::getTemplate () const
+
+std::string Resident_Customizable::implimentGetType () const
 {
-    return make_unique<const ResidentTemplate_UsingFunction>(
-        getAllowedMovementDistance(),
-        getHappinessGoal(),
-        getType()
-    );
+    string funcType = "Customizable Resident: "; 
+    return funcType + _hap_func->toStrBasic();
 }

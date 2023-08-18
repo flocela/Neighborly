@@ -1,8 +1,8 @@
-#include "Resident.h"
-
 #include <sstream>
 #include <stdexcept>
 #include <iomanip>
+
+#include "Resident.h"
 
 using namespace std;
 
@@ -11,11 +11,12 @@ Resident::Resident (
     int    groupNumber,
     double allowedMovementDistance,
     double happinessGoal
-): _id{id}, 
-   _group_id{groupNumber}, 
-   _allowed_movement_distance{allowedMovementDistance}, 
-   _happiness_goal{happinessGoal},
-   _curr_happiness{0}         
+):
+    _id{id}, 
+    _group_id{groupNumber}, 
+    _allowed_movement_distance{allowedMovementDistance}, 
+    _happiness_goal{happinessGoal},
+    _curr_happiness{0}         
 {
     if (happinessGoal < 0.0 || happinessGoal > 100.0)
     {   
