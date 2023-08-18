@@ -1,8 +1,8 @@
-#include "ResidentTemplate_UsingFunction.h"
+#include "ResidentTemplate_Customizable.h"
 
 using namespace std;
 
-ResidentTemplate_UsingFunction::ResidentTemplate_UsingFunction (
+ResidentTemplate_Customizable::ResidentTemplate_Customizable (
     double allowedMovementDistance,
     double happinessGoal,
     std::string functionType
@@ -10,7 +10,7 @@ ResidentTemplate_UsingFunction::ResidentTemplate_UsingFunction (
    _function_type{functionType}
 {}
 
-std::string ResidentTemplate_UsingFunction::getType () const
+std::string ResidentTemplate_Customizable::getType () const
 {
     return _function_type;
 }

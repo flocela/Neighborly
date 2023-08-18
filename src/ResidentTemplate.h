@@ -4,15 +4,19 @@
 #include <unordered_set>
 #include <string>
 
-class ResidentTemplate{
+// Holds basic information about a resident: the allowed movement distance, happiness goal,
+// and the its type.
+class ResidentTemplate {
 
 protected:
+
     ResidentTemplate(const ResidentTemplate& obj) = default;
     ResidentTemplate(ResidentTemplate&& obj) noexcept = default;
     ResidentTemplate& operator= (const ResidentTemplate& obj) = default;
     ResidentTemplate& operator= (ResidentTemplate&& obj) noexcept = default;
 
 public:
+
     // happinessGoal must be in the rage [0, 100].
     // happiness defaults to zero until it is set.
     // @allowedMovementDistance is how far the resident can move to inhabit a new house
@@ -27,6 +31,7 @@ public:
     virtual std::string getType () const = 0;
 
 private:
+
     double _allowed_movement_distance;
     double _happiness_goal;
 };

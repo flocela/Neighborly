@@ -1,5 +1,5 @@
 #include "Resident_Customizable.h"
-#include "ResidentTemplate_UsingFunction.h"
+#include "ResidentTemplate_Customizable.h"
 #include <iostream>
 using namespace std;
 
@@ -26,7 +26,7 @@ double Resident_Customizable::getLeastPossibleHappiness () const
 
 std::unique_ptr<const ResidentTemplate> Resident_Customizable::getTemplate () const
 {
-    return make_unique<const ResidentTemplate_UsingFunction>(
+    return make_unique<const ResidentTemplate_Customizable>(
         getAllowedMovementDistance(),
         getHappinessGoal(),
         getType()

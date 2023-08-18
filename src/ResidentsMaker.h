@@ -25,7 +25,7 @@ public:
         const UI& ui,
         const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories,
         int maxNumOfResidents,
-        std::vector<BaseColor> colors, // these are the colors that the resident groups can be.
+        std::vector<BaseColor> colors, // These are the colors that the resident groups can be.
         double allowableMovement
     ) = 0;
 };
