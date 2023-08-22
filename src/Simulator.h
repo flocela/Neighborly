@@ -6,9 +6,12 @@
 #include "Resident.h"
 #include "ResPerHouse.h"
 
+// Peforms simulation runs.
 class Simulator
 {
+
 protected:
+
     Simulator () = default;
     Simulator (const Simulator& o) = default;
     Simulator (Simulator&& o) noexcept = default;
@@ -16,6 +19,7 @@ protected:
     Simulator& operator= (Simulator&& o) noexcept = default;
 
 public:
+
     virtual ~Simulator () noexcept = default;
     
     virtual ResPerHouse run() = 0;

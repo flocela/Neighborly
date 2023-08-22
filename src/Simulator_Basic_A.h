@@ -3,8 +3,7 @@
 
 #include "Simulator_Basic.h"
 
-// Performs the simulation runs.
-// The steps in a run can be found in Simulator_Basic.
+// The steps in a run can be found in the parent class, which is Simulator_Basic.
 // Deciding whether a resident is ultimately moved in a run is determined in
 // doMoveResident().
 class Simulator_Basic_A: public Simulator_Basic

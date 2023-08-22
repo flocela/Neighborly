@@ -18,13 +18,14 @@ bool compare (T a, T b)
 Simulator_Basic::Simulator_Basic (
     const City* city,
     unordered_set<Resident*> residents,
-    double percentOfResidents,
+    double percentOfResidents, // percent of residents that run will try to move
     int numOfHousesToChooseFrom,
     unique_ptr<CityState> cityState
-): _city{city},
-   _percent_of_residents{percentOfResidents},
-   _max_num_of_tries_to_find_house{numOfHousesToChooseFrom},
-   _city_state{std::move(cityState)}
+): 
+    _city{city},
+    _percent_of_residents{percentOfResidents},
+    _max_num_of_tries_to_find_house{numOfHousesToChooseFrom},
+    _city_state{std::move(cityState)}
 {   
     _sorted_residents.reserve(residents.size());
     for (Resident* res : residents)
@@ -171,6 +172,7 @@ void Simulator_Basic::setHappinessValuesForAllResidents ()
 {
     for (Resident* res : _sorted_residents)
     {
+        // Get resident's house and resident's adjacent houses.
         const House* resHouse = _city_state->getHousePerResident(res);
 
         unordered_set<const House*> adjHouses = _city->getHousesAdjacent(resHouse->getAddress());
@@ -191,9 +193,12 @@ void Simulator_Basic::setHappinessValuesForAllResidents ()
 
 double Simulator_Basic::calculateHappinessValueFor(Resident* res, int address) const
 {
-    unordered_set<const Resident*> adjacentNeighbors;
-
+    // Get all houses that are adjacent to resident.
     unordered_set<const House*> adjacentHouses = _city->getHousesAdjacent(address);
+
+    // Get resident's adjacent neighbors.
+    unordered_set<const Resident*> adjacentNeighbors;
+    
     for (const House* adjacentHouse : adjacentHouses)
     {   
         Resident* adjacentNeighbor = _city_state->getResidentPerHouse(adjacentHouse);

@@ -5,8 +5,8 @@ using namespace std;
 Simulator_Basic_A::Simulator_Basic_A (
     const City* city,
     std::unordered_set<Resident*> residents,
-    double percentOfResidents, // percent of residents that are chosen to move each run.
-    int numOfHousesToChooseFrom, // number of houses the residents can choose from
+    double percentOfResidents,
+    int numOfHousesToChooseFrom,
     std::unique_ptr<CityState> cityState
     ): Simulator_Basic(
             city,
@@ -30,9 +30,9 @@ bool Simulator_Basic_A::doMoveResident (
 ) const
 {
     // Calculate current happiness for resident. May have changed since run started.
-    unordered_set<const Resident*> adjacentNeighbors;
-
     unordered_set<const House*> adjacentHouses = city->getHousesAdjacent(curAddress);
+    
+    unordered_set<const Resident*> adjacentNeighbors;
     for (const House* adjacentHouse : adjacentHouses)
     {   
         Resident* adjacentNeighbor = cityState->getResidentPerHouse(adjacentHouse);
