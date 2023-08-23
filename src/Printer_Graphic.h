@@ -61,7 +61,7 @@ private:
     
     Letter _window_title_letter{44, 5, 0.35};
     std::unique_ptr<Title_Basic> _window_title;
-    std::vector<uint8_t> _title_text_color = _the_color_rgba[Color::gray900];
+    std::vector<uint8_t> _title_text_color = _the_color_rgba[Color::gray100];
     
     /* COLUMNS */
     /* Two columns: City chart is on the left. Diversity and Happiness charts are on the right.
