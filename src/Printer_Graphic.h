@@ -12,9 +12,9 @@
 #include "Title_Basic.h"
 
 //  Displays GrCityChart, GrDiversity Chart, and GrHappinessChart in one window.
-//  Uses a screen width and height of 2400px.
+//  Uses a screen width and height of 2400px x 1200px.
 //  The left half of the screen holds the CityMap.
-//  The right half of the screen holds the Diversity Chart and the HappinessChart below that.
+//  The right half of the screen holds the Diversity Chart and the HappinessChart.
 class Printer_Graphic : public Printer
 {
      
@@ -64,7 +64,8 @@ private:
     std::vector<uint8_t> _title_text_color = _the_color_rgba[Color::gray900];
     
     /* COLUMNS */
-    /* Two columns: City chart is on the left. Diversity and Happiness charts are on the right.*/
+    /* Two columns: City chart is on the left. Diversity and Happiness charts are on the right.
+       Both columns are below the Runs chart.*/
 
     /* COMMON TO ALL OR MOST CHARTS */
 
@@ -84,18 +85,20 @@ private:
     int _chart_space_x__px = _x_center__px - _side_borders__px - _col_inside_border__px;
 
     /* RUNS CHART */
-    /* Sits below the window title, horizontally at center of window */
+    /* Sits below the window title and above the columns holding the city map, diversity chart,
+       and happiness chart. Horizontally sits at center of window.*/
 
     int _num_of_runs;
     int _runs_chart_top_y__px; // top edge of the runs chart
     std::unique_ptr<GrRunsChart> _runs_chart; // shows the current run
     
     /* RIGHT COLUMN */
-    /* Right column holds the diversity chart above the happiness chart */
+    /* Right column holds the diversity chart and the happiness chart. The diversity chart
+       is above the happiness chart. */
     
 
     /* DIVERSITY CHART */
-    /* Diversity chart is in the right column. Diversity chart sits below the runs chart*/
+    /* Diversity chart is in the right column. Diversity chart sits below the runs chart.*/
     
     std::string _div_chart_title =  "Average Number of Disparate Neighbors per Group, per Run";
 

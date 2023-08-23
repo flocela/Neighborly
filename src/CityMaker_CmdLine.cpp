@@ -13,7 +13,7 @@ unique_ptr<City> CityMaker_CmdLine::makeCity (
     int maxDeltaY
 )
 {
-    // The current city choice is the made by the factory at index zero in cityFactories.
+    // The current city choice is the made by the factory at index zero in @cityFactories.
     int cityChoice = 0;
 
     // If there is only one city factory, then force user to choose that one.

@@ -10,7 +10,8 @@ class Point
 public:
 
     Point (double x, double y, Color color)
-    : _x{x},
+    : 
+      _x{x},
       _y{y},
       _color{color},
       _rgba{_the_color_rgba[color]}

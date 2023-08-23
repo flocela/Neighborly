@@ -189,7 +189,7 @@ int PlotB::calcCrossXPx (int topLeftXPx) const
     int requiredXLength = 
         _unit__px * ( _x_diff + _x_start_offset + _x_end_offset) + _y_axis->sizeXPx();
 
-    // Start at given most left point (topLeftXPx),
+    // Start at given most left point (@topLeftXPx),
     // move to the center of given space, move to the left by 1/2 of the required length,
     // move crosshairs to the right making room for y-axis.
     return topLeftXPx +

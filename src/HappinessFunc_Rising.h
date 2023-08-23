@@ -15,7 +15,7 @@ public:
     // An exception is thrown if happiness at zero diversity is larger than or equal
     // to happiness at one diversity, or if either value is not in the range [0.0, 100.0].
     // When total number of neighbors is zero, diversity is undefined.
-    // happinessWithNoNeighbors is the y-value corresponding to when the total
+    // @happinessWithNoNeighbors is the y-value corresponding to when the total
     // number of neighbors is zero.
     HappinessFunc_Rising (
         double happinessWithNoNeighbors,

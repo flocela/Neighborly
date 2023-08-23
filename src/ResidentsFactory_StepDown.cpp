@@ -1,13 +1,11 @@
-#include "ResidentsFactory_StepDown.h"
-
 #include <limits>
 #include <sstream>
 #include <iomanip>
 #include <memory>
 #include <iostream>
-
 #include "HappinessFunc_StepDown.h"
 #include "Resident_Customizable.h"
+#include "ResidentsFactory_StepDown.h"
 #include "Question_Double.h"
 
 using namespace std;

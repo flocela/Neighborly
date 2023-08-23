@@ -1,5 +1,5 @@
-#ifndef PLOT_A_H
-#define PLOT_A_H
+#ifndef PLOT_A__H
+#define PLOT_A__H
 
 #include <memory>
 #include "AxisFormat.h"
@@ -9,7 +9,7 @@
 #include "PlotFormat.h"
 #include "Point.h"
 
-// Plot contains the x and y axes, their labels, and the data points inside the graph.
+// PlotA contains the x and y axes, their labels, and the data points inside the graph.
 // x-axis runs horizontally on the bottom of the plot (left to right).
 // y-axis runs vertically on the left (bottom to top).
 // The unit size (pixels per unit) in the x-direction does not have to match the y-direction's

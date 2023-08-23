@@ -35,10 +35,10 @@ public:
     virtual std::unordered_set<const House*> getOpenHouses() const = 0;
     virtual std::unordered_map<const House*, Resident*> getResidentsPerHouse () const = 0;
 
-    // Returns nullptr if resident does not have a house.
+    // Returns nullptr if @resident does not have a house.
     virtual const House* getHousePerResident(Resident* resident) const = 0;
 
-    // Returns nullptr if house is empty.
+    // Returns nullptr if @house is empty.
     virtual Resident* getResidentPerHouse(const House* house) const = 0;
 };
 

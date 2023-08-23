@@ -18,8 +18,8 @@ protected:
 
 public:
 
-    // happinessGoal must be in the rage [0, 100].
-    // allowedMovementDistance is how far the resident can move to inhabit a new house.
+    // @happinessGoal must be in the rage [0, 100].
+    // @allowedMovementDistance is how far the resident can move to inhabit a new house.
     Resident (
         int id,
         int groupId,

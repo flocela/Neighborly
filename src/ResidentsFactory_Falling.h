@@ -12,9 +12,9 @@ public:
 
     // Creates Residents that use the HappinessFunc_Falling to determine their happiness.
     // Basically the residents' happiness slopes down as diversity increases.
-    // The function will use the ui to get information from the user to create the 
+    // The function will use @ui to get information from the user to create the 
     // happiness function.
-    // Creates count number of residents. Their ids' range from firstID to firstID + count -1.
+    // Creates @count number of residents. Their ids' range from @firstID to @firstID + @count -1.
     std::vector<std::unique_ptr<Resident>> createResidents(
         const UI& ui,
         int firstID, 
@@ -33,7 +33,7 @@ private:
     // If can not get a low happiness value from the user, then use _fallback_low_happiness_value.
     double _fallback_low_happiness_value = 0.0;
 
-    // User prompts for getting information from user.
+    // User prompts for getting information from user:
     
     // prompt for happiness value when resident has no neighbors
     std::string _happinessWithZeroNeighborsPrompt =

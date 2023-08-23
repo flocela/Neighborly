@@ -15,7 +15,7 @@ public:
 
     // The axis lies on a vertical line, so all points on the axis have the same x-coordinate
     // in pixels.
-    // xCoordPx is the axis's x-coordinate in pixels.
+    // @xCoordPx is the axis's x-coordinate in pixels.
     GrAxisVerticalSimple (
         std::unique_ptr<Axis> axis,
         AxisFormat axisFormat,

@@ -15,14 +15,15 @@ GrColorKey_Basic::GrColorKey_Basic (
     std::set<Mood> moods,
     std::vector<uint8_t> textColor,
     std::vector<uint8_t> textBackgroundColor
-): _top_center_x__px{topCenterXPx},
-   _top_center_y__px{topCenterYPx},
-   _label_letter{labelLetter},
-   _b_color_per_groupId{colors},
-   _moods{moods},
-   _box_length__px{_label_letter.letterHeight()/2},
-   _text_color{textColor},
-   _text_background_color{textBackgroundColor}
+):
+    _top_center_x__px{topCenterXPx},
+    _top_center_y__px{topCenterYPx},
+    _label_letter{labelLetter},
+    _b_color_per_groupId{colors},
+    _moods{moods},
+    _box_length__px{_label_letter.letterHeight()/2},
+    _text_color{textColor},
+    _text_background_color{textBackgroundColor}
 {
     setAttributes();
 }

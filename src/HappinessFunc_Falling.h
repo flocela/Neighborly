@@ -17,7 +17,7 @@ public:
     // to happiness at 1.0 diversity, or if either happiness value is not in the range
     // 0.0 to 100.0 inclusive.
     // When total number of neighbors is zero, diversity is undefined.
-    // happinessWithNoNeighbors is the y-value corresponding to when total neighbors is zero.
+    // @happinessWithNoNeighbors is the y-value corresponding to when total neighbors is zero.
     HappinessFunc_Falling (
         double happinessWithNoNeighbors, 
         double happinessAtZeroDiversity,

@@ -18,9 +18,9 @@ GrDvstyChart::GrDvstyChart (
     _key{move(colorKey)},
     _plot{std::move(plot)}
 {   
-    // x-coordinate of plot's top-left corner aligns with topLeftXPx.
+    // x-coordinate of plot's top-left corner aligns with @topLeftXPx.
     // Plot is below the title and below the key.
-    // The available space in the x direction is xSpace.
+    // The available space in the x direction is @xSpace.
     // The available space in the y direction is decreased by the title and the key.
     _plot->setPlot(
         topLeftXPx,
@@ -29,7 +29,7 @@ GrDvstyChart::GrDvstyChart (
         ySpace - _title->sizeYPx() - _key->sizeYPx()
     );
 
-    // In the x-direction, center title and key with the center of the plot.
+    // In the x-direction, center the title and key with the center of the plot.
     // Title is at the top of the chart.
     _title->setTopCenter(_plot->getCenterValueOfXAxisPx(), topLeftYPx);
 

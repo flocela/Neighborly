@@ -10,21 +10,22 @@ class Axis_Basic : public Axis
     
 public:
 
-    // Forward is true, means the values on the axis run in the direction of the pixels
+    // @forward is true, means the values on the axis run in the direction of the pixels
     // in the window.
     // Pixels in window: 000   005   010   015
     // Values on axis:   100   200   300   400
 
-    // If forward is false, then the values on the axis run in the direction opposite
+    // If @@forward is false, then the values on the axis run in the direction opposite
     // the pixels in the window.
     // Pixels in window: 000   005   010    015
     // Values on axis:   400   300   200    100
 
-    // crossPixel is the pixel at the start of the axis. It is startOffset units before the lowVal.
-    // The units for crossPixel is pixels. The units for startOffset and endOffset is units.
-    // The units for pxPerUnit is px/unit.
-    // The crossPixel of the axis is startOffset * pxPerUnit before the low value pixel. The
-    // end of the axis is endOffset * pxPerUnit after from the high value.
+    // crossPixel is the pixel at the start of the axis. It is @startOffset units before the
+    // @lowVal.
+    // The units for @crossPixel is pixels. The units for @startOffset and @endOffset is units.
+    // The units for @pxPerUnit is px/unit.
+    // The @crossPixel of the axis is @startOffset * @pxPerUnit before @lowVal pixel. The
+    // end of the axis is @endOffset * @pxPerUnit after from @highVal.
 
     // pxPerUnit must be positive.
     Axis_Basic (
@@ -64,8 +65,8 @@ public:
 
     int getEndPixel () const override;
 
-    // Returns the pixels covered by a dot at value. If a pixel is negative, then zero is returned
-    // for that pixel. Say val is zero and corresponds to a pixel of zero, but the dotSize is 3.
+    // Returns the pixels covered by a dot at @val. If a pixel is negative, then zero is returned
+    // for that pixel. Say @val is zero and corresponds to a pixel of zero, but the dotSize is 3.
     // Then pixels of {-1, 1} should be retured, but since there are no negative pixels,
     // {0, 1} is returned.
     std::pair<int, int> getPixels (double val, int dotSize) const override;

@@ -14,13 +14,13 @@ public:
 
     // x-axis is Diversity, range is [0.0 to 1.0].
     // y-axis is Happiness, range is [0.0 to 100.0].
-    // An exception is thrown if happinesAtStart is less than or equal
-    // to happinessAtEnd, or if either value is not in the range
+    // An exception is thrown if @happinesAtStart is less than or equal
+    // to @happinessAtEnd, or if either value is not in the range
     // 0.0 to 100.0 inclusive.
     // When the total number of neighbors is zero, diversity is undefined.
-    // happinessWithZeroNeighbors is the y-value corresponding to having no neighbors.
-    // happinessWithZeroNeighbors, happinessAtStart, happinessAtEnd are y-values.
-    // stepDown is an x-value (a diversity value).
+    // @happinessWithZeroNeighbors is the y-value corresponding to having no neighbors.
+    // @happinessWithZeroNeighbors, @happinessAtStart, @happinessAtEnd are y-values.
+    // @stepDown is an x-value (a diversity value).
     HappinessFunc_StepDown (
         double happinessWithZeroNeighbors, 
         double happinessAtStart, // higher happiness value

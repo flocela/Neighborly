@@ -9,8 +9,8 @@ class RandIntsMaker
 
 public:
 
-    // A well of integers is created, from zero to wellSize-1.
-    // Then quantity number of integers are taken from the well (and not replaced)
+    // A well of integers is created, from zero to @wellSize-1.
+    // Then @quantity number of integers are randomly taken from the well (and not replaced)
     // and placed in a vector. That vector is returned.
     std::vector<int> getRandomIntegers(int wellSize, int quantity) const;
 

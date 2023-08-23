@@ -26,10 +26,10 @@ PlotA::PlotA (
     _x_axis{move(xAxis)},
     _y_axis{move(yAxis)}
 {
-    // Axis values will increate from left to right.
+    // Axis values will increate from left to right, so set direction to true.
     _x_axis->setDirectionOfAxis(true);
 
-    // Axis values will increase from bottom to top.
+    // Axis values will increase from bottom to top, so set direction to false.
     _y_axis->setDirectionOfAxis(false);
 
     // Update attributes that are affected by change to top left corner coordinate and
@@ -196,7 +196,7 @@ int PlotA::calcCrossXPx (int topLeftXPx) const
     int requiredXLength = 
         (_unit_x__px * ( _x_diff + _x_start_offset + _x_end_offset)) + _y_axis->sizeXPx();
 
-    // Start at given most left point (topLeftXPx),
+    // Start at given most left point (@topLeftXPx),
     // Move to the center of given space, move to the left by 1/2 of the required length,
     // Move crosshairs to the right making room for y-axis.
     return topLeftXPx +

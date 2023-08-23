@@ -1,11 +1,10 @@
-#include "Printer_Graphic.h"
-
 #include <iostream>
 #include "Axis_Basic.h"
 #include "GrAxisHorizontalSimple.h"
 #include "GrAxisVerticalSimple.h"
 #include "PlotA.h"
 #include "PlotB.h"
+#include "Printer_Graphic.h"
 
 using namespace std;
 
@@ -54,6 +53,7 @@ Printer_Graphic::Printer_Graphic (
     // found from the given house coordinates.
     vector<int> minsAndMaxCoords = ascertainMinMaxHouseCoords(_coordinates_per_house);
 
+    // Create city chart.
     _city_chart =  createCityChart(
         minsAndMaxCoords[0],
         minsAndMaxCoords[1],
@@ -66,6 +66,7 @@ Printer_Graphic::Printer_Graphic (
     // Determine the available space for the diversity chart (vertically).
     int divChartAvailSpaceYPx = _div_chart_y_axis_fraction * colSpaceYPx;
 
+    // Create diversity chart.
     int largestNumOfAdjHouses = ascertainLargestNumberOfAdjHouses(adjacentHousesPerHouse);
 
     _div_chart = createDvstyChart(
@@ -85,6 +86,7 @@ Printer_Graphic::Printer_Graphic (
     int hapChartAvailSpaceYPx = 
         (1 - _div_chart_y_axis_fraction - _space_below_div_chart_y_axis_fraction) * colSpaceYPx;
 
+    // Create happiness chart.
     _happiness_chart = createHapChart(_num_of_runs, hapChartTopLeftYPx, hapChartAvailSpaceYPx);
 }
 
@@ -92,7 +94,7 @@ void Printer_Graphic::print (const RunMetrics* runMetrics) const
 {   
     int run = runMetrics->getRunNumber();
 
-    // Get residents per house from runMetrics information.
+    // Get residents per house from information in @runMetrics.
     const ResPerHouse& residentPerHouse = runMetrics->getResidentsPerHouse();
 
     // Printing is from top to bottom, left to right.
@@ -187,8 +189,6 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             cityPlotFormat,
             make_unique<GrAxisHorizontalSimple>(
                 make_unique<Axis_Basic>(
-                    // axis values increase as window's coordinates increase, set as true.
-                    // PlotB's constructor sets the x-axis as a forward axis.
                     true,                   
                     0,                      // starting pixel for x-axis, use zero for now
                     minXCoord,              // smallest coordinate in the x-direction             
@@ -203,8 +203,6 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
             ),
             make_unique<GrAxisVerticalSimple>(
                 make_unique<Axis_Basic>(
-                    // axis values increase as window's coordinates increase, set as true.
-                    // PlotB's constructor sets the y-axis as a forward axis.
                     true,
                     0,                      // starting pixel for y-axis, use zero for now
                     minYCoord,              // smallest coordinate in y-direction
@@ -248,8 +246,6 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             rightColFormat,                   
             make_unique<GrAxisHorizontalSimple>(
                 make_unique<Axis_Basic>(
-                    // axis values increase as window's coordinates increase, set as true.
-                    // PlotA's constructor sets the x-axis as a forward axis.
                     true,                      
                     0,                         // starting pixel for x-axis, use zero for now
                     0,                         // The first run number is zero.
@@ -264,8 +260,6 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
             ),
             make_unique<GrAxisVerticalSimple>(
                 make_unique<Axis_Basic>(
-                    // axis values increase as window's coordinates decrease, set as false.
-                    // PlotA's constructor sets the y-axis as reverse axis.
                     false,                     
                     0,                         // starting pixel for y-axis, use zero for now
                     0,                         // smallest number of neighbors for a resident is 0
@@ -306,8 +300,6 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
             rightColFormat,                   // plot format for charts on right column
             make_unique<GrAxisHorizontalSimple>(
                 make_unique<Axis_Basic>(
-                    // axis values increase as window's coordinates increase, set as true.
-                    // PlotA's constructor sets the x-axis as a forward axis also.
                     true,                      
                     0,                         // starting pixel for x-axis, use zero for now
                     0,                         // Zero is the starting run number.
@@ -322,8 +314,6 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
             ),
             make_unique<GrAxisVerticalSimple>(
                 make_unique<Axis_Basic>(
-                    // axis values increase as window's coordinates decrease, set as false.
-                    // PlotA's constructor sets the y-axis as reverse axis.
                     false,                     
                     0,                         // starting pixel for y-axis, use zero for now
                     0,                         // least possible happiness for a resident

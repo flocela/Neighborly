@@ -4,9 +4,10 @@
 #include "ResidentsMaker.h"
 #include "UI_CmdLine.h"
 
-// For each group, asks user what type of resident the group will be composed of.
-// For each type of Resident type, asks specific questions that are necessary
-// to create Residents of that type.
+// Asks for the resident type for each group. (There are two groups.)
+// Asks for information to create the residents.
+// Returns the ResidentsGroupInfo for the residents.
+// The ResidentsGroupInfo contains a vector of unique pointers to the residents.
 class ResidentsMaker_CmdLine: public ResidentsMaker
 {
     
@@ -15,7 +16,7 @@ public:
     ResidentsGroupInfo makeResidents (
         const UI& ui,
         const std::vector<std::unique_ptr<const ResidentsFactory>>& residentsFactories,
-        int maxNumberOfGroupsOfResidents,
+        int maxResidentCount,
         std::vector<BaseColor> colors,
         double maxAllowableMovement
     )override;

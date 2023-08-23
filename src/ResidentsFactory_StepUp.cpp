@@ -3,7 +3,6 @@
 #include <limits>
 #include <memory>
 #include <sstream>
-
 #include "HappinessFunc_StepUp.h"
 #include "Question_Double.h"
 #include "Resident_Customizable.h"

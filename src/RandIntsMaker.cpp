@@ -11,7 +11,7 @@ vector<int> RandIntsMaker::getRandomIntegers(int wellSize, int quantity) const
         throw invalid_argument("Well size must be at least as large as quantity.");
     }
 
-    // Create vector with numbers from 0 to wellSize - 1.
+    // Create vector with numbers from 0 to @wellSize - 1.
     vector<int> well(wellSize);
 
     for (size_t ii=0; ii<well.size(); ++ii)
@@ -19,11 +19,11 @@ vector<int> RandIntsMaker::getRandomIntegers(int wellSize, int quantity) const
         well[ii] = ii;
     }
 
-    // Create return vector. Reserve it's size as quantity.
+    // Create return vector. Reserve it's size as @quantity.
     vector<int> answer{};
     answer.reserve(quantity);
 
-    // Push back quantity number of values from well vector to answer vector.
+    // Push back @quantity number of values from well vector to answer vector.
     int counter = 0;
     while (counter < quantity)
     {   
@@ -32,7 +32,9 @@ vector<int> RandIntsMaker::getRandomIntegers(int wellSize, int quantity) const
         int r = rand() % size;
         int randomNum = well[r];
 
-        // If randomNum from well vector is -1, then try well.size() number of
+        // If randomNum from well vector is -1, then that index has already been taken.
+        // Try to select a number from the well that is not -1. This may be too time
+        // consuming if there are too many -1's. Only try well.size() number of
         // times to select a number from well that is not -1.
         size_t smallCounter = 0;
         while ( smallCounter < well.size() && randomNum == -1 )

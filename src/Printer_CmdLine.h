@@ -9,6 +9,7 @@
 #include "Printer.h"
 #include "ResidentTemplate.h"
 
+// Prints a summary of a run and also a closing message for the last print.
 class Printer_CmdLine : public Printer
 {
 
@@ -30,6 +31,9 @@ public:
     Printer_CmdLine& operator= (Printer_CmdLine&& o) noexcept = default;
     ~Printer_CmdLine () noexcept = default;
     
+    // Prints a summary of a  run. Summary includes each group's diversity and happiness sum.
+    // If it's the first run, prints the group information.
+    // If it's the first run or the last run, prints the city map.
     void print(const RunMetrics* runMetrics) const override;
 
     void lastPrint () override;

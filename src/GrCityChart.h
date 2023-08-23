@@ -14,7 +14,7 @@
 
 // Used to print out a city map using a renderer. Shows where each resident group is 
 // on the map. Each resident is assigned a color based on their group id and their
-// happiness value and a square of that color is shown at that address in the map.
+// happiness value. A square of that color is shown at that address in the map.
 // Includes title for this map.
 // Includes key to the map (color for each group id).
 class GrCityChart

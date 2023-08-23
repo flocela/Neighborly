@@ -1,6 +1,7 @@
+#include <iostream>
 #include "Resident_Customizable.h"
 #include "ResidentTemplate_Customizable.h"
-#include <iostream>
+
 using namespace std;
 
 Resident_Customizable::Resident_Customizable (

@@ -17,7 +17,7 @@ protected:
 
 public:
 
-    // happinessGoal must be in the rage [0, 100].
+    // @happinessGoal must be in the rage [0, 100].
     // happiness defaults to zero until it is set.
     // @allowedMovementDistance is how far the resident can move to inhabit a new house
     ResidentTemplate(

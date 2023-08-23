@@ -5,7 +5,6 @@
 #include "HappinessFunc.h"
 #include "Resident.h"
 
-
 class ResidentTemplate_Customizable : public ResidentTemplate
 {
 

@@ -1,9 +1,9 @@
-#include "ResidentTemplate.h"
-
 #include <sstream>
 #include <stdexcept>
 #include <iomanip>
 #include <iostream>
+#include "ResidentTemplate.h"
+
 using namespace std;
 
 ResidentTemplate::ResidentTemplate (

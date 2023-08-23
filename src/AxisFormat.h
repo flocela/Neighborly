@@ -85,7 +85,7 @@ private:
     // _tick_length_inside_chart__px does not include thickness of axis
     int _tick_length_inside_chart__px = 2; 
 
-    // Extend tick marks horizontally across chart
+    // Extend tick marks horizontally across chart.
     bool _include_background_tick_marks = false;   
 };
 

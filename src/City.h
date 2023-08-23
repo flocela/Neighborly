@@ -31,7 +31,6 @@ public:
     // Returns largest distance between any two houses (inclusively) in x direction.
     virtual double getWidth() const = 0;
 
-    // Returns house coordinate, (x, y).
     virtual Coordinate getCoordinate (const int& address) const = 0;
 
     virtual const std::unordered_map<const House*, Coordinate>* getCoordinatesPerHouse() const = 0;

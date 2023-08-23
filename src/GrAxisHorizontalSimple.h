@@ -15,8 +15,8 @@ public:
 
     // The axis lies on a horizontal line, so all points on the axis have the same y-coordinate
     // in pixels.
-    // yCoordPx is the axis's y-coordinate in pixels.
-    // labelsOnTop as true, signifies that the labels will be above the axis. Otherwise
+    // @yCoordPx is the axis's y-coordinate in pixels.
+    // @labelsOnTop as true, signifies that the labels will be above the axis. Otherwise
     // the labels are below the axis.
     GrAxisHorizontalSimple (
         std::unique_ptr<Axis> axis,

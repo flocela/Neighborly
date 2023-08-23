@@ -2,6 +2,7 @@
 #define QUESTION_INT__H
 
 #include "Question.h"
+
 // Creates successive prompts until a proper answer is given.
 // A proper answer is an integer.
 // It is within the range detailed in the constructor.

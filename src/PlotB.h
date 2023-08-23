@@ -1,5 +1,5 @@
-#ifndef PLOT_B_H
-#define PLOT_B_H
+#ifndef PLOT_B__H
+#define PLOT_B__H
 
 #include "AxisFormat.h"
 #include "Coordinate.h"
@@ -9,7 +9,7 @@
 #include "Plot.h"
 #include "PlotFormat.h"
 
-// Plot contains the x and y axis, their labels, and the data points inside the graph.
+// PlotB contains the x and y axis, their labels, and the data points inside the graph.
 // x-axis runs horizontally from left to right. Labels are on top of axis.
 // y-axis runs vertically from top to bottom. Labels are on the left of the axis.
 // The unit size in the x and y directions is the same.

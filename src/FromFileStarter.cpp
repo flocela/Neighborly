@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-
 #include "City_Grid.h"
 #include "CityState_Simple.h"
 #include "Color.h"

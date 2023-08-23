@@ -14,13 +14,13 @@ public:
 
     // x-axis is Diversity, range is [0.0 to 1.0].
     // y-axis is Happiness, range is [0.0 to 100.0].
-    // An exception is thrown if happinessAtStart is greater than or equal
-    // to happinessAtEnd, or if either value is not in the range
+    // An exception is thrown if @happinessAtStart is greater than or equal
+    // to @happinessAtEnd, or if either value is not in the range
     // 0.0 to 100.0 inclusive.
-    // when total number of neighbors is zero, diversity is undefined.
-    // happinessWithNoNeighbors is the y-value corresponding to total neighbors is zero.
-    // happinessWithZeroNeighbors, happinessAtStart, happinessAtEnd are y-values (happiness values).
-    // stepUp is an x-value (diversity value).
+    // When total number of neighbors is zero, diversity is undefined.
+    // @happinessWithNoNeighbors is the y-value corresponding to when total neighbors is zero.
+    // @happinessWithZeroNeighbors, @happinessAtStart, @happinessAtEnd are y-values (happiness values).
+    // @stepUp is an x-value (diversity value).
     HappinessFunc_StepUp () = delete;
     HappinessFunc_StepUp (const HappinessFunc_StepUp& obj) = default;
     HappinessFunc_StepUp (HappinessFunc_StepUp&& obj) noexcept = default;

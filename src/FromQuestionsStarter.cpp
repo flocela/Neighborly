@@ -30,7 +30,8 @@ SimulationComponents FromQuestionsStarter::createSimulationComponents (
     int maxNumOfRuns
 )
 {
-    // Simulation Components. Need to add information to resultantComponents container.
+    // resultantComponents will be returned.
+    // Create here, and add information to it before returning.
     SimulationComponents resultantComponents{};
 
     // group colors

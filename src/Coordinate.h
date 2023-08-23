@@ -19,8 +19,8 @@ public:
     int getX() const { return _x; };
     int getY() const { return _y; };
 
-    // If this y-value is the same as a's y-value, then return true if this x-value is smaller
-    // than a's x-value.
+    // If this y-value is the same as @a's y-value, then return true if this x-value is smaller
+    // than @a's x-value.
     // Else if this y-value is smaller than a's y-value, then return true.
     bool operator<(const Coordinate& a) const;
     std::string toStr() const;

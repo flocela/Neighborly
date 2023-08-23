@@ -51,11 +51,7 @@ public:
     // The size of the plot in the y direction. This is smaller than or equal to the allowed space.
     virtual int sizeYPx () const = 0;
 
-    virtual void print (
-        std::vector<Point> points,
-        bool printAxes,
-        Renderer* renderer
-    ) const = 0;
+    virtual void print (std::vector<Point> points, bool printAxes, Renderer* renderer) const = 0;
 
     // Sets the top left corner of the plot and sets the available space in the x and y directions.
     virtual void setPlot (

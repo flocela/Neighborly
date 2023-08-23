@@ -2,7 +2,6 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
-
 #include "Printer_CmdLine.h"
 
 using namespace std;
@@ -25,7 +24,7 @@ Printer_CmdLine::Printer_CmdLine (
 
 void Printer_CmdLine::print (const RunMetrics* runMetrics) const
 {   
-    // Collect information from runMetrics.
+    // Collect information from @runMetrics.
     int run = runMetrics->getRunNumber();
     const ResPerHouse& residentsPerHouse = runMetrics->getResidentsPerHouse();
     const unordered_map<int, int>& numOfResidentsPerGroupId =

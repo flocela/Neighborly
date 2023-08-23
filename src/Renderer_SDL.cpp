@@ -1,10 +1,8 @@
-#include "Renderer_SDL.h"
-
 #include <cstring>
 #include <SDL_ttf.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <string>
+#include "Renderer_SDL.h"
 
 using namespace std;
 

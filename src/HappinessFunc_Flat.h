@@ -12,10 +12,10 @@ public:
 
     // x-axis is Diversity, range is [0.0 to 1.0].
     // y-axis is Happiness, range is [0.0 to 100.0].
-    // happinessValue is the y-axis Happiness at all points of the x-axis.
-    // An exception is thrown if happinessValue is not in the range 0.0 to 100.0.
+    // @happinessValue is the y-axis Happiness at all points of the x-axis.
+    // An exception is thrown if @happinessValue is not in the range 0.0 to 100.0.
     // When total number of neighbors is zero, diversity is undefined.
-    // happinessWithNoNeighbors returns a y-value for when the total number of neighbors is zero.
+    // @happinessWithNoNeighbors returns a y-value for when the total number of neighbors is zero.
     HappinessFunc_Flat (double happinessWithNoNeighbors, double happinessValue);
     HappinessFunc_Flat () = delete;
     HappinessFunc_Flat (const HappinessFunc_Flat& obj) = default;

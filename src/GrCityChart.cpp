@@ -29,7 +29,7 @@ GrCityChart::GrCityChart (
     
     // Plot's top-left corner's x aligns with topLeftCornerXPx.
     // Plot is below the title and the key.
-    // Plot's allowable x-space is all the space given by xSpace.
+    // Plot's allowable x-space is all the space given by @xSpace.
     // Plot's allowable y-space is decreased by the title and key.
     _plot->setPlot(
         topLeftCornerXPx,

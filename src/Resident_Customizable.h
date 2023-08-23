@@ -1,4 +1,4 @@
-#ifndef RESIDENT_CUSTOMIABLE__H
+#ifndef RESIDENT_CUSTOMIZABLE__H
 #define RESIDENT_CUSTOMIZABLE__H
 
 #include <memory>

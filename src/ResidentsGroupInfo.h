@@ -1,12 +1,11 @@
 #ifndef RESIDENTS_GROUP_INFO__H
 #define RESIDENTS_GROUP_INFO__H
 
-#include "Resident.h"
-#include "ResidentTemplate.h"
-
 #include <memory>
 #include <unordered_map>
 #include <vector>
+#include "Resident.h"
+#include "ResidentTemplate.h"
 
 struct ResidentsGroupInfo
 {

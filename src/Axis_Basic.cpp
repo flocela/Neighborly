@@ -35,7 +35,7 @@ std::pair<int, int> Axis_Basic::getPixels (double val, int dotSize) const
 
     // Change the variable names to denote pixels and axis-values.
     // Line equation: px2 = px1 + m * (v2 - v1), m is in px per unit.
-    // px2 is the pixel value we're looking for, given the real value val (v2 is set to val).
+    // px2 is the pixel value we're looking for, given the real value val (v2 is set to @val).
     // px1 is the pixel value corresponding to the smallest xvalue, (v1 is the smallest value).
 
     double v1 = _low_val -_start_offset_m;

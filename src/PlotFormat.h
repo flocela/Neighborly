@@ -1,5 +1,5 @@
-#ifndef PLOT_FORMAT_H
-#define PLOT_FORMAT_H
+#ifndef PLOT_FORMAT__H
+#define PLOT_FORMAT__H
 
 #include "AxisFormat.h"
 #include "Letter.h"
@@ -13,10 +13,10 @@ public:
         Letter titleLetter,
         Letter keyLetter,
         int minUnitSizePx
-    ) :
-       _title_letter{titleLetter},
-       _key_letter{keyLetter},
-       _min_unit_size__px{minUnitSizePx}
+    ):
+        _title_letter{titleLetter},
+        _key_letter{keyLetter},
+        _min_unit_size__px{minUnitSizePx}
     {}
 
     PlotFormat () = delete;

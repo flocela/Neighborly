@@ -12,6 +12,11 @@ class ResidentsFactory_StepDown: public ResidentsFactory
     
 public:
 
+    // Creates Residents that use the HappinessFunc_Falling to determine their happiness.
+    // Basically the residents' happiness is two tiered with a step down.
+    // The function will use @ui to get information from the user to create the 
+    // happiness function.
+    // Creates @count number of residents. Their ids' range from @firstID to @firstID + @count -1.
     std::vector<std::unique_ptr<Resident>> createResidents(
         const UI& ui,
         int firstID, 

@@ -10,14 +10,15 @@ GrHapChart::GrHapChart (
         int topLeftYPx,
         int xSpace,
         int ySpace
-): _base_color_per_group_id{colors},
-   _title{move(title)},
-   _key{move(colorKey)},
-   _plot{std::move(plot)}
+):
+    _base_color_per_group_id{colors},
+    _title{move(title)},
+    _key{move(colorKey)},
+    _plot{std::move(plot)}
 {   
-    // x-coordinate of plot's top-left corner aligns with topLeftXPx.
+    // x-coordinate of plot's top-left corner aligns with @topLeftXPx.
     // Plot is below the title and below the key.
-    // The available space in the x-direction is xSpace.
+    // The available space in the x-direction is @xSpace.
     // The available space in the y-direction is decreased by the title and the key.
     _plot->setPlot(
         topLeftXPx,
