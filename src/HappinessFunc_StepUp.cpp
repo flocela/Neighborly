@@ -71,14 +71,15 @@ double HappinessFunc_StepUp::calcHappiness (
 string HappinessFunc_StepUp::toStrBasic () const
 {
     stringstream returnStream;
-    returnStream << "StepUp Happiness Function, happiness:: no neighbors: ";
+    returnStream << "StepUp Happiness Function. Happiness with no neighbors is ";
     returnStream << fixed << setprecision(2) << _happ_with_zero_neighbors;
-    returnStream << ", zero diversity: ";
+    returnStream << "; at 0.0 diversity is ";
     returnStream << fixed << setprecision(2) << _happ_at_start;
-    returnStream << ", one diversity: ";
+    returnStream << "; at 1.0 diversity is ";
     returnStream << fixed << setprecision(2) << _happ_at_end;
-    returnStream << ", drop's diversity location: ";
+    returnStream << "; drop's diversity location is ";
     returnStream << fixed << setprecision(2) << _step_up;
+    returnStream << ".";
     
     return returnStream.str();
 }

@@ -54,6 +54,6 @@ double Resident_Customizable::implimentHappiness(
 
 std::string Resident_Customizable::implimentGetType () const
 {
-    string funcType = "Customizable Resident: "; 
+    string funcType = "Customizable Resident with "; 
     return funcType + _hap_func->toStrBasic();
 }

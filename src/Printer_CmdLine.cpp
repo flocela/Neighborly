@@ -60,13 +60,13 @@ void Printer_CmdLine::print (const RunMetrics* runMetrics) const
         {
             cout << "    Group id " << groupID << ":" << endl;
             cout << "      base color: "
-                 << _base_colors_per_groupid.at(groupID)
+                 << _base_colors_per_groupid.at(groupID) << ", "
                  << "      count: "
                  << numOfResidentsPerGroupId.at(groupID) << ", "
                  << "      allowed movement: "
                  << _res_templates_per_group_id.at(groupID)->getAllowedMovementDistance() << ", "
                  << "      happiness goal: "
-                 << _res_templates_per_group_id.at(groupID)->getHappinessGoal() << "," << endl
+                 << _res_templates_per_group_id.at(groupID)->getHappinessGoal() << endl
                  << "      " << _res_templates_per_group_id.at(groupID)->getType() << endl;
         }
 

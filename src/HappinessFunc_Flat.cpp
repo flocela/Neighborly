@@ -50,10 +50,11 @@ double HappinessFunc_Flat::getSmallestValue () const
 string HappinessFunc_Flat::toStrBasic () const
 {
     stringstream returnStream;
-    returnStream << "Flat Happiness Function, happiness:: no neighbors: ";
+    returnStream << "Flat Happiness Function. Happiness with no neighbors is ";
     returnStream << fixed << setprecision(2) << _happ_with_no_neighbors;
-    returnStream << ", constant happiness: ";
+    returnStream << "; with constant happiness is ";
     returnStream << fixed << setprecision(2) << _flat_happiness_val;
-    
+    returnStream << ".";
+
     return returnStream.str();
 }
