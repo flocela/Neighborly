@@ -1,5 +1,5 @@
-#ifndef RESIDENTSMAKER_CMDLINE_H
-#define RESIDENTSMAKER_CMDLINE_H
+#ifndef RESIDENTSMAKER_CMDLINE__H
+#define RESIDENTSMAKER_CMDLINE__H
 
 #include "ResidentsMaker.h"
 #include "UI_CmdLine.h"
@@ -9,6 +9,7 @@
 // to create Residents of that type.
 class ResidentsMaker_CmdLine: public ResidentsMaker
 {
+    
 public:
 
     ResidentsGroupInfo makeResidents (

@@ -1,5 +1,5 @@
-#ifndef TEXT_RECT_H
-#define TEXT_RECT_H
+#ifndef TEXT_RECT__H
+#define TEXT_RECT__H
 
 #include <string>
 #include <vector>

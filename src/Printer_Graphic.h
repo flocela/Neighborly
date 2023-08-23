@@ -1,5 +1,5 @@
-#ifndef PRINTER_GRAPHIC_H
-#define PRINTER_GRAPHIC_H
+#ifndef PRINTER_GRAPHIC__H
+#define PRINTER_GRAPHIC__H
 
 #include "AxisFormat.h"
 #include "GrCityChart.h"
@@ -16,7 +16,8 @@
 //  The left half of the screen holds the CityMap.
 //  The right half of the screen holds the Diversity Chart and the HappinessChart below that.
 class Printer_Graphic : public Printer
-{   
+{
+     
 public:
 
     Printer_Graphic (

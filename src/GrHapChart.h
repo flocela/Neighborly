@@ -1,5 +1,5 @@
-#ifndef GR_HAP_CHART_H
-#define GR_HAP_CHART_H
+#ifndef GR_HAP_CHART__H
+#define GR_HAP_CHART__H
 
 #include <iostream>
 #include <memory>

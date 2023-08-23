@@ -1,5 +1,5 @@
-#ifndef HAPPINESSFUNC_FLAT_H
-#define HAPPINESSFUNC_FLAT_H
+#ifndef HAPPINESSFUNC_FLAT__H
+#define HAPPINESSFUNC_FLAT__H
 
 #include <stdexcept>
 #include "HappinessFunc.h"
@@ -36,6 +36,7 @@ public:
     std::string toStrBasic () const override;
 
 private:
+
     // on the y-axis (happiness values)
     double _happ_with_no_neighbors;
     double _flat_happiness_val;

@@ -1,11 +1,12 @@
-#ifndef TITLE_H
-#define TITLE_H
+#ifndef TITLE__H
+#define TITLE__H
 
 #include "Renderer.h"
 
 // A title prints the title string in the window.
 class Title
 {
+
 protected:
     Title () = default;
     Title (const Title& o) = default;
@@ -14,6 +15,7 @@ protected:
     Title& operator= (Title&& o) noexcept = default;
 
 public:
+
     virtual ~Title () noexcept = default;
     
     virtual int getLetterHeight () const = 0;

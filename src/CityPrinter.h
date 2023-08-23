@@ -1,5 +1,5 @@
-#ifndef CITY_PRINTER_H
-#define CITY_PRINTER_H
+#ifndef CITY_PRINTER__H
+#define CITY_PRINTER__H
 
 #include <unordered_map>
 #include "City.h"
@@ -9,6 +9,7 @@ class CityPrinter
 {
 
 public:
+
     CityPrinter (const City* city);
     CityPrinter() = delete;
     CityPrinter (const CityPrinter& o) = default;

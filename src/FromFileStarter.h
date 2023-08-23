@@ -1,5 +1,5 @@
-#ifndef FROM_FILE_STARTER_H
-#define FROM_FILE_STARTER_H
+#ifndef FROM_FILE_STARTER__H
+#define FROM_FILE_STARTER__H
 
 #include <memory>
 #include <vector>
@@ -12,6 +12,7 @@
 // Takes in a file and returns a SimulationComponents
 class FromFileStarter
 {
+    
 public:
 
     SimulationComponents createSimulationComponents (std::string inputTextFile);

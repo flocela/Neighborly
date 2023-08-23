@@ -1,5 +1,5 @@
-#ifndef RESIDENTFACTORY_STEPDOWN_H
-#define RESIDENTFACTORY_STEPDOWN_H
+#ifndef RESIDENTFACTORY_STEPDOWN__H
+#define RESIDENTFACTORY_STEPDOWN__H
 
 #include "ResidentsFactory.h"
 
@@ -9,6 +9,7 @@
 // value is found after the drop-down diversity through to 1.0 diversity.
 class ResidentsFactory_StepDown: public ResidentsFactory
 {
+    
 public:
 
     std::vector<std::unique_ptr<Resident>> createResidents(

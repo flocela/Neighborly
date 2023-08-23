@@ -1,5 +1,5 @@
-#ifndef RESIDENTTEMPLATE_H
-#define RESIDENTTEMPLATE_H
+#ifndef RESIDENTTEMPLATE__H
+#define RESIDENTTEMPLATE__H
 
 #include <unordered_set>
 #include <string>

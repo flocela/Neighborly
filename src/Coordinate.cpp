@@ -1,7 +1,5 @@
 #include "Coordinate.h"
 
-
-
 using namespace std;
 
 Coordinate::Coordinate (int x, int y): _x{x}, _y{y}

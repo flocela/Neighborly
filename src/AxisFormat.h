@@ -1,5 +1,5 @@
-#ifndef AXIS_FORMAT_H
-#define AXIS_FORMAT_H
+#ifndef AXIS_FORMAT__H
+#define AXIS_FORMAT__H
 
 #include <vector>
 #include "Color.h"
@@ -7,6 +7,7 @@
 
 class AxisFormat
 {
+    
 public:
 
     int axisThicknessPx () const;

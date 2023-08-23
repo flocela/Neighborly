@@ -1,5 +1,5 @@
-#ifndef RESIDENTSMAKER_H
-#define RESIDENTSMAKER_H
+#ifndef RESIDENTSMAKER__H
+#define RESIDENTSMAKER__H
 
 #include <memory>
 #include <vector>
@@ -11,6 +11,7 @@
 // Creates residents based on user's choice.
 class ResidentsMaker
 {
+
 protected:
     ResidentsMaker () = default;
     ResidentsMaker (ResidentsMaker& o) = default;
@@ -19,6 +20,7 @@ protected:
     ResidentsMaker& operator= (ResidentsMaker&& o) noexcept = default;
 
 public:
+
     virtual ~ResidentsMaker () noexcept = default;
     
     virtual ResidentsGroupInfo makeResidents (

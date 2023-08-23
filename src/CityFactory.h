@@ -1,14 +1,15 @@
-#ifndef CITYFACTORY_H
-#define CITYFACTORY_H
+#ifndef CITYFACTORY__H
+#define CITYFACTORY__H
 
 #include <memory>
-
 #include "City.h"
 #include "UI.h"
 
 class CityFactory
 {
+
 protected:
+
     CityFactory () = default;
     CityFactory (const CityFactory& o) = default;
     CityFactory (CityFactory&& o) noexcept = default;
@@ -16,6 +17,7 @@ protected:
     CityFactory& operator= (CityFactory&& o) noexcept = default;
 
 public:
+
     virtual ~CityFactory () noexcept = default;
     
     // Returns the name of the type of city that is produced.

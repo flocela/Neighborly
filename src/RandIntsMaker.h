@@ -1,5 +1,5 @@
-#ifndef RANDINTSMAKER_H
-#define RANDINTSMAKER_H
+#ifndef RANDINTSMAKER__H
+#define RANDINTSMAKER__H
 
 #include <vector>
 

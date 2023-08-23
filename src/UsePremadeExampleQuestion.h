@@ -1,5 +1,5 @@
-#ifndef USE_PREMADE_EXAMPLE_QUESTION_H
-#define USE_PREMADE_EXAMPLE_H
+#ifndef USE_PREMADE_EXAMPLE_QUESTION__H
+#define USE_PREMADE_EXAMPLE__H
 
 #include <vector>
 #include "UI.h"

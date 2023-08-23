@@ -5,6 +5,7 @@
 
 class UI_CmdLine: public UI
 {
+
 public:
     
 
@@ -30,6 +31,7 @@ public:
     ) const override;
     
 private:
+
     int _max_num_of_tries = 3;
 
     // If can not get a menu item chosen from user, then use _fallback_menu_item.

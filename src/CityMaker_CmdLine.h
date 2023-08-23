@@ -1,5 +1,5 @@
-#ifndef CITYMAKER_CMDLINE_H
-#define CITYMAKER_CMDLINE_H
+#ifndef CITYMAKER_CMDLINE__H
+#define CITYMAKER_CMDLINE__H
 
 #include "CityMaker.h"
 #include "UI_CmdLine.h"

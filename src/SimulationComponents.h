@@ -1,9 +1,8 @@
-#ifndef SIMULATIONCOMPONENTS_H
-#define SIMULATIONCOMPONENTS_H
+#ifndef SIMULATIONCOMPONENTS__H
+#define SIMULATIONCOMPONENTS__H
 
 #include <vector>
 #include <memory>
-
 #include "City.h"
 #include "Color.h"
 #include "Resident.h"
@@ -13,7 +12,9 @@
 // Used to construct SimulationComponents
 struct SimulationComponents
 {
+
 public:
+
     int numOfRuns = 0;
     std::unordered_map<int, BaseColor> baseColorsPerGroupid{};
     std::unordered_map<int, std::unique_ptr<const ResidentTemplate>> residentTemplatePerGroupId{};

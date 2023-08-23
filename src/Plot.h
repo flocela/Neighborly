@@ -1,5 +1,5 @@
-#ifndef PLOT_H
-#define PLOT_H
+#ifndef PLOT__H
+#define PLOT__H
 
 #include <vector>
 #include "Point.h"
@@ -8,6 +8,7 @@
 // A Plot has an x and y axis. It prints data points (square dots) in its plot area.
 class Plot
 {
+
 protected:
     Plot () = default;
     Plot (const Plot& o) = default;
@@ -16,6 +17,7 @@ protected:
     Plot& operator= (Plot&& o) noexcept = default;
 
 public:
+
     virtual ~Plot() noexcept = default;
 
     // Returns the x-axis' most central-value's pixel.

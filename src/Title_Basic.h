@@ -1,5 +1,5 @@
-#ifndef TITLE_BASIC_H
-#define TITLE_BASIC_H
+#ifndef TITLE_BASIC__H
+#define TITLE_BASIC__H
 
 #include "Color.h"
 #include "Letter.h"
@@ -101,6 +101,7 @@ public:
     }
 
 private:
+
     Letter _l;
     int _top_center_x__px = 0;
     int _top_center_y__px = 0;

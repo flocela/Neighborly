@@ -1,11 +1,10 @@
-#ifndef CITY_H
-#define CITY_H
+#ifndef CITY__H
+#define CITY__H
 
 #include <memory>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
-
 #include "Coordinate.h"
 #include "House.h"
 #include "SetOfHousesPerHouse.h"
@@ -15,6 +14,7 @@ class City
 {
 
 protected:
+
     City () = default;
     City (const City& o) = default;
     City (City&& o)noexcept = default;
@@ -22,6 +22,7 @@ protected:
     City& operator= (City&& o) noexcept = default;
 
 public:
+
     virtual ~City () noexcept = default;
 
     // Returns largest distance between any two houses (inclusively) in y direction.

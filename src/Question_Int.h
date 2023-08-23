@@ -1,5 +1,5 @@
-#ifndef QUESTION_INT_H
-#define QUESTION_INT_H
+#ifndef QUESTION_INT__H
+#define QUESTION_INT__H
 
 #include "Question.h"
 // Creates successive prompts until a proper answer is given.
@@ -7,6 +7,7 @@
 // It is within the range detailed in the constructor.
 class Question_Int: public Question
 {
+
 protected:
 
     Question_Int (const Question_Int& obj) = default;
@@ -53,6 +54,7 @@ public:
     bool tryAnswer (std::string answer) override;
 
 private:
+
     int _ID = 0;
     int _min = 0;
     int _max = 0;

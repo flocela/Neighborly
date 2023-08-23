@@ -1,10 +1,9 @@
-#ifndef CITYSTATE_H
-#define CITYSTATE_H
+#ifndef CITYSTATE__H
+#define CITYSTATE__H
 
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
-
 #include "House.h"
 #include "Resident.h"
 

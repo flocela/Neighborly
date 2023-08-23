@@ -1,5 +1,5 @@
-#ifndef RESIDENT_H
-#define RESIDENT_H
+#ifndef RESIDENT__H
+#define RESIDENT__H
 
 #include <memory>
 #include <unordered_set>

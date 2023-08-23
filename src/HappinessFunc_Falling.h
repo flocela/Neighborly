@@ -1,5 +1,5 @@
-#ifndef HAPPINESSFUNC_FALLING_H
-#define HAPPINESSFUNC_FALLING_H
+#ifndef HAPPINESSFUNC_FALLING__H
+#define HAPPINESSFUNC_FALLING__H
 
 #include <stdexcept>
 #include "HappinessFunc.h"

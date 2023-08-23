@@ -1,5 +1,5 @@
-#ifndef RESIDENTSFACTORY_H
-#define RESIDENTSFACTORY_H
+#ifndef RESIDENTSFACTORY__H
+#define RESIDENTSFACTORY__H
 
 #include <memory>
 #include <vector>
@@ -9,7 +9,9 @@
 
 class ResidentsFactory
 {
+
 protected:
+
     ResidentsFactory () = default;
     ResidentsFactory (const ResidentsFactory& o) = default;
     ResidentsFactory (ResidentsFactory&& o) noexcept = default;
@@ -17,6 +19,7 @@ protected:
     ResidentsFactory& operator= (ResidentsFactory&& o) noexcept = default;
 
 public:
+
     virtual ~ResidentsFactory () noexcept = default;
     
     virtual std::vector<std::unique_ptr<Resident>> createResidents(

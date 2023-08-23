@@ -1,5 +1,5 @@
-#ifndef SIMULATOR_BASIC_A_H
-#define SIMULATOR_BASIC_A_H
+#ifndef SIMULATOR_BASIC_A__H
+#define SIMULATOR_BASIC_A__H
 
 #include "Simulator_Basic.h"
 
@@ -8,7 +8,9 @@
 // doMoveResident().
 class Simulator_Basic_A: public Simulator_Basic
 {
+
 public:
+
     Simulator_Basic_A (
         const City* city,
         std::unordered_set<Resident*> residents,
@@ -22,6 +24,7 @@ public:
     std::string toString() const override;
 
 protected:
+
     Simulator_Basic_A (const Simulator_Basic_A& o) = default;
     Simulator_Basic_A (Simulator_Basic_A&& o) noexcept = default;
     Simulator_Basic_A& operator= (const Simulator_Basic_A& o) = default;

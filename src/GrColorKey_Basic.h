@@ -1,8 +1,7 @@
-#ifndef GR_COLOR_KEY_BASIC_H
-#define GR_COLOR_KEY_ASIC_H
+#ifndef GR_COLOR_KEY_BASIC__H
+#define GR_COLOR_KEY_ASIC__H
 
 #include <vector>
-
 #include "GrColorKey.h"
 #include "Letter.h"
 #include "Renderer.h"
@@ -12,6 +11,7 @@ class GrColorKey_Basic : public GrColorKey
 {
 
 public:
+
     // A label is made for each combination of group id and mood.
     // So for two groups with two moods (happy and unhappy), there will be 4 labels:
     // group1 happy, group 1 unhappy, group 2 happy, group2 unhappy.
@@ -49,6 +49,7 @@ public:
     void setTopCenter (int xPx, int yPy);
 
 private:
+
     int _top_center_x__px = 0;
     int _top_center_y__px = 0;
     Letter _label_letter;

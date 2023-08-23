@@ -1,5 +1,5 @@
-#ifndef HOUSE_H
-#define HOUSE_H
+#ifndef HOUSE__H
+#define HOUSE__H
 #include <iostream>
 #include <string>
 
@@ -21,6 +21,7 @@ class House
         
 
     private:
+    
         int _address;
 };
 

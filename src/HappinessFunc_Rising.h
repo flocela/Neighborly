@@ -1,5 +1,5 @@
-#ifndef HAPPINESSFUNC_RISING_H
-#define HAPPINESSFUNC_RISING_H
+#ifndef HAPPINESSFUNC_RISING__H
+#define HAPPINESSFUNC_RISING__H
 
 #include <stdexcept>
 #include "HappinessFunc.h"
@@ -41,6 +41,7 @@ public:
     std::string toStrBasic () const override;
 
 private:
+
     double _happ_with_no_neighbors;
     double _happ_at_zero_diversity;
     double _happ_at_one_diversity;

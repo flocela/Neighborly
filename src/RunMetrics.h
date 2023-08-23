@@ -1,9 +1,8 @@
-#ifndef RUNMETRICS_H
-#define RUNMETRICS_H
+#ifndef RUNMETRICS__H
+#define RUNMETRICS__H
 
 #include <unordered_map>
 #include <unordered_set>
-
 #include "City.h"
 #include "House.h"
 #include "Resident.h"

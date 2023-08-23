@@ -1,16 +1,17 @@
-#ifndef FROM_QUESTIONS_STARTER_H
-#define FROM_QUESTIONS_STARTER_H
+#ifndef FROM_QUESTIONS_STARTER__H
+#define FROM_QUESTIONS_STARTER__H
 
 #include <memory>
 #include <vector>
-
 #include "CityFactory.h"
 #include "ResidentsFactory.h"
 #include "SimulationComponents.h"
 
 class FromQuestionsStarter
 {
+
 public:
+
     SimulationComponents createSimulationComponents (
         const UI& ui,
         const std::vector<std::unique_ptr<const CityFactory>>& cityFactories, 

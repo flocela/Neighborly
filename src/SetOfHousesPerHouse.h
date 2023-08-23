@@ -3,7 +3,6 @@
 
 #include <unordered_map>
 #include <unordered_set>
-
 #include "House.h"
 
 // sohph stands for set of houses per house

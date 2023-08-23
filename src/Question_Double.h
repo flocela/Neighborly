@@ -1,5 +1,5 @@
-#ifndef QUESTION_DOUBLE_H
-#define QUESTION_DOUBLE_H
+#ifndef QUESTION_DOUBLE__H
+#define QUESTION_DOUBLE__H
 
 #include "Question.h"
 
@@ -14,6 +14,7 @@ protected:
     Question_Double& operator=(Question_Double&& obj) noexcept = default;
     
 public:
+
     Question_Double () = delete;
     virtual ~Question_Double () noexcept = default;
 
@@ -49,6 +50,7 @@ public:
     bool tryAnswer (std::string answer) override;
 
 private:
+
     int _ID = 0;
     double _min = 0.0;
     double _max = 0.0;

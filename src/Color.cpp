@@ -1,5 +1,6 @@
-#include "Color.h"
 #include <iostream>
+#include "Color.h"
+
 using namespace std;
 
 ostream& operator<<(ostream& os, Color const& obj)

@@ -1,5 +1,5 @@
-#ifndef RESIDENT_CUSTOMIABLE_H
-#define RESIDENT_CUSTOMIZABLE_H
+#ifndef RESIDENT_CUSTOMIABLE__H
+#define RESIDENT_CUSTOMIZABLE__H
 
 #include <memory>
 #include "Resident.h"
@@ -17,6 +17,7 @@ protected:
     Resident_Customizable& operator= (Resident_Customizable&& obj) noexcept = default;
 
 public:
+
     Resident_Customizable (
         int id,
         int groupNumber,
@@ -31,6 +32,7 @@ public:
     std::unique_ptr<const ResidentTemplate> getTemplate () const override;
 
 protected:
+
     double implimentHappiness (
         const std::unordered_set<const Resident*>& neighbors,
         int numOfAdjacentHouses) const override;
@@ -38,6 +40,7 @@ protected:
     std::string implimentGetType () const override; 
 
 private:
+
     std::unique_ptr<HappinessFunc> _hap_func;
 
 };

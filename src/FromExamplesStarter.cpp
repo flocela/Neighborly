@@ -1,6 +1,5 @@
 #include <memory>
 #include <string>
-
 #include "City_Grid.h"
 #include "CityState_Simple.h"
 #include "FromExamplesStarter.h"

@@ -1,9 +1,8 @@
-#ifndef RESPERHOUSE_H
-#define RESPERHOUSE_H
+#ifndef RESPERHOUSE__H
+#define RESPERHOUSE__H
 
 #include <unordered_map>
 #include <utility>
-
 #include "House.h"
 #include "Resident.h"
 

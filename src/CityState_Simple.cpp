@@ -8,9 +8,10 @@ using namespace std;
 
 CityState_Simple::CityState_Simple (
     const City* city
-): _city{city},
-   _open_houses_per_y_x(_city->getHeight(),
-                        vector<unordered_set<const House*>>( ((_city->getWidth()-1)/10)+1 ))
+): 
+    _city{city},
+    _open_houses_per_y_x(_city->getHeight(),
+                            vector<unordered_set<const House*>>( ((_city->getWidth()-1)/10)+1 ))
 {
     // To begin with, all houses are empty.
     for (const House* house : _city->getHouses())

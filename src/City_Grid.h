@@ -1,13 +1,14 @@
-#ifndef CITY_GRID_H
-#define CITY_GRID_H
+#ifndef CITY_GRID__H
+#define CITY_GRID__H
 
-#include "City.h"
 #include <map>
+#include "City.h"
 
 // Only has getter functions.
 // Can not change city's coordinates or addresses after construction.
 class City_Grid: public City
 {
+
 public:
 
     // Grid is a square grid that names addresses left to right, then down.

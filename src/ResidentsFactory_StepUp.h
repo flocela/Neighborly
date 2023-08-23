@@ -1,5 +1,5 @@
-#ifndef RESIDENTFACTORY_STEPUP_H
-#define RESIDENTFACTORY_STEPUP_H
+#ifndef RESIDENTFACTORY_STEPUP__H
+#define RESIDENTFACTORY_STEPUP__H
 
 #include "Question_Double.h"
 #include "Question_Int.h"
@@ -11,6 +11,7 @@
 // value is found after the step-up diversity through to 1.0 diversity.
 class ResidentsFactory_StepUp: public ResidentsFactory
 {
+    
 public:
 
     std::vector<std::unique_ptr<Resident>> createResidents(

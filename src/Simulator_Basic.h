@@ -1,5 +1,5 @@
-#ifndef SIMULATOR_BASIC_H
-#define SIMULATOR_BASIC_H
+#ifndef SIMULATOR_BASIC__H
+#define SIMULATOR_BASIC__H
 
 #include <memory>
 #include <unordered_set>
@@ -45,6 +45,7 @@ public:
     virtual std::string toString() const = 0;
 
 protected:
+
     Simulator_Basic (const Simulator_Basic& o) = default;
     Simulator_Basic (Simulator_Basic&& o) noexcept = default;
     Simulator_Basic& operator= (const Simulator_Basic& o) = default;
@@ -58,6 +59,7 @@ protected:
         int curAddress) const = 0;
 
 private:
+
     const City* _city;
 
     // Percent of residents that run will try to move at each run.

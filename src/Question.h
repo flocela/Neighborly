@@ -1,5 +1,5 @@
-#ifndef QUESTION_H
-#define QUESTION_H
+#ifndef QUESTION__H
+#define QUESTION__H
 
 #include <string>
 
@@ -7,13 +7,17 @@
 // If the user doesn't have a successful answer, then the caller can use the fallback answer.
 class Question
 {
+
 protected:
+
     Question () = default;
     Question (const Question& o) = default;
     Question (Question&& o) noexcept = default;
     Question& operator= (const Question& o) = default;
     Question& operator= (Question&& o) noexcept = default;
+
 public:
+
     virtual ~Question () noexcept = default;
     
     // Returns the question's id.

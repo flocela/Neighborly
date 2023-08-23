@@ -1,9 +1,8 @@
-#ifndef PRINTER_CMDLINE_H
-#define PRINTER_CMDLINE_H
+#ifndef PRINTER_CMDLINE__H
+#define PRINTER_CMDLINE__H
 
 #include <vector>
 #include <unordered_map>
-
 #include "City.h"
 #include "CityPrinter.h"
 #include "Color.h"
@@ -12,7 +11,9 @@
 
 class Printer_CmdLine : public Printer
 {
+
 public:
+
     Printer_CmdLine (
         const CityPrinter& cityPrinter,
         const std::unordered_map<int, BaseColor>& baseColorsPerGroupid,
@@ -34,6 +35,7 @@ public:
     void lastPrint () override;
 
 private:
+
     const CityPrinter& _city_printer;
     const std::unordered_map<int, BaseColor>& _base_colors_per_groupid;
     const std::unordered_map<int, std::unique_ptr<const ResidentTemplate>>& _res_templates_per_group_id;

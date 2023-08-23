@@ -5,7 +5,9 @@
 
 class Coordinate
 {
+
 public:
+
     Coordinate(int x, int y);
     Coordinate() = delete;
     Coordinate (const Coordinate& obj) = default;
@@ -28,6 +30,7 @@ public:
     bool operator!=(const Coordinate& c) const;
 
 private:
+
     int _x = -1;
     int _y = -1;
 

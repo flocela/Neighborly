@@ -1,12 +1,14 @@
-#ifndef POINT_H
-#define POINT_H
+#ifndef POINT__H
+#define POINT__H
 
-#include "Color.h"
 #include <vector>
+#include "Color.h"
 
 class Point
 {
+
 public:
+
     Point (double x, double y, Color color)
     : _x{x},
       _y{y},
@@ -28,6 +30,7 @@ public:
     std::vector<uint8_t> rgba () { return _rgba;}
 
 private:
+
     double _x;
     double _y;
     Color _color;

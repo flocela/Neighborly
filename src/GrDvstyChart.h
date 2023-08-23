@@ -1,9 +1,8 @@
-#ifndef GR_DVSTY_CHART_H
-#define GR_DVSTY_CHART_H
+#ifndef GR_DVSTY_CHART__H
+#define GR_DVSTY_CHART__H
 
 #include <memory>
 #include <unordered_map>
-
 #include "GrColorKey.h"
 #include "Plot.h"
 #include "Renderer.h"

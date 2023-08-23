@@ -1,10 +1,11 @@
-#ifndef RESIDENTFACTORY_FLAT_H
-#define RESIDENTFACTORY_FLAT_H
+#ifndef RESIDENTFACTORY_FLAT__H
+#define RESIDENTFACTORY_FLAT__H
 
 #include "ResidentsFactory.h"
 
 class ResidentsFactory_Flat: public ResidentsFactory
 {
+    
 public:
     
     std::vector<std::unique_ptr<Resident>> createResidents(

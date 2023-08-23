@@ -1,5 +1,5 @@
-#ifndef SIMULATION_GETTER_H
-#define SIMULATION_GETTER_H
+#ifndef SIMULATION_GETTER__H
+#define SIMULATION_GETTER__H
 
 #include <memory>
 #include <vector>
@@ -14,7 +14,9 @@
 // Shows a menu of simulators for user to choose from.
 class SimulatorGetter
 {
+
 public:
+
     SimulatorGetter (City* city, std::unordered_set<Resident*> residents);
     SimulatorGetter (const SimulatorGetter& o) = default;
     SimulatorGetter& operator= (const SimulatorGetter& o) = default;
@@ -25,6 +27,7 @@ public:
     std::unique_ptr<Simulator> getSimulatorFromUser (const UI& ui);
 
 private:
+
     City* _city = nullptr;
     std::unordered_set<Resident*> _residents{};
     double _percent_residents_to_move = 20.0;

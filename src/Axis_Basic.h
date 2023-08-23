@@ -7,7 +7,7 @@
 // Axis_Basic represents an axis. It's tick thickness is one.
 class Axis_Basic : public Axis
 {
-
+    
 public:
 
     // Forward is true, means the values on the axis run in the direction of the pixels

@@ -5,7 +5,8 @@
 
 using namespace std;
 
-City_Grid::City_Grid (int width):
+City_Grid::City_Grid (int width)
+:
 	City(),
 	_width{width},
 	_maxX{_width - 1},

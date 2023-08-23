@@ -1,11 +1,13 @@
-#ifndef HAPPINESSFUNCTION_H
-#define HAPPINESSFUNCTION_H
+#ifndef HAPPINESSFUNCTION__H
+#define HAPPINESSFUNCTION__H
 
 // HappinessFunc has an x-axis of Diversity and a y-axis of Happiness.
 // Happiness range is [0, 100]. Diversity range is [0.0 to 1.0].
 class HappinessFunc
 {
+
 protected:
+
     HappinessFunc () = default;
     HappinessFunc (const HappinessFunc& o) = default;
     HappinessFunc (HappinessFunc&& o) noexcept = default;
@@ -13,6 +15,7 @@ protected:
     HappinessFunc& operator= (HappinessFunc&& o) noexcept = default;
 
 public:
+
     virtual ~HappinessFunc () noexcept = default;
 
     virtual double calcHappiness (

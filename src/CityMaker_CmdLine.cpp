@@ -4,7 +4,7 @@
 using namespace std;
 
 CityMaker_CmdLine::CityMaker_CmdLine (const UI& ui)
-:_ui{ui}
+: _ui{ui}
 {}
 
 unique_ptr<City> CityMaker_CmdLine::makeCity (

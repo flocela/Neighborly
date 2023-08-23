@@ -1,8 +1,7 @@
-#ifndef RENDERER_SDL_H
-#define RENDERER_SDL_H
+#ifndef RENDERER_SDL__H
+#define RENDERER_SDL__H
 
 #include <vector>
-
 #include "Color.h"
 #include "Coordinate.h"
 #include "Rect.h"
@@ -53,6 +52,7 @@ public:
 	void renderTexts (const std::vector<TextRect>& texts);
 	
 private:
+
 	SDL_Window *_sdl_window = nullptr;
 	SDL_Renderer *_sdl_renderer = nullptr;
 

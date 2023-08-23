@@ -1,5 +1,5 @@
-#ifndef CITYFACTORY_GRID_H
-#define CITYFACTORY_GRID_H
+#ifndef CITYFACTORY_GRID__H
+#define CITYFACTORY_GRID__H
 
 #include "CityFactory.h"
 #include "Question_Int.h"

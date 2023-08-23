@@ -1,11 +1,12 @@
-#ifndef LETTER_H
-#define LETTER_H
+#ifndef LETTER__H
+#define LETTER__H
 
 #include <stdexcept>
 
 class Letter
 {
     public:
+
         Letter() = default;
         Letter(int letterHeight, int lineSpace, double widthMultiplier);
         Letter (const Letter& o) = default;
@@ -24,6 +25,7 @@ class Letter
         void setWidthMultiplier (double widthMultiplier);
 
     private:
+    
         int _letter_height = 30;
         int _line_space__px = 2; // clear space below letter (in pixels).
         double _width_multiplier = 0.35;

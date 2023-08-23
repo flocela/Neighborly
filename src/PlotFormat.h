@@ -6,7 +6,9 @@
 
 class PlotFormat
 {
+
 public:
+
     PlotFormat (
         Letter titleLetter,
         Letter keyLetter,
@@ -34,6 +36,7 @@ public:
     int minUnitSize() { return _min_unit_size__px;}
 
 private:
+
     Letter _title_letter;
     Letter _key_letter;
     int _min_unit_size__px = 1;

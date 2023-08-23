@@ -1,5 +1,5 @@
-#ifndef CITYMAKER_H
-#define CITYMAKER_H
+#ifndef CITYMAKER__H
+#define CITYMAKER__H
 
 #include <memory>
 #include <vector>

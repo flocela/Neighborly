@@ -8,6 +8,7 @@ class Axis
 {
 
 protected:
+
     Axis () = default;
     Axis (const Axis& o) = default;
     Axis (Axis&& o) noexcept = default;

@@ -1,5 +1,5 @@
-#ifndef RESIDENTS_GROUP_INFO_H
-#define RESIDENTS_GROUP_INFO_H
+#ifndef RESIDENTS_GROUP_INFO__H
+#define RESIDENTS_GROUP_INFO__H
 
 #include "Resident.h"
 #include "ResidentTemplate.h"
@@ -10,6 +10,7 @@
 
 struct ResidentsGroupInfo
 {
+    
 public:
 
     std::unordered_map<int, BaseColor> _base_color_per_group_num{};

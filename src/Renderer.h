@@ -1,5 +1,5 @@
-#ifndef Renderer_H
-#define Renderer_H
+#ifndef Renderer__H
+#define Renderer__H
 
 #include <vector>
 
@@ -9,6 +9,7 @@
 #include "TextRect.h"
 
 class Renderer {
+	
 public:
 		
 	virtual void endFrame() = 0;

@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <vector>
-
 #include "Coordinate.h"
 #include "GrColorKey_Basic.h"
 #include "House.h"
@@ -20,6 +19,7 @@
 // Includes key to the map (color for each group id).
 class GrCityChart
 {
+
 public:
     GrCityChart (
         std::unordered_map<const House*, Coordinate> coordPerHouse,
@@ -48,7 +48,8 @@ public:
     int sizeXPx() const;
     int sizeYPx() const;
 
-    private:
+private:
+
     std::unordered_map<const House*, Coordinate> _coordinate_per_house;
     std::unordered_map<int, BaseColor> _resident_b_color_per_groupid;
 

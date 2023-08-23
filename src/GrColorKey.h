@@ -1,12 +1,14 @@
-#ifndef GR_COLOR_KEY_H
-#define GR_COLOR_KEY_H
+#ifndef GR_COLOR_KEY__H
+#define GR_COLOR_KEY__H
 
 #include "Renderer.h"
 
 // Used to show the color of each group in a particular chart graphically using a renderer.
 class GrColorKey
 {
+
 protected:
+
     GrColorKey () = default;
     GrColorKey (const GrColorKey& o) = default;
     GrColorKey (GrColorKey&& o) noexcept = default;
@@ -14,6 +16,7 @@ protected:
     GrColorKey& operator= (GrColorKey&& o) noexcept = default;
 
 public:
+
     virtual ~GrColorKey () noexcept = default;
 
     virtual void print (Renderer* renderer) const = 0;

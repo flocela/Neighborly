@@ -1,5 +1,5 @@
-#ifndef RESIDENTSFACTORY_FALLING_H
-#define RESIDENTSFACTORY_FALLING_H
+#ifndef RESIDENTSFACTORY_FALLING__H
+#define RESIDENTSFACTORY_FALLING__H
 
 #include "ResidentsFactory.h"
 
@@ -29,6 +29,7 @@ public:
     std::string toString () override;
 
 private:
+
     // If can not get a low happiness value from the user, then use _fallback_low_happiness_value.
     double _fallback_low_happiness_value = 0.0;
 

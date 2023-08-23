@@ -1,21 +1,23 @@
-#ifndef RANDOMSEEDGETTER_H
-#define RANDOMSEEDGETTER_H
+#ifndef RANDOMSEEDGETTER__H
+#define RANDOMSEEDGETTER__H
 
 #include "Question_Int.h"
 #include "UI.h"
 
 class RandomSeedGetter
 {
-    public:
-        static int getSeedFromUser (const UI& ui);
+public:
 
-    private:
-        static Question_Int createQuestionForSeed ();
+    static int getSeedFromUser (const UI& ui);
 
-        // If can not get a seed for random generator, then use _seed_fallback
-        static const int _seed_fallback;
+private:
 
-        static const std::string _seed_orig_prompt;
+    static Question_Int createQuestionForSeed ();
+
+    // If can not get a seed for random generator, then use _seed_fallback
+    static const int _seed_fallback;
+
+    static const std::string _seed_orig_prompt;
 
 };
 

@@ -1,5 +1,5 @@
-#ifndef HAPPINESSFUNC_STEPDOWN_H
-#define HAPPINESSFUNC_STEPDOWN_H
+#ifndef HAPPINESSFUNC_STEPDOWN__H
+#define HAPPINESSFUNC_STEPDOWN__H
 
 #include <stdexcept>
 #include "HappinessFunc.h"
@@ -9,7 +9,9 @@
 // A lower y-value is used after the stepDown location. stepDown is an x-value.
 class HappinessFunc_StepDown: public HappinessFunc
 {
+
 public:
+
     // x-axis is Diversity, range is [0.0 to 1.0].
     // y-axis is Happiness, range is [0.0 to 100.0].
     // An exception is thrown if happinesAtStart is less than or equal
@@ -44,6 +46,7 @@ public:
     std::string toStrBasic () const override;
 
 private:
+
     // on the y-axis (happiness values)
     double _happ_with_zero_neighbors;
     double _happ_at_start;
