@@ -29,7 +29,7 @@ public:
 
     // Returns the sum of each resident's disparate neighbors per group. Found
     // by creating a total sum for each group. The sum of each resident's 
-    // disparate neighbors is taken and added to the total sum for the group.
+    // disparate neighbors is added to the total sum for the group.
     // Note disparate neighbors may be counted twice. If neighbors A and B
     // are of group 1, and they both share neighbor C of group 2. Then neighbor
     // C will be added to the sum of group 1's diparate neighbors twice.

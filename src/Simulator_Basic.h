@@ -17,7 +17,7 @@ public:
     Simulator_Basic (
         const City* city,
         std::unordered_set<Resident*> residents,
-        double percentOfResidents, // percent of residents that are chosen to move each run.
+        double percentOfResidents, // percent of residents that are chosen to move at each run.
         int numOfHousesToChooseFrom, // number of houses the residents can choose from
         std::unique_ptr<CityState> cityState
     );
@@ -34,7 +34,7 @@ public:
     // Try the available houses in random order. Find the house that would make the resident
     // happiest. If there is a tie as to which house would make the resident happiest,
     // the first randomly chosen house is selected.
-    // Moves resident based on the results of doMoveResident() method.
+    // Decide if resident will move to selected house based on the doMoveResident() method.
     // Note, if there are no available houses within the resident's allowed movement distance,
     // then the resident is not moved.
     // Note, ResidentA may move to a house that makes them happy, then subsequently residentB

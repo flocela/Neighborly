@@ -9,7 +9,7 @@
 #include "ResidentTemplate.h"
 #include "Simulator.h"
 
-// Used to construct SimulationComponents
+// Contains a simulator, and the items that are needed to run the simulator.
 struct SimulationComponents
 {
 

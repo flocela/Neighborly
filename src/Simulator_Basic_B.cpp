@@ -5,8 +5,8 @@ using namespace std;
 Simulator_Basic_B::Simulator_Basic_B (
     const City* city,
     std::unordered_set<Resident*> residents,
-    double percentOfResidents, // percent of residents that are chosen to move each run.
-    int numOfHousesToChooseFrom, // number of houses the residents can choose from
+    double percentOfResidents,
+    int numOfHousesToChooseFrom,
     std::unique_ptr<CityState> cityState
     ): Simulator_Basic(
             city,

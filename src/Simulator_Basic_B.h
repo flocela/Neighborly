@@ -30,7 +30,7 @@ protected:
     Simulator_Basic_B& operator= (const Simulator_Basic_B& o) = default;
     Simulator_Basic_B& operator= (Simulator_Basic_B&& o) noexcept = default;
 
-    // If the newHouseHappiness is greater or equal to the resident's happiness goal, then returns true.
+    // If @newHouseHappiness is greater or equal to the resident's happiness goal, then returns true.
     // Otherwise returns false.
     bool doMoveResident (
         double newHouseHappiness,
