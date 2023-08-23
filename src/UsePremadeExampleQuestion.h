@@ -4,6 +4,8 @@
 #include <vector>
 #include "UI.h"
 
+// Asks user whether they would like to use the premade examples to create a simulation or
+// be asked questions to make a specific simulation.
 class UsePremadeExampleQuestion
 {
     

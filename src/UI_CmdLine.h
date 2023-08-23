@@ -8,7 +8,6 @@ class UI_CmdLine: public UI
 
 public:
     
-
     // When getting an answer from user (for menu or question) will give the user a
     // max number of tries to give a proper response, before using the fallback answer.
     UI_CmdLine (int maxNumOfTries);

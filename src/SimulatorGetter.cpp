@@ -1,8 +1,7 @@
-#include "SimulatorGetter.h"
-
 #include "CityState_Simple.h"
 #include "Simulator_Basic_A.h"
 #include "Simulator_Basic_B.h"
+#include "SimulatorGetter.h"
 
 using namespace std;
 
