@@ -1,5 +1,5 @@
-#ifndef SIMULATOR_H
-#define SIMULATOR_H
+#ifndef SIMULATOR__H
+#define SIMULATOR__H
 
 #include <unordered_map>
 #include "House.h"

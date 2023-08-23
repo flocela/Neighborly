@@ -11,6 +11,7 @@
 #include "Simulator.h"
 #include "UI.h"
 
+// Shows a menu of simulators for user to choose from.
 class SimulatorGetter
 {
 public:
@@ -33,11 +34,14 @@ private:
     Question_Int createQuestionForNumberOfHousesToChooseFrom ();
 
     const std::string _simulator_menu_prompt =
-        "\nWhich simulator would you like? In each run of Simulator A, all residents who are unhappy"
-        " are given the opportunity to move to a house that will make them happier.\n"
-        "In each run of Simulator B, a percentage of residents are randomly chosen and"
-        " forced to move. For each of these residents, a given number of houses are chosen, and the"
-        " resident chooses which one makes them happiest.";
+        "\nWhich simulator would you like? In each run a percentage of"
+        " residents randomly chosen to move. For each of these residents, a given number of houses are"
+        " chosen, and the resident chooses which one makes them happiest. If there are no houses"
+        " within the resident's allowable movement distance, then the resident does not move.\n"
+        " In Simulator A, if the chosen house does not make them happier than their current house"
+        " then the resident does not move.\n In Simulator B, if the chosen house does not meet the"
+        " resident's happiness goal then the resident does not move.";
+        
     const int _simulator_fallback = 1;
     const std::vector<std::string> _simulator_menu_items = {"Simulator A", "Simulator B"};
     const std::string _simulator_menu_failure_response =
