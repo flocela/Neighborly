@@ -1,5 +1,5 @@
-#ifndef AXIS_BASIC_H
-#define AXIS_BASIC_H
+#ifndef AXIS_BASIC__H
+#define AXIS_BASIC__H
 
 #include <utility>
 #include "Axis.h"

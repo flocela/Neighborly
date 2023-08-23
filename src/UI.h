@@ -1,5 +1,5 @@
-#ifndef UI_H
-#define UI_H
+#ifndef UI__H
+#define UI__H
 
 #include <string>
 #include <vector>
@@ -7,8 +7,10 @@
 #include <memory>
 #include "Question.h"
 
+// Presents user with menu or question on the command line and retrieves answer.
 class UI
 {
+
 protected:
     UI () = default;
     UI (const UI& o) = default;
@@ -17,6 +19,7 @@ protected:
     UI& operator= (UI&& o) noexcept = default;
 
 public:
+
     virtual ~UI () noexcept = default;
 
     // Presents the user with a menu of choices and returns the user's response.

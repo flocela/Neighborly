@@ -1,13 +1,11 @@
-#include "UI_CmdLine.h"
-
 #include <iostream>
 #include <sstream>
-
+#include "UI_CmdLine.h"
 #include "Question_Int.h"
 
 using namespace std;
 
-UI_CmdLine:: UI_CmdLine (int maxNumOfTries) : _max_num_of_tries{maxNumOfTries}
+UI_CmdLine:: UI_CmdLine (int maxNumOfTries): _max_num_of_tries{maxNumOfTries}
 {}
 
 string UI_CmdLine::getAnswer (Question&& question) const
@@ -41,7 +39,7 @@ int UI_CmdLine::menu (
     string failureResponse
 ) const
 {  
-    // create the original prompt
+    // Create the original prompt.
     int size = items.size();
     stringstream ssPrompt;
     ssPrompt << prompt << endl;
@@ -77,6 +75,7 @@ int UI_CmdLine::menu (
         _menu_invalid_prompt.size()-3,
         to_string(size));
 
+    // Create question.
     Question_Int chooseMenuItem{
         1,
         1,
@@ -94,10 +93,12 @@ int UI_CmdLine::menu (
             to_string(_fallback_menu_item))
     };
     
+    // Get answer from user.
     int tries = 0;
     string answer = "xx";
     while (tries < _max_num_of_tries && !chooseMenuItem.hasValidAnswer())
-    {   cout << chooseMenuItem.getPrompt();
+    {   
+        cout << chooseMenuItem.getPrompt();
         getline(cin >> ws, answer);
         chooseMenuItem.tryAnswer(answer);
         tries++;
@@ -108,7 +109,8 @@ int UI_CmdLine::menu (
         cout << failureResponse << endl;
         return fallBack;
     }
-    // items are numbered starting with one for the user, but items vector is zero-index based
+
+    // Items are numbered starting with one for the user, but items vector is zero-index based.
     return stoi(answer) - 1;
 }
 

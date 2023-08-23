@@ -1,12 +1,12 @@
-#ifndef UINUMOFRUNSGETTER_H
-#define UINUMOFRUNSGETTER_H
+#ifndef UINUMOFRUNSGETTER__H
+#define UINUMOFRUNSGETTER__H
 
 #include <string>
 #include "Question_Int.h"
 #include "UI.h"
 
-// UINumOfRunsGetter is used to ask the user how many runs should the simulation.
-// Uses the command line interface
+// UINumOfRunsGetter is used to ask the user how many runs are in the simulation.
+// Uses the command line interface.
 class UINumOfRunsGetter
 { 
 

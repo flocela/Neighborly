@@ -1,5 +1,5 @@
-#ifndef GUISTARTINFO_CMDLINEA_H
-#define GUISTARTINFO_CMDLINEA_H
+#ifndef UI_CMDLINE__H
+#define UI_CMDLINE__H
 
 #include "UI.h"
 
@@ -8,7 +8,7 @@ class UI_CmdLine: public UI
 public:
     
 
-    // when getting an answer from user (for menu or question) will give the user
+    // When getting an answer from user (for menu or question) will give the user a
     // max number of tries to give a proper response, before using the fallback answer.
     UI_CmdLine (int maxNumOfTries);
 
@@ -32,7 +32,7 @@ public:
 private:
     int _max_num_of_tries = 3;
 
-    // if can not get a menu item chosen from user, then use _fallback_menu_item
+    // If can not get a menu item chosen from user, then use _fallback_menu_item.
     int _fallback_menu_item = 1;
 
     std::string _menu_type_prompt = "Please enter a whole number, like 2._ ";
@@ -41,7 +41,7 @@ private:
     std::string _menu_invalid_prompt = "Could not determine which item was chosen. Please enter a"
         " number between 1 and . _";
 
-    // inserts additional string at location
+    // Inserts additional string at location.
     std::string insertIntoString (
         std::string str, 
         int location,

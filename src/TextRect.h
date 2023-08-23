@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-// holds information for rendering text block
+// Holds information for rendering text block.
 struct TextRect
 {
     int _x_px; // top left corner x-pixel

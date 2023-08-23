@@ -18,12 +18,13 @@ public:
         std::string title,
         std::vector<uint8_t> textColor,
         std::vector<uint8_t> textBackgroundColor
-    ): _l{letter}, 
-       _top_center_x__px{topCenterXPx}, 
-       _top_center_y__px {topCenterYPx},
-       _title{title},
-       _text_color{textColor},
-       _text_background_color{textBackgroundColor}
+    ): 
+        _l{letter}, 
+        _top_center_x__px{topCenterXPx}, 
+        _top_center_y__px {topCenterYPx},
+        _title{title},
+        _text_color{textColor},
+        _text_background_color{textBackgroundColor}
     {}
 
     Title_Basic (
@@ -31,7 +32,8 @@ public:
         int topCenterXPx,
         int topCenterYPx,
         std::string title
-    ):  _l{letter},
+    ):  
+        _l{letter},
         _top_center_x__px{topCenterXPx}, 
         _top_center_y__px {topCenterYPx},
         _title{title}
@@ -40,8 +42,9 @@ public:
     Title_Basic (
         Letter letter,
         std::string title
-    ): _l{letter},
-      _title{title}
+    ):
+        _l{letter},
+        _title{title}
     {}
 
     Title_Basic () = delete;
@@ -67,7 +70,11 @@ public:
             1);
     }
 
-    int sizeXPx() const override { return _title.length() * _l.letterHeight() * _l.widthMultiplier(); }
+    int sizeXPx() const override 
+    { 
+        return
+            _title.length() * _l.letterHeight() * _l.widthMultiplier();
+    }
 
     int sizeYPx() const override { return _l.getHeightIncLSpace(); }
 
