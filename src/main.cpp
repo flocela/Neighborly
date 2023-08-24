@@ -204,8 +204,8 @@ const vector<unique_ptr<const CityFactory>> initCityFactories ()
 const vector<unique_ptr<const ResidentsFactory>> initResidentFactories()
 {
     vector<unique_ptr<const ResidentsFactory>> residentFactories = {};
-    residentFactories.emplace_back(make_unique<const ResidentsFactory_Falling>());
     residentFactories.emplace_back(make_unique<const ResidentsFactory_Flat>());
+    residentFactories.emplace_back(make_unique<const ResidentsFactory_Falling>());
     residentFactories.emplace_back(make_unique<const ResidentsFactory_Rising>());
     residentFactories.emplace_back(make_unique<const ResidentsFactory_StepDown>());
     residentFactories.emplace_back(make_unique<const ResidentsFactory_StepUp>());
