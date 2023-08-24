@@ -8,7 +8,7 @@ GrCityChart::GrCityChart (
     unordered_map<const House*, Coordinate> coordPerHouseMap,
     unordered_map<int, BaseColor> resColors,
     unique_ptr<Title> title,
-    unique_ptr<GrColorKey_Basic> key,
+    unique_ptr<GrColorKey> key,
     unique_ptr<Plot> plot,
     int topLeftCornerXPx,
     int topLeftCornerYPx,

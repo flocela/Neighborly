@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 #include "Coordinate.h"
-#include "GrColorKey_Basic.h"
+#include "GrColorKey.h"
 #include "House.h"
 #include "Plot.h"
 #include "Renderer.h"
@@ -26,7 +26,7 @@ public:
         // BaseColor for each group
         std::unordered_map<int, BaseColor> resColors,
         std::unique_ptr<Title> title,
-        std::unique_ptr<GrColorKey_Basic> key,
+        std::unique_ptr<GrColorKey> key,
         std::unique_ptr<Plot> plot,
         int topLeftCornerXPx,
         int topLeftCornerYPx,
@@ -54,7 +54,7 @@ private:
     std::unordered_map<int, BaseColor> _resident_b_color_per_groupid;
 
     std::unique_ptr<Title> _title;
-    std::unique_ptr<GrColorKey_Basic> _key;
+    std::unique_ptr<GrColorKey> _key;
     std::unique_ptr<Plot> _plot;
 
     int _top_left_corner_x__px;
