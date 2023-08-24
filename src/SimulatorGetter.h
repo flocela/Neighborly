@@ -37,8 +37,8 @@ private:
     Question_Int createQuestionForNumberOfHousesToChooseFrom ();
 
     const std::string _simulator_menu_prompt =
-        "\nWhich simulator would you like? In each run a percentage of"
-        " residents randomly chosen to move. For each of these residents, a given number of houses are"
+        "\nWhich simulator would you like? In each run a percentage of residents are"
+        " randomly chosen to move. For each of these residents, a given number of houses are"
         " chosen, and the resident chooses which one makes them happiest. If there are no houses"
         " within the resident's allowable movement distance, then the resident does not move.\n"
         " In Simulator A, if the chosen house does not make them happier than their current house"
@@ -51,8 +51,8 @@ private:
         "Could not tell which simulator you wanted, will choose Simulator B.";
 
     const std::string _simulator_b_percentage_prompt =
-        "For Simulator B, at each run a percentage of all residents are chosen and forced to"
-        " move. What should that percentage be?";
+        "At each run a percentage of all residents are chosen to move."
+        " What should that percentage be?";
     const std::string _simulator_b_percentage_value =
         "percentage of residents moved per run";
 

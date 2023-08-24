@@ -220,8 +220,8 @@ pair<int, BaseColor> FromFileStarter::returnBaseColor (ifstream& inputStream)
         }
         getline(inputStream, line); // "</group>"
     }
-    string trim = leftTrim(baseColor);
-    BaseColor c = _base_colors[trim];
+    string trimColor = leftTrim(baseColor);
+    BaseColor c = _base_colors[trimColor];
     return {stoi(groupId), c};
 }
 
