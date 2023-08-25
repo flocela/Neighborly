@@ -3,7 +3,6 @@
 
 #include <unordered_map>
 #include "City.h"
-#include "Color.h"
 
 class CityPrinter
 {

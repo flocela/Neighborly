@@ -1,7 +1,7 @@
 #include <math.h>
-
 #include "CityPrinter.h"
 #include "Coordinate.h"
+
 using namespace std;
 
 CityPrinter::CityPrinter (const City* city)

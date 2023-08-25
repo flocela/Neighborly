@@ -2,7 +2,6 @@
 #define CITYFACTORY_GRID__H
 
 #include "CityFactory.h"
-#include "Question_Int.h"
 
 // CityFactory_Grid creates a City_Grid.
 class CityFactory_Grid: public CityFactory
