@@ -1,8 +1,6 @@
-#include <iostream>
 #include <fstream>
 #include "City_Grid.h"
 #include "CityState_Simple.h"
-#include "Color.h"
 #include "FromFileStarter.h"
 #include "HappinessFunc_Falling.h"
 #include "HappinessFunc_Flat.h"

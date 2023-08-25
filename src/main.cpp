@@ -48,6 +48,7 @@
 #include "ResPerHouse.h"
 #include "Simulator.h"
 #include "SimulationComponents.h"
+#include "UI_CmdLine.h"
 #include "UsePremadeExampleQuestion.h"
 
 #define FONT_PATH "assets/pacifico/Pacifico.ttf"

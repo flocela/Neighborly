@@ -12,9 +12,9 @@
 using namespace std;
 
 template<typename T>
-std::unordered_set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
+unordered_set<T*> getSetOfPointers (vector<unique_ptr<T>>& ts)
 {
-    std::unordered_set<T*> pointers = {};
+    unordered_set<T*> pointers = {};
     for (auto& t : ts)
     {
         pointers.insert(t.get());
@@ -28,7 +28,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
     int chosenCityAndResidentTypeCombo = ui.menu(
         "\nWhich combination of simulator, city size, and resident types do you choose? ",
-        std::vector<std::string>{ 
+        vector<string>{ 
             "Simulator A with small city and regular residents", 
             "Simulator A with large city and regular residents",
             "Simulator A with small city and finicky residents", 
@@ -51,7 +51,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             // SimulatorBasic_A
             components.randomSeed = 0;
             
-            components.city = std::make_unique<City_Grid>(30);
+            components.city = make_unique<City_Grid>(30);
 
             // Two groups means only two colors. Group #1 and Group #2.
             for (int ii=1; ii<3; ++ii)
@@ -61,12 +61,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<200; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     15,  // allowed movement
                     80,  // happiness goal
-                    std::make_unique<HappinessFunc_Falling> (
+                    make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
                         50  // happiness value at one diversity
@@ -75,12 +75,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=200; jj<800; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     jj,
                     2,
                     15,
                     80,
-                    std::make_unique<HappinessFunc_Falling>(
+                    make_unique<HappinessFunc_Falling>(
                         70,
                         95,
                         50)
@@ -92,7 +92,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.residentTemplatePerGroupId
                 .insert({2, components.residents[200]->getTemplate()});
             
-            components.simulator = std::make_unique<Simulator_Basic_A>(
+            components.simulator = make_unique<Simulator_Basic_A>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30, // percent of residents that are chosen to move each run
@@ -112,7 +112,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             // Simulator_Basic_A
             components.randomSeed = 0;
             
-            components.city = std::make_unique<City_Grid>(120);
+            components.city = make_unique<City_Grid>(120);
 
             // Two groups: Group #1 and Group #2
             for (int ii=1; ii<3; ++ii)
@@ -122,12 +122,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<5760; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     30,   // allowed movement
                     80,  // happiness goal
-                    std::make_unique<HappinessFunc_Falling> (
+                    make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
                         50  // happiness value at one diversity
@@ -136,12 +136,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=5760; jj<11520; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     jj,
                     2,
                     30,
                     80,
-                    std::make_unique<HappinessFunc_Falling>(
+                    make_unique<HappinessFunc_Falling>(
                         70,
                         95,
                         50)
@@ -153,7 +153,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.residentTemplatePerGroupId
                 .insert({2, components.residents[5760]->getTemplate()});
 
-            components.simulator = std::make_unique<Simulator_Basic_A>(
+            components.simulator = make_unique<Simulator_Basic_A>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30, // percent of residents that are chosen to move each run
@@ -173,7 +173,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             // Simulator_Basic_A
             components.randomSeed = 0;
             
-            components.city = std::make_unique<City_Grid>(30);
+            components.city = make_unique<City_Grid>(30);
 
             // Two groups: Group #1 and Group #2
             for (int ii=1; ii<3; ++ii)
@@ -183,12 +183,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<200; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     15,   // allowed movement
                     80,  // happiness goal
-                    std::make_unique<HappinessFunc_Falling> (
+                    make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         100, // happiness value at zero diversity
                         0  // happiness value at one diversity
@@ -197,12 +197,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=200; jj<800; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     jj,
                     2,
                     15,
                     80,
-                    std::make_unique<HappinessFunc_Falling>(
+                    make_unique<HappinessFunc_Falling>(
                         70, 
                         100,
                         0)
@@ -214,7 +214,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.residentTemplatePerGroupId
                 .insert({2, components.residents[200]->getTemplate()});
 
-            components.simulator = std::make_unique<Simulator_Basic_A>(
+            components.simulator = make_unique<Simulator_Basic_A>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30, // percent of residents that are chosen to move each run
@@ -234,7 +234,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             // Simulator_Basic_A
             components.randomSeed = 0;
             
-            components.city = std::make_unique<City_Grid>(120);
+            components.city = make_unique<City_Grid>(120);
 
             // Only two groups. Group #1 and Group #2
             for (int ii=1; ii<3; ++ii)
@@ -244,12 +244,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<5760; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     30,   // allowed movement
                     80,  // happiness goal
-                    std::make_unique<HappinessFunc_Falling> (
+                    make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         100, // happiness value at zero diversity
                         0  // happiness value at one diversity
@@ -258,12 +258,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=5760; jj<11520; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     jj,
                     2,
                     30,
                     80,
-                    std::make_unique<HappinessFunc_Falling>(
+                    make_unique<HappinessFunc_Falling>(
                         70,
                         100,
                         0)
@@ -275,7 +275,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.residentTemplatePerGroupId
                 .insert({2, components.residents[5760]->getTemplate()});
 
-            components.simulator = std::make_unique<Simulator_Basic_A>(
+            components.simulator = make_unique<Simulator_Basic_A>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30, // percent of residents that are chosen to move each run
@@ -295,7 +295,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             // SimulatorBasic_B
             components.randomSeed = 0;
             
-            components.city = std::make_unique<City_Grid>(30);
+            components.city = make_unique<City_Grid>(30);
 
             // Two groups means only two colors. Group #1 and Group #2.
             for (int ii=1; ii<3; ++ii)
@@ -305,12 +305,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<200; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     15,  // allowed movement
                     80,  // happiness goal
-                    std::make_unique<HappinessFunc_Falling> (
+                    make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
                         50  // happiness value at one diversity
@@ -319,12 +319,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=200; jj<800; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     jj,
                     2,
                     15,
                     80,
-                    std::make_unique<HappinessFunc_Falling>(
+                    make_unique<HappinessFunc_Falling>(
                         70,
                         95,
                         50)
@@ -336,7 +336,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.residentTemplatePerGroupId
                 .insert({2, components.residents[200]->getTemplate()});
 
-            components.simulator = std::make_unique<Simulator_Basic_B>(
+            components.simulator = make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30, // percent of residents that are chosen to move each run
@@ -356,7 +356,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             // Simulator_Basic_B
             components.randomSeed = 0;
             
-            components.city = std::make_unique<City_Grid>(120);
+            components.city = make_unique<City_Grid>(120);
 
             // Two groups: Group #1 and Group #2
             for (int ii=1; ii<3; ++ii)
@@ -366,12 +366,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<5760; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     30,   // allowed movement
                     80,  // happiness goal
-                    std::make_unique<HappinessFunc_Falling> (
+                    make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         95, // happiness value at zero diversity
                         50  // happiness value at one diversity
@@ -380,12 +380,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=5760; jj<11520; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     jj,
                     2,
                     30,
                     80,
-                    std::make_unique<HappinessFunc_Falling>(
+                    make_unique<HappinessFunc_Falling>(
                         70,
                         95,
                         50)
@@ -397,7 +397,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.residentTemplatePerGroupId
                 .insert({2, components.residents[5760]->getTemplate()});
 
-            components.simulator = std::make_unique<Simulator_Basic_B>(
+            components.simulator = make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30, // percent of residents that are chosen to move each run
@@ -417,7 +417,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             // Simulator_Basic_B
             components.randomSeed = 0;
             
-            components.city = std::make_unique<City_Grid>(30);
+            components.city = make_unique<City_Grid>(30);
 
             // Two groups: Group #1 and Group #2
             for (int ii=1; ii<3; ++ii)
@@ -427,12 +427,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<400; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     15,   // allowed movement
                     80,  // happiness goal
-                    std::make_unique<HappinessFunc_Falling> (
+                    make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         100, // happiness value at zero diversity
                         0  // happiness value at one diversity
@@ -441,12 +441,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=400; jj<800; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     jj,
                     2,
                     15,
                     80,
-                    std::make_unique<HappinessFunc_Falling>(
+                    make_unique<HappinessFunc_Falling>(
                         70, 
                         100,
                         0)
@@ -458,7 +458,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.residentTemplatePerGroupId
                 .insert({2, components.residents[200]->getTemplate()});
 
-            components.simulator = std::make_unique<Simulator_Basic_B>(
+            components.simulator = make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30, // percent of residents that are chosen to move each run
@@ -478,7 +478,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             // Simulator_Basic_B
             components.randomSeed = 0;
             
-            components.city = std::make_unique<City_Grid>(120);
+            components.city = make_unique<City_Grid>(120);
 
             // Only two groups. Group #1 and Group #2
             for (int ii=1; ii<3; ++ii)
@@ -488,12 +488,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             for (int ii=0; ii<5760; ++ii)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     ii,  // id
                     1,   // group number
                     30,   // allowed movement
                     75,  // happiness goal
-                    std::make_unique<HappinessFunc_Falling> (
+                    make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         100, // happiness value at zero diversity
                         0  // happiness value at one diversity
@@ -502,12 +502,12 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             }
             for (int jj=5760; jj<11520; ++jj)
             {
-                components.residents.push_back(std::make_unique<Resident_Customizable>(
+                components.residents.push_back(make_unique<Resident_Customizable>(
                     jj,
                     2,
                     30,
                     75,
-                    std::make_unique<HappinessFunc_Falling>(
+                    make_unique<HappinessFunc_Falling>(
                         70,
                         100,
                         0)
@@ -519,7 +519,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.residentTemplatePerGroupId
                 .insert({2, components.residents[5760]->getTemplate()});
 
-            components.simulator = std::make_unique<Simulator_Basic_B>(
+            components.simulator = make_unique<Simulator_Basic_B>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
                 30, // percent of residents that are chosen to move each run

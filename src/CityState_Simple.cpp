@@ -1,6 +1,4 @@
-#include <algorithm>
 #include <cmath>
-
 #include "CityState_Simple.h"
 #include "Coordinate.h"
 

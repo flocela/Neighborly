@@ -1,11 +1,8 @@
 #ifndef CITYSTATE_SIMPLE__H
 #define CITYSTATE_SIMPLE__H
 
-#include <vector>
-#include <unordered_map>
 #include "City.h"
 #include "CityState.h"
-#include "House.h"
 
 class CityState_Simple : public CityState
 {
