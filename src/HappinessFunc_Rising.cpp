@@ -1,7 +1,6 @@
-#include "HappinessFunc_Rising.h"
-
-#include <sstream>
 #include <iomanip>
+#include <sstream>
+#include "HappinessFunc_Rising.h"
 
 using namespace std;
 

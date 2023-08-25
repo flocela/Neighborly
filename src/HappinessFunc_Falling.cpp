@@ -1,7 +1,5 @@
-#include "HappinessFunc_Falling.h"
-#include <iostream>
-#include <sstream>
 #include <iomanip>
+#include "HappinessFunc_Falling.h"
 
 using namespace std;
 

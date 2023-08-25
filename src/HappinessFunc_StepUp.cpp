@@ -1,9 +1,7 @@
-#include "HappinessFunc_StepUp.h"
-#include <iostream>
-
 #include <algorithm>
-#include <sstream>
 #include <iomanip>
+#include <sstream>
+#include "HappinessFunc_StepUp.h"
 
 using namespace std;
 

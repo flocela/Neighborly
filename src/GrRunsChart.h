@@ -1,7 +1,6 @@
 #ifndef GR_RUNS_CHART__H
 #define GR_RUNS_CHART__H
 
-#include <iostream>
 #include "Color.h"
 #include "Letter.h"
 #include "Renderer.h"

@@ -1,6 +1,6 @@
 #ifndef HOUSE__H
 #define HOUSE__H
-#include <iostream>
+
 #include <string>
 
 class House

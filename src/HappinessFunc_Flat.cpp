@@ -1,8 +1,6 @@
-#include "HappinessFunc_Flat.h"
-
-#include <sstream>
 #include <iomanip>
-#include <algorithm>
+#include <sstream>
+#include "HappinessFunc_Flat.h"
 
 using namespace std;
 
