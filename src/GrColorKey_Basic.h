@@ -4,7 +4,6 @@
 #include <vector>
 #include "GrColorKey.h"
 #include "Letter.h"
-#include "Renderer.h"
 
 // Renders a key (colors corresponding to labels) for a chart.
 class GrColorKey_Basic : public GrColorKey

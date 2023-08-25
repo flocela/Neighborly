@@ -1,8 +1,5 @@
 #include <algorithm>
-#include <iomanip>
-#include <iostream>
 #include <sstream>
-
 #include "GrColorKey_Basic.h"
 
 using namespace std;

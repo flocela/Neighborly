@@ -5,10 +5,7 @@
 #include <vector>
 #include "Coordinate.h"
 #include "GrColorKey.h"
-#include "House.h"
 #include "Plot.h"
-#include "Renderer.h"
-#include "Resident.h"
 #include "ResPerHouse.h"
 #include "Title.h"
 

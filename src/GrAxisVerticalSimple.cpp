@@ -1,5 +1,4 @@
 #include <cmath>
-#include <iostream>
 #include "GrAxisVerticalSimple.h"
 
 using namespace std;

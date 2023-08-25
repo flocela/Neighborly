@@ -3,8 +3,6 @@
 #include "FromQuestionsStarter.h"
 #include "RandomSeedGetter.h"
 #include "ResidentsMaker_CmdLine.h"
-#include "Simulator_Basic_A.h"
-#include "Simulator_Basic_B.h"
 #include "SimulatorGetter.h"
 #include "UINumOfRunsGetter.h"
 
