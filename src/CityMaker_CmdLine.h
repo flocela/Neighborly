@@ -2,7 +2,7 @@
 #define CITYMAKER_CMDLINE__H
 
 #include "CityMaker.h"
-#include "UI_CmdLine.h"
+#include "UI.h"
 
 class CityMaker_CmdLine: public CityMaker
 {
