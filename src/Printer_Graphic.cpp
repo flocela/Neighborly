@@ -199,7 +199,7 @@ unique_ptr<GrCityChart> Printer_Graphic::createCityChart (
                     _x_overrun
                 ),
                 _axis_format_X,
-                0,                          // y-coordinate for x-axis, use zero for now.
+                0,                          // y-coordinate for x-axis, use zero for now
                 true
             ),
             make_unique<GrAxisVerticalSimple>(
@@ -250,13 +250,13 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
                     true,                      
                     0,                         // starting pixel for x-axis, use zero for now
                     0,                         // The first run number is zero.
-                    max(0, maxNumOfRuns-1),    // the last run number TODO why do I check for max??
+                    max(0, maxNumOfRuns-1),    // the last run number
                     0,                         // pixels per unit, use zero for now
                     _x_offset,
                     _x_overrun
                 ),
                 _axis_format_X,
-                0,                             // y-coordinate for x-axis, use zero for now.
+                0,                             // y-coordinate for x-axis (pixels) - zero for now
                 false
             ),
             make_unique<GrAxisVerticalSimple>(
@@ -270,7 +270,7 @@ unique_ptr<GrDvstyChart> Printer_Graphic::createDvstyChart (
                     _y_overrun
                 ),
                 axisFormatForDivChartY,
-                0                              // x-coordinate for y-axis, use zero for now
+                0                              // x-coordinate for y-axis (pixels), use zero for now
             )
         ),                                      
         _x_center__px + _col_inside_border__px, // top left corner of chart, x-coordinate
@@ -304,13 +304,13 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
                     true,                      
                     0,                         // starting pixel for x-axis, use zero for now
                     0,                         // Zero is the starting run number.
-                    max(0, numberOfRuns-1),    // index of the last run TODO why do I check for max??
+                    max(0, numberOfRuns-1),    // index of the last run
                     0,                         // pixels per unit, use zero for now
                     _x_offset,
                     _x_overrun
                 ),
                 _axis_format_X,
-                0,                             // x-axis's x-coordinate (pixel) // TODO better note
+                0,                             // y-coordinate for x-axis (pixels) - zero for now
                 false
             ),
             make_unique<GrAxisVerticalSimple>(
@@ -324,7 +324,7 @@ unique_ptr<GrHapChart>  Printer_Graphic::createHapChart (
                     _y_overrun
                 ),
                 axisFormatForHapChartY,
-                0                              // y-axis's x-coordinate (pixel)
+                0                              // x-coordinate for y-axis (pixels), use zero for now
             )
         ),
         _x_center__px + _col_inside_border__px, // top left corner of chart, x-value

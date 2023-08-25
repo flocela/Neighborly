@@ -1,7 +1,6 @@
 #ifndef AXIS_BASIC__H
 #define AXIS_BASIC__H
 
-#include <utility>
 #include "Axis.h"
 
 // Axis_Basic represents an axis. It's tick thickness is one.

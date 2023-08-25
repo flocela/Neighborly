@@ -1,8 +1,6 @@
 #ifndef AXIS_H
 #define AXIS_H
 
-#include <utility>
-
 // Represents an axis. Used to get the pixels designating values on the axis.
 class Axis
 {
