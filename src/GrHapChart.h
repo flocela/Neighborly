@@ -1,11 +1,8 @@
 #ifndef GR_HAP_CHART__H
 #define GR_HAP_CHART__H
 
-#include <iostream>
 #include <memory>
-
 #include "Plot.h"
-#include "Renderer.h"
 #include "GrColorKey.h"
 #include "Title.h"
 

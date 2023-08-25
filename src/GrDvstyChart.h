@@ -5,7 +5,6 @@
 #include <unordered_map>
 #include "GrColorKey.h"
 #include "Plot.h"
-#include "Renderer.h"
 #include "Title.h"
 
 // Used to render the average diversity of each group, per the run number.

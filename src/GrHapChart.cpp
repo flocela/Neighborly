@@ -1,4 +1,5 @@
 #include "GrHapChart.h"
+
 using namespace std;
 
 GrHapChart::GrHapChart (
