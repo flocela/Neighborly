@@ -24,22 +24,22 @@ void RunMetrics::updateMetrics(int run, const ResPerHouse residentsPerHouse)
     // Populate run's metrics.
     for (auto houseAndResident : residentsPerHouse)
     {   
-        const House* house = houseAndResident.first;
-        const Resident* resident = houseAndResident.second;
-        int resGroupId = resident->getGroupId();
+        const House* curHouse = houseAndResident.first;
+        const Resident* curRes = houseAndResident.second;
+        int curGroupId = curRes->getGroupId();
 
         // Add number of disparate neighbors to sum of different neighbors for this group's id.
 
-        // Add resGroupId key to _num_of_diff_neighbors_per_group_id map if it does not exist.
-        if ( _num_of_diff_neighbors_per_group_id.find(resGroupId) ==
+        // Add curGroupId key to _num_of_diff_neighbors_per_group_id map if it does not exist.
+        if ( _num_of_diff_neighbors_per_group_id.find(curGroupId) ==
              _num_of_diff_neighbors_per_group_id.end() )
         {
-            _num_of_diff_neighbors_per_group_id[resGroupId] = 0;
+            _num_of_diff_neighbors_per_group_id[curGroupId] = 0;
         }
 
-        // Inspect all houses adjacent to resident's house to see if adjacent 
-        // neighbor has a different group id than resident.
-        const unordered_set<const House*>& adjacentHouses = _adj_houses.at(house);
+        // Inspect all houses adjacent to curRes's house to count number of neighbors 
+        // with a different groupId than curRes.
+        const unordered_set<const House*>& adjacentHouses = _adj_houses.at(curHouse);
 
         for (const House* adjacentHouse : adjacentHouses)
         {
@@ -47,28 +47,28 @@ void RunMetrics::updateMetrics(int run, const ResPerHouse residentsPerHouse)
             if (residentsPerHouse.contains(adjacentHouse))
             {
                 int adj_res_groupId = (residentsPerHouse.at(adjacentHouse))->getGroupId();
-                if (adj_res_groupId != resident->getGroupId())
+                if (adj_res_groupId != curRes->getGroupId())
                 {
-                    _num_of_diff_neighbors_per_group_id[resGroupId] += 1;
+                    _num_of_diff_neighbors_per_group_id[curGroupId] += 1;
                 }
             }
         }
 
         // Add resident's happiness to the group's happiness sum.
-        if (_happiness_sum_per_group_id.find(resGroupId) == _happiness_sum_per_group_id.end())
+        if (_happiness_sum_per_group_id.find(curGroupId) == _happiness_sum_per_group_id.end())
         {
-            _happiness_sum_per_group_id[resGroupId] = 0;
+            _happiness_sum_per_group_id[curGroupId] = 0;
         }
         
-        _happiness_sum_per_group_id[resGroupId] += resident->getHappiness();
+        _happiness_sum_per_group_id[curGroupId] += curRes->getHappiness();
 
         // Increase the number of residents per resident's group id
-        if (_num_of_residents_per_group_id.find(resGroupId) ==
+        if (_num_of_residents_per_group_id.find(curGroupId) ==
             _num_of_residents_per_group_id.end())
         {
-            _num_of_residents_per_group_id[resGroupId] = 0;
+            _num_of_residents_per_group_id[curGroupId] = 0;
         }
-        _num_of_residents_per_group_id[resGroupId] += 1;
+        _num_of_residents_per_group_id[curGroupId] += 1;
         
     }
 }

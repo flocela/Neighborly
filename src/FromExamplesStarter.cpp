@@ -46,8 +46,8 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
         case 0:
         {
             // 30 x 30 city has 900 houses. 
-            // 360 Falling Residents (Group 1)
-            // 360 Falling Residents (Group 2)
+            // 200 Falling Residents (Group 1)
+            // 600 Falling Residents (Group 2)
             // SimulatorBasic_A
             components.randomSeed = 0;
             
@@ -59,7 +59,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                 components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
             }
 
-            for (int ii=0; ii<360; ++ii)
+            for (int ii=0; ii<200; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_Customizable>(
                     ii,  // id
@@ -73,7 +73,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     )
                 ));
             }
-            for (int jj=360; jj<720; ++jj)
+            for (int jj=200; jj<800; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_Customizable>(
                     jj,
@@ -90,8 +90,8 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.residentTemplatePerGroupId
                 .insert({1, components.residents[0]->getTemplate()});
             components.residentTemplatePerGroupId
-                .insert({2, components.residents[360]->getTemplate()});
-
+                .insert({2, components.residents[200]->getTemplate()});
+            
             components.simulator = std::make_unique<Simulator_Basic_A>(
                 components.city.get(),
                 getSetOfPointers(components.residents),
@@ -99,7 +99,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                 20, // number of houses the residents can choose from
                 make_unique<CityState_Simple>(components.city.get())
             );
-
+            
             components.numOfRuns = 20;
             break; // end case 0
 
@@ -168,8 +168,8 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
         case 2:
         {
             // 30 x 30 city with 900 houses. 
-            // 360 Falling Resdients (Group 1)
-            // 360 Falling Residents (Group 2)
+            // 200 Falling Resdients (Group 1)
+            // 600 Falling Residents (Group 2)
             // Simulator_Basic_A
             components.randomSeed = 0;
             
@@ -181,7 +181,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                 components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
             }
 
-            for (int ii=0; ii<360; ++ii)
+            for (int ii=0; ii<200; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_Customizable>(
                     ii,  // id
@@ -195,7 +195,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     )
                 ));
             }
-            for (int jj=360; jj<720; ++jj)
+            for (int jj=200; jj<800; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_Customizable>(
                     jj,
@@ -212,7 +212,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.residentTemplatePerGroupId
                 .insert({1, components.residents[0]->getTemplate()});
             components.residentTemplatePerGroupId
-                .insert({2, components.residents[360]->getTemplate()});
+                .insert({2, components.residents[200]->getTemplate()});
 
             components.simulator = std::make_unique<Simulator_Basic_A>(
                 components.city.get(),
@@ -290,8 +290,8 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
         case 4:
         {
             // 30 x 30 city has 900 houses. 
-            // 360 Falling Residents (Group 1)
-            // 360 Falling Residents (Group 2)
+            // 200 Falling Residents (Group 1)
+            // 600 Falling Residents (Group 2)
             // SimulatorBasic_B
             components.randomSeed = 0;
             
@@ -303,7 +303,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                 components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
             }
 
-            for (int ii=0; ii<360; ++ii)
+            for (int ii=0; ii<200; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_Customizable>(
                     ii,  // id
@@ -317,7 +317,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     )
                 ));
             }
-            for (int jj=360; jj<720; ++jj)
+            for (int jj=200; jj<800; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_Customizable>(
                     jj,
@@ -334,7 +334,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.residentTemplatePerGroupId
                 .insert({1, components.residents[0]->getTemplate()});
             components.residentTemplatePerGroupId
-                .insert({2, components.residents[360]->getTemplate()});
+                .insert({2, components.residents[200]->getTemplate()});
 
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
@@ -412,8 +412,8 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
         case 6:
         {
             // 30 x 30 city with 900 houses. 
-            // 360 Falling Resdients (Group 1)
-            // 360 Falling Residents (Group 2)
+            // 200 Falling Resdients (Group 1)
+            // 600 Falling Residents (Group 2)
             // Simulator_Basic_B
             components.randomSeed = 0;
             
@@ -425,7 +425,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                 components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
             }
 
-            for (int ii=0; ii<360; ++ii)
+            for (int ii=0; ii<400; ++ii)
             {
                 components.residents.push_back(std::make_unique<Resident_Customizable>(
                     ii,  // id
@@ -439,7 +439,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     )
                 ));
             }
-            for (int jj=360; jj<720; ++jj)
+            for (int jj=400; jj<800; ++jj)
             {
                 components.residents.push_back(std::make_unique<Resident_Customizable>(
                     jj,
@@ -456,7 +456,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             components.residentTemplatePerGroupId
                 .insert({1, components.residents[0]->getTemplate()});
             components.residentTemplatePerGroupId
-                .insert({2, components.residents[360]->getTemplate()});
+                .insert({2, components.residents[200]->getTemplate()});
 
             components.simulator = std::make_unique<Simulator_Basic_B>(
                 components.city.get(),
