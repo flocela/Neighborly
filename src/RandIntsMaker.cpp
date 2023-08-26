@@ -1,6 +1,5 @@
-#include "RandIntsMaker.h"
 #include <unordered_set>
-#include <iostream>
+#include "RandIntsMaker.h"
 
 using namespace std;
 

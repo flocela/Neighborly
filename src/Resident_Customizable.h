@@ -1,9 +1,8 @@
 #ifndef RESIDENT_CUSTOMIZABLE__H
 #define RESIDENT_CUSTOMIZABLE__H
 
-#include <memory>
-#include "Resident.h"
 #include "HappinessFunc.h"
+#include "Resident.h"
 
 // Uses the HappinessFunc given in the constructor to determine the resident happiness.
 class Resident_Customizable : public Resident

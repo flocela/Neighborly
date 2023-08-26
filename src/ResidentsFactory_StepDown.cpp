@@ -1,7 +1,6 @@
 #include <limits>
 #include <sstream>
 #include <iomanip>
-#include <memory>
 #include <iostream>
 #include "HappinessFunc_StepDown.h"
 #include "Resident_Customizable.h"

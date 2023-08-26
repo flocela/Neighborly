@@ -2,7 +2,6 @@
 #define Renderer__H
 
 #include <vector>
-
 #include "Color.h"
 #include "Coordinate.h"
 #include "Rect.h"

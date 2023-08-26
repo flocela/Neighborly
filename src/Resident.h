@@ -2,8 +2,8 @@
 #define RESIDENT__H
 
 #include <memory>
-#include <unordered_set>
 #include <string>
+#include <unordered_set>
 #include "ResidentTemplate.h"
 
 class Resident

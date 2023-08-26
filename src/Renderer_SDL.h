@@ -1,13 +1,8 @@
 #ifndef RENDERER_SDL__H
 #define RENDERER_SDL__H
 
-#include <vector>
-#include "Color.h"
-#include "Coordinate.h"
-#include "Rect.h"
 #include "Renderer.h"
 #include "SDL.h"
-#include "TextRect.h"
 
 class Renderer_SDL : public Renderer {
 

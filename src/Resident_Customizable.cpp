@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Resident_Customizable.h"
 #include "ResidentTemplate_Customizable.h"
 

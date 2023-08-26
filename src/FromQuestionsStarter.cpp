@@ -2,7 +2,7 @@
 #include "CityState_Simple.h"
 #include "FromQuestionsStarter.h"
 #include "RandomSeedGetter.h"
-#include "ResidentsMaker_CmdLine.h"
+#include "ResidentsMaker_AskUser.h"
 #include "SimulatorGetter.h"
 #include "UINumOfRunsGetter.h"
 
@@ -45,7 +45,7 @@ SimulationComponents FromQuestionsStarter::createSimulationComponents (
     resultantComponents.city = cityMaker.makeCity(cityFactories, maxNumOfHousesX, maxNumOfHousesY);
 
     // Create group info for residents.
-    ResidentsMaker_CmdLine residentsMaker{};
+    ResidentsMaker_AskUser residentsMaker{};
     ResidentsGroupInfo resGroupInfo = residentsMaker.makeResidents(
         ui,
         residentFactories,

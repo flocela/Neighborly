@@ -1,9 +1,5 @@
 #include <iomanip>
 #include <regex>
-#include <sstream>
-#include <stdexcept>
-
-#include <iostream>
 #include "Question_Double.h"
 
 using namespace std;

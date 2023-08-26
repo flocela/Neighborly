@@ -1,7 +1,6 @@
 #include <iomanip>
 #include <iostream>
 #include <limits>
-#include <memory>
 #include <sstream>
 #include "HappinessFunc_StepUp.h"
 #include "Question_Double.h"

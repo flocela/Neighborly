@@ -1,7 +1,5 @@
 #include <sstream>
-#include <stdexcept>
 #include <iomanip>
-
 #include "Resident.h"
 
 using namespace std;

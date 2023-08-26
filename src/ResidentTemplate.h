@@ -1,8 +1,9 @@
 #ifndef RESIDENTTEMPLATE__H
 #define RESIDENTTEMPLATE__H
 
-#include <unordered_set>
 #include <string>
+#include <unordered_set>
+
 
 // Holds basic information about a resident: the allowed movement distance, happiness goal,
 // and the its type.

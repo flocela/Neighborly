@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Axis_Basic.h"
 #include "GrColorKey_Basic.h"
 #include "GrAxisHorizontalSimple.h"

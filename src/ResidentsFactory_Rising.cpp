@@ -1,7 +1,6 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-
 #include "HappinessFunc_Rising.h"
 #include "Question_Double.h"
 #include "Resident_Customizable.h"

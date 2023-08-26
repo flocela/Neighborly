@@ -1,7 +1,5 @@
 #include "RandomSeedGetter.h"
 
-#include <limits>
-
 using namespace std;
 
 const int RandomSeedGetter::_seed_fallback = 1;

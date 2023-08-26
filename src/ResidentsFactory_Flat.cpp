@@ -4,7 +4,6 @@
 #include <iostream>
 #include <limits>
 #include <sstream>
-
 #include "HappinessFunc_Flat.h"
 #include "Resident_Customizable.h"
 #include "Question_Int.h"

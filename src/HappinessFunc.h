@@ -1,6 +1,8 @@
 #ifndef HAPPINESSFUNCTION__H
 #define HAPPINESSFUNCTION__H
 
+#include <string>
+
 // HappinessFunc has an x-axis of Diversity and a y-axis of Happiness.
 // Happiness range is [0, 100]. Diversity range is [0.0 to 1.0].
 class HappinessFunc

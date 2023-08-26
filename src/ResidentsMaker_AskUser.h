@@ -1,14 +1,13 @@
-#ifndef RESIDENTSMAKER_CMDLINE__H
-#define RESIDENTSMAKER_CMDLINE__H
+#ifndef RESIDENTSMAKER_ASKUSER__H
+#define RESIDENTSMAKER_ASKUSER__H
 
 #include "ResidentsMaker.h"
-#include "UI_CmdLine.h"
 
 // Asks for the resident type for each group. (There are two groups.)
 // Asks for information to create the residents.
 // Returns the ResidentsGroupInfo for the residents.
 // The ResidentsGroupInfo contains a vector of unique pointers to the residents.
-class ResidentsMaker_CmdLine: public ResidentsMaker
+class ResidentsMaker_AskUser: public ResidentsMaker
 {
     
 public:

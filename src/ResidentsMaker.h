@@ -4,7 +4,6 @@
 #include <memory>
 #include <vector>
 #include "Color.h"
-#include "Resident.h"
 #include "ResidentsFactory.h"
 #include "ResidentsGroupInfo.h"
 
