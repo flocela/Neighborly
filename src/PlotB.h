@@ -1,11 +1,9 @@
 #ifndef PLOT_B__H
 #define PLOT_B__H
 
-#include "AxisFormat.h"
 #include "Coordinate.h"
 #include "GrAxisHorizontalSimple.h"
 #include "GrAxisVerticalSimple.h"
-#include "Point.h"
 #include "Plot.h"
 #include "PlotFormat.h"
 

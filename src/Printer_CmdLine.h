@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <unordered_map>
-#include "City.h"
 #include "CityPrinter.h"
 #include "Color.h"
 #include "Printer.h"

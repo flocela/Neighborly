@@ -2,12 +2,10 @@
 #define PLOT_A__H
 
 #include <memory>
-#include "AxisFormat.h"
 #include "GrAxisHorizontalSimple.h"
 #include "GrAxisVerticalSimple.h"
 #include "Plot.h"
 #include "PlotFormat.h"
-#include "Point.h"
 
 // PlotA contains the x and y axes, their labels, and the data points inside the graph.
 // x-axis runs horizontally on the bottom of the plot (left to right).

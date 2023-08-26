@@ -1,7 +1,6 @@
 #ifndef PLOT_FORMAT__H
 #define PLOT_FORMAT__H
 
-#include "AxisFormat.h"
 #include "Letter.h"
 
 class PlotFormat

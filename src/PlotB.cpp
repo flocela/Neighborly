@@ -1,6 +1,5 @@
 #include "PlotB.h"
 
-#include <iostream>
 using namespace std;
 
 PlotB::PlotB ( 
