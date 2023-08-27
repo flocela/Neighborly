@@ -26,7 +26,6 @@ vector<int> getOpenAddressesWithinRange(
     return addresses;
 }
 
-// returns pointers to Residents, which need to be deleted.
 vector<Resident*> createResidents (int numOfResidents)
 {
     vector<Resident*> residents{};
@@ -93,7 +92,7 @@ vector<int> createAddresses(
     return addresses;
 }
 
-TEST_CASE("empty city - getOpenHousesWithinRange() allowableDist=15")
+TEST_CASE("CityState:: empty city, getOpenHousesWithinRange(), allowableDist=15")
 {
     int width = 100;
     int centerX = 4;
@@ -115,7 +114,7 @@ TEST_CASE("empty city - getOpenHousesWithinRange() allowableDist=15")
 }
 
 // allowable distance is larger than the width of the city.
-TEST_CASE("empty city - getOpenHouses() allowableDist encompasses every house")
+TEST_CASE("CityState:: empty city, getOpenHouses(), allowableDist encompasses every house")
 {
     City_Grid city = City_Grid(50);
     CityState_Simple cityState{&city};
@@ -134,7 +133,7 @@ TEST_CASE("empty city - getOpenHouses() allowableDist encompasses every house")
 }
 
 // empty city, there are no residents.
-TEST_CASE("empty city - getResidentsPerHouse()")
+TEST_CASE("CityState:: empty city, getResidentsPerHouse()")
 {
     City_Grid city = City_Grid(10);
     CityState_Simple cityState{&city};
@@ -147,7 +146,7 @@ TEST_CASE("empty city - getResidentsPerHouse()")
 }
 
 // resident doesn't have a house in the city. So nullptr is returned for getHousePerResident()
-TEST_CASE("empty city - getHousePerResident()")
+TEST_CASE("CityState:: empty city, getHousePerResident()")
 {
     City_Grid city = City_Grid(10);
     CityState_Simple cityState{&city};
@@ -166,7 +165,7 @@ TEST_CASE("empty city - getHousePerResident()")
 }
 
 // there are no residents. So nullptr is returned for getResidentPerHouse()
-TEST_CASE("empty city - getResidentPerHouse()")
+TEST_CASE("CityState:: empty city, getResidentPerHouse()")
 {
     City_Grid city = City_Grid(10);
     vector<const House*> houses = city.getHouses();
@@ -179,7 +178,7 @@ TEST_CASE("empty city - getResidentPerHouse()")
 }
 
 // At y=5 and y=15, there are 10 residents, from x = 0 through 9.
-TEST_CASE("city with 10 residents at y = 5 and y = 15 - getOpenHousesWithinRange() limited range")
+TEST_CASE("CityState:: city with 10 residents at y = 5 and y = 15, getOpenHousesWithinRange()")
 {
     int width = 100;
     City_Grid city = City_Grid(width);
@@ -240,7 +239,7 @@ TEST_CASE("city with 10 residents at y = 5 and y = 15 - getOpenHousesWithinRange
     }
 }
 
-TEST_CASE("move In and move Out")
+TEST_CASE("CityState:: moveIn() and moveOut()")
 {
     int width = 100;
     // center house and allowable distance used later in getOpenHousesWithRange() method.

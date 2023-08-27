@@ -3,8 +3,7 @@
 
 using Catch::Matchers::Contains;
 
-TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_Rising:: Constructor throws invalid argument exception when"
     " value at zero percent diversity is less than 0.0"
 )
 {   
@@ -14,8 +13,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_Rising:: Constructor throws invalid argument exception when"
     " value at zero percent diversity is greater than 100"
 )
 {   
@@ -25,8 +23,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_Rising:: Constructor throws invalid argument exception when"
     " value at 100 percent diversity is less than 0.0"
 )
 {   
@@ -36,8 +33,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_Rising:: Constructor throws invalid argument exception when"
     " value at 100 percent diversity is greater than 100.0"
 )
 {   
@@ -47,8 +43,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_Rising:: Constructor throws invalid argument exception when"
     " value at zero diversity is greater than value at 100 percent diversity."
 )
 {   
@@ -59,8 +54,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_Rising:: Constructor throws invalid argument exception when"
     " value for no neighbors is less than zero."
 )
 {   
@@ -71,8 +65,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_Rising Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_Rising:: Constructor throws invalid argument exception when"
     " value for no neighbors is greater than 100."
 )
 {   
@@ -83,8 +76,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_Rising getLargestValue(), case"
+TEST_CASE("HappinessFunc_Rising:: getLargestValue(), case"
     " should return value for no neighbors."
 )
 {
@@ -92,8 +84,7 @@ TEST_CASE(
     REQUIRE(95 == func.getLargestValue());
 }
 
-TEST_CASE(
-    "HappinessFunc_Rising getLargestValue(), case"
+TEST_CASE("HappinessFunc_Rising:: getLargestValue(), case"
     " should return value for 100 percent diversity."
 )
 {
@@ -101,8 +92,7 @@ TEST_CASE(
     REQUIRE(95 == func.getLargestValue());
 }
 
-TEST_CASE(
-    "HappinessFunc_Rising getSmallestValue(), case"
+TEST_CASE("HappinessFunc_Rising:: getSmallestValue(), case"
     " should return value for no neighbors."
 )
 {
@@ -110,8 +100,7 @@ TEST_CASE(
     REQUIRE(0 == func.getSmallestValue());
 }
 
-TEST_CASE(
-    "HappinessFunc_Rising getSmallestValue(), case"
+TEST_CASE("HappinessFunc_Rising:: getSmallestValue(), case"
     " should return value for 0 percent diversity."
 )
 {
@@ -119,16 +108,14 @@ TEST_CASE(
     REQUIRE(5.0 == func.getSmallestValue());
 }
 
-TEST_CASE(
-    "HappinessFunc_Rising calcHappiness(), fifty percent diversity"
+TEST_CASE("HappinessFunc_Rising:: calcHappiness(), fifty percent diversity"
 )
 {
     HappinessFunc_Rising func(10, 0, 100);
     REQUIRE(50 == func.calcHappiness(10, 4, 4));
 }
 
-TEST_CASE(
-    "HappinessFunc_Rising calcHappiness with no neighbors"
+TEST_CASE("HappinessFunc_Rising:: calcHappiness with no neighbors"
 )
 {
     HappinessFunc_Rising func(10, 0, 100);

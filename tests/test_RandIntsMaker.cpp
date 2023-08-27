@@ -1,7 +1,6 @@
 #include "catch.hpp"
 #include "../src/RandIntsMaker.h"
 
-#include <iostream>
 #include <unordered_set>
 
 using namespace std;
@@ -72,7 +71,6 @@ TEST_CASE("RandIntsMaker:: Well size and quanity size are the same, test with 5"
     // There is a change that they will be in order...
     REQUIRE(inOrder != actual);
 }
-
 
 TEST_CASE("RandIntsMaker:: Well size and quanity size are the same, test with 1,000")
 {   

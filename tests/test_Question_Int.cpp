@@ -1,8 +1,6 @@
 #include "catch.hpp"
 #include "../src/Question_Int.h"
 
-#include <iostream>
-
 using Catch::Matchers::Contains;
 using namespace std;
 

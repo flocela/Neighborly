@@ -4,8 +4,7 @@
 
 using Catch::Matchers::Contains;
 
-TEST_CASE(
-    "HappinessFunc_Flat Constructor throws invalid argument exception"
+TEST_CASE("HappinessFunc_Flat:: Constructor throws invalid argument exception"
     "when happiness value is less than 0.0"
 )
 {  
@@ -15,8 +14,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_Flat Constructor throws invalid argument exception"
+TEST_CASE("HappinessFunc_Flat:: Constructor throws invalid argument exception"
     "when happiness value is greater than 100.0"
 )
 {   
@@ -26,8 +24,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_Flat Constructor throws invalid argument exception"
+TEST_CASE("HappinessFunc_Flat:: Constructor throws invalid argument exception"
     "when happiness value for no neighbors is < 0.0"
 )
 {   
@@ -38,8 +35,7 @@ TEST_CASE(
 }
 
 
-TEST_CASE(
-    "HappinessFunc_Flat Constructor throws invalid argument exception"
+TEST_CASE("HappinessFunc_Flat:: Constructor throws invalid argument exception"
     "when happiness value for no neighbors is > 0.0"
 )
 {   
@@ -49,8 +45,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "getLargestValue() should return constant value."
+TEST_CASE("HappinessFunc_Flat:: getLargestValue() should return constant value."
 )
 {
     HappinessFunc_Flat f(10, 100);
@@ -58,16 +53,14 @@ TEST_CASE(
 }
 
 
-TEST_CASE(
-    "getLargestValue() should return value for no neighbors."
+TEST_CASE("HappinessFunc_Flat:: getLargestValue() should return value for no neighbors."
 )
 {
     HappinessFunc_Flat f(100, 50);
     REQUIRE(100 == f.getLargestValue());
 }
 
-TEST_CASE(
-    "getSmallestValue() should return constant value."
+TEST_CASE("HappinessFunc_Flat:: getSmallestValue() should return constant value."
 )
 {
     HappinessFunc_Flat f(10, 0);
@@ -75,16 +68,14 @@ TEST_CASE(
 }
 
 
-TEST_CASE(
-    "getSmallestValue() should return value for no neighbors."
+TEST_CASE("HappinessFunc_Flat:: getSmallestValue() should return value for no neighbors."
 )
 {
     HappinessFunc_Flat f(0, 50);
     REQUIRE(0 == f.getSmallestValue());
 }
 
-TEST_CASE(
-    "HappinessFunc_Flat getHappiness with no neighbors"
+TEST_CASE("HappinessFunc_Flat:: getHappiness with no neighbors"
 )
 {
     HappinessFunc_Flat hf{50, 90};
@@ -92,8 +83,7 @@ TEST_CASE(
 }
 
 
-TEST_CASE(
-    "HappinessFunc_Flat getHappiness should be 90, because happiness value is constant."
+TEST_CASE("HappinessFunc_Flat:: getHappiness should be 90, because happiness value is constant."
 )
 {
     HappinessFunc_Flat hf{50, 90};

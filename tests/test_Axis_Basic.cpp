@@ -4,7 +4,7 @@
 
 using namespace std;
 
-TEST_CASE("Axis_Basic::forward_is_negative_and_dot_size_is_1_and_2")
+TEST_CASE("Axis_Basic::forward is false, using dot sizes of 1 and 2")
 {
     Axis_Basic axis {
         false,
@@ -35,7 +35,7 @@ TEST_CASE("Axis_Basic::forward_is_negative_and_dot_size_is_1_and_2")
     
 }
 
-TEST_CASE("Axis_Basic::forward_is_negative_and_dot_size_is_3_and_4")
+TEST_CASE("Axis_Basic::forward is false, using dot sizes of 3 and 4")
 {
     Axis_Basic axis {
         false,
@@ -66,7 +66,7 @@ TEST_CASE("Axis_Basic::forward_is_negative_and_dot_size_is_3_and_4")
     REQUIRE( pair<int, int>{13, 16} == axis.getPixels(2.2, 4) ); // {13, 16}
 }
 
-TEST_CASE("Axis_Basic::forward_is_positive_and_dot_size_is_1_and_2")
+TEST_CASE("Axis_Basic::forward is true, using dot sizes of 1 and 2")
 {
     Axis_Basic axis {
         true,
@@ -97,7 +97,7 @@ TEST_CASE("Axis_Basic::forward_is_positive_and_dot_size_is_1_and_2")
     REQUIRE( pair<int, int>{16, 17} == axis.getPixels(2.2, 2) ); // {16, 17}
 }
 
-TEST_CASE("Axis_Basic::forward_is_positive_and_dot_size_is_3_and_4")
+TEST_CASE("Axis_Basic::forward is true, using dot sizes of 3 and 4")
 {
     Axis_Basic axis {
         true,

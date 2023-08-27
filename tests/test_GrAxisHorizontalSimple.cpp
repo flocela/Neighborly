@@ -5,7 +5,7 @@
 
 using namespace std;
 
-TEST_CASE("GrAxisHorizontalSimple.getLabelLengthPx()")
+TEST_CASE("GrAxisHorizontalSimple:: getLabelLengthPx()")
 {
    AxisFormat format{};
 

@@ -5,7 +5,6 @@
 #include "Letter.h"
 #include "Renderer.h"
 #include "Title.h"
-#include <iostream>
 
 class Title_Basic: public Title
 {

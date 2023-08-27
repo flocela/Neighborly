@@ -1,6 +1,5 @@
 #include "catch.hpp"
 
-#include "../src/HappinessFunc_Flat.h"
 #include "../src/SetOfHousesPerHouse.h"
 
 using namespace std;

@@ -1,10 +1,9 @@
 #include "catch.hpp"
-#include "../src/RunMetrics.h"
 
-#include <memory>
 #include "../src/City_Grid.h"
 #include "../src/HappinessFunc_StepDown.h"
 #include "../src/Resident_Customizable.h"
+#include "../src/RunMetrics.h"
 
 using namespace std;
 
@@ -60,7 +59,7 @@ SetOfHousesPerHouse getAdjacentHousesPerHouse(const City* city)
     return adjacentHousesPerHouse;
 }
 
-TEST_CASE("empty city")
+TEST_CASE("RunMetrics:: empty city")
 {
     City_Grid city = City_Grid(20);
     RunMetrics rm{getAdjacentHousesPerHouse(&city)};
@@ -68,7 +67,7 @@ TEST_CASE("empty city")
     unordered_map<int, int> numOfResidentsPerGroupId{};
     unordered_map<int, int> numOfDiffNeighborsPerGroupId{};
     unordered_map<int, double> happinessSumPerGroupId{};
-//
+
     REQUIRE(residentsPerHouse == rm.getResidentsPerHouse());
     REQUIRE(numOfResidentsPerGroupId == rm.getNumOfResidentsPerGroupId());
     REQUIRE(numOfDiffNeighborsPerGroupId == rm.getNumOfDiffNeighborsPerGroupId());
@@ -82,8 +81,8 @@ TEST_CASE("empty city")
 // group1 column from (5, 6) to (14, 6)
 // group1 column from (5, 7) to (14, 7)
 
-TEST_CASE("three columns of group1")
-{   cout << "test_RUnMetrics 86" << endl;
+TEST_CASE("RunMetrics:: three columns of group1")
+{   
     City_Grid city = City_Grid(20);
     vector<const House*> cityHouses = city.getHouses();
 
@@ -131,7 +130,7 @@ TEST_CASE("three columns of group1")
 // group2 column from (5, 8) to (14, 8) -> labeled as B
 // group1 column from (5, 9) to (14, 9) -> labeled as C
 // group2 column from (5, 10) to (14, 10) -> labeled as D
-TEST_CASE("four columns of group1, two columns of group2")
+TEST_CASE("RunMetrics:: four columns of group1, two columns of group2")
 {
     City_Grid city = City_Grid(20);
     vector<const House*> cityHouses = city.getHouses();

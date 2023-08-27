@@ -3,8 +3,7 @@
 
 using Catch::Matchers::Contains;
 
-TEST_CASE(
-    "HappinessFunc_StepUp Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_StepUp:: Constructor throws invalid argument exception when"
     " happinessAtStart is less than zero"
 )
 {   
@@ -14,8 +13,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_StepUp:: Constructor throws invalid argument exception when"
     " happinessAtStart is greater than 100"
 )
 {   
@@ -25,8 +23,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_StepUp:: Constructor throws invalid argument exception when"
     " happinessAtEnd is less than zero"
 )
 {   
@@ -36,8 +33,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_StepUp:: Constructor throws invalid argument exception when"
     " happinessAtEnd is greater than 100"
 )
 {   
@@ -47,8 +43,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_StepUp:: Constructor throws invalid argument exception when"
     " happinessAtStart is larger than happinessAtEnd."
 )
 {   
@@ -58,8 +53,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_StepUp:: Constructor throws invalid argument exception when"
     " value for no neighbors is less than zero."
 )
 {   
@@ -69,8 +63,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp Constructor throws invalid argument exception when"
+TEST_CASE("HappinessFunc_StepUp:: Constructor throws invalid argument exception when"
     " value for no neighbors is greater than 100."
 )
 {   
@@ -80,8 +73,7 @@ TEST_CASE(
     );
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp getLargestValue(),"
+TEST_CASE("HappinessFunc_StepUp:: getLargestValue(),"
     " since happinessWithZeroNeighbors is larger than happinessAtEnd, getLargestValue() "
     " should return value for no neighbors."
 )
@@ -90,8 +82,7 @@ TEST_CASE(
     REQUIRE(95 == func.getLargestValue());
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp getLargestValue()"
+TEST_CASE("HappinessFunc_StepUp:: getLargestValue()"
     " since happinessAtEnd is larger than happinessWithZeroNeighbors, getLargestValue() "
     " should return happinessAtEnd."
 )
@@ -100,8 +91,7 @@ TEST_CASE(
     REQUIRE(95 == func.getLargestValue());
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp getSmallestValue(),"
+TEST_CASE("HappinessFunc_StepUp:: getSmallestValue(),"
     " since happinessAtStart is smaller than happinessWithZeroNeighbors, getSmallestValue() "
     " should return happinessAtStart."
 )
@@ -110,8 +100,7 @@ TEST_CASE(
     REQUIRE(0.0 == func.getSmallestValue());
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp getSmallestValue(),"
+TEST_CASE("HappinessFunc_StepUp:: getSmallestValue(),"
     " since happinessWithZeroNeighbors is smaller than happinessAtStart, getSmallestValue() "
     " should return happinessWithZeroNeighbor."
 )
@@ -120,32 +109,28 @@ TEST_CASE(
     REQUIRE(0.0 == func.getSmallestValue());
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp calcHappiness() at stepdown is same as happinessAtStart"
+TEST_CASE("HappinessFunc_StepUp:: calcHappiness() at stepdown is same as happinessAtStart"
 )
 {
     HappinessFunc_StepUp func(10, 0, 100.0, .5);
     REQUIRE(0.0 == func.calcHappiness(10, 4, 4));
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp calcHappiness() before stepdown is same as happinessAtStart"
+TEST_CASE("HappinessFunc_StepUp:: calcHappiness() before stepdown is same as happinessAtStart"
 )
 {
     HappinessFunc_StepUp func(10, 0, 100, .5);
     REQUIRE(0 == func.calcHappiness(10, 4, 2));
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp calcHappiness() after stepdown is same as happinessAtEnd"
+TEST_CASE("HappinessFunc_StepUp:: calcHappiness() after stepdown is same as happinessAtEnd"
 )
 {
     HappinessFunc_StepUp func(0, 0, 100, .5);
     REQUIRE(100.0 == func.calcHappiness(10, 4, 6));
 }
 
-TEST_CASE(
-    "HappinessFunc_StepUp calcHappiness with no neighbors"
+TEST_CASE("HappinessFunc_StepUp:: calcHappiness with no neighbors"
 )
 {
     HappinessFunc_StepUp func(10, 0, 100, .5);

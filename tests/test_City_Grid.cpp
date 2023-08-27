@@ -1,21 +1,18 @@
 #include "catch.hpp"
-#include "../src/Coordinate.h"
 #include "../src/City_Grid.h"
-#include "../src/House.h"
-#include <iostream>
 
 #include <math.h>
 
 using namespace std;
 
-TEST_CASE("getSize()")
+TEST_CASE("City_Grid:: getNumOfHouses() and size()")
 {
     City_Grid city = City_Grid(6);
     REQUIRE( city.getNumOfHouses() == 36 );
     REQUIRE( city.getHouses().size() == 36);
 }
 
-TEST_CASE("GetCoordinate()")
+TEST_CASE("City_Grid:: getCoordinate()")
 {
     City_Grid city = City_Grid(6);
     Coordinate coord = city.getCoordinate(13);
@@ -23,7 +20,7 @@ TEST_CASE("GetCoordinate()")
     REQUIRE( coord.getY() == 2 ); //2
 }
 
-TEST_CASE("dist()")
+TEST_CASE("City_Grid:: getDist()")
 {   // house[1] is at (0, 1) and house[28] is at (4, 4).
     City_Grid city = City_Grid(6);
     vector<const House*> houses = city.getHouses();
@@ -32,7 +29,7 @@ TEST_CASE("dist()")
     REQUIRE( sqrt( (3 * 3) + (4 * 4) ) == city.getDist(a1, a28) ); // 
 }
 
-TEST_CASE("getHousesWithinDistance() distance is 2.1, central house")
+TEST_CASE("City_Grid:: getHousesWithinDistance(), house is centrally located on grid")
 {
     City_Grid city = City_Grid(6);
 
@@ -71,7 +68,7 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, central house")
 
 }
 
-TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side")
+TEST_CASE("City_Grid:: getHousesWithinDistance(), house is located at the edge of the grid")
 {
     City_Grid city = City_Grid(6);
     vector<const House*> houses = city.getHouses();
@@ -105,7 +102,7 @@ TEST_CASE("getHousesWithinDistance() distance is 2.1, house at side")
     REQUIRE( expectedAddresses == actualAddresses );
 }
 
-TEST_CASE("getHousesWithinDistance() distance is 0.0, house at side")
+TEST_CASE("City_Grid:: getHousesWithinDistance() distance is 0.0, house at edge of grid")
 {
     City_Grid city = City_Grid(6);
     vector<const House*> houses = city.getHouses();
@@ -131,7 +128,7 @@ TEST_CASE("getHousesWithinDistance() distance is 0.0, house at side")
     REQUIRE( expectedAddresses == actualAddresses );
 }
 
-TEST_CASE("getHousesAdjacent() for corner house (3 neighbors) ")
+TEST_CASE("City_Grid:: getHousesAdjacent() for corner house (3 neighbors) ")
 {
     City_Grid city = City_Grid(6);
     vector<const House*> houses = city.getHouses();
@@ -147,7 +144,7 @@ TEST_CASE("getHousesAdjacent() for corner house (3 neighbors) ")
     REQUIRE( expectedNeighbors == actualNeighbors );
 }
 
-TEST_CASE("getAdjacentHouses() for left edge house (5 neighbors)")
+TEST_CASE("City_Grid:: getAdjacentHouses() for left edge house (5 neighbors)")
 {
     City_Grid city = City_Grid(6);
     vector<const House*> houses = city.getHouses();
@@ -164,7 +161,7 @@ TEST_CASE("getAdjacentHouses() for left edge house (5 neighbors)")
     REQUIRE( expectedNeighbors == actualNeighbors );
 }
 
-TEST_CASE("getAdjacentHouses() for right edge house (5 neighbors)")
+TEST_CASE("City_Grid:: getAdjacentHouses() for right edge house (5 neighbors)")
 {
     City_Grid city = City_Grid(6);
     vector<const House*> houses = city.getHouses();
@@ -181,7 +178,7 @@ TEST_CASE("getAdjacentHouses() for right edge house (5 neighbors)")
     REQUIRE( expectedNeighbors == actualNeighbors );
 }
 
-TEST_CASE("getAdjacentHouses() for top edge house (5 neighbors)")
+TEST_CASE("City_Grid:: getAdjacentHouses() for top edge house (5 neighbors)")
 {
     City_Grid city = City_Grid(6);
     vector<const House*> houses = city.getHouses();
@@ -198,7 +195,7 @@ TEST_CASE("getAdjacentHouses() for top edge house (5 neighbors)")
     REQUIRE( expectedNeighbors == actualNeighbors );
 }
 
-TEST_CASE("getAdjacentHouses() for bottom edge house (5 neighbors)")
+TEST_CASE("City_Grid:: getAdjacentHouses() for bottom edge house (5 neighbors)")
 {
     City_Grid city = City_Grid(6);
     vector<const House*> houses = city.getHouses();
@@ -215,7 +212,7 @@ TEST_CASE("getAdjacentHouses() for bottom edge house (5 neighbors)")
     REQUIRE( expectedNeighbors == actualNeighbors );
 }
 
-TEST_CASE("getAdjacentHouses() for house in middle of grid (8 neighbors)")
+TEST_CASE("City_Grid:: getAdjacentHouses() for house in middle of grid (8 neighbors)")
 {
     City_Grid city = City_Grid(6);
     vector<const House*> houses = city.getHouses();
@@ -235,7 +232,7 @@ TEST_CASE("getAdjacentHouses() for house in middle of grid (8 neighbors)")
     REQUIRE( expectedNeighbors == actualNeighbors );
 }
 
-TEST_CASE("getCoordinate() for a given address")
+TEST_CASE("City_Grid:: getCoordinate() for a given address")
 {
     City_Grid city = City_Grid(6);
     REQUIRE(Coordinate(0, 0) == city.getCoordinate(0)); // 0, 0

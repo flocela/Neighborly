@@ -1,8 +1,7 @@
 #include "catch.hpp"
-#include "../src/Coordinate.h"
-#include <vector>
-#include <algorithm>
+
 #include <sstream>
+#include "../src/Coordinate.h"
 
 using namespace std;
 
