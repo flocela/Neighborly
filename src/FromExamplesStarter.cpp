@@ -101,71 +101,10 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             );
             
             components.numOfRuns = 20;
-            break; // end case 0
+            break;
 
         }
         case 1:
-        {
-            // 120 x 120 city with 14,400 houses. 
-            // 5760 Falling Resdients (Group 1)
-            // 5760 Falling Residents (Group 2)
-            // Simulator_Basic_A
-            components.randomSeed = 0;
-            
-            components.city = make_unique<City_Grid>(120);
-
-            // Two groups: Group #1 and Group #2
-            for (int ii=1; ii<3; ++ii)
-            {
-                components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
-            }
-
-            for (int ii=0; ii<5760; ++ii)
-            {
-                components.residents.push_back(make_unique<Resident_Customizable>(
-                    ii,  // id
-                    1,   // group number
-                    30,   // allowed movement
-                    80,  // happiness goal
-                    make_unique<HappinessFunc_Falling> (
-                        70, // happiness value with zero neighbors
-                        95, // happiness value at zero diversity
-                        50  // happiness value at one diversity
-                    )
-                ));
-            }
-            for (int jj=5760; jj<11520; ++jj)
-            {
-                components.residents.push_back(make_unique<Resident_Customizable>(
-                    jj,
-                    2,
-                    30,
-                    80,
-                    make_unique<HappinessFunc_Falling>(
-                        70,
-                        95,
-                        50)
-                ));
-            }
-
-            components.residentTemplatePerGroupId
-                .insert({1, components.residents[0]->getTemplate()});
-            components.residentTemplatePerGroupId
-                .insert({2, components.residents[5760]->getTemplate()});
-
-            components.simulator = make_unique<Simulator_Basic_A>(
-                components.city.get(),
-                getSetOfPointers(components.residents),
-                30, // percent of residents that are chosen to move each run
-                20, // number of houses the residents can choose from
-                make_unique<CityState_Simple>(components.city.get())
-            );
-
-            components.numOfRuns = 20;
-            
-            break; // end case 1
-        }
-        case 2:
         {
             // 30 x 30 city with 900 houses. 
             // 200 Falling Resdients (Group 1)
@@ -224,7 +163,67 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             components.numOfRuns = 20;
             
-            break; // end case 2
+            break;
+        }
+        case 2:
+        {
+            // 120 x 120 city with 14,400 houses. 
+            // 5760 Falling Resdients (Group 1)
+            // 5760 Falling Residents (Group 2)
+            // Simulator_Basic_A
+            components.randomSeed = 0;
+            
+            components.city = make_unique<City_Grid>(120);
+
+            // Two groups: Group #1 and Group #2
+            for (int ii=1; ii<3; ++ii)
+            {
+                components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
+            }
+
+            for (int ii=0; ii<5760; ++ii)
+            {
+                components.residents.push_back(make_unique<Resident_Customizable>(
+                    ii,  // id
+                    1,   // group number
+                    30,   // allowed movement
+                    80,  // happiness goal
+                    make_unique<HappinessFunc_Falling> (
+                        70, // happiness value with zero neighbors
+                        95, // happiness value at zero diversity
+                        50  // happiness value at one diversity
+                    )
+                ));
+            }
+            for (int jj=5760; jj<11520; ++jj)
+            {
+                components.residents.push_back(make_unique<Resident_Customizable>(
+                    jj,
+                    2,
+                    30,
+                    80,
+                    make_unique<HappinessFunc_Falling>(
+                        70,
+                        95,
+                        50)
+                ));
+
+            components.residentTemplatePerGroupId
+                .insert({1, components.residents[0]->getTemplate()});
+            components.residentTemplatePerGroupId
+                .insert({2, components.residents[5760]->getTemplate()});
+
+            components.simulator = make_unique<Simulator_Basic_A>(
+                components.city.get(),
+                getSetOfPointers(components.residents),
+                30, // percent of residents that are chosen to move each run
+                20, // number of houses the residents can choose from
+                make_unique<CityState_Simple>(components.city.get())
+            );
+
+            components.numOfRuns = 20;
+            
+            break;
         }
         case 3:
         {
@@ -285,7 +284,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             components.numOfRuns = 20;
             
-            break; // end case 3
+            break;
         }
         case 4:
         {
@@ -345,71 +344,10 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
             );
 
             components.numOfRuns = 20;
-            break; // end case 4
+            break;
 
         }
         case 5:
-        {
-            // 120 x 120 city with 14,400 houses. 
-            // 5760 Falling Resdients (Group 1)
-            // 5760 Falling Residents (Group 2)
-            // Simulator_Basic_B
-            components.randomSeed = 0;
-            
-            components.city = make_unique<City_Grid>(120);
-
-            // Two groups: Group #1 and Group #2
-            for (int ii=1; ii<3; ++ii)
-            {
-                components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
-            }
-
-            for (int ii=0; ii<5760; ++ii)
-            {
-                components.residents.push_back(make_unique<Resident_Customizable>(
-                    ii,  // id
-                    1,   // group number
-                    30,   // allowed movement
-                    80,  // happiness goal
-                    make_unique<HappinessFunc_Falling> (
-                        70, // happiness value with zero neighbors
-                        95, // happiness value at zero diversity
-                        50  // happiness value at one diversity
-                    )
-                ));
-            }
-            for (int jj=5760; jj<11520; ++jj)
-            {
-                components.residents.push_back(make_unique<Resident_Customizable>(
-                    jj,
-                    2,
-                    30,
-                    80,
-                    make_unique<HappinessFunc_Falling>(
-                        70,
-                        95,
-                        50)
-                ));
-            }
-
-            components.residentTemplatePerGroupId
-                .insert({1, components.residents[0]->getTemplate()});
-            components.residentTemplatePerGroupId
-                .insert({2, components.residents[5760]->getTemplate()});
-
-            components.simulator = make_unique<Simulator_Basic_B>(
-                components.city.get(),
-                getSetOfPointers(components.residents),
-                30, // percent of residents that are chosen to move each run
-                20, // number of houses the residents can choose from
-                make_unique<CityState_Simple>(components.city.get())
-            );
-
-            components.numOfRuns = 20;
-            
-            break; // end case 5
-        }
-        case 6:
         {
             // 30 x 30 city with 900 houses. 
             // 200 Falling Resdients (Group 1)
@@ -468,7 +406,68 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             components.numOfRuns = 20;
             
-            break; // end case 6
+            break;
+        }
+        case 6:
+        {
+            // 120 x 120 city with 14,400 houses. 
+            // 5760 Falling Resdients (Group 1)
+            // 5760 Falling Residents (Group 2)
+            // Simulator_Basic_B
+            components.randomSeed = 0;
+            
+            components.city = make_unique<City_Grid>(120);
+
+            // Two groups: Group #1 and Group #2
+            for (int ii=1; ii<3; ++ii)
+            {
+                components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
+            }
+
+            for (int ii=0; ii<5760; ++ii)
+            {
+                components.residents.push_back(make_unique<Resident_Customizable>(
+                    ii,  // id
+                    1,   // group number
+                    30,   // allowed movement
+                    80,  // happiness goal
+                    make_unique<HappinessFunc_Falling> (
+                        70, // happiness value with zero neighbors
+                        95, // happiness value at zero diversity
+                        50  // happiness value at one diversity
+                    )
+                ));
+            }
+            for (int jj=5760; jj<11520; ++jj)
+            {
+                components.residents.push_back(make_unique<Resident_Customizable>(
+                    jj,
+                    2,
+                    30,
+                    80,
+                    make_unique<HappinessFunc_Falling>(
+                        70,
+                        95,
+                        50)
+                ));
+            }
+
+            components.residentTemplatePerGroupId
+                .insert({1, components.residents[0]->getTemplate()});
+            components.residentTemplatePerGroupId
+                .insert({2, components.residents[5760]->getTemplate()});
+
+            components.simulator = make_unique<Simulator_Basic_B>(
+                components.city.get(),
+                getSetOfPointers(components.residents),
+                30, // percent of residents that are chosen to move each run
+                20, // number of houses the residents can choose from
+                make_unique<CityState_Simple>(components.city.get())
+            );
+
+            components.numOfRuns = 20;
+            
+            break;
         }
         case 7:
         {
@@ -529,7 +528,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
 
             components.numOfRuns = 20;
             
-            break; // end case 7
+            break;
         }
     }
 
