@@ -29,13 +29,13 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
     int chosenCityAndResidentTypeCombo = ui.menu(
         "\nWhich combination of simulator, city size, and resident types do you choose? ",
         vector<string>{ 
-            "Simulator A with small city and regular residents", 
+            "Simulator A with small city and regular residents",
+            "Simulator A with small city and finicky residents",  
             "Simulator A with large city and regular residents",
-            "Simulator A with small city and finicky residents", 
             "Simulator A with large city and finicky residents",
-            "Simulator B with small city and regular residents", 
+            "Simulator B with small city and regular residents",
+            "Simulator B with small city and finicky residents",
             "Simulator B with large city and regular residents",
-            "Simulator B with small city and finicky residents", 
             "Simulator B with large city and finicky residents"},
             0,
             "Could not tell, which combo you wanted, will be using simulator a with a small city"
@@ -207,6 +207,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                         95,
                         50)
                 ));
+            }
 
             components.residentTemplatePerGroupId
                 .insert({1, components.residents[0]->getTemplate()});
