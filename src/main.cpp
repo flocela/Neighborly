@@ -1,4 +1,13 @@
 /*
+ * Original project is by Amine Ben Hassouna. It allowed th euser to
+ * write text and render blocks in a window. 
+ * 
+ * The idea of Neighbors that is a simulation of two different
+ * groups of residents living in a city and the effects on 
+ * their happiness is by Aurea F. Maldonado - 2023.
+ * The copyright is the same as Amine Ben Hassouna's (2018 2019)
+ * copyrights below.
+ * 
  * Copyright (c) 2018, 2019 Amine Ben Hassouna <amine.benhassouna@gmail.com>
  * All rights reserved.
  *

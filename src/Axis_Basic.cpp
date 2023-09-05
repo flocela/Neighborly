@@ -9,8 +9,8 @@ Axis_Basic::Axis_Basic(
     int lowVal,
     int highVal,
     int pxPerUnit,
-    int startOffsetMultiplier,
-    int endOffsetMultiplier
+    int startOffset,
+    int endOffset
 ):  
     _forward{forward},
     _cross_pixel__px{crossPixel},
@@ -19,8 +19,8 @@ Axis_Basic::Axis_Basic(
     _start_val{forward ? lowVal : highVal},
     _end_val{forward ? highVal : lowVal},
     _px_per_unit{forward ? pxPerUnit : -pxPerUnit},
-    _start_offset_m{startOffsetMultiplier},
-    _end_offset_m{endOffsetMultiplier}
+    _start_offset_m{startOffset},
+    _end_offset_m{endOffset}
 {}
 
 int Axis_Basic::getAxisLengthPx () const

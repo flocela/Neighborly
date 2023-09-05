@@ -1,5 +1,5 @@
 <random_number>
-    10
+    0
 </random_number>
 <city>
     <type>
@@ -41,10 +41,10 @@
         30
     </allowed_movement>
     <happiness_goal>
-        60
+        80
     </happiness_goal>
     <resident_type>
-        Resident_UsingFunction
+        Resident_Customizable
     </resident_type>
     <happiness_function>
         HappinessFunction_Falling
@@ -53,10 +53,10 @@
         70
     </zero_neighbors>
     <happiness_at_zero_diversity>
-        95
+        100
     </happiness_at_zero_diversity>
     <happiness_at_one_diversity>
-        10
+        0
     </happiness_at_one_diversity>
 </resident_group>
 <resident_group>
@@ -73,10 +73,10 @@
         30
     </allowed_movement>
     <happiness_goal>
-        60
+        80
     </happiness_goal>
     <resident_type>
-        Resident_UsingFunction
+        Resident_Customizable
     </resident_type>
     <happiness_function>
         HappinessFunction_Falling
@@ -85,15 +85,15 @@
         70
     </zero_neighbors>
     <happiness_at_zero_diversity>
-        95
+        100
     </happiness_at_zero_diversity>
     <happiness_at_one_diversity>
-        10
+        0
     </happiness_at_one_diversity>
 </resident_group>
 <simulator>
     <name>
-        Simulator_Basic_A
+        Simulator_Basic_B
     </name>
     <percent_residents_to_move>
         30
@@ -103,5 +103,5 @@
     </num_of_tries>
 </simulator>
 <num_of_runs>
-    30
+    20
 </num_of_runs>

@@ -32,7 +32,7 @@
         0
     </start_id>
     <number_of>
-        360
+        200
     </number_of>
     <group_id>
         1
@@ -41,10 +41,10 @@
         15
     </allowed_movement>
     <happiness_goal>
-        60
+        80
     </happiness_goal>
     <resident_type>
-        Resident_UsingFunction
+        Resident_Customizable
     </resident_type>
     <happiness_function>
         HappinessFunction_Falling
@@ -56,15 +56,15 @@
         95
     </happiness_at_zero_diversity>
     <happiness_at_one_diversity>
-        10
+        50
     </happiness_at_one_diversity>
 </resident_group>
 <resident_group>
     <start_id>
-        360
+        200
     </start_id>
     <number_of>
-        360
+        600
     </number_of>
     <group_id>
         2
@@ -73,10 +73,10 @@
         15
     </allowed_movement>
     <happiness_goal>
-        60
+        80
     </happiness_goal>
     <resident_type>
-        Resident_UsingFunction
+        Resident_Customizable
     </resident_type>
     <happiness_function>
         HappinessFunction_Falling
@@ -88,12 +88,12 @@
         95
     </happiness_at_zero_diversity>
     <happiness_at_one_diversity>
-        10
+        50
     </happiness_at_one_diversity>
 </resident_group>
 <simulator>
     <name>
-        Simulator_Basic_B
+        Simulator_Basic_A
     </name>
     <percent_residents_to_move>
         30
@@ -103,5 +103,5 @@
     </num_of_tries>
 </simulator>
 <num_of_runs>
-    30
+    20
 </num_of_runs>

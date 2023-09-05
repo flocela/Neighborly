@@ -425,7 +425,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                 components.baseColorsPerGroupid.insert({ii, _ordered_base_colors[ii-1]});
             }
 
-            for (int ii=0; ii<400; ++ii)
+            for (int ii=0; ii<200; ++ii)
             {
                 components.residents.push_back(make_unique<Resident_Customizable>(
                     ii,  // id
@@ -439,7 +439,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     )
                 ));
             }
-            for (int jj=400; jj<800; ++jj)
+            for (int jj=200; jj<800; ++jj)
             {
                 components.residents.push_back(make_unique<Resident_Customizable>(
                     jj,
@@ -492,7 +492,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     ii,  // id
                     1,   // group number
                     30,   // allowed movement
-                    75,  // happiness goal
+                    80,  // happiness goal
                     make_unique<HappinessFunc_Falling> (
                         70, // happiness value with zero neighbors
                         100, // happiness value at zero diversity
@@ -506,7 +506,7 @@ SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& 
                     jj,
                     2,
                     30,
-                    75,
+                    80,
                     make_unique<HappinessFunc_Falling>(
                         70,
                         100,

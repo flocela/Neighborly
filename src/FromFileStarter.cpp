@@ -27,6 +27,7 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
     SimulationComponents components;
     ifstream inputStream;
     inputStream.open(inputTextFile);
+
     if (inputStream.is_open())
     {   
         // seed for random number generator.
@@ -39,7 +40,7 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
             components.randomSeed = stoi(randNum);
             getline(inputStream, line);      
         }
-
+        
         // city
         getline(inputStream, line);
         if (line.find("<city>") != string::npos)
@@ -66,7 +67,7 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
             }
             getline(inputStream, line); // </city>
         }
-
+        
         // base color per group
         getline(inputStream, line);
         if (line.find("base_color_per_group") != string::npos)
@@ -85,14 +86,15 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
                 populateResidents(inputStream, components.residents);
 
                 // resident types per group id
-                 const unique_ptr<Resident>& lastResident = components.residents.back();
                 components.residentTemplatePerGroupId
-                    .insert({lastResident->getGroupId(), lastResident->getTemplate()});
+                    .insert({components.residents[components.residents.size()-1]->getGroupId(),
+                             components.residents[components.residents.size()-1]->getTemplate()
+                            });
             }
 
             getline(inputStream, line);
         }
-        
+
         if (line.find("<simulator>") != string::npos)
         {   
             string simulator = "";
@@ -132,7 +134,7 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
         }
 
     }
-
+    
     return components;
 }
 

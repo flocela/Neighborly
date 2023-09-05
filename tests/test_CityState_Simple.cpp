@@ -41,7 +41,8 @@ vector<Resident*> createResidents (int numOfResidents)
     return residents;
 }
 
-vector<int> createAddresses(
+// 
+vector<int> createUnoccupiedAddresses (
     int width,
     int centerX,
     int centerY,
@@ -104,7 +105,7 @@ TEST_CASE("CityState:: empty city, getOpenHousesWithinRange(), allowableDist=15"
 
     // expected
     vector<int> expected = 
-        createAddresses(100, centerX, centerY, allowableDist,unordered_set<int>{});
+        createUnoccupiedAddresses(100, centerX, centerY, allowableDist,unordered_set<int>{});
     
     // actual
     vector<int> actual =
@@ -197,7 +198,7 @@ TEST_CASE("CityState:: city with 10 residents at y = 5 and y = 15, getOpenHouses
         1500, 1501, 1502, 1503, 1504, 1505, 1506, 1507, 1508, 1509
     };
 
-    vector<int> expected = createAddresses(
+    vector<int> expected = createUnoccupiedAddresses(
         100,
         centerX,
         centerY,
@@ -241,26 +242,35 @@ TEST_CASE("CityState:: city with 10 residents at y = 5 and y = 15, getOpenHouses
 
 TEST_CASE("CityState:: moveIn() and moveOut()")
 {
+    // City width. City grid will be 100 rows, and 100 columns, numbered from 0 to 999. Total
+    // number of houses is 10,000, numbered from 0 to 9,999.
     int width = 100;
-    // center house and allowable distance used later in getOpenHousesWithRange() method.
+    City_Grid city = City_Grid(width);
+
+    CityState_Simple cityState{&city};
+    
+    // Test focuses on a center house at column 5, row 4. 
     int centerX = 4;
     int centerY = 5;
     int centerHouseAddress = centerY * width + centerX;
     double allowableDist = 15;
 
-    City_Grid city = City_Grid(width);
-    CityState_Simple cityState{&city};
+    
 
-    // houses vector used later when moving residents into houses, and testing
+    // houses vector is used later when moving residents into houses, and when testing
     // getResidentPerHouse() and getHousePerResident() methods.
     vector<const House*> houses = city.getHouses();
 
     vector<Resident*> residents = createResidents(10);
 
-    // moving residents in and out of row ten.
+    // Will move the ten residents into row 10. Then will move residents 0 through 4 out.
+    // Results of row 10 should be:
+    // 00 01 02 03 04 05 06 07 08 09
+    // -- -- -- -- -- R5 R6 R7 R8 R9
+    // Residents will be in house addresses: 1005, 1006 1007, 1008, 1009.
+    // Addresses are row * width + column. For R5 address is 10 * 100 + 5
     int y = 10;
 
-    // Move in ten residents at row y == 10 and then move residents at x=0 through x=4 out.
         for (int ii=0; ii<10; ++ii)
         {
             cityState.moveIn(residents[ii], houses[y * width + ii]);
@@ -271,13 +281,12 @@ TEST_CASE("CityState:: moveIn() and moveOut()")
             cityState.moveOut(residents[ii]);
         }
 
-        // expected
-        // exclude width * y + ii addresses, where ii is from 5 through 9.
+        // Create expected unoccupied houses centered around (centerX, centerY).
         unordered_set<int> occupiedHouses = {1005, 1006, 1007, 1008, 1009};
         vector<int> expected = 
-            createAddresses(width, centerX, centerY, allowableDist, occupiedHouses);
+            createUnoccupiedAddresses(width, centerX, centerY, allowableDist, occupiedHouses);
 
-        // actual is 
+        // actual unoccupied houses centered around (centerX, centerY)
         vector<int> actual = getOpenAddressesWithinRange(
             cityState,
             centerX,
@@ -286,13 +295,13 @@ TEST_CASE("CityState:: moveIn() and moveOut()")
 
         REQUIRE(expected == actual);
 
-    // Move one resident back in
+    // Move one resident back in (Resident 1000 into address 1000).
 
         cityState.moveIn(residents[0], houses[y*width]);
 
         //expected
         unordered_set<int> exclude =  {1000, 1005, 1006, 1007, 1008, 1009};
-        expected = createAddresses(width, centerX, centerY, allowableDist, exclude);
+        expected = createUnoccupiedAddresses(width, centerX, centerY, allowableDist, exclude);
 
         // actual
         actual = getOpenAddressesWithinRange(cityState, centerX, centerY, allowableDist);
@@ -303,20 +312,25 @@ TEST_CASE("CityState:: moveIn() and moveOut()")
 
         // expected
         unordered_map<int, Resident*> expectedResPerAddress{};
-        expectedResPerAddress.insert({y*width, residents[0]});
+
+        // The original 5 residentsare 5 through 9 at addresses 1005 through 1009.
         for (int ii=5; ii<10; ++ii)
         {
             expectedResPerAddress.insert({y*width + ii, residents[ii]});
         }
 
+        // Resident 0 was moved in seperately into address 1000.
+        expectedResPerAddress.insert({y*width+0, residents[0]});
+
         // actual
-        unordered_map<int, Resident*> actualResPerAddress{};
         unordered_map<const House*, Resident*> actualResPerHouse =
             cityState.getResidentsPerHouse();
+        unordered_map<int, Resident*> actualResPerAddress{};
         for (auto p : actualResPerHouse)
         {
             actualResPerAddress.insert({p.first->getAddress(), p.second});
         }
+
         REQUIRE(expectedResPerAddress == actualResPerAddress);
 
     // check getHousePerResident()

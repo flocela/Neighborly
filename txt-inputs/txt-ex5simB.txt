@@ -6,7 +6,7 @@
         City_Grid
     </type>
     <width>
-        30
+        120
     </width>
 </city>
 <base_color_per_group>
@@ -32,19 +32,19 @@
         0
     </start_id>
     <number_of>
-        360
+        5760
     </number_of>
     <group_id>
         1
     </group_id>
     <allowed_movement>
-        15
+        30
     </allowed_movement>
     <happiness_goal>
-        60
+        80
     </happiness_goal>
     <resident_type>
-        Resident_UsingFunction
+        Resident_Customizable
     </resident_type>
     <happiness_function>
         HappinessFunction_Falling
@@ -61,22 +61,22 @@
 </resident_group>
 <resident_group>
     <start_id>
-        360
+        5760
     </start_id>
     <number_of>
-        360
+        5760
     </number_of>
     <group_id>
         2
     </group_id>
     <allowed_movement>
-        15
+        30
     </allowed_movement>
     <happiness_goal>
-        60
+        80
     </happiness_goal>
     <resident_type>
-        Resident_UsingFunction
+        Resident_Customizable
     </resident_type>
     <happiness_function>
         HappinessFunction_Falling

@@ -23,10 +23,6 @@ public:
     HappinessFunc_Flat& operator=(const HappinessFunc_Flat& obj) = default;
     HappinessFunc_Flat& operator=(HappinessFunc_Flat&& obj) noexcept = default;
     ~HappinessFunc_Flat () noexcept = default;
-    
-    double getLargestValue () const;
-
-    double getSmallestValue () const;
 
     double calcHappiness(
         int tot_num_of_possible_neighbors, 
@@ -34,6 +30,10 @@ public:
         int num_of_diff_neighbors) const override;
 
     std::string toStrBasic () const override;
+
+    double getLargestValue () const;
+
+    double getSmallestValue () const;
 
 private:
 

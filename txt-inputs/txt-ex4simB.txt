@@ -6,7 +6,7 @@
         City_Grid
     </type>
     <width>
-        120
+        30
     </width>
 </city>
 <base_color_per_group>
@@ -32,19 +32,19 @@
         0
     </start_id>
     <number_of>
-        5760
+        200
     </number_of>
     <group_id>
         1
     </group_id>
     <allowed_movement>
-        30
+        15
     </allowed_movement>
     <happiness_goal>
-        60
+        80
     </happiness_goal>
     <resident_type>
-        Resident_UsingFunction
+        Resident_Customizable
     </resident_type>
     <happiness_function>
         HappinessFunction_Falling
@@ -56,27 +56,27 @@
         95
     </happiness_at_zero_diversity>
     <happiness_at_one_diversity>
-        10
+        50
     </happiness_at_one_diversity>
 </resident_group>
 <resident_group>
     <start_id>
-        5760
+        200
     </start_id>
     <number_of>
-        5760
+        600
     </number_of>
     <group_id>
         2
     </group_id>
     <allowed_movement>
-        30
+        15
     </allowed_movement>
     <happiness_goal>
-        60
+        80
     </happiness_goal>
     <resident_type>
-        Resident_UsingFunction
+        Resident_Customizable
     </resident_type>
     <happiness_function>
         HappinessFunction_Falling
@@ -88,17 +88,20 @@
         95
     </happiness_at_zero_diversity>
     <happiness_at_one_diversity>
-        10
+        50
     </happiness_at_one_diversity>
 </resident_group>
 <simulator>
     <name>
-        Simulator_Basic_A
+        Simulator_Basic_B
     </name>
+    <percent_residents_to_move>
+        30
+    </percent_residents_to_move>
     <num_of_tries>
         20
     </num_of_tries>
 </simulator>
 <num_of_runs>
-    30
+    20
 </num_of_runs>
