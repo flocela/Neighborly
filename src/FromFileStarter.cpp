@@ -40,7 +40,6 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
             components.randomSeed = stoi(randNum);
             getline(inputStream, line);      
         }
-        
         // city
         getline(inputStream, line);
         if (line.find("<city>") != string::npos)
@@ -67,7 +66,6 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
             }
             getline(inputStream, line); // </city>
         }
-        
         // base color per group
         getline(inputStream, line);
         if (line.find("base_color_per_group") != string::npos)
@@ -76,7 +74,6 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
             components.baseColorsPerGroupid.insert(returnBaseColor(inputStream));
             getline(inputStream, line); // </base_color_per_group>
         }
-        
         // residents
         getline(inputStream, line);
         while (line.find("<resident_group") != string::npos)
@@ -94,7 +91,6 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
 
             getline(inputStream, line);
         }
-
         if (line.find("<simulator>") != string::npos)
         {   
             string simulator = "";
@@ -121,7 +117,6 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
             }
             getline(inputStream, line); // </simulator>
         }
-
         // number of runs
         getline(inputStream, line);
         if (line.find("<num_of_runs>") != string::npos)
@@ -132,7 +127,6 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
             getline(inputStream, line); // </num_of_runs>
             components.numOfRuns = stoi(numOfRuns);
         }
-
     }
     
     return components;

@@ -103,5 +103,5 @@
     </num_of_tries>
 </simulator>
 <num_of_runs>
-    30
+    20
 </num_of_runs>

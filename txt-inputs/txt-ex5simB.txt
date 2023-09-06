@@ -53,7 +53,7 @@
         70
     </zero_neighbors>
     <happiness_at_zero_diversity>
-        10
+        100
     </happiness_at_zero_diversity>
     <happiness_at_one_diversity>
         0

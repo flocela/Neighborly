@@ -64,7 +64,7 @@
         200
     </start_id>
     <number_of>
-        200
+        600
     </number_of>
     <group_id>
         2
