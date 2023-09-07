@@ -1,5 +1,5 @@
-#ifndef FROM_FILE_STARTER__H
-#define FROM_FILE_STARTER__H
+#ifndef COLLECTOR_BY_INPUT_FILE__H
+#define COLLECTOR_BY_QUESTIONS_STARTER__H
 
 #include <memory>
 #include <vector>
@@ -10,7 +10,7 @@
 #include "Simulator_Basic_B.h"
 
 // Takes in a file and returns a SimulationComponents
-class FromFileStarter
+class CollectorByInputFile
 {
     
 public:

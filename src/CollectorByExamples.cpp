@@ -2,7 +2,7 @@
 #include <string>
 #include "City_Grid.h"
 #include "CityState_Simple.h"
-#include "FromExamplesStarter.h"
+#include "CollectorByExamples.h"
 #include "HappinessFunc_Falling.h"
 #include "Resident_Customizable.h"
 #include "SimulationComponents.h"
@@ -22,7 +22,7 @@ unordered_set<T*> getSetOfPointers (vector<unique_ptr<T>>& ts)
     return pointers;
 }
 
-SimulationComponents FromExamplesStarter::createSimulationComponents (const UI& ui)
+SimulationComponents CollectorByExamples::createSimulationComponents (const UI& ui)
 {
     SimulationComponents components;
 

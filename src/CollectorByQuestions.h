@@ -1,11 +1,11 @@
-#ifndef FROM_QUESTIONS_STARTER__H
-#define FROM_QUESTIONS_STARTER__H
+#ifndef COLLECTOR_BY_QUESTIONS__H
+#define COLLECTOR_BY_QUESTIONS__H
 
 #include "CityFactory.h"
 #include "ResidentsFactory.h"
 #include "SimulationComponents.h"
 
-class FromQuestionsStarter
+class CollectorByQuestions
 {
 
 public:

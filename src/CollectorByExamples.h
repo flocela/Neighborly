@@ -1,11 +1,11 @@
-#ifndef FROM_EXAMPLES_STARTER__H
-#define FROM_EXAMPLES_STARTER__H
+#ifndef COLLECTOR_BY_EXAMPLES__H
+#define COLLECTOR_BY_EXAMPLES__H
 
 #include "SimulationComponents.h"
 #include "UI.h"
 
 // Asks the user which example to run.
-class FromExamplesStarter
+class CollectorByExamples
 {
 
 public:

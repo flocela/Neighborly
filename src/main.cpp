@@ -1,10 +1,15 @@
+
+
 /*
- * Original project is by Amine Ben Hassouna. It allowed th euser to
+ * Original project is by Amine Ben Hassouna. It allowed the user to
  * write text and render blocks in a window. 
  * 
- * The idea of Neighbors that is a simulation of two different
+ * The idea of Neighborly, which is a simulation of two different
  * groups of residents living in a city and the effects on 
- * their happiness is by Aurea F. Maldonado - 2023.
+ * their happiness, is taken from the simulation "Parable
+ * of the Polygons" at https://ncase.me/polygons. The code in this
+ * version here is by Aurea F. Maldonado - 2023.
+ * 
  * The copyright is the same as Amine Ben Hassouna's (2018 2019)
  * copyrights below.
  * 
@@ -43,9 +48,9 @@
 
 #include "CityFactory.h"
 #include "CityFactory_Grid.h"
-#include "FromExamplesStarter.h"
-#include "FromQuestionsStarter.h"
-#include "FromFileStarter.h"
+#include "CollectorByExamples.h"
+#include "CollectorByQuestions.h"
+#include "CollectorByInputFile.h"
 #include "Printer_Graphic.h"
 #include "Printer_CmdLine.h"
 #include "Renderer_SDL.h"
@@ -156,8 +161,8 @@ SimulationComponents createSimulationComponents (int argc, char* argv[])
     if (usingFile)
     {
         string inputFile = argv[1];
-        FromFileStarter fromFileStarter{};
-        components = fromFileStarter.createSimulationComponents("../" + inputFile);
+        CollectorByInputFile collectorByInputFile{};
+        components = collectorByInputFile.createSimulationComponents("../" + inputFile);
     }
     else
     {   
@@ -170,13 +175,13 @@ SimulationComponents createSimulationComponents (int argc, char* argv[])
 
         if (usingExamples)
         {   
-            FromExamplesStarter fromExamplesStarter;
-            components = fromExamplesStarter.createSimulationComponents(cmdLine);
+            CollectorByExamples collectorByExamples;
+            components = collectorByExamples.createSimulationComponents(cmdLine);
         }
         else
         {
-            FromQuestionsStarter fromQuestionsStarter{};
-            components = fromQuestionsStarter.createSimulationComponents(
+            CollectorByQuestions collectorByQuestions{};
+            components = collectorByQuestions.createSimulationComponents(
                 cmdLine,
                 initCityFactories(),
                 initResidentFactories(),

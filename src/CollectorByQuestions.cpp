@@ -1,6 +1,6 @@
 #include "CityMaker_CmdLine.h"
 #include "CityState_Simple.h"
-#include "FromQuestionsStarter.h"
+#include "CollectorByQuestions.h"
 #include "RandomSeedGetter.h"
 #include "ResidentsMaker_AskUser.h"
 #include "SimulatorGetter.h"
@@ -19,7 +19,7 @@ std::unordered_set<T*> getSetOfPointers (std::vector<std::unique_ptr<T>>& ts)
     return pointers;
 }
 
-SimulationComponents FromQuestionsStarter::createSimulationComponents (
+SimulationComponents CollectorByQuestions::createSimulationComponents (
     const UI& ui,
     const vector<unique_ptr<const CityFactory>>& cityFactories,
     const vector<unique_ptr<const ResidentsFactory>>& residentFactories,

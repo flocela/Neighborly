@@ -1,7 +1,7 @@
 #include <fstream>
 #include "City_Grid.h"
 #include "CityState_Simple.h"
-#include "FromFileStarter.h"
+#include "CollectorByInputFile.h"
 #include "HappinessFunc_Falling.h"
 #include "HappinessFunc_Flat.h"
 #include "HappinessFunc_Rising.h"
@@ -22,7 +22,7 @@ std::unordered_set<T*> getSetOfPointers (const std::vector<std::unique_ptr<T>>& 
     return pointers;
 }
 
-SimulationComponents FromFileStarter::createSimulationComponents(string inputTextFile)
+SimulationComponents CollectorByInputFile::createSimulationComponents(string inputTextFile)
 {
     SimulationComponents components;
     ifstream inputStream;
@@ -132,7 +132,7 @@ SimulationComponents FromFileStarter::createSimulationComponents(string inputTex
     return components;
 }
 
-std::unique_ptr<Simulator_Basic_A> FromFileStarter::returnSimulatorBasicA (
+std::unique_ptr<Simulator_Basic_A> CollectorByInputFile::returnSimulatorBasicA (
     std::ifstream& inputStream,
     const SimulationComponents& components
 )
@@ -163,7 +163,7 @@ std::unique_ptr<Simulator_Basic_A> FromFileStarter::returnSimulatorBasicA (
     );
 }
 
-std::unique_ptr<Simulator_Basic_B> FromFileStarter::returnSimulatorBasicB (
+std::unique_ptr<Simulator_Basic_B> CollectorByInputFile::returnSimulatorBasicB (
     std::ifstream& inputStream,
     const SimulationComponents& components
 )
@@ -192,7 +192,7 @@ std::unique_ptr<Simulator_Basic_B> FromFileStarter::returnSimulatorBasicB (
     );
 }
 
-pair<int, BaseColor> FromFileStarter::returnBaseColor (ifstream& inputStream)
+pair<int, BaseColor> CollectorByInputFile::returnBaseColor (ifstream& inputStream)
 {
     string groupId = "";
     string baseColor = "";
@@ -219,7 +219,7 @@ pair<int, BaseColor> FromFileStarter::returnBaseColor (ifstream& inputStream)
     return {stoi(groupId), c};
 }
 
-void FromFileStarter::populateResidents (
+void CollectorByInputFile::populateResidents (
     ifstream& inputStream,
     vector<unique_ptr<Resident>>& residents
 )
@@ -336,7 +336,7 @@ void FromFileStarter::populateResidents (
     }
 }
 
-void FromFileStarter::populateResidentsWithStepDownFunc (
+void CollectorByInputFile::populateResidentsWithStepDownFunc (
     std::ifstream& inputStream,
         std::vector<std::unique_ptr<Resident>>& residents,
         int startId,
@@ -397,7 +397,7 @@ void FromFileStarter::populateResidentsWithStepDownFunc (
     }
 }
 
-void FromFileStarter::populateResidentsWithStepUpFunc (
+void CollectorByInputFile::populateResidentsWithStepUpFunc (
     std::ifstream& inputStream,
         std::vector<std::unique_ptr<Resident>>& residents,
         int startId,
@@ -457,7 +457,7 @@ void FromFileStarter::populateResidentsWithStepUpFunc (
     }
 }
 
-void FromFileStarter::populateResidentsWithFallingFunc (
+void CollectorByInputFile::populateResidentsWithFallingFunc (
     std::ifstream& inputStream,
     std::vector<std::unique_ptr<Resident>>& residents,
     int startId,
@@ -509,7 +509,7 @@ void FromFileStarter::populateResidentsWithFallingFunc (
     }
 }
 
-void FromFileStarter::populateResidentsWithRisingFunc (
+void CollectorByInputFile::populateResidentsWithRisingFunc (
     std::ifstream& inputStream,
     std::vector<std::unique_ptr<Resident>>& residents,
     int startId,
@@ -561,7 +561,7 @@ void FromFileStarter::populateResidentsWithRisingFunc (
     }
 }
 
-void FromFileStarter::populateResidentsWithFlatFunc (
+void CollectorByInputFile::populateResidentsWithFlatFunc (
     std::ifstream& inputStream,
     std::vector<std::unique_ptr<Resident>>& residents,
     int startId,
@@ -605,7 +605,7 @@ void FromFileStarter::populateResidentsWithFlatFunc (
     }
 }
 
-string FromFileStarter::leftTrim (string str)
+string CollectorByInputFile::leftTrim (string str)
 {
     size_t start = str.find_first_not_of(" ");
     return (start == std::string::npos) ? "" : str.substr(start);
