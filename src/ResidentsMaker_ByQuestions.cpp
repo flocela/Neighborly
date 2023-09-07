@@ -1,12 +1,12 @@
 #include <iomanip>
 #include <sstream>
-#include "ResidentsMaker_AskUser.h"
+#include "ResidentsMaker_ByQuestions.h"
 #include "Question_Double.h"
 #include "Question_Int.h"
 
 using namespace std;
 
-ResidentsGroupInfo ResidentsMaker_AskUser::makeResidents (
+ResidentsGroupInfo ResidentsMaker_ByQuestions::makeResidents (
     const UI& ui,
     const vector<unique_ptr<const ResidentsFactory>>& residentsFactories,
     int maxResidentCount,
@@ -78,7 +78,7 @@ ResidentsGroupInfo ResidentsMaker_AskUser::makeResidents (
     return resGroupInfo;
 }
 
-int ResidentsMaker_AskUser::askForNumOfResidents(const UI& ui, int maxNumOfResidents, string color)
+int ResidentsMaker_ByQuestions::askForNumOfResidents(const UI& ui, int maxNumOfResidents, string color)
 {
     // Add max number of residents to prompt.
     string howManyResidentsPrompt = insertIntoString(
@@ -105,7 +105,7 @@ int ResidentsMaker_AskUser::askForNumOfResidents(const UI& ui, int maxNumOfResid
     return stoi(ui.getAnswer(question));
 }
 
-int ResidentsMaker_AskUser::askForGroupResidentType (
+int ResidentsMaker_ByQuestions::askForGroupResidentType (
     const UI& ui,
     string color, 
     const vector<unique_ptr<const ResidentsFactory>>& residentsFactories
@@ -128,7 +128,7 @@ int ResidentsMaker_AskUser::askForGroupResidentType (
             ));
 }
 
-double ResidentsMaker_AskUser::askForAllowedMovementForGroup(
+double ResidentsMaker_ByQuestions::askForAllowedMovementForGroup(
     const UI& ui,
     string color, 
     double maxAllowedMovement
@@ -161,7 +161,7 @@ double ResidentsMaker_AskUser::askForAllowedMovementForGroup(
     return stod(ui.getAnswer(question));
 }
 
-double ResidentsMaker_AskUser::askForHappinessGoalForGroup (const UI& ui, string color)
+double ResidentsMaker_ByQuestions::askForHappinessGoalForGroup (const UI& ui, string color)
 {
     // Create question.  Add color to prompt.
     Question_Double question{
@@ -180,7 +180,7 @@ double ResidentsMaker_AskUser::askForHappinessGoalForGroup (const UI& ui, string
     return stod(ui.getAnswer(question));
 }
 
-vector<string> ResidentsMaker_AskUser::getFactoryNames (
+vector<string> ResidentsMaker_ByQuestions::getFactoryNames (
     const vector<unique_ptr<const ResidentsFactory>>& residentsFactories
 )
 {
@@ -192,7 +192,7 @@ vector<string> ResidentsMaker_AskUser::getFactoryNames (
     return residentsFactoryNames;
 }
 
-std::string ResidentsMaker_AskUser::insertIntoString  (
+std::string ResidentsMaker_ByQuestions::insertIntoString  (
     string str,
     int location,
     string insert
@@ -202,7 +202,7 @@ std::string ResidentsMaker_AskUser::insertIntoString  (
     return modifiedString.insert(location, insert);
 }
 
-int ResidentsMaker_AskUser::charLocationForColor (string str)
+int ResidentsMaker_ByQuestions::charLocationForColor (string str)
 {
     string target = "the  group";
     auto pos = str.find(target);

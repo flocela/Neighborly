@@ -1,5 +1,5 @@
-#ifndef RESIDENTSMAKER_ASKUSER__H
-#define RESIDENTSMAKER_ASKUSER__H
+#ifndef RESIDENTS_MAKER_BY_QUESTIONS__H
+#define RESIDENTS_MAKER_BY_QUESTIONS__H
 
 #include "ResidentsMaker.h"
 
@@ -7,7 +7,7 @@
 // Asks for information to create the residents.
 // Returns the ResidentsGroupInfo for the residents.
 // The ResidentsGroupInfo contains a vector of unique pointers to the residents.
-class ResidentsMaker_AskUser: public ResidentsMaker
+class ResidentsMaker_ByQuestions: public ResidentsMaker
 {
     
 public:

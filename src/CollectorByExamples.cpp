@@ -73,6 +73,7 @@ SimulationComponents CollectorByExamples::createSimulationComponents (const UI& 
                     )
                 ));
             }
+            
             for (int jj=200; jj<800; ++jj)
             {
                 components.residents.push_back(make_unique<Resident_Customizable>(
