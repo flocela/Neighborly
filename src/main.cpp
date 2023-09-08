@@ -94,11 +94,11 @@ int main(int argc, char* argv[])
 
     // Construct graphic printer
     Printer_Graphic graphicPrinter{
-        make_unique<Renderer_SDL>(SCREEN_WIDTH, SCREEN_HEIGHT,"Neighbors"),
+        make_unique<Renderer_SDL>(SCREEN_WIDTH, SCREEN_HEIGHT,"Neighborly"),
         components.baseColorsPerGroupid,
         *(components.city->getCoordinatesPerHouse()),
         *(components.city->getAdjacentHousesPerHouse()),
-        "Neighbors",
+        "Neighborly",
         components.numOfRuns
     };
 
