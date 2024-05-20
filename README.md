@@ -35,6 +35,8 @@ The code which allows rendering of text and blocks on a window is by Amine Ben H
 
 I am using the same copyright as Amine Ben Hassouna, see comments in main.cpp, lines 3 -43.
 
+Music for README video is from Kevin MacLeod. "Wallpaper" Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 License http://creativecommons.org/licenses/by/4.0/
+
 This project is distributed under the terms of the MIT license
 [&lt;LICENSE&gt;](LICENSE).
 
