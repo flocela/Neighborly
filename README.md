@@ -1,8 +1,12 @@
 # Neighborly
 
+
+https://github.com/flocela/Neighborly/assets/4298622/b164f628-7264-48fc-860f-309d444ee486
+
+
 ## Introduction
 
-Neighoborly simulates two groups of residents living in a city. The simulation is made up of a number of iterations where in each iteration residents move into new houses. At the end of each iteration the residents' happiness values are calculated and the city, its residents, and their happiness values are printed.
+Neighoborly simulates two groups of residents living in a city. The simulation is made up of a number of iterations where in each iteration residents move into new houses. At the end of each iteration the residents' happiness values are calculated and the city's residents and the group's happiness values are printed. The residents are displayed as boxes whose shade becomes lighter as they become happier.
 
 At the beginning of each iteration a Simulator decides which residents are chosen to move, the houses that are available to them, and whether they do ultimately move. The Simulator can, however, take into account a resident’s happiness with a house, how far the resident can move, and other Resident attributes.
 
