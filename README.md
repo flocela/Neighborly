@@ -6,11 +6,11 @@ https://github.com/flocela/Neighborly/assets/4298622/26b4f36d-855a-46f3-aafd-f18
 
 ## Introduction
 
-Neighborly simulates two groups of residents living in a city. The simulation is made up of a number of iterations where in each iteration residents move into new houses. At the end of each iteration the residents' happiness values are calculated and the city's residents and the group's happiness values are printed. The residents are displayed as boxes whose shade becomes lighter as they become happier.
+Neighborly simulates two groups of residents living in a city. In each iteration residents are moved into houses based on their prospective happiness. Each resident belongs to a group, and their happiness depends on the ratio of like to disparate neighbors. At the end of each iteration the residents' happiness values are calculated and the city's residents and the group's happiness values are printed.
 
-At the beginning of each iteration a Simulator decides which residents are chosen to move, the houses that are available to them, and whether they do ultimately move. The Simulator can, however, take into account a resident’s happiness with a house, how far the resident can move, and other Resident attributes.
+At the beginning of each iteration a Simulator decides which residents are chosen to move, the houses that are available to them, and whether they do ultimately move. A Simulator may take into account a resident’s happiness with a house, how far the resident can move, and other Resident attributes.
 
-Each resident’s happiness is determined by their group because all residents in the same group have the same happiness function. A resident’s happiness depends on their number of disparate neighbors and their total number of neighbors.
+Each group's residents have the same happiness function. A resident’s happiness depends on their number of disparate neighbors and their total number of neighbors.
 
 Say there exists a Group1 resident whose happiness is found using the following function, where happiness decreases as the number of disparate neighbors increases.
 <pre><code>
