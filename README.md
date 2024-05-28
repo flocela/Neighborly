@@ -95,7 +95,7 @@ If you do not include the text file, then you will be asked if you want to use a
 
 ## Run The Tests
 
-Tests can be found in the [tests](tests) directory. In the build folder type
+Tests (written in Catch2) can be found in the [tests](tests) directory. In the build folder type
 ```sh
 ./RunTests
 ```
