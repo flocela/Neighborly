@@ -95,7 +95,7 @@ If you do not include the text file, then you will be asked if you want to use a
 
 ## Run The Tests
 
-In the build folder type
+Tests can be found in the [tests](tests) directory. In the build folder type
 ```sh
 ./RunTests
 ```
