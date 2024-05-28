@@ -27,7 +27,7 @@ If a Group1 resident is surrounded by Group 2 residents, then its happiness will
 
 ## Code
 
-A full explanation of the code including UML diagrams and charts explaining the input and output can be found at [README.pdf](README.pdf).
+A full explanation of the code including UML diagrams and charts explaining the input and output can be found at [README.pdf](README.pdf#L200).
 
 ## Copyrights
 
