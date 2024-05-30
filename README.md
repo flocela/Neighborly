@@ -1,7 +1,7 @@
 # Neighborly
+Check out the demo video on youtube!
 
-
-https://github.com/flocela/Neighborly/assets/4298622/26b4f36d-855a-46f3-aafd-f18c75749d8d
+[![c55C-hKIyOQ](https://img.youtube.com/vi/c55C-hKIyOQ/0.jpg)](https://www.youtube.com/watch?v=c55C-hKIyOQ)
 
 
 ## Introduction
