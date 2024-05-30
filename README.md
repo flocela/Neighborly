@@ -1,5 +1,5 @@
 # Neighborly
-Check out the demo video on youtube!
+Click the picture below to check out the demo video on youtube!
 
 [![c55C-hKIyOQ](https://img.youtube.com/vi/c55C-hKIyOQ/0.jpg)](https://www.youtube.com/watch?v=c55C-hKIyOQ)
 
